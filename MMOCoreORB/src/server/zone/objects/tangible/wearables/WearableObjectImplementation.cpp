@@ -124,7 +124,7 @@ void WearableObjectImplementation::generateSockets(CraftingValues* craftingValue
 	float roll = System::random(skill + luck + random);
 
 	int generatedCount = int(float(MAXSOCKETS * roll) / float(MAXSOCKETS * 100));
-
+//socket count
 	if (generatedCount > MAXSOCKETS)
 		generatedCount = MAXSOCKETS;
 	if (generatedCount < 0)
@@ -159,7 +159,7 @@ void WearableObjectImplementation::applyAttachment(CreatureObject* player,
 		if (isEquipped()) {
 			removeSkillModsFrom(player);
 		}
-
+//mods counted per item
 		if (wearableSkillMods.size() < 6) {
 			HashTable<String, int>* mods = attachment->getSkillMods();
 			HashTableIterator<String, int> iterator = mods->iterator();

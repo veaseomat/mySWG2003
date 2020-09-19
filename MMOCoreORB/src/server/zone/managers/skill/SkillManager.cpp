@@ -272,9 +272,9 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 		ghost->addSkillPoints(-skill->getSkillPointsRequired());
 
 		//Witdraw experience.
-		if (!noXpRequired) {
-			ghost->addExperience(skill->getXpType(), -skill->getXpCost(), true);
-		}
+//		if (!noXpRequired) {
+//			ghost->addExperience(skill->getXpType(), -skill->getXpCost(), true);
+//		}
 
 		creature->addSkill(skill, notifyClient);
 
@@ -663,9 +663,9 @@ void SkillManager::updateXpLimits(PlayerObject* ghost) {
 		if (skillBox == nullptr)
 			continue;
 
-		if (xpTypeCapList->contains(skillBox->getXpType()) && (xpTypeCapList->get(skillBox->getXpType()) < skillBox->getXpCap())) {
-			xpTypeCapList->get(skillBox->getXpType()) = skillBox->getXpCap();
-		}
+//		if (xpTypeCapList->contains(skillBox->getXpType()) && (xpTypeCapList->get(skillBox->getXpType()) < skillBox->getXpCap())) {
+//			xpTypeCapList->get(skillBox->getXpType()) = skillBox->getXpCap();
+//		}
 	}
 
 	//Iterate over the player xp types and cap all xp types to the limits.
@@ -673,9 +673,9 @@ void SkillManager::updateXpLimits(PlayerObject* ghost) {
 
 	for (int i = 0; i < experienceList->size(); ++i) {
 		String xpType = experienceList->getKeyAt(i);
-		if (experienceList->get(xpType) > xpTypeCapList->get(xpType)) {
-			ghost->addExperience(xpType, xpTypeCapList->get(xpType) - experienceList->get(xpType), true);
-		}
+//		if (experienceList->get(xpType) > xpTypeCapList->get(xpType)) {
+//			ghost->addExperience(xpType, xpTypeCapList->get(xpType) - experienceList->get(xpType), true);
+//		}
 	}
 }
 

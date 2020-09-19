@@ -281,7 +281,7 @@ void EntertainingSessionImplementation::doPerformanceAction() {
 		return;
 	}
 
-	int actionDrain = performance->getActionPointsPerLoop() - (int)(entertainer->getHAM(CreatureAttribute::QUICKNESS)/35.f);
+	int actionDrain = performance->getActionPointsPerLoop() - (int)(entertainer->getHAM(CreatureAttribute::QUICKNESS)/35.f) / 10;
 
 	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
 		if (isDancing()) {
@@ -594,7 +594,7 @@ void EntertainingSessionImplementation::doFlourish(int flourishNumber, bool gran
 	//float baseActionDrain = -40 + (getQuickness() / 37.5);
 	float flourishActionDrain = baseActionDrain / 2.0;
 
-	int actionDrain = (int)round((flourishActionDrain * 10 + 0.5) / 10.0); // Round to nearest dec for actual int cost
+	int actionDrain = (int)round((flourishActionDrain * 10 + 0.5) / 10.0) / 10; // Round to nearest dec for actual int cost
 
 	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
 		entertainer->sendSystemMessage("@performance:flourish_too_tired");
@@ -631,9 +631,8 @@ void EntertainingSessionImplementation::addEntertainerBuffDuration(CreatureObjec
 	int buffDuration = getEntertainerBuffDuration(creature, performanceType);
 
 	buffDuration += duration;
-
-	if (buffDuration > (120.0f + (10.0f / 60.0f)) ) // 2 hrs 10 seconds
-		buffDuration = (120.0f + (10.0f / 60.0f)); // 2hrs 10 seconds
+	
+		buffDuration = (120.0f + (10.0f / 60.0f)) * 6; //12 hr
 
 	setEntertainerBuffDuration(creature, performanceType, buffDuration);
 }
@@ -678,6 +677,9 @@ void EntertainingSessionImplementation::addEntertainerBuffStrength(CreatureObjec
 		healingXp += maxBuffStrength - buffStrength;
 		newBuffStrength = maxBuffStrength;
 	}
+
+	if(newBuffStrength < 100.0f)
+		newBuffStrength = 100.0f;
 
 	//newBuffStrength = newBuffStrength;
 
@@ -894,11 +896,11 @@ void EntertainingSessionImplementation::activateEntertainerBuff(CreatureObject* 
 		}
 
 		//1 minute minimum listen/watch time
-		int timeElapsed = time(0) - getEntertainerBuffStartTime(creature, performanceType);
-		if(timeElapsed < 60) {
-			creature->sendSystemMessage("You must listen or watch a performer for at least 1 minute in order to gain the entertainer buffs.");
-			return;
-		}
+//		int timeElapsed = time(0) - getEntertainerBuffStartTime(creature, performanceType);
+//		if(timeElapsed < 60) {
+//			creature->sendSystemMessage("You must listen or watch a performer for at least 1 minute in order to gain the entertainer buffs.");
+//			return;
+//		}
 
 		// Returns a % of base stat
 		int campModTemp = 100;
@@ -1095,10 +1097,13 @@ void EntertainingSessionImplementation::awardEntertainerExperience() {
 
 			float totalBonus = 1.f + groupMod + audienceMod + applauseMod;
 
-			xpAmount = ceil(xpAmount * totalBonus);
+			xpAmount = (ceil(xpAmount * totalBonus) * 1);
 
 			if (playerManager != nullptr)
 				playerManager->awardExperience(player, xptype, xpAmount, true);
+
+			String healxptype("entertainer_healing");
+			playerManager->awardExperience(player, healxptype, (xpAmount / 2), true);
 
 			oldFlourishXp = flourishXp;
 			flourishXp = 0;

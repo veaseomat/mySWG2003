@@ -69,7 +69,7 @@ object_tangible_crafting_station_public_space_station = object_tangible_crafting
    customizationDefaults = {},
 
    stationType = 5,
-   complexityLevel = 25
+   complexityLevel = 100,
 }
 
 ObjectTemplates:addTemplate(object_tangible_crafting_station_public_space_station, "object/tangible/crafting/station/public_space_station.iff")

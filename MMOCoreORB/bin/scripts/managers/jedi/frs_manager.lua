@@ -4,9 +4,9 @@ frsEnabled = 1
 lightEnclaveID = 8525417
 darkEnclaveID = 3435626
 
-petitionInterval = 86400000 -- 1 day
-votingInterval = 86400000 -- 1 day
-acceptanceInterval = 86400000 -- 1 day
+petitionInterval = 3600000 -- 1 hr
+votingInterval = 0 -- nah
+acceptanceInterval = 3600000 -- 1 hr
 maintenanceInterval = 86400000 -- 1 day
 
 requestDemotionDuration = 604800000 -- 7 days
@@ -15,7 +15,7 @@ voteChallengeDuration = 604800000 -- 7 days
 arenaOpenInterval = 5400000 -- 90 mins
 arenaClosedInterval = 108000000 -- 30 hours
 arenaChallengeDuration = 3600000 -- 60 mins
-arenaChallengeCooldown = 90000000 -- 25 hours
+arenaChallengeCooldown = 86400000 -- 24 hours
 
 -- Costs are in FRS experience
 baseMaintCost = 100
@@ -24,7 +24,7 @@ voteChallengeCost = 1000
 
 maxPetitioners = 11
 maxChallenges = 20
-missedVotePenalty = 100 -- FRS XP
+missedVotePenalty = 0 -- FRS XP
 
 -- { rank, skillName, requiredExperience, playerCap, robe }
 lightRankingData = {

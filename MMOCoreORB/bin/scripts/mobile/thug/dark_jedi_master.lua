@@ -44,7 +44,7 @@ dark_jedi_master = Creature:new {
 			}
 		}
 	},
-	weapons = {"dark_jedi_weapons_gen4"},
+	weapons = {"dark_jedi_weapons_gen2"},
 	conversationTemplate = "",
 	attacks = merge(lightsabermaster,forcepowermaster)
 }

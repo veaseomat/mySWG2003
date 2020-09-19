@@ -49,7 +49,7 @@ Saber1hFlurryCommand = {
 	healthCostMultiplier = 0,
 	actionCostMultiplier = 0,
 	mindCostMultiplier = 0,
-	areaRange = 16,
+	areaRange = 8,
 	areaAction = true,
 	forceCostMultiplier = 2.5,
 	visMod = 25,
@@ -91,7 +91,7 @@ Saber1hFlurryCommand = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = ONEHANDJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }

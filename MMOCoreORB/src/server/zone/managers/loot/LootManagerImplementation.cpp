@@ -251,7 +251,7 @@ int LootManagerImplementation::calculateLootCredits(int level) {
 	int maxcredits = (int) round((.03f * level * level) + (3 * level) + 50);
 	int mincredits = (int) round((((float) maxcredits) * .5f) + (2.0f * level));
 
-	int credits = mincredits + System::random(maxcredits - mincredits);
+	int credits = (mincredits + System::random(maxcredits - mincredits)) * 2;
 
 	return credits;
 }
@@ -303,26 +303,6 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	float excMod = 1.0;
 
 	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);
-
-	if (System::random(legendaryChance) >= legendaryChance - adjustment) {
-		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
-		prototype->setCustomObjectName(newName, false);
-
-		excMod = legendaryModifier;
-
-		prototype->addMagicBit(false);
-
-		legendaryLooted.increment();
-	} else if (System::random(exceptionalChance) >= exceptionalChance - adjustment) {
-		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
-		prototype->setCustomObjectName(newName, false);
-
-		excMod = exceptionalModifier;
-
-		prototype->addMagicBit(false);
-
-		exceptionalLooted.increment();
-	}
 
 	if (prototype->isLightsaberCrystalObject()) {
 		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
@@ -411,31 +391,6 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			max = ((max * level / maxMod) + max) * excMod;
 		}
 
-		if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
-			if (max > min && min >= 0) {
-				min *= yellowModifier;
-				max *= yellowModifier;
-			} else if (max > min && max <= 0) {
-				min /= yellowModifier;
-				max /= yellowModifier;
-			} else if (max > min) {
-				min /= yellowModifier;
-				max *= yellowModifier;
-			} else if (max < min && max >= 0) {
-				min /= yellowModifier;
-				max /= yellowModifier;
-			} else if (max < min && min <= 0) {
-				min *= yellowModifier;
-				max *= yellowModifier;
-			} else {
-				min /= yellowModifier;
-				max *= yellowModifier;
-			}
-
-			yellow = true;
-
-			yellowLooted.increment();
-		}
 
 		craftingValues->setMinValue(subtitle, min);
 		craftingValues->setMaxValue(subtitle, max);
@@ -509,7 +464,7 @@ void LootManagerImplementation::addConditionDamage(TangibleObject* loot, Craftin
 }
 
 void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootItemTemplate* templateObject, int level, float excMod) {
-	if (!object->isWeaponObject() && !object->isWearableObject())
+	if (!object->isWearableObject())
 		return;
 
 	const VectorMap<String, int>* skillMods = templateObject->getSkillMods();
@@ -537,8 +492,8 @@ void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootI
 
 			int mod = System::random(max - min) + min;
 
-			if(mod == 0)
-				mod = 1;
+			if(mod < 5)
+				mod = 5;
 
 			String modName = getRandomLootableMod( object->getGameObjectType() );
 			if( !modName.isEmpty() )
@@ -643,7 +598,13 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = entry->getLootChance();
+		int lootChance = (entry->getLootChance() * 3);
+
+		int hroll = System::random(1000);
+
+		if (hroll == 1000){
+			createLoot(trx, container, "holocron_nd", level);
+		}
 
 		if (lootChance <= 0)
 			continue;

@@ -14,9 +14,9 @@ void SharedStructureObjectTemplate::readObject(LuaObject* templateData) {
 
 	lotSize = templateData->getByteField("lotSize");
 
-	baseMaintenanceRate = templateData->getIntField("baseMaintenanceRate");
+	baseMaintenanceRate = templateData->getIntField("baseMaintenanceRate") / 5;
 
-	basePowerRate = templateData->getIntField("basePowerRate");
+	basePowerRate = templateData->getIntField("basePowerRate") / 5;
 
 	LuaObject allowzones = templateData->getObjectField("allowedZones");
 	allowedZones.removeAll(); //Make sure it's empty...

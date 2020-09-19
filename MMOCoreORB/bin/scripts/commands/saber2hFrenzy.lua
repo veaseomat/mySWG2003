@@ -45,12 +45,12 @@ Saber2hFrenzyCommand = {
         name = "saber2hfrenzy",
         
     damageMultiplier = 3.5,
-	speedMultiplier = 3.5,
+	speedMultiplier = 3.0,
 	healthCostMultiplier = 0,
 	actionCostMultiplier = 0,
 	mindCostMultiplier = 0,
 	areaAction = true,
-	areaRange = 16,
+	areaRange = 8,
 	forceCostMultiplier = 2.5,
 	visMod = 25,
 
@@ -84,14 +84,14 @@ Saber2hFrenzyCommand = {
 	  )
 	},
 
-	animation = "showoff_2", 
+	animation = "showoff_1", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber2hfrenzy",
 	
 	poolsToDamage = RANDOM_ATTRIBUTE,
 	
-	weaponType = TWOHANDJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }

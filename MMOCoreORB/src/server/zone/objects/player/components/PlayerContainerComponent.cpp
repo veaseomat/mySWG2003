@@ -99,7 +99,7 @@ int PlayerContainerComponent::canAddObject(SceneObject* sceneObject, SceneObject
 					errorDescription = "@jedi_spam:lightsaber_no_color";
 					return TransferErrorCode::PLAYERUSEMASKERROR;
 				}
-
+//disable this to use looted saber
 				if (weapon->getCraftersName() != creo->getFirstName() && !ghost->isPrivileged()) {
 					errorDescription = "@jedi_spam:not_your_lightsaber";
 					return TransferErrorCode::PLAYERUSEMASKERROR;

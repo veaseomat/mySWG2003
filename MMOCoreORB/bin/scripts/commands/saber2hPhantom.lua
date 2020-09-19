@@ -49,9 +49,8 @@ Saber2hPhantomCommand = {
 	healthCostMultiplier = 0,
 	actionCostMultiplier = 0,
 	mindCostMultiplier = 0,
-	coneAngle = 45,
-	coneAction = true,
-	coneRange = 24,
+	areaAction = true,
+	areaRange = 8,
 	forceCostMultiplier = 3.0,
 	visMod = 25,
 
@@ -85,14 +84,14 @@ Saber2hPhantomCommand = {
 	  )
 	},
 
-	animation = "combo_jedi_2", 
+	animation = "showoff_1", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber2hphantom",
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = TWOHANDJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }

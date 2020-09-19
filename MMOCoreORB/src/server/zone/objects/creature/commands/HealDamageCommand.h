@@ -536,8 +536,10 @@ public:
 		Locker locker(stimPack);
 		stimPack->decreaseUseCount();
 
-		if (targetCreature != creature && !targetCreature->isPet())
-			awardXp(creature, "medical", (healthHealed + actionHealed)); //No experience for healing yourself.
+//		if (targetCreature != creature && !targetCreature->isPet())
+//			awardXp(creature, "medical", (healthHealed + actionHealed)); //No experience for healing yourself.
+
+			awardXp(creature, "medical", (healthHealed + actionHealed) * 1); //No experience for healing yourself.
 
 		if (targetCreature != creature)
 			clocker.release();

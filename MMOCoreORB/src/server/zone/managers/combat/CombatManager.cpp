@@ -707,7 +707,15 @@ int CombatManager::calculateTargetPostureModifier(WeaponObject* weapon, Creature
 
 int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
 	if (attacker->isAiAgent()) {
-		return cast<AiAgent*>(attacker)->getChanceHit() * 100;
+		int npchitchance = cast<AiAgent*>(attacker)->getChanceHit() * 200;//doubling this gets very close to early precu hitchance
+		//these are the min/max hitchance from early precu/ this is a catchall because some npc entries are WRONG
+		if (npchitchance < 25) {
+			npchitchance = 25;
+		}
+		if (npchitchance > 55) {
+			npchitchance = 55;
+		}
+		return npchitchance;
 	} else if (attacker->isInstallationObject()) {
 		return cast<InstallationObject*>(attacker)->getHitChance() * 100;
 	}
@@ -734,6 +742,15 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 
 	if (attackerAccuracy == 0) attackerAccuracy = -15; // unskilled penalty, TODO: this might be -50 or -125, do research
 
+
+	//frs accuracy 25
+//	int frsacc = (creoAttacker->getSkillMod("force_manipulation_dark") + creoAttacker->getSkillMod("force_manipulation_light")) / 4;
+//
+//	if (frsacc > 0) {
+//		attackerAccuracy += frsacc + 5;
+//	}
+
+
 	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy") + creoAttacker->getSkillMod("dead_eye");
 
 	// FS skill mods
@@ -757,6 +774,11 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		case SceneObjectType::HEAVYWEAPON:
 			attackerAccuracy += 25.f;
 		}
+	}
+
+	//accuracy cap new
+	if (attackerAccuracy > 100) {
+		attackerAccuracy = 100;
 	}
 
 	return attackerAccuracy;
@@ -790,18 +812,25 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 
 	debug() << "Base target defense is " << targetDefense;
 
-	// defense hardcap
-	if (targetDefense > 125)
-		targetDefense = 125;
+	//jedi frs bonus
+//	int frsdef = (defender->getSkillMod("force_manipulation_dark") + defender->getSkillMod("force_manipulation_light")) / 4;
+//
+//	if (frsdef > 0) {
+//		targetDefense += frsdef + 5;
+//	}
 
-	if (attacker->isPlayerCreature())
-		targetDefense += defender->getSkillMod("private_defense");
-
-	// SL bonuses go on top of hardcap
+	// SL bonuses go on top of hardcap// NOT ANYMORE BIIIITCH
 	for (int i = 0; i < defenseAccMods->size(); ++i) {
 		const String& mod = defenseAccMods->get(i);
 		targetDefense += defender->getSkillMod("private_group_" + mod);
 	}
+
+	// defense hardcap
+	if (targetDefense > 100)
+		targetDefense = 100;
+
+	if (attacker->isPlayerCreature())
+		targetDefense += defender->getSkillMod("private_defense");
 
 	// food bonus goes on top as well
 	targetDefense += defender->getSkillMod("dodge_attack");
@@ -826,8 +855,8 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 		targetDefense += defender->getSkillMod("private_" + mod);
 	}
 
-	if (targetDefense > 125)
-		targetDefense = 125;
+	if (targetDefense > 100)
+		targetDefense = 100;
 
 	return targetDefense;
 }
@@ -1426,15 +1455,15 @@ void CombatManager::getFrsModifiedForceAttackDamage(CreatureObject* attacker, fl
 	float minMod = 0, maxMod = 0;
 	int powerModifier = 0;
 
-	if (councilType == FrsManager::COUNCIL_LIGHT) {
-		powerModifier = attacker->getSkillMod("force_power_light");
-		minMod = data.getFrsLightMinDamageModifier();
-		maxMod = data.getFrsLightMaxDamageModifier();
-	} else if (councilType == FrsManager::COUNCIL_DARK) {
-		powerModifier = attacker->getSkillMod("force_power_dark");
-		minMod = data.getFrsDarkMinDamageModifier();
-		maxMod = data.getFrsDarkMaxDamageModifier();
-	}
+//	if (councilType == FrsManager::COUNCIL_LIGHT) {
+//		powerModifier = attacker->getSkillMod("force_power_light");
+//		minMod = data.getFrsLightMinDamageModifier();
+//		maxMod = data.getFrsLightMaxDamageModifier();
+//	} else if (councilType == FrsManager::COUNCIL_DARK) {
+//		powerModifier = attacker->getSkillMod("force_power_dark");
+//		minMod = data.getFrsDarkMinDamageModifier();
+//		maxMod = data.getFrsDarkMaxDamageModifier();
+//	}
 
 	if (powerModifier > 0) {
 		if (minMod > 0)
@@ -1488,12 +1517,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	if (defender->isKnockedDown()) {
 		damage *= 1.5f;
-	} else if (data.isForceAttack() && data.getCommandName().hashCode() == STRING_HASHCODE("forcechoke")) {
-		if  (defender->isProne())
-			damage *= 1.5f;
-		else if (defender->isKneeling())
-			damage *= 1.25f;
 	}
+
 
 	// Toughness reduction
 	if (data.isForceAttack())
@@ -1509,9 +1534,92 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= 1.f / (1.f + ((float)forceDefense / 100.f));
 	}
 
+//	float jediarmor = defender->getSkillMod("jedi_force_power_max") / 200;
+//
+//	if (jediarmor > 0) {
+//		jediarmor += 25.f;
+//		if (jediarmor > 50) jediarmor = 50;
+//		damage *= 1.f / (1.f + ((float)jediarmor / 100.f));
+//	}
+
+	//frsarmor
+	float lightarmor = defender->getSkillMod("force_manipulation_light") / 2;
+
+	if (lightarmor > 0) {
+		lightarmor += 10.f;
+		damage *= 1.f / (1.f + ((float)lightarmor / 100.f));
+	}
+
+	float darkarmor = defender->getSkillMod("force_manipulation_dark") / 2;
+
+	if (darkarmor > 0) {
+		darkarmor += 5.f;
+		damage *= 1.f / (1.f + ((float)darkarmor / 100.f));
+	}
+
+	//frsdamage
+	float lightDamage = attacker->getSkillMod("force_manipulation_light") / 2;
+
+	if (lightDamage > 0) {
+		if (data.isForceAttack() || weapon->getAttackType() == SharedWeaponObjectTemplate::LIGHTSABER) {
+			lightDamage += 5.f;
+			damage *= 1.f * (1.f + ((float)lightDamage / 100.f));
+		}
+	}
+
+	float darkDamage = attacker->getSkillMod("force_manipulation_dark") / 2;
+
+	if (darkDamage > 0) {
+		if (data.isForceAttack() || weapon->getAttackType() == SharedWeaponObjectTemplate::LIGHTSABER) {
+			darkDamage += 10.f;
+			damage *= 1.f * (1.f + ((float)darkDamage / 100.f));
+		}
+	}
+
+
 	// PvP Damage Reduction.
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature() && !data.isForceAttack())
 		damage *= 0.25;
+
+	//weapon types dmg balance only in pvp //not working yet
+//	if (attacker->isPlayerCreature() && defender->isPlayerCreature() && !data.isForceAttack()){
+//		switch (attacker->getWeapon()->getGameObjectType()) {
+//		case SceneObjectType::PISTOL:
+//			damage *= 1.25;
+//			/* no break */
+//		case SceneObjectType::CARBINE:
+//			/* no break */
+//		case SceneObjectType::RIFLE:
+//			damage *= 0.75;
+//			/* no break */
+//		case SceneObjectType::MINE:
+//		case SceneObjectType::SPECIALHEAVYWEAPON:
+//			/* no break */
+//		case SceneObjectType::HEAVYWEAPON:
+//			damage *= 1.25;
+//			/* no break */
+//		case SceneObjectType::ONEHANDMELEEWEAPON:
+//			/* no break */
+//		case SceneObjectType::TWOHANDMELEEWEAPON:
+//			/* no break */
+//		case SceneObjectType::POLEARM:
+//		}
+//	}
+
+	// PVE Damage 
+	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
+		damage *= 1.5;
+
+	// EVP Damage Reduction.
+	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
+		damage *= 0.5;
+
+	// PvE Damage increase for non jedi.
+//	if (attacker->isPlayerCreature() && !defender->isPlayerCreature()) {
+//
+//		if (!data.isForceAttack() || weapon->getAttackType() != SharedWeaponObjectTemplate::LIGHTSABER)
+//		damage *= 1.5;
+//	}
 
 	if (damage < 1) damage = 1;
 
@@ -1624,6 +1732,42 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 		ManagedReference<WeaponObject*> targetWeapon = targetCreature->getWeapon();
 		const auto defenseAccMods = targetWeapon->getDefenderSecondaryDefenseModifiers();
 		const String& def = defenseAccMods->get(0); // FIXME: this is hacky, but a lot faster than using contains()
+
+		//jeditoughdodge
+//		int jeditoughdodge = targetCreature->getSkillMod("jedi_toughness");
+//
+//		if ((!weapon->isJediWeapon()) && jeditoughdodge > 0) {
+//			if (jeditoughdodge > System::random(100))
+//				return MISS;
+//
+//		}
+
+
+		//FRS DODGE SYSTEM
+//		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) / 5;
+//
+//		if (frsdodge > 0) {
+//			frsdodge += 10;
+//			if (frsdodge > System::random(100))
+//				return MISS;
+//
+//		}
+
+//		float lightdodge = targetCreature->getSkillMod("force_manipulation_light") / 5;
+//
+//		if (lightdodge > 0) {
+//			lightdodge += 5.f;
+//			if (lightdodge > System::random(100))
+//				return DODGE;
+//		}
+//
+//		float darkdodge = targetCreature->getSkillMod("force_manipulation_dark") / 5;
+//
+//		if (darkdodge > 0) {
+//			lightdodge += 10.f;
+//			if (lightdodge > System::random(100))
+//				return DODGE;
+//		}
 
 		// saber block is special because it's just a % chance to block based on the skillmod
 		if (def == "saber_block") {
@@ -1757,8 +1901,8 @@ void CombatManager::doDodge(TangibleObject* attacker, WeaponObject* weapon, Crea
 bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObject* weapon, const CreatureAttackData& data) const {
 	if (attacker->isAiAgent() || data.isForceAttack())
 		return true;
-
-	float force = weapon->getForceCost() * data.getForceCostMultiplier();
+//change saber special force cost here
+	float force = (weapon->getForceCost() * data.getForceCostMultiplier()) * .5;
 
 	if (force > 0) { // Need Force check first otherwise it can be spammed.
 		ManagedReference<PlayerObject*> playerObject = attacker->getPlayerObject();
@@ -1773,9 +1917,9 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 		}
 	}
 
-	float health = weapon->getHealthAttackCost() * data.getHealthCostMultiplier();
-	float action = weapon->getActionAttackCost() * data.getActionCostMultiplier();
-	float mind = weapon->getMindAttackCost() * data.getMindCostMultiplier();
+	float health = (weapon->getHealthAttackCost() * data.getHealthCostMultiplier()) * .5;
+	float action = (weapon->getActionAttackCost() * data.getActionCostMultiplier()) * .5;
+	float mind = (weapon->getMindAttackCost() * data.getMindCostMultiplier()) * .5;
 
 	health = attacker->calculateCostAdjustment(CreatureAttribute::STRENGTH, health);
 	action = attacker->calculateCostAdjustment(CreatureAttribute::QUICKNESS, action);

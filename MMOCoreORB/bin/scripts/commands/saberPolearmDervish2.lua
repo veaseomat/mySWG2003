@@ -49,9 +49,8 @@ SaberPolearmDervish2Command = {
 	healthCostMultiplier = 0,
 	actionCostMultiplier = 0,
 	mindCostMultiplier = 0,
-	coneAngle = 45,
-	coneAction = true,
-	coneRange = 24,
+	areaAction = true,
+	areaRange = 8,
 	forceCostMultiplier = 3.0,
 	visMod = 25,
 
@@ -61,7 +60,7 @@ SaberPolearmDervish2Command = {
 		{}, 
 		{ "blind_defense" }, 
 		{ "jedi_state_defense", "resistance_states" },
-		75, 
+		85, 
 		0, 
 		60 
 	  ),
@@ -70,7 +69,7 @@ SaberPolearmDervish2Command = {
 		{}, 
 		{ "dizzy_defense" }, 
 		{ "jedi_state_defense", "resistance_states" }, 
-		75, 
+		85, 
 		0, 
 		30 
 	  ),
@@ -79,7 +78,7 @@ SaberPolearmDervish2Command = {
 		{}, 
 		{ "stun_defense" }, 
 		{ "jedi_state_defense", "resistance_states" }, 
-		76, 
+		85, 
 		0, 
 		60
 	  )
@@ -92,7 +91,7 @@ SaberPolearmDervish2Command = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = POLEARMJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }

@@ -27,7 +27,7 @@ lesser_prophet_of_the_light_side = Creature:new {
 	optionsBitmask = AIENABLED,
 	diet = HERBIVORE,
 
-	templates = { "light_jedi" },
+	templates = {"object/mobile/dressed_jedi_trainer_old_human_male_01.iff"},
 	lootGroups = {
 		{
 			groups = {

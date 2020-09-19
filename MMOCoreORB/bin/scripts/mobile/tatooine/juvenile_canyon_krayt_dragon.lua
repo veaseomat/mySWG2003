@@ -1,50 +1,50 @@
 juvenile_canyon_krayt_dragon = Creature:new {
-	objectName = "@mob/creature_names:juvenile_canyon_krayt",
+	objectName = "@mob/creature_names:canyon_krayt_dragon",
 	socialGroup = "krayt",
 	faction = "",
-	level = 122,
-	chanceHit = 4.0,
-	damageMin = 745,
-	damageMax = 1200,
-	baseXp = 11577,
-	baseHAM = 54000,
-	baseHAMmax = 64000,
-	armor = 2,
-	resists = {170,170,15,15,110,15,15,15,-1},
+	level = 275,
+	chanceHit = 27.25,
+	damageMin = 1520,
+	damageMax = 2750,
+	baseXp = 26356,
+	baseHAM = 321000,
+	baseHAMmax = 392000,
+	armor = 3,
+	resists = {160,160,160,160,120,160,160,160,-1},
 	meatType = "meat_carnivore",
-	meatAmount = 750,
+	meatAmount = 1000,
 	hideType = "hide_bristley",
-	hideAmount = 500,
+	hideAmount = 750,
 	boneType = "bone_mammal",
-	boneAmount = 410,
+	boneAmount = 675,
 	milk = 0,
 	tamingChance = 0,
 	ferocity = 20,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
-	creatureBitmask = PACK + KILLER,
+	creatureBitmask = PACK + KILLER + STALKER,
 	optionsBitmask = AIENABLED,
 	diet = CARNIVORE,
 
-	templates = {"object/mobile/juvenile_canyon_krayt.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
-	scale = 0.55;
-
+	templates = {"object/mobile/canyon_krayt_dragon.iff"},
+	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
+	scale = 0.9;
 	lootGroups = {
 		{
 	        groups = {
-				{group = "krayt_tissue_common", chance = 2500000},
-				{group = "krayt_dragon_common", chance = 3500000},
+				{group = "krayt_dragon_common", chance = 2500000},
+				{group = "krayt_tissue_uncommon", chance = 2000000},
+				{group = "krayt_pearls", chance = 1500000},
 				{group = "armor_all", chance = 2000000},
 				{group = "weapons_all", chance = 2000000},
 			},
-			lootChance = 3440000
+			lootChance = 6500000
 		}
 	},
 	weapons = {},
 	conversationTemplate = "",
 	attacks = {
-		{"posturedownattack",""},
-		{"creatureareaattack",""}
+		{"creatureareaattack","stateAccuracyBonus=50"},
+		{"stunattack","stateAccuracyBonus=50"}
 	}
 }
 

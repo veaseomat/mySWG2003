@@ -347,9 +347,9 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 		alm->insertAttribute("@veteran_new:antidecay_examine_title", "@veteran_new:antidecay_examine_text");
 	}
 
-	// Force Cost
+	// Force Cost // float shows decimal points on sabers!
 	if (getForceCost() > 0)
-		alm->insertAttribute("forcecost", (int)getForceCost());
+		alm->insertAttribute("forcecost", (float)getForceCost());
 
 	for (int i = 0; i < getNumberOfDots(); i++) {
 
@@ -716,10 +716,10 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 	}
 
 	int roll = System::random(100);
-	int chance = 5;
+	int chance = 2;
 
 	if (hasPowerup())
-		chance += 10;
+		chance += 5;
 
 	if (roll < chance) {
 		Locker locker(_this.getReferenceUnsafeStaticCast());
@@ -733,8 +733,7 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 			// TODO: is this supposed to be every crystal, or random crystal(s)?
 			for (int i = 0; i < saberInv->getContainerObjectsSize(); i++) {
 				ManagedReference<LightsaberCrystalComponent*> crystal = saberInv->getContainerObject(i).castTo<LightsaberCrystalComponent*>();
-
-				if (crystal != nullptr) {
+				if (crystal->getColor() == 31) {
 					crystal->inflictDamage(crystal, 0, 1, true, true);
 				}
 			}

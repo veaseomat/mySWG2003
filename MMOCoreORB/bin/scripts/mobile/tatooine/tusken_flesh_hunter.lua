@@ -1,16 +1,16 @@
 tusken_flesh_hunter = Creature:new {
-	objectName = "@mob/creature_names:tusken_flesh_hunter",
+	objectName = "@mob/creature_names:tusken_raider",
 	socialGroup = "tusken_raider",
 	faction = "tusken_raider",
-	level = 31,
-	chanceHit = 0.39,
-	damageMin = 300,
-	damageMax = 310,
-	baseXp = 3188,
-	baseHAM = 8500,
-	baseHAMmax = 10300,
+	level = 19,
+	chanceHit = 0.33,
+	damageMin = 180,
+	damageMax = 190,
+	baseXp = 1609,
+	baseHAM = 4500,
+	baseHAMmax = 5500,
 	armor = 0,
-	resists = {0,0,0,0,0,0,0,0,-1},
+	resists = {5,5,5,30,-1,30,-1,-1,-1},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -43,7 +43,7 @@ tusken_flesh_hunter = Creature:new {
 	},
 	weapons = {"tusken_weapons"},
 	conversationTemplate = "",
-	attacks = merge(marksmanmaster,brawlermaster,fencermaster,riflemanmaster)
+	attacks = merge(marksmanmaster,brawlermaster)
 }
 
 CreatureTemplates:addCreatureTemplate(tusken_flesh_hunter, "tusken_flesh_hunter")

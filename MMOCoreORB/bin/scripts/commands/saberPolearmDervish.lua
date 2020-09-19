@@ -50,7 +50,7 @@ SaberPolearmDervishCommand = {
 	actionCostMultiplier = 0,
 	mindCostMultiplier = 0,
 	areaAction = true,
-	areaRange = 16,
+	areaRange = 8,
 	forceCostMultiplier = 2.5,
 	visMod = 25,
 
@@ -84,14 +84,14 @@ SaberPolearmDervishCommand = {
 	  )
 	},
 
-	animation = "showoff_2", 
+	animation = "combo_jedi_2", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saberpolearmdervish",
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = POLEARMJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }

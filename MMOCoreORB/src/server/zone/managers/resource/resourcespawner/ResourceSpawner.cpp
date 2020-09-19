@@ -619,6 +619,18 @@ int ResourceSpawner::randomizeValue(int min, int max) {
 		}
 	}
 
+	randomStat = System::random(max) + System::random(1000);
+
+	if (randomStat > 1000) {
+		randomStat = 1000;
+	}
+
+	if (randomStat < 500) {
+		randomStat = 500;
+	}
+
+//	randomStat = 1000;
+	
 	return randomStat;
 }
 
@@ -853,6 +865,12 @@ void ResourceSpawner::sendSurvey(CreatureObject* player, const String& resname) 
 				maxY = posY;
 			}
 
+//			if (density < maxDensity) {
+//				maxDensity = maxDensity / 2;
+//				maxX = posX;
+//				maxY = posY;
+//			}
+
 			surveyMessage->add(posX, posY, density);
 
 			posX += spacer;
@@ -967,13 +985,13 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 	// Lower skill levels mean you can't sample lower concetrations
 	int surveySkill = player->getSkillMod("surveying");
 
-	if ((density * 100) < (32 - ((surveySkill / 20) * 6)) || density < .10) {
-		StringIdChatParameter message("survey", "density_below_threshold");
-		message.setTO(resname);
-		player->sendSystemMessage(message);
-		player->setPosture(CreaturePosture::UPRIGHT, true);
-		return;
-	}
+//	if ((density * 100) < (32 - ((surveySkill / 20) * 6)) || density < .10) {
+//		StringIdChatParameter message("survey", "density_below_threshold");
+//		message.setTO(resname);
+//		player->sendSystemMessage(message);
+//		player->setPosture(CreaturePosture::UPRIGHT, true);
+//		return;
+//	}
 
 	Coordinate* richSampleLocation = session->getRichSampleLocation();
 
@@ -993,6 +1011,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 	float cityMultiplier = 1.f + player->getSkillMod("private_spec_samplesize") / 100.f;
 
 	int unitsExtracted = maxUnitsExtracted * (float(surveySkill) / 100.0f) * samplingMultiplier * cityMultiplier;
+//	unitsExtracted *= 5;
 	int xpcap = 40;
 
 	if (session->tryGamble()) {
@@ -1025,12 +1044,12 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 	if (unitsExtracted < 2) {
 
 		// Send message to player about trace amounts
-		StringIdChatParameter message("survey", "trace_amount");
-		message.setTO(resname);
-		message.setDI(unitsExtracted);
-		player->sendSystemMessage(message);
+//		StringIdChatParameter message("survey", "trace_amount");
+//		message.setTO(resname);
+//		message.setDI(unitsExtracted);
+//		player->sendSystemMessage(message);
 
-		return;
+		unitsExtracted = 2;
 	}
 
 	// Send message to player about unit extraction

@@ -3,11 +3,11 @@ local Logger = require("utils.logger")
 
 Glowing = ScreenPlay:new {
 	requiredBadges = {
-		{ type = "exploration_jedi", amount = 3 },
-		{ type = "exploration_dangerous", amount = 2 },
-		{ type = "exploration_easy", amount = 5 },
-		{ type = "master", amount = 1 },
-		{ type = "content", amount = 5 },
+		{ type = "exploration_jedi", amount = 1 },
+		{ type = "exploration_dangerous", amount = 0 },
+		{ type = "exploration_easy", amount = 0 },
+		{ type = "master", amount = 3 },
+		{ type = "content", amount = 0 },
 	}
 }
 
@@ -62,8 +62,16 @@ function Glowing:badgeAwardedEventHandler(pPlayer, pPlayer2, badgeNumber)
 	end
 
 	if self:hasRequiredBadgeCount(pPlayer) and not CreatureObject(pPlayer):hasSkill("force_title_jedi_novice") then
-		VillageJediManagerCommon.setJediProgressionScreenPlayState(pPlayer, VILLAGE_JEDI_PROGRESSION_GLOWING)
-		FsIntro:startPlayerOnIntro(pPlayer)
+
+		FsIntro:completeVillageIntroFrog(pPlayer)
+		
+		FsOutro:completeVillageOutroFrog(pPlayer)
+		
+		local sui = SuiMessageBox.new("JediTrials", "emptyCallback") -- No callback
+		sui.setTitle("Jedi Unlock")
+		sui.setPrompt("Congratulations Jedi Initiate, you have completed the village and may travel there to learn force sensitive skills or do quests but it is not required. All you need to do is meditate at a Jedi shrine to begin. May the force be with you...")
+		sui.sendTo(pPlayer)
+		
 		return 1
 	end
 
@@ -82,8 +90,9 @@ end
 function Glowing:onPlayerLoggedIn(pPlayer)
 	if not self:isGlowing(pPlayer) then
 		if self:hasRequiredBadgeCount(pPlayer) then
-			VillageJediManagerCommon.setJediProgressionScreenPlayState(pPlayer, VILLAGE_JEDI_PROGRESSION_GLOWING)
-			FsIntro:startPlayerOnIntro(pPlayer)
+			FsIntro:completeVillageIntroFrog(pPlayer)
+			
+			FsOutro:completeVillageOutroFrog(pPlayer)
 		else
 			self:registerObservers(pPlayer)
 		end

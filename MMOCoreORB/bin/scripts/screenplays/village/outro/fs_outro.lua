@@ -145,5 +145,4 @@ function FsOutro:completeVillageOutroFrog(pPlayer)
 
 	VillageJediManagerCommon.setJediProgressionScreenPlayState(pPlayer, VILLAGE_JEDI_PROGRESSION_DEFEATED_MELLIACHAE)
 
-	PadawanTrials:doPadawanTrialsSetup(pPlayer)
 end

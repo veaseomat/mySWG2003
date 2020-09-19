@@ -1488,12 +1488,18 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 	uint64 preDesignatedFacilityOid = ghost->getCloningFacility();
 	ManagedReference<SceneObject*> preDesignatedFacility = server->getObject(preDesignatedFacilityOid);
 
-	if (preDesignatedFacility == nullptr || preDesignatedFacility != cloner) {
-		player->addWounds(CreatureAttribute::HEALTH, 100, true, false);
-		player->addWounds(CreatureAttribute::ACTION, 100, true, false);
-		player->addWounds(CreatureAttribute::MIND, 100, true, false);
-		player->addShockWounds(100, true);
-	}
+
+		player->setWounds(CreatureAttribute::HEALTH, 0, true);
+		player->setWounds(CreatureAttribute::STRENGTH, 0, true);
+		player->setWounds(CreatureAttribute::CONSTITUTION, 0, true);
+		player->setWounds(CreatureAttribute::ACTION, 0, true);
+		player->setWounds(CreatureAttribute::QUICKNESS, 0, true);
+		player->setWounds(CreatureAttribute::STAMINA, 0, true);
+		player->setWounds(CreatureAttribute::MIND, 0, true);
+		player->setWounds(CreatureAttribute::FOCUS, 0, true);
+		player->setWounds(CreatureAttribute::WILLPOWER, 0, true);
+		player->setShockWounds(100, true);
+
 
 	if (player->getFactionStatus() != FactionStatus::ONLEAVE && cbot->getFacilityType() != CloningBuildingObjectTemplate::FACTION_IMPERIAL && cbot->getFacilityType() != CloningBuildingObjectTemplate::FACTION_REBEL && !player->hasSkill("force_title_jedi_rank_03"))
 		player->setFactionStatus(FactionStatus::ONLEAVE);
@@ -1518,13 +1524,13 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 
 				if (obj->getOptionsBitmask() & OptionBitmask::INSURED) {
 					//1% Decay for insured items
-					obj->inflictDamage(obj, 0, 0.01 * obj->getMaxCondition(), true, true);
+//					obj->inflictDamage(obj, 0, 0.01 * obj->getMaxCondition(), true, true);
 					//Set uninsured
 					uint32 bitmask = obj->getOptionsBitmask() - OptionBitmask::INSURED;
 					obj->setOptionsBitmask(bitmask);
 				} else {
 					//5% Decay for uninsured items
-					obj->inflictDamage(obj, 0, 0.05 * obj->getMaxCondition(), true, true);
+					obj->inflictDamage(obj, 0, 0.02 * obj->getMaxCondition(), true, true);
 				}
 
 				// Calculate condition percentage for decay report
@@ -1552,14 +1558,8 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 
 	// Jedi experience loss.
 	if (ghost->getJediState() >= 2) {
-		int jediXpCap = ghost->getXpCap("jedi_general");
-		int xpLoss = (int)(jediXpCap * -0.05);
 		int curExp = ghost->getExperience("jedi_general");
-
-		int negXpCap = -10000000; // Cap on negative jedi experience
-
-		if ((curExp + xpLoss) < negXpCap)
-			xpLoss = negXpCap - curExp;
+		int xpLoss = (curExp * -0.01);
 
 		awardExperience(player, "jedi_general", xpLoss, true);
 		StringIdChatParameter message("base_player","prose_revoke_xp");
@@ -1722,6 +1722,8 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 
 			uint32 combatXp = 0;
 
+			uint32 frsXp = 0;
+
 			Locker crossLocker(attacker, destructedObject);
 
 			for (int j = 0; j < entry->size(); ++j) {
@@ -1731,27 +1733,34 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 
 				xpAmount *= (float) damage / totalDamage;
 
+//				xpAmount += (float) totalDamage / 100;
+
 				//Cap xp based on level
-				xpAmount = Math::min(xpAmount, calculatePlayerLevel(attacker, xpType) * 300.f);
+//				xpAmount = Math::min(xpAmount, calculatePlayerLevel(attacker, xpType) * 300.f);
 
 				//Apply group bonus if in group
-				if (group != nullptr)
-					xpAmount *= groupExpMultiplier;
+//				if (group != nullptr)
+//					xpAmount *= groupExpMultiplier;
 
-				if (winningFaction == attacker->getFaction())
-					xpAmount *= gcwBonus;
+//				if (winningFaction == attacker->getFaction())
+//					xpAmount *= gcwBonus;
 
-				//Jedi experience doesn't count towards combat experience, and is earned at 20% the rate of normal experience
+				//Jedi experience doesn't count towards combat experience, and is earned at 20% the rate of normal experience //fuck off
 				if (xpType != "jedi_general")
 					combatXp += xpAmount;
-				else
+				if (xpType == "jedi_general" && attacker->hasSkill("force_title_jedi_rank_03"))
+					frsXp += xpAmount;
+//				else
+				if (xpType == "jedi_general")
 					xpAmount *= 0.2f;
 
 				//Award individual expType
 				awardExperience(attacker, xpType, xpAmount);
 			}
 
-			combatXp = awardExperience(attacker, "combat_general", combatXp, true, 0.1f);
+			combatXp = awardExperience(attacker, "combat_general", combatXp, true, 0.2f);
+
+			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.001f);
 
 			//Check if the group leader is a squad leader
 			if (group == nullptr)
@@ -5462,7 +5471,7 @@ bool PlayerManagerImplementation::doBurstRun(CreatureObject* player, float hamMo
 	uint32 crc = STRING_HASHCODE("burstrun");
 	float hamCost = 100.0f;
 	float duration = 30;
-	float cooldown = 300;
+	float cooldown = 150;
 
 	float burstRunMod = (float) player->getSkillMod("burst_run");
 	hamModifier += (burstRunMod / 100.f);

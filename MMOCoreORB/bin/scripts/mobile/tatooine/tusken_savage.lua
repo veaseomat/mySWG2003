@@ -1,16 +1,16 @@
 tusken_savage = Creature:new {
-	objectName = "@mob/creature_names:tusken_savage",
+	objectName = "@mob/creature_names:tusken_raider",
 	socialGroup = "tusken_raider",
 	faction = "tusken_raider",
-	level = 20,
+	level = 19,
 	chanceHit = 0.33,
-	damageMin = 190,
-	damageMax = 200,
-	baseXp = 1803,
-	baseHAM = 5000,
-	baseHAMmax = 6100,
+	damageMin = 180,
+	damageMax = 190,
+	baseXp = 1609,
+	baseHAM = 4500,
+	baseHAMmax = 5500,
 	armor = 0,
-	resists = {35,-1,10,30,-1,30,-1,-1,-1},
+	resists = {5,5,5,30,-1,30,-1,-1,-1},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -43,7 +43,7 @@ tusken_savage = Creature:new {
 	},
 	weapons = {"tusken_weapons"},
 	conversationTemplate = "",
-	attacks = merge(marksmanmaster,brawlermaster,carbineermaster)
+	attacks = merge(marksmanmaster,brawlermaster)
 }
 
 CreatureTemplates:addCreatureTemplate(tusken_savage, "tusken_savage")

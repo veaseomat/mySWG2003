@@ -1,16 +1,16 @@
 tusken_carnage_champion = Creature:new {
-	objectName = "@mob/creature_names:tusken_fort_tusken_champion",
+	objectName = "@mob/creature_names:tusken_raider",
 	socialGroup = "tusken_raider",
 	faction = "tusken_raider",
-	level = 116,
-	chanceHit = 3.85,
-	damageMin = 750,
-	damageMax = 1210,
-	baseXp = 11015,
-	baseHAM = 43000,
-	baseHAMmax = 53000,
-	armor = 2,
-	resists = {65,40,10,30,-1,30,-1,-1,-1},
+	level = 19,
+	chanceHit = 0.33,
+	damageMin = 180,
+	damageMax = 190,
+	baseXp = 1609,
+	baseHAM = 4500,
+	baseHAMmax = 5500,
+	armor = 0,
+	resists = {5,5,5,30,-1,30,-1,-1,-1},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -21,7 +21,7 @@ tusken_carnage_champion = Creature:new {
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
-	creatureBitmask = PACK + HERD + KILLER,
+	creatureBitmask = PACK + KILLER + STALKER,
 	optionsBitmask = AIENABLED,
 	diet = HERBIVORE,
 
@@ -29,9 +29,9 @@ tusken_carnage_champion = Creature:new {
 	lootGroups = {
 		{
 			groups = {
-				{group = "junk", chance = 1000000},
-				{group = "tusken_common", chance = 4000000},
-				{group = "wearables_all", chance = 1500000},
+				{group = "junk", chance = 1500000},
+				{group = "tusken_common", chance = 3000000},
+				{group = "wearables_common", chance = 2000000},
 				{group = "bone_armor", chance = 750000},
 				{group = "chitin_armor", chance = 750000},
 				{group = "armor_attachments", chance = 500000},
@@ -43,7 +43,7 @@ tusken_carnage_champion = Creature:new {
 	},
 	weapons = {"tusken_weapons"},
 	conversationTemplate = "",
-	attacks = merge(marksmanmaster,brawlermaster,fencermaster,riflemanmaster)
+	attacks = merge(marksmanmaster,brawlermaster)
 }
 
 CreatureTemplates:addCreatureTemplate(tusken_carnage_champion, "tusken_carnage_champion")
