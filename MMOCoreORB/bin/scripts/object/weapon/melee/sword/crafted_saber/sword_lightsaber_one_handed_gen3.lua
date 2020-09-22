@@ -132,8 +132,8 @@ object_weapon_melee_sword_crafted_saber_sword_lightsaber_one_handed_gen3 = objec
 	experimentalWeights = {1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "expEffeciency", "expEffeciency", "expEffeciency", "expEffeciency"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "forcecost", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 195, 285, 5.1, 19, 40, 50, 85, 35},
-	experimentalMax = {0, 0, 215, 305, 4.8, 31, 36, 45, 55, 30},
+	experimentalMin = {0, 0, 130, 220, 4.5, 19, 40, 35, 50, 85},
+	experimentalMax = {0, 0, 150, 260, 4.2, 31, 36, 30, 45, 55},
 	experimentalPrecision = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
 }

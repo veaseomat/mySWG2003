@@ -61,7 +61,7 @@ SaberThrow1Command = {
 
 	weaponType = JEDIWEAPON,
 
-	range = 16
+	range = 32
 }
 
 AddCommand(SaberThrow1Command)

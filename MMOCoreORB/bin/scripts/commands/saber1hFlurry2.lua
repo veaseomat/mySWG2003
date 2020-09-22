@@ -44,13 +44,13 @@
 Saber1hFlurry2Command = {
         name = "saber1hflurry2",
 
-	damageMultiplier = 4.5,
+	damageMultiplier = 4.0,
 	speedMultiplier = 4.0,
 	healthCostMultiplier = 0,
 	actionCostMultiplier = 0,
 	mindCostMultiplier = 0,
+	areaRange = 16,
 	areaAction = true,
-	areaRange = 8,
 	forceCostMultiplier = 3.0,
 	visMod = 25,
 
@@ -91,7 +91,7 @@ Saber1hFlurry2Command = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = ONEHANDJEDIWEAPON,
 
 	range = -1
 }

@@ -599,6 +599,8 @@ void PlanetManagerImplementation::loadSnapshotObjects() {
 }
 
 bool PlanetManagerImplementation::isTravelToLocationPermitted(const String& departurePoint, const String& arrivalPlanet, const String& arrivalPoint) {
+	//edit travel locations here
+
 	//Check to see that the departure point exists.
 	if (!isExistingPlanetTravelPoint(departurePoint))
 		return false;

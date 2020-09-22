@@ -72,15 +72,17 @@ void ArmorObjectImplementation::notifyLoadFromDatabase() {
 void ArmorObjectImplementation::fillAttributeList(AttributeListMessage* alm, CreatureObject* object) {
 	WearableObjectImplementation::fillAttributeList(alm, object);
 
+//	alm->insertAttribute("challenge_level", getLevel());
+
 	//Armor Rating
-	if (rating == LIGHT)
-		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_light"); //Light
-	else if (rating == MEDIUM)
-		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_medium"); //Medium
-	else if (rating == HEAVY)
-		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_heavy"); //Heavy
-	else
-		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_none"); //None
+//	if (rating == LIGHT)
+//		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_light"); //Light
+//	else if (rating == MEDIUM)
+//		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_medium"); //Medium
+//	else if (rating == HEAVY)
+//		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_heavy"); //Heavy
+//	else
+//		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_none"); //None
 
 	//Check for special protections
 	if ((isSpecial(SharedWeaponObjectTemplate::KINETIC) || isVulnerable(SharedWeaponObjectTemplate::KINETIC)) && getKinetic() >= 0.5) {

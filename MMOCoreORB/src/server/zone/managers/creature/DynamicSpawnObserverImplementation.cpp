@@ -30,7 +30,7 @@ int DynamicSpawnObserverImplementation::notifyObserverEvent(unsigned int eventTy
 		if (spawnedCreatures.isEmpty()) {
 
 			Reference<Task*> task = new DespawnDynamicSpawnTask(spawn);
-			task->schedule(60000);
+			task->schedule(1000);
 
 			return 1;
 		}
@@ -51,7 +51,7 @@ int DynamicSpawnObserverImplementation::notifyObserverEvent(unsigned int eventTy
 	}
 
 	Reference<Task*> task = new RespawnCreatureTask(ai.get(), zone, level);
-	task->schedule((60 + (level * 2)) * 1000);
+	task->schedule(30000);
 
 	return 0;
 }
@@ -60,15 +60,18 @@ void DynamicSpawnObserverImplementation::spawnInitialMobiles(SceneObject* buildi
 	if (building->getZone() == nullptr)
 		return;
 
-	int spawnLimitAdjustment = (difficulty - 2) / 2;
+	int spawnLimitAdjustment = difficulty;
 
-	int totalNumberToSpawn = (lairTemplate->getSpawnLimit() / 3) + spawnLimitAdjustment;
+	int totalNumberToSpawn = System::random(lairTemplate->getSpawnLimit());
 	VectorMap<String, int> objectsToSpawn; // String mobileTemplate, int number to spawn
 	const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
 	uint32 lairTemplateCRC = getLairTemplateName().hashCode();
 
-	if (totalNumberToSpawn < 1)
-		totalNumberToSpawn = 1;
+	if (totalNumberToSpawn < 3)
+		totalNumberToSpawn = 3;
+
+	if (totalNumberToSpawn > 15)
+		totalNumberToSpawn = 15;
 
 	for (int i = 0; i < totalNumberToSpawn; i++) {
 		int num = System::random(mobiles->size() - 1);

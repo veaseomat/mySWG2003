@@ -59,7 +59,7 @@ Saber1hHeadHit1Command = {
 
 	poolsToDamage = MIND_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = ONEHANDJEDIWEAPON,
 
 	range = -1
 }

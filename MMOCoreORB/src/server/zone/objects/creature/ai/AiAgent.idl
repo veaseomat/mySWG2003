@@ -1000,7 +1000,7 @@ class AiAgent extends CreatureObject {
 
 		return npcTemplate.get().getSocialGroup();
 	}
-
+//hit chance and max damage located here also other npc template stuff
 	@dirty
 	public float getChanceHit() {
 		if (petDeed) {

@@ -5,7 +5,7 @@ enhanced_kwi = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "geo_kwi_adrenal_boost", weight = 10000000}
+
 	}
 }
 

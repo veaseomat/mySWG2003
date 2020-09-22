@@ -1097,13 +1097,13 @@ void EntertainingSessionImplementation::awardEntertainerExperience() {
 
 			float totalBonus = 1.f + groupMod + audienceMod + applauseMod;
 
-			xpAmount = (ceil(xpAmount * totalBonus) * 1);
+			xpAmount = ceil(xpAmount * totalBonus);
 
 			if (playerManager != nullptr)
 				playerManager->awardExperience(player, xptype, xpAmount, true);
-
-			String healxptype("entertainer_healing");
-			playerManager->awardExperience(player, healxptype, (xpAmount / 2), true);
+//heal xp for noone watching
+//			String healxptype("entertainer_healing");
+//			playerManager->awardExperience(player, healxptype, (xpAmount / 2), true);
 
 			oldFlourishXp = flourishXp;
 			flourishXp = 0;

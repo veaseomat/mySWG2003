@@ -360,11 +360,16 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		float minMod = (max > min) ? 2000.f : -2000.f;
 		float maxMod = (max > min) ? 500.f : -500.f;
 
-		if (max > min && min >= 0) { // Both max and min non-negative, max is higher
+//		int levelmod = level / 300;
+//
+//		min *= levelmod;
+//		max *= levelmod;
+
+		if (max > min && min >= 0) { // Both max and min positive, max is higher
 			min = ((min * level / minMod) + min) * excMod;
 			max = ((max * level / maxMod) + max) * excMod;
 
-		} else if (max > min && max <= 0) { // Both max and min are non-positive, max is higher
+		} else if (max > min && max <= 0) { // Both max and min are negative, max is higher
 			minMod *= -1;
 			maxMod *= -1;
 			min = ((min * level / minMod) + min) / excMod;
@@ -375,11 +380,11 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			min = ((min * level / minMod) + min) / excMod;
 			max = ((max * level / maxMod) + max) * excMod;
 
-		} else if (max < min && max >= 0) { // Both max and min are non-negative, min is higher
+		} else if (max < min && max >= 0) { // Both max and min are positive, min is higher
 			min = ((min * level / minMod) + min) / excMod;
 			max = ((max * level / maxMod) + max) / excMod;
 
-		} else if (max < min && min <= 0) { // Both max and min are non-positive, min is higher
+		} else if (max < min && min <= 0) { // Both max and min are negative, min is higher
 			minMod *= -1;
 			maxMod *= -1;
 			min = ((min * level / minMod) + min) * excMod;
@@ -390,6 +395,13 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			min = ((min * level / minMod) + min) / excMod;
 			max = ((max * level / maxMod) + max) * excMod;
 		}
+//
+//		float maxactual = craftingValues->getMaxValue(subtitle);
+//
+//		if (max > maxactual) {
+//
+//			max = maxactual;
+//		}
 
 
 		craftingValues->setMinValue(subtitle, min);
@@ -411,6 +423,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	craftingValues->recalculateValues(false);
 
 	craftingValues->addExperimentalProperty("creatureLevel", "creatureLevel", level, level, 0, false, ValuesMap::LINEARCOMBINE);
+	//can i unhiude this? here or in object alm
 	craftingValues->setHidden("creatureLevel");
 
 	//check weapons and weapon components for min damage > max damage
@@ -418,11 +431,17 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (craftingValues->hasProperty("mindamage") && craftingValues->hasProperty("maxdamage")) {
 			float oldMin = craftingValues->getCurrentValue("mindamage");
 			float oldMax = craftingValues->getCurrentValue("maxdamage");
+//			float maxactual = craftingValues->getMaxValue("maxdamage");
 
 			if (oldMin > oldMax) {
 				craftingValues->setCurrentValue("mindamage", oldMax);
 				craftingValues->setCurrentValue("maxdamage", oldMin);
 			}
+//
+//			if (oldMax > maxactual) {
+//
+//				craftingValues->setCurrentValue("maxdamage", maxactual);
+//			}
 		}
 	}
 

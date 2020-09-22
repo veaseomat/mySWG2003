@@ -5,7 +5,7 @@ death_watch_bunker_overlord_quest = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "death_watch_overlord_vial", weight = 10000000}
+
 	}
 }
 

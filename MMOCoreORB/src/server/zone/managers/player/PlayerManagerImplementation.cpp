@@ -1043,27 +1043,27 @@ uint8 PlayerManagerImplementation::calculateIncapacitationTimer(CreatureObject* 
 	if (value < 0)
 		return 0;
 
-	int recoveryTime = (value / 5); // In seconds - 3 seconds is recoveryEvent timer
+	int recoveryTime = 15; // In seconds - 3 seconds is recoveryEvent timer
 
 	// Recovery time cannot be higher than 60 seconds.
-	recoveryTime = (recoveryTime > 60) ? 60 : recoveryTime;
-
-	//Check for incap recovery food buff - overrides recovery time gate.
-	if (playerCreature->hasBuff(STRING_HASHCODE("food.incap_recovery"))) {
-		Buff* buff = playerCreature->getBuff(STRING_HASHCODE("food.incap_recovery"));
-
-		if (buff != nullptr) {
-			float percent = buff->getSkillModifierValue("incap_recovery");
-
-			recoveryTime = round(recoveryTime * ((100.0f - percent) / 100.0f));
-
-            StringIdChatParameter message("combat_effects", "incap_recovery");
-            message.setDI(recoveryTime);
-            playerCreature->sendSystemMessage(message); // Incapacitation recovery time reduced by %DI%.
-
-			playerCreature->removeBuff(buff);
-		}
-	}
+//	recoveryTime = (recoveryTime > 60) ? 60 : recoveryTime;
+//
+//	//Check for incap recovery food buff - overrides recovery time gate.
+//	if (playerCreature->hasBuff(STRING_HASHCODE("food.incap_recovery"))) {
+//		Buff* buff = playerCreature->getBuff(STRING_HASHCODE("food.incap_recovery"));
+//
+//		if (buff != nullptr) {
+//			float percent = buff->getSkillModifierValue("incap_recovery");
+//
+//			recoveryTime = round(recoveryTime * ((100.0f - percent) / 100.0f));
+//
+//            StringIdChatParameter message("combat_effects", "incap_recovery");
+//            message.setDI(recoveryTime);
+//            playerCreature->sendSystemMessage(message); // Incapacitation recovery time reduced by %DI%.
+//
+//			playerCreature->removeBuff(buff);
+//		}
+//	}
 
 	return recoveryTime;
 }
@@ -1530,7 +1530,7 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 					obj->setOptionsBitmask(bitmask);
 				} else {
 					//5% Decay for uninsured items
-					obj->inflictDamage(obj, 0, 0.02 * obj->getMaxCondition(), true, true);
+					obj->inflictDamage(obj, 0, 0.03 * obj->getMaxCondition(), true, true);
 				}
 
 				// Calculate condition percentage for decay report
@@ -1748,19 +1748,24 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				//Jedi experience doesn't count towards combat experience, and is earned at 20% the rate of normal experience //fuck off
 				if (xpType != "jedi_general")
 					combatXp += xpAmount;
-				if (xpType == "jedi_general" && attacker->hasSkill("force_title_jedi_rank_03"))
-					frsXp += xpAmount;
+//				if (xpType == "jedi_general" && attacker->hasSkill("force_title_jedi_rank_03"))
+//					frsXp += xpAmount;
 //				else
-				if (xpType == "jedi_general")
+				if (xpType == "jedi_general") {
 					xpAmount *= 0.2f;
+
+					if (attacker->hasSkill("force_title_jedi_rank_03"))
+						frsXp += xpAmount;
+
+				}
 
 				//Award individual expType
 				awardExperience(attacker, xpType, xpAmount);
 			}
 
-			combatXp = awardExperience(attacker, "combat_general", combatXp, true, 0.2f);
+			combatXp = awardExperience(attacker, "combat_general", combatXp, true, 0.1f);
 
-			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.001f);
+			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.01f);
 
 			//Check if the group leader is a squad leader
 			if (group == nullptr)
@@ -1966,53 +1971,53 @@ void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, const Badge* b
 
 	player->notifyObservers(ObserverEventType::BADGEAWARDED, player, badgeId);
 	BadgeList* badgeList = BadgeList::instance();
-	switch (ghost->getNumBadges()) {
-	case 5:
-		awardBadge(ghost, badgeList->get("count_5"));
-		break;
-	case 10:
-		awardBadge(ghost, badgeList->get("count_10"));
-		break;
-	case 25:
-		awardBadge(ghost, badgeList->get("count_25"));
-		break;
-	case 50:
-		awardBadge(ghost, badgeList->get("count_50"));
-		break;
-	case 75:
-		awardBadge(ghost, badgeList->get("count_75"));
-		break;
-	case 100:
-		awardBadge(ghost, badgeList->get("count_100"));
-		break;
-	case 125:
-		awardBadge(ghost, badgeList->get("count_125"));
-		break;
-	default:
-		break;
-	}
+//	switch (ghost->getNumBadges()) {
+//	case 5:
+//		awardBadge(ghost, badgeList->get("count_5"));
+//		break;
+//	case 10:
+//		awardBadge(ghost, badgeList->get("count_10"));
+//		break;
+//	case 25:
+//		awardBadge(ghost, badgeList->get("count_25"));
+//		break;
+//	case 50:
+//		awardBadge(ghost, badgeList->get("count_50"));
+//		break;
+//	case 75:
+//		awardBadge(ghost, badgeList->get("count_75"));
+//		break;
+//	case 100:
+//		awardBadge(ghost, badgeList->get("count_100"));
+//		break;
+//	case 125:
+//		awardBadge(ghost, badgeList->get("count_125"));
+//		break;
+//	default:
+//		break;
+//	}
 
-	if (badge->getType() == Badge::EXPLORATION) {
-		switch (ghost->getBadgeTypeCount(static_cast<uint8>(Badge::EXPLORATION))) {
-		case 10:
-			awardBadge(ghost, badgeList->get("bdg_exp_10_badges"));
-			break;
-		case 20:
-			awardBadge(ghost, badgeList->get("bdg_exp_20_badges"));
-			break;
-		case 30:
-			awardBadge(ghost, badgeList->get("bdg_exp_30_badges"));
-			break;
-		case 40:
-			awardBadge(ghost, badgeList->get("bdg_exp_40_badges"));
-			break;
-		case 45:
-			awardBadge(ghost, badgeList->get("bdg_exp_45_badges"));
-			break;
-		default:
-			break;
-		}
-	}
+//	if (badge->getType() == Badge::EXPLORATION) {
+//		switch (ghost->getBadgeTypeCount(static_cast<uint8>(Badge::EXPLORATION))) {
+//		case 10:
+//			awardBadge(ghost, badgeList->get("bdg_exp_10_badges"));
+//			break;
+//		case 20:
+//			awardBadge(ghost, badgeList->get("bdg_exp_20_badges"));
+//			break;
+//		case 30:
+//			awardBadge(ghost, badgeList->get("bdg_exp_30_badges"));
+//			break;
+//		case 40:
+//			awardBadge(ghost, badgeList->get("bdg_exp_40_badges"));
+//			break;
+//		case 45:
+//			awardBadge(ghost, badgeList->get("bdg_exp_45_badges"));
+//			break;
+//		default:
+//			break;
+//		}
+//	}
 }
 
 void PlayerManagerImplementation::setExperienceMultiplier(float globalMultiplier) {
@@ -2045,7 +2050,7 @@ int PlayerManagerImplementation::awardExperience(CreatureObject* player, const S
 		buffMultiplier += player->getSkillModFromBuffs("xp_increase") / 100.f;
 
 	int xp = 0;
-
+//this is where the magic happens
 	if (applyModifiers)
 		xp = playerObject->addExperience(xpType, (int) (amount * speciesModifier * buffMultiplier * localMultiplier * globalExpMultiplier));
 	else

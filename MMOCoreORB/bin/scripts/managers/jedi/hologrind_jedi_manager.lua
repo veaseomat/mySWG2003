@@ -267,6 +267,25 @@ function HologrindJediManager:canLearnSkill(pPlayer, skillName)
 	return true
 end
 
+function HologrindJediManager:canSurrenderSkill(pPlayer, skillName)
+
+	if skillName == "force_title_jedi_rank_02" or skillName == "force_title_jedi_novice" then
+		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:revoke_force_title")
+		return false
+	end
+
+--	if string.find(skillName, "force_sensitive_") and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and CreatureObject(pPlayer):getForceSensitiveSkillCount(false) <= 24 then
+--		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:revoke_force_sensitive")
+--		return false
+--	end
+
+	if string.find(skillName, "force_discipline_") and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") and not CreatureObject(pPlayer):villageKnightPrereqsMet(skillName) then
+		return false
+	end
+
+	return true
+end
+
 registerScreenPlay("HologrindJediManager", true)
 
 return HologrindJediManager

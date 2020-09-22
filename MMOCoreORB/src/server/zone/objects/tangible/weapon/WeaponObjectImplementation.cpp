@@ -213,6 +213,8 @@ String WeaponObjectImplementation::getWeaponType() const {
 void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, CreatureObject* object) {
 	TangibleObjectImplementation::fillAttributeList(alm, object);
 
+//	alm->insertAttribute("challenge_level", getLevel());
+
 	bool res = isCertifiedFor(object);
 
 	if (res) {
@@ -233,27 +235,27 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 			alm->insertAttribute(statname, value);
 	}
 
-	String ap;
-
-	switch (armorPiercing) {
-	case SharedWeaponObjectTemplate::NONE:
-		ap = "None";
-		break;
-	case SharedWeaponObjectTemplate::LIGHT:
-		ap = "Light";
-		break;
-	case SharedWeaponObjectTemplate::MEDIUM:
-		ap = "Medium";
-		break;
-	case SharedWeaponObjectTemplate::HEAVY:
-		ap = "Heavy";
-		break;
-	default:
-		ap = "Unknown";
-		break;
-	}
-
-	alm->insertAttribute("wpn_armor_pierce_rating", ap);
+//	String ap;
+//
+//	switch (armorPiercing) {
+//	case SharedWeaponObjectTemplate::NONE:
+//		ap = "None";
+//		break;
+//	case SharedWeaponObjectTemplate::LIGHT:
+//		ap = "Light";
+//		break;
+//	case SharedWeaponObjectTemplate::MEDIUM:
+//		ap = "Medium";
+//		break;
+//	case SharedWeaponObjectTemplate::HEAVY:
+//		ap = "Heavy";
+//		break;
+//	default:
+//		ap = "Unknown";
+//		break;
+//	}
+//
+//	alm->insertAttribute("wpn_armor_pierce_rating", ap);
 
 	alm->insertAttribute("wpn_attack_speed", Math::getPrecision(getAttackSpeed(), 1));
 
@@ -716,10 +718,10 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 	}
 
 	int roll = System::random(100);
-	int chance = 2;
+	int chance = 3;
 
 	if (hasPowerup())
-		chance += 5;
+		chance += 7;
 
 	if (roll < chance) {
 		Locker locker(_this.getReferenceUnsafeStaticCast());

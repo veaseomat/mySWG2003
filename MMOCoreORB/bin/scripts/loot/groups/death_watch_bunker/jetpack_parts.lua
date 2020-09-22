@@ -5,9 +5,7 @@ jetpack_parts = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "fuel_dispersion_unit", weight = 3333333},
-		{itemTemplate = "injector_tank", weight = 3333333},
-		{itemTemplate = "ducted_fan", weight = 3333334}
+
 	}
 }
 

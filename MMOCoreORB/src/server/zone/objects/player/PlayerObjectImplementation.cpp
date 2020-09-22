@@ -557,7 +557,7 @@ void PlayerObjectImplementation::sendBadgesResponseTo(CreatureObject* player) {
 
 void PlayerObjectImplementation::awardBadge(uint32 badge) {
 	PlayerManager* playerManager = getZoneServer()->getPlayerManager();
-	playerManager->awardBadge(asPlayerObject(), badge);
+//	playerManager->awardBadge(asPlayerObject(), badge);
 }
 
 int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool notifyClient) {
@@ -2059,12 +2059,12 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	if (!forceRegenerationEvent->isScheduled()) {
 		int forceControlMod = 0, forceManipulationMod = 0;
 
-		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 5.f;
-
-		if (frsregen > 0) {
+//		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 5.f;
+//
+//		if (frsregen > 0) {
 //			regen += 5.0f;
-			regen += frsregen;
-		}
+//			regen += frsregen;
+//		}
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
 		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
@@ -2974,7 +2974,7 @@ void PlayerObjectImplementation::recalculateForcePower() {
 
 	int frsMax = player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark");
 
-	maxForce += (frsMax) * 20;
+	maxForce += (frsMax) * 50;
 
 	setForcePowerMax(maxForce, true);
 }

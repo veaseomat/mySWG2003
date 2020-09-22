@@ -5,16 +5,7 @@ death_watch_bunker_ingredient_binary = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "mando_belt", weight = 1000000},
-		{itemTemplate = "mando_bicep_l", weight = 1000000},
-		{itemTemplate = "mando_bicep_r", weight = 1000000},
-		{itemTemplate = "mando_boots", weight = 1000000},
-		{itemTemplate = "mando_bracer_l", weight = 1000000},
-		{itemTemplate = "mando_bracer_r", weight = 1000000},
-		{itemTemplate = "mando_chest_plate", weight = 1000000},
-		{itemTemplate = "mando_gloves", weight = 1000000},
-		{itemTemplate = "mando_helmet", weight = 1000000},
-		{itemTemplate = "mando_leggings", weight = 1000000}
+
 	}
 }
 
