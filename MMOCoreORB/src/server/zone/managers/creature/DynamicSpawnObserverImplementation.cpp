@@ -30,7 +30,7 @@ int DynamicSpawnObserverImplementation::notifyObserverEvent(unsigned int eventTy
 		if (spawnedCreatures.isEmpty()) {
 
 			Reference<Task*> task = new DespawnDynamicSpawnTask(spawn);
-			task->schedule(1000);
+			task->schedule(6000);
 
 			return 1;
 		}
@@ -67,11 +67,11 @@ void DynamicSpawnObserverImplementation::spawnInitialMobiles(SceneObject* buildi
 	const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
 	uint32 lairTemplateCRC = getLairTemplateName().hashCode();
 
-	if (totalNumberToSpawn < 3)
-		totalNumberToSpawn = 3;
+	if (totalNumberToSpawn < 2)
+		totalNumberToSpawn = 2;
 
-	if (totalNumberToSpawn > 15)
-		totalNumberToSpawn = 15;
+	if (totalNumberToSpawn > 12)
+		totalNumberToSpawn = 12;
 
 	for (int i = 0; i < totalNumberToSpawn; i++) {
 		int num = System::random(mobiles->size() - 1);

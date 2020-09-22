@@ -95,15 +95,15 @@ maintenanceDiscount = .25
 	The maximum amount of cities per rank is 255.
 --]]
 CitiesAllowed = {
-	{"corellia", {20, 20, 15, 10, 10}},
-	{"dantooine", {50, 50, 30, 20, 20}},
+	{"corellia", {0, 0, 0, 0, 0}},
+	{"dantooine", {0, 0, 0, 0, 0}},
 	{"dathomir", {0, 0, 0, 0, 0}},
 	{"endor", {0, 0, 0, 0, 0}},
-	{"lok", {50, 50, 30, 20, 20}},
-	{"naboo", {20, 20, 15, 10, 10}},
-	{"rori", {50, 50, 30, 20, 20}},
-	{"talus", {50, 50, 30, 20, 20}},
-	{"tatooine", {20, 20, 15, 10, 10}},
+	{"lok", {0, 0, 0, 0, 0}},
+	{"naboo", {0, 0, 0, 0, 0}},
+	{"rori", {0, 0, 0, 0, 0}},
+	{"talus", {0, 0, 0, 0, 0}},
+	{"tatooine", {0, 0, 0, 0, 0}},
 	{"yavin4", {0, 0, 0, 0, 0}}
 }
 

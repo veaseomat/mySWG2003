@@ -367,7 +367,7 @@ int CombatManager::doTargetCombatAction(CreatureObject* attacker, WeaponObject* 
 		break;
 	case BLOCK:
 		doBlock(attacker, weapon, defender, damage);
-		damageMultiplier = 0.5f;
+		damageMultiplier = 0.0f;
 		break;
 	case DODGE:
 		doDodge(attacker, weapon, defender, damage);
@@ -469,7 +469,7 @@ int CombatManager::doTargetCombatAction(TangibleObject* attacker, WeaponObject* 
 		break;
 	case BLOCK:
 		doBlock(attacker, weapon, defenderObject, damage);
-		damageMultiplier = 0.5f;
+		damageMultiplier = 0.0f;
 		break;
 	case DODGE:
 		doDodge(attacker, weapon, defenderObject, damage);
@@ -1595,6 +1595,50 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		damage *= 1.17;
 		if (weapon->isJediWeapon())
 		damage *= 0.5;
+		if (weapon->isPistolWeapon())
+		damage *= 3.08f;
+		if (weapon->isCarbineWeapon())
+		damage *= 2.4f;
+		if (weapon->isRifleWeapon())
+		damage *= 1.18f;
+		if (weapon->isRangedWeapon())
+		damage *= 1.0f;
+		if (weapon->isUnarmedWeapon())
+		damage *= 1.45f;
+		if (weapon->isOneHandMeleeWeapon())
+		damage *= 2.44f;
+		if (weapon->isTwoHandMeleeWeapon())
+		damage *= 1.29f;
+		if (weapon->isPolearmWeaponObject())
+		damage *= 1.46f;
+		if (weapon->isMeleeWeapon())
+		damage *= 1.25f;
+		if (weapon->isLightningRifle())
+		damage *= 1.0f;
+		if (weapon->isFlameThrower())
+		damage *= 1.06f;
+		if (weapon->isHeavyAcidRifle())
+		damage *= 1.02f;
+		if (weapon->isHeavyWeapon())
+		damage *= 1.0f;
+		if (weapon->isThrownWeapon())
+		damage *= 1.0f;
+		if (weapon->isSpecialHeavyWeapon())
+		damage *= 1.0f;
+		if (weapon->isMineWeapon())
+		damage *= 1.0f;
+		if (weapon->isJediOneHandedWeapon())
+		damage *= 1.57f;
+		if (weapon->isJediTwoHandedWeapon())
+		damage *= 1.66f;
+		if (weapon->isJediPolearmWeapon())
+		damage *= 1.17f;
+		if (weapon->isJediWeapon())
+		damage *= 0.5f;
+	}
+
+	if (data.isForceAttack()) {
+			damage *= 1.0f;
 	}
 
 	//frsdamage
