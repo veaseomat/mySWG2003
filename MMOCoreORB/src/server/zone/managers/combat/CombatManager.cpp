@@ -367,7 +367,7 @@ int CombatManager::doTargetCombatAction(CreatureObject* attacker, WeaponObject* 
 		break;
 	case BLOCK:
 		doBlock(attacker, weapon, defender, damage);
-		damageMultiplier = 0.0f;
+		damageMultiplier = 0.5f;
 		break;
 	case DODGE:
 		doDodge(attacker, weapon, defender, damage);
@@ -469,7 +469,7 @@ int CombatManager::doTargetCombatAction(TangibleObject* attacker, WeaponObject* 
 		break;
 	case BLOCK:
 		doBlock(attacker, weapon, defenderObject, damage);
-		damageMultiplier = 0.0f;
+		damageMultiplier = 0.5f;
 		break;
 	case DODGE:
 		doDodge(attacker, weapon, defenderObject, damage);
@@ -760,46 +760,27 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		attackerAccuracy += creoAttacker->getSkillMod("ranged_accuracy");
 
 	// now apply overall weapon defense mods
-//	if (weapon->isMeleeWeapon()) {
-//		switch (defender->getWeapon()->getGameObjectType()) {
-//		case SceneObjectType::PISTOL:
-//			attackerAccuracy += 20.f;
-//			/* no break */
-//		case SceneObjectType::CARBINE:
-//			attackerAccuracy += 55.f;
-//			/* no break */
-//		case SceneObjectType::RIFLE:
-//		case SceneObjectType::MINE:
-//		case SceneObjectType::SPECIALHEAVYWEAPON:
-//		case SceneObjectType::HEAVYWEAPON:
-//			attackerAccuracy += 25.f;
-//		}
-//	}
-
-	//weapon types acc balance
-	if (attacker->isPlayerCreature()){
-		switch (creoAttacker->getWeapon()->getGameObjectType()) {
+	if (weapon->isMeleeWeapon()) {
+		switch (defender->getWeapon()->getGameObjectType()) {
 		case SceneObjectType::PISTOL:
-			attackerAccuracy += 5;
-			break;
+			attackerAccuracy += 20.f;
+			/* no break */
 		case SceneObjectType::CARBINE:
+			attackerAccuracy += 55.f;
+			/* no break */
 		case SceneObjectType::RIFLE:
-		case SceneObjectType::ONEHANDMELEEWEAPON:
-		case SceneObjectType::TWOHANDMELEEWEAPON:
-		case SceneObjectType::POLEARM:
-		case SceneObjectType::HEAVYWEAPON:
-		case SceneObjectType::THROWNWEAPON:
-		case SceneObjectType::SPECIALHEAVYWEAPON:
 		case SceneObjectType::MINE:
-		case SceneObjectType::MELEEWEAPON:
-		case SceneObjectType::RANGEDWEAPON:
-			;
+		case SceneObjectType::SPECIALHEAVYWEAPON:
+		case SceneObjectType::HEAVYWEAPON:
+			attackerAccuracy += 25.f;
 		}
 	}
 
+
+
 	//accuracy cap new
-	if (attackerAccuracy > 75) {
-		attackerAccuracy = 75;
+	if (attackerAccuracy > 125) {
+		attackerAccuracy = 125;
 	}
 
 	return attackerAccuracy;
@@ -847,8 +828,8 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	}
 
 	// defense hardcap
-	if (targetDefense > 75)
-		targetDefense = 75;
+	if (targetDefense > 125)
+		targetDefense = 125;
 
 	if (attacker->isPlayerCreature())
 		targetDefense += defender->getSkillMod("private_defense");
@@ -876,8 +857,8 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 		targetDefense += defender->getSkillMod("private_" + mod);
 	}
 
-	if (targetDefense > 75)
-		targetDefense = 75;
+	if (targetDefense > 125)
+		targetDefense = 125;
 
 	return targetDefense;
 }
@@ -933,8 +914,8 @@ int CombatManager::calculateDamageRange(TangibleObject* attacker, CreatureObject
 
 	// restrict damage if a player is not certified (don't worry about mobs)
 	if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(cast<CreatureObject*>(attacker))) {
-		minDamage *= .1;
-		maxDamage *= .1;
+		minDamage = 5;
+		maxDamage = 10;
 	}
 
 	debug() << "attacker base damage is " << minDamage << "-" << maxDamage;
@@ -942,29 +923,29 @@ int CombatManager::calculateDamageRange(TangibleObject* attacker, CreatureObject
 	PlayerObject* defenderGhost = defender->getPlayerObject();
 
 	// this is for damage mitigation
-//	if (defenderGhost != nullptr) {
-//		String mitString;
-//		switch (attackType){
-//		case SharedWeaponObjectTemplate::MELEEATTACK:
-//			mitString = "melee_damage_mitigation_";
-//			break;
-//		case SharedWeaponObjectTemplate::RANGEDATTACK:
-//			mitString = "ranged_damage_mitigation_";
-//			break;
-//		default:
-//			break;
-//		}
-//
-//		for (int i = 3; i > 0; i--) {
-//			if (defenderGhost->hasAbility(mitString + i)) {
-//				damageMitigation = i;
-//				break;
-//			}
-//		}
-//
-//		if (damageMitigation > 0)
-//			maxDamage = minDamage + (maxDamage - minDamage) * (1 - (0.2 * damageMitigation));
-//	}
+	if (defenderGhost != nullptr) {
+		String mitString;
+		switch (attackType){
+		case SharedWeaponObjectTemplate::MELEEATTACK:
+			mitString = "melee_damage_mitigation_";
+			break;
+		case SharedWeaponObjectTemplate::RANGEDATTACK:
+			mitString = "ranged_damage_mitigation_";
+			break;
+		default:
+			break;
+		}
+
+		for (int i = 3; i > 0; i--) {
+			if (defenderGhost->hasAbility(mitString + i)) {
+				damageMitigation = i;
+				break;
+			}
+		}
+
+		if (damageMitigation > 0)
+			maxDamage = minDamage + (maxDamage - minDamage) * (1 - (0.2 * damageMitigation));
+	}
 
 	float range = maxDamage - minDamage;
 
@@ -1020,41 +1001,6 @@ int CombatManager::getSpeedModifier(CreatureObject* attacker, WeaponObject* weap
 		speedMods += attacker->getSkillMod("private_ranged_speed_bonus");
 		speedMods += attacker->getSkillMod("ranged_speed");
 	}
-
-	if (attacker->isPlayerCreature()){
-		switch (attacker->getWeapon()->getGameObjectType()) {
-		case SceneObjectType::PISTOL:
-			speedMods += 26;
-			break;
-		case SceneObjectType::CARBINE:
-			speedMods += 40;
-			break;
-		case SceneObjectType::RIFLE:
-			speedMods += 10;
-			break;
-		case SceneObjectType::ONEHANDMELEEWEAPON:
-			speedMods += 10;
-			break;
-		case SceneObjectType::TWOHANDMELEEWEAPON:
-			speedMods += 25;
-			break;
-		case SceneObjectType::POLEARM:
-			speedMods += 25;
-			break;
-		case SceneObjectType::HEAVYWEAPON:
-			speedMods += 55;
-			break;
-		case SceneObjectType::THROWNWEAPON:
-		case SceneObjectType::SPECIALHEAVYWEAPON:
-		case SceneObjectType::MINE:
-		case SceneObjectType::MELEEWEAPON:
-		case SceneObjectType::RANGEDWEAPON:
-			;
-		}
-	}
-
-	if (speedMods > 100)
-		speedMods = 100;
 
 	return speedMods;
 }
@@ -1206,11 +1152,17 @@ int CombatManager::getArmorReduction(TangibleObject* attacker, WeaponObject* wea
 	if (defender->isAiAgent()) {
 		float armorReduction = getArmorNpcReduction(cast<AiAgent*>(defender), damageType);
 
+		if (armorReduction >= 0)
+			damage *= getArmorPiercing(cast<AiAgent*>(defender), armorPiercing);
+
 		if (armorReduction > 0) damage *= (1.f - (armorReduction / 100.f));
 
 		return damage;
 	} else if (defender->isVehicleObject()) {
 		float armorReduction = getArmorVehicleReduction(cast<VehicleObject*>(defender), damageType);
+
+		if (armorReduction >= 0)
+			damage *= getArmorPiercing(cast<VehicleObject*>(defender), armorPiercing);
 
 		if (armorReduction > 0) damage *= (1.f - (armorReduction / 100.f));
 
@@ -1296,6 +1248,9 @@ int CombatManager::getArmorReduction(TangibleObject* attacker, WeaponObject* wea
 		float armorReduction = getArmorObjectReduction(armor, damageType);
 		float dmgAbsorbed = damage;
 
+		// use only the damage applied to the armor for piercing (after the PSG takes some off)
+		damage *= getArmorPiercing(armor, armorPiercing);
+
 		if (armorReduction > 0) {
 			damage *= (1.f - (armorReduction / 100.f));
 			dmgAbsorbed -= damage;
@@ -1337,7 +1292,10 @@ float CombatManager::getArmorPiercing(TangibleObject* defender, int armorPiercin
 		}
 	}
 
-        return 1;
+	if (armorPiercing > armorReduction)
+		return pow(1.25, armorPiercing - armorReduction);
+    else
+        return pow(0.50, armorReduction - armorPiercing);
 }
 
 float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* weapon, TangibleObject* defender, const CreatureAttackData& data) const {
@@ -1549,92 +1507,49 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	damage += defender->getSkillMod("private_damage_susceptibility");
 
-	if (defender->isKnockedDown()) {
-		damage *= 1.5f;
-	}
 
-//mySWG balancing the profs based on highest dmg weapon for that class
-	if (attacker->isPlayerCreature()) {
+//mySWG balancing the profs based on highest dmg weapon and special for that class
+	if (attacker->isPlayerCreature() && !data.isForceAttack()) {
 		if (weapon->isPistolWeapon())
-		damage *= 3.08;
+		damage *= 3.17f;
 		if (weapon->isCarbineWeapon())
-		damage *= 2.4;
-		if (weapon->isRifleWeapon())
-		damage *= 1.18;
-		if (weapon->isRangedWeapon())
-		damage *= 1.0;
-		if (weapon->isUnarmedWeapon())
-		damage *= 1.45;
-		if (weapon->isOneHandMeleeWeapon())
-		damage *= 2.44;
-		if (weapon->isTwoHandMeleeWeapon())
-		damage *= 1.29;
-		if (weapon->isPolearmWeaponObject())
-		damage *= 1.46;
-		if (weapon->isMeleeWeapon())
-		damage *= 1.25;
-		if (weapon->isLightningRifle())
-		damage *= 1.0;
-		if (weapon->isFlameThrower())
-		damage *= 1.06;
-		if (weapon->isHeavyAcidRifle())
-		damage *= 1.02;
-		if (weapon->isHeavyWeapon())
-		damage *= 1.0;
-		if (weapon->isThrownWeapon())
-		damage *= 1.0;
-		if (weapon->isSpecialHeavyWeapon())
-		damage *= 1.0;
-		if (weapon->isMineWeapon())
-		damage *= 1.0;
-		if (weapon->isJediOneHandedWeapon())
-		damage *= 1.57;
-		if (weapon->isJediTwoHandedWeapon())
-		damage *= 1.66;
-		if (weapon->isJediPolearmWeapon())
-		damage *= 1.17;
-		if (weapon->isJediWeapon())
-		damage *= 0.5;
-		if (weapon->isPistolWeapon())
-		damage *= 3.08f;
-		if (weapon->isCarbineWeapon())
-		damage *= 2.4f;
+		damage *= 2.45f;
 		if (weapon->isRifleWeapon())
 		damage *= 1.18f;
-		if (weapon->isRangedWeapon())
-		damage *= 1.0f;
+//		if (weapon->isRangedWeapon())
+//		damage *= 1.0f;
 		if (weapon->isUnarmedWeapon())
 		damage *= 1.45f;
 		if (weapon->isOneHandMeleeWeapon())
-		damage *= 2.44f;
+		damage *= 1.91f;
 		if (weapon->isTwoHandMeleeWeapon())
-		damage *= 1.29f;
-		if (weapon->isPolearmWeaponObject())
-		damage *= 1.46f;
-		if (weapon->isMeleeWeapon())
 		damage *= 1.25f;
+		if (weapon->isPolearmWeaponObject())
+		damage *= 1.0f;
+//		if (weapon->isMeleeWeapon())
+//		damage *= 1.25f;
 		if (weapon->isLightningRifle())
 		damage *= 1.0f;
 		if (weapon->isFlameThrower())
-		damage *= 1.06f;
+		damage *= 1.11f;
 		if (weapon->isHeavyAcidRifle())
-		damage *= 1.02f;
-		if (weapon->isHeavyWeapon())
-		damage *= 1.0f;
-		if (weapon->isThrownWeapon())
-		damage *= 1.0f;
-		if (weapon->isSpecialHeavyWeapon())
-		damage *= 1.0f;
-		if (weapon->isMineWeapon())
-		damage *= 1.0f;
+		damage *= 1.05f;
+//		if (weapon->isHeavyWeapon())
+//		damage *= 1.0f;
+//		if (weapon->isThrownWeapon())
+//		damage *= 1.0f;
+//		if (weapon->isSpecialHeavyWeapon())
+//		damage *= 1.0f;
+//		if (weapon->isMineWeapon())
+//		damage *= 1.0f;
 		if (weapon->isJediOneHandedWeapon())
-		damage *= 1.57f;
+		damage *= 1.26f;
 		if (weapon->isJediTwoHandedWeapon())
-		damage *= 1.66f;
+		damage *= 1.03f;
 		if (weapon->isJediPolearmWeapon())
-		damage *= 1.17f;
-		if (weapon->isJediWeapon())
-		damage *= 0.5f;
+		damage *= 0.95f;
+//		if (weapon->isJediWeapon())
+//		damage *= 0.5f;
 	}
 
 	if (data.isForceAttack()) {
@@ -1642,25 +1557,27 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	}
 
 	//frsdamage
-	float lightDamage = attacker->getSkillMod("force_manipulation_light");
+	float lightDamage = attacker->getSkillMod("force_manipulation_light") / 2;
 
 	if (lightDamage > 0) {
 //			lightDamage += 5.f;
 			damage *= 1.f * (1.f + ((float)lightDamage / 100.f));
 	}
 
-	float darkDamage = attacker->getSkillMod("force_manipulation_dark");
+	float darkDamage = attacker->getSkillMod("force_manipulation_dark") / 2;
 
 	if (darkDamage > 0) {
 			darkDamage += 5.f;
 			damage *= 1.f * (1.f + ((float)darkDamage / 100.f));
 	}
 
+	
 	// Toughness reduction
-//	if (data.isForceAttack())
-//		damage = getDefenderToughnessModifier(defender, SharedWeaponObjectTemplate::FORCEATTACK, data.getDamageType(), damage);
-//	else
-//		damage = getDefenderToughnessModifier(defender, weapon->getAttackType(), weapon->getDamageType(), damage);
+	if (data.isForceAttack())
+		damage = getDefenderToughnessModifier(defender, SharedWeaponObjectTemplate::FORCEATTACK, data.getDamageType(), damage);
+	else
+		damage = getDefenderToughnessModifier(defender, weapon->getAttackType(), weapon->getDamageType(), damage);
+
 
 	// Force Defense skillmod damage reduction
 	if (data.isForceAttack()) {
@@ -1672,14 +1589,14 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 
 	//frsarmor
-	float lightarmor = defender->getSkillMod("force_manipulation_light");
+	float lightarmor = defender->getSkillMod("force_manipulation_light") / 2;
 
 	if (lightarmor > 0) {
 		lightarmor += 5.f;
 		damage *= 1.f / (1.f + ((float)lightarmor / 100.f));
 	}
 
-	float darkarmor = defender->getSkillMod("force_manipulation_dark");
+	float darkarmor = defender->getSkillMod("force_manipulation_dark") / 2;
 
 	if (darkarmor > 0) {
 //		darkarmor += 5.f;
@@ -1723,7 +1640,7 @@ float CombatManager::calculateDamage(TangibleObject* attacker, WeaponObject* wea
 		damage *= 1.5f;
 
 	// Toughness reduction
-//	damage = getDefenderToughnessModifier(defender, weapon->getAttackType(), weapon->getDamageType(), damage);
+	damage = getDefenderToughnessModifier(defender, weapon->getAttackType(), weapon->getDamageType(), damage);
 
 	return damage;
 }
@@ -1745,7 +1662,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 
 			float accTotal = hitChanceEquation(attackerAccuracy, attackerRoll, targetDefense, defenderRoll);
 
-			if (System::random(100) >= accTotal)
+			if (System::random(100) > accTotal)
 				return MISS;
 			else
 				return HIT;
@@ -1850,11 +1767,11 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 //		}
 
 		// saber block is special because it's just a % chance to block based on the skillmod
-//		if (def == "saber_block") {
-//			if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) && ((System::random(100)) < 50 + attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy + attackerRoll)))
-//				return RICOCHET;
-//			else return HIT;
-//		}
+		if (def == "saber_block") {
+			if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) && ((System::random(100)) < targetCreature->getSkillMod(def))))
+				return RICOCHET;
+			else return HIT;
+		}
 
 		targetDefense = getDefenderSecondaryDefenseModifier(targetCreature);
 
@@ -1888,10 +1805,8 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 				default: return COUNTER;
 				}
 			}
-			// new balanced saber block
-			if (def == "saber_block")
-				return RICOCHET;
-			else if (def == "block")
+
+			if (def == "block")
 				return BLOCK;
 			else if (def == "dodge")
 				return DODGE;

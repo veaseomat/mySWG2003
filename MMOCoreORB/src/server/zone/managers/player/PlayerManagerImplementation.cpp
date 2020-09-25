@@ -1971,53 +1971,53 @@ void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, const Badge* b
 
 	player->notifyObservers(ObserverEventType::BADGEAWARDED, player, badgeId);
 	BadgeList* badgeList = BadgeList::instance();
-//	switch (ghost->getNumBadges()) {
-//	case 5:
-//		awardBadge(ghost, badgeList->get("count_5"));
-//		break;
-//	case 10:
-//		awardBadge(ghost, badgeList->get("count_10"));
-//		break;
-//	case 25:
-//		awardBadge(ghost, badgeList->get("count_25"));
-//		break;
-//	case 50:
-//		awardBadge(ghost, badgeList->get("count_50"));
-//		break;
-//	case 75:
-//		awardBadge(ghost, badgeList->get("count_75"));
-//		break;
-//	case 100:
-//		awardBadge(ghost, badgeList->get("count_100"));
-//		break;
-//	case 125:
-//		awardBadge(ghost, badgeList->get("count_125"));
-//		break;
-//	default:
-//		break;
-//	}
+	switch (ghost->getNumBadges()) {
+	case 5:
+		awardBadge(ghost, badgeList->get("count_5"));
+		break;
+	case 10:
+		awardBadge(ghost, badgeList->get("count_10"));
+		break;
+	case 25:
+		awardBadge(ghost, badgeList->get("count_25"));
+		break;
+	case 50:
+		awardBadge(ghost, badgeList->get("count_50"));
+		break;
+	case 75:
+		awardBadge(ghost, badgeList->get("count_75"));
+		break;
+	case 100:
+		awardBadge(ghost, badgeList->get("count_100"));
+		break;
+	case 125:
+		awardBadge(ghost, badgeList->get("count_125"));
+		break;
+	default:
+		break;
+	}
 
-//	if (badge->getType() == Badge::EXPLORATION) {
-//		switch (ghost->getBadgeTypeCount(static_cast<uint8>(Badge::EXPLORATION))) {
-//		case 10:
-//			awardBadge(ghost, badgeList->get("bdg_exp_10_badges"));
-//			break;
-//		case 20:
-//			awardBadge(ghost, badgeList->get("bdg_exp_20_badges"));
-//			break;
-//		case 30:
-//			awardBadge(ghost, badgeList->get("bdg_exp_30_badges"));
-//			break;
-//		case 40:
-//			awardBadge(ghost, badgeList->get("bdg_exp_40_badges"));
-//			break;
-//		case 45:
-//			awardBadge(ghost, badgeList->get("bdg_exp_45_badges"));
-//			break;
-//		default:
-//			break;
-//		}
-//	}
+	if (badge->getType() == Badge::EXPLORATION) {
+		switch (ghost->getBadgeTypeCount(static_cast<uint8>(Badge::EXPLORATION))) {
+		case 10:
+			awardBadge(ghost, badgeList->get("bdg_exp_10_badges"));
+			break;
+		case 20:
+			awardBadge(ghost, badgeList->get("bdg_exp_20_badges"));
+			break;
+		case 30:
+			awardBadge(ghost, badgeList->get("bdg_exp_30_badges"));
+			break;
+		case 40:
+			awardBadge(ghost, badgeList->get("bdg_exp_40_badges"));
+			break;
+		case 45:
+			awardBadge(ghost, badgeList->get("bdg_exp_45_badges"));
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void PlayerManagerImplementation::setExperienceMultiplier(float globalMultiplier) {

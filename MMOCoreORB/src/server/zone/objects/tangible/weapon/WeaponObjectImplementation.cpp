@@ -235,27 +235,27 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 			alm->insertAttribute(statname, value);
 	}
 
-//	String ap;
-//
-//	switch (armorPiercing) {
-//	case SharedWeaponObjectTemplate::NONE:
-//		ap = "None";
-//		break;
-//	case SharedWeaponObjectTemplate::LIGHT:
-//		ap = "Light";
-//		break;
-//	case SharedWeaponObjectTemplate::MEDIUM:
-//		ap = "Medium";
-//		break;
-//	case SharedWeaponObjectTemplate::HEAVY:
-//		ap = "Heavy";
-//		break;
-//	default:
-//		ap = "Unknown";
-//		break;
-//	}
-//
-//	alm->insertAttribute("wpn_armor_pierce_rating", ap);
+	String ap;
+
+	switch (armorPiercing) {
+	case SharedWeaponObjectTemplate::NONE:
+		ap = "None";
+		break;
+	case SharedWeaponObjectTemplate::LIGHT:
+		ap = "Light";
+		break;
+	case SharedWeaponObjectTemplate::MEDIUM:
+		ap = "Medium";
+		break;
+	case SharedWeaponObjectTemplate::HEAVY:
+		ap = "Heavy";
+		break;
+	default:
+		ap = "Unknown";
+		break;
+	}
+
+	alm->insertAttribute("wpn_armor_pierce_rating", ap);
 
 	alm->insertAttribute("wpn_attack_speed", Math::getPrecision(getAttackSpeed(), 1));
 

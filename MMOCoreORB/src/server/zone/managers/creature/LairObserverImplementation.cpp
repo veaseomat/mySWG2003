@@ -263,8 +263,8 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 			amountToSpawn = System::random(lairTemplate->getSpawnLimit());
 		}
 
-		if (amountToSpawn < 2)
-			amountToSpawn = 2;
+		if (amountToSpawn < 3)
+			amountToSpawn = 3;
 
 		if (amountToSpawn > 12)
 			amountToSpawn = 12;
