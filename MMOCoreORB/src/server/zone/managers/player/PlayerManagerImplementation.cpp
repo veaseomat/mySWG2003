@@ -1273,6 +1273,30 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 	player->setTargetID(0, true);
 
 	player->notifyObjectKillObservers(attacker);
+
+	// Jedi experience loss.
+	if (ghost->getJediState() >= 2 && !attacker->isPlayerCreature()) {
+		int curExp = ghost->getExperience("jedi_general");
+		int xpLoss = (curExp * -0.5) / 20; //divide by global xp multi
+
+		awardExperience(player, "jedi_general", xpLoss, true);
+		StringIdChatParameter message("base_player","prose_revoke_xp");
+		message.setDI(xpLoss * -1 * 20);
+		message.setTO("exp_n", "jedi_general");
+		player->sendSystemMessage(message);
+	}
+
+	// FRS experience loss.
+	if (ghost->getJediState() >= 4 && !attacker->isPlayerCreature()) {
+		int frscurExp = ghost->getExperience("force_rank_xp");
+		int frsxpLoss = (frscurExp * -0.1) / 20; //divide by global xp multi
+
+		awardExperience(player, "force_rank_xp", frsxpLoss, true);
+		StringIdChatParameter message("base_player","prose_revoke_xp");
+		message.setDI(frsxpLoss * -1 * 20);
+		message.setTO("exp_n", "force_rank_xp");
+		player->sendSystemMessage(message);
+	}
 }
 
 void PlayerManagerImplementation::sendActivateCloneRequest(CreatureObject* player, int typeofdeath) {
@@ -1394,30 +1418,6 @@ void PlayerManagerImplementation::sendActivateCloneRequest(CreatureObject* playe
 
 	ghost->addSuiBox(cloneMenu);
 	player->sendMessage(cloneMenu->generateMessage());
-
-	// Jedi experience loss.
-	if (ghost->getJediState() >= 2) {
-		int curExp = ghost->getExperience("jedi_general");
-		int xpLoss = (curExp * -0.5) / 20; //divide by global xp multi
-
-		awardExperience(player, "jedi_general", xpLoss, true);
-		StringIdChatParameter message("base_player","prose_revoke_xp");
-		message.setDI(xpLoss * -1 * 20);
-		message.setTO("exp_n", "jedi_general");
-		player->sendSystemMessage(message);
-	}
-
-	// FRS experience loss.
-	if (ghost->getJediState() >= 4) {
-		int frscurExp = ghost->getExperience("force_rank_xp");
-		int frsxpLoss = (frscurExp * -0.1) / 20; //divide by global xp multi
-
-		awardExperience(player, "force_rank_xp", frsxpLoss, true);
-		StringIdChatParameter message("base_player","prose_revoke_xp");
-		message.setDI(frsxpLoss * -1 * 20);
-		message.setTO("exp_n", "force_rank_xp");
-		player->sendSystemMessage(message);
-	}
 }
 
 bool PlayerManagerImplementation::isValidClosestCloner(CreatureObject* player, SceneObject* cloner) {

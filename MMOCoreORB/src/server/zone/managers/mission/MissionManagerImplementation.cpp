@@ -1970,7 +1970,7 @@ bool MissionManagerImplementation::isBountyValidForPlayer(CreatureObject* player
 	auto targetGhost = creature->getPlayerObject();
 	float terminalVisibilityThreshold = VisibilityManager::instance()->getTerminalVisThreshold();
 
-	if (targetGhost == nullptr || targetGhost->getVisibility() < terminalVisibilityThreshold)
+	if (targetGhost == nullptr || targetGhost->getVisibility() < terminalVisibilityThreshold || player->getFactionStatus() != FactionStatus::OVERT)
 		return false;
 
 	auto playerGhost = player->getPlayerObject();

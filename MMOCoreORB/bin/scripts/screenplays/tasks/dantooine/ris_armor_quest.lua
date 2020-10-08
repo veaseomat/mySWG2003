@@ -35,9 +35,9 @@ registerScreenPlay("risArmorQuest", true)
 --   Initialize screenplay           -
 --------------------------------------
 function risArmorQuest:start()
-	if (isZoneEnabled("dantooine")) then
-		self:spawnMobiles()
-	end
+--	if (isZoneEnabled("dantooine")) then
+--		self:spawnMobiles()
+--	end
 end
 
 function risArmorQuest:spawnMobiles()
