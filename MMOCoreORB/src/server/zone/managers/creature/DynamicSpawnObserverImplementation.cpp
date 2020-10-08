@@ -67,8 +67,8 @@ void DynamicSpawnObserverImplementation::spawnInitialMobiles(SceneObject* buildi
 	const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
 	uint32 lairTemplateCRC = getLairTemplateName().hashCode();
 
-	if (totalNumberToSpawn < 3)
-		totalNumberToSpawn = 3;
+	if (totalNumberToSpawn < 5)
+		totalNumberToSpawn = 5;
 
 	if (totalNumberToSpawn > 12)
 		totalNumberToSpawn = 12;

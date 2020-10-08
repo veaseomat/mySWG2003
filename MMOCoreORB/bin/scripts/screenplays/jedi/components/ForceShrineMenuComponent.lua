@@ -68,7 +68,7 @@ function ForceShrineMenuComponent:doMeditate(pObject, pPlayer)
 			sui.setCancelButtonText("@jedi_trials:button_no")
 			sui.sendTo(pPlayer)
 		else
-			KnightTrials:showCurrentTrial(pPlayer)
+			KnightTrials:resetCompletedTrialsToStart(pPlayer)
 		end
 	else
 		CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))

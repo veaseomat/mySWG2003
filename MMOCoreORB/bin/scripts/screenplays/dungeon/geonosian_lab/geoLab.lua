@@ -91,11 +91,11 @@ registerScreenPlay("GeonosianLab", true)
 function GeonosianLab:start()
 	if (isZoneEnabled("yavin4")) then
 		if (self:setupBuilding()) then
-			self:setupTrap()
-			self:spawnSceneObjects()
-			self:spawnMobiles()
-			self:setupPermissionGroups()
-			self:setupLootContainers()
+--			self:setupTrap()
+--			self:spawnSceneObjects()
+--			self:spawnMobiles()
+--			self:setupPermissionGroups()
+--			self:setupLootContainers()
 		end
 	end
 end

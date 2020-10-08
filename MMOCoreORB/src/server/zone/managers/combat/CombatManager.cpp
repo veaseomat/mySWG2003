@@ -726,7 +726,7 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 
 	CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
 
-	int attackerAccuracy = 0;
+	float attackerAccuracy = 0.0f;
 
 	const auto creatureAccMods = weapon->getCreatureAccuracyModifiers();
 
@@ -776,12 +776,17 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		}
 	}
 
-
-
 	//accuracy cap new
 	if (attackerAccuracy > 125) {
 		attackerAccuracy = 125;
 	}
+
+	if (attackerAccuracy < 0) {
+		attackerAccuracy = 0;
+	}
+
+//	if (attacker->isPlayerCreature())
+//		attackerAccuracy *= .5f;
 
 	return attackerAccuracy;
 }
@@ -801,7 +806,7 @@ int CombatManager::getAttackerAccuracyBonus(CreatureObject* attacker, WeaponObje
 }
 
 int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponObject* weapon, TangibleObject* attacker) const {
-	int targetDefense = defender->isPlayerCreature() ? 0 : defender->getLevel();
+	float targetDefense = defender->isPlayerCreature() ? 0 : defender->getLevel();
 	int buffDefense = 0;
 
 	const auto defenseAccMods = weapon->getDefenderDefenseModifiers();
@@ -827,10 +832,6 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 		targetDefense += defender->getSkillMod("private_group_" + mod);
 	}
 
-	// defense hardcap
-	if (targetDefense > 125)
-		targetDefense = 125;
-
 	if (attacker->isPlayerCreature())
 		targetDefense += defender->getSkillMod("private_defense");
 
@@ -839,6 +840,17 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	targetDefense += defender->getSkillMod("private_dodge_attack");
 
 	debug() << "Target defense after state affects and cap is " << targetDefense;
+
+	// defense hardcap
+	if (targetDefense > 125)
+		targetDefense = 125;
+
+	if (targetDefense < 0)
+		targetDefense = 0;
+
+	//this is because all mobs cap at 55 hitchance now
+	if (defender->isPlayerCreature() && !attacker->isPlayerCreature())
+		targetDefense *= .5f;
 
 	return targetDefense;
 }
@@ -859,6 +871,9 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 
 	if (targetDefense > 125)
 		targetDefense = 125;
+
+	if (targetDefense < 0)
+		targetDefense = 0;
 
 	return targetDefense;
 }
@@ -1328,7 +1343,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		damage += System::random(diff);
 
 	damage = applyDamageModifiers(attacker, weapon, damage, data);
-
+//WTF IS THIS 1.5x damage...
 	if (attacker->isPlayerCreature())
 		damage *= 1.5;
 
@@ -1511,25 +1526,25 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //mySWG balancing the profs based on highest dmg weapon and special for that class
 	if (attacker->isPlayerCreature() && !data.isForceAttack()) {
 		if (weapon->isPistolWeapon())
-		damage *= 3.17f;
+		damage *= 2.57f;
 		if (weapon->isCarbineWeapon())
-		damage *= 2.45f;
+		damage *= 2.15f;
 		if (weapon->isRifleWeapon())
-		damage *= 1.18f;
+		damage *= 1.08f;
 //		if (weapon->isRangedWeapon())
 //		damage *= 1.0f;
 		if (weapon->isUnarmedWeapon())
-		damage *= 1.45f;
+		damage *= 1.35f;
 		if (weapon->isOneHandMeleeWeapon())
-		damage *= 1.91f;
+		damage *= 1.71f;
 		if (weapon->isTwoHandMeleeWeapon())
 		damage *= 1.25f;
 		if (weapon->isPolearmWeaponObject())
-		damage *= 1.0f;
+		damage *= 1.38f;
 //		if (weapon->isMeleeWeapon())
 //		damage *= 1.25f;
 		if (weapon->isLightningRifle())
-		damage *= 1.0f;
+		damage *= 1.01f;
 		if (weapon->isFlameThrower())
 		damage *= 1.11f;
 		if (weapon->isHeavyAcidRifle())
@@ -1543,11 +1558,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //		if (weapon->isMineWeapon())
 //		damage *= 1.0f;
 		if (weapon->isJediOneHandedWeapon())
-		damage *= 1.26f;
+		damage *= 1.54f;
 		if (weapon->isJediTwoHandedWeapon())
-		damage *= 1.03f;
+		damage *= 1.59f;
 		if (weapon->isJediPolearmWeapon())
-		damage *= 0.95f;
+		damage *= 1.15f;
 //		if (weapon->isJediWeapon())
 //		damage *= 0.5f;
 	}
@@ -1767,11 +1782,11 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 //		}
 
 		// saber block is special because it's just a % chance to block based on the skillmod
-		if (def == "saber_block") {
-			if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) && ((System::random(100)) < targetCreature->getSkillMod(def))))
-				return RICOCHET;
-			else return HIT;
-		}
+		//EXPERIMENTAL and NOT FINISHED. this saber block changed to jedi v jedi defense, other saber block moved to block/dodge/counter below
+//		if (def == "saber_block") {
+//			if ((attacker->isPlayerCreature() && defender->isPlayerCreature() && weapon->getAttackType() == SharedWeaponObjectTemplate::LIGHTSABER) && (System::random(100) < targetCreature->getSkillMod(def)))
+//				return MISS;
+//		}
 
 		targetDefense = getDefenderSecondaryDefenseModifier(targetCreature);
 
@@ -1812,9 +1827,14 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 				return DODGE;
 			else if (def == "counterattack")
 				return COUNTER;
+			else if (def == "saber_block") {
+				if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) && ((System::random(100)) < targetCreature->getSkillMod(def))))
+					return RICOCHET;
+			}
 			else // shouldn't get here
 				return HIT; // no secondary defenses available on this weapon
 		}
+
 	}
 
 	return HIT;
@@ -1884,8 +1904,8 @@ void CombatManager::showHitLocationFlyText(CreatureObject *attacker, CreatureObj
 		break;
 	}
 
-	if(fly != nullptr)
-		attacker->sendMessage(fly);
+//	if(fly != nullptr)
+//		attacker->sendMessage(fly);
 }
 
 void CombatManager::doDodge(TangibleObject* attacker, WeaponObject* weapon, CreatureObject* defender, int damage) const {
@@ -2011,8 +2031,8 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 					targetDefense /= 1.5;
 					targetDefense += playerLevel;
 
-					if (targetDefense > 90)
-						targetDefense = 90.f;
+					if (targetDefense > 75)
+						targetDefense = 75.f;
 
 					if (System::random(100) > accuracyMod - targetDefense) {
 						failed = true;

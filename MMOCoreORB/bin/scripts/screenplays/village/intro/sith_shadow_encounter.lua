@@ -12,14 +12,14 @@ SithShadowEncounter = Encounter:new {
 	-- Task properties
 	taskName = "SithShadowEncounter",
 	-- Encounter properties
-	encounterDespawnTime = 1 * 30 * 1000, -- 10 sec
+	encounterDespawnTime = 1 * 60 * 1000, -- 10 sec
 	spawnObjectList = {
-		{ template = "boba_fett2", minimumDistance = 64, maximumDistance = 96, referencePoint = 0, followPlayer = true, setNotAttackable = false, runOnDespawn = true },
+		{ template = "boba_fett2", minimumDistance = 64, maximumDistance = 72, referencePoint = 0, followPlayer = true, setNotAttackable = false, runOnDespawn = true },
 	},
 	onEncounterSpawned = nil,
 	isEncounterFinished = nil,
 	onEncounterInRange = nil,
-	inRangeValue = 32,
+	inRangeValue = 42,
 }
 
 -- Check if the sith shadow is the first one spawned for the player.
@@ -63,12 +63,15 @@ function SithShadowEncounter:onPlayerKilled(pPlayer, pKiller, nothing)
 	if (pPlayer == nil or pKiller == nil) then
 		return 0
 	end
-
+	
+	local pGhost = CreatureObject(pPlayer):getPlayerObject()
 	Logger:log("Player was killed.", LT_INFO)
 	if SpawnMobiles.isFromSpawn(pPlayer, SithShadowEncounter.taskName, pKiller) then
 		spatialChat(pKiller, "Pathetic...")
 		--i use this to track if player won or not
 --		QuestManager.completeQuest(pPlayer, QuestManager.quests.TWO_MILITARY)	
+		PlayerObject(pGhost):setVisibility(0)
+
 		return 0
 	end
 
@@ -92,7 +95,7 @@ function SithShadowEncounter:onEncounterSpawned(pPlayer, spawnedObjects)
 		return
 	end
 
-	CreatureObject(pPlayer):sendSystemMessage("You sense a disturbance in the force...")
+	CreatureObject(pPlayer):sendSystemMessage("You sense a disturbance in the Force...")
 
 	SceneObject(pInventory):setContainerOwnerID(playerID)
 
@@ -122,8 +125,7 @@ function SithShadowEncounter:onEncounterInRange(pPlayer, spawnedObjects)
 	foreach(spawnedObjects, function(pMobile)
 		if (pMobile ~= nil) then
 			AiAgent(pMobile):setDefender(pPlayer)
---			AiAgent(pMobile):enqueAttack(pPlayer)
---not working
+			CreatureObject(pMobile):engageCombat(pPlayer)
 		end
 	end)
 end

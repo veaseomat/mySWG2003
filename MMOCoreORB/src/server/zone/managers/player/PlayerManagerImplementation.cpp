@@ -1394,6 +1394,30 @@ void PlayerManagerImplementation::sendActivateCloneRequest(CreatureObject* playe
 
 	ghost->addSuiBox(cloneMenu);
 	player->sendMessage(cloneMenu->generateMessage());
+
+	// Jedi experience loss.
+	if (ghost->getJediState() >= 2) {
+		int curExp = ghost->getExperience("jedi_general");
+		int xpLoss = (curExp * -0.5) / 20; //divide by global xp multi
+
+		awardExperience(player, "jedi_general", xpLoss, true);
+		StringIdChatParameter message("base_player","prose_revoke_xp");
+		message.setDI(xpLoss * -1 * 20);
+		message.setTO("exp_n", "jedi_general");
+		player->sendSystemMessage(message);
+	}
+
+	// FRS experience loss.
+	if (ghost->getJediState() >= 4) {
+		int frscurExp = ghost->getExperience("force_rank_xp");
+		int frsxpLoss = (frscurExp * -0.1) / 20; //divide by global xp multi
+
+		awardExperience(player, "force_rank_xp", frsxpLoss, true);
+		StringIdChatParameter message("base_player","prose_revoke_xp");
+		message.setDI(frsxpLoss * -1 * 20);
+		message.setTO("exp_n", "force_rank_xp");
+		player->sendSystemMessage(message);
+	}
 }
 
 bool PlayerManagerImplementation::isValidClosestCloner(CreatureObject* player, SceneObject* cloner) {
@@ -1555,18 +1579,6 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 
 	player->notifyObservers(ObserverEventType::PLAYERCLONED, player, 0);
 
-
-	// Jedi experience loss.
-	if (ghost->getJediState() >= 2) {
-		int curExp = ghost->getExperience("jedi_general");
-		int xpLoss = (curExp * -0.01);
-
-		awardExperience(player, "jedi_general", xpLoss, true);
-		StringIdChatParameter message("base_player","prose_revoke_xp");
-		message.setDI(xpLoss * -1);
-		message.setTO("exp_n", "jedi_general");
-		player->sendSystemMessage(message);
-	}
 }
 
 void PlayerManagerImplementation::ejectPlayerFromBuilding(CreatureObject* player) {
@@ -1731,7 +1743,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				String xpType = entry->elementAt(j).getKey();
 				float xpAmount = baseXp;
 
-				xpAmount *= (float) damage / totalDamage;
+//				xpAmount *= (float) damage / totalDamage;
 
 //				xpAmount += (float) totalDamage / 100;
 
@@ -1765,7 +1777,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 
 			combatXp = awardExperience(attacker, "combat_general", combatXp, true, 0.1f);
 
-			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.01f);
+			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.001f);
 
 			//Check if the group leader is a squad leader
 			if (group == nullptr)
