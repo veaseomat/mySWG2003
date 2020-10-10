@@ -2039,16 +2039,6 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 
 	float regen = (float)creature->getSkillMod("jedi_force_power_regen");
 
-	//remove old bonuses like robes, 69 is max possible vanilla
-		if (regen > 69) {
-			float newregen = (69 - regen);
-
-			ManagedReference<PlayerObject*> ghost = creature->getPlayerObject();
-
-			creature->addSkillMod(SkillModManager::PERMANENTMOD, "jedi_force_power_regen", newregen, true);
-
-		}
-
 	if(regen == 0.0f)
 		return;
 
@@ -2057,13 +2047,15 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	}
 
 	if (!forceRegenerationEvent->isScheduled()) {
-		int forceControlMod = 0, forceManipulationMod = 0;
-
 		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 2;
 
 		if (frsregen > 0) {
-			regen += 5.0f;
+			regen += 5;
 			regen += frsregen;
+		}
+
+		if (regen > 1) {
+		regen += 10; //jedi robe
 		}
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
@@ -2977,19 +2969,12 @@ void PlayerObjectImplementation::recalculateForcePower() {
 
 	int maxForce = player->getSkillMod("jedi_force_power_max");
 
-	//remove old bonuses like robes, 7475 is max possible vanilla
-		if (maxForce > 7475) {
-			int newmax = (7475 - maxForce);
-
-			ManagedReference<PlayerObject*> ghost = creature->getPlayerObject();
-
-			creature->addSkillMod(SkillModManager::PERMANENTMOD, "jedi_force_power_max", newmax, true);
-
-		}
-
 	int frsMax = player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark");
 
+	if (maxForce > 100) {
 	maxForce += (frsMax) * 100;
+	maxForce += 250; //jedi robe
+	}
 
 	setForcePowerMax(maxForce, true);
 }

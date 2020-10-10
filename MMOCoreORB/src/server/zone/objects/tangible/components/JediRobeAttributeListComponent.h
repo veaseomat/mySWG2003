@@ -23,15 +23,15 @@ public:
 
 		const auto skills = robe->getTemplateSkillMods();
 
-		if (skills->contains("jedi_force_power_max")) {
-			int mod = skills->get("jedi_force_power_max");
-			alm->insertAttribute("jedi_robe_power", "+" + String::valueOf(mod));
-		}
-
-		if (skills->contains("jedi_force_power_regen")) {
-			int mod = skills->get("jedi_force_power_regen");
-			alm->insertAttribute("jedi_robe_regen", "+" + String::valueOf(mod));
-		}
+//		if (skills->contains("jedi_force_power_max")) {
+//			int mod = skills->get("jedi_force_power_max");
+//			alm->insertAttribute("jedi_robe_power", "+" + String::valueOf(mod));
+//		}
+//
+//		if (skills->contains("jedi_force_power_regen")) {
+//			int mod = skills->get("jedi_force_power_regen");
+//			alm->insertAttribute("jedi_robe_regen", "+" + String::valueOf(mod));
+//		}
 
 		String rankRequired = robe->getSkillRequired();
 
