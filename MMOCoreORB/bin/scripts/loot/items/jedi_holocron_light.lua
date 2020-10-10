@@ -4,9 +4,8 @@ jedi_holocron_light = {
 	minimumLevel = 0,
 	maximumLevel = -1,
 	customObjectName = "",
-	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_module_force_crystal.iff",
+	directObjectTemplate = "object/tangible/jedi/jedi_holocron_light.iff",
 	craftingValues = {
-		{"color",0,11,0},
 	},
 	customizationStringNames = {},
 	customizationValues = {}

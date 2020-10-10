@@ -116,7 +116,7 @@ end
 -- @param pCreatureObject pointer to the creature object of the player who unlocked jedi.
 function HologrindJediManager:sendSuiWindow(pCreatureObject)
 	local suiManager = LuaSuiManager()
-	suiManager:sendMessageBox(pCreatureObject, pCreatureObject, "@quest/force_sensitive/intro:force_sensitive", "You begin to feel attuned with the power of the Force. Your Jedi powers have been unlocked. You should visit a shrine to recover your padawan robes. Using Jedi abilities near NPCs or players will gain you visibility for bounty hunters. You will need to tune a color crystal and craft a lightsaber to begin grinding jedi xp. Use /findmytrainer to create a waypoint to your jedi skill trainer. May the force be with you.", "@ok", "HologrindJediManager", "notifyOkPressed")
+	suiManager:sendMessageBox(pCreatureObject, pCreatureObject, "@quest/force_sensitive/intro:force_sensitive", "You begin to feel attuned with the power of the Force. Your Jedi powers have been unlocked. Using Jedi abilities near NPCs or players will gain you visibility for bounty hunters. You will need to tune a color crystal and craft a lightsaber to begin. Use /findmytrainer to create a waypoint to your jedi skill trainer. May the force be with you.", "@ok", "HologrindJediManager", "notifyOkPressed")
 end
 
 -- Award skill and jedi status to the player.
@@ -207,17 +207,18 @@ function HologrindJediManager:sendHolocronMessage(pCreatureObject)
 		end
 	if self:getNumberOfMasteredProfessions(pCreatureObject) >= MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON then
 		-- The Holocron is quiet. The ancients' knowledge of the Force will no longer assist you on your journey. You must continue seeking on your own.
-		if self:isJedi(pCreatureObject) then
-			if	PlayerObject(pGhost):getForcePower() < PlayerObject(pGhost):getForcePowerMax() then
-				PlayerObject(pGhost):setForcePower(PlayerObject(pGhost):getForcePowerMax());
-				CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
-				CreatureObject(pCreatureObject):sendSystemMessage("The holocron hums softly as you feel your Force power replenish.")
-				return false
-			else
-				CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_force_max")
-				return true
-			end
-		end
+--this is holocrons replenish force
+--		if self:isJedi(pCreatureObject) then
+--			if	PlayerObject(pGhost):getForcePower() < PlayerObject(pGhost):getForcePowerMax() then
+--				PlayerObject(pGhost):setForcePower(PlayerObject(pGhost):getForcePowerMax());
+--				CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+--				CreatureObject(pCreatureObject):sendSystemMessage("The holocron hums softly as you feel your Force power replenish.")
+--				return false
+--			else
+--				CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_force_max")
+--				return true
+--			end
+--		end
 		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_quiet")
 		return true
 	else

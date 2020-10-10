@@ -3186,14 +3186,14 @@ bool CreatureObjectImplementation::isHealableBy(CreatureObject* object) {
 	uint32 targetFactionStatus = targetCreo->getFactionStatus();
 	uint32 currentFactionStatus = object->getFactionStatus();
 
-	if (getFaction() != object->getFaction() && !(targetFactionStatus == FactionStatus::ONLEAVE))
-		return false;
+//	if (getFaction() != object->getFaction() && !(targetFactionStatus == FactionStatus::ONLEAVE))
+//		return false;
 
-	if ((targetFactionStatus == FactionStatus::OVERT) && !(currentFactionStatus == FactionStatus::OVERT))
-		return false;
+//	if ((targetFactionStatus == FactionStatus::OVERT) && !(currentFactionStatus == FactionStatus::OVERT))
+//		return false;
 
-	if (!(targetFactionStatus == FactionStatus::ONLEAVE) && (currentFactionStatus == FactionStatus::ONLEAVE))
-		return false;
+//	if (!(targetFactionStatus == FactionStatus::ONLEAVE) && (currentFactionStatus == FactionStatus::ONLEAVE))
+//		return false;
 
 	if(targetCreo->isPlayerCreature()) {
 		PlayerObject* targetGhost = targetCreo->getPlayerObject();
