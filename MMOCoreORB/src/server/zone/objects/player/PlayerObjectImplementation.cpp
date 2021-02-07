@@ -984,13 +984,13 @@ void PlayerObjectImplementation::doDigest(int fillingReduction) {
 		drinkFilling = drinkFillingMax;
 
 	if (foodFilling > 0) {
-		setFoodFilling(foodFilling - fillingReduction);
+		setFoodFilling(foodFilling - (fillingReduction * 2));
 		if (foodFilling < 0)
 			foodFilling = 0;
 	}
 
 	if (drinkFilling > 0) {
-		setDrinkFilling(drinkFilling - fillingReduction);
+		setDrinkFilling(drinkFilling - (fillingReduction * 2));
 		if (drinkFilling < 0)
 			drinkFilling = 0;
 	}

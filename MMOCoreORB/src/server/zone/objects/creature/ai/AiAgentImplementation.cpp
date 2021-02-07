@@ -2543,8 +2543,8 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 
 	alm->insertAttribute("challenge_level", getLevel());
 
-	int minD = getDamageMin() * .5;
-	int maxD = getDamageMax() * .5;
+	int minD = getDamageMin() * .75;
+	int maxD = getDamageMax() * .75;
 
 	StringBuffer damageMsg;
 	damageMsg << (minD) << "-" << (maxD);

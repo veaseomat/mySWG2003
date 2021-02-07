@@ -27,18 +27,17 @@ giant_canyon_krayt_dragon = Creature:new {
 
 	templates = {"object/mobile/canyon_krayt_dragon.iff"},
 	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
-	scale = 1.2;
+	scale = 1.7;
 
 	lootGroups = {
 		{
 	        groups = {
-				{group = "krayt_dragon_common", chance = 2500000},
-				{group = "krayt_tissue_uncommon", chance = 2000000},
-				{group = "krayt_pearls", chance = 1500000},
-				{group = "armor_all", chance = 2000000},
-				{group = "weapons_all", chance = 2000000},
+				{group = "krayt_dragon_common", chance = 1000000},
+				{group = "krayt_tissue_uncommon", chance = 3000000},
+				{group = "krayt_pearls", chance = 3000000},
+				{group = "armor_all", chance = 1500000},
+				{group = "weapons_all", chance = 1500000},
 			},
-			lootChance = 7000000
 		}
 	},
 	weapons = {},

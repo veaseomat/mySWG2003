@@ -285,6 +285,10 @@ void LightsaberCrystalComponentImplementation::fillAttributeList(AttributeListMe
 			alm->insertAttribute("color", str3);
 		} else {
 			if (ownerID != 0 || player->isPrivileged()) {
+				StringBuffer str;
+				str << "@jedi_spam:crystal_quality_" << getQuality();
+				alm->insertAttribute("challenge_level", itemLevel);
+				alm->insertAttribute("crystal_quality", str);
 				alm->insertAttribute("mindamage", damage);
 				alm->insertAttribute("maxdamage", damage);
 				alm->insertAttribute("wpn_attack_speed", attackSpeed);
@@ -293,17 +297,14 @@ void LightsaberCrystalComponentImplementation::fillAttributeList(AttributeListMe
 				alm->insertAttribute("wpn_attack_cost_action", sacAction);
 				alm->insertAttribute("wpn_attack_cost_mind", sacMind);
 				alm->insertAttribute("forcecost", floatForceCost);
-
 				// For debugging
-				if (player->isPrivileged()) {
-					StringBuffer str;
-					str << "@jedi_spam:crystal_quality_" << getQuality();
-					alm->insertAttribute("challenge_level", itemLevel);
-					alm->insertAttribute("crystal_quality", str);
-				}
+
+
+
 			} else {
 				StringBuffer str;
 				str << "@jedi_spam:crystal_quality_" << getQuality();
+				alm->insertAttribute("challenge_level", itemLevel);
 				alm->insertAttribute("crystal_quality", str);
 			}
 		}

@@ -569,8 +569,8 @@ void CombatManager::applyWeaponDots(CreatureObject* attacker, CreatureObject* de
 	if (defender->isInvulnerable())
 		return;
 
-	if (!weapon->isCertifiedFor(attacker))
-		return;
+//	if (!weapon->isCertifiedFor(attacker))
+//		return;
 
 	for (int i = 0; i < weapon->getNumberOfDots(); i++) {
 		if (weapon->getDotUses(i) <= 0)
@@ -584,15 +584,15 @@ void CombatManager::applyWeaponDots(CreatureObject* attacker, CreatureObject* de
 		switch (weapon->getDotType(i)) {
 		case 1: //POISON
 			type = CreatureState::POISONED;
-			//resist = defender->getSkillMod("resistance_poison");
+			resist = defender->getSkillMod("resistance_poison");
 			break;
 		case 2: //DISEASE
 			type = CreatureState::DISEASED;
-			//resist = defender->getSkillMod("resistance_disease");
+			resist = defender->getSkillMod("resistance_disease");
 			break;
 		case 3: //FIRE
 			type = CreatureState::ONFIRE;
-			//resist = defender->getSkillMod("resistance_fire");
+			resist = defender->getSkillMod("resistance_fire");
 			break;
 		case 4: //BLEED
 			type = CreatureState::BLEEDING;
@@ -929,8 +929,8 @@ int CombatManager::calculateDamageRange(TangibleObject* attacker, CreatureObject
 
 	// restrict damage if a player is not certified (don't worry about mobs)
 	if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(cast<CreatureObject*>(attacker))) {
-		minDamage = 5;
-		maxDamage = 10;
+		minDamage *= .5f;
+		maxDamage *= .75f;
 	}
 
 	debug() << "attacker base damage is " << minDamage << "-" << maxDamage;
@@ -981,6 +981,20 @@ float CombatManager::applyDamageModifiers(CreatureObject* attacker, WeaponObject
 			damage += attacker->getSkillMod("private_melee_damage_bonus");
 		if (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)
 			damage += attacker->getSkillMod("private_ranged_damage_bonus");
+	}
+
+	CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
+
+	const auto creatureAccMods = weapon->getCreatureAccuracyModifiers();
+
+	for (int i = 0; i < creatureAccMods->size(); ++i) {
+		const String& mod = creatureAccMods->get(i);
+		damage += creoAttacker->getSkillMod(mod);
+		damage += creoAttacker->getSkillMod("private_" + mod);
+
+		if (creoAttacker->isStanding()) {
+			damage += creoAttacker->getSkillMod(mod + "_while_standing");
+		}
 	}
 
 	damage += attacker->getSkillMod("private_damage_bonus");
@@ -1307,10 +1321,11 @@ float CombatManager::getArmorPiercing(TangibleObject* defender, int armorPiercin
 		}
 	}
 
-	if (armorPiercing > armorReduction)
-		return pow(1.25, armorPiercing - armorReduction);
-    else
-        return pow(0.50, armorReduction - armorPiercing);
+//	if (armorPiercing > armorReduction)
+//		return pow(1.25, armorPiercing - armorReduction);
+//    else
+//        return pow(0.50, armorReduction - armorPiercing);
+	return 1.0;
 }
 
 float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* weapon, TangibleObject* defender, const CreatureAttackData& data) const {
@@ -1331,8 +1346,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		float minDamage = weapon->getMinDamage(), maxDamage = weapon->getMaxDamage();
 
 		if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(attacker)) {
-			minDamage = 5.f;
-			maxDamage = 10.f;
+			minDamage *= .5f;
+			maxDamage *= .75f;
 		}
 
 		damage = minDamage;
@@ -1344,11 +1359,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	damage = applyDamageModifiers(attacker, weapon, damage, data);
 //WTF IS THIS 1.5x damage...
-	if (attacker->isPlayerCreature())
-		damage *= 1.5;
-
-	if (!data.isForceAttack() && weapon->getAttackType() == SharedWeaponObjectTemplate::MELEEATTACK)
-		damage *= 1.25;
+//	if (attacker->isPlayerCreature())
+//		damage *= 1.5;
+//IS THIS VANILLA MELEE DMG PATCH!?
+//	if (!data.isForceAttack() && weapon->getAttackType() == SharedWeaponObjectTemplate::MELEEATTACK)
+//		damage *= 1.25;
 
 	debug() << "damage to be dealt is " << damage;
 
@@ -1510,7 +1525,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		float minDamage = weapon->getMinDamage();
 
 		if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(attacker))
-			minDamage = 5;
+			minDamage *= .5f;
 
 		damage = minDamage;
 	}
@@ -1526,29 +1541,29 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //mySWG balancing the profs based on highest dmg weapon and special for that class
 	if (attacker->isPlayerCreature() && !data.isForceAttack()) {
 		if (weapon->isPistolWeapon())
-		damage *= 2.57f;
+		damage *= 3.0f;
 		if (weapon->isCarbineWeapon())
-		damage *= 2.15f;
+		damage *= 3.4f;
 		if (weapon->isRifleWeapon())
-		damage *= 1.08f;
+		damage *= 1.1f;
 //		if (weapon->isRangedWeapon())
 //		damage *= 1.0f;
 		if (weapon->isUnarmedWeapon())
-		damage *= 1.35f;
+		damage *= 1.9f;
 		if (weapon->isOneHandMeleeWeapon())
-		damage *= 1.71f;
+		damage *= 2.2f;
 		if (weapon->isTwoHandMeleeWeapon())
-		damage *= 1.25f;
+		damage *= 1.3f;
 		if (weapon->isPolearmWeaponObject())
-		damage *= 1.38f;
+		damage *= 1.5f;
 //		if (weapon->isMeleeWeapon())
 //		damage *= 1.25f;
 		if (weapon->isLightningRifle())
-		damage *= 1.01f;
+		damage *= 1.5f;
 		if (weapon->isFlameThrower())
-		damage *= 1.11f;
+		damage *= 1.0f;
 		if (weapon->isHeavyAcidRifle())
-		damage *= 1.05f;
+		damage *= 1.0f;
 //		if (weapon->isHeavyWeapon())
 //		damage *= 1.0f;
 //		if (weapon->isThrownWeapon())
@@ -1558,11 +1573,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //		if (weapon->isMineWeapon())
 //		damage *= 1.0f;
 		if (weapon->isJediOneHandedWeapon())
-		damage *= 1.54f;
+		damage *= 1.0f;
 		if (weapon->isJediTwoHandedWeapon())
-		damage *= 1.59f;
+		damage *= 1.0f;
 		if (weapon->isJediPolearmWeapon())
-		damage *= 1.15f;
+		damage *= 1.0f;
 //		if (weapon->isJediWeapon())
 //		damage *= 0.5f;
 	}
@@ -1572,17 +1587,17 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	}
 
 	//frsdamage
-	float lightDamage = attacker->getSkillMod("force_manipulation_light") / 2;
+	float lightDamage = attacker->getSkillMod("force_manipulation_light");
 
 	if (lightDamage > 0) {
-			lightDamage += 5.f;
+			lightDamage += 20.f;
 			damage *= 1.f * (1.f + ((float)lightDamage / 100.f));
 	}
 
-	float darkDamage = attacker->getSkillMod("force_manipulation_dark") / 2;
+	float darkDamage = attacker->getSkillMod("force_manipulation_dark");
 
 	if (darkDamage > 0) {
-			darkDamage += 10.f;
+			darkDamage += 20.f;
 			damage *= 1.f * (1.f + ((float)darkDamage / 100.f));
 	}
 
@@ -1604,17 +1619,17 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 
 	//frsarmor
-	float lightarmor = defender->getSkillMod("force_manipulation_light") / 2;
+	float lightarmor = defender->getSkillMod("force_manipulation_light");
 
 	if (lightarmor > 0) {
-		lightarmor += 10.f;
+		//lightarmor += 30.f;
 		damage *= 1.f / (1.f + ((float)lightarmor / 100.f));
 	}
 
-	float darkarmor = defender->getSkillMod("force_manipulation_dark") / 2;
+	float darkarmor = defender->getSkillMod("force_manipulation_dark");
 
 	if (darkarmor > 0) {
-		darkarmor += 5.f;
+		//darkarmor += 25.f;
 		damage *= 1.f / (1.f + ((float)darkarmor / 100.f));
 	}
 
@@ -1622,12 +1637,12 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 
 	// PVE Damage bonus
-//	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-//		damage *= 1.2;
+	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
+		damage *= 2.0;
 
 	// EVP Damage Reduction. dont forget to update aiagentimplementation also so examine shows same numbers
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 0.5;
+		damage *= 0.75;
 
 	// PvP Damage Reduction.
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature() && !data.isForceAttack())

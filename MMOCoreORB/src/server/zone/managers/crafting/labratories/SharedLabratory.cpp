@@ -23,19 +23,19 @@ float SharedLabratory::calculateExperimentationValueModifier(int experimentation
 	float results;
 	switch (experimentationResult) {
 	case CraftingManager::AMAZINGSUCCESS:
-		results = 0.08f;
+		results = 0.2f;
 		break;
 	case CraftingManager::GREATSUCCESS:
-		results = 0.07f;
+		results = 0.15f;
 		break;
 	case CraftingManager::GOODSUCCESS:
-		results = 0.055f;
+		results = 0.10f;
 		break;
 	case CraftingManager::MODERATESUCCESS:
-		results = 0.015f;
+		results = 0.05f;
 		break;
 	case CraftingManager::SUCCESS:
-		results = 0.01f;
+		results = 0.02f;
 		break;
 	case CraftingManager::MARGINALSUCCESS:
 		results = 0.00f;
@@ -59,8 +59,14 @@ float SharedLabratory::calculateExperimentationValueModifier(int experimentation
 float SharedLabratory::calculateAssemblyValueModifier(int assemblyResult) {
 
 	if(assemblyResult == CraftingManager::AMAZINGSUCCESS)
+		return 1.2f;
+	if(assemblyResult == CraftingManager::GREATSUCCESS)
+		return 1.15f;
+	if(assemblyResult == CraftingManager::GOODSUCCESS)
+		return 1.1f;
+	if(assemblyResult == CraftingManager::MODERATESUCCESS)
 		return 1.05f;
-	float result = 1.1f - (assemblyResult * .1f);
+	float result = 1.02f;
 	return result;
 }
 
@@ -185,24 +191,24 @@ int SharedLabratory::calculateAssemblySuccess(CreatureObject* player,DraftSchema
 
 	int assemblyRoll = (toolModifier * (luckRoll + (assemblyPoints * 5)));
 
-	if (assemblyRoll > 70)
+	if (assemblyRoll > 60)
 		return CraftingManager::GREATSUCCESS;
 
-	if (assemblyRoll > 60)
+	if (assemblyRoll > 40)
 		return CraftingManager::GOODSUCCESS;
 
-	if (assemblyRoll > 50)
+	if (assemblyRoll > 20)
 		return CraftingManager::MODERATESUCCESS;
 
-	if (assemblyRoll > 40)
-		return CraftingManager::SUCCESS;
+//	if (assemblyRoll > 40)
+//		return CraftingManager::SUCCESS;
+//
+//	if (assemblyRoll > 30)
+//		return CraftingManager::MARGINALSUCCESS;
+//
+//	if (assemblyRoll > 20)
+//		return CraftingManager::OK;
 
-	if (assemblyRoll > 30)
-		return CraftingManager::MARGINALSUCCESS;
-
-	if (assemblyRoll > 20)
-		return CraftingManager::OK;
-
-	return CraftingManager::BARELYSUCCESSFUL;
+	return CraftingManager::SUCCESS;
 }
 

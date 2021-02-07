@@ -300,7 +300,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	setCustomObjectName(prototype, templateObject);
 
-	float excMod = 1.0;
+	float excMod = 2.0;
 
 	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);
 
@@ -447,7 +447,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	// Add Dots to weapon objects.
 	addStaticDots(prototype, templateObject, level);
-	addRandomDots(prototype, templateObject, level, excMod);
+	addRandomDots(prototype, templateObject, level, 1.0);
 
 	setSkillMods(prototype, templateObject, level, excMod);
 

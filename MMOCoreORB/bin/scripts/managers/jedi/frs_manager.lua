@@ -7,10 +7,10 @@ darkEnclaveID = 3435626
 petitionInterval = 86400000 -- 1 day
 votingInterval = 0 -- nah
 acceptanceInterval = 86400000 -- 1 day
-maintenanceInterval = 604800000 -- 7 days
+maintenanceInterval = 86400000 -- 1 day
 
 requestDemotionDuration = 604800000 -- 7 days
-voteChallengeDuration = 604800000 -- 7 days
+voteChallengeDuration = 86400000 -- 7 days
 
 arenaOpenInterval = 0 -- 90 mins
 arenaClosedInterval = 108000000 -- 30 hours
@@ -18,7 +18,7 @@ arenaChallengeDuration = 0 -- 60 mins
 arenaChallengeCooldown = 0 -- 24 hours
 
 -- Costs are in FRS experience
-baseMaintCost = 5000
+baseMaintCost = 200
 requestDemotionCost = 2000
 voteChallengeCost = 1000
 

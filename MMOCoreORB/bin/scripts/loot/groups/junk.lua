@@ -5,6 +5,13 @@ junk = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
+
+		{itemTemplate = "locked_container", weight = 285500},
+--		{groupTemplate = "coa_encoded_disk_fragments", weight = 80000},
+--		{groupTemplate = "coa2_decoder_components", weight = 80000},
+--?		{groupTemplate = "data_storage_unit_parts", weight = 989500},	
+	
+	
 		{itemTemplate = "carbine_cdef", weight = 151515},
 		{itemTemplate = "pistol_cdef", weight = 151515},
 		{itemTemplate = "rifle_cdef", weight = 151515},
@@ -73,10 +80,10 @@ junk = {
 		{itemTemplate = "belt_s11", weight = 85470}, -- Two Pocket Belt
 		{itemTemplate = "boots_s03", weight = 85470}, -- Wrapped Boots
 		{itemTemplate = "boots_s04", weight = 85470}, -- Hide Boots
-		{itemTemplate = "dress_s06", weight = 85470}, -- Maiden's Dress
-		{itemTemplate = "dress_s10", weight = 85470}, -- Plain Robe
-		{itemTemplate = "dress_s12", weight = 85470}, -- Plain Short Robe
-		{itemTemplate = "dress_s18", weight = 85470}, -- Administrator's Robe
+		{itemTemplate = "dress_s06", weight = 5470}, -- Maiden's Dress
+		{itemTemplate = "dress_s10", weight = 5470}, -- Plain Robe
+		{itemTemplate = "dress_s12", weight = 5470}, -- Plain Short Robe
+		{itemTemplate = "dress_s18", weight = 5470}, -- Administrator's Robe
 		{itemTemplate = "dress_s26", weight = 85470}, -- Frock
 		{itemTemplate = "gloves_s12", weight = 85470}, -- Leather Gloves
 		{itemTemplate = "hat_s14", weight = 85470}, -- Headwrap

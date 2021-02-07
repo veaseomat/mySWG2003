@@ -51,7 +51,7 @@ int DynamicSpawnObserverImplementation::notifyObserverEvent(unsigned int eventTy
 	}
 //npc creature respawn timer after killed
 	Reference<Task*> task = new RespawnCreatureTask(ai.get(), zone, level);
-	task->schedule(30000);
+	task->schedule((60 + (level * 2)) * 1000);
 
 	return 0;
 }
