@@ -54,7 +54,7 @@ exceptionalModifier = 2.5
 legendaryModifier = 5.0
 
 --The chance for random skill mods to be on looted weapons/wearables
-skillModChance = 500 -- 1 in 500
+skillModChance = 5 -- 1 in 500
 
 -- Value ranges for random dots on looted weapons (chance is set individually on the loot items)
 randomDotAttribute = {0, 8} -- See CreatureAttributes.h in src for numbers.
@@ -140,6 +140,8 @@ lootableArmorAttachmentStatMods = {
 }
 
 lootableClothingAttachmentStatMods = {
+	"jedi_force_power_regen",
+	"jedi_force_power_max",
 	"jedi_saber_assembly",
 	"jedi_saber_experimentation",
 	"twohandlightsaber_accuracy",

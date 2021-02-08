@@ -150,16 +150,16 @@ function DeathWatchBunkerScreenPlay:start()
 		if pBunker == nil then
 			return 0
 		end
---
---		self:spawnObjects()
---		self:spawnMobiles()
---		self:setupPermissionGroups()
---
---		writeData("dwb:ventDroidAvailable", 1)
---
---		createEvent(1000 * 45, "DeathWatchBunkerScreenPlay", "poisonEvent", pBunker, "")
---		createObserver(ENTEREDBUILDING, "DeathWatchBunkerScreenPlay", "onEnterDWB", pBunker)
---		createObserver(EXITEDBUILDING, "DeathWatchBunkerScreenPlay", "onExitDWB", pBunker)
+
+		self:spawnObjects()
+		self:spawnMobiles()
+		self:setupPermissionGroups()
+
+		writeData("dwb:ventDroidAvailable", 1)
+
+		createEvent(1000 * 45, "DeathWatchBunkerScreenPlay", "poisonEvent", pBunker, "")
+		createObserver(ENTEREDBUILDING, "DeathWatchBunkerScreenPlay", "onEnterDWB", pBunker)
+		createObserver(EXITEDBUILDING, "DeathWatchBunkerScreenPlay", "onExitDWB", pBunker)
 	end
 end
 

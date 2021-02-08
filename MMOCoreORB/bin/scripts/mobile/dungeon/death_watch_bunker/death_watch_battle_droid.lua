@@ -2,7 +2,7 @@ death_watch_battle_droid = Creature:new {
 	objectName = "@mob/creature_names:mand_bunker_battle_droid",
 	socialGroup = "death_watch",
 	faction = "",
-	level = 134,
+	level = 200,
 	chanceHit = 5.5,
 	damageMin = 795,
 	damageMax = 1300,
@@ -36,6 +36,12 @@ death_watch_battle_droid = Creature:new {
 				{group = "death_watch_bunker_commoners", chance = 10000000}
 			},
 			lootChance = 500000
+		},
+		{
+			groups = {
+				{group = "clothing_attachments", chance = 5000000},
+				{group = "armor_attachments", chance = 5000000},
+			},
 		}
 	},
 	weapons = {"battle_droid_weapons"},

@@ -744,11 +744,11 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 
 
 	//frs accuracy 25
-//	int frsacc = (creoAttacker->getSkillMod("force_manipulation_dark") + creoAttacker->getSkillMod("force_manipulation_light")) / 4;
-//
-//	if (frsacc > 0) {
-//		attackerAccuracy += frsacc + 5;
-//	}
+	int frsacc = (creoAttacker->getSkillMod("force_manipulation_dark") + creoAttacker->getSkillMod("force_manipulation_light"));
+
+	if (frsacc > 0) {
+		attackerAccuracy += frsacc + 10;
+	}
 
 
 	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy") + creoAttacker->getSkillMod("dead_eye");
@@ -777,8 +777,10 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 	}
 
 	//accuracy cap new
-	if (attackerAccuracy > 125) {
-		attackerAccuracy = 125;
+	if (!attacker->isPlayerCreature()) {
+		if (attackerAccuracy > 125) {
+			attackerAccuracy = 125;
+		}
 	}
 
 	if (attackerAccuracy < 0) {
@@ -842,8 +844,10 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	debug() << "Target defense after state affects and cap is " << targetDefense;
 
 	// defense hardcap
-	if (targetDefense > 125)
-		targetDefense = 125;
+	if (!defender->isPlayerCreature()) {
+		if (targetDefense > 125)
+			targetDefense = 125;
+	}
 
 	if (targetDefense < 0)
 		targetDefense = 0;
@@ -863,14 +867,23 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 
 	const auto defenseAccMods = weapon->getDefenderSecondaryDefenseModifiers();
 
+	const auto weaponSpeedMods = weapon->getSpeedModifiers();
+//SPEED MODS ADD TO BLOCK/DODGE ECT
+	if (defender->isPlayerCreature()) {
+	for (int i = 0; i < weaponSpeedMods->size(); ++i) {
+		targetDefense += defender->getSkillMod(weaponSpeedMods->get(i));
+	}
+	}
+
 	for (int i = 0; i < defenseAccMods->size(); ++i) {
 		const String& mod = defenseAccMods->get(i);
 		targetDefense += defender->getSkillMod(mod);
 		targetDefense += defender->getSkillMod("private_" + mod);
 	}
-
-	if (targetDefense > 125)
-		targetDefense = 125;
+	if (!defender->isPlayerCreature()) {
+		if (targetDefense > 125)
+			targetDefense = 125;
+	}
 
 	if (targetDefense < 0)
 		targetDefense = 0;
@@ -987,6 +1000,7 @@ float CombatManager::applyDamageModifiers(CreatureObject* attacker, WeaponObject
 
 	const auto creatureAccMods = weapon->getCreatureAccuracyModifiers();
 
+	if (attacker->isPlayerCreature()) {
 	for (int i = 0; i < creatureAccMods->size(); ++i) {
 		const String& mod = creatureAccMods->get(i);
 		damage += creoAttacker->getSkillMod(mod);
@@ -995,6 +1009,7 @@ float CombatManager::applyDamageModifiers(CreatureObject* attacker, WeaponObject
 		if (creoAttacker->isStanding()) {
 			damage += creoAttacker->getSkillMod(mod + "_while_standing");
 		}
+	}
 	}
 
 	damage += attacker->getSkillMod("private_damage_bonus");

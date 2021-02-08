@@ -80,19 +80,19 @@ void SkillModManager::init() {
 
 void SkillModManager::setDefaults() {
 	skillModMin.put(WEARABLE, -25);
-	skillModMax.put(WEARABLE, 25);
+	skillModMax.put(WEARABLE, 50);
 
 	skillModMin.put(ABILITYBONUS, -125);
-	skillModMax.put(ABILITYBONUS, 125);
+	skillModMax.put(ABILITYBONUS, 250);
 
 	skillModMin.put(STRUCTURE, -125);
-	skillModMax.put(STRUCTURE, 125);
+	skillModMax.put(STRUCTURE, 250);
 
 	skillModMin.put(BUFF, -125);
-	skillModMax.put(BUFF, 125);
+	skillModMax.put(BUFF, 250);
 
 	skillModMin.put(DROID, -110);
-	skillModMax.put(DROID, 110);
+	skillModMax.put(DROID, 220);
 }
 
 void SkillModManager::verifyWearableSkillMods(CreatureObject* creature) {

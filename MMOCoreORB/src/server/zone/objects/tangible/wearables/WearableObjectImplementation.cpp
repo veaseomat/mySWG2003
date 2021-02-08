@@ -123,10 +123,10 @@ void WearableObjectImplementation::generateSockets(CraftingValues* craftingValue
 
 	float roll = System::random(skill + luck + random);
 
-	int generatedCount = int(float(MAXSOCKETS * roll) / float(MAXSOCKETS * 100));
+	int generatedCount = System::random(8);
 //socket count
-	if (generatedCount > MAXSOCKETS)
-		generatedCount = MAXSOCKETS;
+	if (generatedCount > 8)
+		generatedCount = 8;
 	if (generatedCount < 0)
 		generatedCount = 0;
 
@@ -160,7 +160,7 @@ void WearableObjectImplementation::applyAttachment(CreatureObject* player,
 			removeSkillModsFrom(player);
 		}
 //mods counted per item
-		if (wearableSkillMods.size() < 6) {
+		if (wearableSkillMods.size() < 9) {
 			HashTable<String, int>* mods = attachment->getSkillMods();
 			HashTableIterator<String, int> iterator = mods->iterator();
 
@@ -176,19 +176,19 @@ void WearableObjectImplementation::applyAttachment(CreatureObject* player,
 			// Select the next mod in the SEA, sorted high-to-low. If that skill mod is already on the
 			// wearable, with higher or equal value, don't apply and continue. Break once one mod
 			// is applied.
-			for( int i = 0; i < sortedMods.size(); i++ ) {
-				String modName = sortedMods.elementAt(i).getKey();
-				int modValue = sortedMods.elementAt(i).getValue();
-
-				int existingValue = -26;
-				if(wearableSkillMods.contains(modName))
-					existingValue = wearableSkillMods.get(modName);
-
-				if( modValue > existingValue) {
-					wearableSkillMods.put( modName, modValue );
-					break;
-				}
-			}
+//			for( int i = 0; i < sortedMods.size(); i++ ) {
+//				String modName = sortedMods.elementAt(i).getKey();
+//				int modValue = sortedMods.elementAt(i).getValue();
+//
+//				int existingValue = -26;
+//				if(wearableSkillMods.contains(modName))
+//					existingValue = wearableSkillMods.get(modName);
+//
+//				if( modValue > existingValue) {
+//					wearableSkillMods.put( modName, modValue );
+//					break;
+//				}
+//			}
 		}
 
 		usedSocketCount++;
