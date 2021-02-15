@@ -41,11 +41,11 @@ function JediTrials:isOnPadawanTrials(pPlayer)
 end
 
 function JediTrials:isEligibleForKnightTrials(pPlayer)
-	if (pPlayer == nil or not self.knightTrialsEnabled) then
+	if (pPlayer == nil) then
 		return false
 	end
 
-	if (CreatureObject(pPlayer):hasSkill("force_rank_light_novice") or CreatureObject(pPlayer):hasSkill("force_rank_dark_novice")) or tonumber(readScreenPlayData(pPlayer, "KnightTrials", "completedTrials")) == 1 then
+	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03")) then
 		return false
 	end
 

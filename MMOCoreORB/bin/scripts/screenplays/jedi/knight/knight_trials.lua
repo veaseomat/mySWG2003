@@ -126,11 +126,11 @@ function KnightTrials:sendCouncilChoiceSui(pPlayer)
 	end
 
 	local sui = SuiMessageBox.new("KnightTrials", "handleCouncilChoice")
-	sui.setPrompt("@jedi_trials:council_choice_msg")
-	sui.setTitle("@jedi_trials:knight_trials_title")
-	sui.setCancelButtonText("@jedi_trials:button_cancel") -- Cancel
-	sui.setOtherButtonText("@jedi_trials:button_lightside") -- 	Light Jedi Council
-	sui.setOkButtonText("@jedi_trials:button_darkside") -- Dark Jedi Council
+	sui.setPrompt("Now you must choose Jedi, what path will you take?")
+	sui.setTitle("JEDI KNIGHT CHOICE")
+	sui.setCancelButtonText("CANCEL") -- Cancel
+	sui.setOtherButtonText("LIGHT SIDE") -- 	Light Jedi Council
+	sui.setOkButtonText("DARK SIDE") -- Dark Jedi Council
 	-- Other Button setup subscribe
 	sui.setProperty("btnRevert", "OnPress", "RevertWasPressed=1\r\nparent.btnOk.press=t")
 	sui.subscribeToPropertyForEvent(SuiEventType.SET_onClosedOk, "btnRevert", "RevertWasPressed")
@@ -142,28 +142,86 @@ function KnightTrials:handleCouncilChoice(pPlayer, pSui, eventIndex, ...)
 	if (pPlayer == nil) then
 		return
 	end
+	
+	local pGhost = CreatureObject(pPlayer):getPlayerObject()
 
+	if (pGhost == nil) then
+		return
+	end
+	
 	local cancelPressed = (eventIndex == 1)
 	local args = {...}
 	local lightSide = args[1]
 
 	if (cancelPressed) then
-		CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:council_choice_delayed")
+--			local pInventory = SceneObject(pPlayer):getSlottedObject("inventory")
+--			giveItem(pInventory, "object/tangible/jedi/no_drop_jedi_holocron_light.iff", -1)
+			
+--			local sui = SuiMessageBox.new("JediTrials", "emptyCallback") -- No callback
+--			sui.setTitle("CANCEL KNIGHT")
+--			sui.setPrompt("You will be asked the next time you train.")
+--			sui.sendTo(pPlayer)
 		return
-	elseif (lightSide ~= nil) then -- Chose Light Side
-		KnightTrials:doCouncilDecision(pPlayer, JediTrials.COUNCIL_LIGHT)
-	elseif (eventIndex == 0) then -- Chose Dark Side
-		KnightTrials:doCouncilDecision(pPlayer, JediTrials.COUNCIL_DARK)
+	elseif (lightSide ~= nil) then -- Chose Light Side-----------------------------------
+	
+		if CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") then
+			return
+		end
+		
+		awardSkill(pPlayer, "force_title_jedi_rank_03")			
+	
+		PlayerObject(pGhost):setJediState(4)
+		
+		awardSkill(pPlayer, "force_rank_light_novice")	
+		
+		CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+		CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")
+		
+			local pInventory = SceneObject(pPlayer):getSlottedObject("inventory")
+
+			if (pInventory == nil or SceneObject(pInventory):isContainerFullRecursive()) then
+				CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:inventory_full_jedi_robe")
+			else
+				giveItem(pInventory, "object/tangible/wearables/robe/robe_jedi_light_s01.iff", -1)
+					local sui = SuiMessageBox.new("JediTrials", "emptyCallback") -- No callback
+					sui.setTitle("Light Jedi Knight")
+					sui.setPrompt("There is no emotion, there is peace.\nThere is no ignorance, there is knowledge.\nThere is no passion, there is serenity.\nThere is no chaos, there is harmony.\nThere is no death, there is the Force.")
+					sui.sendTo(pPlayer)
+			end	
+
+	elseif (eventIndex == 0) then -- Chose Dark Side---------------------------------------
+	
+		if CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") then
+			return
+		end
+			
+		awardSkill(pPlayer, "force_title_jedi_rank_03")			
+	
+		PlayerObject(pGhost):setJediState(8)
+		
+		awardSkill(pPlayer, "force_rank_dark_novice")	
+		
+		CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+		CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")
+		
+			local pInventory = SceneObject(pPlayer):getSlottedObject("inventory")
+
+			if (pInventory == nil or SceneObject(pInventory):isContainerFullRecursive()) then
+				CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:inventory_full_jedi_robe")
+			else
+				giveItem(pInventory, "object/tangible/wearables/robe/robe_jedi_dark_s01.iff", -1)
+					local sui = SuiMessageBox.new("JediTrials", "emptyCallback") -- No callback
+					sui.setTitle("Dark Jedi Knight")
+					sui.setPrompt("Peace is a lie. There is only Passion.\nThrough Passion I gain Strength.\nThrough Strength I gain Power.\nThrough Power I gain Victory.\nThrough Victory my chains are Broken.\nThe Force shall free me.")
+					sui.sendTo(pPlayer)
+			end	
+		
 	end
+		
 end
 
 function KnightTrials:doCouncilDecision(pPlayer, choice)
 	if (pPlayer == nil) then
-		return
-	end
-
-	if (not JediTrials:isEligibleForKnightTrials(pPlayer)) then
-		self:failTrialsIneligible(pPlayer)
 		return
 	end
 
@@ -172,39 +230,25 @@ function KnightTrials:doCouncilDecision(pPlayer, choice)
 	local successMsg
 
 	if (choice == JediTrials.COUNCIL_LIGHT) then
-		if (playerFaction == FACTIONIMPERIAL) then
-			local sui = SuiMessageBox.new("KnightTrials", "noCallback")
-			sui.setTitle("@jedi_trials:knight_trials_title")
-			sui.setPrompt("@jedi_trials:faction_wrong_choice_light")
-			sui.setOkButtonText("@jedi_trials:button_close")
-			sui.hideCancelButton()
-			sui.sendTo(pPlayer)
-			return
-		end
-
+	
+		PlayerObject(pPlayer):setJediState(4)
+		
+		awardSkill(pPlayer, "force_rank_light_novice")	
+		
 		musicFile = "sound/music_themequest_victory_rebel.snd"
-		successMsg = "@jedi_trials:council_chosen_light"
+		
 	elseif (choice == JediTrials.COUNCIL_DARK) then
-		if (playerFaction == FACTIONREBEL) then
-			local sui = SuiMessageBox.new("KnightTrials", "noCallback")
-			sui.setTitle("@jedi_trials:knight_trials_title")
-			sui.setPrompt("@jedi_trials:faction_wrong_choice_dark")
-			sui.setOkButtonText("@jedi_trials:button_close")
-			sui.hideCancelButton()
-			sui.sendTo(pPlayer)
-			return
-		end
-
+	
+		PlayerObject(pPlayer):setJediState(8)
+		
+		awardSkill(pPlayer, "force_rank_dark_novice")	
+		
 		musicFile = "sound/music_themequest_victory_imperial.snd"
-		successMsg = "@jedi_trials:council_chosen_dark"
+		
 	end
-
-	JediTrials:setJediCouncil(pPlayer, choice)
+	
 	CreatureObject(pPlayer):playMusicMessage(musicFile)
-	CreatureObject(pPlayer):sendSystemMessage(successMsg)
-	local trialsCompleted = JediTrials:getTrialsCompleted(pPlayer) + 1
-	JediTrials:setTrialsCompleted(pPlayer, trialsCompleted)
-	self:startNextKnightTrial(pPlayer)
+
 end
 
 function KnightTrials:notifyKilledHuntTarget(pPlayer, pVictim)

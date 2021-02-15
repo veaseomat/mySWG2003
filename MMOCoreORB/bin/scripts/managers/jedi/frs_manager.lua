@@ -1,4 +1,4 @@
-frsEnabled = 1
+frsEnabled = 0
 
 -- Object ID of Enclave buildings
 lightEnclaveID = 8525417

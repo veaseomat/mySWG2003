@@ -261,8 +261,17 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 
 		local pGhost = CreatureObject(pPlayer):getPlayerObject()
 
-		if (pGhost ~= nil and PlayerObject(pGhost):isJediTrainer(pNpc) and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") and not JediTrials:isOnKnightTrials(pPlayer) and JediTrials:isEligibleForKnightTrials(pPlayer)) then
+		if (pGhost ~= nil and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") and JediTrials:isEligibleForKnightTrials(pPlayer)) then
+--			KnightTrials:resetCompletedTrialsToStart(pPlayer)
+			
 			KnightTrials:startKnightTrials(pPlayer)
+			
+			local sui = SuiMessageBox.new("KnightTrials", "startNextKnightTrial")
+			sui.setTitle("@jedi_trials:knight_trials_title")
+			sui.setPrompt("@jedi_trials:knight_trials_start_query")
+			sui.setOkButtonText("@jedi_trials:button_yes")
+			sui.setCancelButtonText("@jedi_trials:button_no")
+			sui.sendTo(pPlayer)
 		end
 	else
 		local messageString = LuaStringIdChatParameter(stringTable .. "prose_train_failed")
