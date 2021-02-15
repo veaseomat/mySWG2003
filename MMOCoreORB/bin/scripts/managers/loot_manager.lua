@@ -140,6 +140,7 @@ lootableArmorAttachmentStatMods = {
 }
 
 lootableClothingAttachmentStatMods = {
+	"saber_block",
 	"jedi_force_power_regen",
 	"jedi_force_power_max",
 	"jedi_saber_assembly",

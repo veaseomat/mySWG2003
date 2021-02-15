@@ -269,9 +269,8 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 	if (ghost != nullptr) {
 		//Withdraw skill points.
-		if (!skillName.beginsWith("crafting_") || !skillName.beginsWith("social_")) {
 		ghost->addSkillPoints(-skill->getSkillPointsRequired());
-		}
+
 		//Witdraw experience.
 		if (!noXpRequired) {
 			ghost->addExperience(skill->getXpType(), -skill->getXpCost(), true);
@@ -336,16 +335,13 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 		for (int i = 0; i < list->size(); ++i) {
 			Skill* skill = list->get(i);
 
-
-			if (!skillName.beginsWith("crafting_") || !skillName.beginsWith("social_")) {
 			totalSkillPointsWasted -= skill->getSkillPointsRequired();
-			}
 		}
 
-//		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
-//			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
-//			ghost->setSkillPoints(totalSkillPointsWasted);
-//		}
+		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
+			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
+			ghost->setSkillPoints(totalSkillPointsWasted);
+		}
 
 		if (playerManager != nullptr) {
 			creature->setLevel(playerManager->calculatePlayerLevel(creature));
@@ -449,9 +445,7 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 	if (ghost != nullptr) {
 		//Give the player the used skill points back.
-		if (!skillName.beginsWith("crafting_") || !skillName.beginsWith("social_")) {
-			ghost->addSkillPoints(skill->getSkillPointsRequired());
-		}
+		ghost->addSkillPoints(skill->getSkillPointsRequired());
 
 		int xpcost = skill->getXpCost();
 
@@ -508,16 +502,13 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 		for (int i = 0; i < list->size(); ++i) {
 			Skill* skill = list->get(i);
 
-
-			if (!skillName.beginsWith("crafting_") || !skillName.beginsWith("social_")) {
-				totalSkillPointsWasted -= skill->getSkillPointsRequired();
-			}
+			totalSkillPointsWasted -= skill->getSkillPointsRequired();
 		}
 
-//		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
-//			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
-//			ghost->setSkillPoints(totalSkillPointsWasted);
-//		}
+		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
+			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
+			ghost->setSkillPoints(totalSkillPointsWasted);
+		}
 
 		ManagedReference<PlayerManager*> playerManager = creature->getZoneServer()->getPlayerManager();
 		if (playerManager != nullptr) {
@@ -724,9 +715,9 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 		}
 
 		//Check if player has enough skill points to learn the skill.
-//		if (ghost->getSkillPoints() < skill->getSkillPointsRequired()) {
-//			return false;
-//		}
+		if (ghost->getSkillPoints() < skill->getSkillPointsRequired()) {
+			return false;
+		}
 	} else {
 		//Could not retrieve player object.
 		return false;
