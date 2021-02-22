@@ -2050,7 +2050,7 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 2;
 
 		if (frsregen > 0) {
-			regen += 5;
+			regen += 10;
 			regen += frsregen;
 		}
 

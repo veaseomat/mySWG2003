@@ -127,8 +127,8 @@ void WearableObjectImplementation::generateSockets(CraftingValues* craftingValue
 //socket count
 	if (generatedCount > 8)
 		generatedCount = 8;
-	if (generatedCount < 1)
-		generatedCount = 1;
+	if (generatedCount < 4)
+		generatedCount = 4;
 
 	// TODO: remove this backwards compatibility fix at next wipe. Only usedSocketCount variable should be used.
 	objectCreatedPreUsedSocketCountFix = false;

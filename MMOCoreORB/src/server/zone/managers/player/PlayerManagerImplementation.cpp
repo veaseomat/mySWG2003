@@ -5487,7 +5487,7 @@ bool PlayerManagerImplementation::doBurstRun(CreatureObject* player, float hamMo
 
 	uint32 crc = STRING_HASHCODE("burstrun");
 	float hamCost = 100.0f;
-	float duration = 30;
+	float duration = 45;
 	float cooldown = 150;
 
 	float burstRunMod = (float) player->getSkillMod("burst_run");

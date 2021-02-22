@@ -443,9 +443,9 @@ void LightsaberCrystalComponentImplementation::updateCraftingValues(CraftingValu
 
 	if (colorMax != 31) {
 		int finalColor = System::random(11);
-//		if (itemLevel > 219){
-//		finalColor = System::random(19) + 11;
-//		}
+		if (itemLevel > 299){
+		finalColor = System::random(19) + 11;
+		}
 		setColor(finalColor);
 		updateCrystal(finalColor);
 	} else {

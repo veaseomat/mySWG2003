@@ -39,7 +39,7 @@ DraftSchematicObjectTemplate::DraftSchematicObjectTemplate() {
 	skillMods.setNoDuplicateInsertPlan();
 	skillMods.setNullValue(0);
 	labratory = 0;
-	factoryCrateSize = 1000;
+	factoryCrateSize = 10000;
 }
 
 DraftSchematicObjectTemplate::~DraftSchematicObjectTemplate() {
