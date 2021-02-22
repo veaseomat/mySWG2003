@@ -2543,23 +2543,27 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 
 	alm->insertAttribute("challenge_level", getLevel());
 
-	int minD = getDamageMin() * .75;
-	int maxD = getDamageMax() * .75;
+//	int minD = getDamageMin() * .75;
+//	int maxD = getDamageMax() * .75;
+//
+//	StringBuffer damageMsg;
+//	damageMsg << (minD) << "-" << (maxD);
+//
+//	alm->insertAttribute("cat_wpn_damage", damageMsg.toString());
 
-	StringBuffer damageMsg;
-	damageMsg << (minD) << "-" << (maxD);
-	alm->insertAttribute("cat_wpn_damage", damageMsg.toString());
 
-	int npchitchance = getChanceHit() * 100;
-
-	if (npchitchance < 25) {
-		npchitchance = 25;
-	}
-	if (npchitchance > 55) {
-		npchitchance = 55;
-	}
-
-	alm->insertAttribute("basetohit", npchitchance);
+//	int npchitchance = getChanceHit() * 100;
+//
+//	if (npchitchance < 25) {
+//		npchitchance = 25;
+//	}
+//	if (npchitchance > 55) {
+//		npchitchance = 55;
+//	}
+//
+//	if (npchitchance > 0) {
+//	alm->insertAttribute("basetohit", npchitchance);
+//	}
 
 //	if (getArmor() == 0)
 //		alm->insertAttribute("armorrating", "None");
