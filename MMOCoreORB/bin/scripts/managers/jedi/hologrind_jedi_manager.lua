@@ -182,6 +182,10 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 		FsIntro:startStepDelay(pCreatureObject, 3)
 	end
 	
+	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_03") then	
+		FsIntro2:startStepDelay(pCreatureObject, 3)
+	end
+	
 end
 
 -- Get the profession name from the badge number.

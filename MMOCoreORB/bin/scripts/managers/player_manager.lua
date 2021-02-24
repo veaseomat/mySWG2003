@@ -48,10 +48,10 @@ onlineCharactersPerAccount = 5 --How many characters are allowed online from a s
 allowSameAccountPvpRatingCredit = 0
 
 --Blue frog / GM buff values
-performanceBuff = 500
-medicalBuff = 1200
-performanceDuration = 43200 -- in seconds
-medicalDuration = 43200 -- in seconds
+performanceBuff = 1250
+medicalBuff = 2500
+performanceDuration = 432000 -- in seconds
+medicalDuration = 432000 -- in seconds
 
 --Sets the experience multiplier while grouped
 groupExpMultiplier = 1.0

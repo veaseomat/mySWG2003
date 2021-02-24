@@ -27,32 +27,32 @@ void LightsaberCrystalComponentImplementation::initializeTransientMembers() {
 void LightsaberCrystalComponentImplementation::notifyLoadFromDatabase() {
 	// Randomize item level and stats for existing crystals based on original quality value
 	// TODO: Remove this on a server wipe when old variables are removed
-	if (color == 31 && (minimumDamage != maximumDamage || itemLevel == 0)) {
-		if (quality == FAIR)
-			itemLevel = 1 + System::random(38); // 1-39
-		else if (quality == GOOD)
-			itemLevel = 40 + System::random(59); // 40-99
-		else if (quality == QUALITY)
-			itemLevel = 100 + System::random(119); // 100-219
-		else if (quality == PREMIUM)
-			itemLevel = 220 + System::random(109); // 220-329
-		else
-			itemLevel = 330 + System::random(20);
+//	if (color == 31 && (minimumDamage != maximumDamage || itemLevel == 0)) {
+//		if (quality == FAIR)
+//			itemLevel = 1 + System::random(38); // 1-39
+//		else if (quality == GOOD)
+//			itemLevel = 40 + System::random(59); // 40-99
+//		else if (quality == QUALITY)
+//			itemLevel = 100 + System::random(119); // 100-219
+//		else if (quality == PREMIUM)
+//			itemLevel = 220 + System::random(109); // 220-329
+//		else
+//			itemLevel = 330 + System::random(20);
+//
+//		attackSpeed = 0.0;
+//		minimumDamage = 0;
+//		maximumDamage = 0;
+//		sacHealth = 0;
+//		sacAction = 0;
+//		sacMind = 0;
+//		woundChance = 0;
+//		forceCost = 0;
+//		floatForceCost = 0.0;
+//
+//		generateCrystalStats();
+//	}
 
-		attackSpeed = 0.0;
-		minimumDamage = 0;
-		maximumDamage = 0;
-		sacHealth = 0;
-		sacAction = 0;
-		sacMind = 0;
-		woundChance = 0;
-		forceCost = 0;
-		floatForceCost = 0.0;
-
-		generateCrystalStats();
-	}
-
-	TangibleObjectImplementation::notifyLoadFromDatabase();
+//	TangibleObjectImplementation::notifyLoadFromDatabase();
 }
 
 void LightsaberCrystalComponentImplementation::generateCrystalStats() {
@@ -184,7 +184,7 @@ int LightsaberCrystalComponentImplementation::getCrystalQuality() {
 		return GOOD;
 	else if (itemLevel < 220)
 		return QUALITY;
-	else if (itemLevel < 330)
+	else if (itemLevel < 450)
 		return PREMIUM;
 	else
 		return FLAWLESS;
@@ -443,7 +443,7 @@ void LightsaberCrystalComponentImplementation::updateCraftingValues(CraftingValu
 
 	if (colorMax != 31) {
 		int finalColor = System::random(11);
-		if (itemLevel > 299){
+		if (itemLevel > 300){
 		finalColor = System::random(19) + 11;
 		}
 		setColor(finalColor);

@@ -193,6 +193,14 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 			} else if (petDeed != nullptr) {
 				weao->setAttackSpeed(petDeed->getAttackSpeed());
 			}
+//npc random saber colors... YOURE WELCOME, VEASEOMAT IS THE BEST BOI. MOD THE GALAXY VIRGINS ETERNALLY BTFO, VEASEOMAT STILL THE JEDI KING
+			Locker locker(weao);
+			if (weao->isJediWeapon()) {
+
+			int color = System::random(30);
+			weao->setBladeColor(color);
+			weao->setCustomizationVariable("/private/index_color_blade", color, true);
+			}
 
 			readyWeapon = weao;
 		} else {

@@ -1598,7 +1598,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	}
 
 	if (data.isForceAttack()) {
-			damage *= 1.0f;
+			damage *= 2.0f;
 	}
 
 	//frsdamage
@@ -1637,14 +1637,14 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	float lightarmor = defender->getSkillMod("force_manipulation_light");
 
 	if (lightarmor > 0) {
-		//lightarmor += 30.f;
+		lightarmor += 10.f;
 		damage *= 1.f / (1.f + ((float)lightarmor / 100.f));
 	}
 
 	float darkarmor = defender->getSkillMod("force_manipulation_dark");
 
 	if (darkarmor > 0) {
-		//darkarmor += 25.f;
+		darkarmor += 10.f;
 		damage *= 1.f / (1.f + ((float)darkarmor / 100.f));
 	}
 
@@ -1786,14 +1786,14 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 
 
 		//FRS DODGE SYSTEM
-//		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) / 5;
-//
-//		if (frsdodge > 0) {
-//			frsdodge += 10;
-//			if (frsdodge > System::random(100))
-//				return MISS;
-//
-//		}
+		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) / 2;
+
+		if (frsdodge > 0) {
+			frsdodge += 10;
+			if (frsdodge > System::random(100))
+				return MISS;
+
+		}
 
 //		float lightdodge = targetCreature->getSkillMod("force_manipulation_light") / 5;
 //

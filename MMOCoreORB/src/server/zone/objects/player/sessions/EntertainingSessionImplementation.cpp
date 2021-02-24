@@ -281,7 +281,7 @@ void EntertainingSessionImplementation::doPerformanceAction() {
 		return;
 	}
 
-	int actionDrain = performance->getActionPointsPerLoop() - (int)(entertainer->getHAM(CreatureAttribute::QUICKNESS)/35.f) / 3;
+	int actionDrain = 1;
 
 	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
 		if (isDancing()) {
@@ -294,7 +294,7 @@ void EntertainingSessionImplementation::doPerformanceAction() {
 			entertainer->sendSystemMessage("@performance:music_too_tired");
 		}
 	} else {
-		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain, false, true);
+		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, 1, false, true);
 	}
 }
 
@@ -599,7 +599,7 @@ void EntertainingSessionImplementation::doFlourish(int flourishNumber, bool gran
 	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
 		entertainer->sendSystemMessage("@performance:flourish_too_tired");
 	} else {
-		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain, false, true);
+		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, 1, false, true);
 
 		if (dancing) {
 			StringBuffer msg;

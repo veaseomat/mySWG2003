@@ -68,7 +68,7 @@ function SithShadowEncounter:onPlayerKilled(pPlayer, pKiller, nothing)
 
 	Logger:log("Player was killed.", LT_INFO)
 	if SpawnMobiles.isFromSpawn(pPlayer, SithShadowEncounter.taskName, pKiller) then
-		spatialChat(pKiller, "Pathetic...")
+--		spatialChat(pKiller, "Pathetic...")
 		--i use this to track if player won or not
 --		QuestManager.completeQuest(pPlayer, QuestManager.quests.TWO_MILITARY)
 		PlayerObject(pGhost):setVisibility(1)
