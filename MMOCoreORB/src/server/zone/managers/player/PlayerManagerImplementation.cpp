@@ -1554,7 +1554,7 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 					obj->setOptionsBitmask(bitmask);
 				} else {
 					//5% Decay for uninsured items
-					obj->inflictDamage(obj, 0, 0.03 * obj->getMaxCondition(), true, true);
+//					obj->inflictDamage(obj, 0, 0.03 * obj->getMaxCondition(), true, true);
 				}
 
 				// Calculate condition percentage for decay report
@@ -1563,12 +1563,12 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 				int condPercentage = ( min / (float)max ) * 100.0f;
 				String line = " - " + obj->getDisplayedName() + " (@"+String::valueOf(condPercentage)+"%)";
 
-				suiCloneDecayReport->addMenuItem(line, item->getObjectID());
+//				suiCloneDecayReport->addMenuItem(line, item->getObjectID());
 			}
 		}
 
-		ghost->addSuiBox(suiCloneDecayReport);
-		player->sendMessage(suiCloneDecayReport->generateMessage());
+//		ghost->addSuiBox(suiCloneDecayReport);
+//		player->sendMessage(suiCloneDecayReport->generateMessage());
 
 	}
 

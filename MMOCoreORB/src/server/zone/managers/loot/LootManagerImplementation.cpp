@@ -509,7 +509,8 @@ void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootI
 			int max = (int) Math::max(-1.f, Math::min(50.f, (float) round(0.1f * level + 3)));
 			int min = (int) Math::max(-1.f, Math::min(50.f, (float) round(0.075f * level - 1)));
 
-			int mod = (System::random(max - min) + min) * 2;
+			int mod = (System::random(max - min) + min);
+			mod += (System::random(max - min) + min);
 
 			if(mod < 5)
 				mod = 5;
@@ -638,6 +639,42 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		int tempChance = 0; //Start at 0.
 
 		const LootGroups* lootGroups = entry->getLootGroups();
+
+		//Now we do the second roll to determine loot group.
+		roll = System::random(10000000);
+
+		//Select the loot group to use.
+		for (int i = 0; i < lootGroups->count(); ++i) {
+			const LootGroupEntry* entry = lootGroups->get(i);
+
+			tempChance += entry->getLootChance();
+
+			//Is this entry lower than the roll? If yes, then we want to try the next entry.
+			if (tempChance < roll)
+				continue;
+
+			createLoot(trx, container, entry->getLootGroupName(), level);
+
+			break;
+		}
+
+		//Now we do the second roll to determine loot group.
+		roll = System::random(10000000);
+
+		//Select the loot group to use.
+		for (int i = 0; i < lootGroups->count(); ++i) {
+			const LootGroupEntry* entry = lootGroups->get(i);
+
+			tempChance += entry->getLootChance();
+
+			//Is this entry lower than the roll? If yes, then we want to try the next entry.
+			if (tempChance < roll)
+				continue;
+
+			createLoot(trx, container, entry->getLootGroupName(), level);
+
+			break;
+		}
 
 		//Now we do the second roll to determine loot group.
 		roll = System::random(10000000);

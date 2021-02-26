@@ -2,7 +2,7 @@ krayt_dragon_ancient = Creature:new {
 	objectName = "@mob/creature_names:giant_canyon_krayt_dragon",
 	socialGroup = "krayt",
 	faction = "",
-	level = 300,
+	level = 330,
 	chanceHit = 30.0,
 	damageMin = 1645,
 	damageMax = 3000,
@@ -27,13 +27,13 @@ krayt_dragon_ancient = Creature:new {
 
 	templates = {"object/mobile/canyon_krayt_dragon.iff"},
 	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
-	scale = 1.2;
+	scale = 1.8;
 
 	lootGroups = {
 		{
 	        groups = {
 				{group = "krayt_dragon_common", chance = 1000000},
-				{group = "krayt_tissue_uncommon", chance = 3000000},
+				{group = "krayt_tissue_rare", chance = 3000000},
 				{group = "krayt_pearls", chance = 3000000},
 				{group = "armor_all", chance = 1500000},
 				{group = "weapons_all", chance = 1500000},

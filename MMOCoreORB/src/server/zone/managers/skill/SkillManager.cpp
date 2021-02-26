@@ -323,6 +323,7 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 				}
 
 				if (badge != nullptr) {
+					//prof badges here
 					playerManager->awardBadge(ghost, badge);
 				}
 			}
@@ -384,6 +385,11 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 	creature->sendMessage(msg4);
 
 	SkillModManager::instance()->verifySkillBoxSkillMods(creature);
+
+	//works with frog not with trainer
+	if (skill->getSkillName() == "social_politician_novice") {
+		awardSkill("social_politician_master", creature, true, true, true);
+	}
 
 	return true;
 }

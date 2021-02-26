@@ -14,28 +14,21 @@ void SharedStructureObjectTemplate::readObject(LuaObject* templateData) {
 
 	lotSize = templateData->getByteField("lotSize");
 
-	baseMaintenanceRate = templateData->getIntField("baseMaintenanceRate") / 5;
+	baseMaintenanceRate = templateData->getIntField("baseMaintenanceRate") / 100;
 
-	basePowerRate = templateData->getIntField("basePowerRate") / 5;
+	basePowerRate = templateData->getIntField("basePowerRate") / 100;
 
-	LuaObject allowzones = templateData->getObjectField("allowedZones");
-	allowedZones.removeAll(); //Make sure it's empty...
-
-	for (int i = 1; i <= allowzones.getTableSize(); ++i) {
-		allowedZones.put(allowzones.getStringAt(i));
-	}
-
-	allowzones.pop();
+	allowedZones = {"corellia", "talus", "dathomir", "endor", "lok", "naboo", "rori", "tatooine", "yavin4", "dantooine"},
 
 	cityRankRequired = templateData->getByteField("cityRankRequired");
 
 	constructionMarkerTemplate = templateData->getStringField("constructionMarker");
 
-	abilityRequired = templateData->getStringField("abilityRequired");
+//	abilityRequired = templateData->getStringField("abilityRequired");
 
 	uniqueStructure = templateData->getBooleanField("uniqueStructure");
 
-	cityMaintenanceBase = templateData->getIntField("cityMaintenanceBase");
+	cityMaintenanceBase = templateData->getIntField("cityMaintenanceBase") / 100;
 
-	cityMaintenanceRate = templateData->getIntField("cityMaintenanceRate");
+	cityMaintenanceRate = templateData->getIntField("cityMaintenanceRate") / 100;
 }
