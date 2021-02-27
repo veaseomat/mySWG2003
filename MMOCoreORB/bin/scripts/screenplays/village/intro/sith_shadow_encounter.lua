@@ -43,7 +43,12 @@ function SithShadowEncounter:onLoot(pLootedCreature, pLooter, nothing)
 		return 0
 	end
 
---	Logger:log("Looting the sith shadow.", LT_INFO)
+	Logger:log("Looting the sith shadow.", LT_INFO)
+	
+	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_03") then	
+		CreatureObject(pLooter):awardExperience("force_rank_xp", 10000, true)	
+	end	
+
 --	if QuestManager.hasActiveQuest(pLooter, QuestManager.quests.TWO_MILITARY) then
 --		if self:isTheFirstSithShadowOfThePlayer(pLootedCreature, pLooter) then
 --

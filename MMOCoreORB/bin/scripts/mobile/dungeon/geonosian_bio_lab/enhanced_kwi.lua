@@ -33,6 +33,12 @@ enhanced_kwi = Creature:new {
 				{group = "enhanced_kwi", chance = 10000000}
 			},
 			lootChance = 3120000
+		},
+		{
+			groups = {
+				{group = "clothing_attachments", chance = 5000000},
+				{group = "armor_attachments", chance = 5000000},
+			},
 		}
 	},
 	weapons = {},

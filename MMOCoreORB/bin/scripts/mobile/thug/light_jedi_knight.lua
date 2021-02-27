@@ -40,16 +40,12 @@ light_jedi_knight = Creature:new {
 	lootGroups = {
 		{
 			groups = {
-				{group = "holocron_light", chance = 600000},
-				{group = "power_crystals", chance = 600000},
-				{group = "color_crystals", chance = 600000},
-				{group = "rifles", chance = 1300000},
-				{group = "pistols", chance = 1300000},
-				{group = "melee_weapons", chance = 1300000},
-				{group = "armor_attachments", chance = 1100000},
-				{group = "clothing_attachments", chance = 1100000},
-				{group = "carbines", chance = 1300000},
-				{group = "dark_jedi_common", chance = 800000}
+				{group = "junk", chance = 3000000},
+				{group = "clothing_attachments", chance = 2000000},
+				{group = "armor_attachments", chance = 2000000},
+				{group = "holocron_dark", chance = 1000000},
+				{group = "color_crystals", chance = 1000000},
+				{group = "sabers", chance = 1000000}
 			}
 		},
 	},

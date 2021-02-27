@@ -67,6 +67,7 @@ randomDotUses = {250, 9999}
 junkValueModifier = 5;
 
 lootableArmorAttachmentStatMods = {
+"unarmed_passive_defense",
 --	"aim",
 --	"alert",
 --	"berserk",
@@ -140,6 +141,7 @@ lootableArmorAttachmentStatMods = {
 }
 
 lootableClothingAttachmentStatMods = {
+	"unarmed_passive_defense",
 	"bio_engineer_assembly",
 	"bio_engineer_experimentation",
 	"saber_block",
@@ -267,6 +269,7 @@ lootableClothingAttachmentStatMods = {
 }
 
 lootableArmorStatMods = {
+	"unarmed_passive_defense",
 --	"aim",
 --	"alert",
 --	"berserk",
@@ -340,6 +343,7 @@ lootableArmorStatMods = {
 }
 
 lootableClothingStatMods = {
+	"unarmed_passive_defense",
 	"bio_engineer_assembly",
 	"bio_engineer_experimentation",
 	"saber_block",

@@ -65,7 +65,7 @@ function FsIntro:startStepDelay(pPlayer, step)
 --		return
 --	else
 	--player lost bh or first time
-		stepDelay = (getRandomNumber(2, 480) * 60 * 1000) --10min - 720=12hr
+		stepDelay = (getRandomNumber(2, 120) * 60 * 1000) --10min - 720=12hr
 --	end
 
 	writeScreenPlayData(pPlayer, "VillageJediProgression", "FsIntroDelay", stepDelay + os.time())
@@ -85,7 +85,7 @@ function FsIntro:doDelayedStep(pPlayer)
 	
 --delay for dead incap or not in good area
 	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer)) then
-		createEvent(getRandomNumber(2, 30) * 60 * 1000, "FsIntro", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(2, 15) * 60 * 1000, "FsIntro", "doDelayedStep", pPlayer, "")
 		return
 	end
 --this is the visibility threshold, vanilla is 1500
@@ -93,7 +93,7 @@ function FsIntro:doDelayedStep(pPlayer)
 		encounterResult = SithShadowEncounter:start(pPlayer)
 	else
 	--chek visibility again after
-		createEvent(getRandomNumber(2, 30) * 60 * 1000, "FsIntro", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(2, 15) * 60 * 1000, "FsIntro", "doDelayedStep", pPlayer, "")
 		return
 	end
 

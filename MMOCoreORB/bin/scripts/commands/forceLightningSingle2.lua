@@ -71,7 +71,7 @@ ForceLightningSingle2Command = {
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
 	forceAttack = true,
-	damageType = ELECTRICITY_DAMAGE,
+	damageType = LIGHTSABER_DAMAGE,
 
 	frsLightMinDamageModifier = 5,
 	frsLightMaxDamageModifier = 10,

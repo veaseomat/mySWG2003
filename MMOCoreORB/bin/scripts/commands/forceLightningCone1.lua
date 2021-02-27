@@ -61,7 +61,7 @@ ForceLightningCone1Command = {
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
 	forceAttack = true,
-	damageType = ELECTRICITY_DAMAGE,
+	damageType = LIGHTSABER_DAMAGE,
 
 	frsLightMinDamageModifier = 2,
 	frsLightMaxDamageModifier = 4,

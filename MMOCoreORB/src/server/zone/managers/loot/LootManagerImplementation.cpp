@@ -262,8 +262,17 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
-//	if(level > 300)
-//		level = 300;
+	if(level > 500)
+		level = 500;
+
+	float excMod = 3.0;
+
+	int maxlvl = templateObject->getnewmaximumLevel();
+
+	if (maxlvl == 1) {
+		level = 0;
+		excMod = 1.0;
+	}
 
 	const String& directTemplateObject = templateObject->getDirectObjectTemplate();
 
@@ -289,6 +298,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	float junkMaxValue = templateObject->getJunkMaxValue() * junkValueModifier;
 	float fJunkValue = junkMinValue+System::random(junkMaxValue-junkMinValue);
 
+
 	if (level>0 && templateObject->getJunkDealerTypeNeeded()>1){
 		fJunkValue=fJunkValue + (fJunkValue * ((float)level / 100)); // This is the loot value calculation if the item has a level
 	}
@@ -300,15 +310,13 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	setCustomObjectName(prototype, templateObject);
 
-	float excMod = 2.5;
-
 	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);
 
 	if (prototype->isLightsaberCrystalObject()) {
 		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
 
 		if (crystal != nullptr)
-			crystal->setItemLevel(uncappedLevel);
+			crystal->setItemLevel(level);
 	}
 
 	String subtitle;
@@ -408,16 +416,16 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		craftingValues->setMaxValue(subtitle, max);
 	}
 
-	if (yellow) {
-		prototype->addMagicBit(false);
-		prototype->setJunkValue((int)(fJunkValue * 1.25));
-	} else {
-		if (excMod == 1.0) {
-			prototype->setJunkValue((int)(fJunkValue));
-		} else {
-			prototype->setJunkValue((int)(fJunkValue * (excMod/2)));
-		}
-	}
+//	if (yellow) {
+//		prototype->addMagicBit(false);
+		prototype->setJunkValue((int)(fJunkValue * 1.5));
+//	} else {
+//		if (excMod == 1.0) {
+//			prototype->setJunkValue((int)(fJunkValue));
+//		} else {
+//			prototype->setJunkValue((int)(fJunkValue * (excMod/2)));
+//		}
+//	}
 
 	// Use percentages to recalculate the values
 	craftingValues->recalculateValues(false);

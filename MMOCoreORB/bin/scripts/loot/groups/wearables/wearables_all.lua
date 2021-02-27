@@ -132,8 +132,6 @@ wearables_all = {
 		{itemTemplate = "hat_s10", weight = 39481}, -- Sunguard
 		{itemTemplate = "hat_s12", weight = 39481}, -- Large Headwrap
 		{itemTemplate = "hat_s13", weight = 39481}, -- Decorative Headdress
-		{itemTemplate = "hat_chef_s01_ith", weight = 39481}, -- Pouffy Ithorian Chef Hat
-		{itemTemplate = "hat_chef_s02_ith", weight = 39481}, -- Small Ithorian Chef Hat
 		{itemTemplate = "jacket_s06", weight = 39481}, -- Vested Jacket
 		{itemTemplate = "jacket_s07", weight = 39481}, -- Scout Jacket
 		{itemTemplate = "jacket_s10", weight = 39481}, -- Heavy Reinforced Jacket
