@@ -333,11 +333,11 @@ int PlayerObjectImplementation::calculateBhReward() {
 //
 //	if (frsRank > 0)
 //		reward += frsRank * 100000; // +100k per frs rank
+//
+//	if (reward < minReward)
+//		reward = minReward;
 
-	if (reward < minReward)
-		reward = minReward;
-
-	return reward;
+	return minReward;
 }
 
 void PlayerObjectImplementation::sendBaselinesTo(SceneObject* player) {
