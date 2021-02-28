@@ -132,7 +132,7 @@ function sithshadowencounter2:onEncounterInRange(pPlayer, spawnedObjects)
 	Logger:log("Sending threaten string.", LT_INFO)
 	local threatenString = LuaStringIdChatParameter(SITH_SHADOW_THREATEN_STRING)
 	threatenString:setTT(CreatureObject(pPlayer):getFirstName())
-	spatialChat(spawnedObjects[1], "Peace is a lie, there is only passion!")
+	spatialChat(spawnedObjects[1], "Never should have come here!")
 
 
 	foreach(spawnedObjects, function(pMobile)

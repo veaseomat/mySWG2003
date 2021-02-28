@@ -90,11 +90,11 @@ function FsIntro2:doDelayedStep(pPlayer)
 	end
 	
 	
-	if CreatureObject(pPlayer):hasSkill("force_rank_light_novice") and CreatureObject(pPlayer):isOvert() then
+	if CreatureObject(pPlayer):isOvert() and (faction == "rebel") then
 		encounterResult = sithshadowencounter2:start(pPlayer)	
 		return
 
-	else if CreatureObject(pPlayer):hasSkill("force_rank_dark_novice") and CreatureObject(pPlayer):isOvert() then
+	else if  CreatureObject(pPlayer):isOvert() and (faction == "imperial") then
 		encounterResult = sithshadowencounter3:start(pPlayer)	
 		return
 		

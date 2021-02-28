@@ -1,6 +1,6 @@
 dark_jedi_knight2 = Creature:new {
 	objectName = "",
-	customName = "a Dark Jedi Knight",	
+	customName = "an Imperial Jedi Knight",
 	randomNameType = NAME_GENERIC,
 	randomNameTag = true,
 	socialGroup = "imperial",
