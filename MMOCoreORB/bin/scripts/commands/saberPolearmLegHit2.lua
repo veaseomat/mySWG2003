@@ -52,7 +52,7 @@ SaberPolearmLegHit2Command = {
 	forceCostMultiplier = 1.25,
 	visMod = 25,
 
-	animation = "combo_3a", 
+	animation = "", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saberpolearmleghit2",

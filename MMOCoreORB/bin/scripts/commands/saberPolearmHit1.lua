@@ -52,7 +52,7 @@ SaberPolearmHit1Command = {
 	forceCostMultiplier = 1.0,
 	visMod = 25,
 
-	animation = "combo_3a", 
+	animation = "", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saberpolearmhit1",

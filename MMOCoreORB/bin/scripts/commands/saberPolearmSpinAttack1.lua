@@ -54,7 +54,7 @@ SaberPolearmSpinAttack1Command = {
 	areaRange = 16,
 	visMod = 25,
 
-	animation = "counter_low_left", 
+	animation = "", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saberpolearmspinattack1",

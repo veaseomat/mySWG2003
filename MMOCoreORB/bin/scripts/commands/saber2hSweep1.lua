@@ -64,7 +64,7 @@ Saber2hSweep1Command = {
 	  )
 	},
 
-	animation = "lower_posture_2hmelee_3",
+	animation = "",
 
 	combatSpam = "saber2hsweep1",
 
