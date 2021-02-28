@@ -45,7 +45,7 @@ function SithShadowEncounter:onLoot(pLootedCreature, pLooter, nothing)
 
 	Logger:log("Looting the sith shadow.", LT_INFO)
 	
-	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_03") then	
+	if CreatureObject(pLooter):hasSkill("force_title_jedi_rank_03") then	
 		CreatureObject(pLooter):awardExperience("force_rank_xp", 10000, true)	
 	end	
 

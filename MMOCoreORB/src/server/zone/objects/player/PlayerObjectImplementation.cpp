@@ -326,13 +326,13 @@ int PlayerObjectImplementation::calculateBhReward() {
 	if (getJediState() >= 4) // Minimum if player is knight
 		minReward = 50000;
 
-	int skillPoints = getSpentJediSkillPoints();
-	int reward = skillPoints * 1000;
-
-	int frsRank = getFrsData()->getRank();
-
-	if (frsRank > 0)
-		reward += frsRank * 100000; // +100k per frs rank
+//	int skillPoints = getSpentJediSkillPoints();
+//	int reward = skillPoints * 1000;
+//
+//	int frsRank = getFrsData()->getRank();
+//
+//	if (frsRank > 0)
+//		reward += frsRank * 100000; // +100k per frs rank
 
 	if (reward < minReward)
 		reward = minReward;
@@ -2047,14 +2047,15 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	}
 
 	if (!forceRegenerationEvent->isScheduled()) {
-		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 2;
 
-		if (frsregen > 0) {
-			regen += 10;
-			regen += frsregen;
-		}
+//		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 2;
+//
+//		if (frsregen > 0) {
+//			regen += 10;
+//			regen += frsregen;
+//		}
 
-		if (regen > 1) {
+		if (regen > 0) {
 		regen += 10; //jedi robe
 		}
 
@@ -2971,8 +2972,8 @@ void PlayerObjectImplementation::recalculateForcePower() {
 
 	int frsMax = player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark");
 
-	if (maxForce > 100) {
-	maxForce += (frsMax) * 100;
+	if (maxForce > 0) {
+	maxForce += frsMax * 50;
 	maxForce += 250; //jedi robe
 	}
 

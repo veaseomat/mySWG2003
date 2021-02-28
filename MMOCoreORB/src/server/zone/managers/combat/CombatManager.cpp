@@ -707,7 +707,7 @@ int CombatManager::calculateTargetPostureModifier(WeaponObject* weapon, Creature
 
 int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
 	if (attacker->isAiAgent()) {
-		int npchitchance = 25; //cast<AiAgent*>(attacker)->getChanceHit() * 100;
+		int npchitchance = 35; //cast<AiAgent*>(attacker)->getChanceHit() * 100;
 		//these are the min/max hitchance from early precu/ this is a catchall because some npc entries are WRONG
 //		if (npchitchance < 25) {
 //			npchitchance = 25;
@@ -845,17 +845,14 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 //	}
 
 	//jedi frs bonus
-	float frsdef = (defender->getSkillMod("force_manipulation_dark") + defender->getSkillMod("force_manipulation_light"));
-
-	if (frsdef > 0) {
-		targetDefense += frsdef;
-	}
+//	float frsdef = (defender->getSkillMod("force_manipulation_dark") + defender->getSkillMod("force_manipulation_light"));
+//
+//	if (frsdef > 0) {
+//		targetDefense += frsdef;
+//	}
 
 //	if (defender->isKnockedDown())
 //		targetDefense *= .5f;
-
-	if (targetDefense < 1)
-		targetDefense = 1;
 
 	//reduce player melee/ranged d
 	if (defender->isPlayerCreature()) {
@@ -865,6 +862,9 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	if (!defender->isPlayerCreature()) {
 			targetDefense *= .3f;
 	}
+
+	if (targetDefense < 1)
+		targetDefense = 1;
 
 	return targetDefense;
 }
@@ -1629,17 +1629,17 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= 4.0;
 
 		//frsdamage
-		float lightDamage = attacker->getSkillMod("force_manipulation_light");
+		float lightDamage = attacker->getSkillMod("force_manipulation_light") / 2;
 
 		if (lightDamage > 0) {
-				lightDamage += 20.f;
+//				lightDamage += 20.f;
 				damage *= 1.f * (1.f + ((float)lightDamage / 100.f));
 		}
 
-		float darkDamage = attacker->getSkillMod("force_manipulation_dark");
+		float darkDamage = attacker->getSkillMod("force_manipulation_dark") / 2;
 
 		if (darkDamage > 0) {
-				darkDamage += 20.f;
+//				darkDamage += 20.f;
 				damage *= 1.f * (1.f + ((float)darkDamage / 100.f));
 		}
 
