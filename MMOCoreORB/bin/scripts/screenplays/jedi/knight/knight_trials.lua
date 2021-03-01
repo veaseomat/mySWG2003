@@ -174,6 +174,8 @@ function KnightTrials:handleCouncilChoice(pPlayer, pSui, eventIndex, ...)
 		
 		awardSkill(pPlayer, "force_rank_light_novice")	
 		
+		FsIntro2:startStepDelay(pPlayer, 3)
+		
 		CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
 		CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")
 		
@@ -200,6 +202,8 @@ function KnightTrials:handleCouncilChoice(pPlayer, pSui, eventIndex, ...)
 		PlayerObject(pGhost):setJediState(8)
 		
 		awardSkill(pPlayer, "force_rank_dark_novice")	
+		
+		FsIntro2:startStepDelay(pPlayer, 3)
 		
 		CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
 		CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")

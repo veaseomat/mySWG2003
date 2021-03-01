@@ -136,6 +136,8 @@ function HologrindJediManager:awardJediStatusAndSkill(pCreatureObject)
 	
 	awardSkill(pCreatureObject, "force_title_jedi_rank_02")
 	
+	FsIntro:startStepDelay(pCreatureObject, 3)
+	
 	local pInventory = SceneObject(pCreatureObject):getSlottedObject("inventory")
 
 	if (pInventory == nil) then
