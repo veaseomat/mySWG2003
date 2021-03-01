@@ -136,6 +136,14 @@ function HologrindJediManager:awardJediStatusAndSkill(pCreatureObject)
 	
 	awardSkill(pCreatureObject, "force_title_jedi_rank_02")
 	
+	local pInventory = SceneObject(pCreatureObject):getSlottedObject("inventory")
+
+	if (pInventory == nil) then
+		return
+	end
+
+	giveItem(pInventory, "object/tangible/wearables/robe/robe_jedi_padawan.iff", -1)
+	
 end
 
 -- Check if the player has mastered all hologrind professions and send sui window and award skills.

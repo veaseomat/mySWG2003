@@ -65,7 +65,7 @@ function FsIntro2:startStepDelay(pPlayer, step)
 --		return
 --	else
 	--player lost bh or first time
-		stepDelay = (getRandomNumber(2, 30) * 60 * 1000) --2min - 720=12hr
+		stepDelay = (getRandomNumber(1, 1) * 1 * 1000) --2min - 720=12hr
 --	end
 
 	writeScreenPlayData(pPlayer, "VillageJediProgression", "FsIntro2Delay", stepDelay + os.time())
@@ -85,23 +85,23 @@ function FsIntro2:doDelayedStep(pPlayer)
 	
 --delay for dead incap or not in good area
 	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer)) then
-		createEvent(getRandomNumber(2, 15) * 60 * 1000, "FsIntro2", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(1, 1) * 1 * 1000, "FsIntro2", "doDelayedStep", pPlayer, "")
 		return
 	end
 	
 	
-	if CreatureObject(pPlayer):isOvert() and (faction == "rebel") then
+	if CreatureObject(pPlayer):hasSkill("force_rank_light_novice") then
 		encounterResult = sithshadowencounter2:start(pPlayer)	
 		return
 
-	else if  CreatureObject(pPlayer):isOvert() and (faction == "imperial") then
+	else if CreatureObject(pPlayer):hasSkill("force_rank_dark_novice") then
 		encounterResult = sithshadowencounter3:start(pPlayer)	
 		return
 		
 
 	else
 	--chek overt again after
-		createEvent(getRandomNumber(2, 15) * 1 * 1000, "FsIntro2", "doDelayedStep", pPlayer, "")
+	--	createEvent(getRandomNumber(1, 1) * 1 * 1000, "FsIntro2", "doDelayedStep", pPlayer, "")
 		return
 	end
 		

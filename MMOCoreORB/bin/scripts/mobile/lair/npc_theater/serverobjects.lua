@@ -71,7 +71,7 @@ includeFile("lair/npc_theater/global_brigand_camp_neutral_small_theater.lua")
 includeFile("lair/npc_theater/global_brigand_highwayman_camp_neutral_large_theater.lua")
 includeFile("lair/npc_theater/global_brigand_leader_camp_neutral_large_theater.lua")
 includeFile("lair/npc_theater/global_brigand_scout_camp_neutral_small_theater.lua")
-
+--includeFile("lair/npc_theater/global_dark_jedi_camp_dark_jedi_theater.lua")
 includeFile("lair/npc_theater/global_gambler_camp_neutral_small_theater.lua")
 includeFile("lair/npc_theater/global_imperial_1st_lieutenant_camp_imperial_medium_theater.lua")
 includeFile("lair/npc_theater/global_imperial_cadet_camp_imperial_small_theater.lua")

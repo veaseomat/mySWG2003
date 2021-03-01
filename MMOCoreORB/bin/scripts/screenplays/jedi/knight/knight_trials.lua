@@ -15,14 +15,14 @@ function KnightTrials:startKnightTrials(pPlayer)
 	JediTrials:setCurrentTrial(pPlayer, 0)
 	self:setTrialShrine(pPlayer, pRandShrine)
 
-	local suiPrompt = getStringId("@jedi_trials:knight_trials_intro_msg") .. " " .. getStringId("@jedi_trials:" .. randomShrinePlanet) .. " " .. getStringId("@jedi_trials:knight_trials_intro_msg_end")
-
-	local sui = SuiMessageBox.new("KnightTrials", "noCallback")
-	sui.setTitle("@jedi_trials:knight_trials_title")
-	sui.setPrompt(suiPrompt)
-	sui.setOkButtonText("@jedi_trials:button_close")
-	sui.hideCancelButton()
-	sui.sendTo(pPlayer)
+--	local suiPrompt = getStringId("@jedi_trials:knight_trials_intro_msg") .. " " .. getStringId("@jedi_trials:" .. randomShrinePlanet) .. " " .. getStringId("@jedi_trials:knight_trials_intro_msg_end")
+--
+--	local sui = SuiMessageBox.new("KnightTrials", "noCallback")
+--	sui.setTitle("@jedi_trials:knight_trials_title")
+--	sui.setPrompt(suiPrompt)
+--	sui.setOkButtonText("@jedi_trials:button_close")
+--	sui.hideCancelButton()
+--	sui.sendTo(pPlayer)
 end
 
 function KnightTrials:noCallback(pPlayer, pSui, eventIndex, ...)
