@@ -64,7 +64,7 @@ SaberPolearmHit2Command = {
 	  )
 	},
 
-	animation = "", 
+	animation = "combo_3a", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saberpolearmhit2",

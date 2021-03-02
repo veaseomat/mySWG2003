@@ -52,7 +52,7 @@ Saber1hHeadHit1Command = {
 	forceCostMultiplier = 1.25,
 	visMod = 25,
 
-	animation = "", 
+	animation = "combo_4a", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber1hheadhit1",

@@ -84,7 +84,7 @@ Saber1hFlurryCommand = {
 	  )
 	},
 
-	animation = "", 
+	animation = "showoff_2", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber1hflurry",

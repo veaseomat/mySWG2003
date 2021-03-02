@@ -52,7 +52,7 @@ Saber2hHit3Command = {
 	forceCostMultiplier = 2.0,
 	visMod = 25,
 
-	animation = "", 
+	animation = "combo_2c", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber2hhit3",
