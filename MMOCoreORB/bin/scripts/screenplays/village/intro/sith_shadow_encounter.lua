@@ -45,10 +45,11 @@ function SithShadowEncounter:onLoot(pLootedCreature, pLooter, nothing)
 
 	Logger:log("Looting the sith shadow.", LT_INFO)
 	
+	CreatureObject(pLooter):awardExperience("jedi_general", 50000, true)		
+		
 	if CreatureObject(pLooter):hasSkill("force_title_jedi_rank_03") then	
-		CreatureObject(pLooter):awardExperience("force_rank_xp", 10000, true)	
+		CreatureObject(pLooter):awardExperience("force_rank_xp", 5000, true)	
 	end	
-
 --	if QuestManager.hasActiveQuest(pLooter, QuestManager.quests.TWO_MILITARY) then
 --		if self:isTheFirstSithShadowOfThePlayer(pLootedCreature, pLooter) then
 --
@@ -105,8 +106,9 @@ function SithShadowEncounter:onEncounterSpawned(pPlayer, spawnedObjects)
 	SceneObject(pInventory):setContainerOwnerID(playerID)
 
 
-	createObserver(LOOTCREATURE, self.taskName, "onLoot", spawnedObjects[1])
+--	createObserver(LOOTCREATURE, self.taskName, "onLoot", spawnedObjects[1])
 	createObserver(OBJECTDESTRUCTION, self.taskName, "onPlayerKilled", pPlayer)
+	createObserver(OBJECTDESTRUCTION, self.taskName, "onLoot", spawnedObjects[1])
 	
 --	QuestManager.activateQuest(pPlayer, QuestManager.quests.TWO_MILITARY)
 

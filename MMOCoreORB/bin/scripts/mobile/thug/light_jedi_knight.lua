@@ -41,8 +41,6 @@ light_jedi_knight = Creature:new {
 		{
 			groups = {
 				{group = "junk", chance = 3000000},
-				{group = "clothing_attachments", chance = 2000000},
-				{group = "armor_attachments", chance = 2000000},
 				{group = "holocron_dark", chance = 1000000},
 				{group = "color_crystals", chance = 1000000},
 				{group = "sabers", chance = 1000000}

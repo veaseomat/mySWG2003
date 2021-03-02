@@ -6,87 +6,102 @@ junk = {
 	maximumLevel = 0,
 	lootItems = {
 
-		{itemTemplate = "locked_container", weight = 1000000},
+		{itemTemplate = "locked_container", weight = 2000000},
 --		{groupTemplate = "coa_encoded_disk_fragments", weight = 80000},
 --		{groupTemplate = "coa2_decoder_components", weight = 80000},
 --?		{groupTemplate = "data_storage_unit_parts", weight = 989500},	
-	
-	
-		{itemTemplate = "carbine_cdef", weight = 136363},
-		{itemTemplate = "pistol_cdef", weight = 136363},
-		{itemTemplate = "rifle_cdef", weight = 136363},
-		{itemTemplate = "knife_survival", weight = 136363},
-		{itemTemplate = "polearm_staff_wood", weight = 136363},
-		{itemTemplate = "polearm_staff_wood_reinforced", weight = 136363},
-		{itemTemplate = "knife_dagger", weight = 136363},
-		{itemTemplate = "axe_heavy_duty", weight = 136363},
-		{itemTemplate = "grenade_fragmentation_light", weight = 136363},
-		{itemTemplate = "pistol_d18", weight = 136363},
-		{itemTemplate = "rifle_dlt20", weight = 136363},
-		{itemTemplate = "polearm_staff_metal", weight = 136363},
-		{itemTemplate = "one_handed_sword", weight = 136363},
-		{itemTemplate = "baton_gaderiffi", weight = 136363},
-		{itemTemplate = "polearm_lance", weight = 136363},
-		{itemTemplate = "two_handed_sword_battleaxe", weight = 136363},
-		{itemTemplate = "carbine_dh17", weight = 136363},
-		{itemTemplate = "pistol_dl44", weight = 136363},
-		{itemTemplate = "rifle_dlt20a", weight = 136363},
-		{itemTemplate = "pistol_scout_trooper", weight = 136363},
-		{itemTemplate = "grenade_fragmentation", weight = 136363},
-		{itemTemplate = "mine_drx55", weight = 136363},
+		{itemTemplate = "attachment_clothing", weight = 1000000},	
+		{itemTemplate = "attachment_armor", weight = 1000000},
+			
+		{itemTemplate = "carbine_cdef", weight = 90909},
+		{itemTemplate = "pistol_cdef", weight = 90909},
+		{itemTemplate = "rifle_cdef", weight = 90909},
+		{itemTemplate = "knife_survival", weight = 90909},
+		{itemTemplate = "polearm_staff_wood", weight = 90909},
+		{itemTemplate = "polearm_staff_wood_reinforced", weight = 90909},
+		{itemTemplate = "knife_dagger", weight = 90909},
+		{itemTemplate = "axe_heavy_duty", weight = 90909},
+		{itemTemplate = "grenade_fragmentation_light", weight = 90909},
+		{itemTemplate = "pistol_d18", weight = 90909},
+		{itemTemplate = "rifle_dlt20", weight = 90909},
+		{itemTemplate = "polearm_staff_metal", weight = 90909},
+		{itemTemplate = "one_handed_sword", weight = 90909},
+		{itemTemplate = "baton_gaderiffi", weight = 90909},
+		{itemTemplate = "polearm_lance", weight = 90909},
+		{itemTemplate = "two_handed_sword_battleaxe", weight = 90909},
+		{itemTemplate = "carbine_dh17", weight = 90909},
+		{itemTemplate = "pistol_dl44", weight = 90909},
+		{itemTemplate = "rifle_dlt20a", weight = 90909},
+		{itemTemplate = "pistol_scout_trooper", weight = 90909},
+		{itemTemplate = "grenade_fragmentation", weight = 90909},
+		{itemTemplate = "mine_drx55", weight = 90909},
 
 		-- Common
-		{itemTemplate = "bone_armor_bicep_l", weight = 125000},
-		{itemTemplate = "bone_armor_bicep_r", weight = 125000},
-		{itemTemplate = "bone_armor_boots", weight = 125000},
-		{itemTemplate = "bone_armor_bracer_l", weight = 125000},
-		{itemTemplate = "bone_armor_bracer_r", weight = 125000},
-		{itemTemplate = "bone_armor_chest_plate", weight = 125000},
-		{itemTemplate = "bone_armor_gloves", weight = 125000},
-		{itemTemplate = "bone_armor_helmet", weight = 125000},
-		{itemTemplate = "bone_armor_leggings", weight = 125000},
-		{itemTemplate = "mabari_armor_belt", weight = 125000},
-		{itemTemplate = "mabari_armor_boots", weight = 125000},
-		{itemTemplate = "mabari_armor_chest_plate", weight = 125000},
-		{itemTemplate = "mabari_armor_gloves", weight = 125000},
-		{itemTemplate = "mabari_armor_helmet", weight = 125000},
-		{itemTemplate = "mabari_armor_pants", weight = 125000},
-		{itemTemplate = "chitin_armor_bicep_l", weight = 125000},
-		{itemTemplate = "chitin_armor_bicep_r", weight = 125000},
-		{itemTemplate = "chitin_armor_boots", weight = 125000},
-		{itemTemplate = "chitin_armor_bracer_l", weight = 125000},
-		{itemTemplate = "chitin_armor_bracer_r", weight = 125000},
-		{itemTemplate = "chitin_armor_chest_plate", weight = 125000},
-		{itemTemplate = "chitin_armor_gloves", weight = 125000},
-		{itemTemplate = "chitin_armor_helmet", weight = 125000},
-		{itemTemplate = "chitin_armor_leggings", weight = 125000},
+		{itemTemplate = "bone_armor_bicep_l", weight = 83333},
+		{itemTemplate = "bone_armor_bicep_r", weight = 83333},
+		{itemTemplate = "bone_armor_boots", weight = 83333},
+		{itemTemplate = "bone_armor_bracer_l", weight = 83333},
+		{itemTemplate = "bone_armor_bracer_r", weight = 83333},
+		{itemTemplate = "bone_armor_chest_plate", weight = 83333},
+		{itemTemplate = "bone_armor_gloves", weight = 83333},
+		{itemTemplate = "bone_armor_helmet", weight = 83333},
+		{itemTemplate = "bone_armor_leggings", weight = 83333},
+		{itemTemplate = "mabari_armor_belt", weight = 83333},
+		{itemTemplate = "mabari_armor_boots", weight = 83333},
+		{itemTemplate = "mabari_armor_chest_plate", weight = 83333},
+		{itemTemplate = "mabari_armor_gloves", weight = 83333},
+		{itemTemplate = "mabari_armor_helmet", weight = 83333},
+		{itemTemplate = "mabari_armor_pants", weight = 83333},
+		{itemTemplate = "chitin_armor_bicep_l", weight = 83333},
+		{itemTemplate = "chitin_armor_bicep_r", weight = 83333},
+		{itemTemplate = "chitin_armor_boots", weight = 83333},
+		{itemTemplate = "chitin_armor_bracer_l", weight = 83333},
+		{itemTemplate = "chitin_armor_bracer_r", weight = 83333},
+		{itemTemplate = "chitin_armor_chest_plate", weight = 83333},
+		{itemTemplate = "chitin_armor_gloves", weight = 83333},
+		{itemTemplate = "chitin_armor_helmet", weight = 83333},
+		{itemTemplate = "chitin_armor_leggings", weight = 83333},
 		
-		{itemTemplate = "bandolier_s07", weight = 115384}, -- Shoulder Strap
-		{itemTemplate = "bandolier_s08", weight = 115384}, -- Dark Sash
-		{itemTemplate = "belt_s07", weight = 115384}, -- Multipocket Belt
-		{itemTemplate = "belt_s11", weight = 115384}, -- Two Pocket Belt
-		{itemTemplate = "boots_s03", weight = 115384}, -- Wrapped Boots
-		{itemTemplate = "boots_s04", weight = 115384}, -- Hide Boots
-		{itemTemplate = "dress_s06", weight = 5470}, -- Maiden's Dress
-		{itemTemplate = "dress_s10", weight = 5470}, -- Plain Robe
-		{itemTemplate = "dress_s12", weight = 5470}, -- Plain Short Robe
-		{itemTemplate = "dress_s18", weight = 5470}, -- Administrator's Robe
-		{itemTemplate = "dress_s26", weight = 115384}, -- Frock
-		{itemTemplate = "gloves_s12", weight = 115384}, -- Leather Gloves
-		{itemTemplate = "hat_s14", weight = 115384}, -- Headwrap
-		{itemTemplate = "jacket_s02", weight = 115384}, -- Shortsleeve Jacket
-		{itemTemplate = "jacket_s12", weight = 115384}, -- Casual Jacket
-		{itemTemplate = "jacket_s15", weight = 115384}, -- Labour Jacket
-		{itemTemplate = "pants_s04", weight = 115384}, -- Pocketed Work Pants
-		{itemTemplate = "pants_s10", weight = 115384}, -- Wrinkled Pants
-		{itemTemplate = "pants_s12", weight = 115384}, -- Work Slacks
-		{itemTemplate = "pants_s17", weight = 115384}, -- Shorts
-		{itemTemplate = "pants_s25", weight = 115384}, -- Casual Pants
-		{itemTemplate = "shirt_s04", weight = 115384}, -- Simple Shirt
-		{itemTemplate = "shirt_s27", weight = 115384}, -- Shortsleeve Shirt
-		{itemTemplate = "shirt_s34", weight = 115384}, -- Soft Undershirt
-		{itemTemplate = "shoes_s02", weight = 115384}, -- Casual Shoes
-		{itemTemplate = "skirt_s10", weight = 115384}, -- Wrapped Skirt
+		{itemTemplate = "bandolier_s07", weight = 38461}, -- Shoulder Strap
+		{itemTemplate = "bandolier_s08", weight = 38461}, -- Dark Sash
+		{itemTemplate = "belt_s07", weight = 38461}, -- Multipocket Belt
+		{itemTemplate = "belt_s11", weight = 38461}, -- Two Pocket Belt
+		{itemTemplate = "boots_s03", weight = 38461}, -- Wrapped Boots
+		{itemTemplate = "boots_s04", weight = 38461}, -- Hide Boots
+		{itemTemplate = "dress_s06", weight = 38461}, -- Maiden's Dress
+		{itemTemplate = "dress_s10", weight = 38461}, -- Plain Robe
+		{itemTemplate = "dress_s12", weight = 38461}, -- Plain Short Robe
+		{itemTemplate = "dress_s18", weight = 38461}, -- Administrator's Robe
+		{itemTemplate = "dress_s26", weight = 38461}, -- Frock
+		{itemTemplate = "gloves_s12", weight = 38461}, -- Leather Gloves
+		{itemTemplate = "hat_s14", weight = 38461}, -- Headwrap
+		{itemTemplate = "jacket_s02", weight = 38461}, -- Shortsleeve Jacket
+		{itemTemplate = "jacket_s12", weight = 38461}, -- Casual Jacket
+		{itemTemplate = "jacket_s15", weight = 38461}, -- Labour Jacket
+		{itemTemplate = "pants_s04", weight = 38461}, -- Pocketed Work Pants
+		{itemTemplate = "pants_s10", weight = 38461}, -- Wrinkled Pants
+		{itemTemplate = "pants_s12", weight = 38461}, -- Work Slacks
+		{itemTemplate = "pants_s17", weight = 38461}, -- Shorts
+		{itemTemplate = "pants_s25", weight = 38461}, -- Casual Pants
+		{itemTemplate = "shirt_s04", weight = 38461}, -- Simple Shirt
+		{itemTemplate = "shirt_s27", weight = 38461}, -- Shortsleeve Shirt
+		{itemTemplate = "shirt_s34", weight = 38461}, -- Soft Undershirt
+		{itemTemplate = "shoes_s02", weight = 38461}, -- Casual Shoes
+		{itemTemplate = "skirt_s10", weight = 38461}, -- Wrapped Skirt
+				
+		{itemTemplate = "ring_s01", weight = 76923}, -- Band
+		{itemTemplate = "ring_s02", weight = 76923}, -- Signet	
+		{itemTemplate = "necklace_s09", weight = 76923}, -- Silver Pendant
+		{itemTemplate = "necklace_s10", weight = 76923}, -- Heavy Crystal Symbol
+		{itemTemplate = "necklace_s12", weight = 76923}, -- Elegant Gemstone Necklace		
+		{itemTemplate = "bracelet_l", weight = 76923}, -- Metal Band
+		{itemTemplate = "bracelet_r", weight = 76923}, -- Metal Band
+		{itemTemplate = "bracelet_s02_l", weight = 76923}, -- Metal Band
+		{itemTemplate = "bracelet_s02_r", weight = 76923}, -- Metal Band
+		{itemTemplate = "bracelet_s03_l", weight = 76923}, -- Golden Bracelet
+		{itemTemplate = "bracelet_s03_r", weight = 76923}, -- Golden Bracelet
+		{itemTemplate = "bracelet_s04_l", weight = 76923}, -- Golden Symbol
+		{itemTemplate = "bracelet_s04_r", weight = 76923}, -- Golden Symbol
 	}
 }
 

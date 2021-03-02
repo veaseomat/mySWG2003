@@ -23,10 +23,10 @@ float SharedLabratory::calculateExperimentationValueModifier(int experimentation
 	float results;
 	switch (experimentationResult) {
 	case CraftingManager::AMAZINGSUCCESS:
-		results = 0.2f;
+		results = 0.15f;
 		break;
 	case CraftingManager::GREATSUCCESS:
-		results = 0.15f;
+		results = 0.13f;
 		break;
 	case CraftingManager::GOODSUCCESS:
 		results = 0.10f;
@@ -35,19 +35,19 @@ float SharedLabratory::calculateExperimentationValueModifier(int experimentation
 		results = 0.05f;
 		break;
 	case CraftingManager::SUCCESS:
-		results = 0.02f;
+		results = 0.03f;
 		break;
 	case CraftingManager::MARGINALSUCCESS:
-		results = 0.00f;
+		results = 0.01f;
 		break;
 	case CraftingManager::OK:
-		results = -0.04f;
+		results = 0.00f;
 		break;
 	case CraftingManager::BARELYSUCCESSFUL:
-		results = -0.07f;
+		results = -0.02f;
 		break;
 	case CraftingManager::CRITICALFAILURE:
-		results = -0.08f;
+		results = -0.04f;
 		break;
 	default:
 		results = 0;
@@ -59,14 +59,24 @@ float SharedLabratory::calculateExperimentationValueModifier(int experimentation
 float SharedLabratory::calculateAssemblyValueModifier(int assemblyResult) {
 
 	if(assemblyResult == CraftingManager::AMAZINGSUCCESS)
-		return 1.2f;
-	if(assemblyResult == CraftingManager::GREATSUCCESS)
 		return 1.15f;
+	if(assemblyResult == CraftingManager::GREATSUCCESS)
+		return 1.13f;
 	if(assemblyResult == CraftingManager::GOODSUCCESS)
 		return 1.1f;
 	if(assemblyResult == CraftingManager::MODERATESUCCESS)
 		return 1.05f;
-	float result = 1.02f;
+	if(assemblyResult == CraftingManager::SUCCESS)
+		return 1.03f;
+	if(assemblyResult == CraftingManager::MARGINALSUCCESS)
+		return 1.01f;
+	if(assemblyResult == CraftingManager::OK)
+		return 1.0f;
+	if(assemblyResult == CraftingManager::BARELYSUCCESSFUL)
+		return 0.08f;
+	if(assemblyResult == CraftingManager::CRITICALFAILURE)
+		return 0.06f;
+	float result = 1.1f - (assemblyResult * .1f);
 	return result;
 }
 
@@ -191,24 +201,24 @@ int SharedLabratory::calculateAssemblySuccess(CreatureObject* player,DraftSchema
 
 	int assemblyRoll = (toolModifier * (luckRoll + (assemblyPoints * 5)));
 
-	if (assemblyRoll > 60)
+	if (assemblyRoll > 70)
 		return CraftingManager::GREATSUCCESS;
 
-	if (assemblyRoll > 40)
+	if (assemblyRoll > 60)
 		return CraftingManager::GOODSUCCESS;
 
-	if (assemblyRoll > 20)
+	if (assemblyRoll > 50)
 		return CraftingManager::MODERATESUCCESS;
 
-//	if (assemblyRoll > 40)
-//		return CraftingManager::SUCCESS;
-//
-//	if (assemblyRoll > 30)
-//		return CraftingManager::MARGINALSUCCESS;
-//
-//	if (assemblyRoll > 20)
-//		return CraftingManager::OK;
+	if (assemblyRoll > 40)
+		return CraftingManager::SUCCESS;
 
-	return CraftingManager::SUCCESS;
+	if (assemblyRoll > 30)
+		return CraftingManager::MARGINALSUCCESS;
+
+	if (assemblyRoll > 20)
+		return CraftingManager::OK;
+
+	return CraftingManager::BARELYSUCCESSFUL;
 }
 

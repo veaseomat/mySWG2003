@@ -112,8 +112,9 @@ function sithshadowencounter3:onEncounterSpawned(pPlayer, spawnedObjects)
 	SceneObject(pInventory):setContainerOwnerID(playerID)
 
 
-	createObserver(LOOTCREATURE, self.taskName, "onLoot", spawnedObjects[1])
+--	createObserver(LOOTCREATURE, self.taskName, "onLoot", spawnedObjects[1])
 	createObserver(OBJECTDESTRUCTION, self.taskName, "onPlayerKilled", pPlayer)
+	createObserver(OBJECTDESTRUCTION, self.taskName, "onLoot", spawnedObjects[1])
 --	createObserver(OBJECTDESTRUCTION, self.taskName, "onsithKilled", spawnedSithShadowsList[1])
 	
 --	QuestManager.activateQuest(pPlayer, QuestManager.quests.TWO_MILITARY)
@@ -132,7 +133,7 @@ function sithshadowencounter3:onEncounterInRange(pPlayer, spawnedObjects)
 	Logger:log("Sending threaten string.", LT_INFO)
 	local threatenString = LuaStringIdChatParameter(SITH_SHADOW_THREATEN_STRING)
 	threatenString:setTT(CreatureObject(pPlayer):getFirstName())
-	spatialChat(spawnedObjects[1], "Never should have come here!")
+	spatialChat(spawnedObjects[1], "There is no emotion, there is peace.")
 
 
 	foreach(spawnedObjects, function(pMobile)

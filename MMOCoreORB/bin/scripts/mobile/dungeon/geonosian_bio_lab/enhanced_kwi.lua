@@ -36,8 +36,8 @@ enhanced_kwi = Creature:new {
 		},
 		{
 			groups = {
-				{group = "clothing_attachments", chance = 5000000},
-				{group = "armor_attachments", chance = 5000000},
+				{group = "clothing_attachments", chance = 1000000},
+				{group = "armor_attachments", chance = 1000000},
 			},
 		}
 	},

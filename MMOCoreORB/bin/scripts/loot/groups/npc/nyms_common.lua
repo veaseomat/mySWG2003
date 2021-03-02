@@ -12,7 +12,7 @@ nyms_common = {
 		{itemTemplate = "high_powered_vibro_motor", weight = 1250000},
 		{itemTemplate = "high_valocity_feed_mechanism", weight = 1250000},
 		{itemTemplate = "large_energy_capacitor", weight = 1250000},
-		{itemTemplate = "wearables_common", weight = 1250000},
+		{itemTemplate = "weapon_component_advanced", weight = 1250000},
 	}
 }
 

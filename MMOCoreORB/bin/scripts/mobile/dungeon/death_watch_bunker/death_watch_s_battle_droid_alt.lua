@@ -33,8 +33,8 @@ death_watch_s_battle_droid_alt = Creature:new {
 	lootGroups = {
 			{
 				groups = {
-					{group = "clothing_attachments", chance = 5000000},
-					{group = "armor_attachments", chance = 5000000},
+					{group = "clothing_attachments", chance = 1000000},
+					{group = "armor_attachments", chance = 1000000},
 				},
 			}
 		},

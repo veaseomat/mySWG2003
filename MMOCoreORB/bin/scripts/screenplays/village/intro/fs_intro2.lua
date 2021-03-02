@@ -65,7 +65,7 @@ function FsIntro2:startStepDelay(pPlayer, step)
 --		return
 --	else
 	--player lost bh or first time
-		stepDelay = (getRandomNumber(2, 45) * 60 * 1000) --2min - 720=12hr
+		stepDelay = (getRandomNumber(2, 180) * 60 * 1000) --2min - 720=12hr
 --	end
 
 	writeScreenPlayData(pPlayer, "VillageJediProgression", "FsIntro2Delay", stepDelay + os.time())

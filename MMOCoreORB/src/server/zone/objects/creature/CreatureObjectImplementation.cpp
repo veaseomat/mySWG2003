@@ -2442,7 +2442,7 @@ void CreatureObjectImplementation::setStunnedState(int durationSeconds) {
 
 		Locker blocker(multBuff);
 
-		state->setSkillModifier("private_speed_bonus", -25);
+		state->setSkillModifier("private_speed_bonus", -50);
 
 		addBuff(multBuff);
 	}
@@ -2462,7 +2462,7 @@ void CreatureObjectImplementation::setBlindedState(int durationSeconds) {
 		state->setStartFlyText("combat_effects", "go_blind", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_blind", 0xFF, 0, 0);
 
-		state->setSkillModifier("private_attack_accuracy", -25);
+		state->setSkillModifier("private_attack_accuracy", -50);
 
 		addBuff(state);
 	}
@@ -2487,8 +2487,8 @@ void CreatureObjectImplementation::setIntimidatedState(int durationSeconds) {
 		state->setStartFlyText("combat_effects", "go_intimidated", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_intimidated", 0xFF, 0, 0);
 
-		state->setSkillModifier("private_melee_defense", -25);
-		state->setSkillModifier("private_ranged_defense", -25);
+		state->setSkillModifier("private_melee_defense", -50);
+		state->setSkillModifier("private_ranged_defense", -50);
 
 		addBuff(state);
 	}

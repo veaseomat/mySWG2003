@@ -707,7 +707,7 @@ int CombatManager::calculateTargetPostureModifier(WeaponObject* weapon, Creature
 
 int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
 	if (attacker->isAiAgent()) {
-		int npchitchance = 35; //cast<AiAgent*>(attacker)->getChanceHit() * 100;
+		int npchitchance = 50; //cast<AiAgent*>(attacker)->getChanceHit() * 100;
 		//these are the min/max hitchance from early precu/ this is a catchall because some npc entries are WRONG
 //		if (npchitchance < 25) {
 //			npchitchance = 25;
@@ -776,7 +776,7 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 
 
 	//frs accuracy
-	int frsacc = (creoAttacker->getSkillMod("force_manipulation_dark") + creoAttacker->getSkillMod("force_manipulation_light"));
+	float frsacc = (creoAttacker->getSkillMod("force_manipulation_dark") + creoAttacker->getSkillMod("force_manipulation_light") * 0.725);
 
 	if (frsacc > 0) {
 		attackerAccuracy += frsacc;
@@ -851,20 +851,17 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 //		targetDefense += frsdef;
 //	}
 
-//	if (defender->isKnockedDown())
-//		targetDefense *= .5f;
-
 	//reduce player melee/ranged d
 	if (defender->isPlayerCreature()) {
-		targetDefense *= .75f;
+		targetDefense *= .5f;
 	}
 	//reduce npc melee/ranged def
 	if (!defender->isPlayerCreature()) {
-			targetDefense *= .3f;
+			targetDefense *= .35f;
 	}
 
-	if (targetDefense < 1)
-		targetDefense = 1;
+	if (defender->isKnockedDown())
+		targetDefense *= .5;
 
 	return targetDefense;
 }
@@ -894,20 +891,18 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 //	}
 
 	// player block/dodge/counter
-//	if (defender->isPlayerCreature()) {
-//		targetDefense *= .75f;
-//	}
-
-	//reduce npc block/dodge/counter
-	if (!defender->isPlayerCreature()) {
+	if (defender->isPlayerCreature()) {
 		targetDefense *= .5f;
 	}
 
-	if (defender->isKnockedDown())
-		targetDefense -= 50;
+	//reduce npc block/dodge/counter
+	if (!defender->isPlayerCreature()) {
+		targetDefense *= .35f;
+	}
 
-	if (targetDefense < 1)
-		targetDefense = 1;
+	if (defender->isKnockedDown())
+		targetDefense *= .5;
+
 
 	return targetDefense;
 }
@@ -963,8 +958,8 @@ int CombatManager::calculateDamageRange(TangibleObject* attacker, CreatureObject
 
 	// restrict damage if a player is not certified (don't worry about mobs)
 	if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(cast<CreatureObject*>(attacker))) {
-		minDamage *= .5f;
-		maxDamage *= .75f;
+		minDamage *= .25f;
+		maxDamage *= .5f;
 	}
 
 	debug() << "attacker base damage is " << minDamage << "-" << maxDamage;
@@ -1364,7 +1359,7 @@ float CombatManager::getArmorPiercing(TangibleObject* defender, int armorPiercin
 	if (armorPiercing > armorReduction)
 		return pow(1.10, armorPiercing - armorReduction);
     else
-        return pow(0.90, armorReduction - armorPiercing);
+        return pow(0.80, armorReduction - armorPiercing);
 }
 
 float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* weapon, TangibleObject* defender, const CreatureAttackData& data) const {
@@ -1385,8 +1380,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		float minDamage = weapon->getMinDamage(), maxDamage = weapon->getMaxDamage();
 
 		if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(attacker)) {
-			minDamage *= .5f;
-			maxDamage *= .75f;
+			minDamage *= .25f;
+			maxDamage *= .5f;
 		}
 
 		damage = minDamage;
@@ -1626,20 +1621,18 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 		// PVE Damage bonus
 		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-			damage *= 4.0;
+			damage *= 3.5;
 
 		//frsdamage
-		float lightDamage = attacker->getSkillMod("force_manipulation_light") / 2;
+		float lightDamage = attacker->getSkillMod("force_manipulation_light") * 0.3125;
 
 		if (lightDamage > 0) {
-//				lightDamage += 20.f;
 				damage *= 1.f * (1.f + ((float)lightDamage / 100.f));
 		}
 
-		float darkDamage = attacker->getSkillMod("force_manipulation_dark") / 2;
+		float darkDamage = attacker->getSkillMod("force_manipulation_dark") * 0.375;
 
 		if (darkDamage > 0) {
-//				darkDamage += 20.f;
 				damage *= 1.f * (1.f + ((float)darkDamage / 100.f));
 		}
 
@@ -1664,23 +1657,21 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 
 	//frsarmor
-	float lightarmor = defender->getSkillMod("force_manipulation_light");
+	float lightarmor = defender->getSkillMod("force_manipulation_light") * 0.75;
 
 	if (lightarmor > 0) {
-//		lightarmor += 10.f;
 		damage *= 1.f / (1.f + ((float)lightarmor / 100.f));
 	}
 
-	float darkarmor = defender->getSkillMod("force_manipulation_dark");
+	float darkarmor = defender->getSkillMod("force_manipulation_dark") * 0.625;
 
 	if (darkarmor > 0) {
-//		darkarmor += 10.f;
 		damage *= 1.f / (1.f + ((float)darkarmor / 100.f));
 	}
 
-	// EVP Damage Reduction. dont forget to update aiagentimplementation also so examine shows same numbers
+	// EVP Damage Reduction. dont forget to update aiagentimplementation also so examine shows same numbers (not using that anymore)
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 0.4;
+		damage *= 0.75;
 
 	// PvP Damage Reduction.
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature() && !data.isForceAttack())
@@ -1987,9 +1978,9 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 		}
 	}
 
-	float health = (weapon->getHealthAttackCost() * data.getHealthCostMultiplier()) * .5;
-	float action = (weapon->getActionAttackCost() * data.getActionCostMultiplier()) * .5;
-	float mind = (weapon->getMindAttackCost() * data.getMindCostMultiplier()) * .5;
+	float health = (weapon->getHealthAttackCost() * data.getHealthCostMultiplier()) * .6;
+	float action = (weapon->getActionAttackCost() * data.getActionCostMultiplier()) * .6;
+	float mind = (weapon->getMindAttackCost() * data.getMindCostMultiplier()) * .6;
 
 	health = attacker->calculateCostAdjustment(CreatureAttribute::STRENGTH, health);
 	action = attacker->calculateCostAdjustment(CreatureAttribute::QUICKNESS, action);
@@ -2064,7 +2055,7 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 			for (int j = 0; j < defenseMods.size(); j++)
 				targetDefense += targetCreature->getSkillMod(defenseMods.get(j));
 
-//			targetDefense /= 1.5;  //why are they nerfing state def by 1.5
+			targetDefense *= 0.7;  //why are they nerfing state def by 1.5
 //			targetDefense += playerLevel;
 
 //			if (targetDefense > 90)
@@ -2081,7 +2072,7 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 				for (int j = 0; j < jediMods.size(); j++) {
 					targetDefense = targetCreature->getSkillMod(jediMods.get(j));
 
-//					targetDefense /= 1.5;  //why would they nerf jedi states by 1.5?
+					targetDefense *= 0.7;  //why would they nerf jedi states by 1.5?
 //					targetDefense += playerLevel;
 
 //					if (targetDefense > 75)

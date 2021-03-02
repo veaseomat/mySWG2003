@@ -2970,11 +2970,14 @@ void PlayerObjectImplementation::recalculateForcePower() {
 
 	int maxForce = player->getSkillMod("jedi_force_power_max");
 
-	int frsMax = player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark");
-
 	if (maxForce > 0) {
-	maxForce += frsMax * 50;
 	maxForce += 250; //jedi robe
+	}
+
+	int frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 0.625;
+
+	if (frsMax > 0) {
+		frsMax *= 1.f * (1.f + ((float)frsMax / 100.f));
 	}
 
 	setForcePowerMax(maxForce, true);

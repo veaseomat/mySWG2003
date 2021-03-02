@@ -251,7 +251,7 @@ int LootManagerImplementation::calculateLootCredits(int level) {
 	int maxcredits = (int) round((.03f * level * level) + (3 * level) + 50);
 	int mincredits = (int) round((((float) maxcredits) * .5f) + (2.0f * level));
 
-	int credits = (mincredits + System::random(maxcredits - mincredits)) * 2;
+	int credits = (mincredits + System::random(maxcredits - mincredits));
 
 	return credits;
 }
@@ -265,7 +265,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level > 500)
 		level = 500;
 
-	float excMod = 3.0;
+	float excMod = (System::random(40) * .1) + 1.0;
 
 	int maxlvl = templateObject->getnewmaximumLevel();
 
@@ -629,7 +629,7 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = (entry->getLootChance() * 3);
+		int lootChance = entry->getLootChance();
 
 //		int hroll = System::random(1000);
 //
@@ -669,6 +669,9 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		//Now we do the second roll to determine loot group.
 		roll = System::random(10000000);
 
+		if (roll > lootChance)
+			continue;
+
 		//Select the loot group to use.
 		for (int i = 0; i < lootGroups->count(); ++i) {
 			const LootGroupEntry* entry = lootGroups->get(i);
@@ -686,6 +689,9 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 
 		//Now we do the second roll to determine loot group.
 		roll = System::random(10000000);
+
+		if (roll > lootChance)
+			continue;
 
 		//Select the loot group to use.
 		for (int i = 0; i < lootGroups->count(); ++i) {

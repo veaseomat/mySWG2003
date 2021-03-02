@@ -67,6 +67,10 @@ randomDotUses = {250, 9999}
 junkValueModifier = 5;
 
 lootableArmorAttachmentStatMods = {
+"heavy_flame_thrower_accuracy",
+"heavy_flame_thrower_speed",
+"heavy_rifle_acid_accuracy",
+"heavy_rifle_acid_speed",
 "unarmed_passive_defense",
 --	"aim",
 --	"alert",
@@ -141,6 +145,10 @@ lootableArmorAttachmentStatMods = {
 }
 
 lootableClothingAttachmentStatMods = {
+"heavy_flame_thrower_accuracy",
+"heavy_flame_thrower_speed",
+"heavy_rifle_acid_accuracy",
+"heavy_rifle_acid_speed",
 	"unarmed_passive_defense",
 	"bio_engineer_assembly",
 	"bio_engineer_experimentation",
@@ -194,14 +202,14 @@ lootableClothingAttachmentStatMods = {
 --	"grenade_experimentation",
 --	"group_slope_move",
 --	"healing_ability",
---	"healing_dance_mind",
---	"healing_dance_shock",
---	"healing_dance_wound",
+	"healing_dance_mind",
+	"healing_dance_shock",
+	"healing_dance_wound",
 	"healing_injury_speed",
 	"healing_injury_treatment",
---	"healing_music_mind",
---	"healing_music_shock",
---	"healing_music_wound",
+	"healing_music_mind",
+	"healing_music_shock",
+	"healing_music_wound",
 --	"healing_range",
 	"healing_range_speed",
 	"healing_wound_speed",
@@ -269,6 +277,10 @@ lootableClothingAttachmentStatMods = {
 }
 
 lootableArmorStatMods = {
+"heavy_flame_thrower_accuracy",
+"heavy_flame_thrower_speed",
+"heavy_rifle_acid_accuracy",
+"heavy_rifle_acid_speed",
 	"unarmed_passive_defense",
 --	"aim",
 --	"alert",
@@ -343,6 +355,10 @@ lootableArmorStatMods = {
 }
 
 lootableClothingStatMods = {
+"heavy_flame_thrower_accuracy",
+"heavy_flame_thrower_speed",
+"heavy_rifle_acid_accuracy",
+"heavy_rifle_acid_speed",
 	"unarmed_passive_defense",
 	"bio_engineer_assembly",
 	"bio_engineer_experimentation",
@@ -396,14 +412,14 @@ lootableClothingStatMods = {
 --	"grenade_experimentation",
 --	"group_slope_move",
 	"healing_ability",
---	"healing_dance_mind",
---	"healing_dance_shock",
---	"healing_dance_wound",
+	"healing_dance_mind",
+	"healing_dance_shock",
+	"healing_dance_wound",
 	"healing_injury_speed",
 	"healing_injury_treatment",
---	"healing_music_mind",
---	"healing_music_shock",
---	"healing_music_wound",
+	"healing_music_mind",
+	"healing_music_shock",
+	"healing_music_wound",
 --	"healing_range",
 	"healing_range_speed",
 	"healing_wound_speed",

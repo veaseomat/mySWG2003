@@ -60,10 +60,10 @@ public:
 		obj->setPlanetCRC(planetCRC);
 		obj->setPosition(coords.getX(), 0, coords.getY());
 		obj->setCustomObjectName(name, false);
+//removing the findmytrainer command
+//		ghost->addWaypoint(obj, true, true);
 
-		ghost->addWaypoint(obj, true, true);
-
-		creature->sendSystemMessage("@jedi_spam:waypoint_created_to_trainer");
+		creature->sendSystemMessage("Your Jedi trainer could be any starting profession trainer on any planet. Converse with starting profession trainers to find yours, may the force be with you.");
 
 		return SUCCESS;
 	}
