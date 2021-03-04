@@ -5,9 +5,10 @@ tailor_components = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "crystalline_clothing_treatment", weight = 3333333},
-		{itemTemplate = "heavy_duty_clasp", weight = 3333334},
-		{itemTemplate = "heavy_duty_leather", weight = 3333333}
+		{itemTemplate = "crystalline_clothing_treatment", weight = 1666666},
+		{itemTemplate = "heavy_duty_clasp", weight = 1666666},
+		{itemTemplate = "heavy_duty_leather", weight = 1666666},
+		{itemTemplate = "weapon_component_advanced", weight = 5000000}
 	}
 }
 

@@ -93,7 +93,7 @@ MindBlast2Command = {
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
 	forceAttack = true,
-	damageType = LIGHTSABER_DAMAGE,
+	damageType = BLAST_DAMAGE,
 
 	frsLightMinDamageModifier = 2,
 	frsLightMaxDamageModifier = 3,

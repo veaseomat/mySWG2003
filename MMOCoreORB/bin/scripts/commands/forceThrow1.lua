@@ -71,7 +71,7 @@ ForceThrow1Command = {
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
 	forceAttack = true,
-	damageType = LIGHTSABER_DAMAGE,
+	damageType = KINETIC_DAMAGE,
 
 	frsLightMinDamageModifier = 1,
 	frsLightMaxDamageModifier = 3,

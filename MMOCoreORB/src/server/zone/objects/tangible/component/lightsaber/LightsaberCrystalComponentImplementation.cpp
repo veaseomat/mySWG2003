@@ -293,10 +293,10 @@ void LightsaberCrystalComponentImplementation::fillAttributeList(AttributeListMe
 				alm->insertAttribute("maxdamage", damage);
 				alm->insertAttribute("wpn_attack_speed", attackSpeed);
 				alm->insertAttribute("wpn_wound_chance", woundChance);
-				alm->insertAttribute("wpn_attack_cost_health", sacHealth);
-				alm->insertAttribute("wpn_attack_cost_action", sacAction);
-				alm->insertAttribute("wpn_attack_cost_mind", sacMind);
-				alm->insertAttribute("forcecost", floatForceCost);
+//				alm->insertAttribute("wpn_attack_cost_health", sacHealth);
+//				alm->insertAttribute("wpn_attack_cost_action", sacAction);
+//				alm->insertAttribute("wpn_attack_cost_mind", sacMind);
+//				alm->insertAttribute("forcecost", floatForceCost);
 				// For debugging
 
 
@@ -473,11 +473,11 @@ int LightsaberCrystalComponentImplementation::inflictDamage(TangibleObject* atta
 				weapon->setAttackSpeed(weapon->getAttackSpeed() - getAttackSpeed());
 				weapon->setMinDamage(weapon->getMinDamage() - getDamage());
 				weapon->setMaxDamage(weapon->getMaxDamage() - getDamage());
-				weapon->setHealthAttackCost(weapon->getHealthAttackCost() - getSacHealth());
-				weapon->setActionAttackCost(weapon->getActionAttackCost() - getSacAction());
-				weapon->setMindAttackCost(weapon->getMindAttackCost() - getSacMind());
-				weapon->setWoundsRatio(weapon->getWoundsRatio() - getWoundChance());
-				weapon->setForceCost(weapon->getForceCost() - getForceCost());
+//				weapon->setHealthAttackCost(weapon->getHealthAttackCost() - getSacHealth());
+//				weapon->setActionAttackCost(weapon->getActionAttackCost() - getSacAction());
+//				weapon->setMindAttackCost(weapon->getMindAttackCost() - getSacMind());
+//				weapon->setWoundsRatio(weapon->getWoundsRatio() - getWoundChance());
+//				weapon->setForceCost(weapon->getForceCost() - getForceCost());
 			}
 
 			if (getColor() != 31) {

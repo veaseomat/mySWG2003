@@ -274,7 +274,7 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 			
 			local sui = SuiMessageBox.new("KnightTrials", "startNextKnightTrial")
 			sui.setTitle("Jedi Knight Unlock")
-			sui.setPrompt("Congratulations! You now have enough Jedi skill points to become a Jedi Knight! Here there is no trial you just pick a side. It does not matter what faction you are, and you do not need to join a faction at all. Force Ranking System experience is only earned through random spawning encounters with Jedi NPCs, These Jedi NPC encoutners will happen as long as you are outside. There is no experiece loss here either. Here FRS gives you Armor, Damage, and Force Power Max. Light side gets slightly more armor, Dark side gives slightly more damage. Are you ready to become a Jedi knight?")
+			sui.setPrompt("Congratulations! You now have enough Jedi skill points to become a Jedi Knight! Here there is no trial you just pick a side. It does not matter what faction you are, and you do not need to join a faction at all. Force Ranking System experience is only earned through random spawning encounters with Jedi NPCs, These Jedi NPC encoutners will happen as long as you are outside. Here FRS gives you innate increases to Armor, Damage, and Force Power Max. Light side gets slightly more armor, Dark side gets slightly more damage. Are you ready to become a Jedi knight?")
 			sui.setOkButtonText("@jedi_trials:button_yes")
 			sui.setCancelButtonText("@jedi_trials:button_no")
 			sui.sendTo(pPlayer)

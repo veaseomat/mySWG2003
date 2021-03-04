@@ -5,14 +5,14 @@ dark_jedi_knight2 = Creature:new {
 	randomNameTag = true,
 	socialGroup = "",
 	faction = "",
-	level = 265,
+	level = 350,
 	chanceHit = 23.5,
-	damageMin = 1645,
-	damageMax = 3000,
+	damageMin = 1800,
+	damageMax = 3310,
 	baseXp = 25266,
 	baseHAM = 261000,
 	baseHAMmax = 320000,
-	armor = 3,
+	armor = 1,
 	resists = {90,90,90,90,90,90,90,90,-1},
 	meatType = "",
 	meatAmount = 0,
@@ -35,16 +35,19 @@ dark_jedi_knight2 = Creature:new {
 	lootGroups = {
 		{
 			groups = {
-				{group = "junk", chance = 3000000},
-				{group = "holocron_dark", chance = 1000000},
+--				{group = "junk", chance = 3000000},
+--				{group = "holocron_dark", chance = 300000},
 				{group = "color_crystals", chance = 1000000},
-				{group = "sabers", chance = 1000000}
+--				{group = "sabers", chance = 1000000}
 			}
 		},
 	},
 	weapons = {"dark_jedi_weapons_gen2"},
 	conversationTemplate = "",
-	attacks = merge(lightsabermaster,forcepowermaster)
+	attacks = {
+		{"dizzyattack",""},
+		{"knockdownattack",""}
+	}
 }
 
 CreatureTemplates:addCreatureTemplate(dark_jedi_knight2, "dark_jedi_knight2")

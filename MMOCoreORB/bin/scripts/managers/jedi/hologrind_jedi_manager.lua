@@ -4,8 +4,8 @@ local PlayerManager = require("managers.player_manager")
 
 jediManagerName = "HologrindJediManager"
 
-NUMBEROFPROFESSIONSTOMASTER = 15 --this is now how many profs are selected
-MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 14
+NUMBEROFPROFESSIONSTOMASTER = 2 --this is now how many profs are selected
+MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 2
 
 HologrindJediManager = JediManager:new {
 	screenplayName = jediManagerName,
@@ -85,7 +85,7 @@ function HologrindJediManager:getNumberOfMasteredProfessions(pCreatureObject)
 	end
 
 	local professions = PlayerObject(pGhost):getHologrindProfessions()
-	local masteredNumberOfProfessions = 11 --this number is now how many of the selected professions you dont need to do
+	local masteredNumberOfProfessions = 0 --this number is now how many of the selected professions you dont need to do
 	for i = 1, #professions, 1 do
 		if PlayerObject(pGhost):hasBadge(professions[i]) then
 			masteredNumberOfProfessions = masteredNumberOfProfessions + 1
@@ -116,7 +116,7 @@ end
 -- @param pCreatureObject pointer to the creature object of the player who unlocked jedi.
 function HologrindJediManager:sendSuiWindow(pCreatureObject)
 	local suiManager = LuaSuiManager()
-	suiManager:sendMessageBox(pCreatureObject, pCreatureObject, "@quest/force_sensitive/intro:force_sensitive", "You begin to feel attuned with the power of the Force. Congratulations! This character is now a Jedi. First, you need to find a lightsaber color crystal and craft a lightsaber. You also have to find your Jedi trainer, it could be any stating profession trainer on any planet, converse with them to find yours. Using your Jedi abilities near NPCs or players will gain you visibility for player and NPC bounty hunters. There is no exp loss here. May the force be with you...", "@ok", "HologrindJediManager", "notifyOkPressed")
+	suiManager:sendMessageBox(pCreatureObject, pCreatureObject, "@quest/force_sensitive/intro:force_sensitive", "You begin to feel attuned with the power of the Force. Congratulations! This character is now a Jedi. First, you need to find a lightsaber color crystal and craft a lightsaber. You also have to find your Jedi trainer, it could be any stating profession trainer on any planet, converse with them to find yours. Using your Jedi abilities near NPCs or players will gain you visibility for player and NPC bounty hunters. May the force be with you...", "@ok", "HologrindJediManager", "notifyOkPressed")
 end
 
 -- Award skill and jedi status to the player.

@@ -6,12 +6,14 @@ junk = {
 	maximumLevel = 0,
 	lootItems = {
 
-		{itemTemplate = "locked_container", weight = 2000000},
+		{itemTemplate = "locked_container", weight = 1000000},
+		{itemTemplate = "weapon_component_advanced", weight = 2000000},
+		
 --		{groupTemplate = "coa_encoded_disk_fragments", weight = 80000},
 --		{groupTemplate = "coa2_decoder_components", weight = 80000},
 --?		{groupTemplate = "data_storage_unit_parts", weight = 989500},	
-		{itemTemplate = "attachment_clothing", weight = 1000000},	
-		{itemTemplate = "attachment_armor", weight = 1000000},
+		{itemTemplate = "attachment_clothing", weight = 500000},	
+		{itemTemplate = "attachment_armor", weight = 500000},
 			
 		{itemTemplate = "carbine_cdef", weight = 90909},
 		{itemTemplate = "pistol_cdef", weight = 90909},

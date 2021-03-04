@@ -23,19 +23,19 @@ float SharedLabratory::calculateExperimentationValueModifier(int experimentation
 	float results;
 	switch (experimentationResult) {
 	case CraftingManager::AMAZINGSUCCESS:
-		results = 0.15f;
+		results = 0.1f;
 		break;
 	case CraftingManager::GREATSUCCESS:
-		results = 0.13f;
+		results = 0.08f;
 		break;
 	case CraftingManager::GOODSUCCESS:
-		results = 0.10f;
-		break;
-	case CraftingManager::MODERATESUCCESS:
 		results = 0.05f;
 		break;
-	case CraftingManager::SUCCESS:
+	case CraftingManager::MODERATESUCCESS:
 		results = 0.03f;
+		break;
+	case CraftingManager::SUCCESS:
+		results = 0.02f;
 		break;
 	case CraftingManager::MARGINALSUCCESS:
 		results = 0.01f;
@@ -59,15 +59,15 @@ float SharedLabratory::calculateExperimentationValueModifier(int experimentation
 float SharedLabratory::calculateAssemblyValueModifier(int assemblyResult) {
 
 	if(assemblyResult == CraftingManager::AMAZINGSUCCESS)
-		return 1.15f;
-	if(assemblyResult == CraftingManager::GREATSUCCESS)
-		return 1.13f;
-	if(assemblyResult == CraftingManager::GOODSUCCESS)
 		return 1.1f;
-	if(assemblyResult == CraftingManager::MODERATESUCCESS)
+	if(assemblyResult == CraftingManager::GREATSUCCESS)
+		return 1.08f;
+	if(assemblyResult == CraftingManager::GOODSUCCESS)
 		return 1.05f;
-	if(assemblyResult == CraftingManager::SUCCESS)
+	if(assemblyResult == CraftingManager::MODERATESUCCESS)
 		return 1.03f;
+	if(assemblyResult == CraftingManager::SUCCESS)
+		return 1.02f;
 	if(assemblyResult == CraftingManager::MARGINALSUCCESS)
 		return 1.01f;
 	if(assemblyResult == CraftingManager::OK)

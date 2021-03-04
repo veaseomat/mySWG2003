@@ -350,8 +350,8 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	}
 
 	// Force Cost // float shows decimal points on sabers!
-	if (getForceCost() > 0)
-		alm->insertAttribute("forcecost", (float)getForceCost());
+//	if (getForceCost() > 0)
+//		alm->insertAttribute("forcecost", (float)getForceCost());
 
 	for (int i = 0; i < getNumberOfDots(); i++) {
 
@@ -718,7 +718,7 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 	}
 
 	int roll = System::random(100);
-	int chance = 2;
+	int chance = 5;
 
 	if (hasPowerup())
 		chance += 5;

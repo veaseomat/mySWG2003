@@ -78,11 +78,11 @@ int SaberInventoryContainerComponent::notifyObjectInserted(SceneObject* sceneObj
 			weao->setAttackSpeed(weao->getAttackSpeed() + crystal->getAttackSpeed());
 			weao->setMinDamage(weao->getMinDamage() + crystal->getDamage());
 			weao->setMaxDamage(weao->getMaxDamage() + crystal->getDamage());
-			weao->setHealthAttackCost(weao->getHealthAttackCost() + crystal->getSacHealth());
-			weao->setActionAttackCost(weao->getActionAttackCost() + crystal->getSacAction());
-			weao->setMindAttackCost(weao->getMindAttackCost() + crystal->getSacMind());
+//			weao->setHealthAttackCost(weao->getHealthAttackCost() + crystal->getSacHealth());
+//			weao->setActionAttackCost(weao->getActionAttackCost() + crystal->getSacAction());
+//			weao->setMindAttackCost(weao->getMindAttackCost() + crystal->getSacMind());
 			weao->setWoundsRatio(weao->getWoundsRatio() + crystal->getWoundChance());
-			weao->setForceCost(weao->getForceCost() + crystal->getForceCost());
+//			weao->setForceCost(weao->getForceCost() + crystal->getForceCost());
 		}
 
 		if (crystal->getColor() != 31) {
@@ -115,11 +115,11 @@ int SaberInventoryContainerComponent::notifyObjectRemoved(SceneObject* sceneObje
 				weao->setAttackSpeed(weao->getAttackSpeed() - crystal->getAttackSpeed());
 				weao->setMinDamage(weao->getMinDamage() - crystal->getDamage());
 				weao->setMaxDamage(weao->getMaxDamage() - crystal->getDamage());
-				weao->setHealthAttackCost(weao->getHealthAttackCost() - crystal->getSacHealth());
-				weao->setActionAttackCost(weao->getActionAttackCost() - crystal->getSacAction());
-				weao->setMindAttackCost(weao->getMindAttackCost() - crystal->getSacMind());
+//				weao->setHealthAttackCost(weao->getHealthAttackCost() - crystal->getSacHealth());
+//				weao->setActionAttackCost(weao->getActionAttackCost() - crystal->getSacAction());
+//				weao->setMindAttackCost(weao->getMindAttackCost() - crystal->getSacMind());
 				weao->setWoundsRatio(weao->getWoundsRatio() - crystal->getWoundChance());
-				weao->setForceCost(weao->getForceCost() - crystal->getForceCost());
+//				weao->setForceCost(weao->getForceCost() - crystal->getForceCost());
 			}
 
 			if (crystal->getColor() != 31) {

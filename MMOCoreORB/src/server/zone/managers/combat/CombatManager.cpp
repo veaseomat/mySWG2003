@@ -776,7 +776,7 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 
 
 	//frs accuracy
-	float frsacc = (creoAttacker->getSkillMod("force_manipulation_dark") + creoAttacker->getSkillMod("force_manipulation_light") * 0.725);
+	float frsacc = (creoAttacker->getSkillMod("force_manipulation_dark") + creoAttacker->getSkillMod("force_manipulation_light") * 0.625);
 
 	if (frsacc > 0) {
 		attackerAccuracy += frsacc;
@@ -853,11 +853,11 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 
 	//reduce player melee/ranged d
 	if (defender->isPlayerCreature()) {
-		targetDefense *= .5f;
+		targetDefense *= .7f;
 	}
 	//reduce npc melee/ranged def
 	if (!defender->isPlayerCreature()) {
-			targetDefense *= .35f;
+			targetDefense *= .3f;
 	}
 
 	if (defender->isKnockedDown())
@@ -879,7 +879,10 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 		const String& mod = defenseAccMods->get(i);
 		targetDefense += defender->getSkillMod(mod);
 		targetDefense += defender->getSkillMod("private_" + mod);
+		if (mod == "saber_block") targetDefense += defender->getSkillMod("saber_block");//boost saber block by adding it again
 	}
+
+
 
 	//SPEED MODS ADD TO BLOCK/DODGE ECT
 //	const auto weaponSpeedMods = weapon->getSpeedModifiers();
@@ -890,14 +893,20 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 //		}
 //	}
 
+	float frssaberblock = (defender->getSkillMod("force_manipulation_dark") + defender->getSkillMod("force_manipulation_light") * 0.625);
+
+	if (frssaberblock > 0) {
+		targetDefense += frssaberblock;
+	}
+
 	// player block/dodge/counter
 	if (defender->isPlayerCreature()) {
-		targetDefense *= .5f;
+		targetDefense *= .75f;
 	}
 
 	//reduce npc block/dodge/counter
 	if (!defender->isPlayerCreature()) {
-		targetDefense *= .35f;
+		targetDefense *= .3f;
 	}
 
 	if (defender->isKnockedDown())
@@ -920,7 +929,7 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 	}
 
 	int jediToughness = defender->getSkillMod("jedi_toughness");
-	if (damType != SharedWeaponObjectTemplate::LIGHTSABER && jediToughness > 0)
+	if (jediToughness > 0)
 		damage *= 1.f - (jediToughness / 100.f);
 
 	return damage < 0 ? 0 : damage;
@@ -1104,6 +1113,12 @@ int CombatManager::getArmorObjectReduction(ArmorObject* armor, int damageType) c
 		break;
 	}
 
+	if (resist > 80)
+		resist = 80;
+
+	if (damageType == 16)
+		resist = 100;
+
 	return Math::max(0, (int)resist);
 }
 
@@ -1154,12 +1169,15 @@ int CombatManager::getArmorNpcReduction(AiAgent* defender, int damageType) const
 		resist = defender->getAcid();
 		break;
 	case SharedWeaponObjectTemplate::LIGHTSABER:
-		resist = 0;
+		resist = defender->getLightSaber();
 		break;
 	}
 
-	if (resist > 90)
-		resist = 90;
+	if (resist > 80)
+		resist = 80;
+
+	if (damageType == 16)
+		resist = 100;
 
 	return (int)resist;
 }
@@ -1832,6 +1850,12 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 //				return MISS;
 //		}
 
+//		if (def == "saber_block") {
+//			if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) && ((System::random(100)) < 25)))
+//				return RICOCHET;
+////			else return HIT;
+//		}
+
 		targetDefense = getDefenderSecondaryDefenseModifier(targetCreature);
 
 		debug() << "Secondary defenses are " << targetDefense;
@@ -1963,24 +1987,30 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 	if (attacker->isAiAgent() || data.isForceAttack())
 		return true;
 //change saber special force cost here
-	float force = (weapon->getForceCost() * data.getForceCostMultiplier()) * .5;
+//	float wforce = weapon->getForceCost();
+////0 fc
+//	if (wforce > 0) {
+//		wforce = 0;
+//	}
+//
+//	float force = (wforce * data.getForceCostMultiplier()) * .5;
+//
+//	if (force > 0) { // Need Force check first otherwise it can be spammed.
+//		ManagedReference<PlayerObject*> playerObject = attacker->getPlayerObject();
+//		if (playerObject != nullptr) {
+//			if (playerObject->getForcePower() <= force) {
+//				attacker->sendSystemMessage("@jedi_spam:no_force_power");
+//				return false;
+//			} else {
+//				playerObject->setForcePower(playerObject->getForcePower() - force);
+//				VisibilityManager::instance()->increaseVisibility(attacker, data.getCommand()->getVisMod()); // Give visibility
+//			}
+//		}
+//	}
 
-	if (force > 0) { // Need Force check first otherwise it can be spammed.
-		ManagedReference<PlayerObject*> playerObject = attacker->getPlayerObject();
-		if (playerObject != nullptr) {
-			if (playerObject->getForcePower() <= force) {
-				attacker->sendSystemMessage("@jedi_spam:no_force_power");
-				return false;
-			} else {
-				playerObject->setForcePower(playerObject->getForcePower() - force);
-				VisibilityManager::instance()->increaseVisibility(attacker, data.getCommand()->getVisMod()); // Give visibility
-			}
-		}
-	}
-
-	float health = (weapon->getHealthAttackCost() * data.getHealthCostMultiplier()) * .6;
-	float action = (weapon->getActionAttackCost() * data.getActionCostMultiplier()) * .6;
-	float mind = (weapon->getMindAttackCost() * data.getMindCostMultiplier()) * .6;
+	float health = (weapon->getHealthAttackCost() * data.getHealthCostMultiplier()) * .7;
+	float action = (weapon->getActionAttackCost() * data.getActionCostMultiplier()) * .7;
+	float mind = (weapon->getMindAttackCost() * data.getMindCostMultiplier()) * .7;
 
 	health = attacker->calculateCostAdjustment(CreatureAttribute::STRENGTH, health);
 	action = attacker->calculateCostAdjustment(CreatureAttribute::QUICKNESS, action);
