@@ -2088,6 +2088,8 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 			targetDefense *= 0.7;  //why are they nerfing state def by 1.5
 //			targetDefense += playerLevel;
 
+			if (!targetCreature->isPlayerCreature()) targetDefense += targetCreature->getLevel() * .5;//make npc harder to state/kd
+
 //			if (targetDefense > 90)
 //				targetDefense = 90.f;
 
