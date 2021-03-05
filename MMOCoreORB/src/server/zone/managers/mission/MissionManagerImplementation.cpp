@@ -836,7 +836,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 	int reward = destroyMissionBaseReward + destroyMissionDifficultyRewardFactor * difficultyLevel;
 	reward += System::random(destroyMissionRandomReward) + System::random(destroyMissionDifficultyRandomReward * difficultyLevel);
-	mission->setRewardCredits(reward);
+	mission->setRewardCredits(reward * .6);
 
 	mission->setMissionDifficulty(difficultyLevel, diffDisplay, difficulty);
 	mission->setSize(randomLairSpawn->getSize());
@@ -1099,7 +1099,7 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			reward = creoLevel * (300 + System::random(300));
 		}
 
-		mission->setRewardCredits(reward);
+		mission->setRewardCredits(reward * .6);
 
 		String diffString = "easy";
 

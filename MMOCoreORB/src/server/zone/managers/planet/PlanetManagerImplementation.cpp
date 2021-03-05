@@ -470,7 +470,7 @@ void PlanetManagerImplementation::loadTravelFares() {
 
 int PlanetManagerImplementation::getTravelFare(const String& departurePlanet, const String& arrivalPlanet) {
 	int fare = travelFares.get(departurePlanet).get(arrivalPlanet);
-	return fare;
+	return fare; //messing with fares here and above change cost but doesnt show adjusted cost, might need tre edit
 }
 
 Reference<SceneObject*> PlanetManagerImplementation::loadSnapshotObject(WorldSnapshotNode* node, WorldSnapshotIff* wsiff, int& totalObjects) {
