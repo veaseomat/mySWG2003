@@ -750,37 +750,37 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 	else if (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)
 		attackerAccuracy += creoAttacker->getSkillMod("ranged_accuracy");
 
-	// now apply overall weapon defense mods
-	if (weapon->isMeleeWeapon()) {
-		switch (defender->getWeapon()->getGameObjectType()) {
-		case SceneObjectType::PISTOL:
-			attackerAccuracy += 20.f;
-			/* no break */
-		case SceneObjectType::CARBINE:
-			attackerAccuracy += 55.f;
-			/* no break */
-		case SceneObjectType::RIFLE:
-		case SceneObjectType::MINE:
-		case SceneObjectType::SPECIALHEAVYWEAPON:
-		case SceneObjectType::HEAVYWEAPON:
-			attackerAccuracy += 25.f;
-		}
-	}
+	// now apply overall weapon defense mods --wtf is this shit
+//	if (weapon->isMeleeWeapon()) {
+//		switch (defender->getWeapon()->getGameObjectType()) {
+//		case SceneObjectType::PISTOL:
+//			attackerAccuracy += 20.f;
+//			/* no break */
+//		case SceneObjectType::CARBINE:
+//			attackerAccuracy += 55.f;
+//			/* no break */
+//		case SceneObjectType::RIFLE:
+//		case SceneObjectType::MINE:
+//		case SceneObjectType::SPECIALHEAVYWEAPON:
+//		case SceneObjectType::HEAVYWEAPON:
+//			attackerAccuracy += 25.f;
+//		}
+//	}
 
 	//accuracy cap new
 //	if (!attacker->isPlayerCreature()) {
-//		if (attackerAccuracy > 125) {
-//			attackerAccuracy = 125;
-//		}
+		if (attackerAccuracy > 150) {
+			attackerAccuracy = 150;
+		}
 //	}
 
 
 	//frs accuracy
-	float frsacc = (creoAttacker->getSkillMod("force_manipulation_dark") + creoAttacker->getSkillMod("force_manipulation_light") * 0.625);
-
-	if (frsacc > 0) {
-		attackerAccuracy += frsacc;
-	}
+//	float frsacc = (creoAttacker->getSkillMod("force_manipulation_dark") + creoAttacker->getSkillMod("force_manipulation_light") * 0.625);
+//
+//	if (frsacc > 0) {
+//		attackerAccuracy += frsacc;
+//	}
 
 	if (attackerAccuracy < 1) {
 		attackerAccuracy = 1;
@@ -839,9 +839,9 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	debug() << "Target defense after state affects and cap is " << targetDefense;
 
 	// defense hardcap
-//	if (!defender->isPlayerCreature()) {
-//		if (targetDefense > 125)
-//			targetDefense = 125;
+//	if (defender->isPlayerCreature()) {
+		if (targetDefense > 100)
+			targetDefense = 100;
 //	}
 
 	//jedi frs bonus
@@ -852,12 +852,12 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 //	}
 
 	//reduce player melee/ranged d
-	if (defender->isPlayerCreature()) {
-		targetDefense *= .7f;
-	}
+//	if (defender->isPlayerCreature()) {
+//		targetDefense *= .7f;
+//	}
 	//reduce npc melee/ranged def
 	if (!defender->isPlayerCreature()) {
-			targetDefense *= .3f;
+		targetDefense *= .7f;
 	}
 
 	if (defender->isKnockedDown())
@@ -893,20 +893,25 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 //		}
 //	}
 
-	float frssaberblock = (defender->getSkillMod("force_manipulation_dark") + defender->getSkillMod("force_manipulation_light") * 0.625);
+//	float frssaberblock = (defender->getSkillMod("force_manipulation_dark") + defender->getSkillMod("force_manipulation_light") * 0.625);
+//
+//	if (frssaberblock > 0) {
+//		targetDefense += frssaberblock;
+//	}
+//
+//	// player block/dodge/counter
+//	if (defender->isPlayerCreature()) {
+//		targetDefense *= .75f;
+//	}
 
-	if (frssaberblock > 0) {
-		targetDefense += frssaberblock;
-	}
-
-	// player block/dodge/counter
-	if (defender->isPlayerCreature()) {
-		targetDefense *= .75f;
-	}
+//	if (defender->isPlayerCreature()) {
+		if (targetDefense > 125)
+			targetDefense = 125;
+//	}
 
 	//reduce npc block/dodge/counter
 	if (!defender->isPlayerCreature()) {
-		targetDefense *= .3f;
+		targetDefense *= .7f;
 	}
 
 	if (defender->isKnockedDown())
@@ -1689,7 +1694,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	// EVP Damage Reduction. dont forget to update aiagentimplementation also so examine shows same numbers (not using that anymore)
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 0.75;
+		damage *= 0.65;
 
 	// PvP Damage Reduction.
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature() && !data.isForceAttack())
@@ -2085,13 +2090,14 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 			for (int j = 0; j < defenseMods.size(); j++)
 				targetDefense += targetCreature->getSkillMod(defenseMods.get(j));
 
-			targetDefense *= 0.7;  //why are they nerfing state def by 1.5
+//			targetDefense *= 0.7;  //why are they nerfing state def by 1.5
 //			targetDefense += playerLevel;
 
-			if (!targetCreature->isPlayerCreature()) targetDefense += targetCreature->getLevel() * .5;//make npc harder to state/kd
 
-//			if (targetDefense > 90)
-//				targetDefense = 90.f;
+			if (targetDefense > 50)
+				targetDefense = 50.f;
+
+			if (!targetCreature->isPlayerCreature()) targetDefense += targetCreature->getLevel() * .5;//make npc harder to state/kd
 
 			if (System::random(100) > accuracyMod - targetDefense)
 				failed = true;
@@ -2104,11 +2110,11 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 				for (int j = 0; j < jediMods.size(); j++) {
 					targetDefense = targetCreature->getSkillMod(jediMods.get(j));
 
-					targetDefense *= 0.7;  //why would they nerf jedi states by 1.5?
+//					targetDefense *= 0.7;  //why would they nerf jedi states by 1.5?
 //					targetDefense += playerLevel;
 
-//					if (targetDefense > 75)
-//						targetDefense = 75.f;
+					if (targetDefense > 50)
+						targetDefense = 50.f;
 
 					if (System::random(100) > accuracyMod - targetDefense) {
 						failed = true;

@@ -268,6 +268,11 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 		if (newamountToSpawn > 15)
 			newamountToSpawn = 15;
 
+		int newspawnLimit = lairTemplate->getnewSpawnLimit();
+
+		if (newspawnLimit > 0)
+			newamountToSpawn = newspawnLimit;
+
 		for (int i = 0; i < newamountToSpawn; i++) {
 			int num = System::random(mobiles->size() - 1);
 			const String& mob = mobiles->get(num);

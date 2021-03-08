@@ -21,6 +21,7 @@ protected:
 	Vector<String> weightedMobiles;
 	VectorMap<String, int> bossMobiles; // mobile template, number to spawn
 	int spawnLimit;
+	int newspawnLimit;
 
 	VectorMap<uint32, Reference<Vector<String>*> > buildings;
 
@@ -37,6 +38,7 @@ public:
 
 	LairTemplate(const String& templateName) {
 		spawnLimit = 0;
+		newspawnLimit = 0;
 		buildings.setAllowDuplicateInsertPlan();
 		buildings.setNullValue(nullptr);
 		faction = 0;
@@ -82,6 +84,8 @@ public:
 
 	void readObject(LuaObject* templateData) {
 		spawnLimit = templateData->getIntField("spawnLimit");
+
+		newspawnLimit = templateData->getIntField("newspawnLimit");
 
 		if (templateData->getStringField("faction").length() > 0) {
 			String factionString = templateData->getStringField("faction");
@@ -225,6 +229,10 @@ public:
 
 	int getSpawnLimit() const {
 		return spawnLimit;
+	}
+
+	int getnewSpawnLimit() const {
+		return newspawnLimit;
 	}
 
 	const VectorMap<String, int>* getMobiles() const {
