@@ -2974,7 +2974,7 @@ void PlayerObjectImplementation::recalculateForcePower() {
 	maxForce += 250; //jedi robe
 	}
 
-	int frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 0.625;
+	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 0.625;
 
 	if (frsMax > 0) {
 		frsMax *= 1.f * (1.f + ((float)frsMax / 100.f));

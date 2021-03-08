@@ -157,7 +157,13 @@ dathomir_destroy_missions = {
 			minDifficulty = 87,
 			maxDifficulty = 91,
 			size = 35,
-		}
+		},
+		{
+			lairTemplateName = "dathomir_mtn_clan_outcast_camp_neutral_small_theater",
+			minDifficulty = 95,
+			maxDifficulty = 99,
+			size = 35,
+		},
 	}
 }
 

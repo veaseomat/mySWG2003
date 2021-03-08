@@ -131,6 +131,7 @@ includeFile("lair/creature_lair/dathomir_rhoa_kwi_pack_leader_lair_neutral_mediu
 includeFile("lair/creature_lair/dathomir_shear_mite_queen_lair_neutral_large.lua")
 includeFile("lair/creature_lair/dathomir_stallion_bolma_lair_neutral_medium.lua")
 includeFile("lair/creature_lair/dathomir_verne_bull_lair_neutral_large.lua")
+--includeFile("lair/creature_lair/dathomir_nightsister_elder_enclave_neutral_large_theater2.lua")
 
 includeFile("lair/creature_lair/endor_arachne_drone_lair_neutral_small.lua")
 includeFile("lair/creature_lair/endor_arachne_drone_lair_neutral_small_01.lua")

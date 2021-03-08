@@ -765,9 +765,9 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 	int diffDisplay = difficultyLevel + 7;
 	if (player->isGrouped())
-		diffDisplay += player->getGroup()->getGroupLevel();
+		diffDisplay = 300;
 	else
-		diffDisplay += playerLevel;
+		diffDisplay += playerLevel * 1.5;
 
 	String building = lairTemplateObject->getMissionBuilding(difficulty);
 
@@ -836,13 +836,16 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 	int reward = destroyMissionBaseReward + destroyMissionDifficultyRewardFactor * difficultyLevel;
 	reward += System::random(destroyMissionRandomReward) + System::random(destroyMissionDifficultyRandomReward * difficultyLevel);
-	mission->setRewardCredits(reward * .6);
+	reward *= .5;
+	if (reward > 10000) reward = 10000;
+
+	mission->setRewardCredits(reward);
 
 	mission->setMissionDifficulty(difficultyLevel, diffDisplay, difficulty);
 	mission->setSize(randomLairSpawn->getSize());
 	mission->setFaction(faction);
 
-	int factionPointsReward = 50;//randomLairSpawn->getMinDifficulty();
+	int factionPointsReward = 25;//randomLairSpawn->getMinDifficulty();
 //	if (factionPointsReward > 32)
 //	{
 //		factionPointsReward = 32;
@@ -960,7 +963,12 @@ void MissionManagerImplementation::randomizeGenericSurveyMission(CreatureObject*
 	mission->setTargetTemplate(templateObject);
 
 	//Reward depending on mission level.
-	mission->setRewardCredits(400 + (randLevel - minLevel) * 20 + System::random(100));
+
+	int reward = 400 + (randLevel - minLevel) * 20 + System::random(100);
+
+	if (reward > 10000) reward = 10000;
+
+	mission->setRewardCredits(reward);
 
 	mission->setFaction(faction);
 
@@ -1036,7 +1044,12 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 
 			mission->setMissionTargetName(name);
 			mission->setMissionDifficulty(75);
-			mission->setRewardCredits(getRealBountyReward(creature, target));
+
+			int reward = getRealBountyReward(creature, target);
+
+			if (reward > 10000) reward = 10000;
+
+			mission->setRewardCredits(reward);
 
 			// Set the Title, Creator, and Description of the mission.
 
@@ -1099,7 +1112,9 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			reward = creoLevel * (300 + System::random(300));
 		}
 
-		mission->setRewardCredits(reward * .6);
+		if (reward > 10000) reward = 10000;
+
+		mission->setRewardCredits(reward);
 
 		String diffString = "easy";
 
@@ -1263,7 +1278,11 @@ bool MissionManagerImplementation::randomGenericDeliverMission(CreatureObject* p
 	int baseCredits = 40;
 	int deliverDistanceCredits = (playerPosition.distanceTo(*(startNpc->getPosition())) + startNpc->getPosition()->distanceTo(*(endNpc->getPosition()))) / 10;
 
-	mission->setRewardCredits(baseCredits + deliverDistanceCredits);
+	int reward = baseCredits + deliverDistanceCredits;
+
+	if (reward > 10000) reward = 10000;
+
+	mission->setRewardCredits(reward);
 
 	switch (faction) {
 	case Factions::FACTIONIMPERIAL:
@@ -1407,7 +1426,11 @@ void MissionManagerImplementation::randomizeGenericEntertainerMission(CreatureOb
 
 	int distanceReward = player->getWorldPosition().distanceTo(target->getPosition()) / 10;
 
-	mission->setRewardCredits(100 + distanceReward + System::random(100));
+	int reward = 100 + distanceReward + System::random(100);
+
+	if (reward > 10000) reward = 10000;
+
+	mission->setRewardCredits(reward);
 
 	mission->setFaction(faction);
 
@@ -1517,7 +1540,13 @@ void MissionManagerImplementation::randomizeGenericHuntingMission(CreatureObject
 	}
 
 	int baseReward = 500 + (difficulty * 100 * randomLairSpawn->getMinDifficulty());
-	mission->setRewardCredits(baseReward + System::random(100));
+
+	int reward = baseReward + System::random(100);
+
+	if (reward > 10000) reward = 10000;
+
+	mission->setRewardCredits(reward);
+
 	mission->setMissionDifficulty(difficulty);
 	mission->setMissionTitle("mission/mission_npc_hunting_neutral_" + diffString, "m" + String::valueOf(randTexts) + "t");
 	mission->setMissionDescription("mission/mission_npc_hunting_neutral_" + diffString, "m" + String::valueOf(randTexts) + "o");
@@ -1564,9 +1593,11 @@ void MissionManagerImplementation::randomizeGenericReconMission(CreatureObject* 
 
 	mission->setStartPosition(position.getX(), position.getY(), playerZone->getZoneName());
 
-	int reward = position.distanceTo(player->getWorldPosition()) / 5;
+	int reward = (position.distanceTo(player->getWorldPosition()) / 5) + 50;
 
-	mission->setRewardCredits(50 + reward);
+	if (reward > 10000) reward = 10000;
+
+	mission->setRewardCredits(reward);
 
 	switch (faction) {
 	case Factions::FACTIONIMPERIAL:

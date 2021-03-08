@@ -28,12 +28,12 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 		spawnLimitAdjustment = 3;
 	}
 
-	int spawnLimit = lairTemplate->getSpawnLimit() + spawnLimitAdjustment;
+	int spawnLimit = lairTemplate->getSpawnLimit() * 2;
 
 	if (forceSpawn) {
 		spawnNumber.increment();
-	} else if (getMobType() == LairTemplate::NPC) {
-		return false;
+//	} else if (getMobType() == LairTemplate::NPC) {
+//		return false;
 	} else {
 		if (spawnedCreatures.size() >= spawnLimit && !lairTemplate->hasBossMobs())
 			return true;
@@ -75,7 +75,7 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 	VectorMap<String, int> objectsToSpawn; // String mobileTemplate, int number to spawn
 
 	if (spawnNumber == 4) {
-		if (System::random(100) > 4)
+		if (System::random(100) > 10)
 			return false;
 
 		const VectorMap<String, int>* mobs = lairTemplate->getBossMobiles();
@@ -86,21 +86,20 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 
 	} else {
 		const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
-		int amountToSpawn = 0;
 
-		if (getMobType() == LairTemplate::CREATURE) {
-			amountToSpawn = System::random(lairTemplate->getSpawnLimit());
-		} else {
-			amountToSpawn = System::random(lairTemplate->getSpawnLimit());
-		}
+		int amountToSpawn = System::random(lairTemplate->getSpawnLimit() * 2);
 
-		if (amountToSpawn < 5)
-			amountToSpawn = 5;
+		int levelincrease = System::random(difficulty * 2);
 
-		if (amountToSpawn > 12)
-			amountToSpawn = 12;
+		int newamountToSpawn = amountToSpawn + levelincrease;
 
-		for (int i = 0; i < amountToSpawn; i++) {
+		if (newamountToSpawn < 5)
+			newamountToSpawn = 5;
+
+		if (newamountToSpawn > 15)
+			newamountToSpawn = 15;
+
+		for (int i = 0; i < newamountToSpawn; i++) {
 			int num = System::random(mobiles->size() - 1);
 			const String& mob = mobiles->get(num);
 
