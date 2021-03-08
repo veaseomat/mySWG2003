@@ -159,7 +159,7 @@ dathomir_destroy_missions = {
 			size = 35,
 		},
 		{
-			lairTemplateName = "dathomir_mtn_clan_outcast_camp_neutral_small_theater",
+			lairTemplateName = "dathomir_nightsister_elder_enclave_neutral_large_theater2",
 			minDifficulty = 95,
 			maxDifficulty = 99,
 			size = 35,
