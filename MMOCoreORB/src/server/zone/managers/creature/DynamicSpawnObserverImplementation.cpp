@@ -73,17 +73,22 @@ void DynamicSpawnObserverImplementation::spawnInitialMobiles(SceneObject* buildi
 //	if (totalNumberToSpawn > 10)
 //		totalNumberToSpawn = 10;
 
-	int amountToSpawn = System::random(lairTemplate->getSpawnLimit() * 2);
+	int amountToSpawn = System::random(lairTemplate->getSpawnLimit() * 1.5);
 
-	int levelincrease = System::random(difficulty * 2);
+	int levelincrease = System::random(difficulty);
 
 	int newamountToSpawn = amountToSpawn + levelincrease;
 
 	if (newamountToSpawn < 5)
 		newamountToSpawn = 5;
 
-	if (newamountToSpawn > 15)
-		newamountToSpawn = 15;
+	if (newamountToSpawn > 10)
+		newamountToSpawn = 10;
+
+	int newspawnLimit = lairTemplate->getnewSpawnLimit();
+
+	if (newspawnLimit > 0)
+		newamountToSpawn = newspawnLimit;
 
 	for (int i = 0; i < newamountToSpawn; i++) {
 		int num = System::random(mobiles->size() - 1);

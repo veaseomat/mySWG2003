@@ -1646,7 +1646,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 		// PVE Damage bonus
 		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-			damage *= 3.5;
+			damage *= 2.0;
 
 		//frsdamage
 		float lightDamage = attacker->getSkillMod("force_manipulation_light") * 0.3125;
@@ -1710,7 +1710,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	// EVP Damage Reduction. dont forget to update aiagentimplementation also so examine shows same numbers (not using that anymore)
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 0.7;
+		damage *= 0.4;
 
 	// PvP Damage Reduction.
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature() && !data.isForceAttack())

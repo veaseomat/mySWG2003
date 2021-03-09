@@ -87,17 +87,17 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 	} else {
 		const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
 
-		int amountToSpawn = System::random(lairTemplate->getSpawnLimit() * 2);
+		int amountToSpawn = System::random(lairTemplate->getSpawnLimit() * 1.5);
 
-		int levelincrease = System::random(difficulty * 2);
+		int levelincrease = System::random(difficulty);
 
 		int newamountToSpawn = amountToSpawn + levelincrease;
 
 		if (newamountToSpawn < 5)
 			newamountToSpawn = 5;
 
-		if (newamountToSpawn > 15)
-			newamountToSpawn = 15;
+		if (newamountToSpawn > 10)
+			newamountToSpawn = 10;
 
 		int newspawnLimit = lairTemplate->getnewSpawnLimit();
 
