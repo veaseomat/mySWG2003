@@ -10,8 +10,8 @@
 -- adjustFactor  - This factor affects the amount of faction gained/lost when killing a mobile
 
 factionList = {
-	{ "rebel", true, "imperial", "", 5.0 },
-	{ "imperial", true, "rebel", "", 5.0 },
+	{ "rebel", true, "imperial", "", 2.0 },
+	{ "imperial", true, "rebel", "", 2.0 },
 	{ "aakuans", true, "binayre,fed_dub,liberation_party", "", 1.0 },
 	{ "afarathu", true, "corsec", "", 1.0 },
 	{ "alkhara", true, "tusken_raider", "", 1.0 },

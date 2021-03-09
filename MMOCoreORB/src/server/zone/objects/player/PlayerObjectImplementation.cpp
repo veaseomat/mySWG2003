@@ -2977,7 +2977,7 @@ void PlayerObjectImplementation::recalculateForcePower() {
 	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 0.625;
 
 	if (frsMax > 0) {
-		frsMax *= 1.f * (1.f + ((float)frsMax / 100.f));
+		maxForce *= 1.f * (1.f + ((float)frsMax / 100.f));
 	}
 
 	setForcePowerMax(maxForce, true);

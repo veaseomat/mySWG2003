@@ -629,11 +629,11 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = (entry->getLootChance() * 2.2);
+		int lootChance = (entry->getLootChance() * 2.5);
 
 		int hroll = System::random(5000);
 
-		if (hroll == 10000)
+		if (hroll == 5000)
 			createLoot(trx, container, "holocron_nd", level);
 
 		if (lootChance <= 0)
