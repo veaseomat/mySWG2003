@@ -2059,6 +2059,13 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 		regen += 10; //jedi robe
 		}
 
+		//frs regen increase by %
+		float frsregen = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.625);
+
+		if (frsregen > 0) {
+			regen *= 1.f + (frsregen / 100.f);
+		}
+
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
 		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
 
@@ -2977,7 +2984,7 @@ void PlayerObjectImplementation::recalculateForcePower() {
 	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 0.625;
 
 	if (frsMax > 0) {
-		maxForce *= 1.f * (1.f + ((float)frsMax / 100.f));
+		maxForce *= 1.f + (frsMax / 100.f);
 	}
 
 	setForcePowerMax(maxForce, true);

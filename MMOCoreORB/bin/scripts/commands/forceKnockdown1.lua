@@ -56,7 +56,7 @@ ForceKnockdown1Command = {
 		{ "knockdownRecovery", "lastKnockdown" },
 		{},
 		{},
-		65,
+		100,
 		0,
 		0
 	  )

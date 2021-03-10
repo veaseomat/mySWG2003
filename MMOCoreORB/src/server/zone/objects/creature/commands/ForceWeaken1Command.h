@@ -44,13 +44,22 @@ public:
 		int res = doCombatAction(creature, target);
 
 		if (res == SUCCESS) {
-			Locker clocker(creatureTarget, creature);
+//			Locker clocker(creatureTarget, creature);
 
-			ManagedReference<Buff*> buff = new ForceWeakenDebuff(creatureTarget, getNameCRC(), 300, 500, 90);
+	//		ManagedReference<Buff*> buff = new ForceWeakenDebuff(creatureTarget, getNameCRC(), 300, 500, 90);
 
-			Locker locker(buff);
+	//		Locker locker(buff);
 
-			creatureTarget->addBuff(buff);
+	//		creatureTarget->addBuff(buff);
+
+			Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(creatureTarget, STRING_HASHCODE("forceweaken1"), 30, BuffType::JEDI);
+
+			Locker blocker(multBuff);
+
+			multBuff->setSkillModifier("private_damage_divisor", 5);
+			multBuff->setSkillModifier("private_damage_multiplier", 4);
+
+			creatureTarget->addBuff(multBuff);
 
 			CombatManager::instance()->broadcastCombatSpam(creature, creatureTarget, nullptr, 0, "cbt_spam", combatSpam + "_hit", 1);
 		}

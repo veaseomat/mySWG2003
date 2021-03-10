@@ -856,3 +856,17 @@ bool SkillManager::villageKnightPrereqsMet(CreatureObject* creature, const Strin
 
 	return fullTrees >= 2 && totalJediPoints >= 206;
 }
+
+int SkillManager::getJediSkillCount(CreatureObject* creature, bool includeNoviceMasterBoxes) {
+	const SkillList* skills =  creature->getSkillList();
+	int JediSkillCount = 0;
+
+	for (int i = 0; i < skills->size(); ++i) {
+		const String& skillName = skills->get(i)->getSkillName();
+		if (skillName.contains("force_discipline_") && (includeNoviceMasterBoxes || skillName.indexOf("0") != -1)) {
+			JediSkillCount++;
+		}
+	}
+
+	return JediSkillCount;
+}

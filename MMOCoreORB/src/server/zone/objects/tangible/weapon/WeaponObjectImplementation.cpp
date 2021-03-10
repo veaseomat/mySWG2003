@@ -257,7 +257,11 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 
 	alm->insertAttribute("wpn_armor_pierce_rating", ap);
 
-	alm->insertAttribute("wpn_attack_speed", Math::getPrecision(getAttackSpeed(), 1));
+	float speed = Math::getPrecision(getAttackSpeed(), 1);
+
+	if (speed < 1.0) speed = 1.0;
+
+	alm->insertAttribute("wpn_attack_speed", speed);
 
 	if (getDamageRadius() != 0.0f)
 		alm->insertAttribute("area", Math::getPrecision(getDamageRadius(), 0));
@@ -310,6 +314,8 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	StringBuffer woundsratio;
 
 	float wnd = round(10 * getWoundsRatio()) / 10.0f;
+
+	if (wnd > 100) wnd = 100;
 
 	woundsratio << wnd << "%";
 

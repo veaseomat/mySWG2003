@@ -21,7 +21,7 @@ public:
 		blockingCRCs.add(BuffCRC::JEDI_FORCE_RUN_3);
         
 		skillMods.put("force_run", 2);
-		skillMods.put("slope_move", 66);
+		skillMods.put("slope_move", 100);
 	}
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
@@ -52,7 +52,7 @@ public:
 		Locker locker(multBuff);
 
 //		multBuff->setSkillModifier("private_damage_divisor", 20);
-		multBuff->setSkillModifier("private_attack_accuracy", -99);
+		multBuff->setSkillModifier("private_attack_accuracy", -150);
 
 		creature->addBuff(multBuff);
 

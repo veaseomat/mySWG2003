@@ -455,7 +455,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	// Add Dots to weapon objects.
 	addStaticDots(prototype, templateObject, level);
-	addRandomDots(prototype, templateObject, level, 1.0);
+	addRandomDots(prototype, templateObject, level, excMod);
 
 	setSkillMods(prototype, templateObject, level, excMod);
 
@@ -880,6 +880,8 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 	if (!object->isWeaponObject())
 		return;
 
+	float dotexcMod = (System::random(15) * .1) + 1.0;
+
 	ManagedReference<WeaponObject*> weapon = cast<WeaponObject*>(object);
 
 	bool shouldGenerateDots = false;
@@ -889,10 +891,11 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 	if (dotChance < 0)
 		return;
 
-	float modSqr = excMod * excMod;
+//	float modSqr = excMod * excMod;
 
 	// Apply the Dot if the chance roll equals the number or is zero.
-	if (dotChance == 0 || System::random(dotChance / modSqr) == 0) { // Defined in loot item script.
+//	if (dotChance == 0 || System::random(dotChance / modSqr) == 0) { // Defined in loot item script.
+	if (System::random(25) == 25) {
 		shouldGenerateDots = true;
 	}
 
@@ -900,8 +903,8 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 
 		int number = 1;
 
-		if (System::random(250 / modSqr) == 0)
-			number = 2;
+//		if (System::random(250 / modSqr) == 0)
+//			number = 2;
 
 		for (int i = 0; i < number; i++) {
 			int dotType = System::random(2) + 1;
@@ -932,16 +935,16 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				str = strMax;
 
-			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
-				str *= yellowModifier;
-			}
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				str *= yellowModifier;
+//			}
 
 			if (dotType == 1)
 				str = str * 2;
 			else if (dotType == 3)
 				str = str * 1.5;
 
-			weapon->addDotStrength(str * excMod);
+			weapon->addDotStrength(str * dotexcMod);
 
 			int durMin = randomDotDuration.elementAt(0);
 			int durMax = randomDotDuration.elementAt(1);
@@ -952,16 +955,16 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				dur = durMax;
 
-			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
-				dur *= yellowModifier;
-			}
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				dur *= yellowModifier;
+//			}
 
 			if (dotType == 2)
 				dur = dur * 5;
 			else if (dotType == 3)
 				dur = dur * 1.5;
 
-			weapon->addDotDuration(dur * excMod);
+			weapon->addDotDuration(dur * dotexcMod);
 
 			int potMin = randomDotPotency.elementAt(0);
 			int potMax = randomDotPotency.elementAt(1);
@@ -972,11 +975,11 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				pot = potMax;
 
-			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
-				pot *= yellowModifier;
-			}
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				pot *= yellowModifier;
+//			}
 
-			weapon->addDotPotency(pot * excMod);
+			weapon->addDotPotency(pot * dotexcMod);
 
 			int useMin = randomDotUses.elementAt(0);
 			int useMax = randomDotUses.elementAt(1);
@@ -991,7 +994,7 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 				use *= yellowModifier;
 			}
 
-			weapon->addDotUses(use * excMod);
+			weapon->addDotUses(use * dotexcMod);
 		}
 
 		weapon->addMagicBit(false);
