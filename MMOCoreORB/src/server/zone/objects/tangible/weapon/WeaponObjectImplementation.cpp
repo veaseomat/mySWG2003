@@ -235,27 +235,27 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 			alm->insertAttribute(statname, value);
 	}
 
-	String ap;
-
-	switch (armorPiercing) {
-	case SharedWeaponObjectTemplate::NONE:
-		ap = "None";
-		break;
-	case SharedWeaponObjectTemplate::LIGHT:
-		ap = "Light";
-		break;
-	case SharedWeaponObjectTemplate::MEDIUM:
-		ap = "Medium";
-		break;
-	case SharedWeaponObjectTemplate::HEAVY:
-		ap = "Heavy";
-		break;
-	default:
-		ap = "Unknown";
-		break;
-	}
-
-	alm->insertAttribute("wpn_armor_pierce_rating", ap);
+//	String ap;
+//
+//	switch (armorPiercing) {
+//	case SharedWeaponObjectTemplate::NONE:
+//		ap = "None";
+//		break;
+//	case SharedWeaponObjectTemplate::LIGHT:
+//		ap = "Light";
+//		break;
+//	case SharedWeaponObjectTemplate::MEDIUM:
+//		ap = "Medium";
+//		break;
+//	case SharedWeaponObjectTemplate::HEAVY:
+//		ap = "Heavy";
+//		break;
+//	default:
+//		ap = "Unknown";
+//		break;
+//	}
+//
+//	alm->insertAttribute("wpn_armor_pierce_rating", ap);
 
 	float speed = Math::getPrecision(getAttackSpeed(), 1);
 
@@ -322,33 +322,33 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	alm->insertAttribute("damage.wpn_wound_chance", woundsratio);
 
 	//Accuracy Modifiers
-	StringBuffer pblank;
-	if (getPointBlankAccuracy() >= 0)
-		pblank << "+";
-
-	pblank << getPointBlankAccuracy() << " @ " << getPointBlankRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_zero", pblank);
-
-	StringBuffer ideal;
-	if (getIdealAccuracy() >= 0)
-		ideal << "+";
-
-	ideal << getIdealAccuracy() << " @ " << getIdealRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_mid", ideal);
-
-	StringBuffer maxrange;
-	if (getMaxRangeAccuracy() >= 0)
-		maxrange << "+";
-
-	maxrange << getMaxRangeAccuracy() << " @ " << getMaxRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
+//	StringBuffer pblank;
+//	if (getPointBlankAccuracy() >= 0)
+//		pblank << "+";
+//
+//	pblank << getPointBlankAccuracy() << " @ " << getPointBlankRange() << "m";
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_zero", pblank);
+//
+//	StringBuffer ideal;
+//	if (getIdealAccuracy() >= 0)
+//		ideal << "+";
+//
+//	ideal << getIdealAccuracy() << " @ " << getIdealRange() << "m";
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_mid", ideal);
+//
+//	StringBuffer maxrange;
+//	if (getMaxRangeAccuracy() >= 0)
+//		maxrange << "+";
+//
+//	maxrange << getMaxRangeAccuracy() << " @ " << getMaxRange() << "m";
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
 
 	//Special Attack Costs
-	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost());
-
-	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost());
-
-	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost());
+//	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost());
+//
+//	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost());
+//
+//	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost());
 
 	//Anti Decay Kit
 	if(hasAntiDecayKit()){

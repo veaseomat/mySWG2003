@@ -75,14 +75,14 @@ void ArmorObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cre
 //	alm->insertAttribute("challenge_level", getLevel());
 
 	//Armor Rating
-	if (rating == LIGHT)
-		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_light"); //Light
-	else if (rating == MEDIUM)
-		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_medium"); //Medium
-	else if (rating == HEAVY)
-		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_heavy"); //Heavy
-	else
-		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_none"); //None
+//	if (rating == LIGHT)
+//		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_light"); //Light
+//	else if (rating == MEDIUM)
+//		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_medium"); //Medium
+//	else if (rating == HEAVY)
+//		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_heavy"); //Heavy
+//	else
+//		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_none"); //None
 
 	int armorKinetic = getKinetic();
 	int armorEnergy = getEnergy();
