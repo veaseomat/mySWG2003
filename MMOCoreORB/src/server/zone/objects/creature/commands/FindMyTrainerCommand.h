@@ -61,9 +61,9 @@ public:
 		obj->setPosition(coords.getX(), 0, coords.getY());
 		obj->setCustomObjectName(name, false);
 //removing the findmytrainer command
-//		ghost->addWaypoint(obj, true, true);
+		ghost->addWaypoint(obj, true, true);
 
-		creature->sendSystemMessage("Your Jedi trainer could be any starting profession trainer on any planet. Converse with starting profession trainers to find yours, may the force be with you.");
+		creature->sendSystemMessage("A waypoint to your Jedi skill trainer has been added to your datapad.");
 
 		return SUCCESS;
 	}

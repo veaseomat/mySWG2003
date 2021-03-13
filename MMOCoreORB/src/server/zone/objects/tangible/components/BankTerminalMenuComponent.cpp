@@ -142,7 +142,7 @@ int BankTerminalMenuComponent::handleObjectMenuSelect(SceneObject* sceneObject, 
 //		if (planet == playerZone->getZoneName() || GLOBALSAFETYDEPOSIT) {
 
 			ManagedReference<SceneObject*> bank = creature->getSlottedObject("bank");
-//			bank->openContainerTo(creature);
+			bank->openContainerTo(creature);
 //		} else {
 //			creature->sendSystemMessage("@newbie_tutorial/system_messages:bank_info_2");
 //		}

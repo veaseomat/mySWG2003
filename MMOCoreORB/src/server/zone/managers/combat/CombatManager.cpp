@@ -1599,29 +1599,29 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	//mySWG balancing the profs based on highest dmg weapon and special for that class
 		if (attacker->isPlayerCreature() && !data.isForceAttack()) {
 			if (weapon->isPistolWeapon())
-			damage *= 2.857f;
+			damage *= 1.9f;
 			if (weapon->isCarbineWeapon())
-			damage *= 1.96f;
+			damage *= 1.4f;
 			if (weapon->isRifleWeapon())
-			damage *= .866f;
+			damage *= .9f;
 //			if (weapon->isRangedWeapon())
 //			damage *= 1.03f;
 			if (weapon->isUnarmedWeapon())
-			damage *= 2.898f;
+			damage *= 1.9f;
 			if (weapon->isOneHandMeleeWeapon())
-			damage *= 1.642f;
+			damage *= 1.3f;
 			if (weapon->isTwoHandMeleeWeapon())
-			damage *= .969f;
+			damage *= 1.0f;
 			if (weapon->isPolearmWeaponObject())
-			damage *= 1.122f;
+			damage *= 1.0f;
 //			if (weapon->isMeleeWeapon())
 //			damage *= .96f;
 			if (weapon->isLightningRifle())
-			damage *= .398f;
+			damage *= .7f;
 			if (weapon->isFlameThrower())
-			damage *= .223f;
+			damage *= .6f;
 			if (weapon->isHeavyAcidRifle())
-			damage *= .244f;
+			damage *= .6f;
 //			if (weapon->isHeavyWeapon())
 //			damage *= 1.0f;
 //			if (weapon->isThrownWeapon())
@@ -1631,17 +1631,17 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	//		if (weapon->isMineWeapon())
 	//		damage *= 1.0f;
 			if (weapon->isJediOneHandedWeapon())
-			damage *= 1.543f;
+			damage *= 1.2f;
 			if (weapon->isJediTwoHandedWeapon())
-			damage *= 1.364f;
+			damage *= 1.1f;
 			if (weapon->isJediPolearmWeapon())
-			damage *= 1.321f;
+			damage *= 1.1f;
 	//		if (weapon->isJediWeapon())
 	//		damage *= 1.0f;
 		}
 //powers boost 10x seems to be same damage as saber attack w force lightning... but 4sec delay and heavy force cost
 		if (data.isForceAttack()) {
-				damage *= 40.f;
+				damage *= 20.f;
 		}
 
 		// PVE Damage bonus
