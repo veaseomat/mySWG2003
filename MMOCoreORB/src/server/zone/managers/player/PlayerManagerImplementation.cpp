@@ -1276,15 +1276,15 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 //jedi xp loss
 
-	int curExp = ghost->getExperience("jedi_general");
-	int xpLoss = (curExp / 8) * -1; //divide by global xp multi
-
-	awardExperience(player, "jedi_general", xpLoss, true);
-
-	int frscurExp = ghost->getExperience("force_rank_xp");
-	int frsxpLoss = (frscurExp / 8) * -1; //divide by global xp multi
-
-	awardExperience(player, "force_rank_xp", frsxpLoss, true);
+//	int curExp = ghost->getExperience("jedi_general");
+//	int xpLoss = (curExp / 8) * -1; //divide by global xp multi
+//
+//	awardExperience(player, "jedi_general", xpLoss, true);
+//
+//	int frscurExp = ghost->getExperience("force_rank_xp");
+//	int frsxpLoss = (frscurExp / 8) * -1; //divide by global xp multi
+//
+//	awardExperience(player, "force_rank_xp", frsxpLoss, true);
 
 	//		StringIdChatParameter message("base_player","prose_revoke_xp");
 	//		message.setDI(frsxpLoss * -1 * 8); //multiply by global xp mult
@@ -1292,54 +1292,54 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 	//		player->sendSystemMessage(message);
 
 	// FRS skill loss.
-	if (player->hasSkill("force_title_jedi_rank_03")) {
-
-		SkillManager::instance()->surrenderSkill("force_rank_dark_master", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_10", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_09", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_08", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_07", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_06", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_05", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_04", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_03", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_02", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_01", player, true, true);
-
-		SkillManager::instance()->surrenderSkill("force_rank_light_master", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_light_rank_10", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_light_rank_09", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_light_rank_08", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_light_rank_07", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_light_rank_06", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_light_rank_05", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_light_rank_04", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_light_rank_03", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_light_rank_02", player, true, true);
-		SkillManager::instance()->surrenderSkill("force_rank_light_rank_01", player, true, true);
-
-		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
-		box->setPromptTitle("FRS SKILL LOSS"); // You feel a tingle in the Force.
-		box->setPromptText("Rest easy son, you've had a busy day. Unfortunately, all of your Force Ranking System progress has been lost because of this death. This may seem like a severe punishment but it is necessicary to keep Jedi powerful. May the force be with you.");
-		ghost->addSuiBox(box);
-		player->sendMessage(box->generateMessage());
-	}
+//	if (player->hasSkill("force_title_jedi_rank_03")) {
+//
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_master", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_10", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_09", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_08", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_07", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_06", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_05", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_04", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_03", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_02", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_01", player, true, true);
+//
+//		SkillManager::instance()->surrenderSkill("force_rank_light_master", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_10", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_09", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_08", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_07", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_06", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_05", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_04", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_03", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_02", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_01", player, true, true);
+//
+//		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+//		box->setPromptTitle("FRS SKILL LOSS"); // You feel a tingle in the Force.
+//		box->setPromptText("Rest easy son, you've had a busy day. Unfortunately, all of your Force Ranking System progress has been lost because of this death. This may seem like a severe punishment but it is necessicary to keep Jedi powerful. May the force be with you.");
+//		ghost->addSuiBox(box);
+//		player->sendMessage(box->generateMessage());
+//	}
 
 	// Jedi skill loss.
 
-	int jediskillpoints = SkillManager::instance()->getJediSkillCount(player, true);
-
-	if ((jediskillpoints > 0) and not player->hasSkill("force_title_jedi_rank_03")) {
-
-
-		SkillManager::instance()->surrenderAllSkills(player, true, true);
-
-		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
-		box->setPromptTitle("JEDI SKILL LOSS");
-		box->setPromptText("Rest easy son, you've had a busy day. Unfortunately, all of your Jedi progress has been lost because of this death. This may seem like a severe punishment but it is necessicary to keep Jedi powerful. May the force be with you.");
-		ghost->addSuiBox(box);
-		player->sendMessage(box->generateMessage());
-	}
+//	int jediskillpoints = SkillManager::instance()->getJediSkillCount(player, true);
+//
+//	if ((jediskillpoints > 0) and not player->hasSkill("force_title_jedi_rank_03")) {
+//
+//
+//		SkillManager::instance()->surrenderAllSkills(player, true, true);
+//
+//		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+//		box->setPromptTitle("JEDI SKILL LOSS");
+//		box->setPromptText("Rest easy son, you've had a busy day. Unfortunately, all of your Jedi progress has been lost because of this death. This may seem like a severe punishment but it is necessicary to keep Jedi powerful. May the force be with you.");
+//		ghost->addSuiBox(box);
+//		player->sendMessage(box->generateMessage());
+//	}
 
 }
 
@@ -1941,27 +1941,27 @@ void PlayerManagerImplementation::applyEncumbrancies(CreatureObject* player, Arm
 	int actionEncumb = Math::max(0, armor->getActionEncumbrance());
 	int mindEncumb = Math::max(0, armor->getMindEncumbrance());
 
-	player->addEncumbrance(CreatureEncumbrance::HEALTH, healthEncumb, true);
-	player->addEncumbrance(CreatureEncumbrance::ACTION, actionEncumb, true);
-	player->addEncumbrance(CreatureEncumbrance::MIND, mindEncumb, true);
+	player->setEncumbrance(CreatureEncumbrance::HEALTH, 0, true);
+	player->setEncumbrance(CreatureEncumbrance::ACTION, 0, true);
+	player->setEncumbrance(CreatureEncumbrance::MIND, 0, true);
 
-	player->inflictDamage(player, CreatureAttribute::STRENGTH, healthEncumb, true);
-	player->addMaxHAM(CreatureAttribute::STRENGTH, -healthEncumb, true);
-
-	player->inflictDamage(player, CreatureAttribute::CONSTITUTION, healthEncumb, true);
-	player->addMaxHAM(CreatureAttribute::CONSTITUTION, -healthEncumb, true);
-
-	player->inflictDamage(player, CreatureAttribute::QUICKNESS, actionEncumb, true);
-	player->addMaxHAM(CreatureAttribute::QUICKNESS, -actionEncumb, true);
-
-	player->inflictDamage(player, CreatureAttribute::STAMINA, actionEncumb, true);
-	player->addMaxHAM(CreatureAttribute::STAMINA, -actionEncumb, true);
-
-	player->inflictDamage(player, CreatureAttribute::FOCUS, mindEncumb, true);
-	player->addMaxHAM(CreatureAttribute::FOCUS, -mindEncumb, true);
-
-	player->inflictDamage(player, CreatureAttribute::WILLPOWER, mindEncumb, true);
-	player->addMaxHAM(CreatureAttribute::WILLPOWER, -mindEncumb, true);
+//	player->inflictDamage(player, CreatureAttribute::STRENGTH, healthEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::STRENGTH, -healthEncumb, true);
+//
+//	player->inflictDamage(player, CreatureAttribute::CONSTITUTION, healthEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::CONSTITUTION, -healthEncumb, true);
+//
+//	player->inflictDamage(player, CreatureAttribute::QUICKNESS, actionEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::QUICKNESS, -actionEncumb, true);
+//
+//	player->inflictDamage(player, CreatureAttribute::STAMINA, actionEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::STAMINA, -actionEncumb, true);
+//
+//	player->inflictDamage(player, CreatureAttribute::FOCUS, mindEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::FOCUS, -mindEncumb, true);
+//
+//	player->inflictDamage(player, CreatureAttribute::WILLPOWER, mindEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::WILLPOWER, -mindEncumb, true);
 }
 
 void PlayerManagerImplementation::removeEncumbrancies(CreatureObject* player, ArmorObject* armor) {
@@ -1969,27 +1969,31 @@ void PlayerManagerImplementation::removeEncumbrancies(CreatureObject* player, Ar
 	int actionEncumb = Math::max(0, armor->getActionEncumbrance());
 	int mindEncumb = Math::max(0, armor->getMindEncumbrance());
 
-	player->addEncumbrance(CreatureEncumbrance::HEALTH, -healthEncumb, true);
-	player->addEncumbrance(CreatureEncumbrance::ACTION, -actionEncumb, true);
-	player->addEncumbrance(CreatureEncumbrance::MIND, -mindEncumb, true);
+	player->setEncumbrance(CreatureEncumbrance::HEALTH, 0, true);
+	player->setEncumbrance(CreatureEncumbrance::ACTION, 0, true);
+	player->setEncumbrance(CreatureEncumbrance::MIND, 0, true);
 
-	player->addMaxHAM(CreatureAttribute::STRENGTH, healthEncumb, true);
-	player->healDamage(player, CreatureAttribute::STRENGTH, healthEncumb, true);
+//	player->addEncumbrance(CreatureEncumbrance::HEALTH, -healthEncumb, true);
+//	player->addEncumbrance(CreatureEncumbrance::ACTION, -actionEncumb, true);
+//	player->addEncumbrance(CreatureEncumbrance::MIND, -mindEncumb, true);
 
-	player->addMaxHAM(CreatureAttribute::CONSTITUTION, healthEncumb, true);
-	player->healDamage(player, CreatureAttribute::CONSTITUTION, healthEncumb, true);
-
-	player->addMaxHAM(CreatureAttribute::QUICKNESS, actionEncumb, true);
-	player->healDamage(player, CreatureAttribute::QUICKNESS, actionEncumb, true);
-
-	player->addMaxHAM(CreatureAttribute::STAMINA, actionEncumb, true);
-	player->healDamage(player, CreatureAttribute::STAMINA, actionEncumb, true);
-
-	player->addMaxHAM(CreatureAttribute::FOCUS, mindEncumb, true);
-	player->healDamage(player, CreatureAttribute::FOCUS, mindEncumb, true);
-
-	player->addMaxHAM(CreatureAttribute::WILLPOWER, mindEncumb, true);
-	player->healDamage(player, CreatureAttribute::WILLPOWER, mindEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::STRENGTH, healthEncumb, true);
+//	player->healDamage(player, CreatureAttribute::STRENGTH, healthEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::CONSTITUTION, healthEncumb, true);
+//	player->healDamage(player, CreatureAttribute::CONSTITUTION, healthEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::QUICKNESS, actionEncumb, true);
+//	player->healDamage(player, CreatureAttribute::QUICKNESS, actionEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::STAMINA, actionEncumb, true);
+//	player->healDamage(player, CreatureAttribute::STAMINA, actionEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::FOCUS, mindEncumb, true);
+//	player->healDamage(player, CreatureAttribute::FOCUS, mindEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::WILLPOWER, mindEncumb, true);
+//	player->healDamage(player, CreatureAttribute::WILLPOWER, mindEncumb, true);
 }
 
 void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, uint32 badgeId) {

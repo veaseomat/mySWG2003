@@ -433,16 +433,9 @@ public:
 //			return 0;
 //		}
 
-		if (buffPower > 4000) {
-			buffPower = 4000;
-		}
 		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
 
 		int durationextra = (enhancePack->getDuration() * 4);
-
-		if (durationextra > 720000) {
-			buffPower = 720000;
-		}
 
 		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, durationextra, enhancePack->getAbsorption());
 

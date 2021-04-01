@@ -534,14 +534,14 @@ void SlicingSessionImplementation::handleWeaponSlice() {
 //edit slicechance here
 	uint8 percentage = System::random(max - min) + min;
 
-	switch(System::random(1)) {
-	case 0:
+//	switch(System::random(1)) {
+//	case 0:
 		handleSliceDamage(percentage);
-		break;
-	case 1:
-		handleSliceSpeed(percentage);
-		break;
-	}
+//		break;
+//	case 1:
+//		handleSliceSpeed(percentage);
+//		break;
+//	}
 }
 
 void SlicingSessionImplementation::detachPowerUp(CreatureObject* player, WeaponObject* weap) {
@@ -640,14 +640,14 @@ void SlicingSessionImplementation::handleArmorSlice() {
 
 	uint8 percent = System::random(max - min) + min;
 
-	switch (sliceType) {
-	case 0:
+//	switch (sliceType) {
+//	case 0:
 		handleSliceEffectiveness(percent);
-		break;
-	case 1:
-		handleSliceEncumbrance(percent);
-		break;
-	}
+//		break;
+//	case 1:
+//		handleSliceEncumbrance(percent);
+//		break;
+//	}
 }
 
 void SlicingSessionImplementation::handleSliceEncumbrance(uint8 percent) {

@@ -1119,8 +1119,8 @@ int CombatManager::getArmorObjectReduction(ArmorObject* armor, int damageType) c
 		break;
 	}
 
-	if (resist > 80)
-		resist = 80;
+	if (resist > 90)
+		resist = 90;
 
 	if (damageType == 16)
 		resist = 100;
@@ -1179,8 +1179,8 @@ int CombatManager::getArmorNpcReduction(AiAgent* defender, int damageType) const
 		break;
 	}
 
-	if (resist > 80)
-		resist = 80;
+	if (resist > 90)
+		resist = 90;
 
 	if (damageType == 16)
 		resist = 100;
@@ -1934,7 +1934,7 @@ float CombatManager::calculateWeaponAttackSpeed(CreatureObject* attacker, Weapon
 	if (jediSpeed > 0)
 		attackSpeed = attackSpeed - (attackSpeed * jediSpeed);
 
-	return Math::max(attackSpeed, 1.0f);
+	return 1.0;//Math::max(attackSpeed, 1.0f);
 }
 
 void CombatManager::doMiss(TangibleObject* attacker, WeaponObject* weapon, CreatureObject* defender, int damage) const {

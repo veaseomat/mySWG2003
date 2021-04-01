@@ -678,12 +678,12 @@ void EntertainingSessionImplementation::addEntertainerBuffStrength(CreatureObjec
 		newBuffStrength = maxBuffStrength;
 	}
 
-	if(newBuffStrength < 100.0f)
-		newBuffStrength = 100.0f;
+//	if(newBuffStrength < 100.0f)
+//		newBuffStrength = 100.0f;
 
-	//newBuffStrength = newBuffStrength;
+	int newnewBuffStrength = newBuffStrength * 2;
 
-	setEntertainerBuffStrength(creature, performanceType, newBuffStrength);
+	setEntertainerBuffStrength(creature, performanceType, newnewBuffStrength);
 }
 
 void EntertainingSessionImplementation::addWatcher(CreatureObject* creature) {
