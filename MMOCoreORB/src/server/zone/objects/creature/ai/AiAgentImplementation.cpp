@@ -2658,7 +2658,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 
 
 
-	if (getKinetic() > -1) {
+	if (getKinetic() > -10) {
 		if (getKinetic() > 90)
 			npcKinetic = 90;
 		StringBuffer txt;
@@ -2666,7 +2666,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_kinetic", txt.toString());
 	}
 
-	if (getEnergy() > -1) {
+	if (getEnergy() > -10) {
 		if (getEnergy() > 90)
 			npcEnergy = 90;
 		StringBuffer txt;
@@ -2674,7 +2674,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_energy", txt.toString());
 	}
 
-	if (getElectricity() > -1) {
+	if (getElectricity() > -10) {
 		if (getElectricity() > 90)
 			npcElectricity = 90;
 		StringBuffer txt;
@@ -2682,7 +2682,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_electrical", txt.toString());
 	}
 
-	if (getBlast() > -1) {
+	if (getBlast() > -10) {
 		if (getBlast() > 90)
 			npcBlast = 90;
 		StringBuffer txt;
@@ -2690,7 +2690,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_blast", txt.toString());
 	}
 
-	if (getHeat() > -1) {
+	if (getHeat() > -10) {
 		if (getHeat() > 90)
 			npcHeat = 90;
 		StringBuffer txt;
@@ -2698,7 +2698,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_heat", txt.toString());
 	}
 
-	if (getCold() > -1) {
+	if (getCold() > -10) {
 		if (getCold() > 90)
 			npcCold = 90;
 		StringBuffer txt;
@@ -2706,7 +2706,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_cold", txt.toString());
 	}
 
-	if (getAcid() > -1) {
+	if (getAcid() > -10) {
 		if (getAcid() > 90)
 			npcAcid = 90;
 		StringBuffer txt;
@@ -2714,9 +2714,11 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_acid", txt.toString());
 	}
 
-	if (getStun() > -1) {
+	if (getStun() > -10) {
 		if (getStun() > 90)
 			npcStun = 90;
+		if (getStun() < 0)
+			npcStun = 0;
 		StringBuffer txt;
 		txt << Math::getPrecision(npcStun, 1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_stun", txt.toString());
