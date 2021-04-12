@@ -707,7 +707,7 @@ int CombatManager::calculateTargetPostureModifier(WeaponObject* weapon, Creature
 
 int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
 	if (attacker->isAiAgent()) {
-		int npchitchance = 75; //cast<AiAgent*>(attacker)->getChanceHit() * 100;
+		int npchitchance = 55; //cast<AiAgent*>(attacker)->getChanceHit() * 100;
 		//these are the min/max hitchance from early precu/ this is a catchall because some npc entries are WRONG
 //		if (npchitchance < 25) {
 //			npchitchance = 25;
@@ -1652,8 +1652,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		}
 
 		// PVE Damage bonus
-//		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-//			damage *= 2.5;
+		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
+			damage *= 1.7;
 
 		//frsdamage
 		float lightDamage = attacker->getSkillMod("force_manipulation_light") * 0.3125;
@@ -1712,7 +1712,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	// EVP Damage Reduction. dont forget to update aiagentimplementation also so examine shows same numbers (not using that anymore)
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 0.5;
+		damage *= 0.7;
 
 	// PvP Damage Reduction.
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
@@ -1921,7 +1921,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 				return COUNTER;
 			else if (def == "saber_block") {
 //				if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) && ((System::random(100)) < targetCreature->getSkillMod(def))))
-					return DODGE;
+					return MISS;
 			}
 			else // shouldn't get here
 				return HIT; // no secondary defenses available on this weapon
