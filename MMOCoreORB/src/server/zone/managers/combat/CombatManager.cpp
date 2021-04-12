@@ -1941,7 +1941,7 @@ float CombatManager::calculateWeaponAttackSpeed(CreatureObject* attacker, Weapon
 	if (jediSpeed > 0)
 		attackSpeed = attackSpeed - (attackSpeed * jediSpeed);
 
-	return 2.0;//Math::max(attackSpeed, 1.0f);
+	return 1.0;//Math::max(attackSpeed, 1.0f);
 }
 
 void CombatManager::doMiss(TangibleObject* attacker, WeaponObject* weapon, CreatureObject* defender, int damage) const {
