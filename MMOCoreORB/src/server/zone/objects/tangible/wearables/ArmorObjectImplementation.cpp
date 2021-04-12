@@ -164,21 +164,21 @@ void ArmorObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cre
 //	}
 	//Check for Effectiveness protections(Normal)
 	if (getKinetic() > -1) {
-		if (getKinetic() > 90)	armorKinetic = 90;
+		if (getKinetic() > 80)	armorKinetic = 80;
 		StringBuffer txt;
 		txt << Math::getPrecision(armorKinetic,1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_kinetic",
 				txt.toString());
 	}
 	if (getEnergy() > -1) {
-		if (getEnergy() > 90)	armorEnergy = 90;
+		if (getEnergy() > 80)	armorEnergy = 80;
 		StringBuffer txt;
 		txt << Math::getPrecision(armorEnergy,1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_energy",
 				txt.toString());
 	}
 	if (getElectricity() > -1) {
-		if (getElectricity() > 90)	armorElectricity = 90;
+		if (getElectricity() > 80)	armorElectricity = 80;
 		StringBuffer txt;
 		txt << Math::getPrecision(armorElectricity,1) << "%";
 		alm->insertAttribute(
@@ -186,21 +186,21 @@ void ArmorObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cre
 				txt.toString());
 	}
 	if (getStun() > -1) {
-		if (getStun() > 90)	armorStun = 90;
+		if (getStun() > 80)	armorStun = 80;
 		StringBuffer txt;
 		txt << Math::getPrecision(armorStun,1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_stun",
 				txt.toString());
 	}
 	if (getBlast() > -1) {
-		if (getBlast() > 90)	armorBlast = 90;
+		if (getBlast() > 80)	armorBlast = 80;
 		StringBuffer txt;
 		txt << Math::getPrecision(armorBlast,1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_blast",
 				txt.toString());
 	}
 	if (getHeat() > -1) {
-		if (getHeat() > 90)	armorHeat = 90;
+		if (getHeat() > 80)	armorHeat = 80;
 		StringBuffer txt;
 		txt << Math::getPrecision(armorHeat,1) << "%";
 		alm->insertAttribute(
@@ -208,7 +208,7 @@ void ArmorObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cre
 				txt.toString());
 	}
 	if (getCold() > -1) {
-		if (getCold() > 90)	armorCold = 90;
+		if (getCold() > 80)	armorCold = 80;
 		StringBuffer txt;
 		txt << Math::getPrecision(armorCold,1) << "%";
 		alm->insertAttribute(
@@ -216,7 +216,7 @@ void ArmorObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cre
 				txt.toString());
 	}
 	if (getAcid() > -1) {
-		if (getAcid() > 90)	armorAcid = 90;
+		if (getAcid() > 80)	armorAcid = 80;
 		StringBuffer txt;
 		txt << Math::getPrecision(armorAcid,1) << "%";
 		alm->insertAttribute(
@@ -292,18 +292,18 @@ float ArmorObjectImplementation::getTypeValue(int type, float value) const {
 	else if (isSpecial(type)) {
 		newValue = specialProtection + value;
 
-		if (newValue > 90)
-			newValue = 90;
+		if (newValue > 80)
+			newValue = 80;
 	} else {
 		newValue = baseProtection + value;
 		newValue *= effectivenessSlice;
 
 		if(sliced && effectivenessSlice > 1) {
-			if(newValue > 90)
-				newValue = 90;
+			if(newValue > 80)
+				newValue = 80;
 		} else {
-			if(newValue > 90)
-				newValue = 90;
+			if(newValue > 80)
+				newValue = 80;
 		}
 	}
 

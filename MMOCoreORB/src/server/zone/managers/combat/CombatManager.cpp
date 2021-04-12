@@ -825,6 +825,11 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 
 	debug() << "Target defense after state affects and cap is " << targetDefense;
 
+	// SL bonuses go on top of hardcap-- i hate squad leader so much, ppl who use a SL are so fkn entitled, not anymore you're not special you are now capped.
+	for (int i = 0; i < defenseAccMods->size(); ++i) {
+		const String& mod = defenseAccMods->get(i);
+		targetDefense += defender->getSkillMod("private_group_" + mod);
+	}
 
 	if (targetDefense > 125)
 		targetDefense = 125;
@@ -834,11 +839,7 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	targetDefense += defender->getSkillMod("dodge_attack");
 	targetDefense += defender->getSkillMod("private_dodge_attack");
 
-	// SL bonuses go on top of hardcap-- i hate squad leader so much, ppl who use a SL are so fkn entitled, not anymore you're not special you are now capped.
-	for (int i = 0; i < defenseAccMods->size(); ++i) {
-		const String& mod = defenseAccMods->get(i);
-		targetDefense += defender->getSkillMod("private_group_" + mod);
-	}
+
 
 	//cap sl and food bonus to +25 above 125
 	if (targetDefense > 150)
@@ -853,7 +854,7 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 
 	//reduce player melee/ranged d
 	if (defender->isPlayerCreature()) {
-		targetDefense *= .6f;
+		targetDefense *= .7f;
 	}
 	//reduce npc melee/ranged def
 	if (!defender->isPlayerCreature()) {
@@ -1119,8 +1120,11 @@ int CombatManager::getArmorObjectReduction(ArmorObject* armor, int damageType) c
 		break;
 	}
 
-	if (resist > 90)
-		resist = 90;
+	if (resist < 0)
+		resist = 0;
+
+	if (resist > 80)
+		resist = 80;
 
 	if (damageType == 16)
 		resist = 100;
@@ -1179,8 +1183,11 @@ int CombatManager::getArmorNpcReduction(AiAgent* defender, int damageType) const
 		break;
 	}
 
-	if (resist > 90)
-		resist = 90;
+	if (resist < 0)
+		resist = 0;
+
+	if (resist > 80)
+		resist = 80;
 
 	if (damageType == 16)
 		resist = 100;
@@ -1645,8 +1652,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		}
 
 		// PVE Damage bonus
-		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-			damage *= 2.5;
+//		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
+//			damage *= 2.5;
 
 		//frsdamage
 		float lightDamage = attacker->getSkillMod("force_manipulation_light") * 0.3125;
@@ -1705,7 +1712,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	// EVP Damage Reduction. dont forget to update aiagentimplementation also so examine shows same numbers (not using that anymore)
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 0.525;
+		damage *= 0.5;
 
 	// PvP Damage Reduction.
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
@@ -1914,7 +1921,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 				return COUNTER;
 			else if (def == "saber_block") {
 //				if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) && ((System::random(100)) < targetCreature->getSkillMod(def))))
-					return BLOCK;
+					return DODGE;
 			}
 			else // shouldn't get here
 				return HIT; // no secondary defenses available on this weapon
@@ -1934,7 +1941,7 @@ float CombatManager::calculateWeaponAttackSpeed(CreatureObject* attacker, Weapon
 	if (jediSpeed > 0)
 		attackSpeed = attackSpeed - (attackSpeed * jediSpeed);
 
-	return 1.0;//Math::max(attackSpeed, 1.0f);
+	return 2.0;//Math::max(attackSpeed, 1.0f);
 }
 
 void CombatManager::doMiss(TangibleObject* attacker, WeaponObject* weapon, CreatureObject* defender, int damage) const {

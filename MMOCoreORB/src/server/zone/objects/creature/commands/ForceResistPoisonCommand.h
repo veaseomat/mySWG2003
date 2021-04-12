@@ -10,16 +10,18 @@ public:
 
 	ForceResistPoisonCommand(const String& name, ZoneProcessServer* server)
 		: JediQueueCommand(name, server) {
-
-		buffCRC = BuffCRC::JEDI_RESIST_POISON;
-
-		skillMods.put("resistance_poison", 25);
-		skillMods.put("absorption_poison", 25);
+//
+//		buffCRC = BuffCRC::JEDI_RESIST_POISON;
+//
+//		skillMods.put("resistance_poison", 25);
+//		skillMods.put("absorption_poison", 25);
 
 	}
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
-		return doJediSelfBuffCommand(creature);
+//		return doJediSelfBuffCommand(creature);
+		creature->sendSystemMessage("This skill has been removed."); //"You do not have enough Force Power to peform that action.
+		return GENERALERROR;
 	}
 
 };

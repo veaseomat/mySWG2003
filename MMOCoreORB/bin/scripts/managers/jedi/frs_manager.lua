@@ -39,7 +39,7 @@ lightRankingData = {
 	{ 8, "force_rank_light_rank_08", 130000, 800, "object/tangible/wearables/robe/robe_jedi_light_s01.iff" },
 	{ 9, "force_rank_light_rank_09", 180000, 800, "object/tangible/wearables/robe/robe_jedi_light_s01.iff" },
 	{ 10, "force_rank_light_rank_10", 250000, 1100, "object/tangible/wearables/robe/robe_jedi_light_s01.iff" },
-	{ 11, "force_rank_light_master", 400000, 0, "object/tangible/wearables/robe/robe_jedi_light_s01.iff" },
+	{ 11, "force_rank_light_master", 400000, 1000, "object/tangible/wearables/robe/robe_jedi_light_s01.iff" },
 }
 
 darkRankingData = {
@@ -54,7 +54,7 @@ darkRankingData = {
 	{ 8, "force_rank_dark_rank_08", 130000, 800, "object/tangible/wearables/robe/robe_jedi_dark_s01.iff" },
 	{ 9, "force_rank_dark_rank_09", 180000, 800, "object/tangible/wearables/robe/robe_jedi_dark_s01.iff" },
 	{ 10, "force_rank_dark_rank_10", 250000, 1100, "object/tangible/wearables/robe/robe_jedi_dark_s01.iff" },
-	{ 11, "force_rank_dark_master", 400000, 0, "object/tangible/wearables/robe/robe_jedi_dark_s01.iff" },
+	{ 11, "force_rank_dark_master", 400000, 1000, "object/tangible/wearables/robe/robe_jedi_dark_s01.iff" },
 }
 
 enclaveRoomRequirements = {

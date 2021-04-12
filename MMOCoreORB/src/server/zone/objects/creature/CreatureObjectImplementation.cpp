@@ -611,8 +611,8 @@ void CreatureObjectImplementation::addShockWounds(int shockToAdd, bool notifyCli
 
 	if (newShockWounds < 0) {
 		newShockWounds = 0;
-	} else if (newShockWounds > 1000) {
-		newShockWounds = 1000;
+	} else if (newShockWounds > 0) {
+		newShockWounds = 0;
 	}
 
 	if (sendSpam && shockToAdd > 0 && asCreatureObject()->isPlayerCreature())
@@ -2435,19 +2435,21 @@ void CreatureObjectImplementation::setStunnedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_stunned", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_stunned", 0xFF, 0, 0);
-		state->setSkillModifier("private_melee_defense", -50);
-		state->setSkillModifier("private_ranged_defense", -50);
+
+//		state->setSkillModifier("private_melee_defense", -50);
+//		state->setSkillModifier("private_ranged_defense", -50);
+		state->setSkillModifier("private_dodge_attack", -60);
 
 		addBuff(state);
 
-		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_stun_multiplier"), durationSeconds, BuffType::STATE);
-
-		Locker blocker(multBuff);
-
-		multBuff->setSkillModifier("private_damage_divisor", 5);
-		multBuff->setSkillModifier("private_damage_multiplier", 4);
-
-		addBuff(multBuff);
+//		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_stun_multiplier"), durationSeconds, BuffType::STATE);
+//
+//		Locker blocker(multBuff);
+//
+//		multBuff->setSkillModifier("private_damage_divisor", 5);
+//		multBuff->setSkillModifier("private_damage_multiplier", 4);
+//
+//		addBuff(multBuff);
 	}
 }
 
@@ -2466,7 +2468,7 @@ void CreatureObjectImplementation::setBlindedState(int durationSeconds) {
 		state->setEndFlyText("combat_effects", "no_blind", 0xFF, 0, 0);
 
 		state->setSkillModifier("private_attack_accuracy", -60);
-		state->setSkillModifier("private_dodge_attack", -60);
+
 
 		addBuff(state);
 	}
@@ -2491,18 +2493,18 @@ void CreatureObjectImplementation::setIntimidatedState(int durationSeconds) {
 		state->setStartFlyText("combat_effects", "go_intimidated", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_intimidated", 0xFF, 0, 0);
 
-		state->setSkillModifier("private_melee_defense", -20);
-		state->setSkillModifier("private_ranged_defense", -20);
+		state->setSkillModifier("private_melee_defense", -50);
+		state->setSkillModifier("private_ranged_defense", -50);
 
 		addBuff(state);
 
-		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_intimidate_multiplier"), durationSeconds, BuffType::STATE);
-
-		Locker blocker(multBuff);
-
-		multBuff->setSkillModifier("private_damage_divisor", 2);
-
-		addBuff(multBuff);
+//		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_intimidate_multiplier"), durationSeconds, BuffType::STATE);
+//
+//		Locker blocker(multBuff);
+//
+//		multBuff->setSkillModifier("private_damage_divisor", 2);
+//
+//		addBuff(multBuff);
 	}
 }
 

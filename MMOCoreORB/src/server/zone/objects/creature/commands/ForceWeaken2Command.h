@@ -19,51 +19,53 @@ public:
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
 
-		if (!checkStateMask(creature))
-			return INVALIDSTATE;
-
-		if (!checkInvalidLocomotions(creature))
-			return INVALIDLOCOMOTION;
-
-		if (isWearingArmor(creature)) {
-			return NOJEDIARMOR;
-		}
-
-		ManagedReference<SceneObject*> targetObject = server->getZoneServer()->getObject(target);
-
-		if (targetObject == nullptr || !targetObject->isCreatureObject()) {
-			return INVALIDTARGET;
-		}
-
-		CreatureObject* creatureTarget = targetObject.castTo<CreatureObject*>();
-
-		if (creatureTarget->hasBuff(STRING_HASHCODE("forceweaken1")) || creatureTarget->hasBuff(STRING_HASHCODE("forceweaken2"))) {
-			return ALREADYAFFECTEDJEDIPOWER;
-		}
-
-		int res = doCombatAction(creature, target);
-
-		if (res == SUCCESS) {
-			Locker clocker(creatureTarget, creature);
-
-		//	ManagedReference<Buff*> buff = new ForceWeakenDebuff(creatureTarget, getNameCRC(), 400, 600, 120);
-
-			//Locker locker(buff);
-
-			//creatureTarget->addBuff(buff);
-
-			Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(creatureTarget, STRING_HASHCODE("forceweaken2"), 30, BuffType::JEDI);
-
-			Locker blocker(multBuff);
-
-			multBuff->setSkillModifier("private_damage_divisor", 2);
-
-			creatureTarget->addBuff(multBuff);
-
-			CombatManager::instance()->broadcastCombatSpam(creature, creatureTarget, nullptr, 0, "cbt_spam", combatSpam + "_hit", 1);
-		}
-
-		return res;
+//		if (!checkStateMask(creature))
+//			return INVALIDSTATE;
+//
+//		if (!checkInvalidLocomotions(creature))
+//			return INVALIDLOCOMOTION;
+//
+//		if (isWearingArmor(creature)) {
+//			return NOJEDIARMOR;
+//		}
+//
+//		ManagedReference<SceneObject*> targetObject = server->getZoneServer()->getObject(target);
+//
+//		if (targetObject == nullptr || !targetObject->isCreatureObject()) {
+//			return INVALIDTARGET;
+//		}
+//
+//		CreatureObject* creatureTarget = targetObject.castTo<CreatureObject*>();
+//
+//		if (creatureTarget->hasBuff(STRING_HASHCODE("forceweaken1")) || creatureTarget->hasBuff(STRING_HASHCODE("forceweaken2"))) {
+//			return ALREADYAFFECTEDJEDIPOWER;
+//		}
+//
+//		int res = doCombatAction(creature, target);
+//
+//		if (res == SUCCESS) {
+//			Locker clocker(creatureTarget, creature);
+//
+//		//	ManagedReference<Buff*> buff = new ForceWeakenDebuff(creatureTarget, getNameCRC(), 400, 600, 120);
+//
+//			//Locker locker(buff);
+//
+//			//creatureTarget->addBuff(buff);
+//
+//			Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(creatureTarget, STRING_HASHCODE("forceweaken2"), 30, BuffType::JEDI);
+//
+//			Locker blocker(multBuff);
+//
+//			multBuff->setSkillModifier("private_damage_divisor", 2);
+//
+//			creatureTarget->addBuff(multBuff);
+//
+//			CombatManager::instance()->broadcastCombatSpam(creature, creatureTarget, nullptr, 0, "cbt_spam", combatSpam + "_hit", 1);
+//		}
+//
+//		return res;
+		creature->sendSystemMessage("This skill has been removed."); //"You do not have enough Force Power to peform that action.
+		return GENERALERROR;
 	}
 
 };

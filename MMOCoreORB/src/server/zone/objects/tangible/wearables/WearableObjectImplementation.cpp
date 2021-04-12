@@ -73,6 +73,8 @@ void WearableObjectImplementation::fillAttributeList(AttributeListMessage* alm,
 		String statname = "cat_skill_mod_bonus.@stat_n:" + key;
 		int value = wearableSkillMods.get(key);
 
+		if (value > 25)	value = 25;
+
 		if (value > 0)
 			alm->insertAttribute(statname, value);
 	}

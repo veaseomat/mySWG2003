@@ -1810,8 +1810,8 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				if (xpType == "jedi_general") {
 					xpAmount *= 0.2f;
 
-//					if (attacker->hasSkill("force_title_jedi_rank_03"))
-//						frsXp += xpAmount;
+					if (attacker->hasSkill("force_title_jedi_rank_03"))
+						frsXp += xpAmount;
 
 				}
 
@@ -1821,7 +1821,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 
 			combatXp = awardExperience(attacker, "combat_general", combatXp, true, 0.1f);
 
-//			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.001f);
+			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.001f);
 
 			//Check if the group leader is a squad leader
 			if (group == nullptr)

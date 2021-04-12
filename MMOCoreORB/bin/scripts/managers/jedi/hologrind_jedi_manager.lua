@@ -151,10 +151,10 @@ end
 -- Check if the player has mastered all hologrind professions and send sui window and award skills.
 -- @param pCreatureObject pointer to the creature object of the player to check the jedi progression on.
 function HologrindJediManager:checkIfProgressedToJedi(pCreatureObject)
-	if self:getNumberOfMasteredProfessions(pCreatureObject) >= NUMBEROFPROFESSIONSTOMASTER and not self:isJedi(pCreatureObject) then
+--	if self:getNumberOfMasteredProfessions(pCreatureObject) >= NUMBEROFPROFESSIONSTOMASTER and not self:isJedi(pCreatureObject) then
 		self:sendSuiWindow(pCreatureObject)
 		self:awardJediStatusAndSkill(pCreatureObject)
-	end
+--	end
 end
 
 -- Event handler for the BADGEAWARDED event.
@@ -167,7 +167,7 @@ function HologrindJediManager:badgeAwardedEventHandler(pCreatureObject, pCreatur
 		return 0
 	end
 
-	self:checkIfProgressedToJedi(pCreatureObject)
+--	self:checkIfProgressedToJedi(pCreatureObject)
 
 	return 0
 end
@@ -185,8 +185,8 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 		return
 	end
 
-	self:checkIfProgressedToJedi(pCreatureObject)
-	self:registerObservers(pCreatureObject)
+--	self:checkIfProgressedToJedi(pCreatureObject)
+--	self:registerObservers(pCreatureObject)
 
 	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
 		FsIntro:startStepDelay(pCreatureObject, 3)
@@ -267,14 +267,27 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 	end
 
 	if itemType == ITEMHOLOCRON then
-		local isSilent = self:sendHolocronMessage(pCreatureObject)
-
-		if isSilent then
+--		local isSilent = self:sendHolocronMessage(pCreatureObject)
+		
+		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
 			return
 		else
+			self:checkIfProgressedToJedi(pCreatureObject)
+			
 			SceneObject(pSceneObject):destroyObjectFromWorld()
 			SceneObject(pSceneObject):destroyObjectFromDatabase()
 		end
+
+
+
+--		if isSilent then
+--			SceneObject(pSceneObject):destroyObjectFromWorld()
+--			SceneObject(pSceneObject):destroyObjectFromDatabase()
+--			return
+--		else
+--			SceneObject(pSceneObject):destroyObjectFromWorld()
+--			SceneObject(pSceneObject):destroyObjectFromDatabase()
+--		end
 	end
 end
 
@@ -284,10 +297,10 @@ end
 
 function HologrindJediManager:canSurrenderSkill(pPlayer, skillName)
 
-	if skillName == "force_title_jedi_rank_02" or skillName == "force_title_jedi_novice" then
-		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:revoke_force_title")
-		return false
-	end
+--	if skillName == "force_title_jedi_rank_02" or skillName == "force_title_jedi_novice" then
+--		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:revoke_force_title")
+--		return false
+--	end
 
 --	if string.find(skillName, "force_sensitive_") and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and CreatureObject(pPlayer):getForceSensitiveSkillCount(false) <= 24 then
 --		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:revoke_force_sensitive")

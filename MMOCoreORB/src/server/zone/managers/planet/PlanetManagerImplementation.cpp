@@ -1060,21 +1060,21 @@ bool PlanetManagerImplementation::isBuildingPermittedAt(float x, float y, SceneO
 	for (int i = 0; i < activeAreas.size(); ++i) {
 		ActiveArea* area = activeAreas.get(i);
 
-		if (area->isNoBuildArea()) {
-			return false;
-		}
+//		if (area->isNoBuildArea()) {
+//			return false;
+//		}
 	}
 
-	if (isInObjectsNoBuildZone(x, y, margin, checkFootprint)) {
-		return false;
-	}
+//	if (isInObjectsNoBuildZone(x, y, margin, checkFootprint)) {
+//		return false;
+//	}
 
 	if (isInWater(x, y)) {
 		return false;
 	}
 
-	if (isInRangeWithPoi(x, y, 150))
-		return false;
+//	if (isInRangeWithPoi(x, y, 150))
+//		return false;
 
 	return true;
 }

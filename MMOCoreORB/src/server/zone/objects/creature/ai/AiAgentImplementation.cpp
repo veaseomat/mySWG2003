@@ -2659,64 +2659,78 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 
 
 	if (getKinetic() > -10) {
-		if (getKinetic() > 90)
-			npcKinetic = 90;
+		if (getKinetic() > 80)
+			npcKinetic = 80;
+		if (getKinetic() < 0)
+			npcKinetic = 0;
 		StringBuffer txt;
 		txt << Math::getPrecision(npcKinetic, 1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_kinetic", txt.toString());
 	}
 
 	if (getEnergy() > -10) {
-		if (getEnergy() > 90)
-			npcEnergy = 90;
+		if (getEnergy() > 80)
+			npcEnergy = 80;
+		if (getEnergy() < 0)
+			npcEnergy = 0;
 		StringBuffer txt;
 		txt << Math::getPrecision(npcEnergy, 1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_energy", txt.toString());
 	}
 
 	if (getElectricity() > -10) {
-		if (getElectricity() > 90)
-			npcElectricity = 90;
+		if (getElectricity() > 80)
+			npcElectricity = 80;
+		if (getElectricity() < 0)
+			npcElectricity = 0;
 		StringBuffer txt;
 		txt << Math::getPrecision(npcElectricity, 1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_electrical", txt.toString());
 	}
 
 	if (getBlast() > -10) {
-		if (getBlast() > 90)
-			npcBlast = 90;
+		if (getBlast() > 80)
+			npcBlast = 80;
+		if (getBlast() < 0)
+			npcBlast = 0;
 		StringBuffer txt;
 		txt << Math::getPrecision(npcBlast, 1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_blast", txt.toString());
 	}
 
 	if (getHeat() > -10) {
-		if (getHeat() > 90)
-			npcHeat = 90;
+		if (getHeat() > 80)
+			npcHeat = 80;
+		if (getHeat() < 0)
+			npcHeat = 0;
 		StringBuffer txt;
 		txt << Math::getPrecision(npcHeat, 1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_heat", txt.toString());
 	}
 
 	if (getCold() > -10) {
-		if (getCold() > 90)
-			npcCold = 90;
+		if (getCold() > 80)
+			npcCold = 80;
+		if (getCold() < 0)
+			npcCold = 0;
 		StringBuffer txt;
 		txt << Math::getPrecision(npcCold, 1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_cold", txt.toString());
 	}
 
 	if (getAcid() > -10) {
-		if (getAcid() > 90)
-			npcAcid = 90;
+		if (getAcid() > 80)
+			npcAcid = 80;
+		if (getAcid() < 0)
+			npcAcid = 0;
 		StringBuffer txt;
 		txt << Math::getPrecision(npcAcid, 1) << "%";
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_acid", txt.toString());
 	}
 
 	if (getStun() > -10) {
-		if (getStun() > 90)
-			npcStun = 90;
+		if (getStun() > 80)
+			npcStun = 80;
 		if (getStun() < 0)
 			npcStun = 0;
 		StringBuffer txt;
