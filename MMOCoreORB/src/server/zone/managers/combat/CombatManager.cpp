@@ -1676,10 +1676,10 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	ManagedReference<WeaponObject*> defweapon = defender->getWeapon();
 
-	float newjediToughness = (defender->getSkillMod("lightsaber_toughness") + defender->getSkillMod("jedi_toughness")) * .8;
-
-	if ((newjediToughness > 0) && (defweapon->isJediWeapon()))
-		damage *= 1.f - (newjediToughness / 100.f);
+//	float newjediToughness = (defender->getSkillMod("lightsaber_toughness") + defender->getSkillMod("jedi_toughness")) * .8;
+//
+//	if ((newjediToughness > 0) && (defweapon->isJediWeapon()))
+//		damage *= 1.f - (newjediToughness / 100.f);
 
 	// Toughness reduction
 //	if (data.isForceAttack())
@@ -1689,12 +1689,12 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 
 	// Force Defense skillmod damage reduction
-	if (data.isForceAttack()) {
-		float forceDefense = defender->getSkillMod("force_defense") * .3;
-
-		if (forceDefense > 0)
-			damage *= 1.f - (forceDefense / 100.f);
-	}
+//	if (data.isForceAttack()) {
+//		float forceDefense = defender->getSkillMod("force_defense") * .3;
+//
+//		if (forceDefense > 0)
+//			damage *= 1.f - (forceDefense / 100.f);
+//	}
 
 
 	//frsarmor
