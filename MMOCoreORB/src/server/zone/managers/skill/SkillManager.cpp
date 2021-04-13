@@ -265,7 +265,7 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 	if (creature->hasSkill(skill->getSkillName()))
 		return true;
 
-	//jedi can only learn jedi skill
+	//this removes non jedi skills from existing jedi
 	if (creature->hasSkill("force_title_jedi_novice")) {
 		SkillManager::surrenderAllSkills(creature, true, false);
 	}
@@ -276,9 +276,9 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 		//Withdraw skill points.
 
 
-		if (!skill->getSkillName().contains("force_discipline")) {
-			ghost->addSkillPoints(-skill->getSkillPointsRequired());
-		}
+//		if (!skill->getSkillName().contains("force_discipline")) {
+//			ghost->addSkillPoints(-skill->getSkillPointsRequired());
+//		}
 
 		//Witdraw experience.
 		if (!noXpRequired) {
@@ -340,13 +340,13 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 		const SkillList* list = creature->getSkillList();
 
-		int totalSkillPointsWasted = 250;
+		int totalSkillPointsWasted = 11250;
 
-		for (int i = 0; i < list->size(); ++i) {
-			Skill* skill = list->get(i);
-
-			totalSkillPointsWasted -= skill->getSkillPointsRequired();
-		}
+//		for (int i = 0; i < list->size(); ++i) {
+//			Skill* skill = list->get(i);
+//
+//			totalSkillPointsWasted -= skill->getSkillPointsRequired();
+//		}
 
 //		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
 //			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
@@ -436,9 +436,10 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 			return false;
 	}
 
-	if (skillName.beginsWith("force_") && !(JediManager::instance()->canSurrenderSkill(creature, skillName)))
-		return false;
+//	if (skillName.beginsWith("force_") && !(JediManager::instance()->canSurrenderSkill(creature, skillName)))
+//		return false;
 
+	//this prevents learning both frs trees
 	if ((skill->getSkillName() == "force_title_jedi_rank_03") && (creature->hasSkill("force_rank_light_novice") || creature->hasSkill("force_rank_dark_novice"))){
 		return false;
 	}
@@ -462,9 +463,9 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 		//Give the player the used skill points back.
 
 
-		if (!skill->getSkillName().contains("force_discipline")) {
-			ghost->addSkillPoints(skill->getSkillPointsRequired());
-		}
+//		if (!skill->getSkillName().contains("force_discipline")) {
+//			ghost->addSkillPoints(skill->getSkillPointsRequired());
+//		}
 
 		int xpcost = skill->getXpCost();
 
@@ -516,13 +517,13 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 		const SkillList* list = creature->getSkillList();
 
-		int totalSkillPointsWasted = 250;
+		int totalSkillPointsWasted = 11250;
 
-		for (int i = 0; i < list->size(); ++i) {
-			Skill* skill = list->get(i);
-
-			totalSkillPointsWasted -= skill->getSkillPointsRequired();
-		}
+//		for (int i = 0; i < list->size(); ++i) {
+//			Skill* skill = list->get(i);
+//
+//			totalSkillPointsWasted -= skill->getSkillPointsRequired();
+//		}
 
 //		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
 //			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
@@ -607,7 +608,7 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 
 			if (ghost != nullptr) {
 				//Give the player the used skill points back.
-				ghost->addSkillPoints(skill->getSkillPointsRequired());
+//				ghost->addSkillPoints(skill->getSkillPointsRequired());
 
 				//Remove abilities
 				auto abilityNames = skill->getAbilities();
@@ -724,6 +725,7 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 		return false;
 	}
 
+	//jedi can only learn jedi skills
 	if (creature->hasSkill("force_title_jedi_novice") && !skillName.beginsWith("force_")) {
 		return false;
 	}
@@ -737,10 +739,10 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 			}
 		}
 
-		//Check if player has enough skill points to learn the skill.
-		if ((ghost->getSkillPoints() < skill->getSkillPointsRequired()) && (!skill->getSkillName().contains("force_discipline")))  {
-			return false;
-		}
+		//Check if player has enough skill points to learn the skill. ***also the jedi part was added wrong it needs to say if has jedi nocive AND skill contains force_disci for it to work
+//		if ((ghost->getSkillPoints() < skill->getSkillPointsRequired()) && (!skill->getSkillName().contains("force_discipline")))  {
+//			return false;
+//		}
 	} else {
 		//Could not retrieve player object.
 		return false;

@@ -15,7 +15,7 @@ saber_rcp = {
 --		{"attackhealthcost",0,-1,0},
 --		{"attackactioncost",0,-1,0},
 --		{"attackmindcost",0,-1,0},
-		{"useCount",1,4,0}
+		{"useCount",2,4,0}
 	},
 	customizationStringName = {},
 	customizationValues = {}

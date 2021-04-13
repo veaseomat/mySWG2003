@@ -302,14 +302,20 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 		break;
 	}
 
-	alm->insertAttribute("damage.wpn_damage_type", dmgtxt);
-
 	float minDmg = round(getMinDamage());
 	float maxDmg = round(getMaxDamage());
+	int newdmg = (minDmg + maxDmg) / 2;
 
-	alm->insertAttribute("damage.wpn_damage_min", minDmg);
+	alm->insertAttribute("damage.damage", newdmg);
 
-	alm->insertAttribute("damage.wpn_damage_max", maxDmg);
+	alm->insertAttribute("damage.wpn_damage_type", dmgtxt);
+
+//	float minDmg = round(getMinDamage());
+//	float maxDmg = round(getMaxDamage());
+
+//	alm->insertAttribute("damage.wpn_damage_min", minDmg);
+
+//	alm->insertAttribute("damage.wpn_damage_max", maxDmg);
 
 	StringBuffer woundsratio;
 

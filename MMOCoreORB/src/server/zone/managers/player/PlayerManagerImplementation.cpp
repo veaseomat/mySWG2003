@@ -1808,7 +1808,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //					frsXp += xpAmount;
 //				else
 				if (xpType == "jedi_general") {
-					xpAmount *= 0.2f;
+					//xpAmount *= 0.2f;
 
 					if (attacker->hasSkill("force_title_jedi_rank_03"))
 						frsXp += xpAmount;
@@ -1821,7 +1821,16 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 
 			combatXp = awardExperience(attacker, "combat_general", combatXp, true, 0.1f);
 
-			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.001f);
+			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.01f);
+
+			//this removes non jedi skills from existing jedi
+			if (attacker->hasSkill("force_title_jedi_novice")) {
+
+				SkillManager* skillManager = server->getSkillManager();
+
+				skillManager->surrenderAllSkills(attacker, true, false);
+
+			}
 
 			//Check if the group leader is a squad leader
 			if (group == nullptr)
@@ -5638,6 +5647,39 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 
 	if (message && player->isPlayerCreature())
 		player->sendSystemMessage("An unknown force strengthens you for battles yet to come.");
+}
+
+void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
+	if (player == nullptr)
+		return;
+
+	bool message = true;
+
+	int selfStrength = player->getBaseHAM(CreatureAttribute::MIND) * (player->getSkillMod("healing_dance_mind") * .01);
+	int selfDuration =	720; //12 hr ;
+
+	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrength * 2, selfDuration * 60, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
+
+//no message b/c it will say it every time you stop dance, if u have no buff mod, or a new buff is applied or not b/c cant overbuff
+//	if (message && player->isPlayerCreature())
+//		player->sendSystemMessage("An unknown force strengthens you for battles yet to come.");
+}
+
+void PlayerManagerImplementation::enhanceSelfMusic(CreatureObject* player) {
+	if (player == nullptr)
+		return;
+
+	bool message = true;
+
+	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * (player->getSkillMod("healing_music_mind") * .01);
+	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * (player->getSkillMod("healing_music_mind") * .01);
+	int selfDuration =	720; //12 hr ;
+
+	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus * 2, selfDuration * 60, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
+	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill * 2, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
+
+//	if (message && player->isPlayerCreature())
+//		player->sendSystemMessage("An unknown force strengthens you for battles yet to come.");
 }
 
 void PlayerManagerImplementation::sendAdminJediList(CreatureObject* player) {

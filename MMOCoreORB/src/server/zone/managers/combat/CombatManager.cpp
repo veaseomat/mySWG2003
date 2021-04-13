@@ -707,7 +707,7 @@ int CombatManager::calculateTargetPostureModifier(WeaponObject* weapon, Creature
 
 int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
 	if (attacker->isAiAgent()) {
-		int npchitchance = 55; //cast<AiAgent*>(attacker)->getChanceHit() * 100;
+		int npchitchance = 75; //cast<AiAgent*>(attacker)->getChanceHit() * 100;
 		//these are the min/max hitchance from early precu/ this is a catchall because some npc entries are WRONG
 //		if (npchitchance < 25) {
 //			npchitchance = 25;
@@ -842,8 +842,8 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 
 
 	//cap sl and food bonus to +25 above 125
-	if (targetDefense > 150)
-		targetDefense = 150;
+	if (targetDefense > 175)
+		targetDefense = 175;
 
 	//jedi frs bonus
 //	float frsdef = (defender->getSkillMod("force_manipulation_dark") + defender->getSkillMod("force_manipulation_light"));
@@ -1406,24 +1406,28 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			getFrsModifiedForceAttackDamage(attacker, minDmg, maxDmg, data);
 
 		float mod = attacker->isAiAgent() ? cast<AiAgent*>(attacker)->getSpecialDamageMult() : 1.f;
-		damage = minDmg * mod;
-		diff = (maxDmg * mod) - damage;
+//		damage = minDmg * mod;
+//		diff = (maxDmg * mod) - damage;
+
+		damage = (minDmg + maxDmg) / 2;
 	} else {
-		float minDamage = weapon->getMinDamage(), maxDamage = weapon->getMaxDamage();
+		float minDamage = weapon->getMinDamage();
+		float maxDamage = weapon->getMaxDamage();
 
 		if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(attacker)) {
 			minDamage *= .25f;
 			maxDamage *= .5f;
 		}
 
-		damage = minDamage;
-		diff = maxDamage - minDamage;
+//		damage = minDamage;
+//		diff = maxDamage - minDamage;
+		damage = (minDamage + maxDamage) / 2;
 	}
 
-	if (diff > 0)
-		damage += System::random(diff);
+//	if (diff > 0)
+//		damage += System::random(diff);
 
-	damage = applyDamageModifiers(attacker, weapon, damage, data);
+//	damage = applyDamageModifiers(attacker, weapon, damage, data);
 //WTF IS THIS 1.5x damage...
 //	if (attacker->isPlayerCreature())
 //		damage *= 1.5;
@@ -1583,25 +1587,29 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		float minDmg = data.getMinDamage();
 		float maxDmg = data.getMaxDamage();
 
-		float mod = attacker->isAiAgent() ? cast<AiAgent*>(attacker)->getSpecialDamageMult() : 1.f;
-		damage = minDmg * mod;
-		diff = (maxDmg * mod) - damage;
+//		float mod = attacker->isAiAgent() ? cast<AiAgent*>(attacker)->getSpecialDamageMult() : 1.f;
+//		damage = minDmg * mod;
+//		diff = (maxDmg * mod) - damage;
+		damage = (minDmg + maxDmg) / 2;
 	} else {
 		diff = calculateDamageRange(attacker, defender, weapon);
 		float minDamage = weapon->getMinDamage();
+		float maxDamage = weapon->getMaxDamage();
 
-		if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(attacker))
-			minDamage *= .5f;
-
-		damage = minDamage;
+		if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(attacker)){
+			minDamage *= .25f;
+			maxDamage *= .5f;
+		}
+	//	damage = minDamage;
+		damage = (minDamage + maxDamage) / 2;
 	}
 
-	if (diff > 0)
-		damage += System::random(diff);
+//	if (diff > 0)
+//		damage += System::random(diff);
 
-	damage = applyDamageModifiers(attacker, weapon, damage, data);
+//	damage = applyDamageModifiers(attacker, weapon, damage, data);
 
-	damage += defender->getSkillMod("private_damage_susceptibility");
+//	damage += defender->getSkillMod("private_damage_susceptibility");
 
 	//mySWG balancing the profs based on highest dmg weapon and special for that class
 		if (attacker->isPlayerCreature() && !data.isForceAttack()) {
@@ -1638,11 +1646,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	//		if (weapon->isMineWeapon())
 	//		damage *= 1.0f;
 			if (weapon->isJediOneHandedWeapon())
-			damage *= 1.2f;
+			damage *= .9f;
 			if (weapon->isJediTwoHandedWeapon())
-			damage *= 1.1f;
+			damage *= .8f;
 			if (weapon->isJediPolearmWeapon())
-			damage *= 1.1f;
+			damage *= .8f;
 	//		if (weapon->isJediWeapon())
 	//		damage *= 1.0f;
 		}
@@ -1653,7 +1661,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 		// PVE Damage bonus
 		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-			damage *= 1.7;
+			damage *= 1.0;
 
 		//frsdamage
 		float lightDamage = attacker->getSkillMod("force_manipulation_light") * 0.3125;
@@ -1716,7 +1724,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	// PvP Damage Reduction.
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 0.1;
+		damage *= 0.2;
 
 	if (damage < 1) damage = 1;
 
@@ -2116,7 +2124,7 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 			if (targetDefense > 50)
 				targetDefense = 50.f;
 
-			if (!targetCreature->isPlayerCreature()) targetDefense += targetCreature->getLevel() * .5;//make npc harder to state/kd
+			if (!targetCreature->isPlayerCreature()) targetDefense += targetCreature->getLevel() * .3;//make npc harder to state/kd
 
 			if (System::random(100) > accuracyMod - targetDefense)
 				failed = true;

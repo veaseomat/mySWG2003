@@ -1040,7 +1040,9 @@ class AiAgent extends CreatureObject {
 		if (npcTemplate.get() == null || isEventMob())
 			return 0;
 
-		return npcTemplate.get().getBaseXp();
+		int newexp = npcTemplate.get().getLevel() * 5;
+
+		return newexp;//npcTemplate.get().getBaseXp();
 	}
 
 	@dirty

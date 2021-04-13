@@ -388,6 +388,8 @@ void EntertainingSessionImplementation::stopPlayingMusic() {
 
 		entertainer->dropActiveSession(SessionFacadeType::ENTERTAINING);
 	}
+
+	playerManager->enhanceSelfMusic(entertainer);
 }
 
 void EntertainingSessionImplementation::startDancing(const String& dance, const String& animation) {
@@ -514,6 +516,19 @@ void EntertainingSessionImplementation::stopDancing() {
 
 		entertainer->dropActiveSession(SessionFacadeType::ENTERTAINING);
 	}
+
+//	entertainer->sendSystemMessage("testing testing testing");
+
+//	ManagedReference<PlayerManager*> playerManager = player->getZoneServer()->getPlayerManager();
+//	PlayerObject* ghost = player->getPlayerObject();
+//	ManagedReference<PlayerManager*> playerManager = entertainer->getZoneServer()->getPlayerManager();
+
+//	int performanceBuff = 1000;
+//	int performanceDuration = 1000;
+
+//	playerManager->doEnhanceCharacter(0x11C1772E, entertainer, performanceBuff, performanceDuration, BuffType::PERFORMANCE, 6);
+//	playerManager->enhanceCharacter(entertainer);
+	playerManager->enhanceSelfDance(entertainer);
 }
 
 bool EntertainingSessionImplementation::canHealBattleFatigue() {
@@ -632,7 +647,7 @@ void EntertainingSessionImplementation::addEntertainerBuffDuration(CreatureObjec
 
 	buffDuration += duration;
 	
-		buffDuration = (120.0f + (10.0f / 60.0f)) * 6; //12 hr
+		buffDuration = 720; //12 hr
 
 	setEntertainerBuffDuration(creature, performanceType, buffDuration);
 }
@@ -680,7 +695,7 @@ void EntertainingSessionImplementation::addEntertainerBuffStrength(CreatureObjec
 
 //	if(newBuffStrength < 100.0f)
 //		newBuffStrength = 100.0f;
-
+//new buff strenght x 2
 	int newnewBuffStrength = newBuffStrength * 2;
 
 	setEntertainerBuffStrength(creature, performanceType, newnewBuffStrength);

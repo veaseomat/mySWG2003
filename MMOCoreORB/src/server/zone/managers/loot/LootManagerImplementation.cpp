@@ -313,10 +313,12 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);
 
+	bool yellow = false;
+
 	if (System::random(legendaryChance) >= legendaryChance - adjustment) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
-
+		yellow = true;
 		excMod = legendaryModifier;
 
 		prototype->addMagicBit(false);
@@ -325,7 +327,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	} else if (System::random(exceptionalChance) >= exceptionalChance - adjustment) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
 		prototype->setCustomObjectName(newName, false);
-
+		yellow = true;
 		excMod = exceptionalModifier;
 
 		prototype->addMagicBit(false);
@@ -341,7 +343,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	}
 
 	String subtitle;
-	bool yellow = false;
+//	bool yellow = false;
 
 	for (int i = 0; i < craftingValues->getExperimentalPropertySubtitleSize(); ++i) {
 		subtitle = craftingValues->getExperimentalPropertySubtitle(i);
@@ -441,7 +443,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 				max *= yellowModifier;
 			}
 
-			yellow = true;
+//			yellow = true;
 
 			yellowLooted.increment();
 		}
@@ -915,6 +917,8 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 
 	if (dotChance < 0)
 		return;
+
+	excMod = 1.0;
 
 	float modSqr = excMod * excMod;
 
