@@ -1715,13 +1715,13 @@ void CreatureObjectImplementation::setSpeedMultiplierMod(float newMultiplierMod,
 	if (speedMultiplierMod == newMultiplierMod * buffMod)
 		return;
 
-	speedMultiplierMod = newMultiplierMod * buffMod;
+	speedMultiplierMod = newMultiplierMod * buffMod;//multiplier for burst runs/force runs, stacks and doesnt remove
 
 	int bufferSize = speedMultiplierModChanges.size();
 
-	if (bufferSize > 5) {
-		speedMultiplierModChanges.remove(0);
-	}
+//	if (bufferSize > 5) {
+//		speedMultiplierModChanges.remove(0);
+//	}
 
 	speedMultiplierModChanges.add(SpeedModChange(speedMultiplierMod));
 
@@ -1740,7 +1740,7 @@ void CreatureObjectImplementation::setRunSpeed(float newSpeed,
 	if (runSpeed == newSpeed)
 		return;
 
-	runSpeed = newSpeed;
+	runSpeed = newSpeed * 1.33;//this boosts run speed only, doesnt affect walk or vehicle
 
 	if (notifyClient) {
 		CreatureObjectDeltaMessage4* dcreo4 = new CreatureObjectDeltaMessage4(
@@ -2102,7 +2102,7 @@ void CreatureObjectImplementation::notifyLoadFromDatabase() {
 
 		buff->loadBuffDurationEvent(asCreatureObject());
 	}
-
+//fix skill mods in here??? check this later
 	ZoneServer* zoneServer = server->getZoneServer();
 	SkillManager* skillManager = SkillManager::instance();
 
@@ -2568,7 +2568,7 @@ void CreatureObjectImplementation::queueDizzyFallEvent() {
 		return;
 
 	dizzyFallDownEvent = new DizzyFallDownEvent(asCreatureObject());
-	dizzyFallDownEvent->schedule(200);
+	dizzyFallDownEvent->schedule(1000);
 }
 
 void CreatureObjectImplementation::activateStateRecovery() {

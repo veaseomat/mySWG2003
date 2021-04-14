@@ -3438,18 +3438,19 @@ int PlayerManagerImplementation::checkSpeedHackFirstTest(CreatureObject* player,
 
 		allowedSpeedMod = vehicle->getSpeedMultiplierMod();
 		allowedSpeedBase = vehicle->getRunSpeed();
-	} else if (parent != nullptr && parent->isMount()) {
-		Creature* mount = cast<Creature*>( parent.get());
-
-		allowedSpeedMod = mount->getSpeedMultiplierMod();
-
-		PetManager* petManager = server->getPetManager();
-
-		if (petManager != nullptr) {
-			allowedSpeedBase = petManager->getMountedRunSpeed(mount);
-		}
-
 	}
+//	else if (parent != nullptr && parent->isMount()) {
+//		Creature* mount = cast<Creature*>( parent.get());
+//
+//		allowedSpeedMod = mount->getSpeedMultiplierMod();
+//
+//		PetManager* petManager = server->getPetManager();
+//
+//		if (petManager != nullptr) {
+//			allowedSpeedBase = petManager->getMountedRunSpeed(mount);
+//		}
+//
+//	}
 
 	float maxAllowedSpeed = allowedSpeedMod * allowedSpeedBase;
 
@@ -5544,8 +5545,8 @@ bool PlayerManagerImplementation::doBurstRun(CreatureObject* player, float hamMo
 
 	uint32 crc = STRING_HASHCODE("burstrun");
 	float hamCost = 100.0f;
-	float duration = 45;
-	float cooldown = 150;
+	float duration = 30;
+	float cooldown = 300;
 
 	float burstRunMod = (float) player->getSkillMod("burst_run");
 	hamModifier += (burstRunMod / 100.f);
@@ -5634,6 +5635,10 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 
 	bool message = true;
 
+	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;
+	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;
+	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;
+
 	message = message && doEnhanceCharacter(0x98321369, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 0); // medical_enhance_health
 	message = message && doEnhanceCharacter(0x815D85C5, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 1); // medical_enhance_strength
 	message = message && doEnhanceCharacter(0x7F86D2C6, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 2); // medical_enhance_constitution
@@ -5641,9 +5646,9 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 	message = message && doEnhanceCharacter(0x71B5C842, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 4); // medical_enhance_quickness
 	message = message && doEnhanceCharacter(0xED0040D9, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 5); // medical_enhance_stamina
 
-	message = message && doEnhanceCharacter(0x11C1772E, player, performanceBuff, performanceDuration, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
-	message = message && doEnhanceCharacter(0x2E77F586, player, performanceBuff, performanceDuration, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
-	message = message && doEnhanceCharacter(0x3EC6FCB6, player, performanceBuff, performanceDuration, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
+	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrengthMind * 2, performanceDuration, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
+	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus * 2, performanceDuration, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
+	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill * 2, performanceDuration, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
 		player->sendSystemMessage("An unknown force strengthens you for battles yet to come.");

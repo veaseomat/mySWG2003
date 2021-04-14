@@ -155,7 +155,9 @@ float PetManagerImplementation::getMountedRunSpeed(CreatureObject* mount) {
 		}
 	}
 
-	return mount->getRunSpeed();
+	int newspeed = mount->getRunSpeed();
+
+	return newspeed;
 }
 
 void PetManagerImplementation::handleChat(CreatureObject* speaker, AiAgent* pet, const String& message){
