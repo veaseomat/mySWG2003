@@ -1030,21 +1030,20 @@ float CombatManager::applyDamageModifiers(CreatureObject* attacker, WeaponObject
 
 
 ////add accuracy mods to damage
-//	CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
-//
-//	const auto creatureAccMods = weapon->getCreatureAccuracyModifiers();
-//
-//	if (attacker->isPlayerCreature()) {
-//	for (int i = 0; i < creatureAccMods->size(); ++i) {
-//		const String& mod = creatureAccMods->get(i);
-//		damage += creoAttacker->getSkillMod(mod);
-//		damage += creoAttacker->getSkillMod("private_" + mod);
-//
-//		if (creoAttacker->isStanding()) {
-//			damage += creoAttacker->getSkillMod(mod + "_while_standing");
-//		}
-//	}
-//	}
+	CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
+
+	const auto creatureAccMods = weapon->getCreatureAccuracyModifiers();
+
+	int accdmg = 0;
+
+	if (attacker->isPlayerCreature()) {
+		for (int i = 0; i < creatureAccMods->size(); ++i) {
+			const String& mod = creatureAccMods->get(i);
+			accdmg += creoAttacker->getSkillMod(mod);
+		}
+		if (accdmg > 125) accdmg = 125;//max acc dmg bonus
+		damage += accdmg;
+	}
 
 	damage += attacker->getSkillMod("private_damage_bonus");
 

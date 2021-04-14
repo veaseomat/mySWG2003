@@ -763,11 +763,11 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 	if (difficulty == 5)
 		difficulty = 4;
 
-	int diffDisplay = difficultyLevel + 7;
-	if (player->isGrouped())
-		diffDisplay = 300;
-	else
-		diffDisplay += playerLevel * 1.5;
+	int diffDisplay = maxDiff; //+ 7;
+//	if (player->isGrouped())
+//		diffDisplay = 300;
+//	else
+//		diffDisplay += playerLevel * 1.5;
 
 	String building = lairTemplateObject->getMissionBuilding(difficulty);
 
@@ -837,9 +837,11 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 	int reward = destroyMissionBaseReward + destroyMissionDifficultyRewardFactor * difficultyLevel;
 	reward += System::random(destroyMissionRandomReward) + System::random(destroyMissionDifficultyRandomReward * difficultyLevel);
 	reward *= .5;
-	if (reward > 10000) reward = 10000;
+//	if (reward > 10000) reward = 10000;
 
 	mission->setRewardCredits(reward);
+
+//	diffDisplay = mission->getDifficultyDisplay();
 
 	mission->setMissionDifficulty(difficultyLevel, diffDisplay, difficulty);
 	mission->setSize(randomLairSpawn->getSize());
