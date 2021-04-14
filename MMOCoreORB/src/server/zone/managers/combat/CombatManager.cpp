@@ -2114,12 +2114,12 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 		if (!failed) {
 			const Vector<String>& defenseMods = effect.getDefenderStateDefenseModifiers();
 			// add up all defenses against the state the target has
-			for (int j = 0; j < defenseMods.size(); j++)
+			for (int j = 0; j < defenseMods.size(); j++) {
 				targetDefense += targetCreature->getSkillMod(defenseMods.get(j));
 				targetDefense += targetCreature->getSkillMod("jedi_state_defense"); //jedi states removed below and added here
 //			targetDefense *= 0.7;  //why are they nerfing state def by 1.5
 //			targetDefense += playerLevel;
-
+			}
 
 			if (targetDefense > 125)//new states hard cap
 				targetDefense = 125.f;
