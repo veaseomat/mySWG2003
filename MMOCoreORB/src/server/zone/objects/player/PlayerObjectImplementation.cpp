@@ -2066,8 +2066,9 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 //			regen *= 1.f + (frsregen / 100.f);
 //		}
 
-		if (regen > 50) {
-		regen = 50; //regen hard cap
+		if (regen > 0) {
+		regen *= .5; //reduce fp regen skill mod because 5 jedi trees
+		regen += 1; //add 1 so regen is never .5 = int 0 = no regen
 		}
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
@@ -2986,10 +2987,11 @@ void PlayerObjectImplementation::recalculateForcePower() {
 //	}
 
 //	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 0.625;
-//
-//	if (frsMax > 0) {
-//		maxForce *= 1.f + (frsMax / 100.f);
-//	}
+	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 25;
+
+	if (frsMax > 0) {
+		maxForce += frsMax;
+	}
 
 //		if (maxForce > 5000) {
 //		maxForce = 5000; //jedi robe
