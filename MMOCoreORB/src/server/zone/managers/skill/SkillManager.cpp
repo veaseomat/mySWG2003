@@ -266,9 +266,9 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 		return true;
 
 	//this removes non jedi skills from existing jedi
-	if (creature->hasSkill("force_title_jedi_novice")) {
-		SkillManager::surrenderAllSkills(creature, true, false);
-	}
+//	if (creature->hasSkill("force_title_jedi_novice")) {
+//		SkillManager::surrenderAllSkills(creature, true, false);
+//	}
 
 	ManagedReference<PlayerObject*> ghost = creature->getPlayerObject();
 
@@ -591,8 +591,16 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 		Skill* skill = copyOfList.get(i);
 
 		if (skill->getSkillPointsRequired() > 0) {
-			if (!removeForceProgression and skill->getSkillName().contains("force_"))
+			if (!removeForceProgression and skill->getSkillName().contains("force_"))//surrender only combat profs
 				continue;
+
+//			if (!skill->getSkillName().beginsWith("combat_")){
+//				continue;
+//			}
+
+//			if (!skill->getSkillName().contains("science_combatmedic")){
+//				continue;
+//			}
 
 			removeSkillRelatedMissions(creature, skill);
 
@@ -609,6 +617,11 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 			if (ghost != nullptr) {
 				//Give the player the used skill points back.
 //				ghost->addSkillPoints(skill->getSkillPointsRequired());
+				int xpcost = skill->getXpCost();
+
+				if (xpcost > 0) {
+					ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+				}
 
 				//Remove abilities
 				auto abilityNames = skill->getAbilities();
@@ -725,10 +738,10 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 		return false;
 	}
 
-	//jedi can only learn jedi skills
-	if (creature->hasSkill("force_title_jedi_novice") && !skillName.beginsWith("force_")) {
-		return false;
-	}
+	//jedi can not have other combat skills
+//	if (creature->hasSkill("force_title_jedi_novice") && skillName.beginsWith("combat_")) {
+//		return false;
+//	}
 
 	ManagedReference<PlayerObject* > ghost = creature->getPlayerObject();
 	if (ghost != nullptr) {

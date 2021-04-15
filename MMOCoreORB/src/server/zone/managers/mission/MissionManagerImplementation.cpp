@@ -839,7 +839,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 	reward *= .5;
 //	if (reward > 10000) reward = 10000;
 
-	mission->setRewardCredits(reward);
+	mission->setRewardCredits(reward * .5);
 
 //	diffDisplay = mission->getDifficultyDisplay();
 
@@ -874,7 +874,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
  	}
 
  	const VectorMap<String, int>* mobiles = lairTemplateObject->getMobiles();
- 	String mobileName = "mysterious";
+ 	String mobileName = "unknown";
 
  	if (mobiles->size() > 0) {
  		mobileName = mobiles->elementAt(0).getKey();
@@ -968,9 +968,9 @@ void MissionManagerImplementation::randomizeGenericSurveyMission(CreatureObject*
 
 	int reward = 400 + (randLevel - minLevel) * 20 + System::random(100);
 
-	if (reward > 10000) reward = 10000;
+//	if (reward > 10000) reward = 10000;
 
-	mission->setRewardCredits(reward);
+	mission->setRewardCredits(reward * .5);
 
 	mission->setFaction(faction);
 
@@ -1040,7 +1040,7 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			String name = "";
 
 			if (creature != nullptr) {
-				name = creature->getFirstName() + " " + creature->getLastName();
+				name = "Unknown...";
 				name = name.trim();
 			}
 
@@ -1049,9 +1049,9 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 
 			int reward = getRealBountyReward(creature, target);
 
-			if (reward > 10000) reward = 10000;
+//			if (reward > 10000) reward = 10000;
 
-			mission->setRewardCredits(reward);
+			mission->setRewardCredits(reward * .5);
 
 			// Set the Title, Creator, and Description of the mission.
 
@@ -1114,9 +1114,9 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			reward = creoLevel * (300 + System::random(300));
 		}
 
-		if (reward > 10000) reward = 10000;
+//		if (reward > 10000) reward = 10000;
 
-		mission->setRewardCredits(reward);
+		mission->setRewardCredits(reward * .5);
 
 		String diffString = "easy";
 
@@ -1282,9 +1282,9 @@ bool MissionManagerImplementation::randomGenericDeliverMission(CreatureObject* p
 
 	int reward = baseCredits + deliverDistanceCredits;
 
-	if (reward > 10000) reward = 10000;
+//	if (reward > 10000) reward = 10000;
 
-	mission->setRewardCredits(reward);
+	mission->setRewardCredits(reward * .5);
 
 	switch (faction) {
 	case Factions::FACTIONIMPERIAL:
@@ -1430,9 +1430,9 @@ void MissionManagerImplementation::randomizeGenericEntertainerMission(CreatureOb
 
 	int reward = 100 + distanceReward + System::random(100);
 
-	if (reward > 10000) reward = 10000;
+//	if (reward > 10000) reward = 10000;
 
-	mission->setRewardCredits(reward);
+	mission->setRewardCredits(reward * .5);
 
 	mission->setFaction(faction);
 
@@ -1545,9 +1545,9 @@ void MissionManagerImplementation::randomizeGenericHuntingMission(CreatureObject
 
 	int reward = baseReward + System::random(100);
 
-	if (reward > 10000) reward = 10000;
+//	if (reward > 10000) reward = 10000;
 
-	mission->setRewardCredits(reward);
+	mission->setRewardCredits(reward * .5);
 
 	mission->setMissionDifficulty(difficulty);
 	mission->setMissionTitle("mission/mission_npc_hunting_neutral_" + diffString, "m" + String::valueOf(randTexts) + "t");
@@ -1597,9 +1597,9 @@ void MissionManagerImplementation::randomizeGenericReconMission(CreatureObject* 
 
 	int reward = (position.distanceTo(player->getWorldPosition()) / 5) + 50;
 
-	if (reward > 10000) reward = 10000;
+//	if (reward > 10000) reward = 10000;
 
-	mission->setRewardCredits(reward);
+	mission->setRewardCredits(reward * .5);
 
 	switch (faction) {
 	case Factions::FACTIONIMPERIAL:
@@ -1987,8 +1987,9 @@ bool MissionManagerImplementation::isBountyValidForPlayer(CreatureObject* player
 	if (!bounty->isOnline())
 		return false;
 
-	if (bounty->numberOfActiveMissions() >= 5)
-		return false;
+//	if (bounty->numberOfActiveMissions() >= 5)
+//		return false;
+
 
 	uint64 targetId = bounty->getTargetPlayerID();
 	uint64 playerId = player->getObjectID();
@@ -2010,6 +2011,10 @@ bool MissionManagerImplementation::isBountyValidForPlayer(CreatureObject* player
 	ManagedReference<CreatureObject*> creature = server->getObject(targetId).castTo<CreatureObject*>();
 
 	if (creature == nullptr)
+		return false;
+
+
+	if (creature->getFactionStatus() != FactionStatus::OVERT)//if jedi not overt then dont add to terminal
 		return false;
 
 	auto targetGhost = creature->getPlayerObject();

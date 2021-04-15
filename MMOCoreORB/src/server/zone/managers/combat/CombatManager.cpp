@@ -775,13 +775,13 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 	//food
 	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy");// + creoAttacker->getSkillMod("dead_eye");
 
-	if (attackerAccuracy > 200) {
-		attackerAccuracy = 200;
+	if (attackerAccuracy > 175) {
+		attackerAccuracy = 175;
 	}
 
-	if (attackerAccuracy < 0) {
-		attackerAccuracy = 0;
-	}
+//	if (attackerAccuracy < 0) {
+//		attackerAccuracy = 0;
+//	}
 
 //	if (attacker->isPlayerCreature())
 //		attackerAccuracy *= .5f;
@@ -1602,6 +1602,22 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	//	damage = minDamage;
 		damage = (minDamage + maxDamage) / 2;
 	}
+
+	////add accuracy mods to damage
+		CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
+
+		const auto creatureAccMods = weapon->getCreatureAccuracyModifiers();
+
+		int accdmg = 0;
+
+		if (attacker->isPlayerCreature()) {
+			for (int i = 0; i < creatureAccMods->size(); ++i) {
+				const String& mod = creatureAccMods->get(i);
+				accdmg += creoAttacker->getSkillMod(mod);
+			}
+			if (accdmg > 125) accdmg = 125;//max acc dmg bonus
+			damage += accdmg;
+		}
 
 //	if (diff > 0)
 //		damage += System::random(diff);

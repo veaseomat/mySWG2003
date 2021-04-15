@@ -289,8 +289,8 @@ void LightsaberCrystalComponentImplementation::fillAttributeList(AttributeListMe
 				str << "@jedi_spam:crystal_quality_" << getQuality();
 				alm->insertAttribute("challenge_level", itemLevel);
 				alm->insertAttribute("crystal_quality", str);
-				alm->insertAttribute("mindamage", damage);
-				alm->insertAttribute("maxdamage", damage);
+//				alm->insertAttribute("mindamage", damage);
+				alm->insertAttribute("damage", damage);
 				alm->insertAttribute("wpn_attack_speed", attackSpeed);
 				alm->insertAttribute("wpn_wound_chance", woundChance);
 //				alm->insertAttribute("wpn_attack_cost_health", sacHealth);

@@ -5,7 +5,8 @@ clothing_attachments = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "attachment_clothing", weight = 10000000}
+		{itemTemplate = "attachment_clothing", weight = 5000000},
+		{itemTemplate = "attachment_armor", weight = 5000000}
 	}
 }
 

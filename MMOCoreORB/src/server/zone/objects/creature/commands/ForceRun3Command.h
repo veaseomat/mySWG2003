@@ -54,7 +54,7 @@ public:
 
 //		multBuff->setSkillModifier("private_damage_divisor", 20);
 		
-		multBuff->setSkillModifier("private_attack_accuracy", -250);
+		multBuff->setSkillModifier("private_attack_accuracy", -500);
 
 		creature->addBuff(multBuff);
 

@@ -255,25 +255,19 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 
 	} else {
 		const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
+		int amountToSpawn = 0;
 
-		int amountToSpawn = System::random(lairTemplate->getSpawnLimit() * 1.5);
+//		if (getMobType() == LairTemplate::CREATURE) {
+			amountToSpawn = System::random(3) + ((lairTemplate->getSpawnLimit() / 3) - 2);
+			amountToSpawn *= 1.5;
+//		} else {
+//			amountToSpawn = System::random(lairTemplate->getSpawnLimit() / 2) + (lairTemplate->getSpawnLimit() / 2);
+//		}
 
-		int levelincrease = System::random(difficulty);
+		if (amountToSpawn < 1)
+			amountToSpawn = 1;
 
-		int newamountToSpawn = amountToSpawn + levelincrease;
-
-		if (newamountToSpawn < 5)
-			newamountToSpawn = 5;
-
-		if (newamountToSpawn > 10)
-			newamountToSpawn = 10;
-
-		int newspawnLimit = lairTemplate->getnewSpawnLimit();
-
-		if (newspawnLimit > 0)
-			newamountToSpawn = newspawnLimit;
-
-		for (int i = 0; i < newamountToSpawn; i++) {
+		for (int i = 0; i < amountToSpawn; i++) {
 			int num = System::random(mobiles->size() - 1);
 			const String& mob = mobiles->get(num);
 

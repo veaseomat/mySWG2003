@@ -1824,13 +1824,13 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.01f);
 
 			//this removes non jedi skills from existing jedi
-			if (attacker->hasSkill("force_title_jedi_novice")) {
-
-				SkillManager* skillManager = server->getSkillManager();
-
-				skillManager->surrenderAllSkills(attacker, true, false);
-
-			}
+//			if (attacker->hasSkill("force_title_jedi_novice")) {
+//
+//				SkillManager* skillManager = server->getSkillManager();
+//
+//				skillManager->surrenderAllSkills(attacker, true, false);
+//
+//			}
 
 			//Check if the group leader is a squad leader
 			if (group == nullptr)
@@ -5586,8 +5586,8 @@ bool PlayerManagerImplementation::doBurstRun(CreatureObject* player, float hamMo
 
 	Locker locker(buff);
 
-	buff->setSpeedMultiplierMod(1.822f);
-	buff->setAccelerationMultiplierMod(1.822f);
+	buff->setSpeedMultiplierMod(1.5f );
+	buff->setAccelerationMultiplierMod(1.5f);
 
 	if (cooldownModifier == 0.f)
 		buff->setStartMessage(startStringId);
@@ -5635,20 +5635,22 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 
 	bool message = true;
 
-	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;
-	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;
-	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;
+	int selfMedBuff = 1250;
+	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * .5;
+	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * .5;
+	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * .5;
+	int selfDuration =	720; //12 hr ;
 
-	message = message && doEnhanceCharacter(0x98321369, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 0); // medical_enhance_health
-	message = message && doEnhanceCharacter(0x815D85C5, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 1); // medical_enhance_strength
-	message = message && doEnhanceCharacter(0x7F86D2C6, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 2); // medical_enhance_constitution
-	message = message && doEnhanceCharacter(0x4BF616E2, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 3); // medical_enhance_action
-	message = message && doEnhanceCharacter(0x71B5C842, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 4); // medical_enhance_quickness
-	message = message && doEnhanceCharacter(0xED0040D9, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 5); // medical_enhance_stamina
+	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
+	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
+	message = message && doEnhanceCharacter(0x7F86D2C6, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 2); // medical_enhance_constitution
+	message = message && doEnhanceCharacter(0x4BF616E2, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 3); // medical_enhance_action
+	message = message && doEnhanceCharacter(0x71B5C842, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 4); // medical_enhance_quickness
+	message = message && doEnhanceCharacter(0xED0040D9, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 5); // medical_enhance_stamina
 
-	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrengthMind * 2, performanceDuration, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
-	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus * 2, performanceDuration, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
-	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill * 2, performanceDuration, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
+	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrengthMind * 2, selfDuration * 60, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
+	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus * 2, selfDuration * 60, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
+	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill * 2, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
 		player->sendSystemMessage("An unknown force strengthens you for battles yet to come.");
