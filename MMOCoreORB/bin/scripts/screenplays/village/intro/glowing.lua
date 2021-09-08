@@ -3,11 +3,11 @@ local Logger = require("utils.logger")
 
 Glowing = ScreenPlay:new {
 	requiredBadges = {
-		{ type = "exploration_jedi", amount = 1 },
+		{ type = "exploration_jedi", amount = 0 },
 		{ type = "exploration_dangerous", amount = 0 },
-		{ type = "exploration_easy", amount = 0 },
-		{ type = "master", amount = 3 },
-		{ type = "content", amount = 0 },
+		{ type = "exploration_easy", amount = 10 },
+		{ type = "master", amount = 5 },
+		{ type = "content", amount = 5 },
 	}
 }
 

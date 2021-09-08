@@ -26,7 +26,7 @@ dark_trooper = Creature:new {
 	creatureBitmask = PACK + KILLER,
 	optionsBitmask = AIENABLED,
 	diet = HERBIVORE,
-	scale = 1.5,
+	scale = 1.05,
 
 	templates = {"object/mobile/dressed_stormtrooper_black_black.iff"},
 	lootGroups = {

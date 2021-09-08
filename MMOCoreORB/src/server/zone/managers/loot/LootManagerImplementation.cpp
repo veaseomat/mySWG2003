@@ -251,7 +251,7 @@ int LootManagerImplementation::calculateLootCredits(int level) {
 	int maxcredits = (int) round((.03f * level * level) + (3 * level) + 50);
 	int mincredits = (int) round((((float) maxcredits) * .5f) + (2.0f * level));
 
-	int credits = (mincredits + System::random(maxcredits - mincredits));
+	int credits = mincredits + System::random(maxcredits - mincredits);
 
 	return credits;
 }
@@ -262,17 +262,17 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
-	if(level > 500)
-		level = 500;
+	if(level > 300)
+		level = 300;
 
-	float excMod = (System::random(40) * .1) + 1.0;
+//	float excMod = (System::random(40) * .1) + 1.0;
 
-	int maxlvl = templateObject->getnewmaximumLevel();
+//	int maxlvl = templateObject->getnewmaximumLevel();
 
-	if (maxlvl == 1) {
-		level = 0;
-		excMod = 1.0;
-	}
+//	if (maxlvl == 1) {
+//		level = 0;
+//		excMod = 1.0;
+//	}
 
 	const String& directTemplateObject = templateObject->getDirectObjectTemplate();
 
@@ -288,6 +288,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	prototype->createChildObjects();
 
 	//Disable serial number generation on looted items that require no s/n
+	//removing this to try and disable loot item sn... did it cause loot items to not work in crafting slots??? yes. it has to be disabled in crafting manager and this left on to work
 	if (!templateObject->getSuppressSerialNumber()) {
 		String serial = craftingManager->generateSerial();
 		prototype->setSerialNumber(serial);
@@ -297,7 +298,6 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	float junkMinValue = templateObject->getJunkMinValue() * junkValueModifier;
 	float junkMaxValue = templateObject->getJunkMaxValue() * junkValueModifier;
 	float fJunkValue = junkMinValue+System::random(junkMaxValue-junkMinValue);
-
 
 	if (level>0 && templateObject->getJunkDealerTypeNeeded()>1){
 		fJunkValue=fJunkValue + (fJunkValue * ((float)level / 100)); // This is the loot value calculation if the item has a level
@@ -310,7 +310,20 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	setCustomObjectName(prototype, templateObject);
 
-	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);
+	float excMod = 1.0;
+
+//	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);//removing this makes legendary chance same for all levels
+
+	if ((System::random(legendaryChance) >= legendaryChance) && (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject())) {
+		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
+		prototype->setCustomObjectName(newName, false);
+
+		excMod = legendaryModifier;
+
+		prototype->addMagicBit(false);
+
+		legendaryLooted.increment();
+	}
 
 	if (prototype->isLightsaberCrystalObject()) {
 		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
@@ -368,16 +381,11 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		float minMod = (max > min) ? 2000.f : -2000.f;
 		float maxMod = (max > min) ? 500.f : -500.f;
 
-//		int levelmod = level / 300;
-//
-//		min *= levelmod;
-//		max *= levelmod;
-
-		if (max > min && min >= 0) { // Both max and min positive, max is higher
+		if (max > min && min >= 0) { // Both max and min non-negative, max is higher
 			min = ((min * level / minMod) + min) * excMod;
 			max = ((max * level / maxMod) + max) * excMod;
 
-		} else if (max > min && max <= 0) { // Both max and min are negative, max is higher
+		} else if (max > min && max <= 0) { // Both max and min are non-positive, max is higher
 			minMod *= -1;
 			maxMod *= -1;
 			min = ((min * level / minMod) + min) / excMod;
@@ -388,11 +396,11 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			min = ((min * level / minMod) + min) / excMod;
 			max = ((max * level / maxMod) + max) * excMod;
 
-		} else if (max < min && max >= 0) { // Both max and min are positive, min is higher
+		} else if (max < min && max >= 0) { // Both max and min are non-negative, min is higher
 			min = ((min * level / minMod) + min) / excMod;
 			max = ((max * level / maxMod) + max) / excMod;
 
-		} else if (max < min && min <= 0) { // Both max and min are negative, min is higher
+		} else if (max < min && min <= 0) { // Both max and min are non-positive, min is higher
 			minMod *= -1;
 			maxMod *= -1;
 			min = ((min * level / minMod) + min) * excMod;
@@ -403,35 +411,26 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			min = ((min * level / minMod) + min) / excMod;
 			max = ((max * level / maxMod) + max) * excMod;
 		}
-//
-//		float maxactual = craftingValues->getMaxValue(subtitle);
-//
-//		if (max > maxactual) {
-//
-//			max = maxactual;
-//		}
-
 
 		craftingValues->setMinValue(subtitle, min);
 		craftingValues->setMaxValue(subtitle, max);
 	}
 
-//	if (yellow) {
-//		prototype->addMagicBit(false);
-		prototype->setJunkValue((int)(fJunkValue * 1.5));
-//	} else {
-//		if (excMod == 1.0) {
-//			prototype->setJunkValue((int)(fJunkValue));
-//		} else {
-//			prototype->setJunkValue((int)(fJunkValue * (excMod/2)));
-//		}
-//	}
+	if (yellow) {
+		prototype->addMagicBit(false);
+		prototype->setJunkValue((int)(fJunkValue * 1.25));
+	} else {
+		if (excMod == 1.0) {
+			prototype->setJunkValue((int)(fJunkValue));
+		} else {
+			prototype->setJunkValue((int)(fJunkValue * (excMod/2)));
+		}
+	}
 
 	// Use percentages to recalculate the values
 	craftingValues->recalculateValues(false);
 
 	craftingValues->addExperimentalProperty("creatureLevel", "creatureLevel", level, level, 0, false, ValuesMap::LINEARCOMBINE);
-	//can i unhiude this? here or in object alm
 	craftingValues->setHidden("creatureLevel");
 
 	//check weapons and weapon components for min damage > max damage
@@ -439,23 +438,20 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (craftingValues->hasProperty("mindamage") && craftingValues->hasProperty("maxdamage")) {
 			float oldMin = craftingValues->getCurrentValue("mindamage");
 			float oldMax = craftingValues->getCurrentValue("maxdamage");
-//			float maxactual = craftingValues->getMaxValue("maxdamage");
 
 			if (oldMin > oldMax) {
 				craftingValues->setCurrentValue("mindamage", oldMax);
 				craftingValues->setCurrentValue("maxdamage", oldMin);
 			}
-//
-//			if (oldMax > maxactual) {
-//
-//				craftingValues->setCurrentValue("maxdamage", maxactual);
-//			}
+
+//			float newDam = (craftingValues->getCurrentValue("mindamage") + craftingValues->getCurrentValue("maxdamage")) / 2;
+//			craftingValues->setCurrentValue("damage", newDam);
 		}
 	}
 
 	// Add Dots to weapon objects.
 	addStaticDots(prototype, templateObject, level);
-	addRandomDots(prototype, templateObject, level, 1.0);
+	addRandomDots(prototype, templateObject, level, excMod);
 
 	setSkillMods(prototype, templateObject, level, excMod);
 
@@ -491,7 +487,7 @@ void LootManagerImplementation::addConditionDamage(TangibleObject* loot, Craftin
 }
 
 void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootItemTemplate* templateObject, int level, float excMod) {
-	if (!object->isWearableObject())
+	if (!object->isWearableObject())//only clothing/armor get sea
 		return;
 
 	const VectorMap<String, int>* skillMods = templateObject->getSkillMods();
@@ -500,7 +496,7 @@ void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootI
 	bool yellow = false;
 	float modSqr = excMod * excMod;
 
-	if (System::random(skillModChance / modSqr) == 0) {
+	if (System::random(skillModChance) >= skillModChance) {
 		// if it has a skillmod the name will be yellow
 		yellow = true;
 		int modCount = System::random(8);
@@ -514,8 +510,8 @@ void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootI
 
 		for(int i = 0; i < modCount; ++i) {
 			//Mods can't be lower than -1 or greater than 25
-			int max = (int) Math::max(-1.f, Math::min(50.f, (float) round(0.1f * level + 3)));
-			int min = (int) Math::max(-1.f, Math::min(50.f, (float) round(0.075f * level - 1)));
+			int max = (int) Math::max(-1.f, Math::min(30.f, (float) round(0.1f * level + 3)));
+			int min = (int) Math::max(-1.f, Math::min(30.f, (float) round(0.075f * level - 1)));
 
 			int mod = (System::random(max - min) + min);
 			mod += (System::random(max - min) + min);
@@ -523,8 +519,8 @@ void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootI
 			if(mod < 5)
 				mod = 5;
 
-			if(mod > 50)
-				mod = 50;
+			if(mod > 25)
+				mod = 25;
 
 			String modName = getRandomLootableMod( object->getGameObjectType() );
 			if( !modName.isEmpty() )
@@ -629,12 +625,14 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = (entry->getLootChance() * 2.5);
+		int lootChance = (entry->getLootChance() * 1.5); //using this multiplier gives less empty corpses
 
-		int hroll = System::random(5000);
+		//random holocron creation (only drops on mobs that have loot lists)
+//		int holochance = 10000;
+//		if (System::random(holochance) >= holochance){
+//			createLoot(trx, container, "holocron_nd", level);
+//		}
 
-		if (hroll == 5000)
-			createLoot(trx, container, "holocron_nd", level);
 
 		if (lootChance <= 0)
 			continue;
@@ -666,7 +664,7 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 			break;
 		}
 
-		//Now we do the second roll to determine loot group.
+		//Now we do the second roll.... this adds another random drop
 		roll = System::random(10000000);
 
 		if (roll > lootChance)
@@ -687,7 +685,7 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 			break;
 		}
 
-		//Now we do the second roll to determine loot group.
+		//Now we do the second roll.... this adds another random drop
 		roll = System::random(10000000);
 
 		if (roll > lootChance)
@@ -815,7 +813,7 @@ void LootManagerImplementation::addStaticDots(TangibleObject* object, const Loot
 		return;
 
 	// Apply the Dot if the chance roll equals the number or is zero.
-	if (dotChance == 0 || System::random(dotChance) == 0) { // Defined in loot item script.
+	if (dotChance == 0 || System::random(25) == 25) { // Defined in loot item script.
 		shouldGenerateDots = true;
 	}
 
@@ -889,6 +887,8 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 	if (dotChance < 0)
 		return;
 
+	excMod = 1.0;
+
 	float modSqr = excMod * excMod;
 
 	// Apply the Dot if the chance roll equals the number or is zero.
@@ -932,9 +932,9 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				str = strMax;
 
-			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
-				str *= yellowModifier;
-			}
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				str *= yellowModifier;
+//			}
 
 			if (dotType == 1)
 				str = str * 2;
@@ -952,9 +952,9 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				dur = durMax;
 
-			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
-				dur *= yellowModifier;
-			}
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				dur *= yellowModifier;
+//			}
 
 			if (dotType == 2)
 				dur = dur * 5;
@@ -972,9 +972,9 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				pot = potMax;
 
-			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
-				pot *= yellowModifier;
-			}
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				pot *= yellowModifier;
+//			}
 
 			weapon->addDotPotency(pot * excMod);
 
@@ -987,9 +987,9 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				use = useMax;
 
-			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
-				use *= yellowModifier;
-			}
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				use *= yellowModifier;
+//			}
 
 			weapon->addDotUses(use * excMod);
 		}

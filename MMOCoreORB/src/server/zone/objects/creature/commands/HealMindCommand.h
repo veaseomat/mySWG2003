@@ -9,7 +9,7 @@
 #include "server/zone/managers/collision/CollisionManager.h"
 
 class HealMindCommand : public QueueCommand {
-	float mindCost;
+//	float mindCost;
 	float mindWoundCost;
 	float range;
 public:
@@ -17,8 +17,8 @@ public:
 	HealMindCommand(const String& name, ZoneProcessServer* server)
 		: QueueCommand(name, server) {
 		
-		mindCost = 250;
-		mindWoundCost = 250;
+//		mindCost = 250;
+		mindWoundCost = 25;
 		range = 5;
 	}
 
@@ -97,10 +97,10 @@ public:
 
 		CreatureObject* player = cast<CreatureObject*>(creature);
 
-		if (creatureTarget == creature) {
-			creature->sendSystemMessage("@healing:no_heal_mind_self"); //You can not heal your own mind.
-			return GENERALERROR;
-		}		
+//		if (creatureTarget == creature) {
+//			creature->sendSystemMessage("@healing:no_heal_mind_self"); //You can not heal your own mind.
+//			return GENERALERROR;
+//		}
 
 		if (creatureTarget->isDead() || (creatureTarget->isAiAgent() && !creatureTarget->isPet()) || creatureTarget->isDroidObject()) {
 			creature->sendSystemMessage("@healing:heal_mind_invalid_target"); // Target must be a player or a creature pet in order to heal mind.
@@ -117,10 +117,10 @@ public:
 			return GENERALERROR;
 		}
 
-		if (creature->getHAM(CreatureAttribute::MIND) < mindCost) {
-			creature->sendSystemMessage("@healing_response:not_enough_mind"); //You do not have enough mind to do that.
-			return GENERALERROR;
-		}
+//		if (creature->getHAM(CreatureAttribute::MIND) < mindCost) {
+//			creature->sendSystemMessage("@healing_response:not_enough_mind"); //You do not have enough mind to do that.
+//			return GENERALERROR;
+//		}
 
 		if (creatureTarget->getHAM(CreatureAttribute::MIND) == 0 || !(creatureTarget->hasDamage(CreatureAttribute::MIND))) {
 			if (creatureTarget->isPlayerCreature()) {

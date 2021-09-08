@@ -105,7 +105,11 @@ public:
 
 	bool villageKnightPrereqsMet(CreatureObject* creature, const String& skillToDrop);
 
+	bool jediPrereqsMet(CreatureObject* creature, const String& skillToDrop);
+
 	int getForceSensitiveSkillCount(CreatureObject* creature, bool includeNoviceMasterBoxes);
+
+	int getJediSkillCount(CreatureObject* creature, bool includeNoviceMasterBoxes);
 
 	void updateXpLimits(PlayerObject* ghost);
 

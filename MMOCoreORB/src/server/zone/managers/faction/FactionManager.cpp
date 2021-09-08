@@ -205,7 +205,8 @@ int FactionManager::getFactionPointsCap(int rank) {
 	if (rank >= factionRanks.getCount())
 		return -1;
 
-	return Math::max(1000, getRankCost(rank) * 200);
+//	return Math::max(1000, getRankCost(rank) * 20);
+	return 1000000;
 }
 
 bool FactionManager::isFaction(const String& faction) {

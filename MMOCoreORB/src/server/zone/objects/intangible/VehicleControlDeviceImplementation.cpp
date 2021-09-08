@@ -19,6 +19,10 @@
 #include "server/zone/managers/player/PlayerManager.h"
 
 void VehicleControlDeviceImplementation::generateObject(CreatureObject* player) {
+
+	player->sendSystemMessage("All Vehicles and Mounts are Disabled on mySWG.");
+	return;
+
 	if (player->isDead() || player->isIncapacitated())
 		return;
 

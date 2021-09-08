@@ -86,7 +86,7 @@ GeonosianLab = ScreenPlay:new {
 	},
 }
 
-registerScreenPlay("GeonosianLab", true)
+--registerScreenPlay("GeonosianLab", true)
 
 function GeonosianLab:start()
 	if (isZoneEnabled("yavin4")) then
@@ -422,7 +422,7 @@ function GeonosianLab:spawnMobiles()
 	spawnMobile("yavin4", "cavern_spider",180,13.4,-22.0,-337.3,-179,1627822)
 
 	-- largeendcave (1627823)
-	spawnMobile("yavin4", "acklay",180,101.1,-34.3,-321.6,-136,1627823, true) --Randomized respawn
+	spawnMobile("yavin4", "acklay",7200,101.1,-34.3,-321.6,-136,1627823, true) --Randomized respawn
 	spawnMobile("yavin4", "enhanced_kwi",180,48.0,-34.0,-334.4,0,1627823)
 	spawnMobile("yavin4", "cavern_spider",180,91.2,-33.9,-347.9,5,1627823)
 	spawnMobile("yavin4", "enhanced_kliknik",180,98.0,-34.1,-334.4,-53,1627823)

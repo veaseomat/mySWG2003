@@ -24,7 +24,7 @@ dark_trooper_novatrooper = Creature:new {
 	creatureBitmask = KILLER,
 	optionsBitmask = AIENABLED,
 	diet = NONE,
-	scale = 1.3,
+	scale = 1.05,
 
 	templates = {"object/mobile/dressed_stormtrooper_black_black.iff"},
 	lootGroups = {},

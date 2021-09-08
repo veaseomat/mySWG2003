@@ -983,14 +983,16 @@ void PlayerObjectImplementation::doDigest(int fillingReduction) {
 	if (drinkFilling > drinkFillingMax)
 		drinkFilling = drinkFillingMax;
 
+	fillingReduction *= 3; //speeds up digeston
+
 	if (foodFilling > 0) {
-		setFoodFilling(foodFilling - (fillingReduction * 2));
+		setFoodFilling(foodFilling - fillingReduction);
 		if (foodFilling < 0)
 			foodFilling = 0;
 	}
 
 	if (drinkFilling > 0) {
-		setDrinkFilling(drinkFilling - (fillingReduction * 2));
+		setDrinkFilling(drinkFilling - fillingReduction);
 		if (drinkFilling < 0)
 			drinkFilling = 0;
 	}
@@ -1374,7 +1376,7 @@ void PlayerObjectImplementation::notifyOnline() {
 		if (playerTemplate != nullptr) {
 			auto speedTempl = playerTemplate->getSpeed();
 
-			playerCreature->setRunSpeed(speedTempl.get(0));
+			playerCreature->setRunSpeed((speedTempl.get(0) * 1.33));//changing this worked on login
 		}
 	}
 
@@ -2055,9 +2057,21 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 //			regen += frsregen;
 //		}
 
-		if (regen > 0) {
-		regen += 10; //jedi robe
-		}
+//		if (regen > 0) {
+//		regen += 10; //jedi robe
+//		}
+
+		//frs regen increase by %
+//		float frsregen = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.625);
+//
+//		if (frsregen > 0) {
+//			regen *= 1.f + (frsregen / 100.f);
+//		}
+
+//		if (regen > 0) {
+//		regen *= .5; //reduce fp regen skill mod because 5 jedi trees
+//		regen += 1; //add 1 so regen is never .5 = int 0 = no regen
+//		}
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
 		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
@@ -2970,15 +2984,20 @@ void PlayerObjectImplementation::recalculateForcePower() {
 
 	int maxForce = player->getSkillMod("jedi_force_power_max");
 
-	if (maxForce > 0) {
-	maxForce += 250; //jedi robe
-	}
+//	if (maxForce > 0) {
+//	maxForce += 250; //jedi robe
+//	}
 
-	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 0.625;
+//	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 0.625;
+//	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 25;
+//
+//	if (frsMax > 0) {
+//		maxForce += frsMax;
+//	}
 
-	if (frsMax > 0) {
-		maxForce *= 1.f * (1.f + ((float)frsMax / 100.f));
-	}
+//		if (maxForce > 5000) {
+//		maxForce = 5000; //jedi robe
+//		}
 
 	setForcePowerMax(maxForce, true);
 }

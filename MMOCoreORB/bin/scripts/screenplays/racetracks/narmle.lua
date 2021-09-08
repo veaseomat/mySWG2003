@@ -36,7 +36,7 @@ narmle_racetrack_screenplay = RaceTrack:new {
 	}
 }
 
-registerScreenPlay("narmle_racetrack_screenplay", true)
+--registerScreenPlay("narmle_racetrack_screenplay", true)
 
 --------------------------------------
 --   Initialize screenplay           -

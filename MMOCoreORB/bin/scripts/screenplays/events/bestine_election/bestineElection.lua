@@ -59,7 +59,7 @@ BestineElection = ScreenPlay:new {
 	VICTOR_RIVAL_QUEST_COMPLETED = 2
 }
 
-registerScreenPlay("BestineElection", true)
+--registerScreenPlay("BestineElection", true)
 
 function BestineElection:isElectionEnabled()
 	return self.electionEnabled

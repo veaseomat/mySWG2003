@@ -820,7 +820,7 @@ void ResourceSpawner::sendSurvey(CreatureObject* player, const String& resname) 
 	//Adjust cost based upon player's focus
 	int mindCost = 100 - (int)(player->getHAM(CreatureAttribute::FOCUS)/15.f);
 
-	player->inflictDamage(player, CreatureAttribute::MIND, 1, false, true);
+//	player->inflictDamage(player, CreatureAttribute::MIND, 1, false, true);
 
 	ManagedReference<SurveySession*> session = player->getActiveSession(SessionFacadeType::SURVEY).castTo<SurveySession*>();
 	if(session == nullptr) {
@@ -932,7 +932,7 @@ void ResourceSpawner::sendSample(CreatureObject* player, const String& resname,
 	//Adjust cost based upon player's quickness
 	int actionCost = 124 - (int)(player->getHAM(CreatureAttribute::QUICKNESS)/12.5f);
 
-	player->inflictDamage(player, CreatureAttribute::ACTION, 1, false, true);
+//	player->inflictDamage(player, CreatureAttribute::ACTION, 1, false, true);
 
 	PlayClientEffectLoc* effect = new PlayClientEffectLoc(sampleAnimation,
 			player->getZone()->getZoneName(), player->getPositionX(),

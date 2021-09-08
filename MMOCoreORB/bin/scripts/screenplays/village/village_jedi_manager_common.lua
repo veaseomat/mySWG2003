@@ -3,22 +3,47 @@ local QuestManager = require("managers.quest.quest_manager")
 
 VillageJediManagerCommon = ScreenPlay:new {
 	forceSensitiveBranches = {
-		"force_sensitive_combat_prowess_ranged_accuracy",
-		"force_sensitive_combat_prowess_ranged_speed",
-		"force_sensitive_combat_prowess_melee_accuracy",
-		"force_sensitive_combat_prowess_melee_speed",
-		"force_sensitive_enhanced_reflexes_ranged_defense",
-		"force_sensitive_enhanced_reflexes_melee_defense",
-		"force_sensitive_enhanced_reflexes_vehicle_control",
-		"force_sensitive_enhanced_reflexes_survival",
-		"force_sensitive_crafting_mastery_experimentation",
-		"force_sensitive_crafting_mastery_assembly",
-		"force_sensitive_crafting_mastery_repair",
-		"force_sensitive_crafting_mastery_technique",
-		"force_sensitive_heightened_senses_healing",
-		"force_sensitive_heightened_senses_surveying",
-		"force_sensitive_heightened_senses_persuasion",
-		"force_sensitive_heightened_senses_luck"
+		 "social_entertainer_hairstyle_04",
+		 "social_entertainer_music_04",
+		 "social_entertainer_music_04",
+		 "social_entertainer_healing_04",
+		 "outdoors_scout_movement_04",
+		 "outdoors_scout_tools_04",
+		 "outdoors_scout_harvest_04",
+		 "outdoors_scout_camp_04",
+		 "science_medic_injury_04",
+		 "science_medic_injury_speed_04",
+		 "science_medic_ability_04",
+		 "science_medic_crafting_04",
+		 "crafting_artisan_engineering_04",
+		 "crafting_artisan_domestic_04",
+		 "crafting_artisan_business_04",
+		 "crafting_artisan_survey_04",
+		 "combat_brawler_unarmed_04",
+		 "combat_brawler_1handmelee_04",
+		 "combat_brawler_2handmelee_04",
+		 "combat_brawler_polearm_04",
+		 "combat_marksman_rifle_04",
+		 "combat_marksman_pistol_04",
+		 "combat_marksman_carbine_04",
+		 "combat_marksman_support_04",
+		 
+--		"force_sensitive_combat_prowess_ranged_accuracy",
+--		"force_sensitive_combat_prowess_ranged_speed",
+--		"force_sensitive_combat_prowess_melee_accuracy",
+--		"force_sensitive_combat_prowess_melee_speed",
+--		"force_sensitive_enhanced_reflexes_ranged_defense",
+--		"force_sensitive_enhanced_reflexes_melee_defense",
+--		"force_sensitive_enhanced_reflexes_vehicle_control",
+--		"force_sensitive_enhanced_reflexes_survival",
+--		"force_sensitive_crafting_mastery_experimentation",
+--		"force_sensitive_crafting_mastery_assembly",
+--		"force_sensitive_crafting_mastery_repair",
+--		"force_sensitive_crafting_mastery_technique",
+--		"force_sensitive_heightened_senses_healing",
+--		"force_sensitive_heightened_senses_surveying",
+--		"force_sensitive_heightened_senses_persuasion",
+--		"force_sensitive_heightened_senses_luck"
 	}
 }
 
@@ -251,7 +276,7 @@ function VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer)
 	local branchesLearned = 0
 
 	for i = 1, #VillageJediManagerCommon.forceSensitiveBranches, 1 do
-		if (CreatureObject(pPlayer):hasSkill(VillageJediManagerCommon.forceSensitiveBranches[i] .. "_04")) then
+		if (CreatureObject(pPlayer):hasSkill(VillageJediManagerCommon.forceSensitiveBranches[i])) then
 			branchesLearned = branchesLearned + 1
 		end
 	end

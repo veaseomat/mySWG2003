@@ -173,7 +173,7 @@ ThemeParkMarauderSzingoTerak = ThemeParkLogic:new {
 	planetName = "endor",
 }
 
-registerScreenPlay("ThemeParkMarauderSzingoTerak", true)
+--registerScreenPlay("ThemeParkMarauderSzingoTerak", true)
 
 theme_park_marauder_szingo_terak_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkMarauderSzingoTerak

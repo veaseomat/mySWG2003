@@ -107,41 +107,41 @@ void DamageOverTime::activate() {
 }
 
 uint32 DamageOverTime::applyDot(CreatureObject* victim) {
-	if (expires.isPast() || !nextTick.isPast())
+//	if (expires.isPast() || !nextTick.isPast())
 		return 0;
-
-	nextTick.updateToCurrentTime();
-
-	uint32 power = 0;
-	ManagedReference<CreatureObject*> attacker = victim->getZoneServer()->getObject(attackerID).castTo<CreatureObject*>();
-
-	if (attacker == nullptr)
-		attacker = victim;
-
-	switch(type) {
-	case CreatureState::BLEEDING:
-		power = doBleedingTick(victim, attacker);
-		nextTick.addMiliTime(20000);
-		break;
-	case CreatureState::POISONED:
-		power = doPoisonTick(victim, attacker);
-		nextTick.addMiliTime(10000);
-		break;
-	case CreatureState::DISEASED:
-		power = doDiseaseTick(victim, attacker);
-		nextTick.addMiliTime(40000);
-		break;
-	case CreatureState::ONFIRE:
-		power = doFireTick(victim, attacker);
-		nextTick.addMiliTime(10000);
-		break;
-	case CommandEffect::FORCECHOKE:
-		power = doForceChokeTick(victim, attacker);
-		nextTick.addMiliTime(5000);
-		break;
-	}
-
-	return power;
+//
+//	nextTick.updateToCurrentTime();
+//
+//	uint32 power = 0;
+//	ManagedReference<CreatureObject*> attacker = victim->getZoneServer()->getObject(attackerID).castTo<CreatureObject*>();
+//
+//	if (attacker == nullptr)
+//		attacker = victim;
+//
+//	switch(type) {
+//	case CreatureState::BLEEDING:
+//		power = doBleedingTick(victim, attacker);
+//		nextTick.addMiliTime(20000);
+//		break;
+//	case CreatureState::POISONED:
+//		power = doPoisonTick(victim, attacker);
+//		nextTick.addMiliTime(10000);
+//		break;
+//	case CreatureState::DISEASED:
+//		power = doDiseaseTick(victim, attacker);
+//		nextTick.addMiliTime(40000);
+//		break;
+//	case CreatureState::ONFIRE:
+//		power = doFireTick(victim, attacker);
+//		nextTick.addMiliTime(10000);
+//		break;
+//	case CommandEffect::FORCECHOKE:
+//		power = doForceChokeTick(victim, attacker);
+//		nextTick.addMiliTime(5000);
+//		break;
+//	}
+//
+//	return power;
 }
 
 uint32 DamageOverTime::initDot(CreatureObject* victim, CreatureObject* attacker) {

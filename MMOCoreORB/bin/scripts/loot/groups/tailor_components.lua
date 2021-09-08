@@ -5,10 +5,18 @@ tailor_components = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "crystalline_clothing_treatment", weight = 1666666},
-		{itemTemplate = "heavy_duty_clasp", weight = 1666666},
-		{itemTemplate = "heavy_duty_leather", weight = 1666666},
-		{itemTemplate = "weapon_component_advanced", weight = 5000000}
+		{itemTemplate = "crystalline_clothing_treatment", weight = 833333},
+		{itemTemplate = "heavy_duty_clasp", weight = 833333},
+		{itemTemplate = "heavy_duty_leather", weight = 833333},
+		{itemTemplate = "crystalline_clothing_treatment1", weight = 833333},
+		{itemTemplate = "crystalline_clothing_treatment2", weight = 833333},
+		{itemTemplate = "crystalline_clothing_treatment3", weight = 833333},
+		{itemTemplate = "crystalline_clothing_treatment4", weight = 833333},
+		{itemTemplate = "crystalline_clothing_treatment5", weight = 833333},
+		{itemTemplate = "crystalline_clothing_treatment6", weight = 833333},
+		{itemTemplate = "crystalline_clothing_treatment7", weight = 833333},
+		{itemTemplate = "crystalline_clothing_treatment8", weight = 833333},
+		{itemTemplate = "crystalline_clothing_treatment9", weight = 833333},
 	}
 }
 

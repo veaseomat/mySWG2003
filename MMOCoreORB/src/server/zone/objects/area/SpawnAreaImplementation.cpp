@@ -103,7 +103,7 @@ int SpawnAreaImplementation::notifyObserverEvent(unsigned int eventType, Observa
 			thisZone->transferObject(area, -1, true);
 
 			Reference<Task*> task = new RemoveNoSpawnAreaTask(area);
-			task->schedule(150000);
+			task->schedule(120000);
 		}
 	}
 

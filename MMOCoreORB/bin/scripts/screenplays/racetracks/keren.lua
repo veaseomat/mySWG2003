@@ -31,7 +31,7 @@ keren_racetrack_screenplay = RaceTrack:new {
 	}
 }
 
-registerScreenPlay("keren_racetrack_screenplay", true)
+--registerScreenPlay("keren_racetrack_screenplay", true)
 
 --------------------------------------
 --   Initialize screenplay           -

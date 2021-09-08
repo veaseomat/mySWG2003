@@ -10,16 +10,18 @@ public:
 
 	ForceSpeed2Command(const String& name, ZoneProcessServer* server)
 	: JediQueueCommand(name, server) {
-
-		buffCRC = BuffCRC::JEDI_FORCE_SPEED_2;
-
-		overrideableCRCs.add(BuffCRC::JEDI_FORCE_SPEED_1);
-
-		skillMods.put("combat_haste", 25);
+//
+//		buffCRC = BuffCRC::JEDI_FORCE_SPEED_2;
+//
+//		overrideableCRCs.add(BuffCRC::JEDI_FORCE_SPEED_1);
+//
+//		skillMods.put("combat_haste", 25);
 	}
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
-		return doJediSelfBuffCommand(creature);
+//		return doJediSelfBuffCommand(creature);
+		creature->sendSystemMessage("This ability is disabled.");
+		return GENERALERROR;
 	}
 
 };

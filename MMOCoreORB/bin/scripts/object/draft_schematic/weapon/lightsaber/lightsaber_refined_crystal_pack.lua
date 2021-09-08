@@ -45,14 +45,14 @@ object_draft_schematic_weapon_lightsaber_lightsaber_refined_crystal_pack = objec
 
    templateType = DRAFTSCHEMATIC,
 
-   customObjectName = "A Refined Crystal Pack",
+--   customObjectName = "A Focusing Crystal",
 
    craftingToolTab = 2048, -- (See DraftSchematicObjectTemplate.h)
    complexity = 18, 
    size = 1, 
 
    xpType = "jedi_general", 
-   xp = 0, 
+   xp = 50, 
 
    assemblySkill = "jedi_saber_assembly", 
    experimentingSkill = "jedi_saber_experimentation", 

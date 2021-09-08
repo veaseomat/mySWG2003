@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_rifle_speed = object_tangible_skill_buff_s
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 300,
+	duration = 3600,
 	useCount = 5,
-	modifiers = { "rifle_speed", 10 },
+	modifiers = { "rifle_speed", 25 },
 	buffName = "rifle_speed",
 	buffCRC = 0x1F7E043E
 }

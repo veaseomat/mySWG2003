@@ -36,12 +36,12 @@ CorellianCorvette = ScreenPlay:new {
 	},
 }
 
-registerScreenPlay("CorellianCorvette", true)
+--registerScreenPlay("CorellianCorvette", true)
 
 function CorellianCorvette:start()
---	if (isZoneEnabled("dungeon1")) then
---		self:initialize()
---	end
+	if (isZoneEnabled("dungeon1")) then
+		self:initialize()
+	end
 end
 
 function CorellianCorvette:initialize()

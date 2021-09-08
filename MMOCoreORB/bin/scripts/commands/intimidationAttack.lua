@@ -44,7 +44,7 @@
 IntimidationAttackCommand = {
         name = "intimidationattack",
         combatSpam = "attack",
-        animation = "creature_attack_special_1", 
+        animation = "", 
 	animType = GENERATE_INTENSITY,
 	stateEffects = {
 	  StateEffect( 

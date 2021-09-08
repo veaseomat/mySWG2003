@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_unarmed_accuracy = object_tangible_skill_b
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 300,
+	duration = 3600,
 	useCount = 5,
-	modifiers = { "unarmed_accuracy", 10 },
+	modifiers = { "unarmed_accuracy", 25 },
 	buffName = "unarmed_accuracy",
 	buffCRC = 0x027D9E64
 }

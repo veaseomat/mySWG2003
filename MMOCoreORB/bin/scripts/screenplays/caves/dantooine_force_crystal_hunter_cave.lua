@@ -32,7 +32,7 @@ registerScreenPlay("ForceCrystalCaveScreenPlay", true)
 
 function ForceCrystalCaveScreenPlay:start()
 	if (isZoneEnabled("dantooine")) then
---		self:spawnMobiles()
+		self:spawnMobiles()
 		self:initializeLootContainers()
 	end
 end

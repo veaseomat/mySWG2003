@@ -54,12 +54,12 @@ skillModLimits = {
 	--{258, x, x}, -- SKILLBOX
 	
 	-- Bonus Mods Wearables / Structure
-	{4097, -25, 50},  --WEARABLE
-	{4098, -125, 250}, -- STRUCTUREMOD
+	{4097, -25, 25},  --WEARABLE
+	{4098, -125, 125}, -- STRUCTUREMOD
 	
 	-- Temp mods, not displayed (on timers or ability bonus)
-	{2711, -125, 250}, -- BUFFMOD
-	{2712, -125, 250}, -- ABILITYBONUSMOD
+	{2711, -125, 125}, -- BUFFMOD
+	{2712, -125, 125}, -- ABILITYBONUSMOD
 }
 
 disabledWearableSkillMods = {
@@ -69,4 +69,5 @@ disabledWearableSkillMods = {
 	"stored_pets",
 	"combat_medic_effectiveness",
 	"jedi_force_power_regen",
+	"saber_block",
 }

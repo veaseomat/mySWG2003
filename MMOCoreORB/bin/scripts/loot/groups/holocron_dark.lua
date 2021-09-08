@@ -6,6 +6,8 @@ holocron_dark = {
 	maximumLevel = 0,
 	lootItems = {
 --		{itemTemplate = "jedi_holocron_dark", weight = 10000000}
+		{groupTemplate = "power_crystals", weight = 5000000},
+		{groupTemplate = "color_crystals", weight = 5000000}
 	}
 }
 

@@ -1,6 +1,6 @@
 JediTrials = ScreenPlay:new {
 	padawanTrialsEnabled = false,
-	knightTrialsEnabled = true,
+	knightTrialsEnabled = false,
 
 	-- Object ID's of the various force shrines.
 	forceShrineIds = {
@@ -50,6 +50,20 @@ function JediTrials:isEligibleForKnightTrials(pPlayer)
 	end
 
 	return CreatureObject(pPlayer):villageKnightPrereqsMet("")
+end
+
+function JediTrials:isEligibleForJedi(pPlayer)
+	if (pPlayer == nil) then
+		return false
+	end
+
+	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
+		return false
+	end
+	
+	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer)
+
+	return learnedBranches >= 6
 end
 
 function JediTrials:isOnKnightTrials(pPlayer)

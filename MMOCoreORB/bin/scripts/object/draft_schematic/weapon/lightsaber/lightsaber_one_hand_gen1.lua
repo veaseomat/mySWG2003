@@ -52,7 +52,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_one_hand_gen1 = object_draft
    size = 1, 
 
    xpType = "jedi_general", 
-   xp = 0, 
+   xp = 200, 
 
    assemblySkill = "jedi_saber_assembly", 
    experimentingSkill = "jedi_saber_experimentation", 
@@ -63,12 +63,12 @@ object_draft_schematic_weapon_lightsaber_lightsaber_one_hand_gen1 = object_draft
    customizationStringNames = {},
    customizationDefaults = {},
 
-   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
-   ingredientTitleNames = {"emitter_shroud", "primary_crystal", "activator", "handgrip", "focusing_crystals", "power_field_insulator", "energizers"},
-   ingredientSlotType = {0, 1, 0, 0, 1, 0, 0},
-   resourceTypes = {"mineral", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "metal", "chemical", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "gas", "metal"},
-   resourceQuantities = {15, 1, 14, 17, 1, 20, 14},
-   contribution = {100, 100, 100, 100, 100, 100, 100},
+   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
+   ingredientTitleNames = {"emitter_shroud", "activator", "handgrip", "focusing_crystals", "power_field_insulator", "energizers"},
+   ingredientSlotType = {0, 0, 0, 2, 0, 0},
+   resourceTypes = {"mineral", "metal", "chemical", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "gas", "metal"},
+   resourceQuantities = {15, 14, 17, 2, 20, 14},
+   contribution = {100, 100, 100, 100, 100, 100},
 
 
    targetTemplate = "object/weapon/melee/sword/crafted_saber/sword_lightsaber_one_handed_gen1.iff",
@@ -77,16 +77,6 @@ object_draft_schematic_weapon_lightsaber_lightsaber_one_hand_gen1 = object_draft
               "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s1_gen1.iff",
               "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s2_gen1.iff",
               "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s3_gen1.iff",
-              "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s4_gen1.iff",
-              "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s5_gen1.iff",
-              "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s6_gen1.iff",
-              "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s7_gen1.iff",
-              "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s8_gen1.iff",
-              "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s9_gen1.iff",
-              "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s10_gen1.iff",
-              "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s11_gen1.iff",
-              "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s12_gen1.iff",
-              "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_one_handed_s13_gen1.iff",
              }
 
 }

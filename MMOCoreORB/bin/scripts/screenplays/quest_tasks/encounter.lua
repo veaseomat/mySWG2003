@@ -93,7 +93,7 @@ function Encounter:isPlayerInPositionForEncounter(pPlayer)
 	if pPlayer == nil or SceneObject(pPlayer):getZoneName() == "" then
 		return false
 	end
-
+--this change is for npc bh
 	return self:isPlayerOnline(pPlayer) and not self:isPlayerInABuilding(pPlayer)
 end
 

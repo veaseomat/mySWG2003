@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_ranged_accuracy = object_tangible_skill_bu
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 300,
+	duration = 3600,
 	useCount = 5,
-	modifiers = { "ranged_accuracy", 10 },
+	modifiers = { "ranged_accuracy", 25 },
 	buffName = "ranged_accuracy",
 	buffCRC = 0x33329A7B
 }

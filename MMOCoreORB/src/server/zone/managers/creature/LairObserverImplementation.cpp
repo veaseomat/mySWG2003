@@ -140,19 +140,19 @@ void LairObserverImplementation::doAggro(TangibleObject* lair, TangibleObject* a
 }
 
 void LairObserverImplementation::checkForHeal(TangibleObject* lair, TangibleObject* attacker, bool forceNewUpdate) {
-	if (lair->isDestroyed() || getMobType() == LairTemplate::NPC)
+//	if (lair->isDestroyed() || getMobType() == LairTemplate::NPC)
 		return;
-
-	if (!(getLivingCreatureCount() > 0 && lair->getConditionDamage() > 0))
-		return;
-
-	if (healLairEvent == nullptr) {
-		healLairEvent = new HealLairObserverEvent(lair, attacker, _this.getReferenceUnsafeStaticCast());
-		healLairEvent->schedule(1000);
-	} else if (!healLairEvent->isScheduled()) {
-		healLairEvent->schedule(1000);
-	} else if (attacker != nullptr)
-		healLairEvent->setAttacker(attacker);
+//
+//	if (!(getLivingCreatureCount() > 0 && lair->getConditionDamage() > 0))
+//		return;
+//
+//	if (healLairEvent == nullptr) {
+//		healLairEvent = new HealLairObserverEvent(lair, attacker, _this.getReferenceUnsafeStaticCast());
+//		healLairEvent->schedule(1000);
+//	} else if (!healLairEvent->isScheduled()) {
+//		healLairEvent->schedule(1000);
+//	} else if (attacker != nullptr)
+//		healLairEvent->setAttacker(attacker);
 }
 
 void LairObserverImplementation::healLair(TangibleObject* lair, TangibleObject* attacker){
@@ -244,7 +244,7 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 	VectorMap<String, int> objectsToSpawn; // String mobileTemplate, int number to spawn
 
 	if (spawnNumber == 4) {
-		if (System::random(100) > 10)
+		if (System::random(100) > 9)
 			return false;
 
 		const VectorMap<String, int>* mobs = lairTemplate->getBossMobiles();
@@ -255,25 +255,18 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 
 	} else {
 		const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
+		int amountToSpawn = 0;
 
-		int amountToSpawn = System::random(lairTemplate->getSpawnLimit() * 2);
+		if (getMobType() == LairTemplate::CREATURE) {
+			amountToSpawn = System::random(3) + ((lairTemplate->getSpawnLimit() / 3) - 2) - spawnNumber;
+		} else {
+			amountToSpawn = System::random(lairTemplate->getSpawnLimit() / 2) + (lairTemplate->getSpawnLimit() / 2) - spawnNumber;
+		}
 
-		int levelincrease = System::random(difficulty * 2);
+		if (amountToSpawn < 1)
+			amountToSpawn = 1;
 
-		int newamountToSpawn = amountToSpawn + levelincrease;
-
-		if (newamountToSpawn < 5)
-			newamountToSpawn = 5;
-
-		if (newamountToSpawn > 15)
-			newamountToSpawn = 15;
-
-		int newspawnLimit = lairTemplate->getnewSpawnLimit();
-
-		if (newspawnLimit > 0)
-			newamountToSpawn = newspawnLimit;
-
-		for (int i = 0; i < newamountToSpawn; i++) {
+		for (int i = 0; i < amountToSpawn; i++) {
 			int num = System::random(mobiles->size() - 1);
 			const String& mob = mobiles->get(num);
 

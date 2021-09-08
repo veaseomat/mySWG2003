@@ -1,49 +1,50 @@
 juvenile_canyon_krayt_dragon = Creature:new {
-	objectName = "@mob/creature_names:canyon_krayt_dragon",
+	objectName = "@mob/creature_names:juvenile_canyon_krayt",
 	socialGroup = "krayt",
 	faction = "",
-	level = 275,
-	chanceHit = 27.25,
-	damageMin = 1520,
-	damageMax = 2750,
-	baseXp = 26356,
-	baseHAM = 321000,
-	baseHAMmax = 392000,
-	armor = 3,
-	resists = {160,160,160,160,120,160,160,160,-1},
+	level = 122,
+	chanceHit = 4.0,
+	damageMin = 745,
+	damageMax = 1200,
+	baseXp = 11577,
+	baseHAM = 54000,
+	baseHAMmax = 64000,
+	armor = 2,
+	resists = {170,170,15,15,110,15,15,15,-1},
 	meatType = "meat_carnivore",
-	meatAmount = 1000,
+	meatAmount = 750,
 	hideType = "hide_bristley",
-	hideAmount = 750,
+	hideAmount = 500,
 	boneType = "bone_mammal",
-	boneAmount = 675,
+	boneAmount = 410,
 	milk = 0,
 	tamingChance = 0,
 	ferocity = 20,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
-	creatureBitmask = PACK + KILLER + STALKER,
+	creatureBitmask = PACK + KILLER,
 	optionsBitmask = AIENABLED,
 	diet = CARNIVORE,
 
-	templates = {"object/mobile/canyon_krayt_dragon.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
-	scale = 0.9;
+	templates = {"object/mobile/juvenile_canyon_krayt.iff"},
+	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
+	scale = 0.55;
+
 	lootGroups = {
 		{
 	        groups = {
-				{group = "krayt_dragon_common", chance = 1000000},
-				{group = "krayt_tissue_uncommon", chance = 3000000},
-				{group = "krayt_pearls", chance = 3000000},
-				{group = "armor_all", chance = 1500000},
-				{group = "weapons_all", chance = 1500000},
+				{group = "krayt_tissue_common", chance = 2500000},
+				{group = "krayt_dragon_common", chance = 3500000},
+				{group = "armor_all", chance = 2000000},
+				{group = "weapons_all", chance = 2000000},
 			},
+			lootChance = 3440000
 		}
 	},
 	weapons = {},
 	conversationTemplate = "",
 	attacks = {
-		{"creatureareaattack","stateAccuracyBonus=50"},
-		{"stunattack","stateAccuracyBonus=50"}
+		{"posturedownattack",""},
+		{"creatureareaattack",""}
 	}
 }
 

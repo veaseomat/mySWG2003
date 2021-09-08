@@ -264,20 +264,44 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 		messageString:setTO(skillStringId)
 		CreatureObject(pPlayer):sendSystemMessage(messageString:_getObject())
 		clonedConversation:setDialogTextStringId(stringTable .. "msg3_2")
-
+	  
 		local pGhost = CreatureObject(pPlayer):getPlayerObject()
+		--540 skills enabled in myswg, chance to unlock every time you train a skill, its possible to not unlock
+		if (pGhost ~= nil and getRandomNumber(1, 500) >= 500 and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and JediTrials:isEligibleForJedi(pPlayer)) then
+	
+			PlayerObject(pGhost):setJediState(2)
+					
+			awardSkill(pPlayer, "force_title_jedi_rank_02")
+		
+			CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+			CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")
+
+			FsIntro:startStepDelay(pPlayer, 3)
+			
+			local suiManager = LuaSuiManager()		
+			suiManager:sendMessageBox(pPlayer, pPlayer, "@quest/force_sensitive/intro:force_sensitive", "You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! To start leveling Jedi skills you need to loot a lightsaber color crystal and craft a lightsaber. Brawler trainers teach all Jedi skills. Using your Jedi abilities near NPCs or players will gain you visibility for player and NPC bounty hunters. There is no XP or skill loss on mySWG. May the force be with you...", "@ok", "HologrindJediManager", "notifyOkPressed")
+			
+		end
 
 		if (pGhost ~= nil and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") and JediTrials:isEligibleForKnightTrials(pPlayer)) then
---			KnightTrials:resetCompletedTrialsToStart(pPlayer)
+
+			awardSkill(pPlayer, "force_title_jedi_rank_03")	
 			
-			KnightTrials:startKnightTrials(pPlayer)
+			CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+			CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")		
 			
-			local sui = SuiMessageBox.new("KnightTrials", "startNextKnightTrial")
-			sui.setTitle("Jedi Knight Unlock")
-			sui.setPrompt("Congratulations! You now have enough Jedi skill points to become a Jedi Knight! Here there is no trial you just pick a side. It does not matter what faction you are, and you do not need to join a faction at all. Force Ranking System experience is only earned through random spawning encounters with Jedi NPCs, These Jedi NPC encoutners will happen as long as you are outside. Here FRS gives you innate increases to Armor, Damage, and Force Power Max. Light side gets slightly more armor, Dark side gets slightly more damage. Are you ready to become a Jedi knight?")
-			sui.setOkButtonText("@jedi_trials:button_yes")
-			sui.setCancelButtonText("@jedi_trials:button_no")
-			sui.sendTo(pPlayer)
+			local suiManager = LuaSuiManager()
+			suiManager:sendMessageBox(pPlayer, pPlayer, "Jedi Knight", "Your hard work has paid off and you are now worthy of the title Jedi Knight. Jedi Knight is only a title, there are no skills or FRS. Congratulations!", "@ok", "HologrindJediManager", "notifyOkPressed")
+			
+--			KnightTrials:startKnightTrials(pPlayer)
+--			
+--			local sui = SuiMessageBox.new("KnightTrials", "startNextKnightTrial")
+--			sui.setTitle("Jedi Knight Unlock")
+--			sui.setPrompt("Congratulations! You now have enough Jedi skill points to become a Jedi Knight! Here there is no trial you just pick a side. It does not matter what faction you are, and you do not need to join a faction at all. Force Ranking System experience is earned the same way combat exp is earned and also through random spawning encounters with Jedi NPCs, These Jedi NPC encoutners will happen as long as you are outside. Here FRS gives you innate increases to Armor, Damage, and Force Power Max. Light side gets slightly more armor, Dark side gets slightly more damage. Are you ready to become a Jedi knight?")
+--			sui.setOkButtonText("@jedi_trials:button_yes")
+--			sui.setCancelButtonText("@jedi_trials:button_no")
+--			sui.sendTo(pPlayer)
+			
 		end
 	else
 		local messageString = LuaStringIdChatParameter(stringTable .. "prose_train_failed")

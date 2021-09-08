@@ -4,8 +4,8 @@ death_watch_s_battle_droid = Creature:new {
 	faction = "",
 	level = 200,
 	chanceHit = 18,
-	damageMin = 795,
-	damageMax = 1300,
+	damageMin = 1200,
+	damageMax = 2300,
 	baseXp = 19000,
 	baseHAM = 230000,
 	baseHAMmax = 230000,
@@ -36,12 +36,6 @@ death_watch_s_battle_droid = Creature:new {
 				{group = "death_watch_bunker_commoners", chance = 10000000}
 			},
 			lootChance = 500000
-		},
-		{
-			groups = {
-				{group = "clothing_attachments", chance = 1000000},
-				{group = "armor_attachments", chance = 1000000},
-			},
 		}
 	},
 	conversationTemplate = "",

@@ -56,4 +56,3 @@ includeFile("tangible/component/weapon/lightsaber/lightsaber_module_forcecost.lu
 includeFile("tangible/component/weapon/lightsaber/lightsaber_module_krayt_dragon_pearl.lua")
 includeFile("tangible/component/weapon/lightsaber/lightsaber_module_woundchance.lua")
 includeFile("tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack.lua")
-includeFile("tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack2.lua")

@@ -29,7 +29,7 @@ risArmorQuest = ScreenPlay:new {
 
 }
 
-registerScreenPlay("risArmorQuest", true)
+--registerScreenPlay("risArmorQuest", true)
 
 --------------------------------------
 --   Initialize screenplay           -

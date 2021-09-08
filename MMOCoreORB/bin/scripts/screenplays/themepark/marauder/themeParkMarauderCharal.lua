@@ -100,7 +100,7 @@ ThemeParkMarauderCharal = ThemeParkLogic:new {
 	planetName = "endor",
 }
 
-registerScreenPlay("ThemeParkMarauderCharal", true)
+--registerScreenPlay("ThemeParkMarauderCharal", true)
 
 theme_park_marauder_charal_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkMarauderCharal
