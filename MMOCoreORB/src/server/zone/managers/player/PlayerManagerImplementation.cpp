@@ -1795,10 +1795,9 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				String xpType = entry->elementAt(j).getKey();
 				float xpAmount = baseXp;
 
+				xpAmount *= (float) damage / totalDamage;
 
 				//******* XP IS NOW CHANGED IN aiagent.idl and creature.idl located in zone/obj/creature/ai
-
-//				xpAmount *= (float) damage / totalDamage;
 
 				//Cap xp based on level
 //				xpAmount = Math::min(xpAmount, calculatePlayerLevel(attacker, xpType) * 300.f);
@@ -5671,7 +5670,7 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Doctor buffs to Health and Action for 500. Dancer and Musician Mnd buffs for 30%. They last 12 hours.");
+		player->sendSystemMessage("You receive Doctor buffs to Health and Action for 500, Dancer and Musician Mind buffs for 30%. They last 12 hours.");
 }
 
 void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
