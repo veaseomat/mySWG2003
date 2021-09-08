@@ -181,41 +181,41 @@ void MissionObjectiveImplementation::awardReward() {
 	ManagedReference<GroupObject*> group = owner->getGroup();
 
 	int playerCount = 1;
-
-	if (group != nullptr) {
-		Locker lockerGroup(group, _this.getReferenceUnsafeStaticCast());
-
-		playerCount = group->getNumberOfPlayerMembers();
-
-#ifdef LOCKFREE_BCLIENT_BUFFERS
-	Reference<BasePacket*> pack = pmm;
-#endif
-
-		for (int i = 0; i < group->getGroupSize(); i++) {
-			Reference<CreatureObject*> groupMember = group->getGroupMember(i);
-
-			if (groupMember != nullptr && groupMember->isPlayerCreature()) {
-				//Play mission complete sound.
-#ifdef LOCKFREE_BCLIENT_BUFFERS
-				groupMember->sendMessage(pack);
-#else
-				groupMember->sendMessage(pmm->clone());
-#endif
-
-				if (groupMember->getWorldPosition().distanceTo(missionEndPoint) < 128) {
-					players.add(groupMember);
-				}
-			}
-		}
-
-#ifndef LOCKFREE_BCLIENT_BUFFERS
-		delete pmm;
-#endif
-	} else {
+//removing group mission payouts
+//	if (group != nullptr) {
+//		Locker lockerGroup(group, _this.getReferenceUnsafeStaticCast());
+//
+//		playerCount = group->getNumberOfPlayerMembers();
+//
+//#ifdef LOCKFREE_BCLIENT_BUFFERS
+//	Reference<BasePacket*> pack = pmm;
+//#endif
+//
+//		for (int i = 0; i < group->getGroupSize(); i++) {
+//			Reference<CreatureObject*> groupMember = group->getGroupMember(i);
+//
+//			if (groupMember != nullptr && groupMember->isPlayerCreature()) {
+//				//Play mission complete sound.
+//#ifdef LOCKFREE_BCLIENT_BUFFERS
+//				groupMember->sendMessage(pack);
+//#else
+//				groupMember->sendMessage(pmm->clone());
+//#endif
+//
+//				if (groupMember->getWorldPosition().distanceTo(missionEndPoint) < 128) {
+//					players.add(groupMember);
+//				}
+//			}
+//		}
+//
+//#ifndef LOCKFREE_BCLIENT_BUFFERS
+//		delete pmm;
+//#endif
+//	} else {
 		//Play mission complete sound.
 		owner->sendMessage(pmm);
 		players.add(owner);
-	}
+//	}
 
 	if (players.size() == 0) {
 		players.add(owner);
@@ -229,9 +229,9 @@ void MissionObjectiveImplementation::awardReward() {
 		expanded = true;
 	}
 
-	if (playerCount > players.size()) {
-		owner->sendSystemMessage("@mission/mission_generic:group_too_far"); // Mission Alert! Some group members are too far away from the group to receive their reward and and are not eligible for reward.
-	}
+//	if (playerCount > players.size()) {
+//		owner->sendSystemMessage("@mission/mission_generic:group_too_far"); // Mission Alert! Some group members are too far away from the group to receive their reward and and are not eligible for reward.
+//	}
 
 	int dividedReward = mission->getRewardCredits() / Math::max(divisor, 1);
 
@@ -246,13 +246,13 @@ void MissionObjectiveImplementation::awardReward() {
 		player->addBankCredits(dividedReward, true);
 	}
 
-	if (group != nullptr) {
-		if (expanded) {
-			owner->sendSystemMessage("@mission/mission_generic:group_expanded"); // Group Mission Success! Reward credits have been transmitted to the bank account of all group members in the immediate area. They have been recalculated to reflect the newly added members.
-		} else {
-			owner->sendSystemMessage("@mission/mission_generic:group_success"); // Group Mission Success! Reward credits have been transmitted to the bank account of all group members in the immediate area.
-		}
-	}
+//	if (group != nullptr) {
+//		if (expanded) {
+//			owner->sendSystemMessage("@mission/mission_generic:group_expanded"); // Group Mission Success! Reward credits have been transmitted to the bank account of all group members in the immediate area. They have been recalculated to reflect the newly added members.
+//		} else {
+//			owner->sendSystemMessage("@mission/mission_generic:group_success"); // Group Mission Success! Reward credits have been transmitted to the bank account of all group members in the immediate area.
+//		}
+//	}
 
 	int creditsDistributed = dividedReward * players.size();
 

@@ -51,7 +51,7 @@ object_tangible_medicine_crafted_medpack_grenade_area_c = object_tangible_medici
 	range = 10,
 	effectiveness = 400,
 	medicineClass = STIM_C,
-	attributes = {0, 3},
+	attributes = {0, 3, 6},
 
 	numberExperimentalProperties = {1, 1, 2, 2, 2, 2, 2, 1},
 	experimentalProperties = {"XX", "XX", "OQ", "PE", "OQ", "UT", "OQ", "PE", "CD", "OQ", "CD", "OQ", "XX"},

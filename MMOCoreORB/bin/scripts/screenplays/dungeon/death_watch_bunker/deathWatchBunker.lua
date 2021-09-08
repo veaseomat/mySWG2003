@@ -141,7 +141,7 @@ DeathWatchBunkerScreenPlay = ScreenPlay:new {
 	secondaryArmorColors = { 42, 90, 236, 244, 252, 253, 254, 255 }
 }
 
-registerScreenPlay("DeathWatchBunkerScreenPlay", true)
+--registerScreenPlay("DeathWatchBunkerScreenPlay", true)
 
 function DeathWatchBunkerScreenPlay:start()
 	if (isZoneEnabled("endor")) then

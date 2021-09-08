@@ -408,25 +408,25 @@ float GroupObjectImplementation::getGroupHarvestModifier(CreatureObject* player)
 
 void GroupObjectImplementation::calcGroupLevel() {
 	int highestPlayer = 0;
-	groupLevel = 0;
+	groupLevel = 300;
 
-	for (int i = 0; i < getGroupSize(); i++) {
-		Reference<CreatureObject*> member = getGroupMember(i);
-
-		if (member->isPet()) {
-			groupLevel += member->getLevel() * 1;
-
-		} else if (member->isPlayerCreature()) {
-			int memberLevel = member->getLevel() * 2;
-
-			if (memberLevel > highestPlayer) {
-				groupLevel += (memberLevel - highestPlayer + (highestPlayer / 5));
-				highestPlayer = memberLevel;
-			} else {
-				groupLevel += memberLevel / 5;
-			}
-		}
-	}
+//	for (int i = 0; i < getGroupSize(); i++) {
+//		Reference<CreatureObject*> member = getGroupMember(i);
+//
+//		if (member->isPet()) {
+//			groupLevel += member->getLevel() * 1;
+//
+//		} else if (member->isPlayerCreature()) {
+//			int memberLevel = member->getLevel() * 2;
+//
+//			if (memberLevel > highestPlayer) {
+//				groupLevel += (memberLevel - highestPlayer + (highestPlayer / 5));
+//				highestPlayer = memberLevel;
+//			} else {
+//				groupLevel += memberLevel / 5;
+//			}
+//		}
+//	}
 
 	GroupObjectDeltaMessage6* msg = new GroupObjectDeltaMessage6(_this.getReferenceUnsafeStaticCast());
 

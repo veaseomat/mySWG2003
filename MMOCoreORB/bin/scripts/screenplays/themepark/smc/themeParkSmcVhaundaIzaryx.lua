@@ -134,7 +134,7 @@ ThemeParkSmcVhaundaIzaryx = ThemeParkLogic:new {
 	planetName = "dathomir"
 }
 
-registerScreenPlay("ThemeParkSmcVhaundaIzaryx", true)
+--registerScreenPlay("ThemeParkSmcVhaundaIzaryx", true)
 
 theme_park_smc_vhaunda_izaryx_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkSmcVhaundaIzaryx

@@ -4,8 +4,8 @@ local PlayerManager = require("managers.player_manager")
 
 jediManagerName = "HologrindJediManager"
 
-NUMBEROFPROFESSIONSTOMASTER = 15 --this is now how many profs are selected
-MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 14
+NUMBEROFPROFESSIONSTOMASTER = 2 --this is now how many profs are selected
+MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 2
 
 HologrindJediManager = JediManager:new {
 	screenplayName = jediManagerName,
@@ -85,7 +85,7 @@ function HologrindJediManager:getNumberOfMasteredProfessions(pCreatureObject)
 	end
 
 	local professions = PlayerObject(pGhost):getHologrindProfessions()
-	local masteredNumberOfProfessions = 11 --this number is now how many of the selected professions you dont need to do
+	local masteredNumberOfProfessions = 0 --this number is now how many of the selected professions you dont need to do
 	for i = 1, #professions, 1 do
 		if PlayerObject(pGhost):hasBadge(professions[i]) then
 			masteredNumberOfProfessions = masteredNumberOfProfessions + 1
@@ -116,7 +116,7 @@ end
 -- @param pCreatureObject pointer to the creature object of the player who unlocked jedi.
 function HologrindJediManager:sendSuiWindow(pCreatureObject)
 	local suiManager = LuaSuiManager()
-	suiManager:sendMessageBox(pCreatureObject, pCreatureObject, "@quest/force_sensitive/intro:force_sensitive", "You begin to feel attuned with the power of the Force. Your Jedi powers have been unlocked. You should visit a shrine to recover your padawan robes. Using Jedi abilities near NPCs or players will gain you visibility for bounty hunters. You will need to tune a color crystal and craft a lightsaber to begin grinding jedi xp. Use /findmytrainer to create a waypoint to your jedi skill trainer. May the force be with you.", "@ok", "HologrindJediManager", "notifyOkPressed")
+	suiManager:sendMessageBox(pCreatureObject, pCreatureObject, "@quest/force_sensitive/intro:force_sensitive", "You begin to feel attuned with the power of the Force. Congratulations! This character is now a Jedi. First, you need to find a lightsaber color crystal and craft a lightsaber. You also have to find your Jedi trainer, it could be any stating profession trainer on any planet, converse with them to find yours. Using your Jedi abilities near NPCs or players will gain you visibility for player and NPC bounty hunters. May the force be with you...", "@ok", "HologrindJediManager", "notifyOkPressed")
 end
 
 -- Award skill and jedi status to the player.
@@ -135,6 +135,16 @@ function HologrindJediManager:awardJediStatusAndSkill(pCreatureObject)
 	PlayerObject(pGhost):setJediState(2)
 	
 	awardSkill(pCreatureObject, "force_title_jedi_rank_02")
+	
+	FsIntro:startStepDelay(pCreatureObject, 3)
+	
+	local pInventory = SceneObject(pCreatureObject):getSlottedObject("inventory")
+
+	if (pInventory == nil) then
+		return
+	end
+
+	giveItem(pInventory, "object/tangible/wearables/robe/robe_jedi_padawan.iff", -1)
 	
 end
 
@@ -182,6 +192,10 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 		FsIntro:startStepDelay(pCreatureObject, 3)
 	end
 	
+	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_03") then	
+		FsIntro2:startStepDelay(pCreatureObject, 3)
+	end
+	
 end
 
 -- Get the profession name from the badge number.
@@ -207,17 +221,18 @@ function HologrindJediManager:sendHolocronMessage(pCreatureObject)
 		end
 	if self:getNumberOfMasteredProfessions(pCreatureObject) >= MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON then
 		-- The Holocron is quiet. The ancients' knowledge of the Force will no longer assist you on your journey. You must continue seeking on your own.
-		if self:isJedi(pCreatureObject) then
-			if	PlayerObject(pGhost):getForcePower() < PlayerObject(pGhost):getForcePowerMax() then
-				PlayerObject(pGhost):setForcePower(PlayerObject(pGhost):getForcePowerMax());
-				CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
-				CreatureObject(pCreatureObject):sendSystemMessage("The holocron hums softly as you feel your Force power replenish.")
-				return false
-			else
-				CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_force_max")
-				return true
-			end
-		end
+--this is holocrons replenish force
+--		if self:isJedi(pCreatureObject) then
+--			if	PlayerObject(pGhost):getForcePower() < PlayerObject(pGhost):getForcePowerMax() then
+--				PlayerObject(pGhost):setForcePower(PlayerObject(pGhost):getForcePowerMax());
+--				CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+--				CreatureObject(pCreatureObject):sendSystemMessage("The holocron hums softly as you feel your Force power replenish.")
+--				return false
+--			else
+--				CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_force_max")
+--				return true
+--			end
+--		end
 		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_quiet")
 		return true
 	else

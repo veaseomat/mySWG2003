@@ -51,7 +51,7 @@ SaberPolearmSpinAttack2Command = {
 	mindCostMultiplier = 0,
 	forceCostMultiplier = 1.75,
 	areaAction = true,
-	areaRange = 16,
+	areaRange = 10,
 	visMod = 25,
 
 	stateEffects = {
@@ -73,7 +73,7 @@ SaberPolearmSpinAttack2Command = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = POLEARMJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }

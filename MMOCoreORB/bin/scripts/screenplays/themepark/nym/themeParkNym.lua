@@ -383,7 +383,7 @@ function NymContainerComponent:removeObject(pContainer, pObj, slot)
 	return -1
 end
 
-registerScreenPlay("ThemeParkNym", true)
+--registerScreenPlay("ThemeParkNym", true)
 
 theme_park_nym_conv_handler = NymConvoHandler:new {
 	themePark = ThemeParkNym

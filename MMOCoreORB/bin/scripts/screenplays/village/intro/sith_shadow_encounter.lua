@@ -43,7 +43,13 @@ function SithShadowEncounter:onLoot(pLootedCreature, pLooter, nothing)
 		return 0
 	end
 
---	Logger:log("Looting the sith shadow.", LT_INFO)
+	Logger:log("Looting the sith shadow.", LT_INFO)
+	
+	CreatureObject(pLooter):awardExperience("jedi_general", 50000, true)		
+		
+	if CreatureObject(pLooter):hasSkill("force_title_jedi_rank_03") then	
+		CreatureObject(pLooter):awardExperience("force_rank_xp", 5000, true)	
+	end	
 --	if QuestManager.hasActiveQuest(pLooter, QuestManager.quests.TWO_MILITARY) then
 --		if self:isTheFirstSithShadowOfThePlayer(pLootedCreature, pLooter) then
 --
@@ -63,12 +69,15 @@ function SithShadowEncounter:onPlayerKilled(pPlayer, pKiller, nothing)
 	if (pPlayer == nil or pKiller == nil) then
 		return 0
 	end
+	
+	local pGhost = CreatureObject(pPlayer):getPlayerObject()
 
 	Logger:log("Player was killed.", LT_INFO)
 	if SpawnMobiles.isFromSpawn(pPlayer, SithShadowEncounter.taskName, pKiller) then
-		spatialChat(pKiller, "Pathetic...")
+--		spatialChat(pKiller, "Pathetic...")
 		--i use this to track if player won or not
---		QuestManager.completeQuest(pPlayer, QuestManager.quests.TWO_MILITARY)	
+--		QuestManager.completeQuest(pPlayer, QuestManager.quests.TWO_MILITARY)
+		PlayerObject(pGhost):setVisibility(1)
 		return 0
 	end
 
@@ -97,8 +106,9 @@ function SithShadowEncounter:onEncounterSpawned(pPlayer, spawnedObjects)
 	SceneObject(pInventory):setContainerOwnerID(playerID)
 
 
-	createObserver(LOOTCREATURE, self.taskName, "onLoot", spawnedObjects[1])
+--	createObserver(LOOTCREATURE, self.taskName, "onLoot", spawnedObjects[1])
 	createObserver(OBJECTDESTRUCTION, self.taskName, "onPlayerKilled", pPlayer)
+	createObserver(OBJECTDESTRUCTION, self.taskName, "onLoot", spawnedObjects[1])
 	
 --	QuestManager.activateQuest(pPlayer, QuestManager.quests.TWO_MILITARY)
 
@@ -122,8 +132,7 @@ function SithShadowEncounter:onEncounterInRange(pPlayer, spawnedObjects)
 	foreach(spawnedObjects, function(pMobile)
 		if (pMobile ~= nil) then
 			AiAgent(pMobile):setDefender(pPlayer)
---			AiAgent(pMobile):enqueAttack(pPlayer)
---not working
+			CreatureObject(pMobile):engageCombat(pPlayer)
 		end
 	end)
 end

@@ -285,7 +285,7 @@ class MissionObject extends IntangibleObject {
 
 	@read
 	public int getRewardCredits() {
-		return rewardCredits;
+		return rewardCredits;//changing this works but doesnt show on terminal
 	}
 
 	@read

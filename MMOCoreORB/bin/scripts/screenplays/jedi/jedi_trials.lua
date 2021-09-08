@@ -1,6 +1,6 @@
 JediTrials = ScreenPlay:new {
 	padawanTrialsEnabled = false,
-	knightTrialsEnabled = true,
+	knightTrialsEnabled = false,
 
 	-- Object ID's of the various force shrines.
 	forceShrineIds = {
@@ -41,15 +41,29 @@ function JediTrials:isOnPadawanTrials(pPlayer)
 end
 
 function JediTrials:isEligibleForKnightTrials(pPlayer)
-	if (pPlayer == nil or not self.knightTrialsEnabled) then
+	if (pPlayer == nil) then
 		return false
 	end
 
-	if (CreatureObject(pPlayer):hasSkill("force_rank_light_novice") or CreatureObject(pPlayer):hasSkill("force_rank_dark_novice")) or tonumber(readScreenPlayData(pPlayer, "KnightTrials", "completedTrials")) == 1 then
+	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03")) then
 		return false
 	end
 
 	return CreatureObject(pPlayer):villageKnightPrereqsMet("")
+end
+
+function JediTrials:isEligibleForJedi(pPlayer)
+	if (pPlayer == nil) then
+		return false
+	end
+
+	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
+		return false
+	end
+	
+	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer)
+
+	return learnedBranches >= 6
 end
 
 function JediTrials:isOnKnightTrials(pPlayer)
@@ -191,7 +205,7 @@ function JediTrials:unlockJediKnight(pPlayer)
 	PlayerObject(pGhost):setJediState(jediState)
 	PlayerObject(pGhost):setFrsCouncil(councilType)
 	PlayerObject(pGhost):setFrsRank(0)
-	CreatureObject(pPlayer):setFactionStatus(2) -- Overt
+	CreatureObject(pPlayer):setFactionStatus(1) -- cOvert now
 	CreatureObject(pPlayer):setFaction(setFactionVal)
 
 	local sui = SuiMessageBox.new("JediTrials", "emptyCallback") -- No callback

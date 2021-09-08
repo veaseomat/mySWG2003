@@ -538,7 +538,7 @@ global = {
 			minDifficulty = 13,
 			maxDifficulty = 17,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -646,7 +646,7 @@ global = {
 			minDifficulty = 14,
 			maxDifficulty = 18,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -709,7 +709,7 @@ global = {
 			minDifficulty = 14,
 			maxDifficulty = 23,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -826,7 +826,7 @@ global = {
 			minDifficulty = 15,
 			maxDifficulty = 19,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -862,7 +862,7 @@ global = {
 			minDifficulty = 16,
 			maxDifficulty = 20,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -952,7 +952,7 @@ global = {
 			minDifficulty = 18,
 			maxDifficulty = 32,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -961,7 +961,7 @@ global = {
 			minDifficulty = 18,
 			maxDifficulty = 32,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -988,7 +988,7 @@ global = {
 			minDifficulty = 19,
 			maxDifficulty = 28,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -1006,7 +1006,7 @@ global = {
 			minDifficulty = 20,
 			maxDifficulty = 29,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -1024,7 +1024,7 @@ global = {
 			minDifficulty = 21,
 			maxDifficulty = 30,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -1060,7 +1060,7 @@ global = {
 			minDifficulty = 22,
 			maxDifficulty = 31,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -1096,7 +1096,7 @@ global = {
 			minDifficulty = 25,
 			maxDifficulty = 34,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 		{
@@ -1105,7 +1105,7 @@ global = {
 			minDifficulty = 31,
 			maxDifficulty = 40,
 			numberToSpawn = 0,
-			weighting = 1,
+			weighting = 50,
 			size = 25
 		},
 	}

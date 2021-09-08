@@ -1,50 +1,50 @@
 krayt_dragon_grand = Creature:new {
-	objectName = "@mob/creature_names:canyon_krayt_dragon",
+	objectName = "@mob/creature_names:krayt_dragon_grand",
 	socialGroup = "krayt",
 	faction = "",
-	level = 275,
-	chanceHit = 27.25,
-	damageMin = 1520,
-	damageMax = 2750,
-	baseXp = 26356,
-	baseHAM = 321000,
-	baseHAMmax = 392000,
+	level = 336,
+	chanceHit = 30,
+	damageMin = 2270,
+	damageMax = 4250,
+	baseXp = 28549,
+	baseHAM = 410000,
+	baseHAMmax = 501000,
 	armor = 3,
-	resists = {160,160,160,160,120,160,160,160,-1},
+	resists = {195,195,195,195,165,195,195,195,-1},
 	meatType = "meat_carnivore",
 	meatAmount = 1000,
 	hideType = "hide_bristley",
-	hideAmount = 750,
+	hideAmount = 950,
 	boneType = "bone_mammal",
-	boneAmount = 675,
+	boneAmount = 905,
 	milk = 0,
 	tamingChance = 0,
-	ferocity = 20,
+	ferocity = 30,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
 	creatureBitmask = PACK + KILLER + STALKER,
 	optionsBitmask = AIENABLED,
 	diet = CARNIVORE,
 
-	templates = {"object/mobile/canyon_krayt_dragon.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
-	scale = 0.9;
+	templates = {"object/mobile/krayt_dragon_hue.iff"},
+	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
+	scale = 1.1;
 	lootGroups = {
 		{
 	        groups = {
+				{group = "krayt_tissue_rare", chance = 2000000},
 				{group = "krayt_dragon_common", chance = 2500000},
-				{group = "krayt_tissue_uncommon", chance = 2000000},
 				{group = "krayt_pearls", chance = 1500000},
 				{group = "armor_all", chance = 2000000},
 				{group = "weapons_all", chance = 2000000},
 			},
-			lootChance = 6500000
+			lootChance = 7720000
 		}
 	},
 	weapons = {},
 	conversationTemplate = "",
 	attacks = {
-		{"creatureareaattack","stateAccuracyBonus=50"},
-		{"stunattack","stateAccuracyBonus=50"}
+		{"creatureareacombo","stateAccuracyBonus=100"},
+		{"creatureareaknockdown","stateAccuracyBonus=100"},
 	}
 }
 

@@ -611,8 +611,8 @@ void CreatureObjectImplementation::addShockWounds(int shockToAdd, bool notifyCli
 
 	if (newShockWounds < 0) {
 		newShockWounds = 0;
-	} else if (newShockWounds > 1000) {
-		newShockWounds = 1000;
+	} else if (newShockWounds > 0) {
+		newShockWounds = 0;
 	}
 
 	if (sendSpam && shockToAdd > 0 && asCreatureObject()->isPlayerCreature())
@@ -1715,13 +1715,13 @@ void CreatureObjectImplementation::setSpeedMultiplierMod(float newMultiplierMod,
 	if (speedMultiplierMod == newMultiplierMod * buffMod)
 		return;
 
-	speedMultiplierMod = newMultiplierMod * buffMod;
+	speedMultiplierMod = newMultiplierMod * buffMod;//multiplier for burst runs/force runs, stacks and doesnt remove
 
 	int bufferSize = speedMultiplierModChanges.size();
 
-	if (bufferSize > 5) {
-		speedMultiplierModChanges.remove(0);
-	}
+//	if (bufferSize > 5) {
+//		speedMultiplierModChanges.remove(0);
+//	}
 
 	speedMultiplierModChanges.add(SpeedModChange(speedMultiplierMod));
 
@@ -1740,7 +1740,7 @@ void CreatureObjectImplementation::setRunSpeed(float newSpeed,
 	if (runSpeed == newSpeed)
 		return;
 
-	runSpeed = newSpeed;
+	runSpeed = newSpeed * 1.5;//PLAYER RUN SPEED
 
 	if (notifyClient) {
 		CreatureObjectDeltaMessage4* dcreo4 = new CreatureObjectDeltaMessage4(
@@ -1830,7 +1830,7 @@ void CreatureObjectImplementation::updateTerrainNegotiation()
 }
 
 float CreatureObjectImplementation::getTerrainNegotiation() const {
-	float slopeMod = ((float)getSkillMod("slope_move") / 50.0f) + terrainNegotiation;
+	float slopeMod = (((float)getSkillMod("slope_move") * .5) / 50.0f) + (terrainNegotiation);
 
 	if (slopeMod > 1)
 		slopeMod = 1;
@@ -2102,7 +2102,7 @@ void CreatureObjectImplementation::notifyLoadFromDatabase() {
 
 		buff->loadBuffDurationEvent(asCreatureObject());
 	}
-
+//fix skill mods in here??? check this later
 	ZoneServer* zoneServer = server->getZoneServer();
 	SkillManager* skillManager = SkillManager::instance();
 
@@ -2121,11 +2121,11 @@ void CreatureObjectImplementation::notifyLoadFromDatabase() {
 		totalSkillPointsWasted -= skill->getSkillPointsRequired();
 	}
 
-	if (ghost->getSkillPoints() != totalSkillPointsWasted) {
-		error() << "skill points on load mismatch calculated: " << totalSkillPointsWasted
-		       << " found: " << ghost->getSkillPoints();
-		ghost->setSkillPoints(totalSkillPointsWasted);
-	}
+//	if (ghost->getSkillPoints() != totalSkillPointsWasted) {
+//		error() << "skill points on load mismatch calculated: " << totalSkillPointsWasted
+//		       << " found: " << ghost->getSkillPoints();
+//		ghost->setSkillPoints(totalSkillPointsWasted);
+//	}
 
 	ghost->getSchematics()->addRewardedSchematics(ghost);
 
@@ -2340,6 +2340,19 @@ void CreatureObjectImplementation::setDizziedState(int durationSeconds) {
 		state->setStartFlyText("combat_effects", "go_dizzy", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_dizzy", 0xFF, 0, 0);
 
+//		state->setSkillModifier("private_block", -50);
+//		state->setSkillModifier("private_dodge", -50);
+//		state->setSkillModifier("private_counterattack", -50);
+//		state->setSkillModifier("private_saber_block", -50);
+
+//		state->setSkillModifier("private_melee_defense", -15);
+//		state->setSkillModifier("private_ranged_defense", -15);
+//		state->setSkillModifier("private_dodge_attack", -15);
+//		state->setSkillModifier("private_attack_accuracy", -15);
+
+		state->setSpeedMultiplierMod(0.25f );
+		state->setAccelerationMultiplierMod(0.25f);
+
 		addBuff(state);
 	}
 }
@@ -2430,11 +2443,23 @@ void CreatureObjectImplementation::setStunnedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_stunned", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_stunned", 0xFF, 0, 0);
-		state->setSkillModifier("private_melee_defense", -50);
-		state->setSkillModifier("private_ranged_defense", -50);
+
+//		state->setSkillModifier("private_melee_defense", -50);
+//		state->setSkillModifier("private_ranged_defense", -50);
+
+
+//this one should work but moved to combat manager
+//		int stuneffect1 = getSkillMod("melee_defense") * .75;
+//		int stuneffect2 = getSkillMod("ranged_defense") * .75;
+//
+//		state->setSkillModifier("private_melee_defense", stuneffect1);
+//		state->setSkillModifier("private_ranged_defense", stuneffect2);
+
+
+//		state->setSkillModifier("private_dodge_attack", -75);
 
 		addBuff(state);
-//stupid stun dmg stuff remove here
+
 //		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_stun_multiplier"), durationSeconds, BuffType::STATE);
 //
 //		Locker blocker(multBuff);
@@ -2459,9 +2484,9 @@ void CreatureObjectImplementation::setBlindedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_blind", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_blind", 0xFF, 0, 0);
+//state effects moved to combat manager
+//		state->setSkillModifier("private_attack_accuracy", -75);
 
-		state->setSkillModifier("private_attack_accuracy", -90);
-		state->setSkillModifier("private_dodge_attack", -90);
 
 		addBuff(state);
 	}
@@ -2485,9 +2510,9 @@ void CreatureObjectImplementation::setIntimidatedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_intimidated", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_intimidated", 0xFF, 0, 0);
-
-		state->setSkillModifier("private_melee_defense", -50);
-		state->setSkillModifier("private_ranged_defense", -50);
+//state effects moved to combat manager
+//		state->setSkillModifier("private_melee_defense", -75);
+//		state->setSkillModifier("private_ranged_defense", -75);
 
 		addBuff(state);
 
@@ -2561,7 +2586,7 @@ void CreatureObjectImplementation::queueDizzyFallEvent() {
 		return;
 
 	dizzyFallDownEvent = new DizzyFallDownEvent(asCreatureObject());
-	dizzyFallDownEvent->schedule(200);
+	dizzyFallDownEvent->schedule(1000);
 }
 
 void CreatureObjectImplementation::activateStateRecovery() {
@@ -3196,14 +3221,14 @@ bool CreatureObjectImplementation::isHealableBy(CreatureObject* object) {
 	uint32 targetFactionStatus = targetCreo->getFactionStatus();
 	uint32 currentFactionStatus = object->getFactionStatus();
 
-	if (getFaction() != object->getFaction() && !(targetFactionStatus == FactionStatus::ONLEAVE))
-		return false;
+//	if (getFaction() != object->getFaction() && !(targetFactionStatus == FactionStatus::ONLEAVE))
+//		return false;
 
-	if ((targetFactionStatus == FactionStatus::OVERT) && !(currentFactionStatus == FactionStatus::OVERT))
-		return false;
+//	if ((targetFactionStatus == FactionStatus::OVERT) && !(currentFactionStatus == FactionStatus::OVERT))
+//		return false;
 
-	if (!(targetFactionStatus == FactionStatus::ONLEAVE) && (currentFactionStatus == FactionStatus::ONLEAVE))
-		return false;
+//	if (!(targetFactionStatus == FactionStatus::ONLEAVE) && (currentFactionStatus == FactionStatus::ONLEAVE))
+//		return false;
 
 	if(targetCreo->isPlayerCreature()) {
 		PlayerObject* targetGhost = targetCreo->getPlayerObject();
@@ -3526,13 +3551,13 @@ bool CreatureObjectImplementation::hasEffectImmunity(uint8 effectType) const {
 	case CommandEffect::INTIMIDATE:
 	case CommandEffect::STUN:
 	case CommandEffect::NEXTATTACKDELAY:
-		if (isDroidSpecies() || const_cast<CreatureObjectImplementation*>(this)->isVehicleObject() || isWalkerSpecies())
+		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
 			return true;
 		break;
 	case CommandEffect::KNOCKDOWN:
 	case CommandEffect::POSTUREUP:
 	case CommandEffect::POSTUREDOWN:
-		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject() || isWalkerSpecies())
+		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
 			return true;
 		break;
 	default:
@@ -3543,11 +3568,13 @@ bool CreatureObjectImplementation::hasEffectImmunity(uint8 effectType) const {
 }
 
 bool CreatureObjectImplementation::hasDotImmunity(uint32 dotType) const {
+	return true;//backup disable dots
+
 	switch (dotType) {
 	case CreatureState::POISONED:
 	case CreatureState::BLEEDING:
 	case CreatureState::DISEASED:
-		if (isDroidSpecies() || const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
+		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
 			return true;
 		break;
 	case CreatureState::ONFIRE:

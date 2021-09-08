@@ -23,7 +23,7 @@ CriesOfAlderaan = ScreenPlay:new {
 	},
 }
 
-registerScreenPlay("CriesOfAlderaan", true)
+--registerScreenPlay("CriesOfAlderaan", true)
 
 function CriesOfAlderaan:start()
 	self:spawnStaticNpcs()

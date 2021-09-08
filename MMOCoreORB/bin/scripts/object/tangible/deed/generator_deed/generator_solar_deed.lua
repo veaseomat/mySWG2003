@@ -53,8 +53,8 @@ object_tangible_deed_generator_deed_generator_solar_deed = object_tangible_deed_
 	experimentalWeights = {1, 1, 1, 1, 2, 1},
 	experimentalGroupTitles = {"null", "null", "expEffeciency", "expStorage", "null"},
 	experimentalSubGroupTitles = {"null", "null", "extractrate", "hoppersize", "hitpoints"},
-	experimentalMin = {0, 0, 6, 50000, 1000},
-	experimentalMax = {0, 0, 15, 75000, 1000},
+	experimentalMin = {0, 0, 60, 500000, 1000},
+	experimentalMax = {0, 0, 150, 750000, 1000},
 	experimentalPrecision = {0, 0, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 4},
 }

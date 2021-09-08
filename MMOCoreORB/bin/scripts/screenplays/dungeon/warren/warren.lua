@@ -28,7 +28,7 @@ Warren = ScreenPlay:new {
 	},
 }
 
-registerScreenPlay("Warren", true)
+--registerScreenPlay("Warren", true)
 
 function Warren:start()
 	if (isZoneEnabled("dantooine")) then

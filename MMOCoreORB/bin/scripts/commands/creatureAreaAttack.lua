@@ -43,11 +43,11 @@
 
 CreatureAreaAttackCommand = {
         name = "creatureareaattack",
-	damageMultiplier = 1.5,
+	damageMultiplier = 1,
 	speedMultiplier = 1,
 
 	combatSpam = "attack",
-	animation = "creature_attack_special_2",
+	animation = "",
 	animType = GENERATE_INTENSITY,
 
 	healthCostMultiplier = 0,

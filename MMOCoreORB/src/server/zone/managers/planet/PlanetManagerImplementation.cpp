@@ -50,21 +50,21 @@ void PlanetManagerImplementation::initialize() {
 	loadTravelFares();
 
 	if (zone->getZoneName() == "dathomir") {
-		Reference<ActiveArea*> area = zone->getZoneServer()->createObject(STRING_HASHCODE("object/fs_village_area.iff"), 0).castTo<ActiveArea*>();
-
-		Locker locker(area);
-		area->setRadius(768.f);
-		area->initializePosition(5306, 0, -4145);
-		zone->transferObject(area, -1, true);
-
-		ManagedReference<SceneObject*> scenery = zone->getZoneServer()->createObject(STRING_HASHCODE("object/static/structure/general/fs_village_nobuild_768m.iff"), 0);
-
-		Locker slocker(scenery, area);
-		scenery->initializePosition(5306, zone->getHeight(5306, -4145), -4145);
-		area->attachScenery(scenery);
-
-		slocker.release();
-		locker.release();
+//		Reference<ActiveArea*> area = zone->getZoneServer()->createObject(STRING_HASHCODE("object/fs_village_area.iff"), 0).castTo<ActiveArea*>();
+//
+//		Locker locker(area);
+//		area->setRadius(768.f);
+//		area->initializePosition(5306, 0, -4145);
+//		zone->transferObject(area, -1, true);
+//
+//		ManagedReference<SceneObject*> scenery = zone->getZoneServer()->createObject(STRING_HASHCODE("object/static/structure/general/fs_village_nobuild_768m.iff"), 0);
+//
+//		Locker slocker(scenery, area);
+//		scenery->initializePosition(5306, zone->getHeight(5306, -4145), -4145);
+//		area->attachScenery(scenery);
+//
+//		slocker.release();
+//		locker.release();
 
 		Reference<ActiveArea*> sarlaccArea = zone->getZoneServer()->createObject(STRING_HASHCODE("object/sarlacc_area.iff"), 0).castTo<ActiveArea*>();
 
@@ -470,7 +470,7 @@ void PlanetManagerImplementation::loadTravelFares() {
 
 int PlanetManagerImplementation::getTravelFare(const String& departurePlanet, const String& arrivalPlanet) {
 	int fare = travelFares.get(departurePlanet).get(arrivalPlanet);
-	return fare;
+	return fare; //messing with fares here and above change cost but doesnt show adjusted cost, might need tre edit
 }
 
 Reference<SceneObject*> PlanetManagerImplementation::loadSnapshotObject(WorldSnapshotNode* node, WorldSnapshotIff* wsiff, int& totalObjects) {
@@ -618,16 +618,16 @@ bool PlanetManagerImplementation::isTravelToLocationPermitted(const String& depa
 		return false;
 
 	//Check to see if incoming Travel is allowed
-	if (!arrivalPlanetManager->isIncomingTravelAllowed(arrivalPoint))
-		return false;
+//	if (!arrivalPlanetManager->isIncomingTravelAllowed(arrivalPoint))
+//		return false;
 
 	//If both zones are the same, then intraplanetary travel is allowed.
 	if (arrivalZone == zone)
 		return true;
 
 	//Check to see if interplanetary travel is allowed between both points.
-	if (!isInterplanetaryTravelAllowed(departurePoint) || !arrivalPlanetManager->isInterplanetaryTravelAllowed(arrivalPoint))
-		return false;
+//	if (!isInterplanetaryTravelAllowed(departurePoint) || !arrivalPlanetManager->isInterplanetaryTravelAllowed(arrivalPoint))
+//		return false;
 
 	return true;
 }
@@ -1060,21 +1060,21 @@ bool PlanetManagerImplementation::isBuildingPermittedAt(float x, float y, SceneO
 	for (int i = 0; i < activeAreas.size(); ++i) {
 		ActiveArea* area = activeAreas.get(i);
 
-		if (area->isNoBuildArea()) {
-			return false;
-		}
+//		if (area->isNoBuildArea()) {
+//			return false;
+//		}
 	}
 
-	if (isInObjectsNoBuildZone(x, y, margin, checkFootprint)) {
-		return false;
-	}
+//	if (isInObjectsNoBuildZone(x, y, margin, checkFootprint)) {
+//		return false;
+//	}
 
 	if (isInWater(x, y)) {
 		return false;
 	}
 
-	if (isInRangeWithPoi(x, y, 150))
-		return false;
+//	if (isInRangeWithPoi(x, y, 150))
+//		return false;
 
 	return true;
 }

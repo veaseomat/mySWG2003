@@ -1029,7 +1029,7 @@ ThemeParkRebel = ThemeParkLogic:new {
 	faction = FACTIONREBEL
 }
 
-registerScreenPlay("ThemeParkRebel", true)
+--registerScreenPlay("ThemeParkRebel", true)
 
 theme_park_rebel_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkRebel

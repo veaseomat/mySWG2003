@@ -25,8 +25,6 @@ marksmanRifle = "object/weapon/ranged/rifle/rifle_cdef.iff"
 
 marksmanCarbine = "object/weapon/ranged/carbine/carbine_cdef.iff"
 
-brawlerOneHander = "object/weapon/melee/knife/knife_stone.iff"
-
 brawlerTwoHander = "object/weapon/melee/axe/axe_heavy_duty.iff"
 
 brawlerPolearm = "object/weapon/melee/polearm/lance_staff_wood_s1.iff"
@@ -45,7 +43,7 @@ slitherhorn = "object/tangible/instrument/slitherhorn.iff"
 
 marojMelon = "object/tangible/food/foraged/foraged_fruit_s1.iff"
 
-x31Speeder = "object/tangible/deed/vehicle_deed/landspeeder_x31_deed.iff"
+Speeder = "object/tangible/deed/vehicle_deed/speederbike_deed.iff"
 
 professionSpecificItems = {
 	combat_brawler = { },
@@ -57,4 +55,4 @@ professionSpecificItems = {
 	social_entertainer = { }
 }
 
-commonStartingItems = { marojMelon, survivalKnife, x31Speeder, brawlerOneHander, brawlerTwoHander, brawlerPolearm, marksmanPistol, marksmanCarbine, marksmanRifle, genericTool, mineralTool, chemicalTool, foodTool, slitherhorn }
+commonStartingItems = { marojMelon, survivalKnife, Speeder, brawlerTwoHander, brawlerPolearm, marksmanPistol, marksmanCarbine, marksmanRifle, genericTool, mineralTool, chemicalTool, foodTool, slitherhorn }

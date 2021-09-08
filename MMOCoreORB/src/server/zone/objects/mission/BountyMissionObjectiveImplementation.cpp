@@ -589,18 +589,18 @@ void BountyMissionObjectiveImplementation::handlePlayerKilled(ManagedObject* arg
 					int maxXpLoss = -500000;
 
 					VisibilityManager::instance()->clearVisibility(target);
-					int xpLoss = mission->getRewardCredits() * -2;
-
-					if (xpLoss > minXpLoss)
-						xpLoss = minXpLoss;
-					else if (xpLoss < maxXpLoss)
-						xpLoss = maxXpLoss;
-
-					owner->getZoneServer()->getPlayerManager()->awardExperience(target, "jedi_general", xpLoss, true);
-					StringIdChatParameter message("base_player","prose_revoke_xp");
-					message.setDI(xpLoss * -1);
-					message.setTO("exp_n", "jedi_general");
-					target->sendSystemMessage(message);
+//					int xpLoss = mission->getRewardCredits() * -2;
+//
+//					if (xpLoss > minXpLoss)
+//						xpLoss = minXpLoss;
+//					else if (xpLoss < maxXpLoss)
+//						xpLoss = maxXpLoss;
+//
+//					owner->getZoneServer()->getPlayerManager()->awardExperience(target, "jedi_general", xpLoss, true);
+//					StringIdChatParameter message("base_player","prose_revoke_xp");
+//					message.setDI(xpLoss * -1);
+//					message.setTO("exp_n", "jedi_general");
+//					target->sendSystemMessage(message);
 				}
 			}
 

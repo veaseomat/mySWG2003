@@ -281,7 +281,7 @@ void EntertainingSessionImplementation::doPerformanceAction() {
 		return;
 	}
 
-	int actionDrain = performance->getActionPointsPerLoop() - (int)(entertainer->getHAM(CreatureAttribute::QUICKNESS)/35.f) / 10;
+	int actionDrain = 1;
 
 	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
 		if (isDancing()) {
@@ -294,7 +294,7 @@ void EntertainingSessionImplementation::doPerformanceAction() {
 			entertainer->sendSystemMessage("@performance:music_too_tired");
 		}
 	} else {
-		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain, false, true);
+//		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, 1, false, true);
 	}
 }
 
@@ -388,6 +388,8 @@ void EntertainingSessionImplementation::stopPlayingMusic() {
 
 		entertainer->dropActiveSession(SessionFacadeType::ENTERTAINING);
 	}
+	if (entertainer->getSkillMod("healing_music_mind") > 0)
+	playerManager->enhanceSelfMusic(entertainer);
 }
 
 void EntertainingSessionImplementation::startDancing(const String& dance, const String& animation) {
@@ -514,6 +516,20 @@ void EntertainingSessionImplementation::stopDancing() {
 
 		entertainer->dropActiveSession(SessionFacadeType::ENTERTAINING);
 	}
+
+//	entertainer->sendSystemMessage("testing testing testing");
+
+//	ManagedReference<PlayerManager*> playerManager = player->getZoneServer()->getPlayerManager();
+//	PlayerObject* ghost = player->getPlayerObject();
+//	ManagedReference<PlayerManager*> playerManager = entertainer->getZoneServer()->getPlayerManager();
+
+//	int performanceBuff = 1000;
+//	int performanceDuration = 1000;
+
+//	playerManager->doEnhanceCharacter(0x11C1772E, entertainer, performanceBuff, performanceDuration, BuffType::PERFORMANCE, 6);
+//	playerManager->enhanceCharacter(entertainer);
+	if (entertainer->getSkillMod("healing_dance_mind") > 0)
+	playerManager->enhanceSelfDance(entertainer);
 }
 
 bool EntertainingSessionImplementation::canHealBattleFatigue() {
@@ -594,12 +610,12 @@ void EntertainingSessionImplementation::doFlourish(int flourishNumber, bool gran
 	//float baseActionDrain = -40 + (getQuickness() / 37.5);
 	float flourishActionDrain = baseActionDrain / 2.0;
 
-	int actionDrain = (int)round((flourishActionDrain * 10 + 0.5) / 10.0) / 10; // Round to nearest dec for actual int cost
+	int actionDrain = (int)round((flourishActionDrain * 10 + 0.5) / 10.0) / 3; // Round to nearest dec for actual int cost
 
 	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
 		entertainer->sendSystemMessage("@performance:flourish_too_tired");
 	} else {
-		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain, false, true);
+//		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, 1, false, true);
 
 		if (dancing) {
 			StringBuffer msg;
@@ -632,7 +648,7 @@ void EntertainingSessionImplementation::addEntertainerBuffDuration(CreatureObjec
 
 	buffDuration += duration;
 	
-		buffDuration = (120.0f + (10.0f / 60.0f)) * 6; //12 hr
+		buffDuration = 720; //12 hr
 
 	setEntertainerBuffDuration(creature, performanceType, buffDuration);
 }
@@ -653,8 +669,8 @@ void EntertainingSessionImplementation::addEntertainerBuffStrength(CreatureObjec
 		maxBuffStrength = (float) entertainer->getSkillMod("healing_music_mind");
 	}
 
-	if(maxBuffStrength > 125.0f)
-		maxBuffStrength = 125.0f;	//cap at 125% power
+//	if(maxBuffStrength > 125.0f)
+//		maxBuffStrength = 125.0f;	//cap at 125% power
 
 	float factionPerkStrength = entertainer->getSkillMod("private_faction_buff_mind");
 
@@ -678,12 +694,12 @@ void EntertainingSessionImplementation::addEntertainerBuffStrength(CreatureObjec
 		newBuffStrength = maxBuffStrength;
 	}
 
-	if(newBuffStrength < 100.0f)
-		newBuffStrength = 100.0f;
+//	if(newBuffStrength < 100.0f)
+//		newBuffStrength = 100.0f;
+//new buff strenght x 2
+	int newnewBuffStrength = newBuffStrength * 2;
 
-	//newBuffStrength = newBuffStrength;
-
-	setEntertainerBuffStrength(creature, performanceType, newBuffStrength);
+	setEntertainerBuffStrength(creature, performanceType, newnewBuffStrength);
 }
 
 void EntertainingSessionImplementation::addWatcher(CreatureObject* creature) {
@@ -1100,10 +1116,17 @@ void EntertainingSessionImplementation::awardEntertainerExperience() {
 			xpAmount = ceil(xpAmount * totalBonus);
 
 			if (playerManager != nullptr)
-				playerManager->awardExperience(player, xptype, xpAmount, true);
+				playerManager->awardExperience(player, xptype, (xpAmount * 70), true);
 //heal xp for noone watching
-//			String healxptype("entertainer_healing");
-//			playerManager->awardExperience(player, healxptype, (xpAmount / 2), true);
+			String healxptype("entertainer_healing");
+			playerManager->awardExperience(player, healxptype, (xpAmount * 35), true);
+
+			//self buff here doing it here causes a super fast mind heal every update- moved to stopdance/music
+//			if (player->getSkillMod("healing_music_mind") > 0)
+//			playerManager->enhanceSelfMusic(player);
+//
+//			if (player->getSkillMod("healing_dance_mind") > 0)
+//			playerManager->enhanceSelfDance(player);
 
 			oldFlourishXp = flourishXp;
 			flourishXp = 0;

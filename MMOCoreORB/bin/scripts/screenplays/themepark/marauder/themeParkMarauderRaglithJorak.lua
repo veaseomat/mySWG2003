@@ -153,7 +153,7 @@ ThemeParkMarauderRaglithJorak = ThemeParkLogic:new {
 	planetName = "endor",
 }
 
-registerScreenPlay("ThemeParkMarauderRaglithJorak", true)
+--registerScreenPlay("ThemeParkMarauderRaglithJorak", true)
 
 theme_park_marauder_raglith_jorak_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkMarauderRaglithJorak

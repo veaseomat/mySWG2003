@@ -21,6 +21,8 @@ protected:
 	int junkMinValue;
 	int junkMaxValue;
 
+	int newmaximumLevel;
+
 	ValuesMap craftingValues;
 	bool suppressSerialNumber;
 
@@ -44,6 +46,7 @@ public:
 		junkDealerTypeNeeded = 0;
 		junkMinValue = 0;
 		junkMaxValue = 0;
+		newmaximumLevel = 0;
 		suppressSerialNumber = false;
 	}
 
@@ -55,6 +58,7 @@ public:
 		junkDealerTypeNeeded = templateData->getIntField("junkDealerTypeNeeded");
 		junkMinValue = templateData->getIntField("junkMinValue");
 		junkMaxValue = templateData->getIntField("junkMaxValue");
+		newmaximumLevel = templateData->getIntField("newmaximumLevel");
 
 		//TODO: At this point, we should go ahead and pull in the tangible objects stats
 
@@ -240,6 +244,10 @@ public:
 
 	int getJunkMaxValue() const {
 		return junkMaxValue;
+	}
+
+	int getnewmaximumLevel() const {
+		return newmaximumLevel;
 	}
 
 	const VectorMap<String, SortedVector<int> >* getStaticDotValues() const {

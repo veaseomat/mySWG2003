@@ -15,56 +15,59 @@ public:
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
 
-		if (!checkStateMask(creature))
-			return INVALIDSTATE;
+//		if (!checkStateMask(creature))
+//			return INVALIDSTATE;
+//
+//		if (!checkInvalidLocomotions(creature))
+//			return INVALIDLOCOMOTION;
+//
+//		if (!creature->isPlayerCreature())
+//			return GENERALERROR;
+//
+//		PlayerObject* ghost = creature->getPlayerObject();
+//
+//		if (ghost == nullptr)
+//			return GENERALERROR;
+//
+//		if (ghost->getJediState() < 2 || !creature->hasSkill("force_title_jedi_rank_02"))
+//			return GENERALERROR;
+//
+//		String planet = ghost->getTrainerZoneName();
+//
+//		if (planet == "") {
+//			setJediTrainer(ghost);
+//			planet = ghost->getTrainerZoneName();
+//		} else {
+//			ZoneServer* zoneServer = ServerCore::getZoneServer();
+//			Zone* trainerZone = zoneServer->getZone(planet);
+//
+//			if (trainerZone == nullptr) {
+//				setJediTrainer(ghost);
+//				planet = ghost->getTrainerZoneName();
+//			}
+//		}
+//
+//		uint32 planetCRC = planet.hashCode();
+//
+//		Vector3 coords = ghost->getTrainerCoordinates();
+//
+//		String name = "@jedi_spam:trainer_waypoint_name";
+//
+//		ManagedReference<WaypointObject*> obj = ( server->getZoneServer()->createObject(0xc456e788, 1)).castTo<WaypointObject*>();
+//
+//		Locker locker(obj);
+//
+//		obj->setPlanetCRC(planetCRC);
+//		obj->setPosition(coords.getX(), 0, coords.getY());
+//		obj->setCustomObjectName(name, false);
+////removing the findmytrainer command
+//		ghost->addWaypoint(obj, true, true);
+//
+//		creature->sendSystemMessage("A waypoint to your Jedi skill trainer has been added to your datapad.");
+//
+//		return SUCCESS;
 
-		if (!checkInvalidLocomotions(creature))
-			return INVALIDLOCOMOTION;
-
-		if (!creature->isPlayerCreature())
-			return GENERALERROR;
-
-		PlayerObject* ghost = creature->getPlayerObject();
-
-		if (ghost == nullptr)
-			return GENERALERROR;
-
-		if (ghost->getJediState() < 2 || !creature->hasSkill("force_title_jedi_rank_02"))
-			return GENERALERROR;
-
-		String planet = ghost->getTrainerZoneName();
-
-		if (planet == "") {
-			setJediTrainer(ghost);
-			planet = ghost->getTrainerZoneName();
-		} else {
-			ZoneServer* zoneServer = ServerCore::getZoneServer();
-			Zone* trainerZone = zoneServer->getZone(planet);
-
-			if (trainerZone == nullptr) {
-				setJediTrainer(ghost);
-				planet = ghost->getTrainerZoneName();
-			}
-		}
-
-		uint32 planetCRC = planet.hashCode();
-
-		Vector3 coords = ghost->getTrainerCoordinates();
-
-		String name = "@jedi_spam:trainer_waypoint_name";
-
-		ManagedReference<WaypointObject*> obj = ( server->getZoneServer()->createObject(0xc456e788, 1)).castTo<WaypointObject*>();
-
-		Locker locker(obj);
-
-		obj->setPlanetCRC(planetCRC);
-		obj->setPosition(coords.getX(), 0, coords.getY());
-		obj->setCustomObjectName(name, false);
-
-		ghost->addWaypoint(obj, true, true);
-
-		creature->sendSystemMessage("@jedi_spam:waypoint_created_to_trainer");
-
+		creature->sendSystemMessage("Brawler trainers teach Jedi skills.");
 		return SUCCESS;
 	}
 

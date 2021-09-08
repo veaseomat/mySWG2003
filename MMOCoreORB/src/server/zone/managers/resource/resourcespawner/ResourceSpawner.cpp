@@ -820,7 +820,7 @@ void ResourceSpawner::sendSurvey(CreatureObject* player, const String& resname) 
 	//Adjust cost based upon player's focus
 	int mindCost = 100 - (int)(player->getHAM(CreatureAttribute::FOCUS)/15.f);
 
-	player->inflictDamage(player, CreatureAttribute::MIND, mindCost, false, true);
+//	player->inflictDamage(player, CreatureAttribute::MIND, 1, false, true);
 
 	ManagedReference<SurveySession*> session = player->getActiveSession(SessionFacadeType::SURVEY).castTo<SurveySession*>();
 	if(session == nullptr) {
@@ -932,7 +932,7 @@ void ResourceSpawner::sendSample(CreatureObject* player, const String& resname,
 	//Adjust cost based upon player's quickness
 	int actionCost = 124 - (int)(player->getHAM(CreatureAttribute::QUICKNESS)/12.5f);
 
-	player->inflictDamage(player, CreatureAttribute::ACTION, actionCost, false, true);
+//	player->inflictDamage(player, CreatureAttribute::ACTION, 1, false, true);
 
 	PlayClientEffectLoc* effect = new PlayClientEffectLoc(sampleAnimation,
 			player->getZone()->getZoneName(), player->getPositionX(),
@@ -974,13 +974,13 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 	String zoneName = zne->getZoneName();
 
 	// If density is too low, we can't obtain a sample
-	if (density < .10f) {
-		StringIdChatParameter message("survey", "efficiency_too_low");
-		message.setTO(resname);
-		player->sendSystemMessage(message);
-		player->setPosture(CreaturePosture::UPRIGHT, true);
-		return;
-	}
+//	if (density < .10f) {
+//		StringIdChatParameter message("survey", "efficiency_too_low");
+//		message.setTO(resname);
+//		player->sendSystemMessage(message);
+//		player->setPosture(CreaturePosture::UPRIGHT, true);
+//		return;
+//	}
 
 	// Lower skill levels mean you can't sample lower concetrations
 	int surveySkill = player->getSkillMod("surveying");
@@ -1041,7 +1041,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 		xpcap = 50;
 	}
 
-	if (unitsExtracted < 2) {
+	if (unitsExtracted < 5) {
 
 		// Send message to player about trace amounts
 //		StringIdChatParameter message("survey", "trace_amount");
@@ -1049,7 +1049,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 //		message.setDI(unitsExtracted);
 //		player->sendSystemMessage(message);
 
-		unitsExtracted = 2;
+		unitsExtracted = 5;
 	}
 
 	// Send message to player about unit extraction
@@ -1075,15 +1075,15 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 	addResourceToPlayerInventory(trx, player, resourceSpawn, unitsExtracted);
 	player->notifyObservers(ObserverEventType::SAMPLE, resourceSpawn, density * 100);
 
-	if (resourceSpawn->isType("radioactive")) {
-		int wound = int((sampleRate / 30) - System::random(7));
-
-		if (wound > 0) {
-			player->addWounds(CreatureAttribute::HEALTH, wound, true);
-			player->addWounds(CreatureAttribute::ACTION, wound, true);
-			player->addWounds(CreatureAttribute::MIND, wound, true);
-		}
-	}
+//	if (resourceSpawn->isType("radioactive")) {
+//		int wound = int((sampleRate / 30) - System::random(7));
+//
+//		if (wound > 0) {
+//			player->addWounds(CreatureAttribute::HEALTH, wound, true);
+//			player->addWounds(CreatureAttribute::ACTION, wound, true);
+//			player->addWounds(CreatureAttribute::MIND, wound, true);
+//		}
+//	}
 }
 
 bool ResourceSpawner::addResourceToPlayerInventory(TransactionLog& trx, CreatureObject* player, ResourceSpawn* resourceSpawn, int unitsExtracted) const {

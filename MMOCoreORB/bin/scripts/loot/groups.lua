@@ -22,6 +22,7 @@ includeFile("groups/sith_shadow_intro_theater_datapad.lua")
 includeFile("groups/skill_buffs.lua")
 includeFile("groups/tailor_components.lua")
 includeFile("groups/treasure_map_group.lua")
+includeFile("groups/paintings.lua")
 
 -- armor sub-folder
 includeFile("groups/armor/armor_all.lua")
@@ -57,6 +58,7 @@ includeFile("groups/component_loot/chemistry_component_advanced.lua")
 includeFile("groups/component_loot/weapon_component_advanced.lua")
 includeFile("groups/component_loot/chemistry_component.lua")
 includeFile("groups/component_loot/weapon_component.lua")
+includeFile("groups/component_loot/rcp.lua")
 
 -- corellian_corvette sub-folder
 includeFile("groups/corellian_corvette/imperial_corvette_loot.lua")
@@ -363,6 +365,8 @@ includeFile("groups/weapon/mines.lua")
 includeFile("groups/weapon/pistols.lua")
 includeFile("groups/weapon/rifles.lua")
 includeFile("groups/weapon/weapons_all.lua")
+includeFile("groups/weapon/sabers.lua")
+includeFile("groups/weapon/testguns.lua")
 
 -- wearables sub-folder
 includeFile("groups/wearables/wearables_all.lua")

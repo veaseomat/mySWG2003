@@ -830,7 +830,7 @@ ThemeParkImperial = ThemeParkLogic:new {
 	planetName = "naboo"
 }
 
-registerScreenPlay("ThemeParkImperial", true)
+--registerScreenPlay("ThemeParkImperial", true)
 
 theme_park_imperial_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkImperial

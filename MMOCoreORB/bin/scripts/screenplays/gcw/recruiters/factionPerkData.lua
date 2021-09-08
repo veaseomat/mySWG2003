@@ -11,12 +11,12 @@ factionRewardType = {
 
 rebelRewardData = {
 	weaponsArmorList = {
-		"armor_marine_backpack", "armor_marine_helmet", "armor_marine_chest_plate", "armor_marine_leggings", "armor_marine_boots", "armor_marine_bicep_l",
-		"armor_marine_bicep_r", "carbine_laser", "pistol_scout_blaster", "lance_staff_metal", "rocket_launcher", "mine_drx", "mine_xg",
+		"armor_marine_helmet", "armor_marine_chest_plate", "armor_marine_leggings", "armor_marine_boots", "armor_marine_bicep_l",
+		"armor_marine_bicep_r", "carbine_laser", "pistol_scout_blaster", "lance_staff_metal", "rocket_launcher", "mine_drx", "mine_xg",--"armor_marine_backpack", 
 	},
 
 	weaponsArmor = {
-		armor_marine_backpack = { index=0, type=factionRewardType.armor, display="@wearables_name:armor_marine_backpack", item="object/tangible/wearables/armor/marine/armor_marine_backpack.iff",cost=1500},
+--		armor_marine_backpack = { index=0, type=factionRewardType.armor, display="@wearables_name:armor_marine_backpack", item="object/tangible/wearables/armor/marine/armor_marine_backpack.iff",cost=1500},
 		armor_marine_bicep_l = { index=1, type=factionRewardType.armor, display="@wearables_name:armor_marine_bicep_l", item="object/tangible/wearables/armor/marine/armor_marine_bicep_l.iff",cost=2000},
 		armor_marine_bicep_r = { index=2, type=factionRewardType.armor, display="@wearables_name:armor_marine_bicep_r", item="object/tangible/wearables/armor/marine/armor_marine_bicep_r.iff",cost=2000},
 		armor_marine_boots = { index=3, type=factionRewardType.armor, display="@wearables_name:armor_marine_boots", item="object/tangible/wearables/armor/marine/armor_marine_boots.iff",cost=3000},
@@ -34,7 +34,7 @@ rebelRewardData = {
 
 	installationsList = {
 		"hq_s01_pvp_rebel", "hq_s01_rebel", "hq_s02_pvp_rebel", "hq_s02_rebel", "hq_s03_pvp_rebel", "hq_s03_rebel", "hq_s04_pvp_rebel", "hq_s04_rebel", --"hq_s05_pvp_rebel",
-		"turret_block_lg", "turret_block_med", "turret_block_sm", "turret_dish_sm", "turret_dish_lg", "turret_tower_sm", "turret_tower_med", "turret_tower_lg",
+--		"turret_block_lg", "turret_block_med", "turret_block_sm", "turret_dish_sm", "turret_dish_lg", "turret_tower_sm", "turret_tower_med", "turret_tower_lg",
 		"minefield_1x1",
 	},
 
@@ -48,14 +48,14 @@ rebelRewardData = {
 		hq_s04_pvp_rebel = {type=factionRewardType.installation, display="@deed:hq_s04_pvp_rebel", item="object/tangible/deed/faction_perk/hq/hq_s04_pvp.iff", generatedObjectTemplate="object/building/faction_perk/hq/hq_s04_rebel_pvp.iff", cost=60000, bonus={"hq_s04_rebel","hq_s04_rebel"} },
 		hq_s04_rebel = {type=factionRewardType.installation, display="@deed:hq_s04_rebel", item="object/tangible/deed/faction_perk/hq/hq_s04.iff", generatedObjectTemplate="object/building/faction_perk/hq/hq_s04_rebel.iff", cost=30000},
 		hq_s05_pvp_rebel = {type=factionRewardType.installation, display="@deed:hq_s05_pvp_rebel", item="object/tangible/deed/faction_perk/hq/hq_s05_pvp.iff", generatedObjectTemplate="object/building/faction_perk/hq/hq_s05_rebel_pvp.iff", cost=60000},
-		turret_block_lg = { type=factionRewardType.installation, display="@deed:turret_block_lg", item="object/tangible/deed/faction_perk/turret/block_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_lg.iff", cost=6300 },
-		turret_block_med = { type=factionRewardType.installation, display="@deed:turret_block_med", item="object/tangible/deed/faction_perk/turret/block_med_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_med.iff", cost=4200 },
-		turret_block_sm = { type=factionRewardType.installation, display="@deed:turret_block_sm", item="object/tangible/deed/faction_perk/turret/block_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_sm.iff", cost=1400 },
-		turret_dish_sm = { type=factionRewardType.installation, display="@deed:turret_dish_sm", item="object/tangible/deed/faction_perk/turret/dish_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/dish_sm.iff", cost=1400 },
-		turret_dish_lg = { type=factionRewardType.installation, display="@deed:turret_dish_lg", item="object/tangible/deed/faction_perk/turret/dish_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/dish_lg.iff", cost=6300 },
-		turret_tower_sm = { type=factionRewardType.installation, display="@deed:turret_tower_sm", item="object/tangible/deed/faction_perk/turret/tower_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_sm.iff", cost=1400 },
-		turret_tower_med = { type=factionRewardType.installation, display="@deed:turret_tower_med", item="object/tangible/deed/faction_perk/turret/tower_med_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_med.iff", cost=4200 },
-		turret_tower_lg = { type=factionRewardType.installation, display="@deed:turret_tower_lg", item="object/tangible/deed/faction_perk/turret/tower_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_lg.iff", cost=6300 },
+--		turret_block_lg = { type=factionRewardType.installation, display="@deed:turret_block_lg", item="object/tangible/deed/faction_perk/turret/block_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_lg.iff", cost=6300 },
+--		turret_block_med = { type=factionRewardType.installation, display="@deed:turret_block_med", item="object/tangible/deed/faction_perk/turret/block_med_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_med.iff", cost=4200 },
+--		turret_block_sm = { type=factionRewardType.installation, display="@deed:turret_block_sm", item="object/tangible/deed/faction_perk/turret/block_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_sm.iff", cost=1400 },
+--		turret_dish_sm = { type=factionRewardType.installation, display="@deed:turret_dish_sm", item="object/tangible/deed/faction_perk/turret/dish_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/dish_sm.iff", cost=1400 },
+--		turret_dish_lg = { type=factionRewardType.installation, display="@deed:turret_dish_lg", item="object/tangible/deed/faction_perk/turret/dish_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/dish_lg.iff", cost=6300 },
+--		turret_tower_sm = { type=factionRewardType.installation, display="@deed:turret_tower_sm", item="object/tangible/deed/faction_perk/turret/tower_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_sm.iff", cost=1400 },
+--		turret_tower_med = { type=factionRewardType.installation, display="@deed:turret_tower_med", item="object/tangible/deed/faction_perk/turret/tower_med_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_med.iff", cost=4200 },
+--		turret_tower_lg = { type=factionRewardType.installation, display="@deed:turret_tower_lg", item="object/tangible/deed/faction_perk/turret/tower_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_lg.iff", cost=6300 },
 		covert_detector_32m = { type=factionRewardType.installation, display="@deed:covert_detector_32m", item="object/tangible/deed/faction_perk/covert_detector/detector_32m_deed.iff", generatedObjectTemplate="object/installation/faction_perk/covert_detector/detector_base.iff", cost=3000 },
 		minefield_1x1 = { type=factionRewardType.installation, display="@deed:minefield_1x1", item="object/tangible/deed/faction_perk/minefield/field_1x1_deed.iff", generatedObjectTemplate="object/installation/faction_perk/minefield/field_1x1.iff", cost=5000 },
 	},
@@ -142,7 +142,7 @@ imperialRewardData = {
 	installationsList = {
 		"hq_s01_pvp_imperial", "hq_s01_imperial", "hq_s02_pvp_imperial", "hq_s02_imperial", "hq_s03_pvp_imperial", "hq_s03_imperial", "hq_s04_pvp_imperial", "hq_s04_imperial",
 		--"hq_s05_pvp_imperial",
-		"turret_block_lg", "turret_block_med", "turret_block_sm", "turret_dish_sm", "turret_dish_lg", "turret_tower_sm", "turret_tower_med", "turret_tower_lg",
+--		"turret_block_lg", "turret_block_med", "turret_block_sm", "turret_dish_sm", "turret_dish_lg", "turret_tower_sm", "turret_tower_med", "turret_tower_lg",
 		--"covert_detector_32m",
 		"minefield_1x1",
 	},
@@ -157,14 +157,14 @@ imperialRewardData = {
 		hq_s04_pvp_imperial = {type=factionRewardType.installation, display="@deed:hq_s04_pvp_imperial", item="object/tangible/deed/faction_perk/hq/hq_s04_pvp.iff", generatedObjectTemplate="object/building/faction_perk/hq/hq_s04_imp_pvp.iff", cost=42000, bonus={"hq_s04_imperial","hq_s04_imperial"}},
 		hq_s04_imperial = {type=factionRewardType.installation, display="@deed:hq_s04_imperial", item="object/tangible/deed/faction_perk/hq/hq_s04.iff", generatedObjectTemplate="object/building/faction_perk/hq/hq_s04_imp.iff", cost=21000 },
 		hq_s05_pvp_imperial = {type=factionRewardType.installation, display="@deed:hq_s05_pvp_imperial", item="object/tangible/deed/faction_perk/hq/hq_s05_pvp.iff", generatedObjectTemplate="object/building/faction_perk/hq/hq_s05_imp_pvp.iff", cost=1},
-		turret_block_lg = { type=factionRewardType.installation, display="@deed:turret_block_lg", item="object/tangible/deed/faction_perk/turret/block_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_lg.iff", cost=6300 },
-		turret_block_med = { type=factionRewardType.installation, display="@deed:turret_block_med", item="object/tangible/deed/faction_perk/turret/block_med_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_med.iff", cost=4200 },
-		turret_block_sm = { type=factionRewardType.installation, display="@deed:turret_block_sm", item="object/tangible/deed/faction_perk/turret/block_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_sm.iff", cost=1400 },
-		turret_dish_sm = { type=factionRewardType.installation, display="@deed:turret_dish_sm", item="object/tangible/deed/faction_perk/turret/dish_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/dish_sm.iff", cost=1400 },
-		turret_dish_lg = { type=factionRewardType.installation, display="@deed:turret_dish_lg", item="object/tangible/deed/faction_perk/turret/dish_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/dish_lg.iff", cost=6300 },
-		turret_tower_sm = { type=factionRewardType.installation, display="@deed:turret_tower_sm", item="object/tangible/deed/faction_perk/turret/tower_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_sm.iff", cost=1400 },
-		turret_tower_med = { type=factionRewardType.installation, display="@deed:turret_tower_med", item="object/tangible/deed/faction_perk/turret/tower_med_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_med.iff", cost=4200 },
-		turret_tower_lg = { type=factionRewardType.installation, display="@deed:turret_tower_lg", item="object/tangible/deed/faction_perk/turret/tower_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_lg.iff", cost=6300 },
+--		turret_block_lg = { type=factionRewardType.installation, display="@deed:turret_block_lg", item="object/tangible/deed/faction_perk/turret/block_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_lg.iff", cost=6300 },
+--		turret_block_med = { type=factionRewardType.installation, display="@deed:turret_block_med", item="object/tangible/deed/faction_perk/turret/block_med_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_med.iff", cost=4200 },
+--		turret_block_sm = { type=factionRewardType.installation, display="@deed:turret_block_sm", item="object/tangible/deed/faction_perk/turret/block_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/block_sm.iff", cost=1400 },
+--		turret_dish_sm = { type=factionRewardType.installation, display="@deed:turret_dish_sm", item="object/tangible/deed/faction_perk/turret/dish_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/dish_sm.iff", cost=1400 },
+--		turret_dish_lg = { type=factionRewardType.installation, display="@deed:turret_dish_lg", item="object/tangible/deed/faction_perk/turret/dish_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/dish_lg.iff", cost=6300 },
+--		turret_tower_sm = { type=factionRewardType.installation, display="@deed:turret_tower_sm", item="object/tangible/deed/faction_perk/turret/tower_sm_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_sm.iff", cost=1400 },
+--		turret_tower_med = { type=factionRewardType.installation, display="@deed:turret_tower_med", item="object/tangible/deed/faction_perk/turret/tower_med_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_med.iff", cost=4200 },
+--		turret_tower_lg = { type=factionRewardType.installation, display="@deed:turret_tower_lg", item="object/tangible/deed/faction_perk/turret/tower_lg_deed.iff", generatedObjectTemplate="object/installation/faction_perk/turret/tower_lg.iff", cost=6300 },
 		covert_detector_32m = { type=factionRewardType.installation, display="@deed:covert_detector_32m", item="object/tangible/deed/faction_perk/covert_detector/detector_32m_deed.iff", generatedObjectTemplate="object/installation/faction_perk/covert_detector/detector_base.iff", cost=3000 },
 		minefield_1x1 = { type=factionRewardType.installation, display="@deed:minefield_1x1", item="object/tangible/deed/faction_perk/minefield/field_1x1_deed.iff", generatedObjectTemplate="object/installation/faction_perk/minefield/field_1x1.iff", cost=350 },
 	},
@@ -191,8 +191,8 @@ imperialRewardData = {
 	},
 
 	hirelingList = {
-		"assault_trooper", "bombardier", "command_security_guard", "compforce_trooper", "dark_trooper", "gunner", "imperial_private", "imperial_trooper", "sand_trooper", "scout_trooper",
-		"storm_commando", "stormtrooper", "stormtrooper_bombardier", "stormtrooper_medic", "stormtrooper_rifleman", "stormtrooper_sniper", "swamp_trooper", "at_st"
+		"assault_trooper", "bombardier", "command_security_guard", "compforce_trooper", "gunner", "imperial_private", "imperial_trooper", "sand_trooper", "scout_trooper",
+		"storm_commando", "stormtrooper", "stormtrooper_bombardier", "stormtrooper_medic", "stormtrooper_rifleman", "stormtrooper_sniper", "swamp_trooper", --"at_st", "dark_trooper"
 	},
 
 	hirelings = {
@@ -200,7 +200,7 @@ imperialRewardData = {
 		bombardier = { type=factionRewardType.hireling, display="@mob/creature_names:bombardier", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="bombardier", cost=105},
 		command_security_guard = { type=factionRewardType.hireling, display="@mob/creature_names:command_security_guard", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="command_security_guard", cost=105},
 		compforce_trooper = { type=factionRewardType.hireling, display="@mob/creature_names:compforce_trooper", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="compforce_trooper", cost=367},
-		dark_trooper = { type=factionRewardType.hireling, display="@mob/creature_names:dark_trooper", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="dark_trooper", cost=2100},
+--		dark_trooper = { type=factionRewardType.hireling, display="@mob/creature_names:dark_trooper", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="dark_trooper", cost=2100},
 		gunner = { type=factionRewardType.hireling, display="@mob/creature_names:gunner", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="gunner", cost=105},
 		imperial_private = { type=factionRewardType.hireling, display="@mob/creature_names:imperial_private", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="imperial_private", cost=105},
 		imperial_trooper = { type=factionRewardType.hireling, display="@mob/creature_names:imperial_trooper", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="imperial_trooper", cost=105},
@@ -213,6 +213,6 @@ imperialRewardData = {
 		stormtrooper_rifleman = { type=factionRewardType.hireling, display="@mob/creature_names:stormtrooper_rifleman", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="stormtrooper_rifleman", cost=420},
 		stormtrooper_sniper = { type=factionRewardType.hireling, display="@mob/creature_names:stormtrooper_sniper", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="stormtrooper_sniper", cost=420},
 		swamp_trooper = { type=factionRewardType.hireling, display="@mob/creature_names:swamp_trooper", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="swamp_trooper", cost=420},
-		at_st = { type=factionRewardType.hireling, display="@mob/creature_names:at_st", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="at_st", cost=9450},
+--		at_st = { type=factionRewardType.hireling, display="@mob/creature_names:at_st", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="at_st", cost=9450},
 	},
 }

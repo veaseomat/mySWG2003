@@ -3,7 +3,7 @@ buffTerminalMenuComponent = {  }
 function buffTerminalMenuComponent:fillObjectMenuResponse(pSceneObject, pMenuResponse, pPlayer)
 	local response = LuaObjectMenuResponse(pMenuResponse)
 	response:addRadialMenuItem(20, 3, "Get Buffs")
-	response:addRadialMenuItem(21, 3, "Clear Wounds")
+--	response:addRadialMenuItem(21, 3, "Clear Wounds")
 end
 
 function buffTerminalMenuComponent:logUsage(pPlayer, what)

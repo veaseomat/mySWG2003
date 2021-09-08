@@ -242,7 +242,7 @@ public:
 		} else
 			buffPower = enhancePack->calculatePower(enhancer, patient);
 
-		return buffPower;
+		return (buffPower / 2);
 	}
 
 	uint32 getBuffStrength(Buff* existingbuff, int attribute) const {
@@ -424,20 +424,21 @@ public:
 		//Applies battle fatigue
 		uint32 buffPower = getEnhancePackStrength(enhancePack, enhancer, patient);
 
-		if (buffPower < currentBuff) {
-			if (patient == enhancer)
-				enhancer->sendSystemMessage("Your current enhancements are of greater power and cannot be re-applied.");
-			else
-				enhancer->sendSystemMessage("Your target's current enhancements are of greater power and cannot be re-applied.");
-
-			return 0;
-		}
+//		if (buffPower < currentBuff) {
+//			if (patient == enhancer)
+//				enhancer->sendSystemMessage("Your current enhancements are of greater power and cannot be re-applied.");
+//			else
+//				enhancer->sendSystemMessage("Your target's current enhancements are of greater power and cannot be re-applied.");
+//
+//			return 0;
+//		}
 
 		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
 
 		int durationextra = (enhancePack->getDuration() * 4);
+		int selfDuration =	720 * 60; //12 hr ;
 
-		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, durationextra, enhancePack->getAbsorption());
+		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, selfDuration, enhancePack->getAbsorption());
 
 		if (creature->isPlayerCreature() && targetCreature->isPlayerCreature()) {
 			playerManager->sendBattleFatigueMessage(creature, targetCreature);

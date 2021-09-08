@@ -79,6 +79,7 @@ void SkillModManager::init() {
 }
 
 void SkillModManager::setDefaults() {
+//skill mod caps
 	skillModMin.put(WEARABLE, -25);
 	skillModMax.put(WEARABLE, 25);
 

@@ -344,7 +344,7 @@ ThemeParkNightsister = ThemeParkLogic:new {
 	planetName = "dathomir"
 }
 
-registerScreenPlay("ThemeParkNightsister", true)
+--registerScreenPlay("ThemeParkNightsister", true)
 
 theme_park_nightsister_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkNightsister

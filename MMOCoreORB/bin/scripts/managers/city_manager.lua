@@ -49,10 +49,10 @@ which carries forward this exception.
 	--------------------
 --]]
 --The amount of time in minutes before the city specialization may be changed again.
-CitySpecializationCooldown = 1440
+CitySpecializationCooldown = 1
 
 --The amount of time in minutes before another withdrawal from the city treasury may be made.
-TreasuryWithdrawalCooldown = 1440
+TreasuryWithdrawalCooldown = 1
 
 --The number of city update cycles that must pass before mayoral voting process is complete.
 CityVotingCycles = 3
@@ -73,19 +73,19 @@ OldCityGracePeriod = 4320
 EnableCityWarn = false
 
 --The number of citizens required to achieve each city rank. (Outpost, Village, Township, City, Metropolis)
-CitizensPerRank = {1, 2, 3, 4, 5}
+CitizensPerRank = {1, 1, 1, 1, 1}
 --CitizensPerRank = {10, 20, 35, 55, 85}
 
 --The radius in meters of the city at each city rank. (Outpost, Village, Township, City, Metropolis)
-RadiusPerRank = {150, 200, 300, 400, 450}
+RadiusPerRank = {100, 150, 200, 250, 300}
 
 -- Maximum for each rank.  ex. rank 1 = DecorationsPerRank * 1, rank 5 = DecorationsPerRank * 5
 DecorationsPerRank = 10
-TrainersPerRank = 3
+TrainersPerRank = 5
 MissionTerminalsPerRank = 3
 
 -- Amount to discount city maintenance  float.  1 = 100%, .75 =75%, .5=50% etc
-maintenanceDiscount = .25
+maintenanceDiscount = 1
 
 --[[
 	CITIES ALLOWED PER PLANET
@@ -95,16 +95,16 @@ maintenanceDiscount = .25
 	The maximum amount of cities per rank is 255.
 --]]
 CitiesAllowed = {
-	{"corellia", {20, 20, 15, 10, 10}},
-	{"dantooine", {50, 50, 30, 20, 20}},
+	{"corellia", {0, 0, 0, 0, 0}},
+	{"dantooine", {0, 0, 0, 0, 0}},
 	{"dathomir", {0, 0, 0, 0, 0}},
 	{"endor", {0, 0, 0, 0, 0}},
-	{"lok", {50, 50, 30, 20, 20}},
-	{"naboo", {20, 20, 15, 10, 10}},
-	{"rori", {50, 50, 30, 20, 20}},
-	{"talus", {50, 50, 30, 20, 20}},
-	{"tatooine", {20, 20, 15, 10, 10}},
-	{"yavin4", {0, 0, 0, 0, 0}}
+	{"lok", {0, 0, 0, 0, 0}},
+	{"naboo", {0, 0, 0, 0, 0}},
+	{"rori", {0, 0, 0, 0, 0}},
+	{"talus", {0, 0, 0, 0, 0}},
+	{"tatooine", {0, 0, 0, 0, 0}},
+	{"yavin4", {0, 0, 0, 0, 0}},
 }
 
 
@@ -186,58 +186,113 @@ CityTaxes = {
 CitySpecializations = {
 	{--Sample Rich
 		name = "@city/city:city_spec_sample_rich",
-		cost = 70000,
+		cost = 1000,
 		skillMods = {
 			{"private_spec_samplesize", 20},
-			{"private_spec_samplerate", 10}
+			{"private_spec_samplerate", 10},
+			{"private_medical_rating", 10},
+			{"private_spec_cloning", 20},
+			{"private_spec_experimentation", 15},
+			{"private_spec_missions", 15},
+			{"private_spec_entertainer", 10},
+			{"private_defense", 90}
 		}
 	},
 	{--Manufacturing Center
 		name = "@city/city:city_spec_industry",
-		cost = 50000,
+		cost = 1000,
 		skillMods = {
-			{"private_spec_assembly", 10}
+			{"private_spec_samplesize", 20},
+			{"private_spec_samplerate", 10},
+			{"private_medical_rating", 10},
+			{"private_spec_cloning", 20},
+			{"private_spec_experimentation", 15},
+			{"private_spec_missions", 15},
+			{"private_spec_entertainer", 10},
+			{"private_defense", 90}
 		}
 	},
 	{--Medical Center
 		name = "@city/city:city_spec_doctor",
-		cost = 80000,
+		cost = 1000,
 		skillMods = {
-			{"private_medical_rating", 10}
+			{"private_spec_samplesize", 20},
+			{"private_spec_samplerate", 10},
+			{"private_medical_rating", 10},
+			{"private_spec_cloning", 20},
+			{"private_spec_experimentation", 15},
+			{"private_spec_missions", 15},
+			{"private_spec_entertainer", 10},
+			{"private_defense", 90}
 		}
 	},
 	{--Clone Lab
 		name = "@city/city:city_spec_cloning",
-		cost = 80000,
+		cost = 1000,
 		skillMods = {
-			{"private_spec_cloning", 20}
+			{"private_spec_samplesize", 20},
+			{"private_spec_samplerate", 10},
+			{"private_medical_rating", 10},
+			{"private_spec_cloning", 20},
+			{"private_spec_experimentation", 15},
+			{"private_spec_missions", 15},
+			{"private_spec_entertainer", 10},
+			{"private_defense", 90}
 		}
 	},
 	{--Research Center
 		name = "@city/city:city_spec_research",
-		cost = 125000,
+		cost = 1000,
 		skillMods = {
-			{"private_spec_experimentation", 15}
+			{"private_spec_samplesize", 20},
+			{"private_spec_samplerate", 10},
+			{"private_medical_rating", 10},
+			{"private_spec_cloning", 20},
+			{"private_spec_experimentation", 15},
+			{"private_spec_missions", 15},
+			{"private_spec_entertainer", 10},
+			{"private_defense", 90}
 		}
 	},
 	{--Improved Job Market
 		name = "@city/city:city_spec_missions",
-		cost = 80000,
+		cost = 1000,
 		skillMods = {
-			{"private_spec_missions", 15}
+			{"private_spec_samplesize", 20},
+			{"private_spec_samplerate", 10},
+			{"private_medical_rating", 10},
+			{"private_spec_cloning", 20},
+			{"private_spec_experimentation", 15},
+			{"private_spec_missions", 15},
+			{"private_spec_entertainer", 10},
+			{"private_defense", 90}
 		}
 	},
 	{--Entertainment District
 		name = "@city/city:city_spec_entertainer",
-		cost = 80000,
+		cost = 1000,
 		skillMods = {
-			{"private_spec_entertainer", 10}
+			{"private_spec_samplesize", 20},
+			{"private_spec_samplerate", 10},
+			{"private_medical_rating", 10},
+			{"private_spec_cloning", 20},
+			{"private_spec_experimentation", 15},
+			{"private_spec_missions", 15},
+			{"private_spec_entertainer", 10},
+			{"private_defense", 90}
 		}
 	},
 	{--Stronghold
 		name = "@city/city:city_spec_stronghold",
-		cost = 150000,
+		cost = 1000,
 		skillMods = {
+			{"private_spec_samplesize", 20},
+			{"private_spec_samplerate", 10},
+			{"private_medical_rating", 10},
+			{"private_spec_cloning", 20},
+			{"private_spec_experimentation", 15},
+			{"private_spec_missions", 15},
+			{"private_spec_entertainer", 10},
 			{"private_defense", 90}
 		}
 	},

@@ -43,7 +43,7 @@ Vector3 SpawnAreaImplementation::getRandomPosition(SceneObject* player) {
 	const auto worldPosition = player->getWorldPosition();
 
 	while (!positionFound && retries-- > 0) {
-		position = areaShape->getRandomPosition(worldPosition, 48.0f, 256.0f);
+		position = areaShape->getRandomPosition(worldPosition, 48.0f, 256.0f);//this is how close to the player stuff can spawn min max
 
 		positionFound = true;
 
@@ -96,14 +96,14 @@ int SpawnAreaImplementation::notifyObserverEvent(unsigned int eventType, Observa
 
 			Locker locker(area);
 
-			area->setRadius(16);
+			area->setRadius(32);//set no spawn radius?
 			area->setNoSpawnArea(true);
 			area->initializePosition(sceno->getPositionX(), sceno->getPositionZ(), sceno->getPositionY());
 
 			thisZone->transferObject(area, -1, true);
 
 			Reference<Task*> task = new RemoveNoSpawnAreaTask(area);
-			task->schedule(1000);
+			task->schedule(300000);//timer for despawn?
 		}
 	}
 

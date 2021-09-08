@@ -7,9 +7,9 @@ function ForceShrineMenuComponent:fillObjectMenuResponse(pSceneObject, pMenuResp
 		menuResponse:addRadialMenuItem(120, 3, "@jedi_trials:meditate") -- Meditate
 	end
 
-	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
-		menuResponse:addRadialMenuItem(121, 3, "@force_rank:recover_jedi_items") -- Recover Jedi Items
-	end
+--	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
+--		menuResponse:addRadialMenuItem(121, 3, "@force_rank:recover_jedi_items") -- Recover Jedi Items
+--	end
 
 end
 
@@ -68,7 +68,7 @@ function ForceShrineMenuComponent:doMeditate(pObject, pPlayer)
 			sui.setCancelButtonText("@jedi_trials:button_no")
 			sui.sendTo(pPlayer)
 		else
-			KnightTrials:showCurrentTrial(pPlayer)
+			KnightTrials:resetCompletedTrialsToStart(pPlayer)
 		end
 	else
 		CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))

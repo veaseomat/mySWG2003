@@ -401,9 +401,9 @@ bool BuildingObjectImplementation::isAllowedEntry(CreatureObject* player) {
 	if (!isClientObject()) {
 		PlayerObject* ghost = player->getPlayerObject().get();
 
-		if (ghost != nullptr && ghost->hasPvpTef()) {
-			return false;
-		}
+//		if (ghost != nullptr && ghost->hasPvpTef()) {
+//			return false;
+//		}
 	}
 
 	if (getOwnerObjectID() == player->getObjectID())

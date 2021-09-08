@@ -322,6 +322,7 @@ includeFile("events/bestineMuseum.lua")
 includeFile("events/eventPromoter.lua")
 includeFile("events/lifeDay.lua")
 includeFile("events/buffTerminalMenuComponent.lua")
+includeFile("events/buffTerminalMenuComponent2.lua")
 includeFile("events/race_droid.lua")
 
 -- Hero of Tatooine

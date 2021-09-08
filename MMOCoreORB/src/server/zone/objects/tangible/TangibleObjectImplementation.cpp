@@ -178,7 +178,7 @@ void TangibleObjectImplementation::setFactionStatus(int status) {
 				pvpStatusBitmask -= CreatureFlag::OVERT;
 		} else if (factionStatus == FactionStatus::OVERT) {
 			if(!(pvpStatusBitmask & CreatureFlag::OVERT)) {
-				int cooldown = 300;
+				int cooldown = 60;
 
 				Zone* creoZone = creature->getZone();
 

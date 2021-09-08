@@ -90,11 +90,11 @@ void WeaponObjectImplementation::loadTemplateData(SharedObjectTemplate* template
 	if (templateAttackSpeed > 1)
 		attackSpeed = templateAttackSpeed;
 
-	if (!isJediWeapon()) {
+//	if (!isJediWeapon()) {
 		setSliceable(true);
-	} else if (isJediWeapon()) {
-		setSliceable(false);
-	}
+//	} else if (isJediWeapon()) {
+//		setSliceable(false);
+//	}
 }
 
 void WeaponObjectImplementation::sendContainerTo(CreatureObject* player) {
@@ -215,13 +215,13 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 
 //	alm->insertAttribute("challenge_level", getLevel());
 
-	bool res = isCertifiedFor(object);
-
-	if (res) {
-		alm->insertAttribute("weapon_cert_status", "Yes");
-	} else {
-		alm->insertAttribute("weapon_cert_status", "No");
-	}
+//	bool res = isCertifiedFor(object);
+//
+//	if (res) {
+//		alm->insertAttribute("weapon_cert_status", "Yes");
+//	} else {
+//		alm->insertAttribute("weapon_cert_status", "No");
+//	}
 
 	/*if (usesRemaining > 0)
 		alm->insertAttribute("count", usesRemaining);*/
@@ -235,29 +235,34 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 			alm->insertAttribute(statname, value);
 	}
 
-//	String ap;
-//
-//	switch (armorPiercing) {
-//	case SharedWeaponObjectTemplate::NONE:
-//		ap = "None";
-//		break;
-//	case SharedWeaponObjectTemplate::LIGHT:
-//		ap = "Light";
-//		break;
-//	case SharedWeaponObjectTemplate::MEDIUM:
-//		ap = "Medium";
-//		break;
-//	case SharedWeaponObjectTemplate::HEAVY:
-//		ap = "Heavy";
-//		break;
-//	default:
-//		ap = "Unknown";
-//		break;
-//	}
-//
-//	alm->insertAttribute("wpn_armor_pierce_rating", ap);
+	String ap;
 
-	alm->insertAttribute("wpn_attack_speed", Math::getPrecision(getAttackSpeed(), 1));
+	switch (armorPiercing) {
+	case SharedWeaponObjectTemplate::NONE:
+		ap = "None";
+		break;
+	case SharedWeaponObjectTemplate::LIGHT:
+		ap = "Light";
+		break;
+	case SharedWeaponObjectTemplate::MEDIUM:
+		ap = "Medium";
+		break;
+	case SharedWeaponObjectTemplate::HEAVY:
+		ap = "Medium";
+//		ap = "Heavy";
+		break;
+	default:
+		ap = "Unknown";
+		break;
+	}
+
+	alm->insertAttribute("wpn_armor_pierce_rating", ap);
+
+	float speed = Math::getPrecision(getAttackSpeed(), 1);
+
+	if (speed < 1.0) speed = 1.0;
+
+	alm->insertAttribute("wpn_attack_speed", speed);
 
 	if (getDamageRadius() != 0.0f)
 		alm->insertAttribute("area", Math::getPrecision(getDamageRadius(), 0));
@@ -298,6 +303,12 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 		break;
 	}
 
+//	float minDmg = round(getMinDamage());
+//	float maxDmg = round(getMaxDamage());
+//	int newdmg = (minDmg + maxDmg) / 2;
+//
+//	alm->insertAttribute("damage.damage", newdmg);
+
 	alm->insertAttribute("damage.wpn_damage_type", dmgtxt);
 
 	float minDmg = round(getMinDamage());
@@ -311,9 +322,15 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 
 	float wnd = round(10 * getWoundsRatio()) / 10.0f;
 
+	if (wnd > 50) wnd = 50;
+
 	woundsratio << wnd << "%";
 
 	alm->insertAttribute("damage.wpn_wound_chance", woundsratio);
+	
+//	float avgDmg = (minDmg + maxDmg) / 2;
+//	alm->insertAttribute("min/max average", avgDmg);
+	
 
 	//Accuracy Modifiers
 	StringBuffer pblank;
@@ -338,11 +355,11 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
 
 	//Special Attack Costs
-	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost());
+	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost() / 3);
 
-	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost());
+	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost() / 3);
 
-	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost());
+	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost() / 3);
 
 	//Anti Decay Kit
 	if(hasAntiDecayKit()){
@@ -350,8 +367,8 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	}
 
 	// Force Cost // float shows decimal points on sabers!
-	if (getForceCost() > 0)
-		alm->insertAttribute("forcecost", (float)getForceCost());
+//	if (getForceCost() > 0)
+//		alm->insertAttribute("forcecost", (float)getForceCost());
 
 	for (int i = 0; i < getNumberOfDots(); i++) {
 
@@ -652,13 +669,13 @@ bool WeaponObjectImplementation::isCertifiedFor(CreatureObject* object) const {
 
 	const auto certificationsRequired = weaponTemplate->getCertificationsRequired();
 
-	for (int i = 0; i < certificationsRequired->size(); ++i) {
-		const String& cert = certificationsRequired->get(i);
-
-		if (!ghost->hasAbility(cert) && !object->hasSkill(cert)) {
-			return false;
-		}
-	}
+//	for (int i = 0; i < certificationsRequired->size(); ++i) {
+//		const String& cert = certificationsRequired->get(i);
+//
+//		if (!ghost->hasAbility(cert) && !object->hasSkill(cert)) {
+//			return false;
+//		}
+//	}
 
 	return true;
 }
@@ -693,18 +710,18 @@ String WeaponObjectImplementation::repairAttempt(int repairChance) {
 
 	if(repairChance < 25) {
 		message += "sys_repair_failed";
-		setMaxCondition(1, true);
+		setMaxCondition(getMaxCondition() * .65f, true);
 		setConditionDamage(0, true);
 	} else if(repairChance < 50) {
 		message += "sys_repair_imperfect";
-		setMaxCondition(getMaxCondition() * .65f, true);
+		setMaxCondition(getMaxCondition() * .80f, true);
 		setConditionDamage(0, true);
 	} else if(repairChance < 75) {
-		setMaxCondition(getMaxCondition() * .80f, true);
+		setMaxCondition(getMaxCondition() * .95f, true);
 		setConditionDamage(0, true);
 		message += "sys_repair_slight";
 	} else {
-		setMaxCondition(getMaxCondition() * .95f, true);
+//		setMaxCondition(getMaxCondition() * 1.0f, true);
 		setConditionDamage(0, true);
 		message += "sys_repair_perfect";
 	}
@@ -717,36 +734,36 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 		return;
 	}
 
-	int roll = System::random(100);
-	int chance = 3;
+	int roll = System::random(20);
+	int chance = 1;
 
 	if (hasPowerup())
-		chance += 7;
+		chance += 1;
 
 	if (roll < chance) {
 		Locker locker(_this.getReferenceUnsafeStaticCast());
 
-		if (isJediWeapon()) {
-			ManagedReference<SceneObject*> saberInv = getSlottedObject("saber_inv");
-
-			if (saberInv == nullptr)
-				return;
-
-			// TODO: is this supposed to be every crystal, or random crystal(s)?
-			for (int i = 0; i < saberInv->getContainerObjectsSize(); i++) {
-				ManagedReference<LightsaberCrystalComponent*> crystal = saberInv->getContainerObject(i).castTo<LightsaberCrystalComponent*>();
-				if (crystal->getColor() == 31) {
-					crystal->inflictDamage(crystal, 0, 1, true, true);
-				}
-			}
-		} else {
+//		if (isJediWeapon()) {
+//			ManagedReference<SceneObject*> saberInv = getSlottedObject("saber_inv");
+//
+//			if (saberInv == nullptr)
+//				return;
+//
+//			// TODO: is this supposed to be every crystal, or random crystal(s)?
+//			for (int i = 0; i < saberInv->getContainerObjectsSize(); i++) {
+//				ManagedReference<LightsaberCrystalComponent*> crystal = saberInv->getContainerObject(i).castTo<LightsaberCrystalComponent*>();
+//				if (crystal->getColor() == 31) {
+//					crystal->inflictDamage(crystal, 0, 1, true, true);
+//				}
+//			}
+//		} else {
 			inflictDamage(_this.getReferenceUnsafeStaticCast(), 0, 1, true, true);
 
 			if (((float)conditionDamage - 1 / (float)maxCondition < 0.75) && ((float)conditionDamage / (float)maxCondition > 0.75))
 				user->sendSystemMessage("@combat_effects:weapon_quarter");
 			if (((float)conditionDamage - 1 / (float)maxCondition < 0.50) && ((float)conditionDamage / (float)maxCondition > 0.50))
 				user->sendSystemMessage("@combat_effects:weapon_half");
-		}
+//		}
 	}
 }
 

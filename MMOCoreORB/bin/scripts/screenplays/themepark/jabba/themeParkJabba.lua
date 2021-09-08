@@ -654,7 +654,7 @@ ThemeParkJabba = ThemeParkLogic:new {
 	requiredFaction = "jabba"
 }
 
-registerScreenPlay("ThemeParkJabba", true)
+--registerScreenPlay("ThemeParkJabba", true)
 
 theme_park_jabba_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkJabba

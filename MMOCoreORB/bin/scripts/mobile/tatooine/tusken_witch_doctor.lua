@@ -1,16 +1,16 @@
 tusken_witch_doctor = Creature:new {
-	objectName = "@mob/creature_names:tusken_warlord",
+	objectName = "@mob/creature_names:tusken_chief",
 	socialGroup = "tusken_raider",
 	faction = "tusken_raider",
-	level = 62,
-	chanceHit = 0.62,
-	damageMin = 455,
-	damageMax = 620,
-	baseXp = 6013,
-	baseHAM = 11000,
-	baseHAMmax = 14000,
-	armor = 1,
-	resists = {45,25,15,80,-1,40,-1,15,-1},
+	level = 43,
+	chanceHit = 0.46,
+	damageMin = 365,
+	damageMax = 440,
+	baseXp = 4279,
+	baseHAM = 9600,
+	baseHAMmax = 11800,
+	armor = 0,
+	resists = {45,30,30,60,-1,40,-1,-1,-1},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -44,7 +44,7 @@ tusken_witch_doctor = Creature:new {
 	},
 	weapons = {"tusken_weapons"},
 	conversationTemplate = "",
-	attacks = merge(brawlernovice,marksmannovice,fencermaster,riflemanmaster)
+	attacks = merge(marksmanmaster,brawlermaster,fencermaster,riflemanmaster)
 }
 
 CreatureTemplates:addCreatureTemplate(tusken_witch_doctor, "tusken_witch_doctor")

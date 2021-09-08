@@ -64,7 +64,7 @@ ThemeParkSmcZideera = ThemeParkLogic:new {
 	planetName = "dathomir"
 }
 
-registerScreenPlay("ThemeParkSmcZideera", true)
+--registerScreenPlay("ThemeParkSmcZideera", true)
 
 theme_park_smc_zideera_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkSmcZideera
