@@ -706,6 +706,7 @@ void PlayerCreationManager::addProfessionStartingItems(CreatureObject* creature,
 	SkillManager::instance()->awardSkill("combat_brawler_novice", creature, false, true, true);
 	SkillManager::instance()->awardSkill("combat_marksman_novice", creature, false, true, true);
 	SkillManager::instance()->awardSkill("outdoors_scout_novice", creature, false, true, true);
+	SkillManager::instance()->awardSkill("social_entertainer_novice", creature, false, true, true);
 
 	//Set the hams.
 	for (int i = 0; i < 9; ++i) {
