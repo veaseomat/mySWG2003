@@ -975,6 +975,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 
 	// If density is too low, we can't obtain a sample
 //	if (density < .10f) {
+//		density = .10f;
 //		StringIdChatParameter message("survey", "efficiency_too_low");
 //		message.setTO(resname);
 //		player->sendSystemMessage(message);
@@ -1012,34 +1013,34 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 
 	int unitsExtracted = maxUnitsExtracted * (float(surveySkill) / 100.0f) * samplingMultiplier * cityMultiplier;
 //	unitsExtracted *= 5;
-	int xpcap = 40;
+	int xpcap = 5;
 
-	if (session->tryGamble()) {
-		if (System::random(2) == 1) {
-			player->sendSystemMessage("@survey:gamble_success");
-			unitsExtracted *= 5;
-		} else {
-			player->sendSystemMessage("@survey:gamble_fail");
-		}
-		session->clearGamble();
-		xpcap = 50;
-	}
-
-	if (richSampleLocation != nullptr && richSampleLocation->getPosition() != Vector3(0, 0, 0)) {
-
-		if (player->getDistanceTo(richSampleLocation) < 10) {
-
-			player->sendSystemMessage("@survey:node_recovery");
-			unitsExtracted *= 5;
-
-		} else {
-
-			player->sendSystemMessage("@survey:node_not_close");
-		}
-
-		session->clearRichSampleLocation();
-		xpcap = 50;
-	}
+//	if (session->tryGamble()) {
+//		if (System::random(2) == 1) {
+//			player->sendSystemMessage("@survey:gamble_success");
+//			unitsExtracted *= 5;
+//		} else {
+//			player->sendSystemMessage("@survey:gamble_fail");
+//		}
+//		session->clearGamble();
+//		xpcap = 50;
+//	}
+//
+//	if (richSampleLocation != nullptr && richSampleLocation->getPosition() != Vector3(0, 0, 0)) {
+//
+//		if (player->getDistanceTo(richSampleLocation) < 10) {
+//
+//			player->sendSystemMessage("@survey:node_recovery");
+//			unitsExtracted *= 5;
+//
+//		} else {
+//
+//			player->sendSystemMessage("@survey:node_not_close");
+//		}
+//
+//		session->clearRichSampleLocation();
+//		xpcap = 50;
+//	}
 
 	if (unitsExtracted < 5) {
 
@@ -1065,8 +1066,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 
 	resourceSpawn->extractResource(zoneName, unitsExtracted);
 
-	int xp = (int) (((float) unitsExtracted / (float) maxUnitsExtracted)
-			* xpcap);
+	int xp = (int) ((float) unitsExtracted * xpcap);
 	ManagedReference<PlayerManager*> playerManager = server->getPlayerManager();
 
 	if (playerManager != nullptr)

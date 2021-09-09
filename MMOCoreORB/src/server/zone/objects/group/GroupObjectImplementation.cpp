@@ -505,26 +505,27 @@ bool GroupObjectImplementation::isOtherMemberPlayingMusic(CreatureObject* player
 }
 
 void GroupObjectImplementation::scheduleUpdateNearestMissionForGroup(unsigned int planetCRC) {
-	Reference<UpdateNearestMissionForGroupTask*> task = nullptr;
-
-	if (updateNearestMissionForGroupTasks.contains(planetCRC)) {
-		task = updateNearestMissionForGroupTasks.get(planetCRC);
-		if (task == nullptr) {
-			updateNearestMissionForGroupTasks.drop(planetCRC);
-		}
-	}
-
-	if (task == nullptr) {
-		task = new UpdateNearestMissionForGroupTask(_this.getReferenceUnsafeStaticCast(), planetCRC);
-		updateNearestMissionForGroupTasks.put(planetCRC, task);
-	}
-
-	if (task->isScheduled()) {
-		task->reschedule(30000);
-	}
-	else {
-		task->schedule(30000);
-	}
+	//remove nearest group mission w/p
+//	Reference<UpdateNearestMissionForGroupTask*> task = nullptr;
+//
+//	if (updateNearestMissionForGroupTasks.contains(planetCRC)) {
+//		task = updateNearestMissionForGroupTasks.get(planetCRC);
+//		if (task == nullptr) {
+//			updateNearestMissionForGroupTasks.drop(planetCRC);
+//		}
+//	}
+//
+//	if (task == nullptr) {
+//		task = new UpdateNearestMissionForGroupTask(_this.getReferenceUnsafeStaticCast(), planetCRC);
+//		updateNearestMissionForGroupTasks.put(planetCRC, task);
+//	}
+//
+//	if (task->isScheduled()) {
+//		task->reschedule(30000);
+//	}
+//	else {
+//		task->schedule(30000);
+//	}
 }
 
 void GroupObjectImplementation::updateLootRules() {
