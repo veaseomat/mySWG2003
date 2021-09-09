@@ -314,10 +314,10 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 //	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);//removing this makes legendary chance same for all levels
 
-	if (prototype->isComponent()) {
-		excMod = 1.1;
-
-	}
+//	if (prototype->isComponent()) {
+//		excMod = 1.25;
+//
+//	}
 
 	if ((System::random(legendaryChance) >= legendaryChance) && (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject())) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";

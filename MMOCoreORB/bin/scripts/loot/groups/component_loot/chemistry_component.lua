@@ -5,13 +5,20 @@ chemistry_component = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "biologic_effect_controller", weight = 1428572},
-		{itemTemplate = "dispersal_mechanism", weight = 1428571},
-		{itemTemplate = "infection_amplifier", weight = 1428571},
-		{itemTemplate = "liquid_delivery_suspension", weight = 1428572},
-		{itemTemplate = "release_mechanism_duration", weight = 1428571},
-		{itemTemplate = "resilience_compound", weight = 1428571},
-		{itemTemplate = "solid_delivery_shell", weight = 1428572}
+		{itemTemplate = "biologic_effect_controller_advanced", weight = 1428572},
+		{itemTemplate = "dispersal_mechanism_advanced", weight = 1428571},
+		{itemTemplate = "infection_amplifier_advanced", weight = 1428571},
+		{itemTemplate = "liquid_delivery_suspension_advanced", weight = 1428572},
+		{itemTemplate = "release_mechanism_duration_advanced", weight = 1428571},
+		{itemTemplate = "resilience_compound_advanced", weight = 1428571},
+		{itemTemplate = "solid_delivery_shell_advanced", weight = 1428572}	
+--		{itemTemplate = "biologic_effect_controller", weight = 1428572},
+--		{itemTemplate = "dispersal_mechanism", weight = 1428571},
+--		{itemTemplate = "infection_amplifier", weight = 1428571},
+--		{itemTemplate = "liquid_delivery_suspension", weight = 1428572},
+--		{itemTemplate = "release_mechanism_duration", weight = 1428571},
+--		{itemTemplate = "resilience_compound", weight = 1428571},
+--		{itemTemplate = "solid_delivery_shell", weight = 1428572}
 	},
 }
 

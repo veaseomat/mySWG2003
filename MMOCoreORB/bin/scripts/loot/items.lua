@@ -241,6 +241,12 @@ includeFile("items/component_loot/sword_core.lua")
 includeFile("items/component_loot/vibro_unit_advanced.lua")
 includeFile("items/component_loot/vibro_unit.lua")
 includeFile("items/component_loot/saber_rcp.lua")
+includeFile("items/component_loot/armorcomponent1.lua")
+includeFile("items/component_loot/armorcomponent2.lua")
+includeFile("items/component_loot/armorcomponent3.lua")
+includeFile("items/component_loot/armorcomponent4.lua")
+includeFile("items/component_loot/armorcomponent5.lua")
+includeFile("items/component_loot/armorcomponent6.lua")
 
 --corellian_corvette sub-folder
 includeFile("items/corellian_corvette/shirt_s03_rebel.lua")

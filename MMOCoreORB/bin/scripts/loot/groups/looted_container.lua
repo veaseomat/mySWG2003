@@ -32,31 +32,18 @@ looted_container = {
 --		{itemTemplate = "worklight", weight = 87719},
 
 		-- Weapons (25% chance)
-		{groupTemplate = "weapons_all", weight = 2500000},
-
-		-- Armors (25% chance)
-		{groupTemplate = "armor_all", weight = 2500000},
+		{groupTemplate = "weapons_all", weight = 2000000},
+		{groupTemplate = "armor_all", weight = 2000000},
+		{groupTemplate = "weapon_component", weight = 1000000},
+		{groupTemplate = "armor_component", weight = 1000000},
+		{groupTemplate = "chemistry_component", weight = 1000000},
+		{groupTemplate = "attachment_clothing", weight = 1000000},
+			
+		{itemTemplate = "locked_container", weight = 500000},	
 		
-		--20%
-		{groupTemplate = "weapon_component_advanced", weight = 1000000},
-		{groupTemplate = "chemistry_component_advanced", weight = 1000000},
+		{groupTemplate = "paintings", weight = 1400000},
 		
-		-- Clothing 
-		{groupTemplate = "wearables_all", weight = 1000000},
-		
-		
-		--10%
-		{groupTemplate = "attachment_clothing", weight = 500000},	
-		{groupTemplate = "attachment_armor", weight = 500000},
-		
-
-		-- 
-		{groupTemplate = "force_color_crystal", weight = 495000},
-		{groupTemplate = "force_power_crystal", weight = 495000},
-		
-		--
-		{groupTemplate = "holocron_nd", weight = 10000},
-
+		{groupTemplate = "holocron_nd", weight = 100000},
 	}
 }
 

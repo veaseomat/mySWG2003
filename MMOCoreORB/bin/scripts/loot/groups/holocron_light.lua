@@ -5,10 +5,8 @@ holocron_light = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
---		{itemTemplate = "jedi_holocron_light", weight = 10000000}
-		{itemTemplate = "force_color_crystal", weight = 50000},
-		{groupTemplate = "rcp", weight = 50000},
-		{groupTemplate = "junk", weight = 9900000}
+		{groupTemplate = "junk", weight = 9990000},
+		{groupTemplate = "holocron_nd", weight = 10000},
 	}
 }
 
