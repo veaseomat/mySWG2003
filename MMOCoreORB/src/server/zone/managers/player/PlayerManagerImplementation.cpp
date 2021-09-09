@@ -5651,12 +5651,12 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 		return;
 
 	bool message = true;
-
+//selfbuff
 	int selfMedBuff = 500;
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * .3;
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * .3;
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * .3;
-	int selfDuration =	720; //12 hr ;
+	int selfDuration =	360; //12 hr ;
 
 	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
 	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
@@ -5670,7 +5670,7 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Doctor buffs to Health and Action for 500, Dancer and Musician Mind buffs for 30%. They last 12 hours.");
+		player->sendSystemMessage("You receive Doctor Health and Action buffs for 500, Dancer and Musician Mind buffs for 30%. They last 6 hours.");
 }
 
 void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
@@ -5680,7 +5680,7 @@ void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
 	bool message = true;
 
 	int selfStrength = player->getBaseHAM(CreatureAttribute::MIND) * (player->getSkillMod("healing_dance_mind") * .01);
-	int selfDuration =	720; //12 hr ;
+	int selfDuration =	360; //12 hr ;
 
 	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrength, selfDuration * 60, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
 
@@ -5697,7 +5697,7 @@ void PlayerManagerImplementation::enhanceSelfMusic(CreatureObject* player) {
 
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * (player->getSkillMod("healing_music_mind") * .01);
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * (player->getSkillMod("healing_music_mind") * .01);
-	int selfDuration =	720; //12 hr ;
+	int selfDuration =	360; //6 hr ;
 
 	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus, selfDuration * 60, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
 	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower

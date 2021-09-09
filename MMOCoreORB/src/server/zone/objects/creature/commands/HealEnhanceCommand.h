@@ -240,9 +240,9 @@ public:
 			buffPower = enhancePack->getEffectiveness();
 			buffPower = buffPower * patient->calculateBFRatio();
 		} else
-			buffPower = enhancePack->calculatePower(enhancer, patient);
+			buffPower = (enhancePack->calculatePower(enhancer, patient) * .5);//reduce doc buffs by 50%
 
-		return (buffPower / 2);
+		return buffPower;
 	}
 
 	uint32 getBuffStrength(Buff* existingbuff, int attribute) const {
@@ -436,7 +436,7 @@ public:
 		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
 
 		int durationextra = (enhancePack->getDuration() * 4);
-		int selfDuration =	720 * 60; //12 hr ;
+		int selfDuration =	360 * 60; //12 hr ;
 
 		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, selfDuration, enhancePack->getAbsorption());
 

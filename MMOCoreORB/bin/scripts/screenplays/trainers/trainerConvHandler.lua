@@ -266,9 +266,39 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 		clonedConversation:setDialogTextStringId(stringTable .. "msg3_2")
 	  
 		local pGhost = CreatureObject(pPlayer):getPlayerObject()
-		--540 skills enabled in myswg, chance to unlock every time you train a skill, its possible to not unlock
-		if (pGhost ~= nil and getRandomNumber(1, 500) >= 500 and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and JediTrials:isEligibleForJedi(pPlayer)) then
-	
+		
+--		--540 skills enabled in myswg, chance to unlock every time you train a skill, its possible to not unlock -- disabled for new version below
+--		if (pGhost ~= nil and getRandomNumber(1, 500) >= 500 and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and JediTrials:isEligibleForJedi(pPlayer)) then
+--			
+
+--jedi unlock has to be an elite master and a random 1/72 chance. 24 profs so only a 1/3 chance to unlock for each caracter
+	if (pGhost ~= nil and getRandomNumber(1, 72) >= 72 and 
+	skillName == "crafting_architect_master" or
+	skillName == "crafting_armorsmith_master" or
+	skillName == "outdoors_bio_engineer_master" or
+	skillName == "combat_bountyhunter_master" or
+	skillName == "combat_carbine_master" or
+	skillName == "crafting_chef_master" or
+	skillName == "science_combatmedic_master" or
+	skillName == "combat_commando_master" or
+	skillName == "outdoors_creaturehandler_master" or
+	skillName == "social_dancer_master" or
+	skillName == "science_doctor_master" or
+	skillName == "crafting_droidengineer_master" or
+	skillName == "combat_1hsword_master" or
+	skillName == "social_imagedesigner_master" or
+	skillName == "social_musician_master" or
+	skillName == "combat_polearm_master" or
+	skillName == "combat_pistol_master" or
+	skillName == "outdoors_ranger_master" or
+	skillName == "combat_rifleman_master" or
+	skillName == "combat_smuggler_master" or
+	skillName == "combat_2hsword_master" or
+	skillName == "crafting_tailor_master" or
+	skillName == "crafting_weaponsmith_master" or
+	skillName == "combat_unarmed_master")
+	then
+
 			PlayerObject(pGhost):setJediState(2)
 					
 			awardSkill(pPlayer, "force_title_jedi_rank_02")
@@ -279,7 +309,7 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 			FsIntro:startStepDelay(pPlayer, 3)
 			
 			local suiManager = LuaSuiManager()		
-			suiManager:sendMessageBox(pPlayer, pPlayer, "@quest/force_sensitive/intro:force_sensitive", "You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \nTo get started you will need to craft rifined crystal packs for jedi experience until you reach novice lightsaber, there is no training lightsaber on mySWG. Brawler trainers teach all Jedi skills. Using your Jedi abilities near NPCs or players will gain visibility for player and NPC bounty hunters. There is no XP or skill loss on mySWG. May the force be with you...", "@ok", "HologrindJediManager", "notifyOkPressed")
+			suiManager:sendMessageBox(pPlayer, pPlayer, "@quest/force_sensitive/intro:force_sensitive", "You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\nTo get started you will need to craft crystal packs for Jedi exp until you reach novice lightsaber, there is no training saber on mySWG. Brawler trainers teach all Jedi skills. Using your Jedi abilities near NPCs or players will gain visibility for player and NPC bounty hunters. There is no XP or skill loss on mySWG. Congratulations and may the force be with you... Jedi.", "@ok", "HologrindJediManager", "notifyOkPressed")
 			
 		end
 
@@ -291,7 +321,7 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 			CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")		
 			
 			local suiManager = LuaSuiManager()
-			suiManager:sendMessageBox(pPlayer, pPlayer, "Jedi Knight", "Your hard work has paid off and you are now worthy of the title Jedi Knight! \nJedi Knight gives you a hidden +25 Lightsaber Toughness, Lightsaber toughness is innate armor on mySWG. A Jedi Knight with master lightsaber has 80% armor to all when no armor is equipped, if a Jedi equips armor it removes the lightsaber toughness armor. There is no need for a MLS/Knight to wear armor. Congratulations!", "@ok", "HologrindJediManager", "notifyOkPressed")
+			suiManager:sendMessageBox(pPlayer, pPlayer, "Jedi Knight", "Your hard work has paid off and you are now worthy of the title Jedi Knight! \nJedi Knight gives you a hidden +25 Lightsaber Toughness, Lightsaber toughness is innate armor on mySWG. A Jedi Knight with master lightsaber has 80% innate armor when no armor is equipped, if a Jedi equips armor it removes the lightsaber toughness armor. There is no need for a MLS/Knight to wear armor. Congratulations! You are among the most powerful in the universe.", "@ok", "HologrindJediManager", "notifyOkPressed")
 			
 --			KnightTrials:startKnightTrials(pPlayer)
 --			
