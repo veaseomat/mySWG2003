@@ -347,6 +347,12 @@ includeFile("items/forage/foraged_solid_delivery_shell.lua")
 includeFile("items/forage/foraged_sosi_hodor.lua")
 includeFile("items/forage/foraged_stimpack.lua")
 includeFile("items/forage/foraged_wild_snaff.lua")
+includeFile("items/forage/food1.lua")
+includeFile("items/forage/food2.lua")
+includeFile("items/forage/food3.lua")
+includeFile("items/forage/food4.lua")
+includeFile("items/forage/food5.lua")
+
 
 -- geonosian_lab sub-folder
 includeFile("items/geonosian_lab/acklay_bone_armor_schematic.lua")
