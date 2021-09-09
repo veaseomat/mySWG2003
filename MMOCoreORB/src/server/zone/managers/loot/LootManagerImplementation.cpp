@@ -314,6 +314,11 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 //	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);//removing this makes legendary chance same for all levels
 
+	if (prototype->isComponent()) {
+		excMod = 1.1;
+
+	}
+
 	if ((System::random(legendaryChance) >= legendaryChance) && (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject())) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
@@ -420,11 +425,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		prototype->addMagicBit(false);
 		prototype->setJunkValue((int)(fJunkValue * 1.25));
 	} else {
-		if (excMod == 1.0) {
-			prototype->setJunkValue((int)(fJunkValue));
-		} else {
-			prototype->setJunkValue((int)(fJunkValue * (excMod/2)));
-		}
+			prototype->setJunkValue((int)(fJunkValue * excMod));
 	}
 
 	// Use percentages to recalculate the values
@@ -450,8 +451,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	}
 
 	// Add Dots to weapon objects.
-	addStaticDots(prototype, templateObject, level);
-	addRandomDots(prototype, templateObject, level, excMod);
+//	addStaticDots(prototype, templateObject, level);
+//	addRandomDots(prototype, templateObject, level, excMod);
 
 	setSkillMods(prototype, templateObject, level, excMod);
 
@@ -797,6 +798,9 @@ bool LootManagerImplementation::createLootSet(TransactionLog& trx, SceneObject* 
 }
 
 void LootManagerImplementation::addStaticDots(TangibleObject* object, const LootItemTemplate* templateObject, int level) {
+	//disable dot loot
+	return;
+
 	if (object == nullptr)
 		return;
 
@@ -872,6 +876,9 @@ void LootManagerImplementation::addStaticDots(TangibleObject* object, const Loot
 }
 
 void LootManagerImplementation::addRandomDots(TangibleObject* object, const LootItemTemplate* templateObject, int level, float excMod) {
+	//disable dot loot
+	return;
+
 	if (object == nullptr)
 		return;
 
