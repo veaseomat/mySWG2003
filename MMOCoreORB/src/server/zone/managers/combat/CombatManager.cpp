@@ -1747,7 +1747,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	// EVP Damage. dont forget to update aiagentimplementation also so examine shows same numbers (not using that anymore)
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 1.5;
+		damage *= 1.75;
 
 	// PvP Damage Reduction.
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature())

@@ -240,7 +240,7 @@ public:
 			buffPower = enhancePack->getEffectiveness();
 			buffPower = buffPower * patient->calculateBFRatio();
 		} else
-			buffPower = (enhancePack->calculatePower(enhancer, patient));//reduce doc buffs here
+			buffPower = (enhancePack->calculatePower(enhancer, patient) * .5);//reduce doc buffs here
 
 		return buffPower;
 	}
@@ -332,6 +332,7 @@ public:
 
 			if (enhancePack == nullptr) {
 				enhancer->sendSystemMessage("@healing_response:healing_response_76"); // That item does not provide attribute enhancement.
+				enhancer->sendSystemMessage("or remove from backpack"); // That item does not provide attribute enhancement.
 				return false;
 			}
 
@@ -436,7 +437,7 @@ public:
 		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
 
 		int durationextra = (enhancePack->getDuration() * 4);
-		int selfDuration =	360 * 60; //12 hr ;
+		int selfDuration =	360 * 60; //6 hr ;
 
 		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, selfDuration, enhancePack->getAbsorption());
 
@@ -445,6 +446,9 @@ public:
 		}
 
 		sendEnhanceMessage(enhancer, patient, attribute, amountEnhanced);
+
+		creature->sendSystemMessage("mySWG: Doc/Ent buffs are half power.");
+
 
 		enhancer->inflictDamage(enhancer, CreatureAttribute::MIND, mindCostNew, false);
 
