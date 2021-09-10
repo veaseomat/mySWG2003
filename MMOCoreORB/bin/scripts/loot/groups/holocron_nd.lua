@@ -5,7 +5,7 @@ holocron_nd = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{groupTemplate = "rcp", weight = 5000000},
+		{itemTemplate = "saber_rcp", weight = 5000000},
 		{itemTemplate = "force_color_crystal", weight = 5000000},
 	}
 }

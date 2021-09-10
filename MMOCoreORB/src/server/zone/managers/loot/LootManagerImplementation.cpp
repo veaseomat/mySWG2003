@@ -626,7 +626,7 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = (entry->getLootChance() * 1.5); //using this multiplier gives less empty corpses
+		int lootChance = (entry->getLootChance() * 1); //using this multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
 //		int holochance = 10000;
@@ -665,7 +665,7 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 			break;
 		}
 
-		//Now we do the second roll.... this adds another random drop
+		//2nd drop
 		roll = System::random(10000000);
 
 		if (roll > lootChance)
@@ -686,26 +686,26 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 			break;
 		}
 
-		//Now we do the second roll.... this adds another random drop
-		roll = System::random(10000000);
-
-		if (roll > lootChance)
-			continue;
-
-		//Select the loot group to use.
-		for (int i = 0; i < lootGroups->count(); ++i) {
-			const LootGroupEntry* entry = lootGroups->get(i);
-
-			tempChance += entry->getLootChance();
-
-			//Is this entry lower than the roll? If yes, then we want to try the next entry.
-			if (tempChance < roll)
-				continue;
-
-			createLoot(trx, container, entry->getLootGroupName(), level);
-
-			break;
-		}
+//		//3rd drop
+//		roll = System::random(10000000);
+//
+//		if (roll > lootChance)
+//			continue;
+//
+//		//Select the loot group to use.
+//		for (int i = 0; i < lootGroups->count(); ++i) {
+//			const LootGroupEntry* entry = lootGroups->get(i);
+//
+//			tempChance += entry->getLootChance();
+//
+//			//Is this entry lower than the roll? If yes, then we want to try the next entry.
+//			if (tempChance < roll)
+//				continue;
+//
+//			createLoot(trx, container, entry->getLootGroupName(), level);
+//
+//			break;
+//		}
 	}
 
 	return true;
