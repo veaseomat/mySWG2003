@@ -1925,10 +1925,13 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 			if (targetCreature->hasState(CreatureState::STUNNED)) {
 				saberblockmod *= .25;
 			}
-
+			if (System::random(100) < saberblockmod) {
 			//		if (mod == "saber_block") targetDefense += defender->getSkillMod("saber_block");//boost saber block by adding it again
-			if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) && ((System::random(100)) < saberblockmod)))
-				return RICOCHET;
+				if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK))))
+					return RICOCHET;
+				return MISS;
+
+			}
 			else return HIT;
 		}
 

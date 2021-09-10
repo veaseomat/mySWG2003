@@ -2,8 +2,8 @@ buffTerminalMenuComponent2 = {  }
 
 function buffTerminalMenuComponent2:fillObjectMenuResponse(pSceneObject, pMenuResponse, pPlayer)
 	local response = LuaObjectMenuResponse(pMenuResponse)
---	response:addRadialMenuItem(20, 3, "Get Buffs")
 	response:addRadialMenuItem(20, 3, "Heal Wounds")
+	response:addRadialMenuItem(21, 3, "Get Buffs")
 end
 
 function buffTerminalMenuComponent2:logUsage(pPlayer, what)

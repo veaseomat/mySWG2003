@@ -514,6 +514,7 @@ includeFile("items/loot_schematic/tatooine_tapestry_schematic.lua")
 includeFile("items/loot_schematic/technical_console_schematic_1.lua")
 includeFile("items/loot_schematic/technical_console_schematic_2.lua")
 includeFile("items/loot_schematic/throw_pillow_schematic.lua")
+includeFile("items/loot_schematic/resourcedeed.lua")
 
 --npc sub-folder
 includeFile("items/npc/aakuan_belt.lua")

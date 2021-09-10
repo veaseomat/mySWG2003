@@ -39,9 +39,11 @@ looted_container = {
 		{groupTemplate = "chemistry_component", weight = 1000000},
 		{groupTemplate = "attachment_clothing", weight = 1000000},
 			
+		{groupTemplate = "paintings", weight = 1000000},
+		
 		{itemTemplate = "locked_container", weight = 500000},	
 		
-		{groupTemplate = "paintings", weight = 1400000},
+		{itemTemplate = "resourcedeed", weight = 400000},	
 		
 		{groupTemplate = "holocron_nd", weight = 100000},
 	}
