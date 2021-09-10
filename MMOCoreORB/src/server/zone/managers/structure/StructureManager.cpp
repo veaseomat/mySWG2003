@@ -286,10 +286,10 @@ int StructureManager::placeStructureFromDeed(CreatureObject* creature, Structure
 //		return 1;
 //	}
 //
-//	if (!planetManager->isBuildingPermittedAt(x, y, creature)) {
-//		creature->sendSystemMessage("@player_structure:not_permitted"); //Building is not permitted here.
-//		return 1;
-//	}
+	if (!planetManager->isBuildingPermittedAt(x, y, creature)) {
+		creature->sendSystemMessage("@player_structure:not_permitted"); //Building is not permitted here.
+		return 1;
+	}
 
 	SortedVector<ManagedReference<ActiveArea*> > objects;
 	zone->getInRangeActiveAreas(x, y, &objects, true);
@@ -299,13 +299,13 @@ int StructureManager::placeStructureFromDeed(CreatureObject* creature, Structure
 	for (int i = 0; i < objects.size(); ++i) {
 		ActiveArea* area = objects.get(i).get();
 
-//		if (!area->isRegion())
-//			continue;
-//
-//		city = dynamic_cast<Region*>(area)->getCityRegion().get();
-//
-//		if (city != nullptr)
-//			break;
+		if (!area->isRegion())
+			continue;
+
+		city = dynamic_cast<Region*>(area)->getCityRegion().get();
+
+		if (city != nullptr)
+			break;
 	}
 
 	SortedVector<ManagedReference<QuadTreeEntry*> > inRangeObjects;

@@ -1830,10 +1830,10 @@ void CreatureObjectImplementation::updateTerrainNegotiation()
 }
 
 float CreatureObjectImplementation::getTerrainNegotiation() const {
-	float slopeMod = (((float)getSkillMod("slope_move") * .5) / 50.0f) + (terrainNegotiation);
+	float slopeMod = (((float)getSkillMod("slope_move") * .25) / 50.0f) + (terrainNegotiation);//reduce terrain nego effectiveness
 
 	if (slopeMod > 1)
-		slopeMod = 1;
+		slopeMod = 1;//next cap it at like .9
 
 	return slopeMod;
 }

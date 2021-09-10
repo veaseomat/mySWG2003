@@ -38,15 +38,16 @@ void SpawnAreaImplementation::buildSpawnList(Vector<uint32>* groupCRCs) {
 Vector3 SpawnAreaImplementation::getRandomPosition(SceneObject* player) {
 	Vector3 position;
 	bool positionFound = false;
-	int retries = 10;
+	int retries = 20;
 
 	const auto worldPosition = player->getWorldPosition();
 
 	while (!positionFound && retries-- > 0) {
-		position = areaShape->getRandomPosition(worldPosition, 48.0f, 256.0f);//this is how close to the player stuff can spawn min max
+		position = areaShape->getRandomPosition(worldPosition, 56.0f, 256.0f);//this is how close to the player stuff can spawn min max
 
 		positionFound = true;
 
+		//spawns on top of spawns without this lol
 		for (int i = 0; i < noSpawnAreas.size(); ++i) {
 			auto noSpawnArea = noSpawnAreas.get(i).get();
 
@@ -96,14 +97,14 @@ int SpawnAreaImplementation::notifyObserverEvent(unsigned int eventType, Observa
 
 			Locker locker(area);
 
-			area->setRadius(32);//set no spawn radius?
+			area->setRadius(0);//set no spawn radius?
 			area->setNoSpawnArea(true);
 			area->initializePosition(sceno->getPositionX(), sceno->getPositionZ(), sceno->getPositionY());
 
 			thisZone->transferObject(area, -1, true);
 
 			Reference<Task*> task = new RemoveNoSpawnAreaTask(area);
-			task->schedule(300000);//timer for despawn?
+			task->schedule(60000);//timer for despawn? 60,000 = 1min
 		}
 	}
 
@@ -166,7 +167,7 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	//	return;
 
 	// Check the spot to see if spawning is allowed
-	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), finalSpawn->getSize() + 64.f)) {
+	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), 0)) {//this is spawn density
 		return;
 	}
 

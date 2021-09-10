@@ -51,7 +51,7 @@ int DynamicSpawnObserverImplementation::notifyObserverEvent(unsigned int eventTy
 	}
 //npc creature respawn timer after killed
 	Reference<Task*> task = new RespawnCreatureTask(ai.get(), zone, level);
-	task->schedule((60 + (level * 2)) * 1000);
+	task->schedule(60 * 1000);
 
 	return 0;
 }
@@ -62,17 +62,15 @@ void DynamicSpawnObserverImplementation::spawnInitialMobiles(SceneObject* buildi
 
 	int spawnLimitAdjustment = (difficulty - 2) / 2;
 
-	int totalNumberToSpawn = (lairTemplate->getSpawnLimit() / 2) + System::random(5); //+ spawnLimitAdjustment;
-	
-	if (totalNumberToSpawn > 15) totalNumberToSpawn = 15;
+	int totalNumberToSpawn = System::random(lairTemplate->getSpawnLimit() * .5);//(lairTemplate->getSpawnLimit() / 2) + System::random(5); //+ spawnLimitAdjustment;
+
+	if (totalNumberToSpawn < 1)	totalNumberToSpawn = 1;
+	if (totalNumberToSpawn > 5) totalNumberToSpawn = 5;
 	
 	VectorMap<String, int> objectsToSpawn; // String mobileTemplate, int number to spawn
 
 	const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
 	uint32 lairTemplateCRC = getLairTemplateName().hashCode();
-
-	if (totalNumberToSpawn < 1)
-		totalNumberToSpawn = 1;
 
 	for (int i = 0; i < totalNumberToSpawn; i++) {
 		int num = System::random(mobiles->size() - 1);

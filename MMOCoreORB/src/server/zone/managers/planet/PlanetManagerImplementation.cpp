@@ -1018,15 +1018,15 @@ bool PlanetManagerImplementation::isSpawningPermittedAt(float x, float y, float 
 	targetPos.setZ(zone->getHeight(x, y));
 
 	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
-	zone->getInRangeActiveAreas(x, y, margin + 64.f, &activeAreas, true);
+	zone->getInRangeActiveAreas(x, y, 0, &activeAreas, true);//raw value instead of margin
 
-	for (int i = 0; i < activeAreas.size(); ++i) {
-		ActiveArea* area = activeAreas.get(i);
-
-		if (area->isRegion() || area->isMunicipalZone() || area->isNoSpawnArea()) {
-			return false;
-		}
-	}
+//	for (int i = 0; i < activeAreas.size(); ++i) {
+//		ActiveArea* area = activeAreas.get(i);
+//
+//		if (area->isRegion() || area->isMunicipalZone() || area->isNoSpawnArea()) {
+//			return false;
+//		}
+//	}
 
 	if (isInObjectsNoBuildZone(x, y, margin)) {
 		return false;
@@ -1057,24 +1057,24 @@ bool PlanetManagerImplementation::isBuildingPermittedAt(float x, float y, SceneO
 
 	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
 
-	for (int i = 0; i < activeAreas.size(); ++i) {
-		ActiveArea* area = activeAreas.get(i);
-
+//	for (int i = 0; i < activeAreas.size(); ++i) {//removing this lets you drop houses closer to cities
+//		ActiveArea* area = activeAreas.get(i);
+//
 //		if (area->isNoBuildArea()) {
 //			return false;
 //		}
-	}
-
-//	if (isInObjectsNoBuildZone(x, y, margin, checkFootprint)) {
-//		return false;
 //	}
+
+	if (isInObjectsNoBuildZone(x, y, margin, checkFootprint)) {
+		return false;
+	}
 
 	if (isInWater(x, y)) {
 		return false;
 	}
 
-//	if (isInRangeWithPoi(x, y, 150))
-//		return false;
+	if (isInRangeWithPoi(x, y, 150))
+		return false;
 
 	return true;
 }
