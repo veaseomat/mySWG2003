@@ -150,11 +150,11 @@ end
 
 -- Check if the player has mastered all hologrind professions and send sui window and award skills.
 -- @param pCreatureObject pointer to the creature object of the player to check the jedi progression on.
-function HologrindJediManager:checkIfProgressedToJedi(pCreatureObject)
-	if self:getNumberOfMasteredProfessions(pCreatureObject) >= NUMBEROFPROFESSIONSTOMASTER and not self:isJedi(pCreatureObject) then
-		self:sendSuiWindow(pCreatureObject)
-		self:awardJediStatusAndSkill(pCreatureObject)
-	end
+--function HologrindJediManager:checkIfProgressedToJedi(pCreatureObject)
+--	if self:getNumberOfMasteredProfessions(pCreatureObject) >= NUMBEROFPROFESSIONSTOMASTER and not self:isJedi(pCreatureObject) then
+--		self:sendSuiWindow(pCreatureObject)
+--		self:awardJediStatusAndSkill(pCreatureObject)
+--	end
 end
 
 -- Event handler for the BADGEAWARDED event.

@@ -564,7 +564,7 @@ void MissionManagerImplementation::randomizeGeneralTerminalMissions(CreatureObje
 		}
 
 		if (slicer) {
-			mission->setRewardCredits(mission->getRewardCredits() * 2);
+			mission->setRewardCredits(mission->getRewardCredits() * 1.5);
 		}
 
 		float cityBonus = 1.f + player->getSkillMod("private_spec_missions") / 100.f;
@@ -593,7 +593,7 @@ void MissionManagerImplementation::randomizeArtisanTerminalMissions(CreatureObje
 		}
 
 		if (slicer) {
-			mission->setRewardCredits(mission->getRewardCredits() * 2);
+			mission->setRewardCredits(mission->getRewardCredits() * 1.5);
 		}
 
 		float cityBonus = 1.f + player->getSkillMod("private_spec_missions") / 100.f;
@@ -622,7 +622,7 @@ void MissionManagerImplementation::randomizeEntertainerTerminalMissions(Creature
 		}
 
 		if (slicer) {
-			mission->setRewardCredits(mission->getRewardCredits() * 2);
+			mission->setRewardCredits(mission->getRewardCredits() * 1.5);
 		}
 
 		float cityBonus = 1.f + player->getSkillMod("private_spec_missions") / 100.f;
@@ -651,7 +651,7 @@ void MissionManagerImplementation::randomizeScoutTerminalMissions(CreatureObject
 		}
 
 		if (slicer) {
-			mission->setRewardCredits(mission->getRewardCredits() * 2);
+			mission->setRewardCredits(mission->getRewardCredits() * 1.5);
 		}
 
 		float cityBonus = 1.f + player->getSkillMod("private_spec_missions") / 100.f;
@@ -724,7 +724,7 @@ void MissionManagerImplementation::randomizeFactionTerminalMissions(CreatureObje
 		}
 
 		if (slicer) {
-			mission->setRewardCredits(mission->getRewardCredits() * 2);
+			mission->setRewardCredits(mission->getRewardCredits() * 1.5);
 		}
 
 		float cityBonus = 1.f + player->getSkillMod("private_spec_missions") / 100.f;
