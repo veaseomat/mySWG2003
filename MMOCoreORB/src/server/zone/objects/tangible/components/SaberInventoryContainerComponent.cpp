@@ -29,17 +29,17 @@ int SaberInventoryContainerComponent::canAddObject(SceneObject* sceneObject, Sce
 
 	LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (object);
 
-	if (crystal->getOwnerID() == 0) {
-		errorDescription = "@jedi_spam:saber_crystal_not_tuned";
-		return TransferErrorCode::INVALIDTYPE;
-	}
+//	if (crystal->getOwnerID() == 0) {
+//		errorDescription = "@jedi_spam:saber_crystal_not_tuned";
+//		return TransferErrorCode::INVALIDTYPE;
+//	}
 
 	ManagedReference<CreatureObject*> creature = crystal->getParentRecursively(SceneObjectType::PLAYERCREATURE).castTo<CreatureObject*>();
 
-	if (creature == nullptr || crystal->getOwnerID() != creature->getObjectID()){
-		errorDescription = "@jedi_spam:saber_crystal_not_owner";
-		return TransferErrorCode::INVALIDTYPE;
-	}
+//	if (creature == nullptr || crystal->getOwnerID() != creature->getObjectID()){
+//		errorDescription = "@jedi_spam:saber_crystal_not_owner";
+//		return TransferErrorCode::INVALIDTYPE;
+//	}
 
 	if (crystal->isDestroyed()) {
 		errorDescription = "You cannot add a broken crystal to your lightsaber.";

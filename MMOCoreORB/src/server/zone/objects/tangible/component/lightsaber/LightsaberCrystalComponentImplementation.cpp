@@ -271,13 +271,13 @@ void LightsaberCrystalComponentImplementation::fillAttributeList(AttributeListMe
 
 	PlayerObject* player = object->getPlayerObject();
 	if (object->hasSkill("force_title_jedi_rank_01") || player->isPrivileged()) {
-		if (ownerID == 0) {
-			StringBuffer str;
-			str << "\\#pcontrast2 UNTUNED";
-			alm->insertAttribute("crystal_owner", str);
-		} else {
-			alm->insertAttribute("crystal_owner", ownerName);
-		}
+//		if (ownerID == 0) {
+//			StringBuffer str;
+//			str << "\\#pcontrast2 UNTUNED";
+//			alm->insertAttribute("crystal_owner", str);
+//		} else {
+//			alm->insertAttribute("crystal_owner", ownerName);
+//		}
 
 		if (getColor() != 31) {
 			StringBuffer str3;
@@ -312,10 +312,10 @@ void LightsaberCrystalComponentImplementation::fillAttributeList(AttributeListMe
 }
 
 void LightsaberCrystalComponentImplementation::fillObjectMenuResponse(ObjectMenuResponse* menuResponse, CreatureObject* player) {
-	if (ownerID == 0 && player->hasSkill("force_title_jedi_rank_01") && hasPlayerAsParent(player)) {
-		String text = "@jedi_spam:tune_crystal";
-		menuResponse->addRadialMenuItem(128, 3, text);
-	}
+//	if (ownerID == 0 && player->hasSkill("force_title_jedi_rank_01") && hasPlayerAsParent(player)) {
+//		String text = "@jedi_spam:tune_crystal";
+//		menuResponse->addRadialMenuItem(128, 3, text);
+//	}
 
 	PlayerObject* ghost = player->getPlayerObject();
 	if (ghost != nullptr && ghost->isPrivileged()) {
@@ -332,18 +332,18 @@ void LightsaberCrystalComponentImplementation::fillObjectMenuResponse(ObjectMenu
 }
 
 int LightsaberCrystalComponentImplementation::handleObjectMenuSelect(CreatureObject* player, byte selectedID) {
-	if (selectedID == 128 && player->hasSkill("force_title_jedi_rank_01") && hasPlayerAsParent(player) && ownerID == 0) {
-		ManagedReference<SuiMessageBox*> suiMessageBox = new SuiMessageBox(player, SuiWindowType::TUNE_CRYSTAL);
-
-		suiMessageBox->setPromptTitle("@jedi_spam:confirm_tune_title");
-		suiMessageBox->setPromptText("@jedi_spam:confirm_tune_prompt");
-		suiMessageBox->setCancelButton(true, "Cancel");
-		suiMessageBox->setUsingObject(_this.getReferenceUnsafeStaticCast());
-		suiMessageBox->setCallback(new LightsaberCrystalTuneSuiCallback(player->getZoneServer()));
-
-		player->getPlayerObject()->addSuiBox(suiMessageBox);
-		player->sendMessage(suiMessageBox->generateMessage());
-	}
+//	if (selectedID == 128 && player->hasSkill("force_title_jedi_rank_01") && hasPlayerAsParent(player) && ownerID == 0) {
+//		ManagedReference<SuiMessageBox*> suiMessageBox = new SuiMessageBox(player, SuiWindowType::TUNE_CRYSTAL);
+//
+//		suiMessageBox->setPromptTitle("@jedi_spam:confirm_tune_title");
+//		suiMessageBox->setPromptText("@jedi_spam:confirm_tune_prompt");
+//		suiMessageBox->setCancelButton(true, "Cancel");
+//		suiMessageBox->setUsingObject(_this.getReferenceUnsafeStaticCast());
+//		suiMessageBox->setCallback(new LightsaberCrystalTuneSuiCallback(player->getZoneServer()));
+//
+//		player->getPlayerObject()->addSuiBox(suiMessageBox);
+//		player->sendMessage(suiMessageBox->generateMessage());
+//	}
 
 	PlayerObject* ghost = player->getPlayerObject();
 	if (ghost != nullptr && ghost->isPrivileged()){
