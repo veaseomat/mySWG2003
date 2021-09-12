@@ -42,7 +42,7 @@
 
 
 object_tangible_component_weapon_lightsaber_lightsaber_lance_module_force_crystal = object_tangible_component_weapon_lightsaber_shared_lightsaber_lance_module_force_crystal:new {
-
+	noTrade = 1,
 }
 
 ObjectTemplates:addTemplate(object_tangible_component_weapon_lightsaber_lightsaber_lance_module_force_crystal, "object/tangible/component/weapon/lightsaber/lightsaber_lance_module_force_crystal.iff")
