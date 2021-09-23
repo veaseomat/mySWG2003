@@ -244,7 +244,7 @@ endor = {
 }
 
 lok = {
-	weatherEnabled = 1,
+	weatherEnabled = 0,
 	gcwEnabled = 1,
 
 	outpostRegionNames = {
@@ -505,7 +505,7 @@ talus = {
 }
 
 tatooine = {
-	weatherEnabled = 1,
+	weatherEnabled = 0,
 	gcwEnabled = 1,
 
 	outpostRegionNames = { },

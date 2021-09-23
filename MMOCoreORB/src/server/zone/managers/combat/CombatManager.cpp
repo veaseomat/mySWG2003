@@ -858,6 +858,9 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	if (targetDefense > 125)
 		targetDefense = 125;
 
+	if (defender->isPlayerCreature()) {
+		targetDefense *= .5;//nerf player target defense less misses
+	}
 
 	// food bonus goes on top
 	targetDefense += defender->getSkillMod("dodge_attack");
@@ -884,8 +887,8 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 		targetDefense *= .25;
 	}
 
-	if (targetDefense > 175)
-		targetDefense = 175;
+	if (targetDefense > 125)
+		targetDefense = 125;//125 hard cap because of nerf above^
 
 	if (targetDefense < 0)
 		targetDefense = 0;
@@ -1682,8 +1685,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	//		damage *= 1.0f;
 		}
 //powers boost 10x seems to be same damage as saber attack w force lightning... but 4sec delay and heavy force cost
-		if (data.isForceAttack()) {
-				damage *= 10.f;
+		if (attacker->isPlayerCreature() && data.isForceAttack()) {
+				damage *= 5.f;
 		}
 
 		// PVE Damage bonus
