@@ -272,7 +272,9 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 --			
 
 --jedi unlock has to be an elite master and a random 1/72 chance. 24 profs so only a 1/3 chance to unlock for each caracter
-	if (((pGhost ~= nil and getRandomNumber(1, 72) >= 72) and 
+		if (pGhost ~= nil and 
+	getRandomNumber(1, 72) >= 72 and
+	JediTrials:isEligibleForPadawanTrials(pPlayer) and
 	(skillName == "crafting_architect_master" or
 	skillName == "crafting_armorsmith_master" or
 	skillName == "outdoors_bio_engineer_master" or
@@ -296,7 +298,7 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 	skillName == "combat_2hsword_master" or
 	skillName == "crafting_tailor_master" or
 	skillName == "crafting_weaponsmith_master" or
-	skillName == "combat_unarmed_master")))
+	skillName == "combat_unarmed_master"))
 	then
 
 			PlayerObject(pGhost):setJediState(2)

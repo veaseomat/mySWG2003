@@ -23,13 +23,13 @@ JediTrials = ScreenPlay:new {
 }
 
 function JediTrials:isEligibleForPadawanTrials(pPlayer)
-	if (pPlayer == nil or not self.padawanTrialsEnabled) then
+	if (pPlayer == nil) then
 		return false
 	end
 
 	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer)
 
-	return CreatureObject(pPlayer):hasScreenPlayState(32, "VillageJediProgression") and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and learnedBranches >= 0 and tonumber(readScreenPlayData(pPlayer, "PadawanTrials", "completedTrials")) ~= 1
+	return learnedBranches >= 6
 end
 
 function JediTrials:isOnPadawanTrials(pPlayer)

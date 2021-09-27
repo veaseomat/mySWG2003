@@ -262,8 +262,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
-	if(level > 300)
-		level = 300;
+	if(level > 100)
+		level = 100;
 
 //	float excMod = (System::random(40) * .1) + 1.0;
 
