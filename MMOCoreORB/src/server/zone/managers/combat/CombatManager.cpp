@@ -1749,7 +1749,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //	}
 
 	// EVP Damage. dont forget to update aiagentimplementation also so examine shows same numbers (not using that anymore) npc damage located in aiagient
-	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
+	if (!attacker->isPlayerCreature())// && defender->isPlayerCreature())
 		damage *= 2.0;
 
 	// PvP Damage Reduction.
