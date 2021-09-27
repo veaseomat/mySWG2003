@@ -1644,15 +1644,15 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	//mySWG balancing the profs based on highest dmg weapon and special for that class
 		if (attacker->isPlayerCreature() && !data.isForceAttack()) {
 			if (weapon->isPistolWeapon())
-			damage *= 1.2f;
-//			if (weapon->isCarbineWeapon())
-//			damage *= 1.25f;
-			if (weapon->isRifleWeapon())
-			damage *= .8f;
+			damage *= 1.3f;
+			if (weapon->isCarbineWeapon())
+			damage *= 1.1f;
+//			if (weapon->isRifleWeapon())
+//			damage *= .8f;
 //			if (weapon->isRangedWeapon())
 //			damage *= 1.03f;
 			if (weapon->isUnarmedWeapon())
-			damage *= 1.3f;
+			damage *= 1.2f;
 			if (weapon->isOneHandMeleeWeapon())
 			damage *= 1.1f;
 //			if (weapon->isTwoHandMeleeWeapon())
@@ -1669,14 +1669,14 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= .7f;
 //			if (weapon->isHeavyWeapon())
 //			damage *= 1.0f;
-//			if (weapon->isThrownWeapon())
-//			damage *= 1.0f;
+			if (weapon->isThrownWeapon())
+			damage *= .5f;
 			if (weapon->isSpecialHeavyWeapon())
-			damage *= 0.5f;
-	//		if (weapon->isMineWeapon())
-	//		damage *= 1.0f;
+			damage *= .5f;
+			if (weapon->isMineWeapon())
+			damage *= .5f;
 			if (weapon->isJediOneHandedWeapon())
-			damage *= 1.1f;
+			damage *= 1.5f;
 //			if (weapon->isJediTwoHandedWeapon())
 //			damage *= .8f;
 //			if (weapon->isJediPolearmWeapon())
@@ -1690,8 +1690,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		}
 
 		// PVE Damage bonus
-//		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-//			damage *= 1.5;
+		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
+			damage *= .5;
 
 		//frsdamage
 //		float lightDamage = attacker->getSkillMod("force_manipulation_light") * 0.3125;
