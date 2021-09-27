@@ -1,5 +1,5 @@
 JediTrials = ScreenPlay:new {
-	padawanTrialsEnabled = false,
+	padawanTrialsEnabled = true,
 	knightTrialsEnabled = false,
 
 	-- Object ID's of the various force shrines.

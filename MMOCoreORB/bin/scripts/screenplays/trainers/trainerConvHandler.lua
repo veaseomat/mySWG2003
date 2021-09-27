@@ -274,7 +274,7 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 --jedi unlock has to be an elite master and a random 1/72 chance. 24 profs so only a 1/3 chance to unlock for each caracter
 		if (pGhost ~= nil and 
 	getRandomNumber(1, 72) >= 72 and
-	JediTrials:isEligibleForPadawanTrials(pPlayer) and
+	JediTrials:isEligibleForJedi(pPlayer) and
 	(skillName == "crafting_architect_master" or
 	skillName == "crafting_armorsmith_master" or
 	skillName == "outdoors_bio_engineer_master" or
