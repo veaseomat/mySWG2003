@@ -2096,12 +2096,13 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 	if (attacker->getHAM(CreatureAttribute::MIND) <= mind)
 		return false;
 
+	if (health < 1)	health = 1;
 	if (health > 0)
 		attacker->inflictDamage(attacker, CreatureAttribute::HEALTH, health, true, true, true);
-
+	if (action < 1)	action = 1;
 	if (action > 0)
 		attacker->inflictDamage(attacker, CreatureAttribute::ACTION, action, true, true, true);
-
+	if (mind < 1) mind = 1;
 	if (mind > 0)
 		attacker->inflictDamage(attacker, CreatureAttribute::MIND, mind, true, true, true);
 
