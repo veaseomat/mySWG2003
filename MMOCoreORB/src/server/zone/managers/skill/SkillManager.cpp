@@ -21,6 +21,13 @@
 #include "server/zone/managers/mission/MissionManager.h"
 #include "server/zone/managers/frs/FrsManager.h"
 
+#include "server/zone/ZoneServer.h"
+#include "server/chat/ChatManager.h"
+#include "engine/engine.h"
+#include "server/zone/objects/creature/CreatureObject.h"
+#include "server/zone/ZoneProcessServer.h"
+#include "engine/core/ManagedService.h"
+
 SkillManager::SkillManager()
 	: Logger("SkillManager") {
 
@@ -399,6 +406,13 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 //	if (skill->getSkillName() == "social_politician_novice") {
 //		awardSkill("social_politician_master", creature, true, true, true);
 //	}
+
+//	ZoneProcessServer* server;
+	ChatManager* chatManager = creature->getZoneServer()->getChatManager();
+
+		if (skill->getSkillName() == "force_title_jedi_rank_02") {
+			chatManager->broadcastGalaxy("IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR: Lord Vader has detected a vergence in the Force.\r\rBe on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.", "imperial");
+		}
 
 	return true;
 }

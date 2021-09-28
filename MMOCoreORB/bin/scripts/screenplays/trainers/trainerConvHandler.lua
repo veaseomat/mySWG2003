@@ -273,7 +273,7 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 
 --jedi unlock has to be an elite master and a random 1/72 chance. 24 profs so only a 1/3 chance to unlock for each caracter
 		if (pGhost ~= nil and 
-	getRandomNumber(1, 72) >= 72 and
+	getRandomNumber(1, 20) >= 20 and
 	JediTrials:isEligibleForJedi(pPlayer) and
 	(skillName == "crafting_architect_master" or
 	skillName == "crafting_armorsmith_master" or
@@ -312,7 +312,10 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 			
 			local suiManager = LuaSuiManager()		
 			suiManager:sendMessageBox(pPlayer, pPlayer, "@quest/force_sensitive/intro:force_sensitive", "You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\nTo get started you will need to craft crystal packs for Jedi exp until you reach novice lightsaber, there is no training saber on mySWG. Brawler trainers teach all Jedi skills. Using your Jedi abilities near NPCs or players will gain visibility for player and NPC bounty hunters. There is no XP or skill loss on mySWG. Congratulations and may the force be with you... Jedi.", "@ok", "HologrindJediManager", "notifyOkPressed")
-			
+			--not working yet***** message located in skillmanager.ccp
+--			self:broadcastToPlayers(pGhost, "IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR: Lord Vader has detected a vergence in the Force.\r\rBe on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.")
+			--playerObject(pGhost):broadcastGalaxy("IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR: Lord Vader has detected a vergence in the Force.\r\rBe on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.")			
+
 		end
 
 		if (pGhost ~= nil and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") and JediTrials:isEligibleForKnightTrials(pPlayer)) then

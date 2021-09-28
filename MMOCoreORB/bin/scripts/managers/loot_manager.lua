@@ -44,7 +44,7 @@
 yellowChance = 1000 -- 1 in 1,000
 exceptionalChance = 100000 --1 in 100,000
 
-legendaryChance = 10000 --only this one is enabled here
+legendaryChance = 1000 --only this one is enabled here
 
 --Determines how much of an increase in the base stats will be applied to the object.
 yellowModifier = 1.5
