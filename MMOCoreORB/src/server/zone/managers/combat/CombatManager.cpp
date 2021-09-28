@@ -1691,7 +1691,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 		// PVE Damage bonus
 //		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-//			damage *= .5;
+//			damage *= .75;
 
 		//frsdamage
 //		float lightDamage = attacker->getSkillMod("force_manipulation_light") * 0.3125;
