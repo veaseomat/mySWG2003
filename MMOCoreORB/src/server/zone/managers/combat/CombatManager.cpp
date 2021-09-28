@@ -1651,8 +1651,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //			damage *= .8f;
 //			if (weapon->isRangedWeapon())
 //			damage *= 1.03f;
-			if (weapon->isUnarmedWeapon())
-			damage *= 1.2f;
+//			if (weapon->isUnarmedWeapon())
+//			damage *= 1.2f;
 			if (weapon->isOneHandMeleeWeapon())
 			damage *= 1.1f;
 //			if (weapon->isTwoHandMeleeWeapon())
@@ -1676,7 +1676,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			if (weapon->isMineWeapon())
 			damage *= .5f;
 			if (weapon->isJediOneHandedWeapon())
-			damage *= 1.5f;
+			damage *= 2.0f;
 //			if (weapon->isJediTwoHandedWeapon())
 //			damage *= .8f;
 //			if (weapon->isJediPolearmWeapon())
@@ -1690,8 +1690,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		}
 
 		// PVE Damage bonus
-		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-			damage *= .5;
+//		if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
+//			damage *= .5;
 
 		//frsdamage
 //		float lightDamage = attacker->getSkillMod("force_manipulation_light") * 0.3125;
