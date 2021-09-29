@@ -2079,9 +2079,9 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 //		}
 //	}
 
-	float health = (weapon->getHealthAttackCost() * data.getHealthCostMultiplier()) / 3;
-	float action = (weapon->getActionAttackCost() * data.getActionCostMultiplier()) / 3;
-	float mind = (weapon->getMindAttackCost() * data.getMindCostMultiplier()) / 3;
+	float health = (weapon->getHealthAttackCost() * data.getHealthCostMultiplier()) * .25;
+	float action = (weapon->getActionAttackCost() * data.getActionCostMultiplier()) * .25;
+	float mind = (weapon->getMindAttackCost() * data.getMindCostMultiplier()) * .25;
 
 	health = attacker->calculateCostAdjustment(CreatureAttribute::STRENGTH, health);
 	action = attacker->calculateCostAdjustment(CreatureAttribute::QUICKNESS, action);

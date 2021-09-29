@@ -32,6 +32,8 @@ void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool
 		int mod = (System::random(max - min) + min);
 		mod += (System::random(max - min) + min);
 
+		mod = System::random(level * .3);
+
 		if(mod < 5)
 			mod = 5;
 
