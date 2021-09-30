@@ -401,8 +401,8 @@ int CombatManager::doTargetCombatAction(CreatureObject* attacker, WeaponObject* 
 			damage = applyDamage(attacker, weapon, defender, damage, damageMultiplier, poolsToDamage, hitLocation, data);
 
 			if (!defender->isDead()) {
-//				applyDots(attacker, defender, data, damage, unmitDamage, poolsToDamage);
-//				applyWeaponDots(attacker, defender, weapon);
+				applyDots(attacker, defender, data, damage, unmitDamage, poolsToDamage);
+				applyWeaponDots(attacker, defender, weapon);
 			}
 
 		}
@@ -515,10 +515,44 @@ int CombatManager::doTargetCombatAction(TangibleObject* attacker, WeaponObject* 
 }
 
 void CombatManager::applyDots(CreatureObject* attacker, CreatureObject* defender, const CreatureAttackData& data, int appliedDamage, int unmitDamage, int poolsToDamage) const {
+//	attacker->sendSystemMessage("mySWG: DOTs are currently disabled");//send a msg to the player even when its npc dot attack wtf
+	return;
+//
 //	const Vector<DotEffect>* dotEffects = data.getDotEffects();
 //
 //	if (defender->isInvulnerable())
 //		return;
+//
+//	ManagedReference<WeaponObject*> attweapon = attacker->getWeapon();
+//
+//	if (attweapon->isJediWeapon()) {
+//		attacker->sendSystemMessage("You can not use dots with a lightsaber equipped!");
+//		return;
+//	}
+//
+//	if (attacker->hasBuff(BuffCRC::JEDI_FORCE_RUN_1)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_SPEED_1)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_SPEED_2)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_1)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_2)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_1)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_2)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_PROTECTION_1)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_FEEDBACK_1)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_FEEDBACK_2)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_ABSORB_1)
+//		|| attacker->hasBuff(BuffCRC::JEDI_FORCE_ABSORB_2)
+//		|| attacker->hasBuff(BuffCRC::JEDI_RESIST_DISEASE)
+//		|| attacker->hasBuff(BuffCRC::JEDI_RESIST_POISON)
+//		|| attacker->hasBuff(BuffCRC::JEDI_RESIST_BLEEDING)
+//		|| attacker->hasBuff(BuffCRC::JEDI_RESIST_STATES)
+//		|| attacker->hasBuff(BuffCRC::JEDI_AVOID_INCAPACITATION)
+//	) {
+//		attacker->sendSystemMessage("You can not use dots with a force power active!");
+//		return;
+//	}
 //
 //	for (int i = 0; i < dotEffects->size(); i++) {
 //		const DotEffect& effect = dotEffects->get(i);
@@ -566,6 +600,9 @@ void CombatManager::applyDots(CreatureObject* attacker, CreatureObject* defender
 }
 
 void CombatManager::applyWeaponDots(CreatureObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
+//	attacker->sendSystemMessage("mySWG: DOTs are currently disabled");
+	return;
+//
 //	if (defender->isInvulnerable())
 //		return;
 //
@@ -1909,9 +1946,9 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 		if (def == "saber_block") {
 			int saberblockmod = targetCreature->getSkillMod("saber_block");
 
-			if (targetCreature->isStanding() && !targetCreature->isRunning()) {
-				saberblockmod *= 1.15;
-			}
+//			if (targetCreature->isStanding() && !targetCreature->isRunning()) {
+//				saberblockmod *= 1.1;
+//			}
 
 			if (targetCreature->isKneeling()) {
 				saberblockmod *= .75;

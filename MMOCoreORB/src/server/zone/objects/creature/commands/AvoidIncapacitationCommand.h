@@ -39,7 +39,7 @@ public:
 //			return doJediSelfBuffCommand(creature);
 //		}
 //	}
-		creature->sendSystemMessage("This ability is disabled.");
+		creature->sendSystemMessage("mySWG: This ability is disabled.");
 		return GENERALERROR;
 	}
 

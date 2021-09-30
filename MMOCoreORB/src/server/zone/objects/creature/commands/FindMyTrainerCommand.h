@@ -67,7 +67,7 @@ public:
 //
 //		return SUCCESS;
 
-		creature->sendSystemMessage("Brawler trainers teach Jedi skills.");
+		creature->sendSystemMessage("mySWG: Brawler trainers teach Jedi skills.");
 		return SUCCESS;
 	}
 

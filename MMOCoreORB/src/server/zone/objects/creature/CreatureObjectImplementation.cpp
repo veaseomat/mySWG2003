@@ -3568,22 +3568,23 @@ bool CreatureObjectImplementation::hasEffectImmunity(uint8 effectType) const {
 }
 
 bool CreatureObjectImplementation::hasDotImmunity(uint32 dotType) const {
+//	sendSystemMessage("mySWG: DOTs are currently disabled");
 	return true;//backup disable dots
-
-	switch (dotType) {
-	case CreatureState::POISONED:
-	case CreatureState::BLEEDING:
-	case CreatureState::DISEASED:
-		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
-			return true;
-		break;
-	case CreatureState::ONFIRE:
-		return false;
-	default:
-		return false;
-	}
-
-	return false;
+//
+//	switch (dotType) {
+//	case CreatureState::POISONED:
+//	case CreatureState::BLEEDING:
+//	case CreatureState::DISEASED:
+//		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
+//			return true;
+//		break;
+//	case CreatureState::ONFIRE:
+//		return false;
+//	default:
+//		return false;
+//	}
+//
+//	return false;
 }
 
 int CreatureObjectImplementation::getSpecies() const {
@@ -3614,7 +3615,7 @@ void CreatureObjectImplementation::updateVehiclePosition(bool sendPackets) {
 
 	if (creo != nullptr) {
 		//Locker clocker(creo, asCreatureObject());
-		creo->setCurrentSpeed(getCurrentSpeed());
+		creo->setCurrentSpeed(getCurrentSpeed());//vehicle speed? not tested
 	}
 
 	TangibleObjectImplementation::updateVehiclePosition(sendPackets);

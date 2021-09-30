@@ -10,17 +10,15 @@ public:
 
 	ForceResistStatesCommand(const String& name, ZoneProcessServer* server)
 		: JediQueueCommand(name, server) {
-//
-//		buffCRC = BuffCRC::JEDI_RESIST_STATES;
-//
-//		skillMods.put("resistance_states", 25);
+
+		buffCRC = BuffCRC::JEDI_RESIST_STATES;
+
+		skillMods.put("resistance_states", 25);
 
 	}
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
-//		return doJediSelfBuffCommand(creature);
-		creature->sendSystemMessage("This ability is disabled.");
-		return GENERALERROR;
+		return doJediSelfBuffCommand(creature);
 	}
 
 };

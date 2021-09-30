@@ -24,7 +24,7 @@ public:
 //			return INVALIDLOCOMOTION;
 //
 //		return SUCCESS;
-		creature->sendSystemMessage("This ability is disabled.");
+		creature->sendSystemMessage("mySWG: This ability is disabled.");
 		return GENERALERROR;
 	}
 

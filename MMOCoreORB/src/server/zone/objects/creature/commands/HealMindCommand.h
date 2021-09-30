@@ -18,7 +18,7 @@ public:
 		: QueueCommand(name, server) {
 		
 //		mindCost = 250;
-		mindWoundCost = 25;
+		mindWoundCost = 100;
 		range = 5;
 	}
 

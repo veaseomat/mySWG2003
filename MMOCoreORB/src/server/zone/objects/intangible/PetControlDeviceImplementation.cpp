@@ -544,7 +544,7 @@ bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force,
 
 	Time currentTime;
 	uint32 timeDelta = currentTime.getTime() - lastGrowth.getTime();
-	int stagesToGrow = timeDelta / 3600; // 12 hour
+	int stagesToGrow = timeDelta / 10800; // 4 hour
 
 	if (adult)
 		stagesToGrow = 10;
@@ -1161,29 +1161,29 @@ void PetControlDeviceImplementation::setTrainingCommand(unsigned int commandID) 
 }
 
 void PetControlDeviceImplementation::trainAsMount(CreatureObject* player) {
-	return;
-//	if (isTrainedAsMount() || !player->hasSkill("outdoors_creaturehandler_support_04"))
-//		return;
-//
-//	PetManager* petManager = player->getZoneServer()->getPetManager();
-//	if (petManager == nullptr)
-//		return;
-//
-//	if (petManager->checkMountEligibility(_this.getReferenceUnsafeStaticCast()) != PetManager::CANBEMOUNTTRAINED)
-//		return;
-//
-//	ManagedReference<TangibleObject*> controlledObject = this->controlledObject.get();
-//	if (controlledObject == nullptr || !controlledObject->isAiAgent())
-//		return;
-//
-//	AiAgent* pet = cast<AiAgent*>(controlledObject.get());
-//	if (pet == nullptr)
-//		return;
-//
-//	assert(pet->isLockedByCurrentThread());
-//
-//	trainedAsMount = true;
-//	pet->setOptionBit(0x1000);
+//	return;
+	if (isTrainedAsMount() || !player->hasSkill("outdoors_creaturehandler_support_04"))
+		return;
+
+	PetManager* petManager = player->getZoneServer()->getPetManager();
+	if (petManager == nullptr)
+		return;
+
+	if (petManager->checkMountEligibility(_this.getReferenceUnsafeStaticCast()) != PetManager::CANBEMOUNTTRAINED)
+		return;
+
+	ManagedReference<TangibleObject*> controlledObject = this->controlledObject.get();
+	if (controlledObject == nullptr || !controlledObject->isAiAgent())
+		return;
+
+	AiAgent* pet = cast<AiAgent*>(controlledObject.get());
+	if (pet == nullptr)
+		return;
+
+	assert(pet->isLockedByCurrentThread());
+
+	trainedAsMount = true;
+	pet->setOptionBit(0x1000);
 }
 
 void PetControlDeviceImplementation::resetNamingCommands() {

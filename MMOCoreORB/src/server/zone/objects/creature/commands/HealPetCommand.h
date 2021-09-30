@@ -47,11 +47,11 @@ public:
 
 				PharmaceuticalObject* pharma = cast<PharmaceuticalObject*>(item);
 
-				if (pharma->isPetStimPack()) {
+//				if (pharma->isPetStimPack()) {
 					StimPack* stimPack = cast<StimPack*>(pharma);
 
 					return stimPack;
-				}
+//				}
 			}
 		}
 
