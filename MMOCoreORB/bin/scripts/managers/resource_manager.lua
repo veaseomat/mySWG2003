@@ -52,7 +52,7 @@ averageShiftTime = 14400000 -- In milliseconds 4hrs
   --  *** Default is 2 hours (7200000) ***
   --  *** Good testing time is (15000) ***
 
-aveduration = 14400 -- In seconds 3972 = 6-24hrs, 14400 = 24hrs-88hrs or 3.67days @ *22
+aveduration = 57600 -- In seconds 3972 = 6-24hrs, 14400 = 24hrs-88hrs or 3.67days @ *22
   -- This is the modifier for how long spawns are in shift
   -- Organics are in shift between (6 * aveduration) and  (22 * aveduration)
   -- Inorganics are in shift between (6 * aveduration) and (11 * aveduration)

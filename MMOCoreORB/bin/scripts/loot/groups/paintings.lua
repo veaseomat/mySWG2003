@@ -1,4 +1,4 @@
-treasure_map_group = {
+paintings = {
 	description = "",
 	minimumLevel = 0,
 	maximumLevel = 0,
@@ -38,4 +38,4 @@ treasure_map_group = {
 	}
 }
 
-addLootGroupTemplate("treasure_map_group", treasure_map_group)
+addLootGroupTemplate("paintings", paintings)

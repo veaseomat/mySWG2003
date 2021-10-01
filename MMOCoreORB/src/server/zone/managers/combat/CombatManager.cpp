@@ -1950,6 +1950,8 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 //				saberblockmod *= 1.1;
 //			}
 
+			saberblockmod *= .75;//saberblock nerf cuz its OP AZ FUGGG
+
 			if (targetCreature->isKneeling()) {
 				saberblockmod *= .75;
 			}
