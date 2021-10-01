@@ -1039,8 +1039,8 @@ bool PlanetManagerImplementation::isSpawningPermittedAt(float x, float y, float 
 	if (isInRangeWithPoi(x, y, 150))
 		return false;
 
-	if (terrainManager->getHighestHeightDifference(x - 10, y - 10, x + 10, y + 10) > 15.0)
-		return false;
+//	if (terrainManager->getHighestHeightDifference(x - 10, y - 10, x + 10, y + 10) > 15.0)
+//		return false;
 
 	return true;
 }
