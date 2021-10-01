@@ -43,7 +43,7 @@ Vector3 SpawnAreaImplementation::getRandomPosition(SceneObject* player) {
 	const auto worldPosition = player->getWorldPosition();
 
 	while (!positionFound && retries-- > 0) {
-		position = areaShape->getRandomPosition(worldPosition, 32.0f, 512.0f);//this is how close to the player stuff can spawn min max
+		position = areaShape->getRandomPosition(worldPosition, 32.0f, 192.0f);//this is how close to the player stuff can spawn min max
 
 		positionFound = true;
 
