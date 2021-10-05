@@ -62,7 +62,7 @@ void DynamicSpawnObserverImplementation::spawnInitialMobiles(SceneObject* buildi
 
 	int spawnLimitAdjustment = (difficulty - 2) / 2;
 
-	int totalNumberToSpawn = System::random(lairTemplate->getSpawnLimit() * .75) + System::random(3);//(lairTemplate->getSpawnLimit() / 2) + System::random(5); //+ spawnLimitAdjustment;
+	int totalNumberToSpawn = System::random(lairTemplate->getSpawnLimit() * .5) + System::random(2);//(lairTemplate->getSpawnLimit() / 2) + System::random(5); //+ spawnLimitAdjustment;
 
 	if (totalNumberToSpawn < 1)	totalNumberToSpawn = 1;
 	if (totalNumberToSpawn > 7) totalNumberToSpawn = 7;

@@ -5,8 +5,8 @@ krayt_pearls = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{groupTemplate = "junk", weight = 6000000},
-		{itemTemplate = "saber_rcp", weight = 4000000}--10% pearls will be rcp
+		{groupTemplate = "junk", weight = 7000000},
+		{itemTemplate = "saber_rcp", weight = 3000000}--10% pearls will be rcp
 	}
 }
 

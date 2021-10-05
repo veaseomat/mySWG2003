@@ -258,9 +258,9 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 		int amountToSpawn = 0;
 
 		if (getMobType() == LairTemplate::CREATURE) {
-			amountToSpawn = System::random(lairTemplate->getSpawnLimit() * .5) + System::random(3) - spawnNumber;//(lairTemplate->getSpawnLimit() / 3) + System::random(4) - spawnNumber;
+			amountToSpawn = System::random(lairTemplate->getSpawnLimit() * .5) + System::random(2) - spawnNumber;//(lairTemplate->getSpawnLimit() / 3) + System::random(4) - spawnNumber;
 		} else {
-			amountToSpawn = System::random(lairTemplate->getSpawnLimit() * .5) + System::random(3) - spawnNumber;
+			amountToSpawn = System::random(lairTemplate->getSpawnLimit() * .5) + System::random(2) - spawnNumber;
 		}
 
 		if (amountToSpawn < 1)	amountToSpawn = 1;
