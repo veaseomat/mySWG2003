@@ -142,8 +142,52 @@ padawanTrialQuests = {
 
 knightTrialQuests = {
 	{
-		trialName = "light_or_dark",
-		trialType = TRIAL_COUNCIL
+		trialName = "ancient_bull_rancor",
+		trialType = TRIAL_HUNT,
+		huntTarget = "ancient_bull_rancor",
+		huntGoal = 8
+	},
+	{
+		trialName = "stintaril_prowler",
+		trialType = TRIAL_HUNT,
+		huntTarget = "stintaril_prowler",
+		huntGoal = 8
+	},
+	{
+		trialName = "blurrg_raptor",
+		trialType = TRIAL_HUNT,
+		huntTarget = "blurrg_raptor",
+		huntGoal = 3
+	},
+	{
+		trialName = "enraged_kimogila",
+		trialType = TRIAL_HUNT,
+		huntTarget = "enraged_kimogila",
+		huntGoal = 3
+	},
+	{
+		trialName = "peko_peko_albatross",
+		trialType = TRIAL_HUNT,
+		huntTarget = "peko_peko_albatross",
+		huntGoal = 2
+	},
+	{
+		trialName = "graul_marauder",
+		trialType = TRIAL_HUNT,
+		huntTarget = "graul_marauder",
+		huntGoal = 2
+	},
+	{
+		trialName = "nightsister_elder",
+		trialType = TRIAL_HUNT,
+		huntTarget = "nightsister_elder",
+		huntGoal = 1
+	},
+	{
+		trialName = "giant_canyon_krayt",
+		trialType = TRIAL_HUNT,
+		huntTarget = "giant_canyon_krayt_dragon",
+		huntGoal = 1
 	},
 }
 

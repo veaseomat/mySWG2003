@@ -3,9 +3,9 @@ power_crystals = {
 	minimumLevel = 0,
 	maximumLevel = -1,
 	lootItems = {
-		{groupTemplate = "junk", weight = 5000000},
-		{itemTemplate = "saber_rcp", weight = 3000000},
-		{itemTemplate = "force_color_crystal", weight = 2000000},
+		{groupTemplate = "junk", weight = 9250000},
+		{itemTemplate = "saber_rcp", weight = 500000},
+		{itemTemplate = "force_color_crystal", weight = 250000},
 	}
 }
 

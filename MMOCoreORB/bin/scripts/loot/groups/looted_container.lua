@@ -41,11 +41,11 @@ looted_container = {
 			
 		{groupTemplate = "paintings", weight = 1000000},
 		
-		{itemTemplate = "locked_container", weight = 500000},	
+		{itemTemplate = "locked_container", weight = 550000},	
 		
 		{itemTemplate = "resourcedeed", weight = 400000},	
 		
-		{groupTemplate = "holocron_nd", weight = 100000},
+		{groupTemplate = "holocron_nd", weight = 50000},
 	}
 }
 

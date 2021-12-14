@@ -58,7 +58,7 @@ performanceDuration = 432000 -- in seconds
 groupExpMultiplier = 1.0
 
 --Sets a global experience multiplier
-globalExpMultiplier = 10.0
+globalExpMultiplier = 20.0
 
 --Sets the base number of control devices of each type that a player can have in their datapad at once
 --For creature pets, A Creature Handler will have the base number + their stored pets skill mod as limit

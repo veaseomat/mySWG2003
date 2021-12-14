@@ -15,14 +15,14 @@ function KnightTrials:startKnightTrials(pPlayer)
 	JediTrials:setCurrentTrial(pPlayer, 0)
 	self:setTrialShrine(pPlayer, pRandShrine)
 
---	local suiPrompt = getStringId("@jedi_trials:knight_trials_intro_msg") .. " " .. getStringId("@jedi_trials:" .. randomShrinePlanet) .. " " .. getStringId("@jedi_trials:knight_trials_intro_msg_end")
---
---	local sui = SuiMessageBox.new("KnightTrials", "noCallback")
---	sui.setTitle("@jedi_trials:knight_trials_title")
---	sui.setPrompt(suiPrompt)
---	sui.setOkButtonText("@jedi_trials:button_close")
---	sui.hideCancelButton()
---	sui.sendTo(pPlayer)
+	local suiPrompt = "You are now ready to become a Jedi Knight. To begin the trails you must travel to" .. " " .. getStringId("@jedi_trials:" .. randomShrinePlanet) .. ". " .. "There you must find the correct Jedi shrine and meditate before it."
+
+	local sui = SuiMessageBox.new("KnightTrials", "noCallback")
+	sui.setTitle("Jedi Knight")
+	sui.setPrompt(suiPrompt)
+	sui.setOkButtonText("@jedi_trials:button_close")
+	sui.hideCancelButton()
+	sui.sendTo(pPlayer)
 end
 
 function KnightTrials:noCallback(pPlayer, pSui, eventIndex, ...)
@@ -33,13 +33,13 @@ function KnightTrials:startNextKnightTrial(pPlayer)
 		return
 	end
 
-	local playerFaction = CreatureObject(pPlayer):getFaction()
-	local playerCouncil = JediTrials:getJediCouncil(pPlayer)
-
-	if ((playerFaction == FACTIONIMPERIAL and playerCouncil == JediTrials.COUNCIL_LIGHT) or (playerFaction == FACTIONREBEL and playerCouncil == JediTrials.COUNCIL_DARK)) then
-		self:giveWrongFactionWarning(pPlayer, playerCouncil)
-		return
-	end
+--	local playerFaction = CreatureObject(pPlayer):getFaction()
+--	local playerCouncil = JediTrials:getJediCouncil(pPlayer)
+--
+--	if ((playerFaction == FACTIONIMPERIAL and playerCouncil == JediTrials.COUNCIL_LIGHT) or (playerFaction == FACTIONREBEL and playerCouncil == JediTrials.COUNCIL_DARK)) then
+--		self:giveWrongFactionWarning(pPlayer, playerCouncil)
+--		return
+--	end
 
 	local trialsCompleted = JediTrials:getTrialsCompleted(pPlayer)
 
@@ -65,30 +65,30 @@ function KnightTrials:startNextKnightTrial(pPlayer)
 
 	local trialData = knightTrialQuests[currentTrial]
 
-	if (trialData.trialType == TRIAL_COUNCIL) then
-		self:sendCouncilChoiceSui(pPlayer)
-		return
-	end
+--	if (trialData.trialType == TRIAL_COUNCIL) then
+--		self:sendCouncilChoiceSui(pPlayer)
+--		return
+--	end
 
 	local trialString = "@jedi_trials:" .. trialData.trialName
 
-	if (trialData.trialType == TRIAL_HUNT_FACTION) then
-		local councilChoice = JediTrials:getJediCouncil(pPlayer)
-
-		if (councilChoice == JediTrials.COUNCIL_LIGHT) then
-			trialString = trialString .. "_light"
-		else
-			trialString = trialString .. "_dark"
-		end
-	end
+--	if (trialData.trialType == TRIAL_HUNT_FACTION) then
+--		local councilChoice = JediTrials:getJediCouncil(pPlayer)
+--
+--		if (playerFaction == FACTIONIMPERIAL) then
+--			trialString = trialString .. "_dark"
+--		else
+--			trialString = trialString .. "_light"
+--		end
+--	end
 
 	trialString = getStringId(trialString)
 
 	shrinePrompt = shrinePrompt .. trialString
 
-	if (trialData.huntGoal ~= nil and trialData.huntGoal > 1) then
+--	if (trialData.huntGoal ~= nil and trialData.huntGoal > 1) then
 		shrinePrompt = shrinePrompt .. " 0 of " .. trialData.huntGoal
-	end
+--	end
 
 	local sui = SuiMessageBox.new("KnightTrials", "noCallback")
 	sui.setTitle("@jedi_trials:knight_trials_title")
@@ -102,22 +102,22 @@ function KnightTrials:startNextKnightTrial(pPlayer)
 	deleteScreenPlayData(pPlayer, "JediTrials", "huntTargetGoal")
 	writeScreenPlayData(pPlayer, "JediTrials", "huntTargetCount", 0)
 
-	if (trialData.trialType == TRIAL_HUNT or trialData.trialType == TRIAL_HUNT_FACTION) then
-		if (trialData.trialType == TRIAL_HUNT) then
+--	if (trialData.trialType == TRIAL_HUNT or trialData.trialType == TRIAL_HUNT_FACTION) then
+--		if (trialData.trialType == TRIAL_HUNT) then
 			writeScreenPlayData(pPlayer, "JediTrials", "huntTarget", trialData.huntTarget)
-		else
-			local councilChoice = JediTrials:getJediCouncil(pPlayer)
+--		else
+--			local councilChoice = JediTrials:getJediCouncil(pPlayer)
 
-			if (councilChoice == JediTrials.COUNCIL_LIGHT) then
-				writeScreenPlayData(pPlayer, "JediTrials", "huntTarget", trialData.rebelTarget)
-			else
-				writeScreenPlayData(pPlayer, "JediTrials", "huntTarget", trialData.imperialTarget)
-			end
-		end
+--			if (playerFaction == FACTIONIMPERIAL) then
+--				writeScreenPlayData(pPlayer, "JediTrials", "huntTarget", trialData.imperialTarget)
+--			else
+--				writeScreenPlayData(pPlayer, "JediTrials", "huntTarget", trialData.rebelTarget)
+--			end
+--		end
 
 		writeScreenPlayData(pPlayer, "JediTrials", "huntTargetGoal", trialData.huntGoal)
 		createObserver(KILLEDCREATURE, "KnightTrials", "notifyKilledHuntTarget", pPlayer)
-	end
+--	end
 end
 
 function KnightTrials:sendCouncilChoiceSui(pPlayer)
@@ -374,75 +374,32 @@ function KnightTrials:showCurrentTrial(pPlayer)
 
 	local trialData = knightTrialQuests[trialNumber]
 
-	if (trialData.trialType == TRIAL_COUNCIL) then
-		self:sendCouncilChoiceSui(pPlayer)
-		return
-	end
-
-	local playerFaction = CreatureObject(pPlayer):getFaction()
-	local playerCouncil = JediTrials:getJediCouncil(pPlayer)
-
-	if (trialData.trialType == TRIAL_HUNT or trialData.trialType == TRIAL_HUNT_FACTION) then
-		if ((playerFaction == FACTIONIMPERIAL and playerCouncil == JediTrials.COUNCIL_LIGHT) or (playerFaction == FACTIONREBEL and playerCouncil == JediTrials.COUNCIL_DARK)) then
-			self:giveWrongFactionWarning(pPlayer, playerCouncil)
-			return
-		end
-	end
-
 	local huntTarget = readScreenPlayData(pPlayer, "JediTrials", "huntTarget")
 	local targetCount = tonumber(readScreenPlayData(pPlayer, "JediTrials", "huntTargetCount"))
 	local targetGoal = tonumber(readScreenPlayData(pPlayer, "JediTrials", "huntTargetGoal"))
 
-	if (targetCount == nil) then
-		printLuaError("KnightTrials:showCurrentTrial, nil targetCount for player: " .. SceneObject(pPlayer):getCustomObjectName() .. " on trial " .. trialNumber .. ". Setting to 0.")
-		writeScreenPlayData(pPlayer, "JediTrials", "huntTargetCount", 0)
-		targetCount = 0
-	end
+--		writeScreenPlayData(pPlayer, "JediTrials", "huntTargetCount", 0)
+--		targetCount = 0
 
-	if (targetGoal == nil) then
-		printLuaError("KnightTrials:showCurrentTrial, nil targetGoal for player: " .. SceneObject(pPlayer):getCustomObjectName() .. " on trial " .. trialNumber .. ". Setting to " .. trialData.huntGoal .. ".")
 		writeScreenPlayData(pPlayer, "JediTrials", "huntTargetGoal", trialData.huntGoal)
 		targetGoal = trialData.huntGoal
-	end
 
-	if (huntTarget == nil or huntTarget == "") then
 		local newTarget = ""
-		if (trialData.trialType == TRIAL_HUNT) then
-			writeScreenPlayData(pPlayer, "JediTrials", "huntTarget", trialData.huntTarget)
-			newTarget = trialData.huntTarget
-		else
-			local councilChoice = JediTrials:getJediCouncil(pPlayer)
 
-			if (councilChoice == JediTrials.COUNCIL_LIGHT) then
-				writeScreenPlayData(pPlayer, "JediTrials", "huntTarget", trialData.rebelTarget)
-				newTarget = trialData.rebelTarget
-			else
-				writeScreenPlayData(pPlayer, "JediTrials", "huntTarget", trialData.imperialTarget)
-				newTarget = trialData.imperialTarget
-			end
-		end
-
-		printLuaError("KnightTrials:showCurrentTrial, nil huntTarget for player: " .. SceneObject(pPlayer):getCustomObjectName() .. " on trial " .. trialNumber .. ". Setting to " .. newTarget .. ".")
+		writeScreenPlayData(pPlayer, "JediTrials", "huntTarget", trialData.huntTarget)
+		newTarget = trialData.huntTarget
 		huntTarget = newTarget
-	end
+
+
+		createObserver(KILLEDCREATURE, "KnightTrials", "notifyKilledHuntTarget", pPlayer)
 
 	local shrinePrompt = "@jedi_trials:" .. trialData.trialName
 
-	if (trialData.trialType == TRIAL_HUNT_FACTION) then
-		local councilChoice = JediTrials:getJediCouncil(pPlayer)
-
-		if (councilChoice == JediTrials.COUNCIL_LIGHT) then
-			shrinePrompt = shrinePrompt .. "_light"
-		else
-			shrinePrompt = shrinePrompt .. "_dark"
-		end
-	end
-
 	shrinePrompt = getStringId(shrinePrompt)
 
-	if (trialData.huntGoal ~= nil and trialData.huntGoal > 1) then
-		shrinePrompt = shrinePrompt .. " " .. targetCount .. " of " .. trialData.huntGoal
-	end
+
+	shrinePrompt = shrinePrompt .. " " .. targetCount .. " of " .. trialData.huntGoal
+
 
 	local sui = SuiMessageBox.new("KnightTrials", "noCallback")
 	sui.setTitle("@jedi_trials:knight_trials_title")
@@ -518,11 +475,13 @@ function KnightTrials:resetCompletedTrialsToStart(pPlayer)
 	if (pPlayer == nil) then
 		return
 	end
+	
+	local trialNumber = JediTrials:getCurrentTrial(pPlayer)
 
 	JediTrials:resetTrialData(pPlayer, "knight")
 	deleteScreenPlayData(pPlayer, "KnightTrials", "completedTrials")
 
 	JediTrials:setStartedTrials(pPlayer)
-	JediTrials:setTrialsCompleted(pPlayer, 0)
-	JediTrials:setCurrentTrial(pPlayer, 0)
+	JediTrials:setTrialsCompleted(pPlayer, trialNumber - 1)
+	JediTrials:setCurrentTrial(pPlayer, trialNumber)
 end

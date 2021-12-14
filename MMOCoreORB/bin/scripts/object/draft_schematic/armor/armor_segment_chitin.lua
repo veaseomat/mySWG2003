@@ -63,12 +63,12 @@ object_draft_schematic_armor_armor_segment_chitin = object_draft_schematic_armor
 	customizationStringNames = {},
 	customizationDefaults = {},
 
-	ingredientTemplateNames = {"craft_armor_ingredients_n", "craft_armor_ingredients_n", "craft_armor_ingredients_n"},
-	ingredientTitleNames = {"armor_segment_chitin", "segment_mounting_tabs", "segment_enhancement"},
-	ingredientSlotType = {0, 0, 3},
-	resourceTypes = {"bone", "metal_ferrous", "object/tangible/component/armor/shared_base_armor_segment_enhancement.iff"},
-	resourceQuantities = {15, 5, 1},
-	contribution = {100, 100, 100},
+	ingredientTemplateNames = {"craft_armor_ingredients_n", "craft_armor_ingredients_n", "craft_armor_ingredients_n", "craft_armor_ingredients_n"},
+	ingredientTitleNames = {"armor_segment_chitin", "segment_mounting_tabs", "defensive_layer", "defensive_layer_2"},
+	ingredientSlotType = {0, 0, 3, 3},
+	resourceTypes = {"bone", "metal_ferrous", "object/tangible/component/armor/shared_armor_layer.iff", "object/tangible/component/armor/shared_armor_layer.iff"},
+	resourceQuantities = {15, 5, 1, 1},
+	contribution = {100, 100, 100, 100},
 
 	targetTemplate = "object/tangible/component/armor/armor_segment_chitin.iff",
 

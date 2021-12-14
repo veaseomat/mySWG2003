@@ -2068,10 +2068,10 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 //			regen *= 1.f + (frsregen / 100.f);
 //		}
 
-//		if (regen > 0) {
-//		regen *= .5; //reduce fp regen skill mod because 5 jedi trees
-//		regen += 1; //add 1 so regen is never .5 = int 0 = no regen
-//		}
+		if (regen > 0) {
+		regen *= .5; //reduce fp regen skill mod because 5 jedi trees
+		regen += 1; //add 1 so regen is never .5 = int 0 = no regen
+		}
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
 		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
@@ -2994,6 +2994,11 @@ void PlayerObjectImplementation::recalculateForcePower() {
 //	if (frsMax > 0) {
 //		maxForce += frsMax;
 //	}
+
+		if (maxForce > 0) {
+			maxForce *= .5;
+			maxForce += 250;
+		}
 
 //		if (maxForce > 5000) {
 //		maxForce = 5000; //jedi robe

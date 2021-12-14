@@ -52,7 +52,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_refined_crystal_pack = objec
    size = 1, 
 
    xpType = "jedi_general", 
-   xp = 50, 
+   xp = 25, 
 
    assemblySkill = "jedi_saber_assembly", 
    experimentingSkill = "jedi_saber_experimentation", 

@@ -27,9 +27,12 @@
 #include "server/zone/objects/creature/CreatureObject.h"
 #include "server/zone/ZoneProcessServer.h"
 #include "engine/core/ManagedService.h"
+#include "server/zone/objects/player/sui/messagebox/SuiMessageBox.h"
 
 SkillManager::SkillManager()
 	: Logger("SkillManager") {
+
+	zoneServer = ServerCore::getZoneServer();
 
 	rootNode = new Skill();
 
@@ -319,6 +322,23 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 		//Add draft schematic groups
 		auto schematicsGranted = skill->getSchematicsGranted();
+
+//		if ((skill->getSkillName() == "force_discipline_light_saber_two_hand_02") || (skill->getSkillName() == "force_discipline_light_saber_polearm_02")) {
+//			skillName == "force_discipline_light_saber_one_hand_02";
+//			auto skill = skillMap.get(skillName.hashCode());
+//			auto schematicsGranted = skill->getSchematicsGranted();
+//			SchematicMap::instance()->addSchematics(ghost, *schematicsGranted, notifyClient);
+////			auto schematicsGranted = "craftSaberOneHand2";
+//		}
+//
+//		if ((skill->getSkillName() == "force_discipline_light_saber_two_hand_04") || (skill->getSkillName() == "force_discipline_light_saber_polearm_04")) {
+//			skillName == "force_discipline_light_saber_one_hand_04";
+//			auto skill = skillMap.get(skillName.hashCode());
+//			auto schematicsGranted = skill->getSchematicsGranted();
+//			SchematicMap::instance()->addSchematics(ghost, *schematicsGranted, notifyClient);
+//			//SchematicMap::instance()->addSchematics(ghost, craftSaberOneHand3, notifyClient);
+//		}
+
 		SchematicMap::instance()->addSchematics(ghost, *schematicsGranted, notifyClient);
 
 		//Update maximum experience.
@@ -363,7 +383,7 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 		if (playerManager != nullptr) {
 			creature->setLevel(playerManager->calculatePlayerLevel(creature));
 		}
-
+//this could be useful for quests
 		if (skill->getSkillName().contains("force_sensitive") && skill->getSkillName().contains("_04"))
 			JediManager::instance()->onFSTreeCompleted(creature, skill->getSkillName());
 
@@ -408,10 +428,21 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 //	}
 
 //	ZoneProcessServer* server;
-	ChatManager* chatManager = creature->getZoneServer()->getChatManager();
 
-		if (skill->getSkillName() == "force_title_jedi_rank_02") {
-			chatManager->broadcastGalaxy("IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR: Lord Vader has detected a vergence in the Force.\r\rBe on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.", "imperial");
+
+		if (skill->getSkillName() == "force_title_jedi_rank_01") {
+			ChatManager* chatManager = creature->getZoneServer()->getChatManager();
+			ChatManager* chatManager2 = zoneServer.get()->getChatManager();
+			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(creature, SuiWindowType::NONE);
+
+			box->setPromptTitle("Jedi Unlock");
+			box->setPromptText("You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\nYou have been sent mail with a guide to Jedi on mySWG. First you will need to find your Jedi skill trainer! it could be any starting profession trainer in the galaxy, talk to each one until you find yours.\n\nJedi on mySWG is PERMADEATH with only 3 lives! After you find your trainer you will only have 3 lives, after that all of you Jedi skills will be removed. \n\nCongratulations, good luck, and may the Force be with you... Jedi.");
+			ghost->addSuiBox(box);
+			creature->sendMessage(box->generateMessage());
+
+			chatManager2->sendMail("mySWG", "Jedi Guide", "Congratulations on unlocking Jedi on mySWG!\n\nTo get started you first need to find your trainer, the command /findmytrainer does not work, finding your personal Jedi trainer is part of the quest. Your Jedi trainer could be any starting profession trainer in the galaxy, you will need to talk to each once until you find the correct one. Next you will need to craft a lightsaber crafting tool, then you will need to craft refined crystal packs for jedi exp until you have enough for novice lightsaber, there is no training saber on myswg.\n\nAfter you have trained novice lightsaber you are ready to craft your first lightsaber. You will need to loot a color crystal to use your lightsaber. Color crystals and refined crystal packs can be looted from any npc that normally drops crystals. In mySWG all lightsaber types have the same damage and can use any lightsaber special, the most powerful specials all have the same stats but different animations, this is for balance and to increase variety. 3 saber types x 3 dfferent animations = 9 MLS animation spam options. Lightsabers deal energy damage and decay like normal weapons. All lightsabers have 1 slot for a color crystal only, color crystals do NOT decay, can not be tuned, and are not tradable. A Jedi must find his own color crystal.\n\nJEDI CAN WEAR ARMOR! Yes, Jedi can wear armor here like pre-9. Also, Lightsaber toughness and Jedi toughness are now innate armor but only while a lightsaber is equipped. Lightsaber toughness and Jedi toughness add together and stack on top of all armor resists for a maximum of 80%. So if your armor has 20% stun and you have 40 lightsaber toughness and 10 Jedi toughness, you actually have 70% stun armor as long as your lightsaber is equipped.\n\n**PERMADEATH!**\nYes, Jedi on mySWG is permadeath. You have 3 lives, after you have died 3 times you will have all of your jedi skill boxes REMOVED. Player kills do not count to avoid any griefing and to allow for safe duels. When killed by a non player character you will receive a pop up upon death informing you that you have lost a life, revives of any kind will not save you and do not affect your death count. Your death counter will show up in experience as 'jedi_deaths'. Death count does not start until you find your Jedi trainer, this is to prevent accidental unlocks from losing jedi lives if they are not ready to begin the grind. It is possible to unlock again.\n\nVisibility is slightly more forgiving here but mostly unchanged. Using a lightsaber or any force powers within 32m of any player or humanoid NPC will raise your visibility for the Bounty Hunter terminals. NPC Bounty Hunters will start to come after you once you have enough visibility. As a new Jedi you should just RUN.\n\nJedi Knight trials will start when you have learned enough skills. FRS has been removed, instead the Jedi knight skill box grants hidden skill mods. Jedi Knight is not tied to any faction, you do not have to be rebel or imperial and there is no light or dark side, there is just Jedi Knight.", creature->getFirstName());
+
+			chatManager->broadcastGalaxy("IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR: Lord Vader has detected a vergence in the Force.\n\nBe on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.", "imperial");
 		}
 
 	return true;
@@ -484,9 +515,11 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 //		}
 
 		int xpcost = skill->getXpCost();
+		int curExp = ghost->getExperience(skill->getXpType());
 
 		if (xpcost > 0) {
-			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+//			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+			ghost->addExperience(skill->getXpType(), -curExp, true);
 		}
 
 		//Remove abilities but only if the creature doesn't still have a skill that grants the
@@ -606,7 +639,7 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 	for (int i = 0; i < copyOfList.size(); i++) {
 		Skill* skill = copyOfList.get(i);
 
-		if (skill->getSkillPointsRequired() > 0) {
+		if (skill->getSkillName().contains("force_")){
 //			if (!removeForceProgression and skill->getSkillName().contains("force_"))
 //				continue;
 
@@ -635,8 +668,15 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 //				ghost->addSkillPoints(skill->getSkillPointsRequired());
 				int xpcost = skill->getXpCost();
 
+//				if (xpcost > 0) {
+//					ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+//				}
+
+				int curExp = ghost->getExperience(skill->getXpType());
+
 				if (xpcost > 0) {
-					ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+		//			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+					ghost->addExperience(skill->getXpType(), -curExp, true);
 				}
 
 				//Remove abilities

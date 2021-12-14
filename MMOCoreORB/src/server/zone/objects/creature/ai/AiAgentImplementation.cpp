@@ -2581,14 +2581,14 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 //	alm->insertAttribute("basetohit", npchitchance);
 //	}
 
-	if (getArmor() == 0)
-		alm->insertAttribute("armorrating", "None");
-	else if (getArmor() == 1)
-		alm->insertAttribute("armorrating", "Light");
-	else if (getArmor() == 2)
-		alm->insertAttribute("armorrating", "Medium");
-	else if (getArmor() == 3)
-		alm->insertAttribute("armorrating", "Medium");
+//	if (getArmor() == 0)
+//		alm->insertAttribute("armorrating", "None");
+//	else if (getArmor() == 1)
+//		alm->insertAttribute("armorrating", "Light");
+//	else if (getArmor() == 2)
+//		alm->insertAttribute("armorrating", "Medium");
+//	else if (getArmor() == 3)
+//		alm->insertAttribute("armorrating", "Medium");
 //		alm->insertAttribute("armorrating", "Heavy");
 
 	int npcKinetic = getKinetic();

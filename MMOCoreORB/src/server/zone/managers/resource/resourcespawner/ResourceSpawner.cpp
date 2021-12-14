@@ -1011,7 +1011,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 
 	float cityMultiplier = 1.f + player->getSkillMod("private_spec_samplesize") / 100.f;
 
-	int unitsExtracted = maxUnitsExtracted * (float(surveySkill) / 100.0f) * samplingMultiplier * cityMultiplier;
+	int unitsExtracted = maxUnitsExtracted * (float(surveySkill) / 100.0f) * samplingMultiplier * cityMultiplier * 5;
 //	unitsExtracted *= 5;
 	int xpcap = 5;
 
@@ -1042,7 +1042,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 //		xpcap = 50;
 //	}
 
-	if (unitsExtracted < 5) {
+	if (unitsExtracted < 10) {
 
 		// Send message to player about trace amounts
 //		StringIdChatParameter message("survey", "trace_amount");
@@ -1050,7 +1050,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 //		message.setDI(unitsExtracted);
 //		player->sendSystemMessage(message);
 
-		unitsExtracted = 5;
+		unitsExtracted = 10;
 	}
 
 	// Send message to player about unit extraction

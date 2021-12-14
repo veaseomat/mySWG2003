@@ -235,28 +235,28 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 			alm->insertAttribute(statname, value);
 	}
 
-	String ap;
-
-	switch (armorPiercing) {
-	case SharedWeaponObjectTemplate::NONE:
-		ap = "None";
-		break;
-	case SharedWeaponObjectTemplate::LIGHT:
-		ap = "Light";
-		break;
-	case SharedWeaponObjectTemplate::MEDIUM:
-		ap = "Medium";
-		break;
-	case SharedWeaponObjectTemplate::HEAVY:
-		ap = "Medium";
-//		ap = "Heavy";
-		break;
-	default:
-		ap = "Unknown";
-		break;
-	}
-
-	alm->insertAttribute("wpn_armor_pierce_rating", ap);
+//	String ap;
+//
+//	switch (armorPiercing) {
+//	case SharedWeaponObjectTemplate::NONE:
+//		ap = "None";
+//		break;
+//	case SharedWeaponObjectTemplate::LIGHT:
+//		ap = "Light";
+//		break;
+//	case SharedWeaponObjectTemplate::MEDIUM:
+//		ap = "Medium";
+//		break;
+//	case SharedWeaponObjectTemplate::HEAVY:
+//		ap = "Medium";
+////		ap = "Heavy";
+//		break;
+//	default:
+//		ap = "Unknown";
+//		break;
+//	}
+//
+//	alm->insertAttribute("wpn_armor_pierce_rating", ap);
 
 	float speed = Math::getPrecision(getAttackSpeed(), 1);
 
@@ -355,11 +355,11 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
 
 	//Special Attack Costs
-	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost() / 3);
-
-	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost() / 3);
-
-	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost() / 3);
+//	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost() / 3);
+//
+//	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost() / 3);
+//
+//	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost() / 3);
 
 	//Anti Decay Kit
 	if(hasAntiDecayKit()){

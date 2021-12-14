@@ -262,8 +262,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
-	if(level > 100)
-		level = 100;
+//	if(level > 100)
+//		level = 100;
 
 //	float excMod = (System::random(40) * .1) + 1.0;
 
@@ -310,25 +310,25 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	setCustomObjectName(prototype, templateObject);
 
-	float excMod = 1.0;
+	float excMod = 1.0 + (System::random(15) * .1);
 
 //	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);//removing this makes legendary chance same for all levels
 
 	if (prototype->isComponent()) {
-		excMod = 1.5;
+		excMod = 1.0 + (System::random(40) * .1);
 
 	}
 
-	if ((System::random(legendaryChance) >= legendaryChance) && (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject())) {
-		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
-		prototype->setCustomObjectName(newName, false);
-
-		excMod = legendaryModifier;
-
-		prototype->addMagicBit(false);
-
-		legendaryLooted.increment();
-	}
+//	if ((System::random(legendaryChance) >= legendaryChance) && (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject())) {
+//		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
+//		prototype->setCustomObjectName(newName, false);
+//
+//		excMod = legendaryModifier;
+//
+//		prototype->addMagicBit(false);
+//
+//		legendaryLooted.increment();
+//	}
 
 	if (prototype->isLightsaberCrystalObject()) {
 		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
@@ -503,6 +503,8 @@ void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootI
 		int modCount = System::random(8);
 		int roll = System::random(100);
 
+//		if (modCount <= 0) modCount = 1;
+
 //		if(roll > (100 - modSqr))
 //			modCount += 2;
 //
@@ -531,10 +533,10 @@ void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootI
 		}
 	}
 
-	if (object->isWearableObject() || object->isWeaponObject()) {
+	if (object->isWearableObject()) {
 		ManagedReference<TangibleObject*> item = cast<TangibleObject*>(object);
 
-		if(additionalMods.size() > 0 || skillMods->size() > 0)
+		if(additionalMods.size() > 0)
 			yellow = true;
 
 		for (int i = 0; i < additionalMods.size(); i++) {
@@ -628,13 +630,13 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = (entry->getLootChance() * 1); //using this multiplier gives less empty corpses 1.5x is helpful, 2x significant
+		int lootChance = (entry->getLootChance() * 1.25); //using this multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
-//		int holochance = 10000;
-//		if (System::random(holochance) >= holochance){
-//			createLoot(trx, container, "holocron_nd", level);
-//		}
+		int holochance = 10000;
+		if (System::random(holochance) >= holochance){
+			createLoot(trx, container, "holocron_nd", level);
+		}
 
 
 		if (lootChance <= 0)

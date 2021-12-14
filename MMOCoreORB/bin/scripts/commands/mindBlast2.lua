@@ -93,7 +93,7 @@ MindBlast2Command = {
 	poolsToDamage = MIND_ATTRIBUTE,
 
 	forceAttack = true,
-	damageType = BLAST_DAMAGE,
+	damageType = STUN_DAMAGE,
 
 	frsLightMinDamageModifier = 2,
 	frsLightMaxDamageModifier = 3,

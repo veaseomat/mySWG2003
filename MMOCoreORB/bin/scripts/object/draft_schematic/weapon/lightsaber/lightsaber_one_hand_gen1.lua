@@ -52,7 +52,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_one_hand_gen1 = object_draft
    size = 1, 
 
    xpType = "jedi_general", 
-   xp = 100, 
+   xp = 25, 
 
    assemblySkill = "jedi_saber_assembly", 
    experimentingSkill = "jedi_saber_experimentation", 
@@ -65,7 +65,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_one_hand_gen1 = object_draft
 
    ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
    ingredientTitleNames = {"emitter_shroud", "activator", "handgrip", "focusing_crystals", "power_field_insulator", "energizers"},
-   ingredientSlotType = {0, 0, 0, 1, 0, 0},
+   ingredientSlotType = {0, 0, 0, 2, 0, 0},
    resourceTypes = {"mineral", "metal", "chemical", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "gas", "metal"},
    resourceQuantities = {15, 14, 17, 1, 20, 14},
    contribution = {100, 100, 100, 100, 100, 100},

@@ -124,14 +124,16 @@ object_weapon_melee_2h_sword_crafted_saber_sword_lightsaber_two_handed_gen3 = ob
 	childObjects = {
 		{templateFile = "object/tangible/inventory/lightsaber_inventory_training.iff", x = 0, z = 0, y = 0, ox = 0, oy = 0, oz = 0, ow = 0, cellid = -1, containmentType = 4}
 	},
+	
+		noTrade = 1,
 
 	numberExperimentalProperties = {1, 1, 2, 2, 2, 2, 2, 1, 1, 1},
 	experimentalProperties = {"XX", "XX", "CD", "OQ", "CD", "OQ", "CD", "OQ", "SR", "UT", "CD", "OQ", "OQ", "OQ", "OQ"},
 	experimentalWeights = {1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "expEffeciency", "expEffeciency", "expEffeciency", "expEffeciency"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "forcecost", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 175, 255, 4.8, 19, 40, 55, 47, 25},
-	experimentalMax = {0, 0, 185, 295, 4.5, 31, 36, 40, 32, 20},
+	experimentalMin = {0, 0, 195, 285, 5.1, 19, 40, 47, 55, 25},
+	experimentalMax = {0, 0, 215, 305, 4.8, 31, 36, 32, 40, 20},
 	experimentalPrecision = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
 }

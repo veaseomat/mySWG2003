@@ -52,7 +52,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_one_hand_gen3 = object_draft
    size = 1, 
 
    xpType = "jedi_general", 
-   xp = 300, 
+   xp = 100, 
 
    assemblySkill = "jedi_saber_assembly", 
    experimentingSkill = "jedi_saber_experimentation", 
@@ -63,12 +63,12 @@ object_draft_schematic_weapon_lightsaber_lightsaber_one_hand_gen3 = object_draft
    customizationStringNames = {},
    customizationDefaults = {},
 
-   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
-   ingredientTitleNames = {"emitter_shroud", "activator", "handgrip", "focusing_crystals", "power_field_insulator", "energizers"},
-   ingredientSlotType = {0, 0, 0, 1, 0, 0},
-   resourceTypes = {"metal_ferrous", "aluminum_titanium", "petrochem_inert_polymer", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "gas_inert_culsion", "copper_polysteel"},
-   resourceQuantities = {35, 20, 25, 3, 25, 25},
-   contribution = {100, 100, 100, 100, 100, 100},
+   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
+   ingredientTitleNames = {"emitter_shroud", "activator", "handgrip", "focusing_crystals", "focusing_crystals_2", "focusing_crystals_3", "power_field_insulator", "energizers"},
+   ingredientSlotType = {0, 0, 0, 2, 2, 2, 0, 0},
+   resourceTypes = {"metal_ferrous", "aluminum_titanium", "petrochem_inert_polymer", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "gas_inert_culsion", "copper_polysteel"},
+   resourceQuantities = {35, 20, 25, 1, 1, 1, 25, 25},
+   contribution = {100, 100, 100, 100, 100, 100, 100, 100},
 
 
    targetTemplate = "object/weapon/melee/sword/crafted_saber/sword_lightsaber_one_handed_gen3.iff",

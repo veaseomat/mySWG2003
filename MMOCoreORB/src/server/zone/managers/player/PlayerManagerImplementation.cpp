@@ -1341,6 +1341,49 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 //		player->sendMessage(box->generateMessage());
 //	}
 
+
+//PERMADEATH!
+	if (player->hasSkill("force_title_jedi_rank_02") && !attacker->isPlayerCreature())  {
+
+		int jediDeaths = ghost->getExperience("jedi_deaths");
+
+		awardExperience(player, "jedi_deaths", 1, false, 1, false);
+
+		if (jediDeaths < 1) {
+			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+			box->setPromptTitle("PERMADEATH!");
+			box->setPromptText("You have died! A Jedi will suffer PERMADEATH when he has died 3 times. You have 2 more lives left, after that you will be cut off from the force and lose all of your jedi skills.");
+
+			ghost->addSuiBox(box);
+			player->sendMessage(box->generateMessage());
+
+		}
+
+		if (jediDeaths == 1) {
+			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+			box->setPromptTitle("PERMADEATH!");
+			box->setPromptText("You have died! A Jedi will suffer PERMADEATH when he has died 3 times. You have 1 more life left, the next time you die you will be cut off from the force and lose all of your jedi skills.");
+
+			ghost->addSuiBox(box);
+			player->sendMessage(box->generateMessage());
+		}
+
+		if (jediDeaths >= 2) {
+			SkillManager::instance()->surrenderAllSkills(player, true, true);
+
+			ghost->setJediState(0);
+
+			awardExperience(player, "jedi_deaths", -(jediDeaths + 1), false, 1, false);
+
+			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+			box->setPromptTitle("PERMADEATH!");
+			box->setPromptText("You have been cut off from the force! All of your jedi abilities have been removed!");
+
+			ghost->addSuiBox(box);
+			player->sendMessage(box->generateMessage());
+		}
+	}
+
 }
 
 void PlayerManagerImplementation::sendActivateCloneRequest(CreatureObject* player, int typeofdeath) {
@@ -2132,10 +2175,12 @@ int PlayerManagerImplementation::awardExperience(CreatureObject* player, const S
 
 	int xp = 0;
 //this is where the magic happens
-	if (applyModifiers)
-		xp = playerObject->addExperience(xpType, (int) (amount * speciesModifier * buffMultiplier * localMultiplier * globalExpMultiplier));
-	else
+	if (applyModifiers == false)
 		xp = playerObject->addExperience(xpType, (int)amount);
+//		xp = playerObject->addExperience(xpType, (int) (amount * globalExpMultiplier));
+	else
+//		xp = playerObject->addExperience(xpType, (int)amount);
+		xp = playerObject->addExperience(xpType, (int) (amount * localMultiplier * globalExpMultiplier));
 
 	player->notifyObservers(ObserverEventType::XPAWARDED, player, xp);
 

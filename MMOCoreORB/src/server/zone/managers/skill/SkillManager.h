@@ -6,10 +6,17 @@
 #ifndef SKILLMANAGER_H_
 #define SKILLMANAGER_H_
 
+#include "engine/lua/Lua.h"
 #include "server/zone/objects/player/variables/Ability.h"
 #include "server/zone/objects/creature/variables/Skill.h"
 
 class PerformanceManager;
+
+namespace server {
+namespace zone {
+	class ZoneServer;
+}
+}
 
 namespace server {
 namespace zone {
@@ -45,6 +52,8 @@ class SkillManager : public Singleton<SkillManager>, public Logger, public Objec
 
 	HashTable<String, Reference<Ability*> > abilityMap;
 	HashTable<uint32, Reference<Skill*> > skillMap;
+
+	ManagedReference<ZoneServer*> zoneServer;
 
 	Reference<Skill*> rootNode;
 
