@@ -192,6 +192,10 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 		FsIntro:startStepDelay(pCreatureObject, 3)
 	end
 	
+--	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then	
+--		PlayerObject(pCreatureObject):findmytrainer()
+--	end
+	
 --	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_03") then	
 --		FsIntro2:startStepDelay(pCreatureObject, 3)
 --	end

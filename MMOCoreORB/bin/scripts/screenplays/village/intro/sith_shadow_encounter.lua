@@ -132,7 +132,13 @@ function SithShadowEncounter:onEncounterInRange(pPlayer, spawnedObjects)
 	foreach(spawnedObjects, function(pMobile)
 		if (pMobile ~= nil) then
 			AiAgent(pMobile):setDefender(pPlayer)
+			
+			--AiAgent(pMobile):setFollowObject(pPlayer) --nottested yet
+			
 			CreatureObject(pMobile):engageCombat(pPlayer)
+			--setSpawnedObjectsToFollow(pMobile, pPlayer)
+		--AiAgent(spawnedObjects):setAiTemplate("follow")
+		--AiAgent(spawnedObjects):setFollowState(3)--not tested
 		end
 	end)
 end

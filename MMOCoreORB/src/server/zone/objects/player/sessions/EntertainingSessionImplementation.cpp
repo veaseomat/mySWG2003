@@ -1116,10 +1116,10 @@ void EntertainingSessionImplementation::awardEntertainerExperience() {
 			xpAmount = ceil(xpAmount * totalBonus);
 
 			if (playerManager != nullptr)
-				playerManager->awardExperience(player, xptype, (xpAmount * 70), true);
+				playerManager->awardExperience(player, xptype, (xpAmount * 10), true);
 //heal xp for noone watching
 			String healxptype("entertainer_healing");
-			playerManager->awardExperience(player, healxptype, (xpAmount * 35), true);
+			playerManager->awardExperience(player, healxptype, (xpAmount * 5), true);
 
 			//self buff here doing it here causes a super fast mind heal every update- moved to stopdance/music
 //			if (player->getSkillMod("healing_music_mind") > 0)

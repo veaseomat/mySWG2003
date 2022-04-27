@@ -39,7 +39,7 @@ public:
 			if (buff != nullptr) {
 				float percent = buff->getSkillModifierValue("heal_recovery");
 
-				delay = (round(delay * (100.0f - percent) / 100.0f)) / 2;
+				delay = round(delay * (100.0f - percent) / 100.0f);
 			}
 		}
 
@@ -240,7 +240,7 @@ public:
 			buffPower = enhancePack->getEffectiveness();
 			buffPower = buffPower * patient->calculateBFRatio();
 		} else
-			buffPower = (enhancePack->calculatePower(enhancer, patient) * .5);//reduce doc buffs here
+			buffPower = enhancePack->calculatePower(enhancer, patient);
 
 		return buffPower;
 	}
@@ -332,7 +332,6 @@ public:
 
 			if (enhancePack == nullptr) {
 				enhancer->sendSystemMessage("@healing_response:healing_response_76"); // That item does not provide attribute enhancement.
-				enhancer->sendSystemMessage("or remove from backpack"); // That item does not provide attribute enhancement.
 				return false;
 			}
 
@@ -436,19 +435,13 @@ public:
 
 		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
 
-		int durationextra = (enhancePack->getDuration() * 4);
-		int selfDuration =	360 * 60; //6 hr ;
-
-		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, selfDuration, enhancePack->getAbsorption());
+		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, enhancePack->getDuration(), enhancePack->getAbsorption());
 
 		if (creature->isPlayerCreature() && targetCreature->isPlayerCreature()) {
 			playerManager->sendBattleFatigueMessage(creature, targetCreature);
 		}
 
 		sendEnhanceMessage(enhancer, patient, attribute, amountEnhanced);
-
-		creature->sendSystemMessage("mySWG: Doc/Ent buffs are half power.");
-
 
 		enhancer->inflictDamage(enhancer, CreatureAttribute::MIND, mindCostNew, false);
 
@@ -459,8 +452,8 @@ public:
 			enhancePack->decreaseUseCount();
 		}
 
-
-			awardXp(enhancer, "medical", amountEnhanced * 1); //No experience for healing yourself.
+		if (patient != enhancer)
+			awardXp(enhancer, "medical", amountEnhanced); //No experience for healing yourself.
 
 		doAnimations(enhancer, patient);
 

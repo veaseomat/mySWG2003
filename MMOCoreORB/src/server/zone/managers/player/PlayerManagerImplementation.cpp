@@ -1347,8 +1347,6 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 		int jediDeaths = ghost->getExperience("jedi_deaths");
 
-		awardExperience(player, "jedi_deaths", 1, false, 1, false);
-
 		if (jediDeaths < 1) {
 			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
 			box->setPromptTitle("PERMADEATH!");
@@ -1356,6 +1354,8 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 			ghost->addSuiBox(box);
 			player->sendMessage(box->generateMessage());
+
+			awardExperience(player, "jedi_deaths", 1, false, 1, false);
 
 		}
 
@@ -1366,14 +1366,20 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 			ghost->addSuiBox(box);
 			player->sendMessage(box->generateMessage());
+
+			awardExperience(player, "jedi_deaths", 1, false, 1, false);
 		}
 
 		if (jediDeaths >= 2) {
 			SkillManager::instance()->surrenderAllSkills(player, true, true);
 
+			SkillManager::instance()->surrenderSkill("force_title_jedi_rank_02", player, true);
+
+			SkillManager::instance()->surrenderSkill("force_title_jedi_rank_01", player, true);
+
 			ghost->setJediState(0);
 
-			awardExperience(player, "jedi_deaths", -(jediDeaths + 1), false, 1, false);
+			awardExperience(player, "jedi_deaths", 0, false, 1, false);
 
 			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
 			box->setPromptTitle("PERMADEATH!");
@@ -2284,18 +2290,18 @@ void PlayerManagerImplementation::handleAddItemToTradeWindow(CreatureObject* pla
 		return;
 	}
 
-	if (objectToTrade->isNoTrade()) {
-		player->sendSystemMessage("@container_error_message:container26");
-		handleAbortTradeMessage(player);
-		return;
-	}
+//	if (objectToTrade->isNoTrade()) {
+//		player->sendSystemMessage("@container_error_message:container26");
+//		handleAbortTradeMessage(player);
+//		return;
+//	}
 
 	// Containers containing notrade items...
-	if (objectToTrade->containsNoTradeObjectRecursive()) {
-		player->sendSystemMessage("@container_error_message:container26");
-		handleAbortTradeMessage(player);
-		return;
-	}
+//	if (objectToTrade->containsNoTradeObjectRecursive()) {
+//		player->sendSystemMessage("@container_error_message:container26");
+//		handleAbortTradeMessage(player);
+//		return;
+//	}
 
 	if (objectToTrade->isControlDevice()) {
 		Reference<ControlDevice*> controlDevice = cast<ControlDevice*>(objectToTrade.get());
@@ -2427,8 +2433,8 @@ bool PlayerManagerImplementation::checkTradeItems(CreatureObject* player, Creatu
 	for (int i = 0; i < tradeContainer->getTradeSize(); ++i) {
 		ManagedReference<SceneObject*> scene = tradeContainer->getTradeItem(i);
 
-		if (scene->isNoTrade())
-			return false;
+//		if (scene->isNoTrade())
+//			return false;
 
 		if (scene->isTangibleObject()) {
 
@@ -2495,8 +2501,8 @@ bool PlayerManagerImplementation::checkTradeItems(CreatureObject* player, Creatu
 	for (int i = 0; i < receiverContainer->getTradeSize(); ++i) {
 		ManagedReference<SceneObject*> scene = receiverContainer->getTradeItem(i);
 
-		if (scene->isNoTrade())
-			return false;
+//		if (scene->isNoTrade())
+//			return false;
 
 		if (scene->isTangibleObject()) {
 
@@ -4808,7 +4814,7 @@ void PlayerManagerImplementation::acceptUnity( CreatureObject* respondingPlayer)
 
 	for (int i = 0; i < inventory->getContainerObjectsSize(); i++) {
 		ManagedReference<WearableObject*> wearable = cast<WearableObject*>(inventory->getContainerObject(i).get());
-		if (wearable != nullptr && wearable->getGameObjectType() == SceneObjectType::RING && !wearable->isEquipped() && !wearable->isNoTrade()) {
+		if (wearable != nullptr && wearable->getGameObjectType() == SceneObjectType::RING && !wearable->isEquipped()) {// && !wearable->isNoTrade()) {
 			String itemName = wearable->getDisplayedName();
 			box->addMenuItem(itemName, wearable->getObjectID());
 		}
@@ -5697,10 +5703,37 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 
 	bool message = true;
 //selfbuff
-	int selfMedBuff = 250;//
-	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * .25;//25% is half of vanilla 50%
-	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * .25;
-	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * .25;
+	int selfMedBuff = 1750;//
+	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.0;//25% is half of vanilla 50%
+	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.0;//.625 is half of 125
+	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.0;//1.0== 100%
+	int selfDuration =	180; //3 hr ;
+
+	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
+	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
+	message = message && doEnhanceCharacter(0x7F86D2C6, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 2); // medical_enhance_constitution
+	message = message && doEnhanceCharacter(0x4BF616E2, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 3); // medical_enhance_action
+	message = message && doEnhanceCharacter(0x71B5C842, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 4); // medical_enhance_quickness
+	message = message && doEnhanceCharacter(0xED0040D9, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 5); // medical_enhance_stamina
+
+	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrengthMind, selfDuration * 60, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
+	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus, selfDuration * 60, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
+	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
+
+	if (message && player->isPlayerCreature())
+		player->sendSystemMessage("You receive Doctor Health/Action buffs, Dancer/Musician Mind buffs.");
+}
+
+void PlayerManagerImplementation::enhanceCharacterDocBuff(CreatureObject* player) {
+	if (player == nullptr)
+		return;
+
+	bool message = true;
+//selfbuff
+	int selfMedBuff = 1500;//
+	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;//25% is half of vanilla 50%
+	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;//.625 is half of 125
+	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;
 	int selfDuration =	360; //6 hr ;
 
 	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
@@ -5715,7 +5748,7 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Doctor Health/Action buffs for 250. Dancer/Musician Mind buffs for 50%. They last 6 hours. \nmySWG: Doc/Ent buffs are half power.");
+		player->sendSystemMessage("You receive Doctor Health/Action buffs for 1500. Dancer/Musician Mind buffs for 125%. They last 6 hours.");
 }
 
 void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
@@ -5731,7 +5764,7 @@ void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
 
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Dancer Mind buff for 6 hours. \nmySWG: Doc/Ent buffs are half power.");
+		player->sendSystemMessage("You receive Dancer Mind buff for 6 hours.");
 
 //no message b/c it will say it every time you stop dance, if u have no buff mod, or a new buff is applied or not b/c cant overbuff
 //	if (message && player->isPlayerCreature())

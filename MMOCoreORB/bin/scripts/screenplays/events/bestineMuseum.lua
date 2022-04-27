@@ -43,7 +43,7 @@ local artistMobiles = {
 	{ template = "lilas_dinhint", x = 22.6945, z = 0.198179, y = -0.151074, direction = -79, cellID = 1028172, position = STAND }
 }
 
---registerScreenPlay("BestineMuseumScreenPlay", true)
+registerScreenPlay("BestineMuseumScreenPlay", true)
 
 function BestineMuseumScreenPlay:start()
 	if (isZoneEnabled("tatooine")) then

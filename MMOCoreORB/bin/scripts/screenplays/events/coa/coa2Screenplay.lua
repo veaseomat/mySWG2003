@@ -27,7 +27,7 @@ Coa2Screenplay = ScreenPlay:new {
 	}
 }
 
---registerScreenPlay("Coa2Screenplay", true)
+registerScreenPlay("Coa2Screenplay", true)
 
 function Coa2Screenplay:start()
 	self:spawnStaticNpcs()

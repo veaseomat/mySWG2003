@@ -38,7 +38,7 @@ lifeDayScreenplay = ScreenPlay:new {
 	robe = "object/tangible/wearables/wookiee/wke_lifeday_robe.iff"
 }
 
---registerScreenPlay("lifeDayScreenplay", true)
+registerScreenPlay("lifeDayScreenplay", true)
 
 function lifeDayScreenplay:start()
 	if getFormattedTime():find("Dec") ~= nil then

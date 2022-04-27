@@ -38,7 +38,7 @@ lok_racetrack_screenplay = RaceTrack:new {
 	}
 }
 
---registerScreenPlay("lok_racetrack_screenplay", true)
+registerScreenPlay("lok_racetrack_screenplay", true)
 
 --------------------------------------
 --   Initialize screenplay           -

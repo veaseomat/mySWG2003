@@ -69,10 +69,10 @@ object_weapon_melee_polearm_crafted_saber_sword_lightsaber_polearm_gen1 = object
 	attackType = MELEEATTACK,
 
 	-- ENERGY, KINETIC, ELECTRICITY, STUN, BLAST, HEAT, COLD, ACID, LIGHTSABER
-	damageType = ENERGY,
+	damageType = LIGHTSABER,
 
 	-- NONE, LIGHT, MEDIUM, HEAVY
-	armorPiercing = HEAVY,
+	armorPiercing = MEDIUM,
 
 	-- combat_rangedspecialize_bactarifle, combat_rangedspecialize_rifle, combat_rangedspecialize_pistol, combat_rangedspecialize_heavy, combat_rangedspecialize_carbine
 	-- combat_meleespecialize_unarmed, combat_meleespecialize_twohand, combat_meleespecialize_polearm, combat_meleespecialize_onehand, combat_general,
@@ -121,19 +121,19 @@ object_weapon_melee_polearm_crafted_saber_sword_lightsaber_polearm_gen1 = object
 
 	defenderToughnessModifiers = { "lightsaber_toughness" },
 	
+	noTrade = 1,
+
 	childObjects = {
-		{templateFile = "object/tangible/inventory/lightsaber_inventory_training.iff", x = 0, z = 0, y = 0, ox = 0, oy = 0, oz = 0, ow = 0, cellid = -1, containmentType = 4}
+		{templateFile = "object/tangible/inventory/lightsaber_inventory_1.iff", x = 0, z = 0, y = 0, ox = 0, oy = 0, oz = 0, ow = 0, cellid = -1, containmentType = 4}
 	},
-	
-		noTrade = 1,
 
 	numberExperimentalProperties = {1, 1, 2, 2, 2, 2, 2, 1, 1, 1},
 	experimentalProperties = {"XX", "XX", "CD", "OQ", "CD", "OQ", "CD", "OQ", "SR", "UT", "CD", "OQ", "OQ", "OQ", "OQ"},
 	experimentalWeights = {1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "expEffeciency", "expEffeciency", "expEffeciency", "expEffeciency"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "forcecost", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 105, 195, 5.1, 10, 15, 60, 95, 45},
-	experimentalMax = {0, 0, 125, 235, 4.8, 20, 12, 45, 65, 40},
+	experimentalMin = {0, 0, 105, 195, 5.1, 10, 15, 35, 40, 20},
+	experimentalMax = {0, 0, 125, 235, 4.8, 20, 12, 25, 25, 15},
 	experimentalPrecision = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
 }

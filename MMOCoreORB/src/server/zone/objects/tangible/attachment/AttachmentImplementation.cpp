@@ -24,6 +24,8 @@ void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool
 	int roll = System::random(100);
 	int modCount = 1;
 
+	level /= 3;//lvl 100 cap
+
 	for(int i = 0; i < modCount; ++i) {
 		//Mods can't be lower than -1 or greater than 25
 		int max = (int) Math::max(-1.f, Math::min(30.f, (float) round(0.1f * level + 3)));

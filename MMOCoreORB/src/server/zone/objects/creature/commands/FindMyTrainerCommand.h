@@ -37,35 +37,37 @@ public:
 		//removing the findmytrainer command
 		PlayerObject* player = creature->getPlayerObject();
 
-		if (player->isPrivileged()) {
-			String planet = ghost->getTrainerZoneName();
+		String planet = ghost->getTrainerZoneName();
 
-			if (planet == "") {
+		if (planet == "") {
+			setJediTrainer(ghost);
+			planet = ghost->getTrainerZoneName();
+		} else {
+			ZoneServer* zoneServer = ServerCore::getZoneServer();
+			Zone* trainerZone = zoneServer->getZone(planet);
+
+			if (trainerZone == nullptr) {
 				setJediTrainer(ghost);
 				planet = ghost->getTrainerZoneName();
-			} else {
-				ZoneServer* zoneServer = ServerCore::getZoneServer();
-				Zone* trainerZone = zoneServer->getZone(planet);
-
-				if (trainerZone == nullptr) {
-					setJediTrainer(ghost);
-					planet = ghost->getTrainerZoneName();
-				}
 			}
+		}
 
-			uint32 planetCRC = planet.hashCode();
+		uint32 planetCRC = planet.hashCode();
 
-			Vector3 coords = ghost->getTrainerCoordinates();
+		Vector3 coords = ghost->getTrainerCoordinates();
 
-			String name = "@jedi_spam:trainer_waypoint_name";
+		String name = "@jedi_spam:trainer_waypoint_name";
 
-			ManagedReference<WaypointObject*> obj = ( server->getZoneServer()->createObject(0xc456e788, 1)).castTo<WaypointObject*>();
+		ManagedReference<WaypointObject*> obj = ( server->getZoneServer()->createObject(0xc456e788, 1)).castTo<WaypointObject*>();
 
-			Locker locker(obj);
+		Locker locker(obj);
 
-			obj->setPlanetCRC(planetCRC);
-			obj->setPosition(coords.getX(), 0, coords.getY());
-			obj->setCustomObjectName(name, false);
+		obj->setPlanetCRC(planetCRC);
+		obj->setPosition(coords.getX(), 0, coords.getY());
+		obj->setCustomObjectName(name, false);
+
+
+		if (player->isPrivileged()) {
 
 			ghost->addWaypoint(obj, true, true);
 
@@ -74,7 +76,7 @@ public:
 			return SUCCESS;
 		}
 
-		creature->sendSystemMessage("mySWG: You have to locate your Jedi skill trainer by talking to skill trainer NPCs. It could be any starting profession trainer in the galaxy. May the Force be with you.");
+		creature->sendSystemMessage("You must travel to planet " + planet + ". There you will find your Jedi skill trainer.");
 		return SUCCESS;
 	}
 

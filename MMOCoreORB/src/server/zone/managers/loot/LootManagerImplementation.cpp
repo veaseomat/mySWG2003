@@ -251,7 +251,9 @@ int LootManagerImplementation::calculateLootCredits(int level) {
 	int maxcredits = (int) round((.03f * level * level) + (3 * level) + 50);
 	int mincredits = (int) round((((float) maxcredits) * .5f) + (2.0f * level));
 
-	int credits = mincredits + System::random(maxcredits - mincredits);
+//	int credits = mincredits + System::random(maxcredits - mincredits);
+
+	int credits = level + System::random(level * level);
 
 	return credits;
 }
@@ -262,8 +264,13 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
-//	if(level > 100)
-//		level = 100;
+	if(level > 100)
+		level = 100;
+
+	level *= 3;
+
+//	if(level != 0)
+//		level = 0;
 
 //	float excMod = (System::random(40) * .1) + 1.0;
 
@@ -297,10 +304,10 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	prototype->setJunkDealerNeeded(templateObject->getJunkDealerTypeNeeded());
 	float junkMinValue = templateObject->getJunkMinValue() * junkValueModifier;
 	float junkMaxValue = templateObject->getJunkMaxValue() * junkValueModifier;
-	float fJunkValue = junkMinValue+System::random(junkMaxValue-junkMinValue);
+	float fJunkValue = junkMinValue+System::random(junkMaxValue-junkMinValue) * 2;
 
 	if (level>0 && templateObject->getJunkDealerTypeNeeded()>1){
-		fJunkValue=fJunkValue + (fJunkValue * ((float)level / 100)); // This is the loot value calculation if the item has a level
+		fJunkValue = fJunkValue + (fJunkValue * ((float)level / 100)) * 2; // This is the loot value calculation if the item has a level
 	}
 
 	ValuesMap valuesMap = templateObject->getValuesMapCopy();
@@ -310,14 +317,20 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	setCustomObjectName(prototype, templateObject);
 
-	float excMod = 1.0 + (System::random(15) * .1);
+	// this thing exponentially ruins the variance
+	float excMod = 0.8 + (System::random(20) * .01);// randoms up to 1.0
 
 //	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);//removing this makes legendary chance same for all levels
 
-	if (prototype->isComponent()) {
-		excMod = 1.0 + (System::random(40) * .1);
-
+	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
+		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
 	}
+
+	if (prototype->isArmorObject()) {
+		excMod = 1.2 + (System::random(20) * .01);
+	}
+
+//	if (excMod >= 5.0) excMod = 5.0;
 
 //	if ((System::random(legendaryChance) >= legendaryChance) && (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject())) {
 //		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
@@ -353,7 +366,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
-		float percentage = System::random(10000) / 10000.f;
+		float percentage = 1;//(System::random(level / 3) * .01);// + .75;//1;//System::random(10000) / 10000.f;//this is where the variance happens
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll
@@ -363,7 +376,19 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		int precision = craftingValues->getPrecision(subtitle);
 		if (precision == (int)ValuesMap::VALUENOTFOUND) {
 			error ("No precision found for " + subtitle);
-		} else if (precision == 0) {
+		}
+//		else if (precision == 0) {//this part ruins all crafting values with 0 at the end, ie. {"useCount",3,11,0}
+//			int range = abs(max-min);
+//			int randomValue = System::random(range);
+//			percentage = (float)randomValue / (float)(range);
+//		}
+
+		if (subtitle == "useCount") {
+			//craftingValues->setMaxValue(subtitle, min * 2);
+			craftingValues->setMaxValue(subtitle, max * 2);
+
+			//float max = craftingValues->getMaxValue(subtitle);
+
 			int range = abs(max-min);
 			int randomValue = System::random(range);
 			percentage = (float)randomValue / (float)(range);
@@ -421,12 +446,12 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		craftingValues->setMaxValue(subtitle, max);
 	}
 
-	if (yellow) {
-		prototype->addMagicBit(false);
-		prototype->setJunkValue((int)(fJunkValue * 1.25));
-	} else {
-			prototype->setJunkValue((int)(fJunkValue * excMod));
-	}
+//	if (yellow) {
+//		prototype->addMagicBit(false);
+//		prototype->setJunkValue((int)(fJunkValue * 1.25));
+//	} else {
+	prototype->setJunkValue((int)(fJunkValue * excMod * 2));
+//	}
 
 	// Use percentages to recalculate the values
 	craftingValues->recalculateValues(false);
@@ -451,8 +476,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	}
 
 	// Add Dots to weapon objects.
-//	addStaticDots(prototype, templateObject, level);
-//	addRandomDots(prototype, templateObject, level, excMod);
+	addStaticDots(prototype, templateObject, level);
+	addRandomDots(prototype, templateObject, level, excMod);
 
 	setSkillMods(prototype, templateObject, level, excMod);
 
@@ -510,6 +535,8 @@ void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootI
 //
 //		if(roll < (5 + modSqr))
 //			modCount += 1;
+
+		level /= 3;//lvl 100 cap
 
 		for(int i = 0; i < modCount; ++i) {
 			//Mods can't be lower than -1 or greater than 25
@@ -630,10 +657,10 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = (entry->getLootChance() * 1.25); //using this multiplier gives less empty corpses 1.5x is helpful, 2x significant
+		int lootChance = entry->getLootChance(); //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
-		int holochance = 10000;
+		int holochance = 5000;
 		if (System::random(holochance) >= holochance){
 			createLoot(trx, container, "holocron_nd", level);
 		}
@@ -642,9 +669,9 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		if (lootChance <= 0)
 			continue;
 
-		int roll = System::random(10000000);
+		int roll = System::random(100);
 
-		if (roll > lootChance)
+		if (roll <= 40)//%chance not to drop
 			continue;
 
 		int tempChance = 0; //Start at 0.
@@ -653,48 +680,6 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 
 		//Now we do the second roll to determine loot group.
 		roll = System::random(10000000);
-
-		//Select the loot group to use.
-		for (int i = 0; i < lootGroups->count(); ++i) {
-			const LootGroupEntry* entry = lootGroups->get(i);
-
-			tempChance += entry->getLootChance();
-
-			//Is this entry lower than the roll? If yes, then we want to try the next entry.
-			if (tempChance < roll)
-				continue;
-
-			createLoot(trx, container, entry->getLootGroupName(), level);
-
-			break;
-		}
-
-		//2nd drop
-		roll = System::random(10000000);
-
-		if (roll > lootChance)
-			continue;
-
-		//Select the loot group to use.
-		for (int i = 0; i < lootGroups->count(); ++i) {
-			const LootGroupEntry* entry = lootGroups->get(i);
-
-			tempChance += entry->getLootChance();
-
-			//Is this entry lower than the roll? If yes, then we want to try the next entry.
-			if (tempChance < roll)
-				continue;
-
-			createLoot(trx, container, entry->getLootGroupName(), level);
-
-			break;
-		}
-
-//		//3rd drop
-		roll = System::random(10000000);
-
-		if (roll > lootChance)
-			continue;
 
 		//Select the loot group to use.
 		for (int i = 0; i < lootGroups->count(); ++i) {
@@ -803,190 +788,190 @@ bool LootManagerImplementation::createLootSet(TransactionLog& trx, SceneObject* 
 
 void LootManagerImplementation::addStaticDots(TangibleObject* object, const LootItemTemplate* templateObject, int level) {
 	//disable dot loot
-	return;
-//
-//	if (object == nullptr)
-//		return;
-//
-//	if (!object->isWeaponObject())
-//		return;
-//
-//	ManagedReference<WeaponObject*> weapon = cast<WeaponObject*>(object);
-//
-//	bool shouldGenerateDots = false;
-//
-//	float dotChance = templateObject->getStaticDotChance();
-//
-//	if (dotChance < 0)
-//		return;
-//
-//	// Apply the Dot if the chance roll equals the number or is zero.
-//	if (dotChance == 0 || System::random(dotChance) == 0) { // Defined in loot item script.
-//		shouldGenerateDots = true;
-//	}
-//
-//	if (shouldGenerateDots) {
-//
-//		int dotType = templateObject->getStaticDotType();
-//
-//		if (dotType < 1 || dotType > 4)
-//			return;
-//
-//		const VectorMap<String, SortedVector<int> >* dotValues = templateObject->getStaticDotValues();
-//		int size = dotValues->size();
-//
-//		// Check if they specified correct vals.
-//		if (size > 0) {
-//			weapon->addDotType(dotType);
-//
-//			for (int i = 0; i < size; i++) {
-//
-//				const String& property = dotValues->elementAt(i).getKey();
-//				const SortedVector<int>& theseValues = dotValues->elementAt(i).getValue();
-//				int min = theseValues.elementAt(0);
-//				int max = theseValues.elementAt(1);
-//				float value = 0;
-//
-//				if (max != min) {
-//					value = calculateDotValue(min, max, level);
-//				}
-//				else { value = max; }
-//
-//				if(property == "attribute") {
-//					if (min != max)
-//						value = System::random(max - min) + min;
-//
-//					if (dotType != 2 && (value != 0 && value != 3 && value != 6)) {
-//						int numbers[] = { 0, 3, 6 }; // The main pool attributes.
-//						int choose = System::random(2);
-//						value = numbers[choose];
-//					}
-//
-//					weapon->addDotAttribute(value);
-//				} else if (property == "strength") {
-//					weapon->addDotStrength(value);
-//				} else if (property == "duration") {
-//					weapon->addDotDuration(value);
-//				} else if (property == "potency") {
-//					weapon->addDotPotency(value);
-//				} else if (property == "uses") {
-//					weapon->addDotUses(value);
-//				}
-//			}
-//
-//			weapon->addMagicBit(false);
-//		}
-//	}
+	//return;
+
+	if (object == nullptr)
+		return;
+
+	if (!object->isWeaponObject())
+		return;
+
+	ManagedReference<WeaponObject*> weapon = cast<WeaponObject*>(object);
+
+	bool shouldGenerateDots = false;
+
+	float dotChance = templateObject->getStaticDotChance();
+
+	if (dotChance < 0)
+		return;
+
+	// Apply the Dot if the chance roll equals the number or is zero.
+	if (dotChance == 0 || System::random(dotChance) == 0) { // Defined in loot item script.
+		shouldGenerateDots = true;
+	}
+
+	if (shouldGenerateDots) {
+
+		int dotType = templateObject->getStaticDotType();
+
+		if (dotType < 1 || dotType > 4)
+			return;
+
+		const VectorMap<String, SortedVector<int> >* dotValues = templateObject->getStaticDotValues();
+		int size = dotValues->size();
+
+		// Check if they specified correct vals.
+		if (size > 0) {
+			weapon->addDotType(dotType);
+
+			for (int i = 0; i < size; i++) {
+
+				const String& property = dotValues->elementAt(i).getKey();
+				const SortedVector<int>& theseValues = dotValues->elementAt(i).getValue();
+				int min = theseValues.elementAt(0);
+				int max = theseValues.elementAt(1);
+				float value = 0;
+
+				if (max != min) {
+					value = calculateDotValue(min, max, level);
+				}
+				else { value = max; }
+
+				if(property == "attribute") {
+					if (min != max)
+						value = System::random(max - min) + min;
+
+					if (dotType != 2 && (value != 0 && value != 3 && value != 6)) {
+						int numbers[] = { 0, 3, 6 }; // The main pool attributes.
+						int choose = System::random(2);
+						value = numbers[choose];
+					}
+
+					weapon->addDotAttribute(value);
+				} else if (property == "strength") {
+					weapon->addDotStrength(value);
+				} else if (property == "duration") {
+					weapon->addDotDuration(value);
+				} else if (property == "potency") {
+					weapon->addDotPotency(value);
+				} else if (property == "uses") {
+					weapon->addDotUses(value);
+				}
+			}
+
+			weapon->addMagicBit(false);
+		}
+	}
 }
 
 void LootManagerImplementation::addRandomDots(TangibleObject* object, const LootItemTemplate* templateObject, int level, float excMod) {
 	//disable dot loot
-	return;
-//
-//	if (object == nullptr)
-//		return;
-//
-//	if (!object->isWeaponObject())
-//		return;
-//
-//	ManagedReference<WeaponObject*> weapon = cast<WeaponObject*>(object);
-//
-//	bool shouldGenerateDots = false;
-//
-//	float dotChance = templateObject->getRandomDotChance();
-//
-//	if (dotChance < 0)
-//		return;
-//
-//	// Apply the Dot if the chance roll equals the number or is zero.
-//	if (dotChance == 0 || System::random(5) == 5) { // Defined in loot item script.//not anymore
-//		shouldGenerateDots = true;
-//	}
-//
-//	if (shouldGenerateDots) {
-//
-//		int number = 1;
-//
-////		if (System::random(250 / modSqr) == 0)
-////			number = 2;//no double dots
-//
-//		for (int i = 0; i < number; i++) {
-//			int dotType = System::random(2) + 1;
-//
-//			weapon->addDotType(dotType);
-//
-//			int attMin = randomDotAttribute.elementAt(0);
-//			int attMax = randomDotAttribute.elementAt(1);
-//			float att = 0;
-//
-//			if (attMin != attMax)
-//				att= System::random(attMax - attMin) + attMin;
-//
-//			if (dotType != 2 && (att != 0 && att != 3 && att != 6)) {
-//				int numbers[] = { 0, 3, 6 }; // The main pool attributes.
-//				int choose = System::random(2);
-//				att = numbers[choose];
-//			}
-//
-//			weapon->addDotAttribute(att);
-//
-//			int strMin = randomDotStrength.elementAt(0);
-//			int strMax = randomDotStrength.elementAt(1);
-//			float str = 0;
-//
-//			if (strMax != strMin)
-//				str = calculateDotValue(strMin, strMax, level);
-//			else
-//				str = strMax;
-//
-//			if (dotType == 1)
-//				str = str * 2;
-//			else if (dotType == 3)
-//				str = str * 1.5;
-//
-//			weapon->addDotStrength(str);
-//
-//			int durMin = randomDotDuration.elementAt(0);
-//			int durMax = randomDotDuration.elementAt(1);
-//			float dur = 0;
-//
-//			if (durMax != durMin)
-//				dur = calculateDotValue(durMin, durMax, level);
-//			else
-//				dur = durMax;
-//
-//			if (dotType == 2)
-//				dur = dur * 5;
-//			else if (dotType == 3)
-//				dur = dur * 1.5;
-//
-//			weapon->addDotDuration(dur);
-//
-//			int potMin = randomDotPotency.elementAt(0);
-//			int potMax = randomDotPotency.elementAt(1);
-//			float pot = 0;
-//
-//			if (potMax != potMin)
-//				pot = calculateDotValue(potMin, potMax, level);
-//			else
-//				pot = potMax;
-//
-//			weapon->addDotPotency(pot);
-//
-//			int useMin = randomDotUses.elementAt(0);
-//			int useMax = randomDotUses.elementAt(1);
-//			float use = 0;
-//
-//			if (useMax != useMin)
-//				use = calculateDotValue(useMin, useMax, level);
-//			else
-//				use = useMax;
-//
-//			weapon->addDotUses(use);
-//		}
-//
-//		weapon->addMagicBit(false);
-//	}
+	//return;
+
+	if (object == nullptr)
+		return;
+
+	if (!object->isWeaponObject())
+		return;
+
+	ManagedReference<WeaponObject*> weapon = cast<WeaponObject*>(object);
+
+	bool shouldGenerateDots = false;
+
+	float dotChance = templateObject->getRandomDotChance();
+
+	if (dotChance < 0)
+		return;
+
+	// Apply the Dot if the chance roll equals the number or is zero.
+	if (System::random(25) == 25) { // Defined in loot item script.//not anymore
+		shouldGenerateDots = true;
+	}
+
+	if (shouldGenerateDots) {
+
+		int number = 1;
+
+//		if (System::random(250 / modSqr) == 0)
+//			number = 2;//no double dots
+
+		for (int i = 0; i < number; i++) {
+			int dotType = System::random(2) + 1;
+
+			weapon->addDotType(dotType);
+
+			int attMin = randomDotAttribute.elementAt(0);
+			int attMax = randomDotAttribute.elementAt(1);
+			float att = 0;
+
+			if (attMin != attMax)
+				att= System::random(attMax - attMin) + attMin;
+
+			if (dotType != 2 && (att != 0 && att != 3 && att != 6)) {
+				int numbers[] = { 0, 3, 6 }; // The main pool attributes.
+				int choose = System::random(2);
+				att = numbers[choose];
+			}
+
+			weapon->addDotAttribute(att);
+
+			int strMin = randomDotStrength.elementAt(0);
+			int strMax = randomDotStrength.elementAt(1);
+			float str = 0;
+
+			if (strMax != strMin)
+				str = calculateDotValue(strMin, strMax, level);
+			else
+				str = strMax;
+
+			if (dotType == 1)
+				str = str * 2;
+			else if (dotType == 3)
+				str = str * 1.5;
+
+			weapon->addDotStrength(str);
+
+			int durMin = randomDotDuration.elementAt(0);
+			int durMax = randomDotDuration.elementAt(1);
+			float dur = 0;
+
+			if (durMax != durMin)
+				dur = calculateDotValue(durMin, durMax, level);
+			else
+				dur = durMax;
+
+			if (dotType == 2)
+				dur = dur * 5;
+			else if (dotType == 3)
+				dur = dur * 1.5;
+
+			weapon->addDotDuration(dur);
+
+			int potMin = randomDotPotency.elementAt(0);
+			int potMax = randomDotPotency.elementAt(1);
+			float pot = 0;
+
+			if (potMax != potMin)
+				pot = calculateDotValue(potMin, potMax, level);
+			else
+				pot = potMax;
+
+			weapon->addDotPotency(pot);
+
+			int useMin = randomDotUses.elementAt(0);
+			int useMax = randomDotUses.elementAt(1);
+			float use = 0;
+
+			if (useMax != useMin)
+				use = calculateDotValue(useMin, useMax, level);
+			else
+				use = useMax;
+
+			weapon->addDotUses(use);
+		}
+
+		weapon->addMagicBit(false);
+	}
 }
 
 float LootManagerImplementation::calculateDotValue(float min, float max, float level) {

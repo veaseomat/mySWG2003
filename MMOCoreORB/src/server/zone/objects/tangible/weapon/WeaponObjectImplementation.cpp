@@ -89,12 +89,12 @@ void WeaponObjectImplementation::loadTemplateData(SharedObjectTemplate* template
 
 	if (templateAttackSpeed > 1)
 		attackSpeed = templateAttackSpeed;
-
-//	if (!isJediWeapon()) {
+//saber slice
+	if (!isJediWeapon()) {
 		setSliceable(true);
-//	} else if (isJediWeapon()) {
-//		setSliceable(false);
-//	}
+	} else if (isJediWeapon()) {
+		setSliceable(false);
+	}
 }
 
 void WeaponObjectImplementation::sendContainerTo(CreatureObject* player) {
@@ -248,8 +248,8 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 //		ap = "Medium";
 //		break;
 //	case SharedWeaponObjectTemplate::HEAVY:
-//		ap = "Medium";
-////		ap = "Heavy";
+////		ap = "Medium";
+//		ap = "Heavy";
 //		break;
 //	default:
 //		ap = "Unknown";
@@ -258,7 +258,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 //
 //	alm->insertAttribute("wpn_armor_pierce_rating", ap);
 
-	float speed = Math::getPrecision(getAttackSpeed(), 1);
+	float speed = 1.0; //Math::getPrecision(getAttackSpeed(), 1);
 
 	if (speed < 1.0) speed = 1.0;
 
@@ -296,7 +296,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 		dmgtxt << "Acid";
 		break;
 	case SharedWeaponObjectTemplate::LIGHTSABER:
-		dmgtxt << "Lightsaber";
+		dmgtxt << "Energy";//"Lightsaber";
 		break;
 	default:
 		dmgtxt << "Unknown";
@@ -333,26 +333,26 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	
 
 	//Accuracy Modifiers
-	StringBuffer pblank;
-	if (getPointBlankAccuracy() >= 0)
-		pblank << "+";
-
-	pblank << getPointBlankAccuracy() << " @ " << getPointBlankRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_zero", pblank);
-
-	StringBuffer ideal;
-	if (getIdealAccuracy() >= 0)
-		ideal << "+";
-
-	ideal << getIdealAccuracy() << " @ " << getIdealRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_mid", ideal);
-
-	StringBuffer maxrange;
-	if (getMaxRangeAccuracy() >= 0)
-		maxrange << "+";
-
-	maxrange << getMaxRangeAccuracy() << " @ " << getMaxRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
+//	StringBuffer pblank;
+//	if (getPointBlankAccuracy() >= 0)
+//		pblank << "+";
+//
+//	pblank << getPointBlankAccuracy() << " @ " << getPointBlankRange() << "m";
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_zero", pblank);
+//
+//	StringBuffer ideal;
+//	if (getIdealAccuracy() >= 0)
+//		ideal << "+";
+//
+//	ideal << getIdealAccuracy() << " @ " << getIdealRange() << "m";
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_mid", ideal);
+//
+//	StringBuffer maxrange;
+//	if (getMaxRangeAccuracy() >= 0)
+//		maxrange << "+";
+//
+//	maxrange << getMaxRangeAccuracy() << " @ " << getMaxRange() << "m";
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
 
 	//Special Attack Costs
 //	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost() / 3);
@@ -743,27 +743,28 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 	if (roll < chance) {
 		Locker locker(_this.getReferenceUnsafeStaticCast());
 
-//		if (isJediWeapon()) {
-//			ManagedReference<SceneObject*> saberInv = getSlottedObject("saber_inv");
-//
-//			if (saberInv == nullptr)
-//				return;
-//
-//			// TODO: is this supposed to be every crystal, or random crystal(s)?
-//			for (int i = 0; i < saberInv->getContainerObjectsSize(); i++) {
-//				ManagedReference<LightsaberCrystalComponent*> crystal = saberInv->getContainerObject(i).castTo<LightsaberCrystalComponent*>();
-//				if (crystal->getColor() == 31) {
-//					crystal->inflictDamage(crystal, 0, 1, true, true);
-//				}
-//			}
-//		} else {
+		if (isJediWeapon()) {
+			ManagedReference<SceneObject*> saberInv = getSlottedObject("saber_inv");
+
+			if (saberInv == nullptr)
+				return;
+
+			// TODO: is this supposed to be every crystal, or random crystal(s)?
+			for (int i = 0; i < saberInv->getContainerObjectsSize(); i++) {
+				ManagedReference<LightsaberCrystalComponent*> crystal = saberInv->getContainerObject(i).castTo<LightsaberCrystalComponent*>();
+
+				if (crystal->getColor() == 31) {
+					crystal->inflictDamage(crystal, 0, 1, true, true);
+				}
+			}
+		} else {
 			inflictDamage(_this.getReferenceUnsafeStaticCast(), 0, 1, true, true);
 
 			if (((float)conditionDamage - 1 / (float)maxCondition < 0.75) && ((float)conditionDamage / (float)maxCondition > 0.75))
 				user->sendSystemMessage("@combat_effects:weapon_quarter");
 			if (((float)conditionDamage - 1 / (float)maxCondition < 0.50) && ((float)conditionDamage / (float)maxCondition > 0.50))
 				user->sendSystemMessage("@combat_effects:weapon_half");
-//		}
+		}
 	}
 }
 

@@ -11,7 +11,7 @@ CrackdownCantina = ScreenPlay:new {
 	debugNotify = true -- Send system message when successfully triggered (for debugging)
 }
 
---registerScreenPlay("CrackdownCantina", true)
+registerScreenPlay("CrackdownCantina", true)
 
 function CrackdownCantina:start()
 	if (not isEnabled) then

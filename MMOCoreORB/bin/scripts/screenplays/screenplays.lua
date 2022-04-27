@@ -322,7 +322,7 @@ includeFile("events/bestineMuseum.lua")
 includeFile("events/eventPromoter.lua")
 includeFile("events/lifeDay.lua")
 includeFile("events/buffTerminalMenuComponent.lua")
-includeFile("events/buffTerminalMenuComponent2.lua")
+--includeFile("events/buffTerminalMenuComponent2.lua")
 includeFile("events/race_droid.lua")
 
 -- Hero of Tatooine
@@ -672,3 +672,14 @@ includeFile("events/ServerEventAutomation.lua")
 
 -- Custom content - Loads last to allow for overrides
 includeFile("../custom_scripts/screenplays/screenplays.lua")
+
+includeFile("tasks/naboo/merch_crazy_larry.lua")
+includeFile("tasks/naboo/buy_doc_buff.lua")
+includeFile("tasks/naboo/master_merchant.lua")
+includeFile("tasks/naboo/master_armor.lua")
+includeFile("tasks/naboo/master_weapon.lua")
+includeFile("tasks/naboo/master_chef.lua")
+includeFile("tasks/naboo/master_arch.lua")
+includeFile("tasks/naboo/master_artisan.lua")
+
+

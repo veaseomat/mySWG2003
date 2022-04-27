@@ -24,7 +24,7 @@ void SharedStructureObjectTemplate::readObject(LuaObject* templateData) {
 
 	constructionMarkerTemplate = templateData->getStringField("constructionMarker");
 
-//	abilityRequired = templateData->getStringField("abilityRequired");
+	abilityRequired = templateData->getStringField("abilityRequired");
 
 	uniqueStructure = templateData->getBooleanField("uniqueStructure");
 

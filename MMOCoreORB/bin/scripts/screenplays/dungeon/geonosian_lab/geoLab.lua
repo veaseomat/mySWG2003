@@ -86,7 +86,7 @@ GeonosianLab = ScreenPlay:new {
 	},
 }
 
---registerScreenPlay("GeonosianLab", true)
+registerScreenPlay("GeonosianLab", true)
 
 function GeonosianLab:start()
 	if (isZoneEnabled("yavin4")) then

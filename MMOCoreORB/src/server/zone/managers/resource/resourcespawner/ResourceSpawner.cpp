@@ -1011,9 +1011,9 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 
 	float cityMultiplier = 1.f + player->getSkillMod("private_spec_samplesize") / 100.f;
 
-	int unitsExtracted = maxUnitsExtracted * (float(surveySkill) / 100.0f) * samplingMultiplier * cityMultiplier * 5;
+	int unitsExtracted = maxUnitsExtracted * (float(surveySkill) / 100.0f) * samplingMultiplier * cityMultiplier * 3;
 //	unitsExtracted *= 5;
-	int xpcap = 5;
+	int xpcap = 2;
 
 //	if (session->tryGamble()) {
 //		if (System::random(2) == 1) {
@@ -1042,7 +1042,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 //		xpcap = 50;
 //	}
 
-	if (unitsExtracted < 10) {
+	if (unitsExtracted < 5) {
 
 		// Send message to player about trace amounts
 //		StringIdChatParameter message("survey", "trace_amount");
@@ -1050,7 +1050,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 //		message.setDI(unitsExtracted);
 //		player->sendSystemMessage(message);
 
-		unitsExtracted = 10;
+		unitsExtracted = 5;
 	}
 
 	// Send message to player about unit extraction
@@ -1066,7 +1066,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 
 	resourceSpawn->extractResource(zoneName, unitsExtracted);
 
-	int xp = (int) ((float) unitsExtracted * xpcap);
+	int xp = (int) ((float) unitsExtracted * 2);
 	ManagedReference<PlayerManager*> playerManager = server->getPlayerManager();
 
 	if (playerManager != nullptr)

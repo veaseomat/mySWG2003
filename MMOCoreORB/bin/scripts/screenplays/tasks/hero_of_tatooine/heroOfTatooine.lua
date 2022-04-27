@@ -42,7 +42,7 @@ HeroOfTatooineScreenPlay = ScreenPlay:new {
 		}
 }
 
---registerScreenPlay("HeroOfTatooineScreenPlay", true)
+registerScreenPlay("HeroOfTatooineScreenPlay", true)
 
 function HeroOfTatooineScreenPlay:start()
 	if (isZoneEnabled("tatooine")) then

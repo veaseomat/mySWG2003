@@ -583,8 +583,21 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 //			xp = -10000000;
 		}
 	}
+	
+	int xpCap = -1;
 
-	int xpCap = 10000000;
+	if (xpTypeCapList.contains(xpType))
+		xpCap = xpTypeCapList.get(xpType);
+
+	if (xpCap < 0)
+		xpCap = 2000;
+
+	if (xp > xpCap) {
+		valueToAdd = xpCap - (xp - valueToAdd);
+		xp = xpCap;
+	}
+
+//	int xpCap = 10000000;
 
 //	if (xpTypeCapList.contains(xpType))
 //		xpCap = xpTypeCapList.get(xpType);
@@ -2051,27 +2064,39 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	if (!forceRegenerationEvent->isScheduled()) {
 
 //		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 2;
-//
-//		if (frsregen > 0) {
-//			regen += 10;
-//			regen += frsregen;
-//		}
 
-//		if (regen > 0) {
-//		regen += 10; //jedi robe
-//		}
-
-		//frs regen increase by %
-//		float frsregen = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.625);
-//
 //		if (frsregen > 0) {
 //			regen *= 1.f + (frsregen / 100.f);
 //		}
 
 		if (regen > 0) {
-		regen *= .5; //reduce fp regen skill mod because 5 jedi trees
-		regen += 1; //add 1 so regen is never .5 = int 0 = no regen
+		regen += 10;
 		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
+			regen *= .75;
+		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
+			regen *= .5;
+		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_1)) {
+			regen *= .75;
+		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_2)) {
+			regen *= .5;
+		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_1)) {
+			regen *= .75;
+		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_2)) {
+			regen *= .5;
+		}
+
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
 		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
@@ -2314,14 +2339,14 @@ void PlayerObjectImplementation::doForceRegen() {
 
 	if (creature->isSitting()) {
 
-			modifier = 2;
+			modifier = 5;
 	}
 
 	if (creature->isMeditating()) {
 		Reference<ForceMeditateTask*> medTask = creature->getPendingTask("forcemeditate").castTo<ForceMeditateTask*>();
 
 		if (medTask != nullptr)
-			modifier = 5;
+			modifier = 10;
 	}
 
 	uint32 forceTick = tick * modifier;
@@ -2984,10 +3009,6 @@ void PlayerObjectImplementation::recalculateForcePower() {
 
 	int maxForce = player->getSkillMod("jedi_force_power_max");
 
-//	if (maxForce > 0) {
-//	maxForce += 250; //jedi robe
-//	}
-
 //	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 0.625;
 //	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 25;
 //
@@ -2996,13 +3017,9 @@ void PlayerObjectImplementation::recalculateForcePower() {
 //	}
 
 		if (maxForce > 0) {
-			maxForce *= .5;
 			maxForce += 250;
 		}
 
-//		if (maxForce > 5000) {
-//		maxForce = 5000; //jedi robe
-//		}
 
 	setForcePowerMax(maxForce, true);
 }

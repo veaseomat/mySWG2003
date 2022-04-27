@@ -6,7 +6,7 @@ EmperorsRetreatScreenPlay = ScreenPlay:new {
 	screenplayName = "EmperorsRetreatScreenPlay",
 }
 
---registerScreenPlay("EmperorsRetreatScreenPlay", true)
+registerScreenPlay("EmperorsRetreatScreenPlay", true)
 
 function EmperorsRetreatScreenPlay:start()
 	if (isZoneEnabled("naboo")) then

@@ -298,45 +298,47 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 --			
 
 --jedi unlock has to be an elite master and a random 1/72 chance. 24 profs so only a 1/3 chance to unlock for each caracter
-		if (pGhost ~= nil and 
-	getRandomNumber(1, 6) >= 6 and
-	JediTrials:isEligibleForJedi(pPlayer) and
-	(skillName == "crafting_architect_master" or
-	skillName == "crafting_armorsmith_master" or
-	skillName == "outdoors_bio_engineer_master" or
-	skillName == "combat_bountyhunter_master" or
-	skillName == "combat_carbine_master" or
-	skillName == "crafting_chef_master" or
-	skillName == "science_combatmedic_master" or
-	skillName == "combat_commando_master" or
-	skillName == "outdoors_creaturehandler_master" or
-	skillName == "social_dancer_master" or
-	skillName == "science_doctor_master" or
-	skillName == "crafting_droidengineer_master" or
-	skillName == "combat_1hsword_master" or
-	skillName == "social_imagedesigner_master" or
-	skillName == "social_musician_master" or
-	skillName == "combat_polearm_master" or
-	skillName == "combat_pistol_master" or
-	skillName == "outdoors_ranger_master" or
-	skillName == "combat_rifleman_master" or
-	skillName == "combat_smuggler_master" or
-	skillName == "combat_2hsword_master" or
-	skillName == "crafting_tailor_master" or
-	skillName == "crafting_weaponsmith_master" or
-	skillName == "combat_unarmed_master"))
-	then
-
-			PlayerObject(pGhost):setJediState(2)
-					
-			awardSkill(pPlayer, "force_title_jedi_rank_01")
-		
-			writeScreenPlayData(pPlayer, "PadawanTrials", "startedTrials", 1)		
+--		if (pGhost ~= nil and 
+--	getRandomNumber(1, 7) >= 7 and
+--	JediTrials:isEligibleForJedi(pPlayer) and
+--	(
+--	skillName == "crafting_architect_master" or
+--	skillName == "crafting_armorsmith_master" or
+--	skillName == "outdoors_bio_engineer_master" or
+--	skillName == "combat_bountyhunter_master" or
+--	skillName == "combat_carbine_master" or
+--	skillName == "crafting_chef_master" or
+--	skillName == "science_combatmedic_master" or
+--	skillName == "combat_commando_master" or
+--	skillName == "outdoors_creaturehandler_master" or
+--	skillName == "social_dancer_master" or
+--	skillName == "science_doctor_master" or
+--	skillName == "crafting_droidengineer_master" or
+--	skillName == "combat_1hsword_master" or
+--	skillName == "social_imagedesigner_master" or
+--	skillName == "social_musician_master" or
+--	skillName == "combat_polearm_master" or
+--	skillName == "combat_pistol_master" or
+--	skillName == "outdoors_ranger_master" or
+--	skillName == "combat_rifleman_master" or
+--	skillName == "combat_smuggler_master" or
+--	skillName == "combat_2hsword_master" or
+--	skillName == "crafting_tailor_master" or
+--	skillName == "crafting_weaponsmith_master" or
+--	skillName == "combat_unarmed_master"))
+--	then
+--
+--			PlayerObject(pGhost):setJediState(2)
+--					
+--			awardSkill(pPlayer, "force_title_jedi_rank_01")
+--		
+--			writeScreenPlayData(pPlayer, "PadawanTrials", "startedTrials", 1)		
+--			
+--			CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+--			CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")
+--
+--			FsIntro:startStepDelay(pPlayer, 3)
 			
-			CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
-			CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")
-
-			FsIntro:startStepDelay(pPlayer, 3)
 --moved to skillmanager			
 --			local suiManager = LuaSuiManager()		
 --			suiManager:sendMessageBox(pPlayer, pPlayer, "Jedi Unlock", "You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\nYou have been sent mail with a guide to Jedi on mySWG. First you will need to find your Jedi skill trainer! it could be any starting profession trainer in the galaxy, talk to each one until you find yours.\n\nJedi on mySWG is PERMADEATH with only 3 lives! After you find your trainer you will only have 3 lives, after that all of you Jedi skills will be removed. \n\nCongratulations, good luck, and may the Force be with you... Jedi.", "@ok", "HologrindJediManager", "notifyOkPressed")
@@ -356,7 +358,7 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 --			self:broadcastToPlayers(pGhost, "IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR: Lord Vader has detected a vergence in the Force.\r\rBe on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.")
 			--playerObject(pGhost):broadcastGalaxy("IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR: Lord Vader has detected a vergence in the Force.\r\rBe on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.")			
 
-		end
+--		end
 
 --		if (pGhost ~= nil and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") and JediTrials:isEligibleForKnightTrials(pPlayer)) then
 --

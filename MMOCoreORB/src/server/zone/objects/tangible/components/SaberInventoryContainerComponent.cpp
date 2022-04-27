@@ -29,17 +29,17 @@ int SaberInventoryContainerComponent::canAddObject(SceneObject* sceneObject, Sce
 
 	LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (object);
 
-//	if (crystal->getOwnerID() == 0) {
-//		errorDescription = "@jedi_spam:saber_crystal_not_tuned";
-//		return TransferErrorCode::INVALIDTYPE;
-//	}
+	if (crystal->getOwnerID() == 0) {
+		errorDescription = "@jedi_spam:saber_crystal_not_tuned";
+		return TransferErrorCode::INVALIDTYPE;
+	}
 
 	ManagedReference<CreatureObject*> creature = crystal->getParentRecursively(SceneObjectType::PLAYERCREATURE).castTo<CreatureObject*>();
 
-//	if (creature == nullptr || crystal->getOwnerID() != creature->getObjectID()){
-//		errorDescription = "@jedi_spam:saber_crystal_not_owner";
-//		return TransferErrorCode::INVALIDTYPE;
-//	}
+	if (creature == nullptr || crystal->getOwnerID() != creature->getObjectID()){
+		errorDescription = "@jedi_spam:saber_crystal_not_owner";
+		return TransferErrorCode::INVALIDTYPE;
+	}
 
 	if (crystal->isDestroyed()) {
 		errorDescription = "You cannot add a broken crystal to your lightsaber.";
@@ -78,11 +78,11 @@ int SaberInventoryContainerComponent::notifyObjectInserted(SceneObject* sceneObj
 			weao->setAttackSpeed(weao->getAttackSpeed() + crystal->getAttackSpeed());
 			weao->setMinDamage(weao->getMinDamage() + crystal->getDamage());
 			weao->setMaxDamage(weao->getMaxDamage() + crystal->getDamage());
-//			weao->setHealthAttackCost(weao->getHealthAttackCost() + crystal->getSacHealth());
-//			weao->setActionAttackCost(weao->getActionAttackCost() + crystal->getSacAction());
-//			weao->setMindAttackCost(weao->getMindAttackCost() + crystal->getSacMind());
+			weao->setHealthAttackCost(weao->getHealthAttackCost() + crystal->getSacHealth());
+			weao->setActionAttackCost(weao->getActionAttackCost() + crystal->getSacAction());
+			weao->setMindAttackCost(weao->getMindAttackCost() + crystal->getSacMind());
 			weao->setWoundsRatio(weao->getWoundsRatio() + crystal->getWoundChance());
-//			weao->setForceCost(weao->getForceCost() + crystal->getForceCost());
+			weao->setForceCost(weao->getForceCost() + crystal->getForceCost());
 		}
 
 		if (crystal->getColor() != 31) {
@@ -115,11 +115,11 @@ int SaberInventoryContainerComponent::notifyObjectRemoved(SceneObject* sceneObje
 				weao->setAttackSpeed(weao->getAttackSpeed() - crystal->getAttackSpeed());
 				weao->setMinDamage(weao->getMinDamage() - crystal->getDamage());
 				weao->setMaxDamage(weao->getMaxDamage() - crystal->getDamage());
-//				weao->setHealthAttackCost(weao->getHealthAttackCost() - crystal->getSacHealth());
-//				weao->setActionAttackCost(weao->getActionAttackCost() - crystal->getSacAction());
-//				weao->setMindAttackCost(weao->getMindAttackCost() - crystal->getSacMind());
+				weao->setHealthAttackCost(weao->getHealthAttackCost() - crystal->getSacHealth());
+				weao->setActionAttackCost(weao->getActionAttackCost() - crystal->getSacAction());
+				weao->setMindAttackCost(weao->getMindAttackCost() - crystal->getSacMind());
 				weao->setWoundsRatio(weao->getWoundsRatio() - crystal->getWoundChance());
-//				weao->setForceCost(weao->getForceCost() - crystal->getForceCost());
+				weao->setForceCost(weao->getForceCost() - crystal->getForceCost());
 			}
 
 			if (crystal->getColor() != 31) {

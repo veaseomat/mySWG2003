@@ -34,7 +34,7 @@ agrilatswamp_racetrack_screenplay = RaceTrack:new {
 	}
 }
 
---registerScreenPlay("agrilatswamp_racetrack_screenplay", true)
+registerScreenPlay("agrilatswamp_racetrack_screenplay", true)
 
 --------------------------------------
 --   Initialize screenplay           -

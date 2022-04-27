@@ -128,7 +128,7 @@ int AiAgentImplementation::calculateAttackMaxDamage(int level) {
 	return dmg;
 }
 float AiAgentImplementation::calculateAttackSpeed(int level) {
-	float speed = 3.5f - ((float)level / 100.f);
+	float speed = 1.0f;//(1.0f + (System::random(20) * .1)) - ((float)level / 100.f);
 	return speed;
 }
 
@@ -144,12 +144,15 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	convoTemplateCRC = npcTemplate->getConversationTemplate();
 
-	level = getTemplateLevel();
+	int newlvl = getTemplateLevel();
+	if (newlvl > 100) newlvl = 100;
+
+	level = newlvl;
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float minDmg = level * 2;
-	float maxDmg = level * 3;
+	float minDmg = level * 5.0 + (System::random(20) * .1);
+	float maxDmg = level * 10.0 + (System::random(20) * .1);
 	float speed = calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
@@ -229,18 +232,51 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	int ham = 0;
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
-		for (int i = 0; i < 9; ++i) {
-			if (i % 3 == 0) {
-				//ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
-				ham = level * 200;
-				ham += System::random(level * 40);
-//				if (ham > 100000) ham = 100000;
-				if (isDroidObject() && isPet())
-					ham = getHamMaximum();
-				baseHAM.add(ham);
-			} else
-				baseHAM.add(ham/10);
-		}
+		int health = (level * 80) + System::random(level * 20);
+		int str = (level * 60) + System::random(level * 40);
+		int con = (level * 70) + System::random(level * 30);
+		baseHAM.add(health * .3);
+		baseHAM.add(str);
+		baseHAM.add(con);
+		int action = (level * 70) + System::random(level * 30);
+		int quick = (level * 60) + System::random(level * 40);
+		int stam = (level * 70) + System::random(level * 30);
+		baseHAM.add(action * .3);
+		baseHAM.add(quick);
+		baseHAM.add(stam);
+		int mind = (level * 40) + System::random(level * 60);
+		int focus = (level * 60) + System::random(level * 40);
+		int will = (level * 70) + System::random(level * 30);
+		baseHAM.add(mind * .3);
+		baseHAM.add(focus);
+		baseHAM.add(will);
+
+//		int health = (level * 200) + System::random(level * 40);
+//		baseHAM.add(health);
+//		baseHAM.add(health * .50);
+//		baseHAM.add(health * .50);
+//		int action = (level * 200) + System::random(level * 40);
+//		baseHAM.add(action);
+//		baseHAM.add(action * .50);
+//		baseHAM.add(action * .50);
+//		int mind = ((level * 200) + System::random(level * 40)) * .75;
+//		baseHAM.add(mind);
+//		baseHAM.add(mind * .50);
+//		baseHAM.add(mind * .50);
+
+//		for (int i = 0; i < 9; ++i) {
+//			if (i % 3 == 0) {
+//				//ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
+//				ham = level * 200;
+//				ham += System::random(level * 40);
+////				if (ham > 100000) ham = 100000;
+//				if (isDroidObject() && isPet())
+//					ham = getHamMaximum();
+//				baseHAM.add(ham);
+//			} else
+//				baseHAM.add(ham/10);
+//		}
+
 	} else {
 		int health = petDeed->getHealth();
 		baseHAM.add(health);
@@ -404,18 +440,19 @@ void AiAgentImplementation::setupAttackMaps() {
 }
 
 void AiAgentImplementation::setLevel(int lvl, bool randomHam) {
+	lvl = level;
 	if (lvl <= 0)
 		return;
 
 	CreatureObjectImplementation::setLevel(lvl);
 
-	level = lvl;
+//	level = lvl;
 
 	if (npcTemplate == nullptr) {
 		return;
 	}
 
-	int baseLevel = getTemplateLevel();
+	int baseLevel = level;//getTemplateLevel();
 
 	if (baseLevel == lvl)
 		return;
@@ -430,7 +467,7 @@ void AiAgentImplementation::setLevel(int lvl, bool randomHam) {
 	maxDmg *= ratio;
 
 	if (readyWeapon != nullptr) {
-		float mod = 1 - 0.1*readyWeapon->getArmorPiercing();
+		float mod = 1;// - 0.1*readyWeapon->getArmorPiercing();
 		readyWeapon->setMinDamage(minDmg * mod);
 		readyWeapon->setMaxDamage(maxDmg * mod);
 
@@ -1413,7 +1450,7 @@ void AiAgentImplementation::respawn(Zone* zone, int level) {
 			}
 		}
 	} else {
-		setLevel(level);
+		//setLevel(level);
 	}
 
 	resetBehaviorList();
@@ -1480,8 +1517,8 @@ void AiAgentImplementation::notifyDespawn(Zone* zone) {
 	loadTemplateData(templateObject);
 	loadTemplateData(npcTemplate);
 
-	if (oldLevel != level)
-		setLevel(level);
+//	if (oldLevel != level)
+//		setLevel(level);
 
 	stateBitmask = 0;
 
@@ -1653,17 +1690,40 @@ void AiAgentImplementation::activatePostureRecovery() {
 }
 
 void AiAgentImplementation::activateHAMRegeneration(int latency) {
-    if (isIncapacitated() || isDead() || isInCombat())
+    if (isIncapacitated() || isDead())// || isInCombat())
         return;
 
-    uint32 healthTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::HEALTH) / 300000.f * latency));
-    uint32 actionTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::ACTION) / 300000.f * latency));
-    uint32 mindTick   = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::MIND) / 300000.f * latency));
+//    uint32 healthTick = (uint32) Math::max(1.f, (float) ceil(getBaseHAM(CreatureAttribute::CONSTITUTION) / 300000.f * latency));
+//    uint32 actionTick = (uint32) Math::max(1.f, (float) ceil(getBaseHAM(CreatureAttribute::STAMINA) / 300000.f * latency));
+//    uint32 mindTick   = (uint32) Math::max(1.f, (float) ceil(getBaseHAM(CreatureAttribute::WILLPOWER) / 300000.f * latency));
+//
+//    //reducing ai regen
+//    healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick * 4.0, true, false);
+//    healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick * 4.0, true, false);
+//    healDamage(asCreatureObject(), CreatureAttribute::MIND,   mindTick * 4.0, true, false);
 
-    //reducing ai regen
-    healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick * .25, true, false);
-    healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick * .25, true, false);
-    healDamage(asCreatureObject(), CreatureAttribute::MIND,   mindTick * .25,   true, false);
+	float modifier = (float)latency/1000.f;
+
+	// this formula gives the amount of regen per second
+	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
+			CreatureAttribute::CONSTITUTION)) * 13.0f / 2100.0f * modifier);
+	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
+			CreatureAttribute::STAMINA)) * 13.0f / 2100.0f * modifier);
+	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
+			CreatureAttribute::WILLPOWER)) * 13.0f / 2100.0f * modifier);
+
+	if (healthTick < 1)
+		healthTick = 1;
+
+	if (actionTick < 1)
+		actionTick = 1;
+
+	if (mindTick < 1)
+		mindTick = 1;
+
+	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick * .5, true, false);
+	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick * .5, true, false);
+	healDamage(asCreatureObject(), CreatureAttribute::MIND, mindTick * .25, true, false);
 
     activatePassiveWoundRegeneration();
 }
@@ -2557,7 +2617,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		return;
 	}
 
-	alm->insertAttribute("challenge_level", getLevel());
+	alm->insertAttribute("challenge_level", level);
 
 //	int minD = getDamageMin() * .75;
 //	int maxD = getDamageMax() * .75;
@@ -2588,7 +2648,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 //	else if (getArmor() == 2)
 //		alm->insertAttribute("armorrating", "Medium");
 //	else if (getArmor() == 3)
-//		alm->insertAttribute("armorrating", "Medium");
+//		//alm->insertAttribute("armorrating", "Medium");
 //		alm->insertAttribute("armorrating", "Heavy");
 
 	int npcKinetic = getKinetic();

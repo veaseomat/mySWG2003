@@ -188,7 +188,7 @@ function NightSisterStrongholdScreenPlay:spawnMobiles()
 	spawnMobile("dathomir", "nightsister_initiate",600,5.27219,-24.4314,-26.0931,2,4115620)
 	spawnMobile("dathomir", "nightsister_initiate",600,2.20982,-11.8595,-2.93477,7,4115619)
 
---	self:respawnAxkvaMin()
+	self:respawnAxkvaMin()
 
 	local pTrap = spawnSceneObject("dathomir", "object/static/terrain/corellia/rock_crystl_shrpbush_med.iff", -11.5, -64.6, -202.2, 4115624, 0.707107, 0, 0.707107, 0)
 

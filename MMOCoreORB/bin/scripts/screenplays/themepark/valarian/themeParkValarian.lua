@@ -358,7 +358,7 @@ ThemeParkValarian = ThemeParkLogic:new {
 	requiredFaction = "valarian"
 }
 
---registerScreenPlay("ThemeParkValarian", true)
+registerScreenPlay("ThemeParkValarian", true)
 
 theme_park_valarian_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkValarian

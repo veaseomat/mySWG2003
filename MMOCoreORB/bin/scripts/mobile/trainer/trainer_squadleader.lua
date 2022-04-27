@@ -1,17 +1,18 @@
 trainer_squadleader = Creature:new {
-	objectName = "@mob/creature_names:trainer_squadleader",
+	objectName = "@mob/creature_names:commoner",
 	randomNameType = NAME_GENERIC,
 	randomNameTag = true,
-	faction = "",
-	level = 100,
-	chanceHit = 0.390000,
-	damageMin = 290,
-	damageMax = 300,
-	baseXp = 2914,
-	baseHAM = 8400,
-	baseHAMmax = 10200,
+	socialGroup = "townsperson",
+	faction = "townsperson",
+	level = 4,
+	chanceHit = 0.24,
+	damageMin = 40,
+	damageMax = 45,
+	baseXp = 62,
+	baseHAM = 113,
+	baseHAMmax = 138,
 	armor = 0,
-	resists = {-1,-1,-1,-1,-1,-1,-1,-1,-1},
+	resists = {15,15,15,15,15,15,15,-1,-1},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -19,21 +20,20 @@ trainer_squadleader = Creature:new {
 	boneType = "",
 	boneAmount = 0,
 	milk = 0,
-	tamingChance = 0.000000,
+	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = NONE,
-	creatureBitmask = NONE,
-	optionsBitmask = INVULNERABLE + CONVERSABLE,
+	creatureBitmask = HERD,
+	optionsBitmask = AIENABLED,
 	diet = HERBIVORE,
 
-	templates = {
-		"object/mobile/dressed_squad_leader_trainer_01.iff",
-		"object/mobile/dressed_squad_leader_trainer_02.iff",
-		"object/mobile/dressed_squad_leader_trainer_03.iff"
-	},
+	templates = { "commoner_male" },
+
 	lootGroups = {},
 	weapons = {},
-	conversationTemplate = "squadleaderTrainerConvoTemplate",
-	attacks = {}
+	conversationTemplate = "",
+	attacks = {
+	}
 }
-CreatureTemplates:addCreatureTemplate(trainer_squadleader,"trainer_squadleader")
+
+CreatureTemplates:addCreatureTemplate(trainer_squadleader, "trainer_squadleader")

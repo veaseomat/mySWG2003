@@ -58,7 +58,7 @@ BodyShot3Command = {
 
 	combatSpam = "bodyshot",
 	
-	weaponType = PISTOLWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

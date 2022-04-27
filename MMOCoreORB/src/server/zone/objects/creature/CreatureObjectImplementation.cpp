@@ -2791,15 +2791,16 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 	if (isIncapacitated() || isDead())
 		return;
 
-	if (!isPlayerCreature() && isInCombat())
+	if (!isPlayerCreature())// && isInCombat())
 		return;
 
 	float modifier = (float)latency/1000.f;
 
-	if (isKneeling())
-		modifier *= 1.25f;
-	else if (isSitting())
-		modifier *= 3.5f;
+//	if (isKneeling())
+//		modifier *= 1.25f;
+//	else
+	if (isSitting())
+		modifier *= 4.0f;
 
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
@@ -2831,12 +2832,12 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 
 	if(healthRegen > 0) {
 		healthWoundHeal += (int)(healthRegen * 0.2);
-		if(healthWoundHeal >= 100) {
-			healWound(asCreatureObject(), CreatureAttribute::HEALTH, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::STRENGTH, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::CONSTITUTION, 2, true, false);
-			healthWoundHeal -= 100;
-		}
+	//	if(healthWoundHeal >= 100) {
+			healWound(asCreatureObject(), CreatureAttribute::HEALTH, healthWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::STRENGTH, healthWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::CONSTITUTION, healthWoundHeal, true, false);
+			//healthWoundHeal -= 100;
+//		}
 	}
 
 	/// Action wound regen
@@ -2844,12 +2845,12 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 
 	if(actionRegen > 0) {
 		actionWoundHeal += (int)(actionRegen * 0.2);
-		if(actionWoundHeal >= 100) {
-			healWound(asCreatureObject(), CreatureAttribute::ACTION, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::STAMINA, 2, true, false);
-			actionWoundHeal -= 100;
-		}
+		//if(actionWoundHeal >= 100) {
+			healWound(asCreatureObject(), CreatureAttribute::ACTION, actionWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, actionWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::STAMINA, actionWoundHeal, true, false);
+			//actionWoundHeal -= 100;
+		//}
 	}
 
 	/// Mind wound regen
@@ -2857,12 +2858,12 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 
 	if(mindRegen > 0) {
 		mindWoundHeal += (int)(mindRegen * 0.2);
-		if(mindWoundHeal >= 100) {
-			healWound(asCreatureObject(), CreatureAttribute::MIND, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::FOCUS, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::WILLPOWER, 2, true, false);
-			mindWoundHeal -= 100;
-		}
+		//if(mindWoundHeal >= 100) {
+			healWound(asCreatureObject(), CreatureAttribute::MIND, mindWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::FOCUS, mindWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::WILLPOWER, mindWoundHeal, true, false);
+			//mindWoundHeal -= 100;
+		//}
 	}
 }
 

@@ -1017,16 +1017,18 @@ bool PlanetManagerImplementation::isSpawningPermittedAt(float x, float y, float 
 
 	targetPos.setZ(zone->getHeight(x, y));
 
-	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
-	zone->getInRangeActiveAreas(x, y, 0, &activeAreas, true);//raw value instead of margin
+	float newradius = System::random(64);
 
-//	for (int i = 0; i < activeAreas.size(); ++i) {
-//		ActiveArea* area = activeAreas.get(i);
-//
-//		if (area->isRegion() || area->isMunicipalZone() || area->isNoSpawnArea()) {
-//			return false;
-//		}
-//	}
+	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
+	zone->getInRangeActiveAreas(x, y, margin + newradius, &activeAreas, true);//raw value of 0 instead of margin+ x is no area 64.f is vanilla
+
+	for (int i = 0; i < activeAreas.size(); ++i) {
+		ActiveArea* area = activeAreas.get(i);
+
+		if (area->isRegion() || area->isMunicipalZone() || area->isNoSpawnArea()) {
+			return false;
+		}
+	}
 
 	if (isInObjectsNoBuildZone(x, y, margin)) {
 		return false;

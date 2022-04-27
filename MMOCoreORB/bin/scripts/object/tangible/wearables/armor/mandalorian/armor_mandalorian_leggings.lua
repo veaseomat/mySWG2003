@@ -44,10 +44,10 @@
 object_tangible_wearables_armor_mandalorian_armor_mandalorian_leggings = object_tangible_wearables_armor_mandalorian_shared_armor_mandalorian_leggings:new {
 	templateType = ARMOROBJECT,
 
-	certificationsRequired = { "combat_bountyhunter_master",
-					"combat_commando_master",
-					"outdoors_squadleader_master",
-					"outdoors_ranger_master" },
+--	certificationsRequired = { "combat_bountyhunter_master",
+--					"combat_commando_master",
+--					"outdoors_squadleader_master",
+--					"outdoors_ranger_master" },
 
 	playerRaces = { "object/creature/player/bothan_male.iff",
 				"object/creature/player/bothan_female.iff",
@@ -93,7 +93,7 @@ object_tangible_wearables_armor_mandalorian_armor_mandalorian_leggings = object_
 				"object/mobile/vendor/zabrak_male.iff" },
 	
 	-- Damage types in WeaponObject
-	specialResists = KINETIC + ENERGY + BLAST + STUN + HEAT + COLD + ACID + ELECTRICITY + LIGHTSABER,
+--	specialResists = KINETIC + ENERGY + BLAST + STUN + HEAT + COLD + ACID + ELECTRICITY + LIGHTSABER,
 
 	-- These are default Blue Frog stats, These are also used as temporary DWB crafting stats. Needs to be adjusted to random color, and Blast should be a Special Resist. Encumberance on boots and all arm/hand armor are estimated. Helm/Chest/Leggings are correct. 
 	healthEncumbrance = 94,

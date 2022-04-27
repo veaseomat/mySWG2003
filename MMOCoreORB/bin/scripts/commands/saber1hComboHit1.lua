@@ -59,7 +59,7 @@ Saber1hComboHit1Command = {
 
 	poolsToDamage = HEALTH_ATTRIBUTE + ACTION_ATTRIBUTE + MIND_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = ONEHANDJEDIWEAPON,
 
 	range = -1
 }

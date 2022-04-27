@@ -36,6 +36,12 @@ function ForceShrineMenuComponent:doMeditate(pObject, pPlayer)
 --		KnightTrials:resetCompletedTrialsToStart(pPlayer)
 --	end
 
+--not working
+--	if (JediTrials:isOnPadawanTrials(pPlayer)) then
+--		local pTrainerPlanet =	PlayerObject(pPlayer):getTrainerZoneName()
+--		CreatureObject(pPlayer):sendSystemMessage("You must go to the planet " .. pTrainerPlanet .. ". There you will find your Jedi skill trainer.")
+--	end
+	
 	if (JediTrials:isOnKnightTrials(pPlayer)) then
 		local pPlayerShrine = KnightTrials:getTrialShrine(pPlayer)
 

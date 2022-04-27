@@ -107,6 +107,11 @@ includeFile("groups/forage/forage_live_creatures.lua")
 includeFile("groups/forage/forage_medical_component.lua")
 includeFile("groups/forage/forage_rare.lua")
 includeFile("groups/forage/food.lua")
+includeFile("groups/forage/food1.lua")
+includeFile("groups/forage/food2.lua")
+includeFile("groups/forage/food3.lua")
+includeFile("groups/forage/food4.lua")
+includeFile("groups/forage/food5.lua")
 
 -- generic_quests sub-folder
 includeFile("groups/generic_quests/generic_quests_businessman_expired_ticket.lua")

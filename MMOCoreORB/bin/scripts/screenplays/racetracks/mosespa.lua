@@ -36,7 +36,7 @@ mosespa_racetrack_screenplay = RaceTrack:new {
 	}
 }
 
---registerScreenPlay("mosespa_racetrack_screenplay", true)
+registerScreenPlay("mosespa_racetrack_screenplay", true)
 
 --------------------------------------
 --   Initialize screenplay           -

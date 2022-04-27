@@ -138,9 +138,7 @@ public:
 	}
 
 	float getDamageMultiplier() const {
-		float newMult = (damageMultiplier + 1.0) * .5f;
-		//if (newMult < 1.0) newMult = 1.0;
-		return newMult;
+		return damageMultiplier;
 	}
 
 	float getForceCostMultiplier() const {

@@ -79,6 +79,27 @@ void CharacterBuilderTerminalImplementation::enhanceCharacter(CreatureObject* pl
 	}
 }
 
+void CharacterBuilderTerminalImplementation::enhanceCharacterDocBuff(CreatureObject* player) {
+	PlayerManager* pm = player->getZoneServer()->getPlayerManager();
+
+	pm->enhanceCharacterDocBuff(player);
+
+	ManagedReference<PlayerObject*> ghost = player->getPlayerObject();
+
+	if (ghost == nullptr)
+		return;
+
+	for (int i = 0; i < ghost->getActivePetsSize(); i++) {
+		ManagedReference<AiAgent*> pet = ghost->getActivePet(i);
+
+		if (pet != nullptr) {
+			Locker crossLocker(pet, player);
+
+			pm->enhanceCharacterDocBuff(pet);
+		}
+	}
+}
+
 void CharacterBuilderTerminalImplementation::giveLanguages(CreatureObject* player) {
 	SkillManager* skillManager = server->getSkillManager();
 

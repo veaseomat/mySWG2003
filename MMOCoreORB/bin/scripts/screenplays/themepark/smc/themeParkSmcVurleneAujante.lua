@@ -186,7 +186,7 @@ ThemeParkSmcVurleneAujante = ThemeParkLogic:new {
 	requiredPlanets = { "dathomir", "naboo" },
 }
 
---registerScreenPlay("ThemeParkSmcVurleneAujante", true)
+registerScreenPlay("ThemeParkSmcVurleneAujante", true)
 
 theme_park_smc_vurlene_aujante_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = ThemeParkSmcVurleneAujante

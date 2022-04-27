@@ -204,8 +204,8 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 
 	if (forceSpawn) {
 		spawnNumber.increment();
-//	} else if (getMobType() == LairTemplate::NPC) {
-//		return false;//this lets npc spawn multiple when disabled
+	} else if (getMobType() == LairTemplate::NPC) {
+		return false;//this lets npc spawn multiple when disabled
 	} else {
 		int conditionDamage = lair->getConditionDamage();
 		int maxCondition = lair->getMaxCondition();
@@ -244,7 +244,7 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 	VectorMap<String, int> objectsToSpawn; // String mobileTemplate, int number to spawn
 
 	if (spawnNumber == 4) {
-		if (System::random(100) > 9)
+		if (System::random(100) < 80)
 			return false;
 
 		const VectorMap<String, int>* mobs = lairTemplate->getBossMobiles();
@@ -258,13 +258,14 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 		int amountToSpawn = 0;
 
 		if (getMobType() == LairTemplate::CREATURE) {
-			amountToSpawn = System::random(lairTemplate->getSpawnLimit() * .5) + System::random(2) - spawnNumber;//(lairTemplate->getSpawnLimit() / 3) + System::random(4) - spawnNumber;
+			amountToSpawn = System::random(3) + ((lairTemplate->getSpawnLimit() / 3) - 2);
 		} else {
-			amountToSpawn = System::random(lairTemplate->getSpawnLimit() * .5) + System::random(2) - spawnNumber;
+			amountToSpawn = System::random(lairTemplate->getSpawnLimit() / 2) + (lairTemplate->getSpawnLimit() / 2);
 		}
 
+		amountToSpawn *= 1.3;
+
 		if (amountToSpawn < 1)	amountToSpawn = 1;
-		if (amountToSpawn > 5)	amountToSpawn = 5;
 		
 		for (int i = 0; i < amountToSpawn; i++) {
 			int num = System::random(mobiles->size() - 1);

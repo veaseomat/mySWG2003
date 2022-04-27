@@ -37,7 +37,7 @@ nashal_racetrack_screenplay = RaceTrack:new {
 	}
 }
 
---registerScreenPlay("nashal_racetrack_screenplay", true)
+registerScreenPlay("nashal_racetrack_screenplay", true)
 
 --------------------------------------
 --   Initialize screenplay           -

@@ -36,7 +36,7 @@ Encounter = Task:new {
 	onEncounterDespawned = nil,
 	isEncounterFinished = nil,
 	onEncounterInRange = nil,
-	inRangeValue = 16,
+	inRangeValue = 32,
 }
 
 -- Start the encounter.

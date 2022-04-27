@@ -25,7 +25,7 @@ eventPromoterScreenplay = ScreenPlay:new {
 	}
 }
 
---registerScreenPlay("eventPromoterScreenplay", true)
+registerScreenPlay("eventPromoterScreenplay", true)
 
 --------------------------------------
 --   Initialize screenplay           -
