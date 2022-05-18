@@ -42,7 +42,19 @@
 
 
 object_tangible_component_weapon_lightsaber_lightsaber_module_force_crystal = object_tangible_component_weapon_lightsaber_shared_lightsaber_module_force_crystal:new {
-		gameObjectType = 262156
+		gameObjectType = 262156,
+--			noTrade = 1,
+
+--	numberExperimentalProperties = {1, 1, 1, 2, 2, 2, 2},
+--	experimentalProperties = {"XX", "XX", "XX", "CD", "OQ", "CD", "OQ", "CD", "OQ", "CD", "OQ"},
+--	experimentalWeights = {1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2},
+--	experimentalGroupTitles = {"null", "null", "exp_durability", "expDamage", "expDamage", "expDamage", "expDamage"},
+--	experimentalSubGroupTitles = {"null", "null", "hitpoints", "mindamage", "maxdamage", "attackspeed", "woundchance"},
+--	experimentalMin = {0, 0, 700, 1, 1, 0, 1},
+--	experimentalMax = {0, 0, 1400, 50, 50, -1.0, 10},
+--	experimentalPrecision = {0, 0, 0, 0, 0, 1, 1},
+--	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1},
+
 }
 
 ObjectTemplates:addTemplate(object_tangible_component_weapon_lightsaber_lightsaber_module_force_crystal, "object/tangible/component/weapon/lightsaber/lightsaber_module_force_crystal.iff")

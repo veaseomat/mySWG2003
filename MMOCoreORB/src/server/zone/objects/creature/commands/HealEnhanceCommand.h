@@ -39,7 +39,7 @@ public:
 			if (buff != nullptr) {
 				float percent = buff->getSkillModifierValue("heal_recovery");
 
-				delay = (round(delay * (100.0f - percent) / 100.0f)) / 2;
+				delay = round(delay * (100.0f - percent) / 100.0f);
 			}
 		}
 
@@ -424,20 +424,18 @@ public:
 		//Applies battle fatigue
 		uint32 buffPower = getEnhancePackStrength(enhancePack, enhancer, patient);
 
-		if (buffPower < currentBuff) {
-			if (patient == enhancer)
-				enhancer->sendSystemMessage("Your current enhancements are of greater power and cannot be re-applied.");
-			else
-				enhancer->sendSystemMessage("Your target's current enhancements are of greater power and cannot be re-applied.");
-
-			return 0;
-		}
+//		if (buffPower < currentBuff) {
+//			if (patient == enhancer)
+//				enhancer->sendSystemMessage("Your current enhancements are of greater power and cannot be re-applied.");
+//			else
+//				enhancer->sendSystemMessage("Your target's current enhancements are of greater power and cannot be re-applied.");
+//
+//			return 0;
+//		}
 
 		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
 
-		int durationextra = (enhancePack->getDuration() * 4);
-
-		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, durationextra, enhancePack->getAbsorption());
+		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, enhancePack->getDuration(), enhancePack->getAbsorption());
 
 		if (creature->isPlayerCreature() && targetCreature->isPlayerCreature()) {
 			playerManager->sendBattleFatigueMessage(creature, targetCreature);
@@ -454,8 +452,8 @@ public:
 			enhancePack->decreaseUseCount();
 		}
 
-
-			awardXp(enhancer, "medical", amountEnhanced * 1); //No experience for healing yourself.
+		if (patient != enhancer)
+			awardXp(enhancer, "medical", amountEnhanced); //No experience for healing yourself.
 
 		doAnimations(enhancer, patient);
 

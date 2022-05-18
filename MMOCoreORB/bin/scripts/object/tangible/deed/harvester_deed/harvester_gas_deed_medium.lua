@@ -53,8 +53,8 @@ object_tangible_deed_harvester_deed_harvester_gas_deed_medium = object_tangible_
 	experimentalWeights = {1, 1, 1, 1, 2, 1, 2, 1},
 	experimentalGroupTitles = {"null", "null", "expEffeciency", "expStorage", "null"},
 	experimentalSubGroupTitles = {"null", "null", "extractrate", "hoppersize", "hitpoints"},
-	experimentalMin = {0, 0, 2, 50000, 1000},
-	experimentalMax = {0, 0, 6, 75000, 1000},
+	experimentalMin = {0, 0, 20, 500000, 1000},
+	experimentalMax = {0, 0, 60, 750000, 1000},
 	experimentalPrecision = {0, 0, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 4},
 }

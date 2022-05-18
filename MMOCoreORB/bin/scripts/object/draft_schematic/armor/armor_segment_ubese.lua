@@ -64,9 +64,9 @@ object_draft_schematic_armor_armor_segment_ubese = object_draft_schematic_armor_
 	customizationDefaults = {},
 
 	ingredientTemplateNames = {"craft_armor_ingredients_n", "craft_armor_ingredients_n", "craft_armor_ingredients_n", "craft_armor_ingredients_n", "craft_armor_ingredients_n"},
-	ingredientTitleNames = {"segment_layer_assembly_plate", "armor_layer_weld_tabs", "segment_mounting_tabs", "defensive_layer", "segment_enhancement"},
+	ingredientTitleNames = {"segment_layer_assembly_plate", "armor_layer_weld_tabs", "segment_mounting_tabs", "defensive_layer", "defensive_layer_2"},
 	ingredientSlotType = {0, 0, 0, 3, 3},
-	resourceTypes = {"iron", "steel", "fiberplast", "object/tangible/component/armor/shared_armor_layer.iff", "object/tangible/component/armor/shared_base_armor_segment_enhancement.iff"},
+	resourceTypes = {"iron", "steel", "fiberplast", "object/tangible/component/armor/shared_armor_layer.iff", "object/tangible/component/armor/shared_armor_layer.iff"},
 	resourceQuantities = {15, 10, 5, 1, 1},
 	contribution = {100, 100, 100, 100, 100},
 

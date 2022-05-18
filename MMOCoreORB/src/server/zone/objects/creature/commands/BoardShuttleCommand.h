@@ -67,7 +67,7 @@ public:
 			return GENERALERROR;
 		}
 
-		if (!shuttle->isInRange(creature, 25.f)) {
+		if (!shuttle->isInRange(creature, 64.f)) {
 			creature->sendSystemMessage("@player_structure:boarding_too_far"); //You are too far from the shuttle to board.
 			return GENERALERROR;
 		}

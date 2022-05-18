@@ -351,7 +351,7 @@ void SuiManager::handleCharacterBuilderSelectItem(CreatureObject* player, SuiBox
 		String templatePath = node->getTemplatePath();
 
 		if (templatePath.indexOf(".iff") < 0) { // Non-item selections
-
+//frog commands
 			if (templatePath == "unlearn_all_skills") {
 
 				SkillManager::instance()->surrenderAllSkills(player, true, false);

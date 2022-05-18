@@ -394,6 +394,7 @@ includeFile("lair/creature_dynamic/tatooine_womprat_slum_rat_neutral_none.lua")
 includeFile("lair/creature_dynamic/tatooine_worrt_herd_neutral_none.lua")
 includeFile("lair/creature_dynamic/tatooine_zucca_boar_pack_neutral_none.lua")
 
+includeFile("lair/creature_dynamic/yavin4_acklay_pack_neutral_none.lua")
 includeFile("lair/creature_dynamic/yavin4_angler_herd_neutral_none.lua")
 includeFile("lair/creature_dynamic/yavin4_angler_pack_neutral_none.lua")
 includeFile("lair/creature_dynamic/yavin4_choku_herd_neutral_none.lua")

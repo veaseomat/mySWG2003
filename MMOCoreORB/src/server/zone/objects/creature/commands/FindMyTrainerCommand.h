@@ -2,6 +2,8 @@
 				Copyright <SWGEmu>
 		See file COPYING for copying conditions.*/
 
+#include "server/zone/objects/player/PlayerObject.h"
+
 #ifndef FINDMYTRAINERCOMMAND_H_
 #define FINDMYTRAINERCOMMAND_H_
 
@@ -29,8 +31,11 @@ public:
 		if (ghost == nullptr)
 			return GENERALERROR;
 
-		if (ghost->getJediState() < 2 || !creature->hasSkill("force_title_jedi_rank_02"))
+		if (ghost->getJediState() < 2 || !creature->hasSkill("force_title_jedi_rank_01"))
 			return GENERALERROR;
+
+		//removing the findmytrainer command
+		PlayerObject* player = creature->getPlayerObject();
 
 		String planet = ghost->getTrainerZoneName();
 
@@ -61,10 +66,17 @@ public:
 		obj->setPosition(coords.getX(), 0, coords.getY());
 		obj->setCustomObjectName(name, false);
 
-		ghost->addWaypoint(obj, true, true);
 
-		creature->sendSystemMessage("@jedi_spam:waypoint_created_to_trainer");
+		if (player->isPrivileged()) {
 
+			ghost->addWaypoint(obj, true, true);
+
+			creature->sendSystemMessage("A waypoint to your Jedi skill trainer has been added to your datapad.");
+
+			return SUCCESS;
+		}
+
+		creature->sendSystemMessage("You must travel to planet " + planet + ". There you will find your Jedi skill trainer.");
 		return SUCCESS;
 	}
 

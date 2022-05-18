@@ -80,6 +80,7 @@ void ArmorObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cre
 //	else if (rating == MEDIUM)
 //		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_medium"); //Medium
 //	else if (rating == HEAVY)
+//		//alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_medium"); //Medium
 //		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_heavy"); //Heavy
 //	else
 //		alm->insertAttribute("armorrating", "@obj_attr_n:armor_pierce_none"); //None
@@ -197,44 +198,44 @@ void ArmorObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cre
 				"cat_armor_effectiveness.armor_eff_elemental_acid",
 				txt.toString());
 	}
-	if (!isSpecial(SharedWeaponObjectTemplate::LIGHTSABER) && !isVulnerable(SharedWeaponObjectTemplate::LIGHTSABER) && getLightSaber() >= 0.5) {
-		StringBuffer txt;
-		txt << Math::getPrecision(getLightSaber(),1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_restraint",
-				txt.toString());
-	}
+//	if (!isSpecial(SharedWeaponObjectTemplate::LIGHTSABER) && !isVulnerable(SharedWeaponObjectTemplate::LIGHTSABER) && getLightSaber() >= 0.5) {
+//		StringBuffer txt;
+//		txt << Math::getPrecision(getLightSaber(),1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_restraint",
+//				txt.toString());
+//	}
 
 	//Vulnerabilities
-	if (getKinetic() < 0.5)
-		alm->insertAttribute("cat_armor_vulnerability.armor_eff_kinetic", "-");
-
-	if (getEnergy() < 0.5)
-		alm->insertAttribute("cat_armor_vulnerability.armor_eff_energy", "-");
-
-	if (getElectricity() < 0.5)
-		alm->insertAttribute(
-				"cat_armor_vulnerability.armor_eff_elemental_electrical", "-");
-
-	if (getStun() < 0.5)
-		alm->insertAttribute("cat_armor_vulnerability.armor_eff_stun", "-");
-
-	if (getBlast() < 0.5)
-		alm->insertAttribute("cat_armor_vulnerability.armor_eff_blast", "-");
-
-	if (getHeat() < 0.5)
-		alm->insertAttribute(
-				"cat_armor_vulnerability.armor_eff_elemental_heat", "-");
-
-	if (getCold() < 0.5)
-		alm->insertAttribute(
-				"cat_armor_vulnerability.armor_eff_elemental_cold", "-");
-
-	if (getAcid() < 0.5)
-		alm->insertAttribute(
-				"cat_armor_vulnerability.armor_eff_elemental_acid", "-");
-
-	if (getLightSaber() < 0.5)
-		alm->insertAttribute("cat_armor_vulnerability.armor_eff_restraint", "-");
+//	if (getKinetic() < 0.5)
+//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_kinetic", "-");
+//
+//	if (getEnergy() < 0.5)
+//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_energy", "-");
+//
+//	if (getElectricity() < 0.5)
+//		alm->insertAttribute(
+//				"cat_armor_vulnerability.armor_eff_elemental_electrical", "-");
+//
+//	if (getStun() < 0.5)
+//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_stun", "-");
+//
+//	if (getBlast() < 0.5)
+//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_blast", "-");
+//
+//	if (getHeat() < 0.5)
+//		alm->insertAttribute(
+//				"cat_armor_vulnerability.armor_eff_elemental_heat", "-");
+//
+//	if (getCold() < 0.5)
+//		alm->insertAttribute(
+//				"cat_armor_vulnerability.armor_eff_elemental_cold", "-");
+//
+//	if (getAcid() < 0.5)
+//		alm->insertAttribute(
+//				"cat_armor_vulnerability.armor_eff_elemental_acid", "-");
+//
+//	if (getLightSaber() < 0.5)
+//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_restraint", "-");
 
 	//Encumbrances
 	alm->insertAttribute("cat_armor_encumbrance.health", getHealthEncumbrance());
@@ -273,8 +274,8 @@ float ArmorObjectImplementation::getTypeValue(int type, float value) const {
 		newValue *= effectivenessSlice;
 
 		if(sliced && effectivenessSlice > 1) {
-			if(newValue > 90)
-				newValue = 90;
+			if(newValue > 80)
+				newValue = 80;
 		} else {
 			if(newValue > 80)
 				newValue = 80;

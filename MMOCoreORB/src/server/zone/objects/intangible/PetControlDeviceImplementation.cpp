@@ -153,7 +153,7 @@ void PetControlDeviceImplementation::callObject(CreatureObject* player) {
 		bool ch = player->hasSkill("outdoors_creaturehandler_novice");
 
 		if (ch) {
-			maxPets = player->getSkillMod("keep_creature");
+			maxPets = 1;//player->getSkillMod("keep_creature");//ch called pets
 			maxLevelofPets = player->getSkillMod("tame_level");
 		}
 
@@ -168,7 +168,7 @@ void PetControlDeviceImplementation::callObject(CreatureObject* player) {
 		}
 
 	} else if (petType == PetManager::FACTIONPET){
-		maxPets = 3;
+		maxPets = 1;//3;
 	}
 
 	for (int i = 0; i < ghost->getActivePetsSize(); ++i) {
@@ -229,10 +229,10 @@ void PetControlDeviceImplementation::callObject(CreatureObject* player) {
 		Reference<CallPetTask*> callPet = new CallPetTask(_this.getReferenceUnsafeStaticCast(), player, "call_pet");
 
 		StringIdChatParameter message("pet/pet_menu", "call_pet_delay"); // Calling pet in %DI seconds. Combat will terminate pet call.
-		message.setDI(15);
+		message.setDI(5);
 		player->sendSystemMessage(message);
 
-		player->addPendingTask("call_pet", callPet, 15 * 1000);
+		player->addPendingTask("call_pet", callPet, 5 * 1000);
 
 		if (petControlObserver == nullptr) {
 			petControlObserver = new PetControlObserver(_this.getReferenceUnsafeStaticCast());
@@ -503,8 +503,8 @@ void PetControlDeviceImplementation::storeObject(CreatureObject* player, bool fo
 	}
 	else {
 		if (pet->getPendingTask("store_pet") == nullptr) {
-			player->sendSystemMessage( "Storing pet in 60 seconds");
-			pet->addPendingTask("store_pet", task, 60 * 1000);
+			player->sendSystemMessage( "Storing pet in 5 seconds");
+			pet->addPendingTask("store_pet", task, 5 * 1000);
 		}
 		else {
 			AtomicTime nextExecution;
@@ -544,7 +544,7 @@ bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force,
 
 	Time currentTime;
 	uint32 timeDelta = currentTime.getTime() - lastGrowth.getTime();
-	int stagesToGrow = timeDelta / 43200; // 12 hour
+	int stagesToGrow = timeDelta / 10800; // 4 hour
 
 	if (adult)
 		stagesToGrow = 10;
@@ -1161,6 +1161,7 @@ void PetControlDeviceImplementation::setTrainingCommand(unsigned int commandID) 
 }
 
 void PetControlDeviceImplementation::trainAsMount(CreatureObject* player) {
+//	return;
 	if (isTrainedAsMount() || !player->hasSkill("outdoors_creaturehandler_support_04"))
 		return;
 

@@ -855,3 +855,5 @@ includeFile("quest/yavin4/theme_park_rebel_big_creature_cage.lua")
 includeFile("quest/yavin4/theme_park_rebel_supervisor.lua")
 includeFile("quest/yavin4/vraker_orde.lua")
 includeFile("quest/yavin4/yith_seenath.lua")
+
+includeFile("quest/naboo/merch_crazy_larry.lua")

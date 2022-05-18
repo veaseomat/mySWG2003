@@ -7,9 +7,9 @@ function ForceShrineMenuComponent:fillObjectMenuResponse(pSceneObject, pMenuResp
 		menuResponse:addRadialMenuItem(120, 3, "@jedi_trials:meditate") -- Meditate
 	end
 
-	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
-		menuResponse:addRadialMenuItem(121, 3, "@force_rank:recover_jedi_items") -- Recover Jedi Items
-	end
+--	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
+--		menuResponse:addRadialMenuItem(121, 3, "@force_rank:recover_jedi_items") -- Recover Jedi Items
+--	end
 
 end
 
@@ -32,17 +32,17 @@ function ForceShrineMenuComponent:handleObjectMenuSelect(pObject, pPlayer, selec
 end
 
 function ForceShrineMenuComponent:doMeditate(pObject, pPlayer)
-	if (tonumber(readScreenPlayData(pPlayer, "KnightTrials", "completedTrials")) == 1 and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03")) then
-		KnightTrials:resetCompletedTrialsToStart(pPlayer)
-	end
+--	if (tonumber(readScreenPlayData(pPlayer, "KnightTrials", "completedTrials")) == 1 and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03")) then
+--		KnightTrials:resetCompletedTrialsToStart(pPlayer)
+--	end
 
-	if (not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and CreatureObject(pPlayer):hasScreenPlayState(32, "VillageJediProgression")) then
-		local currentTrial = JediTrials:getCurrentTrial(pPlayer)
-
-		if (not JediTrials:isOnPadawanTrials(pPlayer)) then
-			JediTrials:completePadawanForTesting(pPlayer)
-		end
-	elseif (JediTrials:isOnKnightTrials(pPlayer)) then
+--not working
+--	if (JediTrials:isOnPadawanTrials(pPlayer)) then
+--		local pTrainerPlanet =	PlayerObject(pPlayer):getTrainerZoneName()
+--		CreatureObject(pPlayer):sendSystemMessage("You must go to the planet " .. pTrainerPlanet .. ". There you will find your Jedi skill trainer.")
+--	end
+	
+	if (JediTrials:isOnKnightTrials(pPlayer)) then
 		local pPlayerShrine = KnightTrials:getTrialShrine(pPlayer)
 
 		if (pPlayerShrine ~= nil and pObject ~= pPlayerShrine) then
@@ -62,12 +62,13 @@ function ForceShrineMenuComponent:doMeditate(pObject, pPlayer)
 
 		if (currentTrial == 0 and trialsCompleted == 0) then
 			local sui = SuiMessageBox.new("KnightTrials", "startNextKnightTrial")
-			sui.setTitle("@jedi_trials:knight_trials_title")
-			sui.setPrompt("@jedi_trials:knight_trials_start_query")
+			sui.setTitle("Jedi Knight")
+			sui.setPrompt("Are you ready to begin the Jedi Knight trials?")
 			sui.setOkButtonText("@jedi_trials:button_yes")
 			sui.setCancelButtonText("@jedi_trials:button_no")
 			sui.sendTo(pPlayer)
 		else
+--			KnightTrials:resetCompletedTrialsToStart(pPlayer)
 			KnightTrials:showCurrentTrial(pPlayer)
 		end
 	else

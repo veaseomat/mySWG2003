@@ -101,6 +101,8 @@ function TatooineStaticSpawnsNorthScreenPlay:spawnMobiles()
 	spawnMobile("tatooine", "wonderous_cu_pa", 600, -6111.3, 190.1, 3965.6, -69, 0)
 
 	--Krayt Skeleton (-6750,3569)
+--	spawnMobile("tatooine", "canyon_krayt_dragon", 1800, -6718.3, 175.6, 3499.6, 80, 0)
+	
 --	spawnMobile("tatooine", "krayt_dragon_grand", 1800, -6718.3, 175.6, 3499.6, 80, 0)
 --	spawnMobile("tatooine", "krayt_dragon_grand", 1800, -6796.1, 194.0, 3514.6, 175, 0)
 --	spawnMobile("tatooine", "krayt_dragon_adolescent", 1800, -6789.0, 127.7, 3661.2, -104, 0)

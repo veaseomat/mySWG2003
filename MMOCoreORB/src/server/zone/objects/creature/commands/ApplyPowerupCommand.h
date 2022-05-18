@@ -59,7 +59,7 @@ public:
 		if (creature->getSlottedObject("default_weapon") == weapon)
 			return GENERALERROR;
 
-		if (weapon->isJediWeapon())
+		if (weapon->isJediWeapon())//enable jedi pup here
 			return GENERALERROR;			
 
 		if((weapon->isRangedWeapon() && pup->isRanged()) ||

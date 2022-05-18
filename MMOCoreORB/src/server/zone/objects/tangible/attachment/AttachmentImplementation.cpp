@@ -24,15 +24,23 @@ void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool
 	int roll = System::random(100);
 	int modCount = 1;
 
+	level /= 3;//lvl 100 cap
+
 	for(int i = 0; i < modCount; ++i) {
 		//Mods can't be lower than -1 or greater than 25
-		int max = (int) Math::max(-1.f, Math::min(25.f, (float) round(0.1f * level + 3)));
-		int min = (int) Math::max(-1.f, Math::min(25.f, (float) round(0.075f * level - 1)));
+		int max = (int) Math::max(-1.f, Math::min(30.f, (float) round(0.1f * level + 3)));
+		int min = (int) Math::max(-1.f, Math::min(30.f, (float) round(0.075f * level - 1)));
 
-		int mod = System::random(max - min) + min;
+		int mod = (System::random(max - min) + min);
+		mod += (System::random(max - min) + min);
+
+		mod = (level * .25) + System::random(2);//new sea stat calc
 
 		if(mod < 5)
 			mod = 5;
+
+		if(mod > 25)
+			mod = 25;
 
 		String modName = server->getZoneServer()->getLootManager()->getRandomLootableMod(gameObjectType);
 

@@ -6,6 +6,7 @@ janta_common = {
 	maximumLevel = 0,
 	lootItems = {
 		{itemTemplate = "janta_blood", weight = 2500000},
+--		{itemTemplate = "biologic_effect_controller_advanced", weight = 2500000},
 		{itemTemplate = "knife_janta", weight = 1500000},
 		{itemTemplate = "janta_hides", weight = 3500000},
 		{itemTemplate = "spear_rack_schematic", weight = 500000},

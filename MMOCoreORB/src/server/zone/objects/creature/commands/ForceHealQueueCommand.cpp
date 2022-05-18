@@ -11,7 +11,7 @@
 #include "server/zone/objects/building/BuildingObject.h"
 
 ForceHealQueueCommand::ForceHealQueueCommand(const String& name, ZoneProcessServer* server) : JediQueueCommand(name, server) {
-	speed = 3;
+	speed = 3;//force heal timer here
 	allowedTarget = TARGET_AUTO;
 
 	forceCost = 0;
@@ -55,6 +55,37 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 	int totalCost = forceCost;
 	bool healPerformed = false;
 
+//increase heal amount with frs
+	float newhealAmount = healAmount;
+	float newhealWoundAmount = healWoundAmount;
+
+	float frsheal = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.625);
+
+	if (frsheal > 0) {
+		newhealAmount *= 1.f + (frsheal / 100.f);
+		newhealWoundAmount *= 1.f + (frsheal / 100.f);
+	}
+
+//reduce healing force cost based on number of force healing boxes the jedi has? NOT FINISHED
+//	const SkillList* skillList = creature->getSkillList();
+//
+//	int fullTrees = 0;
+//	int totalJediPoints = 0;
+//
+//	for (int i = 0; i < skillList->size(); ++i) {
+//		Skill* skill = skillList->get(i);
+//
+//		String skillName = skill->getSkillName();
+//		if (skillName.contains("force_discipline_healing_") &&
+//			(skillName.indexOf("0") != -1 || skillName.contains("novice") || skillName.contains("master") )) {
+//			totalJediPoints += skill->getSkillPointsRequired();
+//
+//			if (skillName.indexOf("4") != -1) {
+//				fullTrees++;
+//			}
+//		}
+//	}
+
 	// Attribute Wound Healing
 	for (int i = 0; i < 3; i++) {
 		// Attrib Values: Health = 1, Action = 2, Mind = 4
@@ -64,8 +95,8 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 					uint8 attrib = (i * 3) + j;
 					int woundAmount = targetCreature->getWounds(attrib);
 
-					if (healWoundAmount > 0 && woundAmount > healWoundAmount)
-						woundAmount = healWoundAmount;
+					if (newhealWoundAmount > 0 && woundAmount > newhealWoundAmount)
+						woundAmount = newhealWoundAmount;
 
 					totalCost += woundAmount * forceCostMultiplier;
 
@@ -95,8 +126,8 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 				int maxHam = targetCreature->getMaxHAM(attrib) - targetCreature->getWounds(attrib);
 				int amtToHeal = maxHam - curHam;
 
-				if (healAmount > 0 && amtToHeal > healAmount)
-					amtToHeal = healAmount;
+				if (newhealAmount > 0 && amtToHeal > newhealAmount)
+					amtToHeal = newhealAmount;
 
 				totalCost += amtToHeal * forceCostMultiplier;
 
@@ -242,6 +273,13 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 	}
 
 	bool selfHeal = creature->getObjectID() == targetCreature->getObjectID();
+
+	//frs reduced heal force cost
+	float frscost = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.625);
+
+	if (frscost > 0) {
+		totalCost *= 1.f - (frscost / 100.f);
+	}
 
 	if (healPerformed) {
 		if (selfHeal)

@@ -163,7 +163,7 @@ void CreatureImplementation::scheduleDespawn() {
 	Reference<DespawnCreatureTask*> despawn = new DespawnCreatureTask(_this.getReferenceUnsafeStaticCast());
 	//despawn->schedule(300000); /// 5 minutes
 	//addPendingTask("despawn", despawn, 45000); /// 45 second
-	addPendingTask("despawn", despawn, 20000);
+	addPendingTask("despawn", despawn, 300000);
 }
 
 bool CreatureImplementation::hasOrganics() {
@@ -213,7 +213,7 @@ void CreatureImplementation::notifyDespawn(Zone* zone) {
 
 bool CreatureImplementation::canHarvestMe(CreatureObject* player) {
 
-	if(!player->isInRange(_this.getReferenceUnsafeStaticCast(), 10.0f) || player->isInCombat() || !player->hasSkill("outdoors_scout_novice")
+	if(!player->isInRange(_this.getReferenceUnsafeStaticCast(), 10.0f)
 			|| player->isDead() || player->isIncapacitated() || isPet())
 		return false;
 

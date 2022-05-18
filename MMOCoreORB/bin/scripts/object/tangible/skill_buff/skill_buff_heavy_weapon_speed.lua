@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_heavy_weapon_speed = object_tangible_skill
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 300,
+	duration = 3600,
 	useCount = 5,
-	modifiers = { "heavyweapon_speed", 10 },
+	modifiers = { "heavyweapon_speed", 25 },
 	buffName = "heavyweapon_speed",
 	buffCRC = 0x311A7044
 }

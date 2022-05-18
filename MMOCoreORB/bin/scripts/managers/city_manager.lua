@@ -49,10 +49,10 @@ which carries forward this exception.
 	--------------------
 --]]
 --The amount of time in minutes before the city specialization may be changed again.
-CitySpecializationCooldown = 1440
+CitySpecializationCooldown = 1
 
 --The amount of time in minutes before another withdrawal from the city treasury may be made.
-TreasuryWithdrawalCooldown = 1440
+TreasuryWithdrawalCooldown = 1
 
 --The number of city update cycles that must pass before mayoral voting process is complete.
 CityVotingCycles = 3
@@ -73,11 +73,11 @@ OldCityGracePeriod = 4320
 EnableCityWarn = false
 
 --The number of citizens required to achieve each city rank. (Outpost, Village, Township, City, Metropolis)
-CitizensPerRank = {1, 2, 3, 4, 5}
+CitizensPerRank = {1, 1, 1, 1, 1}
 --CitizensPerRank = {10, 20, 35, 55, 85}
 
 --The radius in meters of the city at each city rank. (Outpost, Village, Township, City, Metropolis)
-RadiusPerRank = {150, 200, 300, 400, 450}
+RadiusPerRank = {100, 150, 200, 250, 300}
 
 -- Maximum for each rank.  ex. rank 1 = DecorationsPerRank * 1, rank 5 = DecorationsPerRank * 5
 DecorationsPerRank = 10
@@ -85,7 +85,7 @@ TrainersPerRank = 3
 MissionTerminalsPerRank = 3
 
 -- Amount to discount city maintenance  float.  1 = 100%, .75 =75%, .5=50% etc
-maintenanceDiscount = .25
+maintenanceDiscount = 1.0
 
 --[[
 	CITIES ALLOWED PER PLANET
@@ -95,16 +95,16 @@ maintenanceDiscount = .25
 	The maximum amount of cities per rank is 255.
 --]]
 CitiesAllowed = {
-	{"corellia", {20, 20, 15, 10, 10}},
-	{"dantooine", {50, 50, 30, 20, 20}},
-	{"dathomir", {0, 0, 0, 0, 0}},
-	{"endor", {0, 0, 0, 0, 0}},
-	{"lok", {50, 50, 30, 20, 20}},
-	{"naboo", {20, 20, 15, 10, 10}},
-	{"rori", {50, 50, 30, 20, 20}},
-	{"talus", {50, 50, 30, 20, 20}},
-	{"tatooine", {20, 20, 15, 10, 10}},
-	{"yavin4", {0, 0, 0, 0, 0}}
+	{"corellia", {10, 10, 10, 5, 5}},
+	{"dantooine", {10, 10, 10, 5, 5}},
+	{"dathomir", {10, 10, 10, 5, 5}},
+	{"endor", {10, 10, 10, 5, 5}},
+	{"lok", {10, 10, 10, 5, 5}},
+	{"naboo", {10, 10, 10, 5, 5}},
+	{"rori", {10, 10, 10, 5, 5}},
+	{"talus", {10, 10, 10, 5, 5}},
+	{"tatooine", {10, 10, 10, 5, 5}},
+	{"yavin4", {10, 10, 10, 5, 5}},
 }
 
 

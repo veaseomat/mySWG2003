@@ -17,7 +17,7 @@ end
 function EndorStaticSpawnsScreenPlay:spawnMobiles()
 
 	--Need to add the rest of static spawns (Incomplete).
---	spawnMobile("endor", "boba_fett",300, -4680.59, 13.13, 4330.65, -151, 0)
+	spawnMobile("endor", "boba_fett",300, -4680.59, 13.13, 4330.65, -151, 0)
 	--Donkuwah Hut 4031 -7668
 	spawnMobile("endor", "tainted_donkuwah_dark_shaman",300, 4031.5, 0.8, -7668.1, -34, 0)
 

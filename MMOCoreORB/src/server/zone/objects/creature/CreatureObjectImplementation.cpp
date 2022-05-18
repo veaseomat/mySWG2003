@@ -611,8 +611,8 @@ void CreatureObjectImplementation::addShockWounds(int shockToAdd, bool notifyCli
 
 	if (newShockWounds < 0) {
 		newShockWounds = 0;
-	} else if (newShockWounds > 1000) {
-		newShockWounds = 1000;
+	} else if (newShockWounds > 0) {
+		newShockWounds = 0;
 	}
 
 	if (sendSpam && shockToAdd > 0 && asCreatureObject()->isPlayerCreature())
@@ -1715,13 +1715,13 @@ void CreatureObjectImplementation::setSpeedMultiplierMod(float newMultiplierMod,
 	if (speedMultiplierMod == newMultiplierMod * buffMod)
 		return;
 
-	speedMultiplierMod = newMultiplierMod * buffMod;
+	speedMultiplierMod = newMultiplierMod * buffMod;//multiplier for burst runs/force runs, stacks and doesnt remove
 
 	int bufferSize = speedMultiplierModChanges.size();
 
-	if (bufferSize > 5) {
-		speedMultiplierModChanges.remove(0);
-	}
+//	if (bufferSize > 5) {
+//		speedMultiplierModChanges.remove(0);
+//	}
 
 	speedMultiplierModChanges.add(SpeedModChange(speedMultiplierMod));
 
@@ -1740,7 +1740,7 @@ void CreatureObjectImplementation::setRunSpeed(float newSpeed,
 	if (runSpeed == newSpeed)
 		return;
 
-	runSpeed = newSpeed;
+	runSpeed = newSpeed * 1.5;//PLAYER RUN SPEED
 
 	if (notifyClient) {
 		CreatureObjectDeltaMessage4* dcreo4 = new CreatureObjectDeltaMessage4(
@@ -1830,10 +1830,10 @@ void CreatureObjectImplementation::updateTerrainNegotiation()
 }
 
 float CreatureObjectImplementation::getTerrainNegotiation() const {
-	float slopeMod = ((float)getSkillMod("slope_move") / 50.0f) + terrainNegotiation;
+	float slopeMod = (((float)getSkillMod("slope_move") * .25) / 50.0f) + (terrainNegotiation);//reduce terrain nego effectiveness
 
 	if (slopeMod > 1)
-		slopeMod = 1;
+		slopeMod = 1;//next cap it at like .9
 
 	return slopeMod;
 }
@@ -2102,7 +2102,7 @@ void CreatureObjectImplementation::notifyLoadFromDatabase() {
 
 		buff->loadBuffDurationEvent(asCreatureObject());
 	}
-
+//fix skill mods in here??? check this later
 	ZoneServer* zoneServer = server->getZoneServer();
 	SkillManager* skillManager = SkillManager::instance();
 
@@ -2121,11 +2121,11 @@ void CreatureObjectImplementation::notifyLoadFromDatabase() {
 		totalSkillPointsWasted -= skill->getSkillPointsRequired();
 	}
 
-	if (ghost->getSkillPoints() != totalSkillPointsWasted) {
-		error() << "skill points on load mismatch calculated: " << totalSkillPointsWasted
-		       << " found: " << ghost->getSkillPoints();
-		ghost->setSkillPoints(totalSkillPointsWasted);
-	}
+//	if (ghost->getSkillPoints() != totalSkillPointsWasted) {
+//		error() << "skill points on load mismatch calculated: " << totalSkillPointsWasted
+//		       << " found: " << ghost->getSkillPoints();
+//		ghost->setSkillPoints(totalSkillPointsWasted);
+//	}
 
 	ghost->getSchematics()->addRewardedSchematics(ghost);
 
@@ -2340,6 +2340,19 @@ void CreatureObjectImplementation::setDizziedState(int durationSeconds) {
 		state->setStartFlyText("combat_effects", "go_dizzy", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_dizzy", 0xFF, 0, 0);
 
+//		state->setSkillModifier("private_block", -50);
+//		state->setSkillModifier("private_dodge", -50);
+//		state->setSkillModifier("private_counterattack", -50);
+//		state->setSkillModifier("private_saber_block", -50);
+
+//		state->setSkillModifier("private_melee_defense", -15);
+//		state->setSkillModifier("private_ranged_defense", -15);
+//		state->setSkillModifier("private_dodge_attack", -15);
+//		state->setSkillModifier("private_attack_accuracy", -15);
+
+		state->setSpeedMultiplierMod(0.25f );
+		state->setAccelerationMultiplierMod(0.25f);
+
 		addBuff(state);
 	}
 }
@@ -2430,11 +2443,23 @@ void CreatureObjectImplementation::setStunnedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_stunned", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_stunned", 0xFF, 0, 0);
-		state->setSkillModifier("private_melee_defense", -50);
-		state->setSkillModifier("private_ranged_defense", -50);
+
+//		state->setSkillModifier("private_melee_defense", -50);
+//		state->setSkillModifier("private_ranged_defense", -50);
+
+
+//this one should work but moved to combat manager
+//		int stuneffect1 = getSkillMod("melee_defense") * .75;
+//		int stuneffect2 = getSkillMod("ranged_defense") * .75;
+//
+//		state->setSkillModifier("private_melee_defense", stuneffect1);
+//		state->setSkillModifier("private_ranged_defense", stuneffect2);
+
+
+//		state->setSkillModifier("private_dodge_attack", -75);
 
 		addBuff(state);
-//stupid stun dmg stuff remove here
+
 //		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_stun_multiplier"), durationSeconds, BuffType::STATE);
 //
 //		Locker blocker(multBuff);
@@ -2459,9 +2484,9 @@ void CreatureObjectImplementation::setBlindedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_blind", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_blind", 0xFF, 0, 0);
+//state effects moved to combat manager
+//		state->setSkillModifier("private_attack_accuracy", -75);
 
-		state->setSkillModifier("private_attack_accuracy", -90);
-		state->setSkillModifier("private_dodge_attack", -90);
 
 		addBuff(state);
 	}
@@ -2485,9 +2510,9 @@ void CreatureObjectImplementation::setIntimidatedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_intimidated", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_intimidated", 0xFF, 0, 0);
-
-		state->setSkillModifier("private_melee_defense", -50);
-		state->setSkillModifier("private_ranged_defense", -50);
+//state effects moved to combat manager
+//		state->setSkillModifier("private_melee_defense", -75);
+//		state->setSkillModifier("private_ranged_defense", -75);
 
 		addBuff(state);
 
@@ -2561,7 +2586,7 @@ void CreatureObjectImplementation::queueDizzyFallEvent() {
 		return;
 
 	dizzyFallDownEvent = new DizzyFallDownEvent(asCreatureObject());
-	dizzyFallDownEvent->schedule(200);
+	dizzyFallDownEvent->schedule(1000);
 }
 
 void CreatureObjectImplementation::activateStateRecovery() {
@@ -2766,15 +2791,16 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 	if (isIncapacitated() || isDead())
 		return;
 
-	if (!isPlayerCreature() && isInCombat())
+	if (!isPlayerCreature())// && isInCombat())
 		return;
 
 	float modifier = (float)latency/1000.f;
 
-	if (isKneeling())
-		modifier *= 1.25f;
-	else if (isSitting())
-		modifier *= 3.5f;
+//	if (isKneeling())
+//		modifier *= 1.25f;
+//	else
+	if (isSitting())
+		modifier *= 4.0f;
 
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
@@ -2806,12 +2832,12 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 
 	if(healthRegen > 0) {
 		healthWoundHeal += (int)(healthRegen * 0.2);
-		if(healthWoundHeal >= 100) {
-			healWound(asCreatureObject(), CreatureAttribute::HEALTH, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::STRENGTH, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::CONSTITUTION, 2, true, false);
-			healthWoundHeal -= 100;
-		}
+	//	if(healthWoundHeal >= 100) {
+			healWound(asCreatureObject(), CreatureAttribute::HEALTH, healthWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::STRENGTH, healthWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::CONSTITUTION, healthWoundHeal, true, false);
+			//healthWoundHeal -= 100;
+//		}
 	}
 
 	/// Action wound regen
@@ -2819,12 +2845,12 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 
 	if(actionRegen > 0) {
 		actionWoundHeal += (int)(actionRegen * 0.2);
-		if(actionWoundHeal >= 100) {
-			healWound(asCreatureObject(), CreatureAttribute::ACTION, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::STAMINA, 2, true, false);
-			actionWoundHeal -= 100;
-		}
+		//if(actionWoundHeal >= 100) {
+			healWound(asCreatureObject(), CreatureAttribute::ACTION, actionWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, actionWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::STAMINA, actionWoundHeal, true, false);
+			//actionWoundHeal -= 100;
+		//}
 	}
 
 	/// Mind wound regen
@@ -2832,12 +2858,12 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 
 	if(mindRegen > 0) {
 		mindWoundHeal += (int)(mindRegen * 0.2);
-		if(mindWoundHeal >= 100) {
-			healWound(asCreatureObject(), CreatureAttribute::MIND, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::FOCUS, 2, true, false);
-			healWound(asCreatureObject(), CreatureAttribute::WILLPOWER, 2, true, false);
-			mindWoundHeal -= 100;
-		}
+		//if(mindWoundHeal >= 100) {
+			healWound(asCreatureObject(), CreatureAttribute::MIND, mindWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::FOCUS, mindWoundHeal, true, false);
+			healWound(asCreatureObject(), CreatureAttribute::WILLPOWER, mindWoundHeal, true, false);
+			//mindWoundHeal -= 100;
+		//}
 	}
 }
 
@@ -3196,14 +3222,14 @@ bool CreatureObjectImplementation::isHealableBy(CreatureObject* object) {
 	uint32 targetFactionStatus = targetCreo->getFactionStatus();
 	uint32 currentFactionStatus = object->getFactionStatus();
 
-	if (getFaction() != object->getFaction() && !(targetFactionStatus == FactionStatus::ONLEAVE))
-		return false;
+//	if (getFaction() != object->getFaction() && !(targetFactionStatus == FactionStatus::ONLEAVE))
+//		return false;
 
-	if ((targetFactionStatus == FactionStatus::OVERT) && !(currentFactionStatus == FactionStatus::OVERT))
-		return false;
+//	if ((targetFactionStatus == FactionStatus::OVERT) && !(currentFactionStatus == FactionStatus::OVERT))
+//		return false;
 
-	if (!(targetFactionStatus == FactionStatus::ONLEAVE) && (currentFactionStatus == FactionStatus::ONLEAVE))
-		return false;
+//	if (!(targetFactionStatus == FactionStatus::ONLEAVE) && (currentFactionStatus == FactionStatus::ONLEAVE))
+//		return false;
 
 	if(targetCreo->isPlayerCreature()) {
 		PlayerObject* targetGhost = targetCreo->getPlayerObject();
@@ -3526,13 +3552,13 @@ bool CreatureObjectImplementation::hasEffectImmunity(uint8 effectType) const {
 	case CommandEffect::INTIMIDATE:
 	case CommandEffect::STUN:
 	case CommandEffect::NEXTATTACKDELAY:
-		if (isDroidSpecies() || const_cast<CreatureObjectImplementation*>(this)->isVehicleObject() || isWalkerSpecies())
+		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
 			return true;
 		break;
 	case CommandEffect::KNOCKDOWN:
 	case CommandEffect::POSTUREUP:
 	case CommandEffect::POSTUREDOWN:
-		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject() || isWalkerSpecies())
+		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
 			return true;
 		break;
 	default:
@@ -3543,20 +3569,23 @@ bool CreatureObjectImplementation::hasEffectImmunity(uint8 effectType) const {
 }
 
 bool CreatureObjectImplementation::hasDotImmunity(uint32 dotType) const {
-	switch (dotType) {
-	case CreatureState::POISONED:
-	case CreatureState::BLEEDING:
-	case CreatureState::DISEASED:
-		if (isDroidSpecies() || const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
-			return true;
-		break;
-	case CreatureState::ONFIRE:
-		return false;
-	default:
-		return false;
-	}
-
-	return false;
+//	sendSystemMessage("mySWG: DOTs are currently disabled");
+	return true;//backup disable dots
+//
+//	switch (dotType) {
+//	case CreatureState::POISONED:
+//	case CreatureState::BLEEDING:
+//	case CreatureState::DISEASED:
+//		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
+//			return true;
+//		break;
+//	case CreatureState::ONFIRE:
+//		return false;
+//	default:
+//		return false;
+//	}
+//
+//	return false;
 }
 
 int CreatureObjectImplementation::getSpecies() const {
@@ -3587,7 +3616,7 @@ void CreatureObjectImplementation::updateVehiclePosition(bool sendPackets) {
 
 	if (creo != nullptr) {
 		//Locker clocker(creo, asCreatureObject());
-		creo->setCurrentSpeed(getCurrentSpeed());
+		creo->setCurrentSpeed(getCurrentSpeed());//vehicle speed? not tested
 	}
 
 	TangibleObjectImplementation::updateVehiclePosition(sendPackets);

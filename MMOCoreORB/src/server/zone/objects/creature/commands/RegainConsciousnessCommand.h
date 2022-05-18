@@ -91,7 +91,6 @@ public:
 		}
 
 		return GENERALERROR;
-
 	}
 
 };

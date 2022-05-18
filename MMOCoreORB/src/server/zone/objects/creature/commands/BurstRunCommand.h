@@ -32,7 +32,9 @@ public:
 
 		return SUCCESS;
 	}
-
+//		creature->sendSystemMessage("This ability is disabled.");
+//		return GENERALERROR;
+//	}
 };
 
 #endif //BURSTRUNCOMMAND_H_

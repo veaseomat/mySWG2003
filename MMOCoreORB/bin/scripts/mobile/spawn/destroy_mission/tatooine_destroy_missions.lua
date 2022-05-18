@@ -284,6 +284,13 @@ tatooine_destroy_missions = {
 			maxDifficulty = 36,
 			size = 25,
 		},
+--		{
+--			lairTemplateName = "tatooine_giant_canyon_krayt_dragon_lair_neutral_large",
+--			minDifficulty = 95,
+--			maxDifficulty = 99,
+--			size = 25,
+--		},		
+		
 	}
 }
 

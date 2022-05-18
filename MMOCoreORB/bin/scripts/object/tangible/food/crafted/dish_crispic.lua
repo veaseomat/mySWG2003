@@ -44,9 +44,9 @@
 object_tangible_food_crafted_dish_crispic = object_tangible_food_crafted_shared_dish_crispic:new {
 	templateType = CONSUMABLE,
 
-	duration = 45,
-	filling = 10,
-	nutrition = 10,
+	duration = 900,
+	filling = 100,
+	nutrition = 120,
 
 	effectType = 2,
 

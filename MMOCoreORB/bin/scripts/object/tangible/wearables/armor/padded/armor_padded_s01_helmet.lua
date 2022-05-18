@@ -88,14 +88,14 @@ object_tangible_wearables_armor_padded_armor_padded_s01_helmet = object_tangible
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
 
-	kinetic = 15,
-	energy = 15,
-	electricity = 15,
-	stun = 15,
-	blast = 15,
-	heat = 15,
-	cold = 15,
-	acid = 15,
+	kinetic = 50,
+	energy = 50,
+	electricity = 50,
+	stun = 50,
+	blast = 80,
+	heat = 50,
+	cold = 50,
+	acid = 50,
 	lightSaber = 0,
 
 	numberExperimentalProperties = {1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 2, 1},

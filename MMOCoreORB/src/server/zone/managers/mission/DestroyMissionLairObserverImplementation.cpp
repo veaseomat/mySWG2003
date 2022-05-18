@@ -32,7 +32,7 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 
 	if (forceSpawn) {
 		spawnNumber.increment();
-	} else if (getMobType() == LairTemplate::NPC) {
+	} else if (getMobType() == LairTemplate::NPC) {//removes npc 3 spawn
 		return false;
 	} else {
 		if (spawnedCreatures.size() >= spawnLimit && !lairTemplate->hasBossMobs())
@@ -75,7 +75,7 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 	VectorMap<String, int> objectsToSpawn; // String mobileTemplate, int number to spawn
 
 	if (spawnNumber == 4) {
-		if (System::random(100) > 4)
+		if (System::random(100) < 90)
 			return false;
 
 		const VectorMap<String, int>* mobs = lairTemplate->getBossMobiles();
@@ -93,6 +93,8 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 		} else {
 			amountToSpawn = System::random(2) + (spawnLimit / 3);
 		}
+
+		amountToSpawn *= 1.3;
 
 		if (amountToSpawn < 1)
 			amountToSpawn = 1;

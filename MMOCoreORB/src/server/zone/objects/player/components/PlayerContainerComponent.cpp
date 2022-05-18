@@ -100,10 +100,10 @@ int PlayerContainerComponent::canAddObject(SceneObject* sceneObject, SceneObject
 					return TransferErrorCode::PLAYERUSEMASKERROR;
 				}
 //disable this to use looted saber
-				if (weapon->getCraftersName() != creo->getFirstName() && !ghost->isPrivileged()) {
-					errorDescription = "@jedi_spam:not_your_lightsaber";
-					return TransferErrorCode::PLAYERUSEMASKERROR;
-				}
+//				if (weapon->getCraftersName() != creo->getFirstName() && !ghost->isPrivileged()) {
+//					errorDescription = "@jedi_spam:not_your_lightsaber";
+//					return TransferErrorCode::PLAYERUSEMASKERROR;
+//				}
 			}
 		}
 	}

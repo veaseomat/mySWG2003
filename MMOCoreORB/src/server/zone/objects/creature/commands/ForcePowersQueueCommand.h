@@ -101,10 +101,18 @@ public:
 //			frsModifier = frsDarkForceCostModifier;
 //		}
 
-		if (manipulationMod == 0 || frsModifier == 0)
-			return forceCost;
+		//frs reduced powers force cost
+		float frscost = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.625);
+		int newforcecost = forceCost;
 
-		return forceCost + (int)((manipulationMod * frsModifier) + .5);
+		if (frscost > 0) {
+			newforcecost *= 1.f - (frscost / 100.f);
+		}
+
+//		if (manipulationMod == 0 || frsModifier == 0)
+//			return forceCost;
+
+		return newforcecost;
 	}
 
 	float getCommandDuration(CreatureObject *object, const UnicodeString& arguments) const {

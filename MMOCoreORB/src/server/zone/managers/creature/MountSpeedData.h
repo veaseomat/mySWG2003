@@ -38,7 +38,7 @@ public:
 	}
 
 	float getRunSpeed() {
-		return runSpeed;
+		return runSpeed * 2.5;
 	}
 
 	float getGallopSpeedMultiplier() {

@@ -1,5 +1,5 @@
 JediTrials = ScreenPlay:new {
-	padawanTrialsEnabled = false,
+	padawanTrialsEnabled = true,
 	knightTrialsEnabled = true,
 
 	-- Object ID's of the various force shrines.
@@ -23,13 +23,13 @@ JediTrials = ScreenPlay:new {
 }
 
 function JediTrials:isEligibleForPadawanTrials(pPlayer)
-	if (pPlayer == nil or not self.padawanTrialsEnabled) then
+	if (pPlayer == nil) then
 		return false
 	end
 
 	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer)
 
-	return CreatureObject(pPlayer):hasScreenPlayState(32, "VillageJediProgression") and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and learnedBranches >= 0 and tonumber(readScreenPlayData(pPlayer, "PadawanTrials", "completedTrials")) ~= 1
+	return learnedBranches >= 6
 end
 
 function JediTrials:isOnPadawanTrials(pPlayer)
@@ -41,15 +41,29 @@ function JediTrials:isOnPadawanTrials(pPlayer)
 end
 
 function JediTrials:isEligibleForKnightTrials(pPlayer)
-	if (pPlayer == nil or not self.knightTrialsEnabled) then
+	if (pPlayer == nil) then
 		return false
 	end
 
-	if (CreatureObject(pPlayer):hasSkill("force_rank_light_novice") or CreatureObject(pPlayer):hasSkill("force_rank_dark_novice")) or tonumber(readScreenPlayData(pPlayer, "KnightTrials", "completedTrials")) == 1 then
+	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03")) then
 		return false
 	end
 
 	return CreatureObject(pPlayer):villageKnightPrereqsMet("")
+end
+
+function JediTrials:isEligibleForJedi(pPlayer)
+	if (pPlayer == nil) then
+		return false
+	end
+
+	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_01")) then
+		return false
+	end
+	
+	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer)
+
+	return learnedBranches >= 6
 end
 
 function JediTrials:isOnKnightTrials(pPlayer)
@@ -157,55 +171,64 @@ function JediTrials:unlockJediKnight(pPlayer)
 	if (pGhost == nil) then
 		return
 	end
+	
+	awardSkill(pPlayer, "force_title_jedi_rank_03")	
+			
+	CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+	CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")		
+			
+	local suiManager = LuaSuiManager()
+	suiManager:sendMessageBox(pPlayer, pPlayer, "Jedi Knight", "Congratulations! You are now worthy of the rank Jedi Knight! \n\nJedi Knight gives you a hidden innate bonuses to offense and defenses.", "@ok", "HologrindJediManager", "notifyOkPressed")
+	
 
-	local knightRobe, unlockMusic, unlockString, enclaveLoc, enclaveName, jediState, setFactionVal, skillForceRank
-	local councilType = self:getJediCouncil(pPlayer)
+--	local knightRobe, unlockMusic, unlockString, enclaveLoc, enclaveName, jediState, setFactionVal, skillForceRank
+--	local councilType = self:getJediCouncil(pPlayer)
 
-	if (councilType == self.COUNCIL_LIGHT) then
-		knightRobe = "object/tangible/wearables/robe/robe_jedi_light_s01.iff"
-		unlockMusic = "sound/music_become_light_jedi.snd"
-		unlockString = "@jedi_trials:knight_trials_completed_light"
-		enclaveLoc = { -5575, 4905, "yavin4" }
-		enclaveName = "Light Jedi Enclave"
-		jediState = 4
-		setFactionVal = FACTIONREBEL
-	elseif (councilType == self.COUNCIL_DARK) then
-		knightRobe = "object/tangible/wearables/robe/robe_jedi_dark_s01.iff"
-		unlockMusic = "sound/music_become_dark_jedi.snd"
-		unlockString = "@jedi_trials:knight_trials_completed_dark"
-		enclaveLoc = { 5079, 305, "yavin4" }
-		enclaveName = "Dark Jedi Enclave"
-		jediState = 8
-		setFactionVal = FACTIONIMPERIAL
-	else
-		printLuaError("Invalid council type in JediTrials:unlockJediKnight")
-		return
-	end
+--	if (councilType == self.COUNCIL_LIGHT) then
+--		knightRobe = "object/tangible/wearables/robe/robe_jedi_light_s01.iff"
+--		unlockMusic = "sound/music_become_light_jedi.snd"
+--		unlockString = "@jedi_trials:knight_trials_completed_light"
+--		enclaveLoc = { -5575, 4905, "yavin4" }
+--		enclaveName = "Light Jedi Enclave"
+--		jediState = 4
+--		setFactionVal = FACTIONREBEL
+--	elseif (councilType == self.COUNCIL_DARK) then
+--		knightRobe = "object/tangible/wearables/robe/robe_jedi_dark_s01.iff"
+--		unlockMusic = "sound/music_become_dark_jedi.snd"
+--		unlockString = "@jedi_trials:knight_trials_completed_dark"
+--		enclaveLoc = { 5079, 305, "yavin4" }
+--		enclaveName = "Dark Jedi Enclave"
+--		jediState = 8
+--		setFactionVal = FACTIONIMPERIAL
+--	else
+--		printLuaError("Invalid council type in JediTrials:unlockJediKnight")
+--		return
+--	end
 
-	awardSkill(pPlayer, "force_title_jedi_rank_03")
+--	awardSkill(pPlayer, "force_title_jedi_rank_03")
 	writeScreenPlayData(pPlayer, "KnightTrials", "completedTrials", 1)
-	CreatureObject(pPlayer):playMusicMessage(unlockMusic)
-	playClientEffectLoc(CreatureObject(pPlayer):getObjectID(), "clienteffect/trap_electric_01.cef", CreatureObject(pPlayer):getZoneName(), CreatureObject(pPlayer):getPositionX(), CreatureObject(pPlayer):getPositionZ(), CreatureObject(pPlayer):getPositionY(), CreatureObject(pPlayer):getParentID())
+--	CreatureObject(pPlayer):playMusicMessage(unlockMusic)
+--	playClientEffectLoc(CreatureObject(pPlayer):getObjectID(), "clienteffect/trap_electric_01.cef", CreatureObject(pPlayer):getZoneName(), CreatureObject(pPlayer):getPositionX(), CreatureObject(pPlayer):getPositionZ(), CreatureObject(pPlayer):getPositionY(), CreatureObject(pPlayer):getParentID())
 
-	PlayerObject(pGhost):addWaypoint(enclaveLoc[3], enclaveName, "", enclaveLoc[1], enclaveLoc[2], WAYPOINTYELLOW, true, true, 0)
-	PlayerObject(pGhost):setJediState(jediState)
-	PlayerObject(pGhost):setFrsCouncil(councilType)
-	PlayerObject(pGhost):setFrsRank(0)
-	CreatureObject(pPlayer):setFactionStatus(2) -- Overt
-	CreatureObject(pPlayer):setFaction(setFactionVal)
+--	PlayerObject(pGhost):addWaypoint(enclaveLoc[3], enclaveName, "", enclaveLoc[1], enclaveLoc[2], WAYPOINTYELLOW, true, true, 0)
+--	PlayerObject(pGhost):setJediState(jediState)
+--	PlayerObject(pGhost):setFrsCouncil(councilType)
+--	PlayerObject(pGhost):setFrsRank(0)
+--	CreatureObject(pPlayer):setFactionStatus(1) -- cOvert now
+--	CreatureObject(pPlayer):setFaction(setFactionVal)
 
-	local sui = SuiMessageBox.new("JediTrials", "emptyCallback") -- No callback
-	sui.setTitle("@jedi_trials:knight_trials_title")
-	sui.setPrompt(unlockString)
-	sui.sendTo(pPlayer)
+--	local sui = SuiMessageBox.new("JediTrials", "emptyCallback") -- No callback
+--	sui.setTitle("@jedi_trials:knight_trials_title")
+--	sui.setPrompt(unlockString)
+--	sui.sendTo(pPlayer)
 
-	local pInventory = SceneObject(pPlayer):getSlottedObject("inventory")
-
-	if (pInventory == nil or SceneObject(pInventory):isContainerFullRecursive()) then
-		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:inventory_full_jedi_robe")
-	else
-		giveItem(pInventory, knightRobe, -1)
-	end
+--	local pInventory = SceneObject(pPlayer):getSlottedObject("inventory")
+--
+--	if (pInventory == nil or SceneObject(pInventory):isContainerFullRecursive()) then
+--		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:inventory_full_jedi_robe")
+--	else
+--		giveItem(pInventory, knightRobe, -1)
+--	end
 
 end
 

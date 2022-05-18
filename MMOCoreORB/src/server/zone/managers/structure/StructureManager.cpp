@@ -281,11 +281,11 @@ int StructureManager::placeStructureFromDeed(CreatureObject* creature, Structure
 			dynamic_cast<SharedStructureObjectTemplate*>(templateManager->getTemplate(serverTemplatePath.hashCode()));
 
 	//Check to see if this zone allows this structure.
-	if (serverTemplate == nullptr || !serverTemplate->isAllowedZone(zone->getZoneName())) {
-		creature->sendSystemMessage("@player_structure:wrong_planet"); //That deed cannot be used on this planet.
-		return 1;
-	}
-
+//	if (serverTemplate == nullptr || !serverTemplate->isAllowedZone(zone->getZoneName())) {
+//		creature->sendSystemMessage("@player_structure:wrong_planet"); //That deed cannot be used on this planet.
+//		return 1;
+//	}
+//
 	if (!planetManager->isBuildingPermittedAt(x, y, creature)) {
 		creature->sendSystemMessage("@player_structure:not_permitted"); //Building is not permitted here.
 		return 1;
@@ -382,10 +382,10 @@ int StructureManager::placeStructureFromDeed(CreatureObject* creature, Structure
 	}
 
 	if (city != nullptr) {
-		if (city->isZoningEnabled() && !city->hasZoningRights(creature->getObjectID())) {
-			creature->sendSystemMessage("@player_structure:no_rights"); //You don't have the right to place that structure in this city. The mayor or one of the city milita must grant you zoning rights first.
-			return 1;
-		}
+//		if (city->isZoningEnabled() && !city->hasZoningRights(creature->getObjectID())) {
+//			creature->sendSystemMessage("@player_structure:no_rights"); //You don't have the right to place that structure in this city. The mayor or one of the city milita must grant you zoning rights first.
+//			return 1;
+//		}
 
 		if (rankRequired != 0 && city->getCityRank() < rankRequired) {
 			StringIdChatParameter param("city/city", "rank_req"); // The city must be at least rank %DI (%TO) in order for you to place this structure.

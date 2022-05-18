@@ -36,7 +36,7 @@ Encounter = Task:new {
 	onEncounterDespawned = nil,
 	isEncounterFinished = nil,
 	onEncounterInRange = nil,
-	inRangeValue = 16,
+	inRangeValue = 32,
 }
 
 -- Start the encounter.
@@ -93,8 +93,8 @@ function Encounter:isPlayerInPositionForEncounter(pPlayer)
 	if pPlayer == nil or SceneObject(pPlayer):getZoneName() == "" then
 		return false
 	end
-
-	return self:isPlayerOnline(pPlayer) and not self:isPlayerInABuilding(pPlayer) and not self:isPlayerInNpcCity(pPlayer)
+--this change is for npc bh
+	return self:isPlayerOnline(pPlayer) and not self:isPlayerInABuilding(pPlayer)
 end
 
 -- Empty handler for the handleEncounterInRange event.

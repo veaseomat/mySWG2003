@@ -1043,7 +1043,7 @@ uint8 PlayerManagerImplementation::calculateIncapacitationTimer(CreatureObject* 
 	if (value < 0)
 		return 0;
 
-	int recoveryTime = 15; // In seconds - 3 seconds is recoveryEvent timer
+	int recoveryTime = 30; // In seconds - 3 seconds is recoveryEvent timer minimum
 
 	// Recovery time cannot be higher than 60 seconds.
 //	recoveryTime = (recoveryTime > 60) ? 60 : recoveryTime;
@@ -1191,7 +1191,7 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 	player->sendSystemMessage(stringId);
 
 	player->updateTimeOfDeath();
-	player->clearBuffs(true, false);
+//	player->clearBuffs(true, false);
 
 	PlayerObject* ghost = player->getPlayerObject();
 
@@ -1273,6 +1273,123 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 	player->setTargetID(0, true);
 
 	player->notifyObjectKillObservers(attacker);
+
+//jedi xp loss
+
+//	int curExp = ghost->getExperience("jedi_general");
+//	int xpLoss = (curExp / 8) * -1; //divide by global xp multi
+//
+//	awardExperience(player, "jedi_general", xpLoss, true);
+//
+//	int frscurExp = ghost->getExperience("force_rank_xp");
+//	int frsxpLoss = (frscurExp / 8) * -1; //divide by global xp multi
+//
+//	awardExperience(player, "force_rank_xp", frsxpLoss, true);
+
+	//		StringIdChatParameter message("base_player","prose_revoke_xp");
+	//		message.setDI(frsxpLoss * -1 * 8); //multiply by global xp mult
+	//		message.setTO("exp_n", "force_rank_xp");
+	//		player->sendSystemMessage(message);
+
+	// FRS skill loss.
+//	if (player->hasSkill("force_title_jedi_rank_03")) {
+//
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_master", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_10", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_09", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_08", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_07", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_06", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_05", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_04", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_03", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_02", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_01", player, true, true);
+//
+//		SkillManager::instance()->surrenderSkill("force_rank_light_master", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_10", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_09", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_08", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_07", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_06", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_05", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_04", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_03", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_02", player, true, true);
+//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_01", player, true, true);
+//
+//		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+//		box->setPromptTitle("FRS SKILL LOSS"); // You feel a tingle in the Force.
+//		box->setPromptText("Rest easy son, you've had a busy day. Unfortunately, all of your Force Ranking System progress has been lost because of this death. This may seem like a severe punishment but it is necessicary to keep Jedi powerful. May the force be with you.");
+//		ghost->addSuiBox(box);
+//		player->sendMessage(box->generateMessage());
+//	}
+
+	// Jedi skill loss.
+
+//	int jediskillpoints = SkillManager::instance()->getJediSkillCount(player, true);
+//
+//	if ((jediskillpoints > 0) and not player->hasSkill("force_title_jedi_rank_03")) {
+//
+//
+//		SkillManager::instance()->surrenderAllSkills(player, true, true);
+//
+//		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+//		box->setPromptTitle("JEDI SKILL LOSS");
+//		box->setPromptText("Rest easy son, you've had a busy day. Unfortunately, all of your Jedi progress has been lost because of this death. This may seem like a severe punishment but it is necessicary to keep Jedi powerful. May the force be with you.");
+//		ghost->addSuiBox(box);
+//		player->sendMessage(box->generateMessage());
+//	}
+
+
+//PERMADEATH!
+	if (player->hasSkill("force_title_jedi_rank_02") && !attacker->isPlayerCreature())  {
+
+		int jediDeaths = ghost->getExperience("jedi_deaths");
+
+		if (jediDeaths < 1) {
+			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+			box->setPromptTitle("PERMADEATH!");
+			box->setPromptText("You have died! A Jedi will suffer PERMADEATH when he has died 3 times. You have 2 more lives left, after that you will be cut off from the force and lose all of your jedi skills.");
+
+			ghost->addSuiBox(box);
+			player->sendMessage(box->generateMessage());
+
+			awardExperience(player, "jedi_deaths", 1, false, 1, false);
+
+		}
+
+		if (jediDeaths == 1) {
+			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+			box->setPromptTitle("PERMADEATH!");
+			box->setPromptText("You have died! A Jedi will suffer PERMADEATH when he has died 3 times. You have 1 more life left, the next time you die you will be cut off from the force and lose all of your jedi skills.");
+
+			ghost->addSuiBox(box);
+			player->sendMessage(box->generateMessage());
+
+			awardExperience(player, "jedi_deaths", 1, false, 1, false);
+		}
+
+		if (jediDeaths >= 2) {
+			SkillManager::instance()->surrenderAllSkills(player, true, true);
+
+			SkillManager::instance()->surrenderSkill("force_title_jedi_rank_02", player, true);
+
+			SkillManager::instance()->surrenderSkill("force_title_jedi_rank_01", player, true);
+
+			ghost->setJediState(0);
+
+			awardExperience(player, "jedi_deaths", 0, false, 1, false);
+
+			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+			box->setPromptTitle("PERMADEATH!");
+			box->setPromptText("You have been cut off from the force! All of your jedi abilities have been removed!");
+
+			ghost->addSuiBox(box);
+			player->sendMessage(box->generateMessage());
+		}
+	}
+
 }
 
 void PlayerManagerImplementation::sendActivateCloneRequest(CreatureObject* player, int typeofdeath) {
@@ -1498,11 +1615,19 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 		player->setWounds(CreatureAttribute::MIND, 0, true);
 		player->setWounds(CreatureAttribute::FOCUS, 0, true);
 		player->setWounds(CreatureAttribute::WILLPOWER, 0, true);
-		player->setShockWounds(100, true);
+		player->setShockWounds(0, true);
+
+		int healthheal = player->getHAM(CreatureAttribute::HEALTH);
+		int actionheal = player->getHAM(CreatureAttribute::ACTION);
+		int mindheal = player->getHAM(CreatureAttribute::MIND);
+
+		player->healDamage(player, CreatureAttribute::HEALTH, healthheal, true);
+		player->healDamage(player, CreatureAttribute::ACTION, actionheal, true);
+		player->healDamage(player, CreatureAttribute::MIND, mindheal, true);
 
 
-	if (player->getFactionStatus() != FactionStatus::ONLEAVE && cbot->getFacilityType() != CloningBuildingObjectTemplate::FACTION_IMPERIAL && cbot->getFacilityType() != CloningBuildingObjectTemplate::FACTION_REBEL && !player->hasSkill("force_title_jedi_rank_03"))
-		player->setFactionStatus(FactionStatus::ONLEAVE);
+//	if (player->getFactionStatus() != FactionStatus::ONLEAVE && cbot->getFacilityType() != CloningBuildingObjectTemplate::FACTION_IMPERIAL && cbot->getFacilityType() != CloningBuildingObjectTemplate::FACTION_REBEL && !player->hasSkill("force_title_jedi_rank_03"))
+//		player->setFactionStatus(FactionStatus::ONLEAVE);
 
 	SortedVector<ManagedReference<SceneObject*> > insurableItems = getInsurableItems(player, false);
 
@@ -1530,7 +1655,7 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 					obj->setOptionsBitmask(bitmask);
 				} else {
 					//5% Decay for uninsured items
-					obj->inflictDamage(obj, 0, 0.03 * obj->getMaxCondition(), true, true);
+//					obj->inflictDamage(obj, 0, 0.03 * obj->getMaxCondition(), true, true);
 				}
 
 				// Calculate condition percentage for decay report
@@ -1539,12 +1664,12 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 				int condPercentage = ( min / (float)max ) * 100.0f;
 				String line = " - " + obj->getDisplayedName() + " (@"+String::valueOf(condPercentage)+"%)";
 
-				suiCloneDecayReport->addMenuItem(line, item->getObjectID());
+//				suiCloneDecayReport->addMenuItem(line, item->getObjectID());
 			}
 		}
 
-		ghost->addSuiBox(suiCloneDecayReport);
-		player->sendMessage(suiCloneDecayReport->generateMessage());
+//		ghost->addSuiBox(suiCloneDecayReport);
+//		player->sendMessage(suiCloneDecayReport->generateMessage());
 
 	}
 
@@ -1555,18 +1680,6 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 
 	player->notifyObservers(ObserverEventType::PLAYERCLONED, player, 0);
 
-
-	// Jedi experience loss.
-	if (ghost->getJediState() >= 2) {
-		int curExp = ghost->getExperience("jedi_general");
-		int xpLoss = (curExp * -0.01);
-
-		awardExperience(player, "jedi_general", xpLoss, true);
-		StringIdChatParameter message("base_player","prose_revoke_xp");
-		message.setDI(xpLoss * -1);
-		message.setTO("exp_n", "jedi_general");
-		player->sendSystemMessage(message);
-	}
 }
 
 void PlayerManagerImplementation::ejectPlayerFromBuilding(CreatureObject* player) {
@@ -1733,7 +1846,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 
 				xpAmount *= (float) damage / totalDamage;
 
-//				xpAmount += (float) totalDamage / 100;
+				//******* XP IS NOW CHANGED IN aiagent.idl and creature.idl located in zone/obj/creature/ai
 
 				//Cap xp based on level
 //				xpAmount = Math::min(xpAmount, calculatePlayerLevel(attacker, xpType) * 300.f);
@@ -1751,13 +1864,13 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //				if (xpType == "jedi_general" && attacker->hasSkill("force_title_jedi_rank_03"))
 //					frsXp += xpAmount;
 //				else
-				if (xpType == "jedi_general") {
-					xpAmount *= 0.2f;
+//				if (xpType == "jedi_general") {
+					//xpAmount *= 0.2f;
 
-					if (attacker->hasSkill("force_title_jedi_rank_03"))
-						frsXp += xpAmount;
+//					if (attacker->hasSkill("force_title_jedi_rank_03"))
+//						frsXp += xpAmount;
 
-				}
+//				}
 
 				//Award individual expType
 				awardExperience(attacker, xpType, xpAmount);
@@ -1765,7 +1878,16 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 
 			combatXp = awardExperience(attacker, "combat_general", combatXp, true, 0.1f);
 
-			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.01f);
+//			frsXp = awardExperience(attacker, "force_rank_xp", frsXp, true, 0.01f);
+
+			//this removes non jedi skills from existing jedi
+//			if (attacker->hasSkill("force_title_jedi_novice")) {
+//
+//				SkillManager* skillManager = server->getSkillManager();
+//
+//				skillManager->surrenderAllSkills(attacker, true, false);
+//
+//			}
 
 			//Check if the group leader is a squad leader
 			if (group == nullptr)
@@ -1881,13 +2003,17 @@ bool PlayerManagerImplementation::checkEncumbrancies(CreatureObject* player, Arm
 }
 
 void PlayerManagerImplementation::applyEncumbrancies(CreatureObject* player, ArmorObject* armor) {
-	int healthEncumb = Math::max(0, armor->getHealthEncumbrance());
-	int actionEncumb = Math::max(0, armor->getActionEncumbrance());
-	int mindEncumb = Math::max(0, armor->getMindEncumbrance());
+	int healthEncumb = Math::max(0, (armor->getHealthEncumbrance() / 2));
+	int actionEncumb = Math::max(0, (armor->getActionEncumbrance() / 2));
+	int mindEncumb = Math::max(0, (armor->getMindEncumbrance() / 2));
 
 	player->addEncumbrance(CreatureEncumbrance::HEALTH, healthEncumb, true);
 	player->addEncumbrance(CreatureEncumbrance::ACTION, actionEncumb, true);
 	player->addEncumbrance(CreatureEncumbrance::MIND, mindEncumb, true);
+
+//	player->setEncumbrance(CreatureEncumbrance::HEALTH, 0, true);
+//	player->setEncumbrance(CreatureEncumbrance::ACTION, 0, true);
+//	player->setEncumbrance(CreatureEncumbrance::MIND, 0, true);
 
 	player->inflictDamage(player, CreatureAttribute::STRENGTH, healthEncumb, true);
 	player->addMaxHAM(CreatureAttribute::STRENGTH, -healthEncumb, true);
@@ -1909,9 +2035,13 @@ void PlayerManagerImplementation::applyEncumbrancies(CreatureObject* player, Arm
 }
 
 void PlayerManagerImplementation::removeEncumbrancies(CreatureObject* player, ArmorObject* armor) {
-	int healthEncumb = Math::max(0, armor->getHealthEncumbrance());
-	int actionEncumb = Math::max(0, armor->getActionEncumbrance());
-	int mindEncumb = Math::max(0, armor->getMindEncumbrance());
+	int healthEncumb = Math::max(0, (armor->getHealthEncumbrance() / 2));
+	int actionEncumb = Math::max(0, (armor->getActionEncumbrance() / 2));
+	int mindEncumb = Math::max(0, (armor->getMindEncumbrance() / 2));
+
+//	player->setEncumbrance(CreatureEncumbrance::HEALTH, 0, true);
+//	player->setEncumbrance(CreatureEncumbrance::ACTION, 0, true);
+//	player->setEncumbrance(CreatureEncumbrance::MIND, 0, true);
 
 	player->addEncumbrance(CreatureEncumbrance::HEALTH, -healthEncumb, true);
 	player->addEncumbrance(CreatureEncumbrance::ACTION, -actionEncumb, true);
@@ -1937,40 +2067,40 @@ void PlayerManagerImplementation::removeEncumbrancies(CreatureObject* player, Ar
 }
 
 void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, uint32 badgeId) {
-	const Badge* badge = BadgeList::instance()->get(badgeId);
-	if (badge != nullptr)
-		awardBadge(ghost, badge);
+//	const Badge* badge = BadgeList::instance()->get(badgeId);
+//	if (badge != nullptr)
+//		awardBadge(ghost, badge);
 }
 
 void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, const Badge* badge) {
-	if (badge == nullptr) {
-		ghost->error("Failed to award null badge.");
-		return;
-	}
-
-	StringIdChatParameter stringId("badge_n", "");
-	stringId.setTO("badge_n", badge->getKey());
-
-	ManagedReference<CreatureObject*> player = dynamic_cast<CreatureObject*>(ghost->getParent().get().get());
-	const unsigned int badgeId = badge->getIndex();
-	if (ghost->hasBadge(badgeId)) {
-		stringId.setStringId("badge_n", "prose_hasbadge");
-		player->sendSystemMessage(stringId);
-		return;
-	}
-
-	ghost->setBadge(badgeId);
-	stringId.setStringId("badge_n", "prose_grant");
-	player->sendSystemMessage(stringId);
-
-	if (badge->getHasMusic()) {
-		String music = badge->getMusic();
-		PlayMusicMessage* musicMessage = new PlayMusicMessage(music);
-		player->sendMessage(musicMessage);
-	}
-
-	player->notifyObservers(ObserverEventType::BADGEAWARDED, player, badgeId);
-	BadgeList* badgeList = BadgeList::instance();
+//	if (badge == nullptr) {
+//		ghost->error("Failed to award null badge.");
+//		return;
+//	}
+//
+//	StringIdChatParameter stringId("badge_n", "");
+//	stringId.setTO("badge_n", badge->getKey());
+//
+//	ManagedReference<CreatureObject*> player = dynamic_cast<CreatureObject*>(ghost->getParent().get().get());
+//	const unsigned int badgeId = badge->getIndex();
+//	if (ghost->hasBadge(badgeId)) {
+//		stringId.setStringId("badge_n", "prose_hasbadge");
+//		player->sendSystemMessage(stringId);
+//		return;
+//	}
+//
+//	ghost->setBadge(badgeId);
+//	stringId.setStringId("badge_n", "prose_grant");
+//	player->sendSystemMessage(stringId);
+//
+//	if (badge->getHasMusic()) {
+//		String music = badge->getMusic();
+//		PlayMusicMessage* musicMessage = new PlayMusicMessage(music);
+//		player->sendMessage(musicMessage);
+//	}
+//
+//	player->notifyObservers(ObserverEventType::BADGEAWARDED, player, badgeId);
+//	BadgeList* badgeList = BadgeList::instance();
 //	switch (ghost->getNumBadges()) {
 //	case 5:
 //		awardBadge(ghost, badgeList->get("count_5"));
@@ -1996,7 +2126,7 @@ void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, const Badge* b
 //	default:
 //		break;
 //	}
-
+//
 //	if (badge->getType() == Badge::EXPLORATION) {
 //		switch (ghost->getBadgeTypeCount(static_cast<uint8>(Badge::EXPLORATION))) {
 //		case 10:
@@ -2051,10 +2181,12 @@ int PlayerManagerImplementation::awardExperience(CreatureObject* player, const S
 
 	int xp = 0;
 //this is where the magic happens
-	if (applyModifiers)
-		xp = playerObject->addExperience(xpType, (int) (amount * speciesModifier * buffMultiplier * localMultiplier * globalExpMultiplier));
-	else
+	if (applyModifiers == false)
 		xp = playerObject->addExperience(xpType, (int)amount);
+//		xp = playerObject->addExperience(xpType, (int) (amount * globalExpMultiplier));
+	else
+//		xp = playerObject->addExperience(xpType, (int)amount);
+		xp = playerObject->addExperience(xpType, (int) (amount * localMultiplier * globalExpMultiplier));
 
 	player->notifyObservers(ObserverEventType::XPAWARDED, player, xp);
 
@@ -2158,18 +2290,18 @@ void PlayerManagerImplementation::handleAddItemToTradeWindow(CreatureObject* pla
 		return;
 	}
 
-	if (objectToTrade->isNoTrade()) {
-		player->sendSystemMessage("@container_error_message:container26");
-		handleAbortTradeMessage(player);
-		return;
-	}
+//	if (objectToTrade->isNoTrade()) {
+//		player->sendSystemMessage("@container_error_message:container26");
+//		handleAbortTradeMessage(player);
+//		return;
+//	}
 
 	// Containers containing notrade items...
-	if (objectToTrade->containsNoTradeObjectRecursive()) {
-		player->sendSystemMessage("@container_error_message:container26");
-		handleAbortTradeMessage(player);
-		return;
-	}
+//	if (objectToTrade->containsNoTradeObjectRecursive()) {
+//		player->sendSystemMessage("@container_error_message:container26");
+//		handleAbortTradeMessage(player);
+//		return;
+//	}
 
 	if (objectToTrade->isControlDevice()) {
 		Reference<ControlDevice*> controlDevice = cast<ControlDevice*>(objectToTrade.get());
@@ -2301,8 +2433,8 @@ bool PlayerManagerImplementation::checkTradeItems(CreatureObject* player, Creatu
 	for (int i = 0; i < tradeContainer->getTradeSize(); ++i) {
 		ManagedReference<SceneObject*> scene = tradeContainer->getTradeItem(i);
 
-		if (scene->isNoTrade())
-			return false;
+//		if (scene->isNoTrade())
+//			return false;
 
 		if (scene->isTangibleObject()) {
 
@@ -2369,8 +2501,8 @@ bool PlayerManagerImplementation::checkTradeItems(CreatureObject* player, Creatu
 	for (int i = 0; i < receiverContainer->getTradeSize(); ++i) {
 		ManagedReference<SceneObject*> scene = receiverContainer->getTradeItem(i);
 
-		if (scene->isNoTrade())
-			return false;
+//		if (scene->isNoTrade())
+//			return false;
 
 		if (scene->isTangibleObject()) {
 
@@ -3369,18 +3501,19 @@ int PlayerManagerImplementation::checkSpeedHackFirstTest(CreatureObject* player,
 
 		allowedSpeedMod = vehicle->getSpeedMultiplierMod();
 		allowedSpeedBase = vehicle->getRunSpeed();
-	} else if (parent != nullptr && parent->isMount()) {
-		Creature* mount = cast<Creature*>( parent.get());
-
-		allowedSpeedMod = mount->getSpeedMultiplierMod();
-
-		PetManager* petManager = server->getPetManager();
-
-		if (petManager != nullptr) {
-			allowedSpeedBase = petManager->getMountedRunSpeed(mount);
-		}
-
 	}
+//	else if (parent != nullptr && parent->isMount()) {
+//		Creature* mount = cast<Creature*>( parent.get());
+//
+//		allowedSpeedMod = mount->getSpeedMultiplierMod();
+//
+//		PetManager* petManager = server->getPetManager();
+//
+//		if (petManager != nullptr) {
+//			allowedSpeedBase = petManager->getMountedRunSpeed(mount);
+//		}
+//
+//	}
 
 	float maxAllowedSpeed = allowedSpeedMod * allowedSpeedBase;
 
@@ -3541,7 +3674,7 @@ void PlayerManagerImplementation::lootAll(CreatureObject* player, CreatureObject
 		return;
 
 	SceneObject* creatureInventory = ai->getSlottedObject("inventory");
-
+//loot creatures for holo drop? needs more than just this removed
 	if (creatureInventory == nullptr)
 		return;
 
@@ -4337,6 +4470,11 @@ bool PlayerManagerImplementation::promptTeachableSkills(CreatureObject* teacher,
 bool PlayerManagerImplementation::offerTeaching(CreatureObject* teacher, CreatureObject* student, Skill* skill) {
 	ManagedReference<PlayerObject*> studentGhost = student->getPlayerObject();
 
+	if (teacher->isPlayerCreature()) {
+		teacher->sendSystemMessage("Players can not teach other players skills."); //You cannot teach yourself.
+		return false;
+	}
+
 	//Do they have an outstanding teaching offer?
 	if (studentGhost->hasSuiBoxWindowType(SuiWindowType::TEACH_OFFER)) {
 		StringIdChatParameter params("teaching", "student_has_offer_to_learn"); //%TT already has an offer to learn.
@@ -4676,7 +4814,7 @@ void PlayerManagerImplementation::acceptUnity( CreatureObject* respondingPlayer)
 
 	for (int i = 0; i < inventory->getContainerObjectsSize(); i++) {
 		ManagedReference<WearableObject*> wearable = cast<WearableObject*>(inventory->getContainerObject(i).get());
-		if (wearable != nullptr && wearable->getGameObjectType() == SceneObjectType::RING && !wearable->isEquipped() && !wearable->isNoTrade()) {
+		if (wearable != nullptr && wearable->getGameObjectType() == SceneObjectType::RING && !wearable->isEquipped()) {// && !wearable->isNoTrade()) {
 			String itemName = wearable->getDisplayedName();
 			box->addMenuItem(itemName, wearable->getObjectID());
 		}
@@ -5476,7 +5614,7 @@ bool PlayerManagerImplementation::doBurstRun(CreatureObject* player, float hamMo
 	uint32 crc = STRING_HASHCODE("burstrun");
 	float hamCost = 100.0f;
 	float duration = 30;
-	float cooldown = 150;
+	float cooldown = 300;
 
 	float burstRunMod = (float) player->getSkillMod("burst_run");
 	hamModifier += (burstRunMod / 100.f);
@@ -5515,7 +5653,7 @@ bool PlayerManagerImplementation::doBurstRun(CreatureObject* player, float hamMo
 	ManagedReference<Buff*> buff = new Buff(player, crc, duration, BuffType::SKILL);
 
 	Locker locker(buff);
-
+//burst run speed mults
 	buff->setSpeedMultiplierMod(1.822f);
 	buff->setAccelerationMultiplierMod(1.822f);
 
@@ -5546,8 +5684,8 @@ bool PlayerManagerImplementation::doEnhanceCharacter(uint32 crc, CreatureObject*
 	if (player == nullptr)
 		return false;
 
-	if (player->hasBuff(crc))
-		return false;
+//	if (player->hasBuff(crc))
+//		return false;
 
 	ManagedReference<Buff*> buff = new Buff(player, crc, duration, buffType);
 
@@ -5564,20 +5702,93 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 		return;
 
 	bool message = true;
+//selfbuff
+	int selfMedBuff = 1750;//
+	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.0;//25% is half of vanilla 50%
+	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.0;//.625 is half of 125
+	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.0;//1.0== 100%
+	int selfDuration =	180; //3 hr ;
 
-	message = message && doEnhanceCharacter(0x98321369, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 0); // medical_enhance_health
-	message = message && doEnhanceCharacter(0x815D85C5, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 1); // medical_enhance_strength
-	message = message && doEnhanceCharacter(0x7F86D2C6, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 2); // medical_enhance_constitution
-	message = message && doEnhanceCharacter(0x4BF616E2, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 3); // medical_enhance_action
-	message = message && doEnhanceCharacter(0x71B5C842, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 4); // medical_enhance_quickness
-	message = message && doEnhanceCharacter(0xED0040D9, player, medicalBuff, medicalDuration, BuffType::MEDICAL, 5); // medical_enhance_stamina
+	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
+	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
+	message = message && doEnhanceCharacter(0x7F86D2C6, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 2); // medical_enhance_constitution
+	message = message && doEnhanceCharacter(0x4BF616E2, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 3); // medical_enhance_action
+	message = message && doEnhanceCharacter(0x71B5C842, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 4); // medical_enhance_quickness
+	message = message && doEnhanceCharacter(0xED0040D9, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 5); // medical_enhance_stamina
 
-	message = message && doEnhanceCharacter(0x11C1772E, player, performanceBuff, performanceDuration, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
-	message = message && doEnhanceCharacter(0x2E77F586, player, performanceBuff, performanceDuration, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
-	message = message && doEnhanceCharacter(0x3EC6FCB6, player, performanceBuff, performanceDuration, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
+	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrengthMind, selfDuration * 60, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
+	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus, selfDuration * 60, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
+	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("An unknown force strengthens you for battles yet to come.");
+		player->sendSystemMessage("You receive Doctor Health/Action buffs, Dancer/Musician Mind buffs.");
+}
+
+void PlayerManagerImplementation::enhanceCharacterDocBuff(CreatureObject* player) {
+	if (player == nullptr)
+		return;
+
+	bool message = true;
+//selfbuff
+	int selfMedBuff = 1500;//
+	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;//25% is half of vanilla 50%
+	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;//.625 is half of 125
+	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;
+	int selfDuration =	360; //6 hr ;
+
+	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
+	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
+	message = message && doEnhanceCharacter(0x7F86D2C6, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 2); // medical_enhance_constitution
+	message = message && doEnhanceCharacter(0x4BF616E2, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 3); // medical_enhance_action
+	message = message && doEnhanceCharacter(0x71B5C842, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 4); // medical_enhance_quickness
+	message = message && doEnhanceCharacter(0xED0040D9, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 5); // medical_enhance_stamina
+
+	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrengthMind, selfDuration * 60, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
+	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus, selfDuration * 60, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
+	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
+
+	if (message && player->isPlayerCreature())
+		player->sendSystemMessage("You receive Doctor Health/Action buffs for 1500. Dancer/Musician Mind buffs for 125%. They last 6 hours.");
+}
+
+void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
+	if (player == nullptr)
+		return;
+
+	bool message = true;
+
+	int selfStrength = (player->getBaseHAM(CreatureAttribute::MIND) * (player->getSkillMod("healing_dance_mind") * .01) * .5);//.5 to reduce vanilla buffs
+	int selfDuration =	360; //6 hr ;
+
+	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrength, selfDuration * 60, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
+
+
+	if (message && player->isPlayerCreature())
+		player->sendSystemMessage("You receive Dancer Mind buff for 6 hours.");
+
+//no message b/c it will say it every time you stop dance, if u have no buff mod, or a new buff is applied or not b/c cant overbuff
+//	if (message && player->isPlayerCreature())
+//		player->sendSystemMessage("An unknown force strengthens you for battles yet to come.");
+}
+
+void PlayerManagerImplementation::enhanceSelfMusic(CreatureObject* player) {
+	if (player == nullptr)
+		return;
+
+	bool message = true;
+
+	int selfStrengthFocus = (player->getBaseHAM(CreatureAttribute::FOCUS) * (player->getSkillMod("healing_music_mind") * .01) * .5);//1/2 vanilla power
+	int selfStrengthWill = (player->getBaseHAM(CreatureAttribute::WILLPOWER) * (player->getSkillMod("healing_music_mind") * .01) * .5);
+	int selfDuration =	360; //6 hr ;
+
+	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus, selfDuration * 60, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
+	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
+
+	if (message && player->isPlayerCreature())
+		player->sendSystemMessage("You receive Musician Mind buffs for 6 hours. \nmySWG: Doc/Ent buffs are half power.");
+
+//	if (message && player->isPlayerCreature())
+//		player->sendSystemMessage("An unknown force strengthens you for battles yet to come.");
 }
 
 void PlayerManagerImplementation::sendAdminJediList(CreatureObject* player) {

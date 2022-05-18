@@ -297,10 +297,10 @@ void LightsaberCrystalComponentImplementation::fillAttributeList(AttributeListMe
 				alm->insertAttribute("maxdamage", damage);
 				alm->insertAttribute("wpn_attack_speed", attackSpeed);
 				alm->insertAttribute("wpn_wound_chance", woundChance);
-				alm->insertAttribute("wpn_attack_cost_health", sacHealth);
-				alm->insertAttribute("wpn_attack_cost_action", sacAction);
-				alm->insertAttribute("wpn_attack_cost_mind", sacMind);
-				alm->insertAttribute("forcecost", floatForceCost);
+//				alm->insertAttribute("wpn_attack_cost_health", sacHealth);
+//				alm->insertAttribute("wpn_attack_cost_action", sacAction);
+//				alm->insertAttribute("wpn_attack_cost_mind", sacMind);
+//				alm->insertAttribute("forcecost", (int)getForceCost());
 
 				// For debugging
 				if (player->isPrivileged()) {
@@ -449,10 +449,17 @@ void LightsaberCrystalComponentImplementation::updateCraftingValues(CraftingValu
 	int color = values->getCurrentValue("color");
 
 	if (colorMax != 31) {
-		int finalColor = System::random(11);
-//		if (itemLevel > 219){
-//		finalColor = System::random(19) + 11;
-//		}
+
+		int finalColor = System::random(6);// red,green,blue
+
+		if (System::random(10) >= 10){
+		finalColor = System::random(6) + 6;// 1/10 color crystals will be yellow,purp,orange
+		}
+
+		if (System::random(100) >= 100){
+		finalColor = System::random(18) + 12;// 1/100 color crystals will be special named colors
+		}
+
 		setColor(finalColor);
 		updateCrystal(finalColor);
 	} else {

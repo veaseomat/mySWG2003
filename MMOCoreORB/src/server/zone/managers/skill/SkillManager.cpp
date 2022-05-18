@@ -21,8 +21,18 @@
 #include "server/zone/managers/mission/MissionManager.h"
 #include "server/zone/managers/frs/FrsManager.h"
 
+#include "server/zone/ZoneServer.h"
+#include "server/chat/ChatManager.h"
+#include "engine/engine.h"
+#include "server/zone/objects/creature/CreatureObject.h"
+#include "server/zone/ZoneProcessServer.h"
+#include "engine/core/ManagedService.h"
+#include "server/zone/objects/player/sui/messagebox/SuiMessageBox.h"
+
 SkillManager::SkillManager()
 	: Logger("SkillManager") {
+
+	zoneServer = ServerCore::getZoneServer();
 
 	rootNode = new Skill();
 
@@ -265,11 +275,21 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 	if (creature->hasSkill(skill->getSkillName()))
 		return true;
 
+	//this removes non jedi skills from existing jedi
+//	if (creature->hasSkill("force_title_jedi_rank_02")) {
+//		SkillManager::surrenderAllSkills(creature, true, false);
+//	}
+
 	ManagedReference<PlayerObject*> ghost = creature->getPlayerObject();
 
 	if (ghost != nullptr) {
 		//Withdraw skill points.
 		ghost->addSkillPoints(-skill->getSkillPointsRequired());
+
+
+//		if (!skill->getSkillName().contains("force_discipline")) {
+//			ghost->addSkillPoints(-skill->getSkillPointsRequired());
+//		}
 
 		//Witdraw experience.
 		if (!noXpRequired) {
@@ -303,6 +323,23 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 		//Add draft schematic groups
 		auto schematicsGranted = skill->getSchematicsGranted();
+
+//		if ((skill->getSkillName() == "force_discipline_light_saber_two_hand_02") || (skill->getSkillName() == "force_discipline_light_saber_polearm_02")) {
+//			skillName == "force_discipline_light_saber_one_hand_02";
+//			auto skill = skillMap.get(skillName.hashCode());
+//			auto schematicsGranted = skill->getSchematicsGranted();
+//			SchematicMap::instance()->addSchematics(ghost, *schematicsGranted, notifyClient);
+////			auto schematicsGranted = "craftSaberOneHand2";
+//		}
+//
+//		if ((skill->getSkillName() == "force_discipline_light_saber_two_hand_04") || (skill->getSkillName() == "force_discipline_light_saber_polearm_04")) {
+//			skillName == "force_discipline_light_saber_one_hand_04";
+//			auto skill = skillMap.get(skillName.hashCode());
+//			auto schematicsGranted = skill->getSchematicsGranted();
+//			SchematicMap::instance()->addSchematics(ghost, *schematicsGranted, notifyClient);
+//			//SchematicMap::instance()->addSchematics(ghost, craftSaberOneHand3, notifyClient);
+//		}
+
 		SchematicMap::instance()->addSchematics(ghost, *schematicsGranted, notifyClient);
 
 		//Update maximum experience.
@@ -323,6 +360,7 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 				}
 
 				if (badge != nullptr) {
+					//prof badges here
 					playerManager->awardBadge(ghost, badge);
 				}
 			}
@@ -346,7 +384,7 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 		if (playerManager != nullptr) {
 			creature->setLevel(playerManager->calculatePlayerLevel(creature));
 		}
-
+//this could be useful for quests
 		if (skill->getSkillName().contains("force_sensitive") && skill->getSkillName().contains("_04"))
 			JediManager::instance()->onFSTreeCompleted(creature, skill->getSkillName());
 
@@ -385,6 +423,29 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 	SkillModManager::instance()->verifySkillBoxSkillMods(creature);
 
+	//works with frog not with trainer --now located in trainerconvohander
+//	if (skill->getSkillName() == "social_politician_novice") {
+//		awardSkill("social_politician_master", creature, true, true, true);
+//	}
+
+//	ZoneProcessServer* server;
+
+
+		if (skill->getSkillName() == "force_title_jedi_rank_01") {
+			ChatManager* chatManager = creature->getZoneServer()->getChatManager();
+			ChatManager* chatManager2 = zoneServer.get()->getChatManager();
+			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(creature, SuiWindowType::NONE);
+
+			box->setPromptTitle("Jedi Unlock");
+			box->setPromptText("You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\n     First you will need to find your Jedi skill trainer! it could be any starting profession trainer in the galaxy, talk to each one until you find yours. The command /findmytrainer will tell you what planet your trainer is on.\n\n     Jedi on mySWG is PERMADEATH with only 3 lives! After 3 PvE deaths all of you Jedi skills will be removed. \n\nCongratulations, good luck, and may the Force be with you... Jedi.");
+			ghost->addSuiBox(box);
+			creature->sendMessage(box->generateMessage());
+
+			chatManager2->sendMail("mySWG", "Jedi Guide", "Congratulations on unlocking Jedi on mySWG!\n\n     To get started you first need to find your trainer, the command /findmytrainer will tell you what planet your Jedi skill trainer is on. finding your personal Jedi trainer is part of the journey. Your Jedi trainer could be any starting profession trainer, you will need to talk to each once until you find the correct one. Next you will need to craft a training lightsaber, loot and tune a color crystal, then you can begin grinding..\n\nPERMADEATH\n\n     Yes, Jedi on mySWG is permadeath. You have 3 lives, after you have died 3 times you will have all of your jedi skill boxes REMOVED. Player kills do not count to avoid any griefing and to allow for safe pvp/duels. When killed by a non player character you will receive a pop up upon death informing you that you have lost a life. Your death counter will show up in experience as 'jedi_deaths'. Death count does not start until you find your Jedi trainer. It is possible to unlock again after having lost all jedi skills.\n\nBOUNTY HUNTERS\n\n     Visibility is slightly more forgiving here but mostly unchanged. Using a lightsaber or any force powers within 32m of any player or humanoid NPC will raise your visibility for the Bounty Hunter terminals. NPC Bounty Hunters will start to come after you once you have enough visibility. As a new Jedi you should just RUN.\n\nJEDI KNIGHT\n\n     Jedi Knight trials will start when you have learned enough skills.", creature->getFirstName());
+
+			chatManager->broadcastGalaxy("IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR:\n\nLord Vader has detected a vergence in the Force.\n\n     Be on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.", "imperial");
+		}
+
 	return true;
 }
 
@@ -402,6 +463,8 @@ void SkillManager::removeSkillRelatedMissions(CreatureObject* creature, Skill* s
 
 bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creature, bool notifyClient, bool checkFrs) {
 	Skill* skill = skillMap.get(skillName.hashCode());
+	//creature->sendSystemMessage("You can not surrender skills.");
+	//return false;//no skill can be surrendered
 
 	if (skill == nullptr)
 		return false;
@@ -421,8 +484,13 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 			return false;
 	}
 
-	if (skillName.beginsWith("force_") && !(JediManager::instance()->canSurrenderSkill(creature, skillName)))
-		return false;
+	//if (skillName.beginsWith("force_") && !(JediManager::instance()->canSurrenderSkill(creature, skillName)))
+	//	return false;
+
+	//this prevents learning both frs trees
+	//if ((skill->getSkillName() == "force_title_jedi_rank_03") && (creature->hasSkill("force_rank_light_novice") || creature->hasSkill("force_rank_dark_novice"))){
+	//	return false;
+	//}
 
 	removeSkillRelatedMissions(creature, skill);
 
@@ -443,11 +511,17 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 		//Give the player the used skill points back.
 		ghost->addSkillPoints(skill->getSkillPointsRequired());
 
-		int xpcost = skill->getXpCost();
+//		if (!skill->getSkillName().contains("force_discipline")) {
+//			ghost->addSkillPoints(skill->getSkillPointsRequired());
+//		}
 
-		if (xpcost > 0) {
-			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
-		}
+//		int xpcost = skill->getXpCost();
+//		int curExp = ghost->getExperience(skill->getXpType());
+
+//		if (xpcost > 0) {
+////			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+//			ghost->addExperience(skill->getXpType(), -curExp, true);
+//		}
 
 		//Remove abilities but only if the creature doesn't still have a skill that grants the
 		//ability.  Some abilities are granted by multiple skills. For example Dazzle for dancers
@@ -570,6 +644,19 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 			if (!removeForceProgression and skill->getSkillName().contains("force_"))
 				continue;
 
+
+//		if (skill->getSkillName().contains("force_")){
+//			if (!removeForceProgression and skill->getSkillName().contains("force_"))
+//				continue;
+
+//			if (!skill->getSkillName().beginsWith("combat_")){
+//				continue;
+//			}
+
+//			if (!skill->getSkillName().contains("science_combatmedic")){
+//				continue;
+//			}
+
 			removeSkillRelatedMissions(creature, skill);
 
 			creature->removeSkill(skill, notifyClient);
@@ -585,6 +672,18 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 			if (ghost != nullptr) {
 				//Give the player the used skill points back.
 				ghost->addSkillPoints(skill->getSkillPointsRequired());
+//				int xpcost = skill->getXpCost();
+
+//				if (xpcost > 0) {
+//					ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+//				}
+
+//				int curExp = ghost->getExperience(skill->getXpType());
+
+//				if (xpcost > 0) {
+		////			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+//					ghost->addExperience(skill->getXpType(), -curExp, true);
+//				}
 
 				//Remove abilities
 				auto abilityNames = skill->getAbilities();
@@ -633,7 +732,16 @@ void SkillManager::awardDraftSchematics(Skill* skill, PlayerObject* ghost, bool 
 		//Add draft schematic groups
 		auto schematicsGranted = skill->getSchematicsGranted();
 		SchematicMap::instance()->addSchematics(ghost, *schematicsGranted, notifyClient);
+
+//	if (skill->getSkillName().contains("force_discipline")) {
+//		return;
+//	}
+
+//	if ((ghost != nullptr)){
+
 	}
+
+//		SchematicMap::instance()->removeSchematics(ghost, craftSaberPoleArm2, notifyClient);
 }
 
 void SkillManager::updateXpLimits(PlayerObject* ghost) {
@@ -668,10 +776,10 @@ void SkillManager::updateXpLimits(PlayerObject* ghost) {
 
 		if (skillBox == nullptr)
 			continue;
-
-//		if (xpTypeCapList->contains(skillBox->getXpType()) && (xpTypeCapList->get(skillBox->getXpType()) < skillBox->getXpCap())) {
-//			xpTypeCapList->get(skillBox->getXpType()) = skillBox->getXpCap();
-//		}
+//remove this for no xp cap
+		if (xpTypeCapList->contains(skillBox->getXpType()) && (xpTypeCapList->get(skillBox->getXpType()) < skillBox->getXpCap())) {
+			xpTypeCapList->get(skillBox->getXpType()) = skillBox->getXpCap();
+		}
 	}
 
 	//Iterate over the player xp types and cap all xp types to the limits.
@@ -679,9 +787,10 @@ void SkillManager::updateXpLimits(PlayerObject* ghost) {
 
 	for (int i = 0; i < experienceList->size(); ++i) {
 		String xpType = experienceList->getKeyAt(i);
-//		if (experienceList->get(xpType) > xpTypeCapList->get(xpType)) {
-//			ghost->addExperience(xpType, xpTypeCapList->get(xpType) - experienceList->get(xpType), true);
-//		}
+//remove this for no xp cap
+		if (experienceList->get(xpType) > xpTypeCapList->get(xpType)) {
+			ghost->addExperience(xpType, xpTypeCapList->get(xpType) - experienceList->get(xpType), true);
+		}
 	}
 }
 
@@ -701,6 +810,12 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 		return false;
 	}
 
+	//jedi can not have other combat skills
+//	if (creature->hasSkill("force_title_jedi_rank_02") && !skillName.beginsWith("force_")) {// && skillName.beginsWith("combat_")) {
+//		creature->sendSystemMessage("Jedi can not learn non Jedi skills.");
+//		return false;
+//	}
+
 	ManagedReference<PlayerObject* > ghost = creature->getPlayerObject();
 	if (ghost != nullptr) {
 		//Check if player has enough xp to learn the skill.
@@ -709,7 +824,7 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 				return false;
 			}
 		}
-
+//remove for inf sp ??
 		//Check if player has enough skill points to learn the skill.
 		if (ghost->getSkillPoints() < skill->getSkillPointsRequired()) {
 			return false;
@@ -845,4 +960,50 @@ bool SkillManager::villageKnightPrereqsMet(CreatureObject* creature, const Strin
 	}
 
 	return fullTrees >= 2 && totalJediPoints >= 206;
+}
+
+bool SkillManager::jediPrereqsMet(CreatureObject* creature, const String& skillToDrop) {
+	const SkillList* skillList = creature->getSkillList();
+
+	int fullTrees = 0;
+	int totalJediPoints = 0;
+
+	for (int i = 0; i < skillList->size(); ++i) {
+		Skill* skill = skillList->get(i);
+
+		String skillName = skill->getSkillName();
+		if ((skillName.indexOf("0") != -1 || skillName.contains("novice") || skillName.contains("master") )) {
+			totalJediPoints += skill->getSkillPointsRequired();
+
+			if (skillName.indexOf("4") != -1) {
+				fullTrees++;
+			}
+		}
+	}
+
+	if (!skillToDrop.isEmpty()) {
+		Skill* skillBeingDropped = skillMap.get(skillToDrop.hashCode());
+
+		if (skillToDrop.indexOf("4") != -1) {
+			fullTrees--;
+		}
+
+		totalJediPoints -= skillBeingDropped->getSkillPointsRequired();
+	}
+
+	return totalJediPoints >= 206;
+}
+
+int SkillManager::getJediSkillCount(CreatureObject* creature, bool includeNoviceMasterBoxes) {
+	const SkillList* skills =  creature->getSkillList();
+	int JediSkillCount = 0;
+
+	for (int i = 0; i < skills->size(); ++i) {
+		const String& skillName = skills->get(i)->getSkillName();
+		if (skillName.contains("force_discipline_") && (includeNoviceMasterBoxes || skillName.indexOf("0") != -1)) {
+			JediSkillCount++;
+		}
+	}
+
+	return JediSkillCount;
 }

@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_thrown_accuracy = object_tangible_skill_bu
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 300,
+	duration = 3600,
 	useCount = 5,
-	modifiers = { "thrown_accuracy", 10 },
+	modifiers = { "thrown_accuracy", 25 },
 	buffName = "thrown_accuracy",
 	buffCRC = 0xBFEEDABF
 }

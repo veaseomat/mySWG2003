@@ -32,18 +32,18 @@ public:
 			return;
 		}
 
-		if (creature->isDizzied()) {
-			if (creature->isRidingMount()) {
-				creature->updateCooldownTimer("mount_dismount", 0);
-				creature->dismount();
-			}
-
-			if (!creature->isKnockedDown())
-				creature->setPosture(CreaturePosture::KNOCKEDDOWN);
-
-			creature->sendSystemMessage("@cbt_spam:dizzy_fall_down_single");
-			creature->sendStateCombatSpam("cbt_spam", "dizzy_fall_down", 11);
-		}
+//		if (creature->isDizzied()) {
+//			if (creature->isRidingMount()) {
+//				creature->updateCooldownTimer("mount_dismount", 0);
+//				creature->dismount();
+//			}
+//
+//			if (!creature->isKnockedDown())
+//				creature->setPosture(CreaturePosture::KNOCKEDDOWN);
+//
+//			creature->sendSystemMessage("@cbt_spam:dizzy_fall_down_single");
+//			creature->sendStateCombatSpam("cbt_spam", "dizzy_fall_down", 11);
+//		}
 
 		creature->clearDizzyEvent();
 	}

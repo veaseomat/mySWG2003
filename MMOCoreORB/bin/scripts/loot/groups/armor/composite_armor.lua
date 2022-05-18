@@ -3,6 +3,7 @@ composite_armor = {
 	minimumLevel = 0,
 	maximumLevel = -1,
 	lootItems = {
+--		{groupTemplate = "armor_all", weight = 10000000},
 		{itemTemplate = "composite_armor_helmet", weight = 1000000},
 		{itemTemplate = "composite_armor_chest_plate", weight = 1000000},
 		{itemTemplate = "composite_armor_leggings", weight = 1000000},

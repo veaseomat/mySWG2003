@@ -69,7 +69,7 @@ LegShot3Command = {
 
 	combatSpam = "kneecapshot",
 	
-	weaponType = CARBINEWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }
