@@ -318,10 +318,15 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	setCustomObjectName(prototype, templateObject);
 
 	// this thing exponentially ruins the variance
+<<<<<<< HEAD
 	float excMod = 1.0;//0.8 + (System::random(20) * .01);// randoms up to 1.0
+=======
+	float excMod = 0.8 + (System::random(20) * .01);// randoms up to 1.0
+>>>>>>> refs/remotes/origin/unstable
 
 //	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);//removing this makes legendary chance same for all levels
 
+<<<<<<< HEAD
 //	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
 //		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
 //	}
@@ -329,6 +334,15 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //	if (prototype->isArmorObject()) {
 //		excMod = 1.2 + (System::random(20) * .01);
 //	}
+=======
+	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
+		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
+	}
+
+	if (prototype->isArmorObject()) {
+		excMod = 1.2 + (System::random(20) * .01);
+	}
+>>>>>>> refs/remotes/origin/unstable
 
 //	if (excMod >= 5.0) excMod = 5.0;
 
@@ -366,7 +380,11 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
+<<<<<<< HEAD
 		float percentage = (level / 3) * .01;//(System::random(level / 3) * .01);// + .75;//1;//System::random(10000) / 10000.f;//this is where the variance happens
+=======
+		float percentage = 1;//(System::random(level / 3) * .01);// + .75;//1;//System::random(10000) / 10000.f;//this is where the variance happens
+>>>>>>> refs/remotes/origin/unstable
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll
