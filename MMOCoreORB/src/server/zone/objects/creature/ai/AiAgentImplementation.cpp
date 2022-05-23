@@ -151,8 +151,8 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float minDmg = level * 5.0 + (System::random(20) * .1);
-	float maxDmg = level * 10.0 + (System::random(20) * .1);
+	float minDmg = level * 5;
+	float maxDmg = level * 10;
 	float speed = calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
@@ -186,7 +186,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		ManagedReference<WeaponObject*> weao = (getZoneServer()->createObject(crc, getPersistenceLevel())).castTo<WeaponObject*>();
 
 		if (weao != nullptr) {
-			float mod = 1 - 0.1*weao->getArmorPiercing();
+			float mod = .156;//1 - 0.1*weao->getArmorPiercing();
 			weao->setMinDamage(minDmg * mod);
 			weao->setMaxDamage(maxDmg * mod);
 
@@ -233,19 +233,19 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
 		int health = (level * 80) + System::random(level * 20);
-		int str = (level * 60) + System::random(level * 40);
+		int str = (level * 70) + System::random(level * 30);
 		int con = (level * 70) + System::random(level * 30);
 		baseHAM.add(health * .3);
 		baseHAM.add(str);
 		baseHAM.add(con);
 		int action = (level * 70) + System::random(level * 30);
-		int quick = (level * 60) + System::random(level * 40);
+		int quick = (level * 70) + System::random(level * 30);
 		int stam = (level * 70) + System::random(level * 30);
 		baseHAM.add(action * .3);
 		baseHAM.add(quick);
 		baseHAM.add(stam);
 		int mind = (level * 40) + System::random(level * 60);
-		int focus = (level * 60) + System::random(level * 40);
+		int focus = (level * 70) + System::random(level * 30);
 		int will = (level * 70) + System::random(level * 30);
 		baseHAM.add(mind * .3);
 		baseHAM.add(focus);
@@ -2628,18 +2628,26 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 //	alm->insertAttribute("cat_wpn_damage", damageMsg.toString());
 
 
-//	int npchitchance = getChanceHit() * 100;
-//
-//	if (npchitchance < 25) {
-//		npchitchance = 25;
-//	}
-//	if (npchitchance > 55) {
-//		npchitchance = 55;
-//	}
-//
-//	if (npchitchance > 0) {
-//	alm->insertAttribute("basetohit", npchitchance);
-//	}
+	int mindam = getWeapon()->getMinDamage();
+	int maxdam = getWeapon()->getMaxDamage();
+
+	float attackSpeed = (1.0f - ((float) level / 100.0f)) * weapon->getAttackSpeed();
+
+	if (attackSpeed < 1.0)
+		attackSpeed = 1.0;
+	if (hasState(CreatureState::STUNNED)) {
+		attackSpeed *= 1.2;
+	}
+
+	alm->insertAttribute("ai speed", attackSpeed);
+
+	int aidam = ((mindam + maxdam) / 2) / attackSpeed;
+
+	alm->insertAttribute("damage.wpn_damage_min", mindam);
+
+	alm->insertAttribute("damage.wpn_damage_max", maxdam);
+
+	alm->insertAttribute("AI DPS", aidam);
 
 	if (getArmor() == 0)
 		alm->insertAttribute("armorrating", "None");
@@ -2648,18 +2656,46 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 	else if (getArmor() == 2)
 		alm->insertAttribute("armorrating", "Medium");
 	else if (getArmor() == 3)
-		//alm->insertAttribute("armorrating", "Medium");
 		alm->insertAttribute("armorrating", "Heavy");
 
-	int npcKinetic = getKinetic();
-	int npcEnergy = getEnergy();
-	int npcElectricity = getElectricity();
-	int npcStun = getStun();
-	int npcBlast = getBlast();
-	int npcHeat = getHeat();
-	int npcCold = getCold();
-	int npcAcid = getAcid();
-	int npcLightSaber = getLightSaber();
+	//int npchitchance = getChanceHit() * 100;
+	int npchitchance = getMaxHAM(CreatureAttribute::FOCUS) / 30;
+
+	if (weapon->isMeleeWeapon()) {
+		npchitchance *= 1.1;
+	}
+	if (weapon->isRangedWeapon() && isKneeling()) {
+		npchitchance *= 1.2;
+	}
+	if (weapon->isRangedWeapon() && isProne()) {
+		npchitchance *= 1.4;
+	}
+	if (isRunning()) {
+		npchitchance *= .6;
+	}
+	if (hasState(CreatureState::BLINDED)) {
+		npchitchance *= .8;
+	}
+	if (npchitchance > 150)
+		npchitchance = 150;
+
+	alm->insertAttribute("ai accuracy", npchitchance);
+
+	int targetDefense = getMaxHAM(CreatureAttribute::STRENGTH) / 15;//npc target defense based off 3k ham
+
+	alm->insertAttribute("ai defense", targetDefense);
+
+
+
+//	int npcKinetic = getKinetic();
+//	int npcEnergy = getEnergy();
+//	int npcElectricity = getElectricity();
+//	int npcStun = getStun();
+//	int npcBlast = getBlast();
+//	int npcHeat = getHeat();
+//	int npcCold = getCold();
+//	int npcAcid = getAcid();
+//	int npcLightSaber = getLightSaber();
 
 //	if (npcKinetic == nullptr){
 //		npcKinetic = 0;

@@ -721,13 +721,23 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 
 		CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
 
+		if (weapon->isMeleeWeapon()) {
+			npchitchance *= 1.1;
+		}
+		if (weapon->isRangedWeapon() && creoAttacker->isKneeling()) {
+			npchitchance *= 1.2;
+		}
+		if (weapon->isRangedWeapon() && creoAttacker->isProne()) {
+			npchitchance *= 1.4;
+		}
 		if (creoAttacker->isRunning()) {
-			npchitchance *= .5;
+			npchitchance *= .6;
 		}
-
 		if (creoAttacker->hasState(CreatureState::BLINDED)) {
-			npchitchance *= .25;
+			npchitchance *= .8;
 		}
+		if (npchitchance > 150)
+			npchitchance = 150;
 
 		return npchitchance;
 	}
@@ -776,8 +786,8 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		attackerAccuracy *= 1.0f;
 ////		if (weapon->isHeavyWeapon())
 ////		attackerAccuracy *= 1.0f;
-////		if (weapon->isThrownWeapon())
-////		attackerAccuracy *= .5f;
+		if (weapon->isThrownWeapon())
+		attackerAccuracy *= 1.2f;
 ////		if (weapon->isSpecialHeavyWeapon())
 ////		attackerAccuracy *= .5f;
 ////		if (weapon->isMineWeapon())
@@ -1131,8 +1141,8 @@ int CombatManager::getSpeedModifier(CreatureObject* attacker, WeaponObject* weap
 		speedMods *= 2.3f;
 //		if (weapon->isHeavyWeapon())
 //		speedMods *= 1.0f;
-//		if (weapon->isThrownWeapon())
-//		speedMods *= .5f;
+		if (weapon->isThrownWeapon())
+		speedMods *= 2.5f;
 //		if (weapon->isSpecialHeavyWeapon())
 //		speedMods *= .5f;
 //		if (weapon->isMineWeapon())
@@ -1402,8 +1412,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 		float oldmod = attacker->isAiAgent() ? cast<AiAgent*>(attacker)->getSpecialDamageMult() : 1.f;
 
-		oldmod *= .5;
-		oldmod += .5;
+//		oldmod *= .5;
+//		oldmod += .5;
 
 		float mod = oldmod;
 		damage = minDmg * mod;
@@ -1621,8 +1631,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= .4f;
 //			if (weapon->isHeavyWeapon())
 //			damage *= 1.0f;
-//			if (weapon->isThrownWeapon())
-//			damage *= 0;
+			if (weapon->isThrownWeapon())
+			damage *= .1;
 //			if (weapon->isSpecialHeavyWeapon())
 //			damage *= 0;
 //			if (weapon->isMineWeapon())
@@ -1889,7 +1899,7 @@ float CombatManager::calculateWeaponAttackSpeed(CreatureObject* attacker, Weapon
 	int speedMod = getSpeedModifier(attacker, weapon);
 	float jediSpeed = attacker->getSkillMod("combat_haste") / 100.0f;
 
-	if (!attacker->isPlayerCreature()) speedMod = (attacker->getLevel() / 3);
+	if (!attacker->isPlayerCreature()) speedMod = attacker->getLevel();
 
 	float attackSpeed = (1.0f - ((float) speedMod / 100.0f)) * weapon->getAttackSpeed();
 
