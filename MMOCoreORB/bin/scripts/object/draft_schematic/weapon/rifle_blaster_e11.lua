@@ -68,7 +68,7 @@ object_draft_schematic_weapon_rifle_blaster_e11 = object_draft_schematic_weapon_
    resourceTypes = {"steel_ditanium", "iron_polonium", "metal", "crystalline_gallinorian", "object/tangible/component/weapon/shared_blaster_power_handler.iff", "ore_carbonate_alantium", "object/tangible/component/weapon/shared_blaster_rifle_barrel.iff", "object/tangible/component/weapon/shared_stock.iff"},
    resourceQuantities = {150, 85, 20, 15, 1, 30, 1, 1},
    contribution = {100, 100, 100, 100, 100, 100, 100, 100},
-ingredientAppearance = {"", "", "", "", "muzzle", "scope", ""},
+ingredientAppearance = {"", "", "", "", "", "", "muzzle", ""},
 
 
    targetTemplate = "object/weapon/ranged/rifle/rifle_e11.iff",

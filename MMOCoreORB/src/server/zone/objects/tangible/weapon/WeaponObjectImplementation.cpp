@@ -492,7 +492,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	attackerAccuracy += object->getSkillMod("attack_accuracy");
 
 	if (isMeleeWeapon()) {
-		attackerAccuracy *= 1.2;
+		attackerAccuracy *= 1.1;
 	}
 	if (isRangedWeapon() && object->isKneeling()) {
 		attackerAccuracy *= 1.2;
@@ -538,6 +538,9 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	if (targetDefense > 200)
 		targetDefense = 200;
 
+	if (isMeleeWeapon()) {
+		targetDefense *= 1.1;
+	}
 	// food bonus goes on top
 	targetDefense += object->getSkillMod("dodge_attack") * .5;
 

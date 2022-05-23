@@ -801,7 +801,7 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy");
 
 	if (weapon->isMeleeWeapon()) {
-		attackerAccuracy *= 1.2;
+		attackerAccuracy *= 1.1;
 	}
 //	if (weapon->isRangedWeapon() && creoAttacker->isStanding()) {
 //		attackerAccuracy *= 1.25;
@@ -869,6 +869,10 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 
 	if (targetDefense > 200)
 		targetDefense = 200;
+
+	if (defender->getWeapon()->isMeleeWeapon()) {
+		targetDefense *= 1.1;
+	}
 
 	// food bonus goes on top
 	targetDefense += defender->getSkillMod("dodge_attack") * .5;
@@ -1592,43 +1596,43 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	//mySWG balancing the profs based on highest dmg weapon and special for that class
 		if (attacker->isPlayerCreature() && !data.isForceAttack()) {
 			if (weapon->isPistolWeapon())
-			damage *= 1.2f;
+			damage *= 1.4f;
 			if (weapon->isCarbineWeapon())
-			damage *= 1.0f;
+			damage *= 1.1f;
 			if (weapon->isRifleWeapon())
-			damage *= .5f;
+			damage *= .7f;
 //			if (weapon->isRangedWeapon())
 //			damage *= 1.03f;
 			if (weapon->isUnarmedWeapon())
-			damage *= 2.0f;
+			damage *= 1.9f;
 			if (weapon->isOneHandMeleeWeapon())
-			damage *= 1.0f;
+			damage *= 1.3f;
 			if (weapon->isTwoHandMeleeWeapon())
-			damage *= .5f;
+			damage *= .7f;
 			if (weapon->isPolearmWeaponObject())
-			damage *= .6f;
+			damage *= .8f;
 //			if (weapon->isMeleeWeapon())
 //			damage *= 1.1f;
 			if (weapon->isLightningRifle())
-			damage *= 1.5f;
+			damage *= .4f;
 			if (weapon->isFlameThrower())
-			damage *= .8f;
+			damage *= .3f;
 			if (weapon->isHeavyAcidRifle())
-			damage *= 1.0f;
+			damage *= .4f;
 //			if (weapon->isHeavyWeapon())
 //			damage *= 1.0f;
-			if (weapon->isThrownWeapon())
-			damage *= 0;
-			if (weapon->isSpecialHeavyWeapon())
-			damage *= 0;
-			if (weapon->isMineWeapon())
-			damage *= 0;
+//			if (weapon->isThrownWeapon())
+//			damage *= 0;
+//			if (weapon->isSpecialHeavyWeapon())
+//			damage *= 0;
+//			if (weapon->isMineWeapon())
+//			damage *= 0;
 			if (weapon->isJediOneHandedWeapon())
-			damage *= 1.0f;
+			damage *= .6f;
 			if (weapon->isJediTwoHandedWeapon())
-			damage *= .9f;
+			damage *= .5f;
 			if (weapon->isJediPolearmWeapon())
-			damage *= .8f;
+			damage *= .4f;
 //			if (weapon->isJediWeapon())
 //			damage *= 1.1f;
 		}
