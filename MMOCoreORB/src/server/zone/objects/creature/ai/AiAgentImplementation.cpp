@@ -1116,37 +1116,39 @@ void AiAgentImplementation::selectWeapon() {
 	WeaponObject* finalWeap = nullptr;
 	ManagedReference<WeaponObject*> defaultWeapon = getSlottedObject("default_weapon").castTo<WeaponObject*>();
 
-	if (getUseRanged()) {
-		if (readyWeapon != nullptr && readyWeapon->isRangedWeapon()) {
-			finalWeap = readyWeapon;
-		} else if (defaultWeapon != nullptr && defaultWeapon->isRangedWeapon()) {
-			finalWeap = defaultWeapon;
-		}
-
-	} else {
-		ManagedReference<SceneObject*> followCopy = getFollowObject().get();
-		float dist = 5.f;
-
-		if (followCopy != nullptr)
-			dist = getDistanceTo(followCopy) - followCopy->getTemplateRadius() - getTemplateRadius();
-
-		float readyWeaponRangeDiff = -1.f;
-		float defaultWeaponRangeDiff = 100.f;
-
-		if (readyWeapon != nullptr) {
-			finalWeap = readyWeapon;
-			readyWeaponRangeDiff = fabs(readyWeapon->getIdealRange() - dist);
-		}
-
-		if (defaultWeapon != nullptr && defaultWeapon->getMaxRange() >= dist) {
-			defaultWeaponRangeDiff = fabs(defaultWeapon->getIdealRange() - dist);
-		}
-
-		if (finalWeap == nullptr || readyWeaponRangeDiff > defaultWeaponRangeDiff)
-			finalWeap = defaultWeapon;
-	}
+//	if (getUseRanged()) {
+//		if (readyWeapon != nullptr && readyWeapon->isRangedWeapon()) {
+//			finalWeap = readyWeapon;
+//		} else if (defaultWeapon != nullptr && defaultWeapon->isRangedWeapon()) {
+//			finalWeap = defaultWeapon;
+//		}
+//
+//	} else {
+//		ManagedReference<SceneObject*> followCopy = getFollowObject().get();
+//		float dist = 5.f;
+//
+//		if (followCopy != nullptr)
+//			dist = getDistanceTo(followCopy) - followCopy->getTemplateRadius() - getTemplateRadius();
+//
+//		float readyWeaponRangeDiff = -1.f;
+//		float defaultWeaponRangeDiff = 100.f;
+//
+//		if (readyWeapon != nullptr) {
+//			finalWeap = readyWeapon;
+//			readyWeaponRangeDiff = fabs(readyWeapon->getIdealRange() - dist);
+//		}
+//
+//		if (defaultWeapon != nullptr && defaultWeapon->getMaxRange() >= dist) {
+//			defaultWeaponRangeDiff = fabs(defaultWeapon->getIdealRange() - dist);
+//		}
+//
+//		if (finalWeap == nullptr || readyWeaponRangeDiff > defaultWeaponRangeDiff)
+//			finalWeap = defaultWeapon;
+//	}
 
 	ManagedReference<WeaponObject*> currentWeapon = getWeapon();
+
+	finalWeap = readyWeapon;//try readyweapon next
 
 	if (currentWeapon != finalWeap) {
 		if (currentWeapon != nullptr && currentWeapon != defaultWeapon) {
