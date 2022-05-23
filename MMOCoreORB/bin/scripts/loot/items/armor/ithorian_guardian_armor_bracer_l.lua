@@ -4,7 +4,7 @@ ithorian_guardian_armor_bracer_l = {
 	customObjectName = "",
 	directObjectTemplate = "object/tangible/wearables/armor/ithorian_guardian/ith_armor_s02_bracer_l.iff",
 	craftingValues = {
-		{"armor_rating",1,1,0},
+		{"armor_rating",2,2,0},
 		{"kineticeffectiveness",10,40,10},
 		{"armor_effectiveness",4,29,10},
 		{"armor_integrity",15000, 25000,0},

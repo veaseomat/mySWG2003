@@ -69,7 +69,7 @@ EyeShotCommand = {
 
 	combatSpam = "eyeshot",
 	
-	weaponType = PISTOLWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

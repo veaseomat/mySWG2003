@@ -96,7 +96,7 @@ object_tangible_wearables_armor_ris_armor_ris_chest_plate = object_tangible_wear
 	mindEncumbrance = 1,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = HEAVY,
 
 	kinetic = 15,
 	energy = 15,

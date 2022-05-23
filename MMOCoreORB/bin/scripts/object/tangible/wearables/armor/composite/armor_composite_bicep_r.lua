@@ -103,7 +103,7 @@ object_tangible_wearables_armor_composite_armor_composite_bicep_r = object_tangi
 	maxCondition = 30000,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = HEAVY,
 
 	kinetic = 50,
 	energy = 50,

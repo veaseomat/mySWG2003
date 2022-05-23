@@ -96,7 +96,7 @@ object_tangible_wearables_armor_padded_armor_padded_s01_leggings = object_tangib
 	mindEncumbrance = 1,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	kinetic = 50,
 	energy = 50,

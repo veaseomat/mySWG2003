@@ -96,7 +96,7 @@ object_tangible_wearables_armor_padded_armor_padded_s01_chest_plate = object_tan
 	mindEncumbrance = 1,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	kinetic = 50,
 	energy = 50,

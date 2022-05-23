@@ -88,9 +88,12 @@ function FsIntro:doDelayedStep(pPlayer)
 		createEvent(getRandomNumber(2, 30) * 60 * 1000, "FsIntro", "doDelayedStep", pPlayer, "")
 		return
 	end
+	
 --this is the visibility threshold, vanilla is 1500
 	if PlayerObject(pGhost):getVisibility() >= 4000 then
 		encounterResult = SithShadowEncounter:start(pPlayer)
+		return
+		
 	else
 	--chek visibility again after
 		createEvent(getRandomNumber(2, 30) * 60 * 1000, "FsIntro", "doDelayedStep", pPlayer, "")

@@ -81,7 +81,7 @@ PolearmArea2Command = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 	
-	weaponType = POLEARMWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 }

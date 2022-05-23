@@ -48,11 +48,11 @@ object_draft_schematic_weapon_rifle_blaster_e11 = object_draft_schematic_weapon_
    customObjectName = "E11 Rifle",
 
    craftingToolTab = 1, -- (See DraftSchematicObjectTemplate.h)
-   complexity = 22, 
-   size = 3, 
+   complexity = 30, 
+   size = 4, 
 
    xpType = "crafting_weapons_general", 
-   xp = 160, 
+   xp = 650, 
 
    assemblySkill = "weapon_assembly", 
    experimentingSkill = "weapon_experimentation", 
@@ -62,12 +62,13 @@ object_draft_schematic_weapon_rifle_blaster_e11 = object_draft_schematic_weapon_
    customizationStringNames = {},
    customizationDefaults = {},
 
-   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
-   ingredientTitleNames = {"frame_assembly", "receiver_assembly", "grip_assembly", "powerhandler", "barrel", "scope", "stock"},
-   ingredientSlotType = {0, 0, 0, 1, 1, 3, 3},
-   resourceTypes = {"iron_plumbum", "metal_ferrous", "metal", "object/tangible/component/weapon/shared_blaster_power_handler.iff", "object/tangible/component/weapon/shared_blaster_rifle_barrel.iff", "object/tangible/component/weapon/shared_scope_weapon.iff", "object/tangible/component/weapon/shared_stock.iff"},
-   resourceQuantities = {45, 15, 12, 1, 1, 1, 1},
-   contribution = {100, 100, 100, 100, 100, 100, 100},
+   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
+   ingredientTitleNames = {"frame_assembly", "receiver_assembly", "grip_assembly", "enhanced_cooling_mechanism", "powerhandler", "thermal_control_unit", "barrel", "stock"},
+   ingredientSlotType = {0, 0, 0, 0, 1, 0, 1, 3},
+   resourceTypes = {"steel_ditanium", "iron_polonium", "metal", "crystalline_gallinorian", "object/tangible/component/weapon/shared_blaster_power_handler.iff", "ore_carbonate_alantium", "object/tangible/component/weapon/shared_blaster_rifle_barrel.iff", "object/tangible/component/weapon/shared_stock.iff"},
+   resourceQuantities = {150, 85, 20, 15, 1, 30, 1, 1},
+   contribution = {100, 100, 100, 100, 100, 100, 100, 100},
+ingredientAppearance = {"", "", "", "", "muzzle", "scope", ""},
 
 
    targetTemplate = "object/weapon/ranged/rifle/rifle_e11.iff",

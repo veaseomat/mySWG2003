@@ -6,7 +6,7 @@ mando_gloves = {
 	customObjectName = "",
 	directObjectTemplate = "object/tangible/wearables/armor/mandalorian/armor_mandalorian_gloves.iff",
 	craftingValues = {
-		{"armor_rating",1,1,0},
+		{"armor_rating",3,3,0},
 		{"armor_effectiveness",10,50,10},
 		{"armor_integrity",20000,70000,0},
 		{"armor_health_encumbrance",25,15,0},

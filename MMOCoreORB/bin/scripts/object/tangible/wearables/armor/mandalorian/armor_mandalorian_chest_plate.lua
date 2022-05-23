@@ -102,7 +102,7 @@ object_tangible_wearables_armor_mandalorian_armor_mandalorian_chest_plate = obje
 	mindEncumbrance = 50,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = HEAVY,
 	maxCondition = 40000,
 
 	kinetic = 50,

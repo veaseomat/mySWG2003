@@ -318,44 +318,29 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	setCustomObjectName(prototype, templateObject);
 
 	// this thing exponentially ruins the variance
-<<<<<<< HEAD
+
 	float excMod = 1.0;//0.8 + (System::random(20) * .01);// randoms up to 1.0
-=======
-	float excMod = 0.8 + (System::random(20) * .01);// randoms up to 1.0
->>>>>>> refs/remotes/origin/unstable
 
-//	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);//removing this makes legendary chance same for all levels
-
-<<<<<<< HEAD
 //	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
 //		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
 //	}
-//
+
 //	if (prototype->isArmorObject()) {
 //		excMod = 1.2 + (System::random(20) * .01);
 //	}
-=======
-	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
-		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
-	}
-
-	if (prototype->isArmorObject()) {
-		excMod = 1.2 + (System::random(20) * .01);
-	}
->>>>>>> refs/remotes/origin/unstable
 
 //	if (excMod >= 5.0) excMod = 5.0;
 
-//	if ((System::random(legendaryChance) >= legendaryChance) && (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject())) {
-//		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
-//		prototype->setCustomObjectName(newName, false);
-//
-//		excMod = legendaryModifier;
-//
-//		prototype->addMagicBit(false);
-//
-//		legendaryLooted.increment();
-//	}
+	if ((System::random(1000) >= 1000) && (prototype->isWeaponObject())) {
+		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
+		prototype->setCustomObjectName(newName, false);
+
+		excMod = 3.0;
+
+		prototype->addMagicBit(false);
+
+		legendaryLooted.increment();
+	}
 
 	if (prototype->isLightsaberCrystalObject()) {
 		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
@@ -380,11 +365,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
-<<<<<<< HEAD
+
 		float percentage = (level / 3) * .01;//(System::random(level / 3) * .01);// + .75;//1;//System::random(10000) / 10000.f;//this is where the variance happens
-=======
-		float percentage = 1;//(System::random(level / 3) * .01);// + .75;//1;//System::random(10000) / 10000.f;//this is where the variance happens
->>>>>>> refs/remotes/origin/unstable
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll
@@ -468,7 +450,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //		prototype->addMagicBit(false);
 //		prototype->setJunkValue((int)(fJunkValue * 1.25));
 //	} else {
-	prototype->setJunkValue((int)(fJunkValue * excMod * 2));
+	prototype->setJunkValue((int)((level / 3) * 50 * excMod));
 //	}
 
 	// Use percentages to recalculate the values

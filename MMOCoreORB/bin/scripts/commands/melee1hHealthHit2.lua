@@ -71,7 +71,7 @@ Melee1hHealthHit2Command = {
 	  )
 	},
 	
-	weaponType = ONEHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 }

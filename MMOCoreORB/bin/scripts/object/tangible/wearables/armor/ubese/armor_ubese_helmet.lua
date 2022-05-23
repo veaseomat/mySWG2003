@@ -89,7 +89,7 @@ object_tangible_wearables_armor_ubese_armor_ubese_helmet = object_tangible_weara
 	mindEncumbrance = 1,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	kinetic = 15,
 	energy = 15,

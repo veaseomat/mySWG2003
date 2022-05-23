@@ -58,7 +58,7 @@ object_tangible_wearables_armor_ithorian_guardian_ith_armor_s02_bicep_r = object
 	mindEncumbrance = 1,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	kinetic = 15,
 	energy = 15,

@@ -65,7 +65,7 @@ Melee2hMindHit2Command = {
 	  )
 	},
 	
-	weaponType = TWOHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	animation = "combo_3c", 
 	animType = GENERATE_INTENSITY,

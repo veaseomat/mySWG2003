@@ -96,7 +96,7 @@ object_tangible_wearables_armor_ubese_armor_ubese_bracer_l = object_tangible_wea
 	mindEncumbrance = 1,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	kinetic = 15,
 	energy = 15,

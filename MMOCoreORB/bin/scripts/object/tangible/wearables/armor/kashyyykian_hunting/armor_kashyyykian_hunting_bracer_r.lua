@@ -62,7 +62,7 @@ object_tangible_wearables_armor_kashyyykian_hunting_armor_kashyyykian_hunting_br
 	maxCondition = 30000,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = HEAVY,
 
 	kinetic = 80,
 	energy = 65,

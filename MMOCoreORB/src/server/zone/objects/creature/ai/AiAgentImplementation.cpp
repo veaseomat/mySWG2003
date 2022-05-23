@@ -2641,15 +2641,15 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 //	alm->insertAttribute("basetohit", npchitchance);
 //	}
 
-//	if (getArmor() == 0)
-//		alm->insertAttribute("armorrating", "None");
-//	else if (getArmor() == 1)
-//		alm->insertAttribute("armorrating", "Light");
-//	else if (getArmor() == 2)
-//		alm->insertAttribute("armorrating", "Medium");
-//	else if (getArmor() == 3)
-//		//alm->insertAttribute("armorrating", "Medium");
-//		alm->insertAttribute("armorrating", "Heavy");
+	if (getArmor() == 0)
+		alm->insertAttribute("armorrating", "None");
+	else if (getArmor() == 1)
+		alm->insertAttribute("armorrating", "Light");
+	else if (getArmor() == 2)
+		alm->insertAttribute("armorrating", "Medium");
+	else if (getArmor() == 3)
+		//alm->insertAttribute("armorrating", "Medium");
+		alm->insertAttribute("armorrating", "Heavy");
 
 	int npcKinetic = getKinetic();
 	int npcEnergy = getEnergy();
@@ -2758,86 +2758,86 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 //	}
 
 
-
-	if (npcKinetic < 1000){
-		if (getKinetic() > 80)
-			npcKinetic = 80;
-		if (getKinetic() < 0)
-			npcKinetic = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcKinetic, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_kinetic", txt.toString());
-	}
-
-	if (npcEnergy < 1000){
-		if (getEnergy() > 80)
-			npcEnergy = 80;
-		if (getEnergy() < 0)
-			npcEnergy = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcEnergy, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_energy", txt.toString());
-	}
-
-	if (npcElectricity < 1000){
-		if (getElectricity() > 80)
-			npcElectricity = 80;
-		if (getElectricity() < 0)
-			npcElectricity = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcElectricity, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_electrical", txt.toString());
-	}
-
-	if (npcBlast < 1000){
-		if (getBlast() > 80)
-			npcBlast = 80;
-		if (getBlast() < 0)
-			npcBlast = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcBlast, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_blast", txt.toString());
-	}
-
-	if (npcHeat < 1000){
-		if (getHeat() > 80)
-			npcHeat = 80;
-		if (getHeat() < 0)
-			npcHeat = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcHeat, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_heat", txt.toString());
-	}
-
-	if (npcCold < 1000){
-		if (getCold() > 80)
-			npcCold = 80;
-		if (getCold() < 0)
-			npcCold = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcCold, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_cold", txt.toString());
-	}
-
-	if (npcAcid < 1000){
-		if (getAcid() > 80)
-			npcAcid = 80;
-		if (getAcid() < 0)
-			npcAcid = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcAcid, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_acid", txt.toString());
-	}
-
-	if (getStun() > -10) {
-		if (getStun() > 80)
-			npcStun = 80;
-		if (getStun() < 0)
-			npcStun = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcStun, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_stun", txt.toString());
-	}
+//
+//	if (npcKinetic < 1000){
+//		if (getKinetic() > 80)
+//			npcKinetic = 80;
+//		if (getKinetic() < 0)
+//			npcKinetic = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcKinetic, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_kinetic", txt.toString());
+//	}
+//
+//	if (npcEnergy < 1000){
+//		if (getEnergy() > 80)
+//			npcEnergy = 80;
+//		if (getEnergy() < 0)
+//			npcEnergy = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcEnergy, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_energy", txt.toString());
+//	}
+//
+//	if (npcElectricity < 1000){
+//		if (getElectricity() > 80)
+//			npcElectricity = 80;
+//		if (getElectricity() < 0)
+//			npcElectricity = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcElectricity, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_electrical", txt.toString());
+//	}
+//
+//	if (npcBlast < 1000){
+//		if (getBlast() > 80)
+//			npcBlast = 80;
+//		if (getBlast() < 0)
+//			npcBlast = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcBlast, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_blast", txt.toString());
+//	}
+//
+//	if (npcHeat < 1000){
+//		if (getHeat() > 80)
+//			npcHeat = 80;
+//		if (getHeat() < 0)
+//			npcHeat = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcHeat, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_heat", txt.toString());
+//	}
+//
+//	if (npcCold < 1000){
+//		if (getCold() > 80)
+//			npcCold = 80;
+//		if (getCold() < 0)
+//			npcCold = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcCold, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_cold", txt.toString());
+//	}
+//
+//	if (npcAcid < 1000){
+//		if (getAcid() > 80)
+//			npcAcid = 80;
+//		if (getAcid() < 0)
+//			npcAcid = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcAcid, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_acid", txt.toString());
+//	}
+//
+//	if (getStun() > -10) {
+//		if (getStun() > 80)
+//			npcStun = 80;
+//		if (getStun() < 0)
+//			npcStun = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcStun, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_stun", txt.toString());
+//	}
 
 //	if (getKinetic() <= 0)
 //		alm->insertAttribute("cat_armor_vulnerability.armor_eff_kinetic", "-");

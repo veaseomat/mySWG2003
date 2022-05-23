@@ -528,10 +528,10 @@ public:
 	}
 
 	virtual String getAnimation(TangibleObject* attacker, TangibleObject* defender, WeaponObject* weapon, uint8 hitLocation, int damage) const {
-		if (animation.isEmpty())
+		//if (animation.isEmpty())
 			return getDefaultAttackAnimation(attacker, weapon, hitLocation, damage);
 
-		return generateAnimation(hitLocation, ((uint32)weapon->getMaxDamage()) >> 2, damage);
+		//return generateAnimation(hitLocation, ((uint32)weapon->getMaxDamage()) >> 2, damage);
 	}
 
 	inline const String& getEffectString() const {

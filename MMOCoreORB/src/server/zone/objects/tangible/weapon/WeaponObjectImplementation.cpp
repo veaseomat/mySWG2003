@@ -226,14 +226,14 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	/*if (usesRemaining > 0)
 		alm->insertAttribute("count", usesRemaining);*/
 
-	for(int i = 0; i < wearableSkillMods.size(); ++i) {
-		const String& key = wearableSkillMods.elementAt(i).getKey();
-		String statname = "cat_skill_mod_bonus.@stat_n:" + key;
-		int value = wearableSkillMods.get(key);
-
-		if (value > 0)
-			alm->insertAttribute(statname, value);
-	}
+//	for(int i = 0; i < wearableSkillMods.size(); ++i) {
+//		const String& key = wearableSkillMods.elementAt(i).getKey();
+//		String statname = "cat_skill_mod_bonus.@stat_n:" + key;
+//		int value = wearableSkillMods.get(key);
+//
+//		if (value > 0)
+//			alm->insertAttribute(statname, value);
+//	}
 
 //	String ap;
 //
@@ -258,11 +258,85 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 //
 //	alm->insertAttribute("wpn_armor_pierce_rating", ap);
 
-	float speed = 1.0; //Math::getPrecision(getAttackSpeed(), 1);
 
-	if (speed < 1.0) speed = 1.0;
+//SPEEEEED
 
-	alm->insertAttribute("wpn_attack_speed", speed);
+	int speedMods = 0;
+
+	const auto weaponSpeedMods = getSpeedModifiers();
+
+	for (int i = 0; i < weaponSpeedMods->size(); ++i) {
+		speedMods += object->getSkillMod(weaponSpeedMods->get(i));
+	}
+
+	if (getAttackType() == SharedWeaponObjectTemplate::MELEEATTACK) {
+		speedMods += object->getSkillMod("melee_speed");
+	} else if (getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK) {
+		speedMods += object->getSkillMod("ranged_speed");
+	}
+
+		if (isPistolWeapon())
+		speedMods *= 1.4f;
+		if (isCarbineWeapon())
+		speedMods *= 1.7f;
+		if (isRifleWeapon())
+		speedMods *= 1.2f;
+//		if (isRangedWeapon())
+//		speedMods *= 1.03f;
+//		if (isUnarmedWeapon())
+//		speedMods *= 1.2f;
+		if (isOneHandMeleeWeapon())
+		speedMods *= 1.2f;
+		if (isTwoHandMeleeWeapon())
+		speedMods *= 1.4f;
+		if (isPolearmWeaponObject())
+		speedMods *= 1.4f;
+//		if (isMeleeWeapon())
+//		speedMods *= 1.1f;
+		if (isLightningRifle())
+		speedMods *= 1.7f;
+		if (isFlameThrower())
+		speedMods *= 2.3f;
+		if (isHeavyAcidRifle())
+		speedMods *= 2.3f;
+//		if (isHeavyWeapon())
+//		speedMods *= 1.0f;
+//		if (isThrownWeapon())
+//		speedMods *= .5f;
+//		if (isSpecialHeavyWeapon())
+//		speedMods *= .5f;
+//		if (isMineWeapon())
+//		speedMods *= .5f;
+//		if (isJediOneHandedWeapon())
+//		speedMods *= 2.0f;
+//		if (isJediTwoHandedWeapon())
+//		speedMods *= .8f;
+//		if (isJediPolearmWeapon())
+//		speedMods *= .8f;
+//		if (isJediWeapon())
+//		speedMods *= 1.1f;
+
+	if (speedMods > 100) speedMods = 100;
+	if (speedMods < 0) speedMods = 0;
+
+	float jediSpeed = object->getSkillMod("combat_haste") / 100.0f;
+
+	float attackSpeed = (1.0f - ((float) speedMods / 100.0f)) * getAttackSpeed();
+
+	if (jediSpeed > 0)
+		attackSpeed = attackSpeed - (attackSpeed * jediSpeed);
+
+	if (attackSpeed < 1.0)
+		attackSpeed = 1.0;
+	if (object->hasState(CreatureState::STUNNED)) {
+		attackSpeed *= 1.2;
+	}
+//
+//	float speed = Math::getPrecision(getAttackSpeed(), 1);
+//
+//	if (speed < 1.0) speed = 1.0;
+
+	alm->insertAttribute("your speed", attackSpeed);
 
 	if (getDamageRadius() != 0.0f)
 		alm->insertAttribute("area", Math::getPrecision(getDamageRadius(), 0));
@@ -309,7 +383,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 //
 //	alm->insertAttribute("damage.damage", newdmg);
 
-	alm->insertAttribute("damage.wpn_damage_type", dmgtxt);
+//	alm->insertAttribute("damage.wpn_damage_type", dmgtxt);
 
 	float minDmg = round(getMinDamage());
 	float maxDmg = round(getMaxDamage());
@@ -318,15 +392,20 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 
 	alm->insertAttribute("damage.wpn_damage_max", maxDmg);
 
-	StringBuffer woundsratio;
 
-	float wnd = round(10 * getWoundsRatio()) / 10.0f;
+	int newdps = ((minDmg + maxDmg) / 2) / 1.0;
 
-	if (wnd > 50) wnd = 50;
+	alm->insertAttribute("your dps", newdps);
 
-	woundsratio << wnd << "%";
+//	StringBuffer woundsratio;
 
-	alm->insertAttribute("damage.wpn_wound_chance", woundsratio);
+//	float wnd = round(10 * getWoundsRatio()) / 10.0f;
+//
+//	if (wnd > 50) wnd = 50;
+//
+//	woundsratio << wnd << "%";
+
+	//alm->insertAttribute("damage.wpn_wound_chance", woundsratio);
 	
 //	float avgDmg = (minDmg + maxDmg) / 2;
 //	alm->insertAttribute("min/max average", avgDmg);
@@ -353,13 +432,132 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 //
 //	maxrange << getMaxRangeAccuracy() << " @ " << getMaxRange() << "m";
 //	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
+//
 
-	//Special Attack Costs
-//	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost() / 3);
-//
-//	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost() / 3);
-//
-//	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost() / 3);
+
+	int attackerAccuracy = 0;
+
+	const auto creatureAccMods = getCreatureAccuracyModifiers();
+
+	for (int i = 0; i < creatureAccMods->size(); ++i) {
+		const String& mod = creatureAccMods->get(i);
+		attackerAccuracy += object->getSkillMod(mod);
+	}
+
+
+	if (isPistolWeapon())
+	attackerAccuracy *= 1.1f;
+	if (isCarbineWeapon())
+	attackerAccuracy *= .8f;
+	if (isRifleWeapon())
+	attackerAccuracy *= .7f;
+////		if (isRangedWeapon())
+////		attackerAccuracy *= 1.03f;
+	if (isUnarmedWeapon())
+	attackerAccuracy *= .5f;
+	if (isOneHandMeleeWeapon())
+	attackerAccuracy *= .7f;
+	if (isTwoHandMeleeWeapon())
+	attackerAccuracy *= .8f;
+	if (isPolearmWeaponObject())
+	attackerAccuracy *= .7f;
+////		if (isMeleeWeapon())
+////		attackerAccuracy *= 1.1f;
+	if (isLightningRifle())
+	attackerAccuracy *= 1.5f;
+	if (isFlameThrower())
+	attackerAccuracy *= 1.0f;
+	if (isHeavyAcidRifle())
+	attackerAccuracy *= 1.0f;
+////		if (isHeavyWeapon())
+////		attackerAccuracy *= 1.0f;
+////		if (isThrownWeapon())
+////		attackerAccuracy *= .5f;
+////		if (isSpecialHeavyWeapon())
+////		attackerAccuracy *= .5f;
+////		if (isMineWeapon())
+////		attackerAccuracy *= .5f;
+////		if (isJediOneHandedWeapon())
+////		attackerAccuracy *= 2.0f;
+////		if (isJediTwoHandedWeapon())
+////		attackerAccuracy *= .8f;
+////		if (isJediPolearmWeapon())
+////		attackerAccuracy *= .8f;
+//		if (isJediWeapon())
+//		attackerAccuracy *= 1.25f;
+
+	if (attackerAccuracy > 100)
+		attackerAccuracy = 100;
+
+	attackerAccuracy += object->getSkillMod("attack_accuracy");
+
+	if (isMeleeWeapon()) {
+		attackerAccuracy *= 1.2;
+	}
+	if (isRangedWeapon() && object->isKneeling()) {
+		attackerAccuracy *= 1.2;
+	}
+	if (isRangedWeapon() && object->isProne()) {
+		attackerAccuracy *= 1.4;
+	}
+	if (object->isRunning()) {
+		attackerAccuracy *= .6;
+	}
+	if (object->hasState(CreatureState::BLINDED)) {
+		attackerAccuracy *= .8;
+	}
+	if (attackerAccuracy > 150)
+		attackerAccuracy = 150;
+	if (attackerAccuracy < 0)
+		attackerAccuracy = 0;
+	if (object->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
+		attackerAccuracy = -50;
+	}
+	if (object->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
+		attackerAccuracy = -150;
+	}
+
+	alm->insertAttribute("your Accuracy", attackerAccuracy);
+
+
+//TOTAL DEFENSE
+	int targetDefense = 0;
+
+		targetDefense += object->getSkillMod("melee_defense");
+		targetDefense += object->getSkillMod("ranged_defense");
+
+		targetDefense += object->getSkillMod("block");
+		targetDefense += object->getSkillMod("dodge");
+		targetDefense += object->getSkillMod("counterattack");
+		targetDefense += object->getSkillMod("unarmed_passive_defense");
+
+		if (isJediWeapon()) {
+			targetDefense += object->getSkillMod("saber_block");
+		}
+
+	if (targetDefense > 200)
+		targetDefense = 200;
+
+	// food bonus goes on top
+	targetDefense += object->getSkillMod("dodge_attack") * .5;
+
+	if (object->isKneeling()) {
+		targetDefense *= .8;
+	}
+	if (object->isProne()) {
+		targetDefense *= .6;
+	}
+	if (object->isKnockedDown()) {
+		targetDefense *= .4;
+	}
+	if (object->hasState(CreatureState::INTIMIDATED)) {
+		targetDefense *= .8;
+	}
+	if (targetDefense < 0)
+		targetDefense = 0;
+
+	alm->insertAttribute("your Defense", attackerAccuracy);
+
 
 	//Anti Decay Kit
 	if(hasAntiDecayKit()){

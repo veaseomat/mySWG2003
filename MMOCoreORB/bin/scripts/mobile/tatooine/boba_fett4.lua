@@ -1,7 +1,7 @@
 boba_fett4 = Creature:new {
 --	objectName = "@mob/creature_names:bounty_hunter",
 	randomNameType = NAME_GENERIC,
-	randomNameTag = true,
+--	randomNameTag = true,
 	socialGroup = "rebel",
 	faction = "rebel",
 	level = 300,

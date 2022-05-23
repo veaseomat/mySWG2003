@@ -103,34 +103,34 @@ object_weapon_melee_baton_baton_stun = object_weapon_melee_baton_shared_baton_st
 
 
 	-- The values below are the default values.  To be used for blue frog objects primarily"Stun Baton":"1H Melee":"0":"stun"
-	healthAttackCost = 10,
-	actionAttackCost = 38,
-	mindAttackCost = 32,
+	healthAttackCost = 47,
+	actionAttackCost = 26,
+	mindAttackCost = 10,
 	forceCost = 0,
 
 	pointBlankRange = 0,
-	pointBlankAccuracy = 0,
+	pointBlankAccuracy = -10,
 
-	idealRange = 2,
-	idealAccuracy = 0,
+	idealRange = 3,
+	idealAccuracy = -10,
 
-	maxRange = 4,
-	maxRangeAccuracy = 0,
+	maxRange = 5,
+	maxRangeAccuracy = -10,
 
-	minDamage = 50,
-	maxDamage = 110,
+	minDamage = 90,
+	maxDamage = 185,
 
-	attackSpeed = 3,
+	attackSpeed = 4,
 
-	woundsRatio = 2,
+	woundsRatio = 16,
 
 	numberExperimentalProperties = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	experimentalProperties = {"XX", "XX", "SR", "SR", "SR", "SR", "SR", "SR", "SR", "XX", "SR", "XX", "SR", "SR", "SR"},
 	experimentalWeights = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "exp_durability", "expRange", "expRange", "null", "expRange", "null", "expEffeciency", "expEffeciency", "expEffeciency"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "hitpoints", "zerorangemod", "maxrangemod", "midrange", "midrangemod", "maxrange", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 28, 53, 4.2, 1, 750, -5, -5, 2, -5, 4, 10, 45, 39},
-	experimentalMax = {0, 0, 52, 98, 2.9, 3, 1500, 5, 5, 2, 5, 4, 4, 24, 19},
+	experimentalMin = {0, 0, 49, 98, 5.9, 11, 750, -15, -15, 3, -15, 4, 58, 31, 10},
+	experimentalMax = {0, 0, 91, 182, 4, 21, 1500, -5, -5, 3, -5, 4, 30, 15, 4},
 	experimentalPrecision = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 }

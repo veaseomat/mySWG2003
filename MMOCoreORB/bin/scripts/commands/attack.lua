@@ -57,7 +57,7 @@ AttackCommand = {
 
 	range = -1,
 	
-	trails = NOTRAIL,
+--	trails = NOTRAIL,
 
 	poolsToDamage = RANDOM_ATTRIBUTE
 }

@@ -48,11 +48,11 @@ object_draft_schematic_weapon_rifle_light_blaster_e11_carbine = object_draft_sch
    customObjectName = "E11 Carbine",
 
    craftingToolTab = 1, -- (See DraftSchematicObjectTemplate.h)
-   complexity = 22, 
+   complexity = 24, 
    size = 3, 
 
    xpType = "crafting_weapons_general", 
-   xp = 140, 
+   xp = 205, 
 
    assemblySkill = "weapon_assembly", 
    experimentingSkill = "weapon_experimentation", 
@@ -65,10 +65,10 @@ object_draft_schematic_weapon_rifle_light_blaster_e11_carbine = object_draft_sch
    ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
    ingredientTitleNames = {"frame_assembly", "receiver_assembly", "grip_assembly", "powerhandler", "barrel", "scope", "stock"},
    ingredientSlotType = {0, 0, 0, 1, 1, 3, 3},
-   resourceTypes = {"iron_plumbum", "metal_ferrous", "metal", "object/tangible/component/weapon/shared_blaster_power_handler.iff", "object/tangible/component/weapon/shared_blaster_rifle_barrel.iff", "object/tangible/component/weapon/shared_scope_weapon.iff", "object/tangible/component/weapon/shared_stock.iff"},
-   resourceQuantities = {40, 20, 9, 1, 1, 1, 1},
+   resourceTypes = {"steel_ditanium", "iron_polonium", "metal", "object/tangible/component/weapon/shared_blaster_power_handler.iff", "object/tangible/component/weapon/shared_blaster_rifle_barrel.iff", "object/tangible/component/weapon/shared_scope_weapon.iff", "object/tangible/component/weapon/shared_stock.iff"},
+   resourceQuantities = {65, 25, 12, 1, 1, 1, 1},
    contribution = {100, 100, 100, 100, 100, 100, 100},
-   ingredientAppearance = {"", "", "", "", "muzzle", "scope", ""},
+ingredientAppearance = {"", "", "", "", "muzzle", "scope", ""},
 
 
    targetTemplate = "object/weapon/ranged/carbine/carbine_e11.iff",

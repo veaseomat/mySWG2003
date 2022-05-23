@@ -59,7 +59,7 @@ PolearmSpinAttack1Command = {
 
 	combatSpam = "limbsmasher",
 	
-	weaponType = POLEARMWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 

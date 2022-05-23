@@ -92,7 +92,7 @@ object_tangible_wearables_armor_ris_armor_ris_boots = object_tangible_wearables_
 	mindEncumbrance = 1,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = HEAVY,
 
 	kinetic = 15,
 	energy = 15,

@@ -62,7 +62,7 @@ object_tangible_wearables_armor_ithorian_sentinel_ith_armor_s03_helmet = object_
 	maxCondition = 30000,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = HEAVY,
 
 	kinetic = 65,
 	energy = 65,

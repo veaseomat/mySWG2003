@@ -52,7 +52,7 @@ object_draft_schematic_weapon_axe_vibro = object_draft_schematic_weapon_shared_a
    size = 4, 
 
    xpType = "crafting_weapons_general", 
-   xp = 120, 
+   xp = 220, 
 
    assemblySkill = "weapon_assembly", 
    experimentingSkill = "weapon_experimentation", 
@@ -62,12 +62,12 @@ object_draft_schematic_weapon_axe_vibro = object_draft_schematic_weapon_shared_a
    customizationStringNames = {},
    customizationDefaults = {},
 
-   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
-   ingredientTitleNames = {"vibro_unit_and_power_cell_brackets", "axe_base", "vibration_generator"},
-   ingredientSlotType = {0, 0, 1},
-   resourceTypes = {"steel_ditanium", "copper", "object/tangible/component/weapon/shared_vibro_unit.iff"},
-   resourceQuantities = {38, 24, 2},
-   contribution = {100, 100, 100},
+   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
+   ingredientTitleNames = {"lance_shaft", "vibro_unit_and_power_cell_brackets", "grip", "vibration_generator", "axe_head"},
+   ingredientSlotType = {0, 0, 0, 1, 0},
+   resourceTypes = {"steel_ditanium", "copper", "metal_nonferrous", "object/tangible/component/weapon/shared_vibro_unit.iff", "steel_duralloy"},
+   resourceQuantities = {55, 25, 15, 3, 15},
+   contribution = {100, 100, 100, 100, 100},
 
 
    targetTemplate = "object/weapon/melee/axe/axe_vibroaxe.iff",

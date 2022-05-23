@@ -96,7 +96,7 @@ object_tangible_wearables_armor_composite_armor_composite_helmet = object_tangib
 	maxCondition = 30000,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = HEAVY,
 
 	kinetic = 50,
 	energy = 50,

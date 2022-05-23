@@ -100,7 +100,7 @@ object_tangible_wearables_armor_marine_armor_marine_chest_plate_rebel = object_t
 	mindEncumbrance = 19,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	kinetic = 40,
 	energy = 40,

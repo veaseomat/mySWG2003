@@ -58,7 +58,7 @@ StoppingShotCommand = {
 
 	combatSpam = "stoppingshot",
 	
-	weaponType = PISTOLWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }
