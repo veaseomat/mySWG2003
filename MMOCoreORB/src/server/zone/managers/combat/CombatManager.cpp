@@ -1722,6 +1722,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
 //		damage *= 0.15;
 
+	damage *= 0.5;
+
 	if (damage < 1) damage = 1;
 
 	// PvP Damage disabled
@@ -2196,7 +2198,7 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 	if (poolsToDamage == 0 || damageMultiplier == 0)
 		return 0;
 
-	float ratio = 50;//weapon->getWoundsRatio();
+	float ratio = 25;//weapon->getWoundsRatio();
 	//if (ratio > 50) ratio = 50;
 
 	float healthDamage = 0.f, actionDamage = 0.f, mindDamage = 0.f;
@@ -2206,7 +2208,7 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 	}
 
 	int aiquick = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::QUICKNESS);//70+r30
-	int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//76 (6 of 30 = 20%)
+	int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80 (10 of 30= 1/3)
 
 	if (!attacker->isPlayerCreature() && (aifocus > aiquick)) {
 		if (weapon->isPistolWeapon()){

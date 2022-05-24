@@ -151,7 +151,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float randomizer = .8 + (System::random(20) * .01);
+	float randomizer = .9 + (System::random(20) * .01);
 	float randomtwo = .8 + (System::random(20) * .01);
 
 	float minDmg = (level * 7) * randomizer;
@@ -248,7 +248,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		baseHAM.add(quick * .3);
 		baseHAM.add(stam * .3);
 		int mind = (level * 40) + System::random(level * 60);
-		int focus = (level * 76);//this one is static for determining if npc will hit single pool
+		int focus = (level * 80);//this one is static for determining if npc will hit single pool
 		int will = (level * 70) + System::random(level * 30);
 		baseHAM.add(mind * .3);
 		baseHAM.add(focus * .3);
@@ -1726,9 +1726,9 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 	if (mindTick < 1)
 		mindTick = 1;
 
-	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick * .5, true, false);
-	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick * .5, true, false);
-	healDamage(asCreatureObject(), CreatureAttribute::MIND, mindTick * .25, true, false);
+	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
+	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
+	healDamage(asCreatureObject(), CreatureAttribute::MIND, mindTick, true, false);
 
     activatePassiveWoundRegeneration();
 }
