@@ -1177,10 +1177,10 @@ int CombatManager::getArmorObjectReduction(CreatureObject* defender, ArmorObject
 
 	//jedi armor
 	ManagedReference<WeaponObject*> defweapon = defender->getWeapon();
-	int saberToughness = defender->getSkillMod("lightsaber_toughness") + defender->getSkillMod("jedi_toughness");
 
 	if (defweapon->isJediWeapon()) {
-		resist += saberToughness;
+		resist = defender->getSkillMod("lightsaber_toughness") + defender->getSkillMod("jedi_toughness");
+		resist += defender->getSkillMod("force_armor");
 //		if (defender->hasSkill("force_title_jedi_rank_03"))	resist += 25;
 	}
 
@@ -1650,9 +1650,9 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //			damage *= 1.1f;
 		}
 
-//powers boost 10x seems to be same damage as saber attack w force lightning... but 4sec delay and heavy force cost
+//powers boost
 		if (attacker->isPlayerCreature() && data.isForceAttack()) {
-				damage *= 5.f;
+				damage *= 4;//4x gets lightning2 equal to max saber output
 		}
 
 		// PVE Damage bonus
@@ -1715,14 +1715,14 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //	}
 
 	// EVP Damage. npc damage located in aiagient
-//	if (!attacker->isPlayerCreature())// && defender->isPlayerCreature())
-//		damage *= .5;//creature damage also located in aiagentimplementation file
+	if (!attacker->isPlayerCreature())
+		damage *= .8;//nerf npc to make game easier
 
 	// PvP Damage Reduction.
 //	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
 //		damage *= 0.15;
 
-	damage *= 0.5;
+	damage *= 0.5;//pvp on live was * .25, * .5 makes it feel like endgame pvp on live since weapons here dont go as high
 
 	if (damage < 1) damage = 1;
 

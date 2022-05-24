@@ -564,6 +564,17 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	alm->insertAttribute("your Defense", targetDefense);
 
 
+	int jediarmor = 0;
+
+	if (isJediWeapon()) {
+		jediarmor = object->getSkillMod("lightsaber_toughness") + object->getSkillMod("jedi_toughness");
+		jediarmor += object->getSkillMod("force_armor");
+
+		alm->insertAttribute("jedi armor", jediarmor);
+	}
+
+
+
 	//Anti Decay Kit
 	if(hasAntiDecayKit()){
 		alm->insertAttribute("@veteran_new:antidecay_examine_title", "@veteran_new:antidecay_examine_text");
@@ -671,7 +682,7 @@ int WeaponObjectImplementation::getPointBlankAccuracy(bool withPup) const {
 	if (powerupObject != nullptr && withPup)
 		return pointBlankAccuracy + (abs(pointBlankAccuracy) * powerupObject->getPowerupStat("pointBlankAccuracy"));
 
-	return pointBlankAccuracy;
+	return 1000;//pointBlankAccuracy;
 }
 
 int WeaponObjectImplementation::getPointBlankRange(bool withPup) const {
@@ -699,7 +710,7 @@ int WeaponObjectImplementation::getIdealAccuracy(bool withPup) const {
 	if (powerupObject != nullptr && withPup)
 		return idealAccuracy + (abs(idealAccuracy) * powerupObject->getPowerupStat("idealAccuracy"));
 
-	return idealAccuracy;
+	return 1000;//idealAccuracy;
 }
 
 
@@ -707,7 +718,7 @@ int WeaponObjectImplementation::getMaxRangeAccuracy(bool withPup) const {
 	if (powerupObject != nullptr && withPup)
 		return maxRangeAccuracy + (abs(maxRangeAccuracy) * powerupObject->getPowerupStat("maxRangeAccuracy"));
 
-	return maxRangeAccuracy;
+	return 1000;//maxRangeAccuracy;
 }
 
 float WeaponObjectImplementation::getAttackSpeed(bool withPup) const {

@@ -11,7 +11,7 @@ boba_fett3 = Creature:new {
 	baseXp = 9336,
 	baseHAM = 90000,
 	baseHAMmax = 101000,
-	armor = 2,
+	armor = 3,
 	resists = {80,80,80,80,80,80,80,80,0},
 	meatType = "",
 	meatAmount = 0,
@@ -65,10 +65,7 @@ boba_fett3 = Creature:new {
 	lootGroups = {},
 	weapons = {"bh_weapons"},
 	conversationTemplate = "",
-	attacks =	{
-		{"dizzyattack",""},
-		{"knockdownattack",""}
-	}
+	attacks =	merge(bountyhuntermaster,marksmanmaster,brawlermaster,swordsmanmaster,pistoleermaster,fencermaster,pikemanmaster,riflemanmaster)
 }
 
 CreatureTemplates:addCreatureTemplate(boba_fett3, "boba_fett3")

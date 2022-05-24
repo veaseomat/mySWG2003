@@ -1711,11 +1711,13 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::CONSTITUTION)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::HEALTH)) * 13.0f / 2100.0f * modifier);
 	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::STAMINA)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::ACTION)) * 13.0f / 2100.0f * modifier);
 	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::WILLPOWER)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::MIND)) * 13.0f / 2100.0f * modifier);
+
+	healthTick *= .5;//npc needs nerf to be similar to player
 
 	if (healthTick < 1)
 		healthTick = 1;
