@@ -2039,17 +2039,6 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 	if (targetCreature->isInvulnerable())
 		return;
 
-	int playerLevel = 0;
-	if (targetCreature->isPlayerCreature()) {
-		ZoneServer* server = targetCreature->getZoneServer();
-		if (server != nullptr) {
-			PlayerManager* pManager = server->getPlayerManager();
-			if (pManager != nullptr) {
-				playerLevel = pManager->calculatePlayerLevel(targetCreature) - 5;
-			}
-		}
-	}
-
 	// loop through all the states in the command
 	for (int i = 0; i < stateEffects->size(); i++) {
 		const StateEffect& effect = stateEffects->get(i);
@@ -2076,16 +2065,29 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 		// if recovery timer conditions aren't satisfied, it won't matter
 		if (!failed) {
 			const Vector<String>& defenseMods = effect.getDefenderStateDefenseModifiers();
-			// add up all defenses against the state the target has
-			for (int j = 0; j < defenseMods.size(); j++) {
-			targetDefense += targetCreature->getSkillMod(defenseMods.get(j));
-			targetDefense *= .5;
-//			targetDefense /= 1.5;
-//			targetDefense += playerLevel;
+
+			if (targetCreature->isPlayerCreature()){
+				for (int j = 0; j < defenseMods.size(); j++) {
+					targetDefense += targetCreature->getSkillMod("blind_defense");
+					targetDefense += targetCreature->getSkillMod("dizzy_defense");
+					targetDefense += targetCreature->getSkillMod("stun_defense");
+					targetDefense += targetCreature->getSkillMod("intimidate_defense");
+					targetDefense += targetCreature->getSkillMod("knockdown_defense");
+					targetDefense += targetCreature->getSkillMod("posture_change_down_defense");
+
+					if (targetCreature->getWeapon()->isJediWeapon())
+						targetDefense += targetCreature->getSkillMod("resistance_states");
+				}
 			}
 
-			if (targetDefense > 125)//new states hard cap
-				targetDefense = 125.f;
+			if (!targetCreature->isPlayerCreature()){
+				targetDefense = targetCreature->getMaxHAM(CreatureAttribute::STRENGTH) / 20;
+			}
+
+			if (targetDefense > 150)//new states hard cap
+				targetDefense = 150;
+
+			targetDefense /= 3;//reduces it to 50 so states can still land somtimes
 
 //			if (!targetCreature->isPlayerCreature()) targetDefense += targetCreature->getLevel() * .3;//make npc harder to state/kd
 
@@ -2094,24 +2096,24 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 
 			// no reason to apply jedi defenses if primary defense was successful
 			// and only perform extra rolls if the character is a Jedi
-			if (!failed && targetCreature->isPlayerCreature() && targetCreature->getPlayerObject()->isJedi()) {
-				const Vector<String>& jediMods = effect.getDefenderJediStateDefenseModifiers();
-				// second chance for jedi, roll against their special defenses jedi_state_defense & resistance_states
-				for (int j = 0; j < jediMods.size(); j++) {
-					targetDefense = targetCreature->getSkillMod(jediMods.get(j));
-					targetDefense *= .5;
-//					targetDefense /= 1.5;
-//					targetDefense += playerLevel;
-
-					if (targetDefense > 125)//new states hard cap
-						targetDefense = 125.f;
-
-					if (System::random(100) > accuracyMod - targetDefense) {
-						failed = true;
-						break;
-					}
-				}
-			}
+//			if (!failed && targetCreature->isPlayerCreature() && targetCreature->getPlayerObject()->isJedi()) {
+//				const Vector<String>& jediMods = effect.getDefenderJediStateDefenseModifiers();
+//				// second chance for jedi, roll against their special defenses jedi_state_defense & resistance_states
+//				for (int j = 0; j < jediMods.size(); j++) {
+//					targetDefense = targetCreature->getSkillMod(jediMods.get(j));
+//					targetDefense *= .5;
+////					targetDefense /= 1.5;
+////					targetDefense += playerLevel;
+//
+//					if (targetDefense > 50)//new states hard cap
+//						targetDefense = 50;
+//
+//					if (System::random(100) > accuracyMod - targetDefense) {
+//						failed = true;
+//						break;
+//					}
+//				}
+//			}
 		}
 
 		if (!failed) {
@@ -2156,15 +2158,15 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 
 		// now check combat equilibrium
 		//TODO: This should eventually be moved to happen AFTER the CombatAction is broadcast to "fix" it's animation (Mantis #4832)
-		if (!failed && (effectType == CommandEffect::KNOCKDOWN || effectType == CommandEffect::POSTUREDOWN || effectType == CommandEffect::POSTUREUP)) {
-			int combatEquil = targetCreature->getSkillMod("combat_equillibrium");
-
-			if (combatEquil > 100)
-				combatEquil = 100;
-
-			if ((combatEquil >> 1) > (int) System::random(100) && !targetCreature->isDead() && !targetCreature->isIntimidated())
-				targetCreature->setPosture(CreaturePosture::UPRIGHT, false);
-		}
+//		if (!failed && (effectType == CommandEffect::KNOCKDOWN || effectType == CommandEffect::POSTUREDOWN || effectType == CommandEffect::POSTUREUP)) {
+//			int combatEquil = targetCreature->getSkillMod("combat_equillibrium");
+//
+//			if (combatEquil > 100)
+//				combatEquil = 100;
+//
+//			if ((combatEquil >> 1) > (int) System::random(100) && !targetCreature->isDead() && !targetCreature->isIntimidated())
+//				targetCreature->setPosture(CreaturePosture::UPRIGHT, false);
+//		}
 
 		//Send Combat Spam for state-only attacks.
 		if (data.isStateOnlyAttack()) {
