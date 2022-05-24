@@ -151,11 +151,11 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float randomizer = .7 + (System::random(30) * .01);
-	float randomtwo = .7 + (System::random(30) * .01);
+	float randomizer = .8 + (System::random(20) * .01);
+	float randomtwo = .8 + (System::random(20) * .01);
 
-	float minDmg = (level * 5.85) * randomizer;
-	float maxDmg = (level * 17.55) * randomizer;
+	float minDmg = (level * 7) * randomizer;
+	float maxDmg = (level * 14) * randomizer;
 	float speed = (4.0 - (level * .03)) * randomtwo;//calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
@@ -189,9 +189,9 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		ManagedReference<WeaponObject*> weao = (getZoneServer()->createObject(crc, getPersistenceLevel())).castTo<WeaponObject*>();
 
 		if (weao != nullptr) {
-			float mod = .156;//1 - 0.1*weao->getArmorPiercing();
-			weao->setMinDamage(minDmg * mod);
-			weao->setMaxDamage(maxDmg * mod);
+			//float mod = 1.0;//1 - 0.1*weao->getArmorPiercing();
+			weao->setMinDamage(minDmg);
+			weao->setMaxDamage(maxDmg);
 
 			SharedWeaponObjectTemplate* weaoTemp = cast<SharedWeaponObjectTemplate*>(weao->getObjectTemplate());
 			if (weaoTemp != nullptr && weaoTemp->getPlayerRaces()->size() > 0) {
@@ -236,19 +236,19 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
 		int health = (level * 80) + System::random(level * 20);
-		int str = (level * 70) + System::random(level * 30);
+		int str = (level * 70) + System::random(level * 30);//npc defenses based on this one
 		int con = (level * 70) + System::random(level * 30);
 		baseHAM.add(health * .3);
 		baseHAM.add(str * .3);
 		baseHAM.add(con * .3);
 		int action = (level * 70) + System::random(level * 30);
-		int quick = (level * 70) + System::random(level * 30);
+		int quick = (level * 70) + System::random(level * 30);//npc accuracy based on this one
 		int stam = (level * 70) + System::random(level * 30);
 		baseHAM.add(action * .3);
 		baseHAM.add(quick * .3);
 		baseHAM.add(stam * .3);
 		int mind = (level * 40) + System::random(level * 60);
-		int focus = (level * 70) + System::random(level * 30);
+		int focus = (level * 76);//this one is static for determining if npc will hit single pool
 		int will = (level * 70) + System::random(level * 30);
 		baseHAM.add(mind * .3);
 		baseHAM.add(focus * .3);
@@ -2664,7 +2664,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("armorrating", "Heavy");
 
 	//int npchitchance = getChanceHit() * 100;
-	int npchitchance = getMaxHAM(CreatureAttribute::FOCUS) / 30;
+	int npchitchance = getMaxHAM(CreatureAttribute::FOCUS) / 10;
 
 	if (weapon->isMeleeWeapon()) {
 		npchitchance *= 1.1;
@@ -2686,7 +2686,26 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 
 	alm->insertAttribute("ai accuracy", npchitchance);
 
-	int targetDefense = getMaxHAM(CreatureAttribute::STRENGTH) / 15;//npc target defense based off 3k ham
+	int targetDefense = getMaxHAM(CreatureAttribute::STRENGTH) / 10;//npc target defense based off 3k ham
+	targetDefense *= .5;
+
+	if (getWeapon()->isMeleeWeapon()) {
+		targetDefense *= 1.1;
+	}
+	if (isKneeling()) {
+		targetDefense *= .8;
+	}
+	if (isProne()) {
+		targetDefense *= .6;
+	}
+	if (isKnockedDown()) {
+		targetDefense *= .4;
+	}
+	if (hasState(CreatureState::INTIMIDATED)) {
+		targetDefense *= .8;
+	}
+	if (targetDefense < 0)
+		targetDefense = 0;
 
 	alm->insertAttribute("ai defense", targetDefense);
 

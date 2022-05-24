@@ -538,11 +538,13 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	if (targetDefense > 200)
 		targetDefense = 200;
 
+	targetDefense *= .5;
+
 	if (isMeleeWeapon()) {
 		targetDefense *= 1.1;
 	}
 	// food bonus goes on top
-	targetDefense += object->getSkillMod("dodge_attack") * .5;
+	targetDefense += object->getSkillMod("dodge_attack");
 
 	if (object->isKneeling()) {
 		targetDefense *= .8;
@@ -559,7 +561,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	if (targetDefense < 0)
 		targetDefense = 0;
 
-	alm->insertAttribute("your Defense", attackerAccuracy);
+	alm->insertAttribute("your Defense", targetDefense);
 
 
 	//Anti Decay Kit

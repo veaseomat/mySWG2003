@@ -710,7 +710,7 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 	if (attacker->isAiAgent()) {
 
 		//int npchitchance = 75; //cast<AiAgent*>(attacker)->getChanceHit() * 100;
-		int npchitchance = defender->getMaxHAM(CreatureAttribute::FOCUS) / 30;//3000 max to 100
+		int npchitchance = defender->getMaxHAM(CreatureAttribute::QUICKNESS) / 10;//3000 max to 150
 		//these are the min/max hitchance from early precu/ this is a catchall because some npc entries are WRONG
 //		if (npchitchance < 25) {
 //			npchitchance = 25;
@@ -808,7 +808,8 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 //	if (attacker->isPlayerCreature())
 //		attackerAccuracy *= .5f;
 
-	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy");
+	//food
+	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy") * .5;
 
 	if (weapon->isMeleeWeapon()) {
 		attackerAccuracy *= 1.1;
@@ -860,7 +861,7 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 
 	if (!defender->isPlayerCreature()) {
 		//targetDefense = defender->getLevel() / 3;
-		targetDefense = defender->getMaxHAM(CreatureAttribute::STRENGTH) / 15;//npc target defense based off 3k ham
+		targetDefense = defender->getMaxHAM(CreatureAttribute::STRENGTH) / 10;//npc target defense based off 3k ham
 	}
 
 	if (defender->isPlayerCreature()) {
@@ -872,7 +873,7 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 		targetDefense += defender->getSkillMod("counterattack");
 		targetDefense += defender->getSkillMod("unarmed_passive_defense");
 
-		if (weapon->isJediWeapon()) {
+		if (defender->getWeapon()->isJediWeapon()) {
 			targetDefense += defender->getSkillMod("saber_block");
 		}
 	}
@@ -880,12 +881,14 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	if (targetDefense > 200)
 		targetDefense = 200;
 
+	targetDefense *= .5;
+
 	if (defender->getWeapon()->isMeleeWeapon()) {
 		targetDefense *= 1.1;
 	}
 
 	// food bonus goes on top
-	targetDefense += defender->getSkillMod("dodge_attack") * .5;
+	targetDefense += defender->getSkillMod("dodge_attack");
 
 	if (defender->isKneeling()) {
 		targetDefense *= .8;
@@ -1054,18 +1057,18 @@ int CombatManager::calculateDamageRange(TangibleObject* attacker, CreatureObject
 }
 
 float CombatManager::applyDamageModifiers(CreatureObject* attacker, WeaponObject* weapon, float damage, const CreatureAttackData& data) const {
-	if (!data.isForceAttack()) {
-		const auto weaponDamageMods = weapon->getDamageModifiers();
+//	if (!data.isForceAttack()) {
+//		const auto weaponDamageMods = weapon->getDamageModifiers();
+//
+//		for (int i = 0; i < weaponDamageMods->size(); ++i) {
+//			damage += attacker->getSkillMod(weaponDamageMods->get(i));
+//		}
 
-		for (int i = 0; i < weaponDamageMods->size(); ++i) {
-			damage += attacker->getSkillMod(weaponDamageMods->get(i));
-		}
-
-		if (weapon->getAttackType() == SharedWeaponObjectTemplate::MELEEATTACK)
-			damage += attacker->getSkillMod("private_melee_damage_bonus");
-		if (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)
-			damage += attacker->getSkillMod("private_ranged_damage_bonus");
-	}
+//		if (weapon->getAttackType() == SharedWeaponObjectTemplate::MELEEATTACK)
+//			damage += attacker->getSkillMod("private_melee_damage_bonus");
+//		if (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)
+//			damage += attacker->getSkillMod("private_ranged_damage_bonus");
+//	}
 
 
 ////accuracy adds to damage
@@ -1084,17 +1087,17 @@ float CombatManager::applyDamageModifiers(CreatureObject* attacker, WeaponObject
 //		damage += accdmg;
 //	}
 
-	damage += attacker->getSkillMod("private_damage_bonus");
-
-	int damageMultiplier = attacker->getSkillMod("private_damage_multiplier");
-
-	if (damageMultiplier != 0)
-		damage *= damageMultiplier;
-
-	int damageDivisor = attacker->getSkillMod("private_damage_divisor");
-
-	if (damageDivisor != 0)
-		damage /= damageDivisor;
+//	damage += attacker->getSkillMod("private_damage_bonus");
+//
+//	int damageMultiplier = attacker->getSkillMod("private_damage_multiplier");
+//
+//	if (damageMultiplier != 0)
+//		damage *= damageMultiplier;
+//
+//	int damageDivisor = attacker->getSkillMod("private_damage_divisor");
+//
+//	if (damageDivisor != 0)
+//		damage /= damageDivisor;
 
 	return damage;
 }
@@ -1821,7 +1824,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	float defenderRoll = (float)System::random(150) + 25.f;
 
 	// TODO (dannuic): add the trapmods in here somewhere (defense down trapmods)
-	float accTotal = hitChanceEquation(attackerAccuracy * 1.25, attackerRoll, targetDefense, defenderRoll);
+	float accTotal = hitChanceEquation(attackerAccuracy, attackerRoll, targetDefense, defenderRoll);
 
 	debug() << "Final hit chance is " << accTotal;
 
@@ -2200,6 +2203,71 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 
 	if (defender->isInvulnerable()) {
 		return 0;
+	}
+
+	int aiquick = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::QUICKNESS);//70+r30
+	int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//76 (6 of 30 = 20%)
+
+	if (!attacker->isPlayerCreature() && (aifocus > aiquick)) {
+		if (weapon->isPistolWeapon()){
+			poolsToDamage = HEALTH;
+			damage *= .6;
+		}
+		if (weapon->isCarbineWeapon()){
+			poolsToDamage = ACTION;
+			damage *= .6;
+		}
+		if (weapon->isRifleWeapon()){
+			poolsToDamage = MIND;
+			damage *= .6;
+		}
+//			if (weapon->isRangedWeapon())
+//			damage *= 1.03f;
+//		if (weapon->isUnarmedWeapon())
+//		damage *= 1.9f;
+		if (weapon->isOneHandMeleeWeapon()){
+			poolsToDamage = HEALTH;
+			damage *= .6;
+		}
+		if (weapon->isTwoHandMeleeWeapon()){
+			poolsToDamage = MIND;
+			damage *= .6;
+		}
+		if (weapon->isPolearmWeaponObject()){
+			poolsToDamage = ACTION;
+			damage *= .6;
+		}
+//			if (weapon->isMeleeWeapon())
+//			damage *= 1.1f;
+//		if (weapon->isLightningRifle())
+//		damage *= .4f;
+//		if (weapon->isFlameThrower())
+//		damage *= .3f;
+//		if (weapon->isHeavyAcidRifle())
+//		damage *= .4f;
+//			if (weapon->isHeavyWeapon())
+//			damage *= 1.0f;
+//		if (weapon->isThrownWeapon())
+//		damage *= .1;
+//			if (weapon->isSpecialHeavyWeapon())
+//			damage *= 0;
+//			if (weapon->isMineWeapon())
+//			damage *= 0;
+		if (weapon->isJediOneHandedWeapon()){
+			poolsToDamage = MIND;
+			damage *= .6;
+		}
+		if (weapon->isJediTwoHandedWeapon()){
+			poolsToDamage = HEALTH;
+			damage *= .6;
+		}
+		if (weapon->isJediPolearmWeapon()){
+			poolsToDamage = ACTION;
+			damage *= .6;
+		}
+//			if (weapon->isJediWeapon())
+//			damage *= 1.1f;
+
 	}
 
 	String xpType;
