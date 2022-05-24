@@ -151,7 +151,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float randomizer = .9 + (System::random(20) * .01);
+	float randomizer = .8 + (System::random(20) * .01);
 	float randomtwo = .8 + (System::random(20) * .01);
 
 	float minDmg = (level * 7) * randomizer;
