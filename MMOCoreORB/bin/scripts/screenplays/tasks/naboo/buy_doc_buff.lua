@@ -141,17 +141,17 @@ function docbuff_convo_handler:getNextConversationScreen(conversationTemplate, c
                     giveItem(pInventory, "object/tangible/medicine/crafted/crafted_stimpack_sm_s1_d.iff", -1)
                     --createLoot(pInventory, "junk", 300, false)
                     
-                elseif (optionLink == "option5" and credits < 100) then
+                elseif (optionLink == "option5" and credits < 2000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "option5" and credits >= 100) then
+                elseif (optionLink == "option5" and credits >= 2000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    creature:subtractCashCredits(100)
+                    creature:subtractCashCredits(2000)
                     local pItem = 
 										--CreatureObject(conversingPlayer):enhanceCharacterDocBuff()
-                    giveItem(pInventory, "object/tangible/medicine/crafted/crafted_stimpack_sm_s1_a.iff", -1)
+                    giveItem(pInventory, "object/tangible/medicine/crafted/crafted_stimpack_sm_s1_e.iff", -1)
                     --createLoot(pInventory, "junk", 300, false)
                     
                 elseif (optionLink == "option6" and credits < 100) then

@@ -16,7 +16,7 @@ docbuff_first_screen = ConvoScreen:new {
         {"StimPack B - 250", "option2"},
         {"StimPack C - 500", "option3"},
         {"StimPack D - 1k", "option4"},
---        {"", "option5"},
+        {"StimPack E - 2k", "option5"},
 --        {"", "option6"},
 --        {"", "option7"},
 --        {"", "option8"},

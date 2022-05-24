@@ -285,11 +285,11 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 //		speedMods *= 1.03f;
 //		if (isUnarmedWeapon())
 //		speedMods *= 1.2f;
-		if (isOneHandMeleeWeapon())
+		if (isOneHandMeleeWeapon() && !isJediWeapon())
 		speedMods *= 1.2f;
-		if (isTwoHandMeleeWeapon())
+		if (isTwoHandMeleeWeapon() && !isJediWeapon())
 		speedMods *= 1.4f;
-		if (isPolearmWeaponObject())
+		if (isPolearmWeaponObject() && !isJediWeapon())
 		speedMods *= 1.4f;
 //		if (isMeleeWeapon())
 //		speedMods *= 1.1f;
@@ -332,9 +332,11 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 		attackSpeed *= 1.2;
 	}
 //
-//	float speed = Math::getPrecision(getAttackSpeed(), 1);
-//
-//	if (speed < 1.0) speed = 1.0;
+	float oldspeed = Math::getPrecision(getAttackSpeed(), 1);
+
+	if (oldspeed < 1.0) oldspeed = 1.0;
+
+	alm->insertAttribute("wpn_attack_speed", oldspeed);
 
 	alm->insertAttribute("your speed", attackSpeed);
 
@@ -455,11 +457,11 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 ////		attackerAccuracy *= 1.03f;
 	if (isUnarmedWeapon())
 	attackerAccuracy *= .5f;
-	if (isOneHandMeleeWeapon())
+	if (isOneHandMeleeWeapon() && !isJediWeapon())
 	attackerAccuracy *= .7f;
-	if (isTwoHandMeleeWeapon())
+	if (isTwoHandMeleeWeapon() && !isJediWeapon())
 	attackerAccuracy *= .8f;
-	if (isPolearmWeaponObject())
+	if (isPolearmWeaponObject() && !isJediWeapon())
 	attackerAccuracy *= .7f;
 ////		if (isMeleeWeapon())
 ////		attackerAccuracy *= 1.1f;
@@ -563,12 +565,37 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 
 	alm->insertAttribute("your Defense", targetDefense);
 
+//states!!!!!!!!!!!
+	float statedef = 0.f;
+
+	statedef += object->getSkillMod("blind_defense");
+	statedef += object->getSkillMod("dizzy_defense");
+	statedef += object->getSkillMod("stun_defense");
+	statedef += object->getSkillMod("intimidate_defense");
+	statedef += object->getSkillMod("knockdown_defense");
+	statedef += object->getSkillMod("posture_change_down_defense");
+
+	if (isJediWeapon()) {
+		statedef += object->getSkillMod("resistance_states");
+		statedef += object->getSkillMod("jedi_state_defense");
+	}
+
+	if (statedef > 150)
+		statedef = 150;
+
+	statedef /= 3;
+
+	alm->insertAttribute("state Defense", statedef);
+
 
 	int jediarmor = 0;
 
 	if (isJediWeapon()) {
 		jediarmor = object->getSkillMod("lightsaber_toughness") + object->getSkillMod("jedi_toughness");
 		jediarmor += object->getSkillMod("force_armor");
+
+		if (jediarmor > 80)
+			jediarmor = 80;
 
 		alm->insertAttribute("jedi armor", jediarmor);
 	}

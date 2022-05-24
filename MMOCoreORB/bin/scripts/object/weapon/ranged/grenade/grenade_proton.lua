@@ -114,8 +114,8 @@ object_weapon_ranged_grenade_grenade_proton = object_weapon_ranged_grenade_share
 	maxRange = 64,
 	maxRangeAccuracy = -30,
 
-	minDamage = 100,
-	maxDamage = 300,
+	minDamage = 933,
+	maxDamage = 1951,
 
 	attackSpeed = 10,
 

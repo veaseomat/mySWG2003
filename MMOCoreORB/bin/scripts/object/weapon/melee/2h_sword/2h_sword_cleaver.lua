@@ -114,8 +114,8 @@ object_weapon_melee_2h_sword_2h_sword_cleaver = object_weapon_melee_2h_sword_sha
 	maxRange = 5,
 	maxRangeAccuracy = -35,
 
-	minDamage = 100,
-	maxDamage = 450,
+	minDamage = 78,
+	maxDamage = 276,
 
 	attackSpeed = 6,
 

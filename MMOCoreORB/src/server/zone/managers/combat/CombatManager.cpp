@@ -770,11 +770,11 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 ////		attackerAccuracy *= 1.03f;
 		if (weapon->isUnarmedWeapon())
 		attackerAccuracy *= .5f;
-		if (weapon->isOneHandMeleeWeapon())
+		if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
 		attackerAccuracy *= .7f;
-		if (weapon->isTwoHandMeleeWeapon())
+		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
 		attackerAccuracy *= .8f;
-		if (weapon->isPolearmWeaponObject())
+		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
 		attackerAccuracy *= .7f;
 ////		if (weapon->isMeleeWeapon())
 ////		attackerAccuracy *= 1.1f;
@@ -1128,11 +1128,11 @@ int CombatManager::getSpeedModifier(CreatureObject* attacker, WeaponObject* weap
 //		speedMods *= 1.03f;
 //		if (weapon->isUnarmedWeapon())
 //		speedMods *= 1.2f;
-		if (weapon->isOneHandMeleeWeapon())
+		if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
 		speedMods *= 1.2f;
-		if (weapon->isTwoHandMeleeWeapon())
+		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
 		speedMods *= 1.4f;
-		if (weapon->isPolearmWeaponObject())
+		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
 		speedMods *= 1.4f;
 //		if (weapon->isMeleeWeapon())
 //		speedMods *= 1.1f;
@@ -1271,15 +1271,15 @@ int CombatManager::getArmorReduction(TangibleObject* attacker, WeaponObject* wea
 	ManagedReference<WeaponObject*> defweapon = defender->getWeapon();
 
 	if (!data.isForceAttack()) {
-		// Force Armor
-		float rawDamage = damage;
-
-		int forceArmor = defender->getSkillMod("force_armor");
-		if ((forceArmor > 0) && defweapon->isJediWeapon()) {
-			float dmgAbsorbed = rawDamage - (damage *= 1.f - (forceArmor / 100.f));
-			defender->notifyObservers(ObserverEventType::FORCEARMOR, attacker, dmgAbsorbed);
-			sendMitigationCombatSpam(defender, nullptr, (int)dmgAbsorbed, FORCEARMOR);
-		}
+		// Force Armor moved to actual armor
+//		float rawDamage = damage;
+//
+//		int forceArmor = defender->getSkillMod("force_armor");
+//		if ((forceArmor > 0) && defweapon->isJediWeapon()) {
+//			float dmgAbsorbed = rawDamage - (damage *= 1.f - (forceArmor / 100.f));
+//			defender->notifyObservers(ObserverEventType::FORCEARMOR, attacker, dmgAbsorbed);
+//			sendMitigationCombatSpam(defender, nullptr, (int)dmgAbsorbed, FORCEARMOR);
+//		}
 	} else {
 		float jediBuffDamage = 0;
 		float rawDamage = damage;
@@ -1618,11 +1618,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //			damage *= 1.03f;
 			if (weapon->isUnarmedWeapon())
 			damage *= 1.9f;
-			if (weapon->isOneHandMeleeWeapon())
+			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
 			damage *= 1.3f;
-			if (weapon->isTwoHandMeleeWeapon())
+			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
 			damage *= .7f;
-			if (weapon->isPolearmWeaponObject())
+			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
 			damage *= .8f;
 //			if (weapon->isMeleeWeapon())
 //			damage *= 1.1f;
@@ -1716,7 +1716,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	// EVP Damage. npc damage located in aiagient
 	if (!attacker->isPlayerCreature())
-		damage *= .8;//nerf npc to make game easier
+		damage *= .6;//nerf npc to make game easier
 
 	// PvP Damage Reduction.
 //	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
@@ -2064,10 +2064,8 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 
 		// if recovery timer conditions aren't satisfied, it won't matter
 		if (!failed) {
-			const Vector<String>& defenseMods = effect.getDefenderStateDefenseModifiers();
 
 			if (targetCreature->isPlayerCreature()){
-				for (int j = 0; j < defenseMods.size(); j++) {
 					targetDefense += targetCreature->getSkillMod("blind_defense");
 					targetDefense += targetCreature->getSkillMod("dizzy_defense");
 					targetDefense += targetCreature->getSkillMod("stun_defense");
@@ -2075,9 +2073,10 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 					targetDefense += targetCreature->getSkillMod("knockdown_defense");
 					targetDefense += targetCreature->getSkillMod("posture_change_down_defense");
 
-					if (targetCreature->getWeapon()->isJediWeapon())
+					if (targetCreature->getWeapon()->isJediWeapon()){
 						targetDefense += targetCreature->getSkillMod("resistance_states");
-				}
+						targetDefense += targetCreature->getSkillMod("jedi_state_defense");
+					}
 			}
 
 			if (!targetCreature->isPlayerCreature()){
@@ -2229,15 +2228,15 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 //			damage *= 1.03f;
 //		if (weapon->isUnarmedWeapon())
 //		damage *= 1.9f;
-		if (weapon->isOneHandMeleeWeapon()){
+		if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon()){
 			poolsToDamage = HEALTH;
 			damage *= .6;
 		}
-		if (weapon->isTwoHandMeleeWeapon()){
+		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon()){
 			poolsToDamage = MIND;
 			damage *= .6;
 		}
-		if (weapon->isPolearmWeaponObject()){
+		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon()){
 			poolsToDamage = ACTION;
 			damage *= .6;
 		}

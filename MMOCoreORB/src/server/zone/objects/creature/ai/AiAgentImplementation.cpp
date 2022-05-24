@@ -2712,6 +2712,18 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 	alm->insertAttribute("ai defense", targetDefense);
 
 
+	//states!!!!!!!!!!!
+		float statedef = 0.f;
+
+		statedef = getMaxHAM(CreatureAttribute::STRENGTH) / 20;
+
+		if (statedef > 150)
+			statedef = 150;
+
+		statedef /= 3;
+
+		alm->insertAttribute("state Defense", statedef);
+
 
 //	int npcKinetic = getKinetic();
 //	int npcEnergy = getEnergy();

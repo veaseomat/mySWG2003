@@ -99,8 +99,8 @@ function masterchef_convo_handler:getNextConversationScreen(conversationTemplate
                     creature:subtractCashCredits(5000)
                     local pItem = 
 										--CreatureObject(conversingPlayer):enhanceCharacter()
-                    --giveItem(pInventory, "object/tangible/food/crafted/dish_crispic.iff", -1)
-                    createLoot(pInventory, "food1", 300, false)
+                    giveItem(pInventory, "object/tangible/food/crafted/dish_crispic.iff", -1)
+                    --createLoot(pInventory, "food1", 300, false)
                     
                 elseif (optionLink == "option3" and credits < 5000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
@@ -112,8 +112,8 @@ function masterchef_convo_handler:getNextConversationScreen(conversationTemplate
                     creature:subtractCashCredits(5000)
                     local pItem = 
 										--CreatureObject(conversingPlayer):enhanceCharacter()
-                    --giveItem(pInventory, "object/tangible/food/crafted/drink_vasarian_brandy.iff", -1)
-                    createLoot(pInventory, "food5", 300, false)
+                    giveItem(pInventory, "object/tangible/food/crafted/drink_vasarian_brandy.iff", -1)
+                    --createLoot(pInventory, "food5", 300, false)
                     
                 elseif (optionLink == "option4" and credits < 5000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
@@ -125,8 +125,8 @@ function masterchef_convo_handler:getNextConversationScreen(conversationTemplate
                     creature:subtractCashCredits(5000)
                     local pItem = 
 										--CreatureObject(conversingPlayer):enhanceCharacterDocBuff()
-                    --giveItem(pInventory, "object/tangible/food/crafted/drink_garrmorl.iff", -1)
-                    createLoot(pInventory, "food4", 300, false)
+                    giveItem(pInventory, "object/tangible/food/crafted/drink_garrmorl.iff", -1)
+                    --createLoot(pInventory, "food4", 300, false)
                     
                 elseif (optionLink == "option5" and credits < 5000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
@@ -138,20 +138,20 @@ function masterchef_convo_handler:getNextConversationScreen(conversationTemplate
                     creature:subtractCashCredits(5000)
                     local pItem = 
 										--CreatureObject(conversingPlayer):enhanceCharacterDocBuff()
-                    --giveItem(pInventory, "object/tangible/food/crafted/drink_accarragm.iff", -1)
-                    createLoot(pInventory, "food3", 300, false)
+                    giveItem(pInventory, "object/tangible/food/crafted/drink_accarragm.iff", -1)
+                    --createLoot(pInventory, "food3", 300, false)
                     
-                elseif (optionLink == "option6" and credits < 100) then
+                elseif (optionLink == "option6" and credits < 5000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "option6" and credits >= 100) then
+                elseif (optionLink == "option6" and credits >= 5000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    creature:subtractCashCredits(100)
+                    creature:subtractCashCredits(5000)
                     local pItem = 
 										--CreatureObject(conversingPlayer):enhanceCharacterDocBuff()
-                    giveItem(pInventory, "object/tangible/medicine/crafted/crafted_stimpack_sm_s1_a.iff", -1)
+                    giveItem(pInventory, "object/tangible/food/crafted/drink_blue_milk.iff", -1)
                     --createLoot(pInventory, "junk", 300, false)
                     
                 elseif (optionLink == "option7" and credits < 100) then

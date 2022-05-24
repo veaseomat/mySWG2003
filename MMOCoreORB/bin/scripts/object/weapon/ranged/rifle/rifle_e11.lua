@@ -114,8 +114,8 @@ object_weapon_ranged_rifle_rifle_e11 = object_weapon_ranged_rifle_shared_rifle_e
 	maxRange = 64,
 	maxRangeAccuracy = -10,
 
-	minDamage = 125,
-	maxDamage = 400,
+	minDamage = 101,
+	maxDamage = 246,
 
 	attackSpeed = 7.5,
 

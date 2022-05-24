@@ -45,9 +45,9 @@ object_tangible_food_crafted_drink_blue_milk = object_tangible_food_crafted_shar
 	templateType = CONSUMABLE,
 
 	duration = 10,
-	filling = 10,
-	nutrition = 10,
-
+	filling = 22,
+	nutrition = 350,
+	useCount = 5,
 	effectType = 6,
 
 	fillingMin = 36,

@@ -17,7 +17,7 @@ masterchef_first_screen = ConvoScreen:new {
         {"Vasarian Brandy - 5k", "option3"},
         {"Garrmorl - 5k", "option4"},
         {"Accarragm - 5k", "option5"},
---        {"", "option6"},
+        {"Blue Milk - 5k", "option6"},
 --        {"", "option7"},
 --        {"", "option8"},
 --        {"", "option9"},

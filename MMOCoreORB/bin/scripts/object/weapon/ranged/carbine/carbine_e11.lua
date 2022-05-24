@@ -114,8 +114,8 @@ object_weapon_ranged_carbine_carbine_e11 = object_weapon_ranged_carbine_shared_c
 	maxRange = 64,
 	maxRangeAccuracy = -50,
 
-	minDamage = 80,
-	maxDamage = 125,
+	minDamage = 90,
+	maxDamage = 140,
 
 	attackSpeed = 4.1,
 
