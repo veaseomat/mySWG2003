@@ -1142,8 +1142,8 @@ int CombatManager::getSpeedModifier(CreatureObject* attacker, WeaponObject* weap
 		speedMods *= 2.3f;
 		if (weapon->isHeavyAcidRifle())
 		speedMods *= 2.3f;
-//		if (weapon->isHeavyWeapon())
-//		speedMods *= 1.0f;
+		if (weapon->isHeavyWeapon())
+		speedMods *= 1.7f;
 		if (weapon->isThrownWeapon())
 		speedMods *= 2.5f;
 //		if (weapon->isSpecialHeavyWeapon())
@@ -1632,10 +1632,10 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= .3f;
 			if (weapon->isHeavyAcidRifle())
 			damage *= .4f;
-//			if (weapon->isHeavyWeapon())
-//			damage *= 1.0f;
+			if (weapon->isHeavyWeapon())
+			damage *= .1f;
 			if (weapon->isThrownWeapon())
-			damage *= .1;
+			damage *= .1f;
 //			if (weapon->isSpecialHeavyWeapon())
 //			damage *= 0;
 //			if (weapon->isMineWeapon())

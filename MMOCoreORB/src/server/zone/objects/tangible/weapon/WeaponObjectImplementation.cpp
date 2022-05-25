@@ -299,8 +299,8 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 		speedMods *= 2.3f;
 		if (isHeavyAcidRifle())
 		speedMods *= 2.3f;
-//		if (isHeavyWeapon())
-//		speedMods *= 1.0f;
+		if (isHeavyWeapon())
+		speedMods *= 1.7f;
 //		if (isThrownWeapon())
 //		speedMods *= .5f;
 //		if (isSpecialHeavyWeapon())
@@ -395,7 +395,49 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	alm->insertAttribute("damage.wpn_damage_max", maxDmg);
 
 
-	int newdps = ((minDmg + maxDmg) / 2) / 1.0;
+	int newdps = ((minDmg + maxDmg) / 2) / attackSpeed;
+
+	if (isPistolWeapon())
+		newdps *= 1.4f;
+	if (isCarbineWeapon())
+		newdps *= 1.1f;
+	if (isRifleWeapon())
+		newdps *= .7f;
+//			if (isRangedWeapon())
+//			damage *= 1.03f;
+	if (isUnarmedWeapon())
+		newdps *= 1.9f;
+	if (isOneHandMeleeWeapon() && !isJediWeapon())
+		newdps *= 1.3f;
+	if (isTwoHandMeleeWeapon() && !isJediWeapon())
+		newdps *= .7f;
+	if (isPolearmWeaponObject() && !isJediWeapon())
+		newdps *= .8f;
+//			if (isMeleeWeapon())
+//			damage *= 1.1f;
+	if (isLightningRifle())
+		newdps *= .4f;
+	if (isFlameThrower())
+		newdps *= .3f;
+	if (isHeavyAcidRifle())
+		newdps *= .4f;
+	if (isHeavyWeapon())
+		newdps *= .1f;
+	if (isThrownWeapon())
+		newdps *= .1f;
+//			if (isSpecialHeavyWeapon())
+//			damage *= 0;
+//			if (isMineWeapon())
+//			damage *= 0;
+	if (isJediOneHandedWeapon())
+		newdps *= .6f;
+	if (isJediTwoHandedWeapon())
+		newdps *= .5f;
+	if (isJediPolearmWeapon())
+		newdps *= .4f;
+//			if (isJediWeapon())
+//			damage *= 1.1f;
+
 
 	alm->insertAttribute("your dps", newdps);
 
