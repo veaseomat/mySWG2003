@@ -299,7 +299,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 		speedMods *= 2.3f;
 		if (isHeavyAcidRifle())
 		speedMods *= 2.3f;
-		if (isHeavyWeapon())
+		if (isHeavyWeapon() && (!isHeavyAcidRifle() || !isFlameThrower() || !isLightningRifle()))
 		speedMods *= 1.7f;
 //		if (isThrownWeapon())
 //		speedMods *= .5f;
@@ -421,7 +421,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 		newdps *= .3f;
 	if (isHeavyAcidRifle())
 		newdps *= .4f;
-	if (isHeavyWeapon())
+	if (isHeavyWeapon() && (!isHeavyAcidRifle() || !isFlameThrower() || !isLightningRifle()))
 		newdps *= .1f;
 	if (isThrownWeapon())
 		newdps *= .1f;
@@ -608,7 +608,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	alm->insertAttribute("your Defense", targetDefense);
 
 //states!!!!!!!!!!!
-	float statedef = 0.f;
+	int statedef = 0;
 
 	statedef += object->getSkillMod("blind_defense");
 	statedef += object->getSkillMod("dizzy_defense");
