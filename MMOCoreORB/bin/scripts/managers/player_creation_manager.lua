@@ -19,17 +19,17 @@ professions = {
 	"social_entertainer"
 }
 
-marksmanPistol = "object/weapon/ranged/pistol/pistol_d18.iff"
+marksmanPistol = "object/weapon/ranged/pistol/pistol_cdef.iff"
 	
-marksmanRifle = "object/weapon/ranged/rifle/rifle_dlt20.iff"
+marksmanRifle = "object/weapon/ranged/rifle/rifle_cdef.iff"
 
-marksmanCarbine = "object/weapon/ranged/carbine/carbine_dh17.iff"
+marksmanCarbine = "object/weapon/ranged/carbine/carbine_cdef.iff"
 
-brawlerOneHander = "object/weapon/melee/sword/sword_01.iff"
+brawlerOneHander = "object/weapon/melee/knife/knife_stone.iff"
 
-brawlerTwoHander = "object/weapon/melee/2h_sword/2h_sword_battleaxe.iff"
+brawlerTwoHander = "object/weapon/melee/axe/axe_heavy_duty.iff"
 
-brawlerPolearm = "object/weapon/melee/polearm/lance_staff_wood_s2.iff"
+brawlerPolearm = "object/weapon/melee/polearm/lance_staff_wood_s1.iff"
 
 survivalKnife = "object/weapon/melee/knife/knife_survival.iff"
 
