@@ -292,7 +292,7 @@ int StructureManager::placeStructureFromDeed(CreatureObject* creature, Structure
 //	}
 
 	SortedVector<ManagedReference<ActiveArea*> > objects;
-	zone->getInRangeActiveAreas(x, y, &objects, true);
+//	zone->getInRangeActiveAreas(x, y, &objects, true);
 
 	ManagedReference<CityRegion*> city;
 

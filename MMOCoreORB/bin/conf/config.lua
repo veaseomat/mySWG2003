@@ -58,7 +58,7 @@ Core3 = {
 	DBUser = "swgemu",
 	DBPass = "123456",
 	DBInstances = 2,
-	DBSecret = "swgemus3cr37!", -- Change this! This value should be unique and of reasonable length.
+	DBSecret = "r3t4rdV!LL#USA", -- Change this! This value should be unique and of reasonable length.
 
 	LoginPort = 44453,
 	LoginProcessingThreads = 1,
