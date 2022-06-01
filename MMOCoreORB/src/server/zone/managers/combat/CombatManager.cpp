@@ -1716,7 +1716,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	// EVP Damage. npc damage located in aiagient
 	if (!attacker->isPlayerCreature())
-		damage *= .6;//nerf npc to make game easier
+		damage *= .7;//nerf npc to make game easier
 
 	// PvP Damage Reduction.
 //	if (attacker->isPlayerCreature() && defender->isPlayerCreature())

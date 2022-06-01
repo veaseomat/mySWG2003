@@ -38,12 +38,12 @@ void SpawnAreaImplementation::buildSpawnList(Vector<uint32>* groupCRCs) {
 Vector3 SpawnAreaImplementation::getRandomPosition(SceneObject* player) {
 	Vector3 position;
 	bool positionFound = false;
-	int retries = 20;
+	int retries = 10;//10 is vanilla, ive used 20 previously, have not thouroghly tested
 
 	const auto worldPosition = player->getWorldPosition();
 
 	while (!positionFound && retries-- > 0) {
-		position = areaShape->getRandomPosition(worldPosition, 32.0f, 192.0f);//this is how close to the player stuff can spawn min max
+		position = areaShape->getRandomPosition(worldPosition, 32.0f, 128.0f);//this is how close to the player stuff can spawn min max
 
 		positionFound = true;
 
@@ -97,7 +97,7 @@ int SpawnAreaImplementation::notifyObserverEvent(unsigned int eventType, Observa
 
 			Locker locker(area);
 
-			area->setRadius(8);//set no spawn radius?
+			area->setRadius(0);//set no spawn radius?
 			area->setNoSpawnArea(true);
 			area->initializePosition(sceno->getPositionX(), sceno->getPositionZ(), sceno->getPositionY());
 
@@ -167,7 +167,7 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	//	return;
 
 	// Check the spot to see if spawning is allowed
-	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), 0)) {//this is spawn density
+	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), 32)) {//this is spawn density, was set to 0 prior
 		return;
 	}
 
