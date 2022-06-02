@@ -114,10 +114,10 @@ object_weapon_melee_knife_knife_survival = object_weapon_melee_knife_shared_knif
 	maxRange = 4,
 	maxRangeAccuracy = 30,
 
-	minDamage = 10,
-	maxDamage = 30,
+	minDamage = 14,
+	maxDamage = 28,
 
-	attackSpeed = 3.25,
+	attackSpeed = 4.2,
 
 	woundsRatio = 8,
 

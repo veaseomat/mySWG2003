@@ -51,13 +51,16 @@ x31Speeder = "object/tangible/deed/vehicle_deed/landspeeder_x31_deed.iff"
 Speeder = "object/tangible/deed/vehicle_deed/speederbike_deed.iff"
 
 professionSpecificItems = {
-	combat_brawler = { brawlerOneHander, brawlerTwoHander, brawlerPolearm },
-	combat_marksman = { marksmanPistol, marksmanCarbine, marksmanRifle },
-	crafting_artisan = { genericTool, mineralTool, chemicalTool },
+	combat_brawler = { },
+	combat_marksman = { },
+	crafting_artisan = { },
 	jedi = { },
-	outdoors_scout = { genericTool },
-	science_medic = { foodTool },
+	outdoors_scout = { },
+	science_medic = { },
 	social_entertainer = { slitherhorn }
 }
 
-commonStartingItems = { marojMelon, survivalKnife, Speeder }
+commonStartingItems = { marojMelon, Speeder, survivalKnife, brawlerTwoHander, brawlerPolearm, marksmanPistol, marksmanCarbine, marksmanRifle, genericTool, mineralTool, chemicalTool, foodTool, slitherhorn }
+
+
+

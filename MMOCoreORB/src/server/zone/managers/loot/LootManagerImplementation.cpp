@@ -319,7 +319,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	// this thing exponentially ruins the variance
 
-	float excMod = 1.0 * .625;// randomize the percentage below instead
+	float excMod = 1.0;// * .625;// randomize the percentage below instead
 
 //	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
 //		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
@@ -335,7 +335,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 
-		excMod = 2.0 * .625;
+		excMod = 2.0;
 
 		prototype->addMagicBit(false);
 
@@ -365,7 +365,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
-		float percentage = ((level / 3) * .01) * (0.7 + (System::random(30) * .01));//;//System::random(10000) / 10000.f;//this is where the variance happens
+		float percentage = (((level / 3) * .01) * 0.6) + (System::random(40) * .01);//;//System::random(10000) / 10000.f;//this is where the variance happens
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll
