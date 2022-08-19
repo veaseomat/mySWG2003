@@ -4,7 +4,7 @@ padded_armor_bracer_r = {
 	customObjectName = "a Padded Armor Right Bracer",
 	directObjectTemplate = "object/tangible/wearables/armor/padded/armor_padded_s01_bracer_r.iff",
 	craftingValues = {
-		{"armor_rating",1,1,0},
+		{"armor_rating",1,3,0},
 		{"blasteffectiveness",10,45,10},
 		{"armor_effectiveness",8,29,10},
 		{"armor_integrity",18750, 31000,0},

@@ -71,7 +71,7 @@ HealthShot2Command = {
 	  )
 	},
 	
-	weaponType = PISTOLWEAPON,	
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

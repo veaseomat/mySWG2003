@@ -94,7 +94,7 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 			amountToSpawn = System::random(2) + (spawnLimit / 3);
 		}
 
-		amountToSpawn *= 1.3;
+	//	amountToSpawn *= 1.3;
 
 		if (amountToSpawn < 1)
 			amountToSpawn = 1;

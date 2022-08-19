@@ -91,7 +91,7 @@ Saber2hFrenzyCommand = {
 	
 	poolsToDamage = RANDOM_ATTRIBUTE,
 	
-	weaponType = TWOHANDJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }

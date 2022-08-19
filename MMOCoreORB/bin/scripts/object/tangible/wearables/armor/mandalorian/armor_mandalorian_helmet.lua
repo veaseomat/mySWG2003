@@ -96,7 +96,7 @@ object_tangible_wearables_armor_mandalorian_armor_mandalorian_helmet = object_ta
 	mindEncumbrance = 286,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = HEAVY,
 	maxCondition = 40000,
 
 	kinetic = 50,

@@ -4,7 +4,7 @@ mabari_armor_boots = {
 	customObjectName = "Mabari Armorweave Boots",
 	directObjectTemplate = "object/tangible/wearables/armor/zam/armor_zam_wesell_boots.iff",
 	craftingValues = {
-		{"armor_rating",1,1,0},
+		{"armor_rating",1,3,0},
 		{"heateffectiveness",10,40,10},
 		{"blasteffectiveness",10,40,10},
 		{"armor_effectiveness",4,19,10},

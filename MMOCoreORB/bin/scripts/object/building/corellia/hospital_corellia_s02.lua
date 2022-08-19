@@ -42,6 +42,7 @@
 
 
 object_building_corellia_hospital_corellia_s02 = object_building_corellia_shared_hospital_corellia_s02:new {
+--	gameObjectType = 518,
 	skillMods = {
 		{"private_medical_rating", 100},
 		{"private_med_wound_health", 100},

@@ -59,7 +59,7 @@ DisarmingShot2Command = {
 
 	combatSpam = "disarmblast",
 
-	weaponType = PISTOLWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

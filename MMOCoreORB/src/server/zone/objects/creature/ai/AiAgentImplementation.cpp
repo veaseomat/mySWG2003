@@ -144,17 +144,32 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	convoTemplateCRC = npcTemplate->getConversationTemplate();
 
+	bool legendarynpc = false;
+
 	int newlvl = getTemplateLevel();
 	if (newlvl > 100) newlvl = 100;
 
-	level = newlvl;
+	newlvl *= 3;
+
+	if (System::random(100) >= 100) {
+		legendarynpc = true;
+		newlvl *= 1.5 + (System::random(50) * .01);
+	}
+
+	float lvlrandomizer = .9 + (System::random(20) * .01);
+
+	level = newlvl * lvlrandomizer;
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float minDmg = level * 5.0 + (System::random(20) * .1);
-	float maxDmg = level * 10.0 + (System::random(20) * .1);
-	float speed = calculateAttackSpeed(level);
+	float randomizer = .8 + (System::random(20) * .01);
+	float randomtwo = .8 + (System::random(20) * .01);
+
+	float minDmg = (level * 5);// * randomizer;
+	float maxDmg = (level * 10);// * randomizer;
+	float speed = (3.5 - (level * .01));// * randomtwo;//calculateAttackSpeed(level);
 	bool allowedWeapon = true;
+
 
 	if (petDeed != nullptr) {
 		minDmg = petDeed->getMinDamage();
@@ -186,7 +201,13 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		ManagedReference<WeaponObject*> weao = (getZoneServer()->createObject(crc, getPersistenceLevel())).castTo<WeaponObject*>();
 
 		if (weao != nullptr) {
-			float mod = 1 - 0.1*weao->getArmorPiercing();
+			float mod = 1.0;//1 - 0.1*weao->getArmorPiercing();
+
+//			if (System::random(100) >= 100) {
+//				mod = 2.0;
+//				legendarynpc = true;
+//			}
+
 			weao->setMinDamage(minDmg * mod);
 			weao->setMaxDamage(maxDmg * mod);
 
@@ -232,24 +253,24 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	int ham = 0;
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
-		int health = (level * 80) + System::random(level * 20);
-		int str = (level * 60) + System::random(level * 40);
+		int health = (level * 90) + System::random(level * 10);
+		int str = (level * 70) + System::random(level * 30);//npc defenses based on this one
 		int con = (level * 70) + System::random(level * 30);
-		baseHAM.add(health * .3);
-		baseHAM.add(str);
-		baseHAM.add(con);
-		int action = (level * 70) + System::random(level * 30);
-		int quick = (level * 60) + System::random(level * 40);
+		baseHAM.add(health / 10);
+		baseHAM.add(str / 10);
+		baseHAM.add(con / 10);
+		int action = (level * 80) + System::random(level * 20);
+		int quick = (level * 70) + System::random(level * 30);//npc accuracy based on this one
 		int stam = (level * 70) + System::random(level * 30);
-		baseHAM.add(action * .3);
-		baseHAM.add(quick);
-		baseHAM.add(stam);
-		int mind = (level * 40) + System::random(level * 60);
-		int focus = (level * 60) + System::random(level * 40);
+		baseHAM.add(action / 10);
+		baseHAM.add(quick / 10);
+		baseHAM.add(stam / 10);
+		int mind = (level * 60) + System::random(level * 40);
+		int focus = (level * 80);//this one is static for determining if npc will hit single pool
 		int will = (level * 70) + System::random(level * 30);
-		baseHAM.add(mind * .3);
-		baseHAM.add(focus);
-		baseHAM.add(will);
+		baseHAM.add(mind / 10);
+		baseHAM.add(focus / 10);
+		baseHAM.add(will / 10);
 
 //		int health = (level * 200) + System::random(level * 40);
 //		baseHAM.add(health);
@@ -310,7 +331,12 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		int templSpecies = getSpecies();
 
 		if (!npcTemplate->getRandomNameTag()) {
-			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies), false);
+			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#00FFFF" + " [" + level + "]", false);
+			if (legendarynpc == true) {
+				//objectName = npcTemplate->getObjectName() + "(Legendary)";
+				//setCustomObjectName("(Legendary)", false);
+				setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#00FFFF" + " [" + level + "]" + "\\#FF00FF" + " (Legendary)", false);
+			}
 		} else {
 			String newName = nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies);
 			newName += " (";
@@ -321,10 +347,33 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 				newName += StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString();
 
 			newName += ")";
-			setCustomObjectName(newName, false);
+			setCustomObjectName(newName + "\\#00FFFF" + " [" + level + "]", false);
+			if (legendarynpc == true) {
+				setCustomObjectName(newName + "\\#00FFFF" + " [" + level + "]" + "\\#FF00FF" + " (Legendary)", false);
+			}
 		}
 	} else {
-		setCustomObjectName(templateData->getCustomName(), false);
+//		NameManager* nm = server->getNameManager();
+//		int templSpecies = getSpecies();
+//		String newName2 = nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies);
+//		newName2 += " (";
+//
+//			newName2 += templateData->getCustomName();
+//
+//		newName2 += ")";
+//
+//		setCustomObjectName(newName2 + " [" + level + "]", false);
+
+//		String newname2 = templateData->getCustomName();
+//
+//		newname2 += " [";
+//		newname2 += level;
+//		newname2 += "]";
+
+		setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#00FFFF" + " [" + level + "]", false);
+		if (legendarynpc == true) {
+			setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#00FFFF" + " [" + level + "]" + "\\#FF00FF" + " (Legendary)", false);
+		}
 	}
 
 	setHeight(templateData->getScale(), false);
@@ -1113,37 +1162,39 @@ void AiAgentImplementation::selectWeapon() {
 	WeaponObject* finalWeap = nullptr;
 	ManagedReference<WeaponObject*> defaultWeapon = getSlottedObject("default_weapon").castTo<WeaponObject*>();
 
-	if (getUseRanged()) {
-		if (readyWeapon != nullptr && readyWeapon->isRangedWeapon()) {
-			finalWeap = readyWeapon;
-		} else if (defaultWeapon != nullptr && defaultWeapon->isRangedWeapon()) {
-			finalWeap = defaultWeapon;
-		}
-
-	} else {
-		ManagedReference<SceneObject*> followCopy = getFollowObject().get();
-		float dist = 5.f;
-
-		if (followCopy != nullptr)
-			dist = getDistanceTo(followCopy) - followCopy->getTemplateRadius() - getTemplateRadius();
-
-		float readyWeaponRangeDiff = -1.f;
-		float defaultWeaponRangeDiff = 100.f;
-
-		if (readyWeapon != nullptr) {
-			finalWeap = readyWeapon;
-			readyWeaponRangeDiff = fabs(readyWeapon->getIdealRange() - dist);
-		}
-
-		if (defaultWeapon != nullptr && defaultWeapon->getMaxRange() >= dist) {
-			defaultWeaponRangeDiff = fabs(defaultWeapon->getIdealRange() - dist);
-		}
-
-		if (finalWeap == nullptr || readyWeaponRangeDiff > defaultWeaponRangeDiff)
-			finalWeap = defaultWeapon;
-	}
+//	if (getUseRanged()) {
+//		if (readyWeapon != nullptr && readyWeapon->isRangedWeapon()) {
+//			finalWeap = readyWeapon;
+//		} else if (defaultWeapon != nullptr && defaultWeapon->isRangedWeapon()) {
+//			finalWeap = defaultWeapon;
+//		}
+//
+//	} else {
+//		ManagedReference<SceneObject*> followCopy = getFollowObject().get();
+//		float dist = 5.f;
+//
+//		if (followCopy != nullptr)
+//			dist = getDistanceTo(followCopy) - followCopy->getTemplateRadius() - getTemplateRadius();
+//
+//		float readyWeaponRangeDiff = -1.f;
+//		float defaultWeaponRangeDiff = 100.f;
+//
+//		if (readyWeapon != nullptr) {
+//			finalWeap = readyWeapon;
+//			readyWeaponRangeDiff = fabs(readyWeapon->getIdealRange() - dist);
+//		}
+//
+//		if (defaultWeapon != nullptr && defaultWeapon->getMaxRange() >= dist) {
+//			defaultWeaponRangeDiff = fabs(defaultWeapon->getIdealRange() - dist);
+//		}
+//
+//		if (finalWeap == nullptr || readyWeaponRangeDiff > defaultWeaponRangeDiff)
+//			finalWeap = defaultWeapon;
+//	}
 
 	ManagedReference<WeaponObject*> currentWeapon = getWeapon();
+
+	finalWeap = readyWeapon;//try readyweapon next
 
 	if (currentWeapon != finalWeap) {
 		if (currentWeapon != nullptr && currentWeapon != defaultWeapon) {
@@ -1704,13 +1755,18 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 
 	float modifier = (float)latency/1000.f;
 
+	//modifier *= .7f;//npc needs nerf to be similar to player
+
+	if (!isInCombat() && isPet())
+		modifier *= 3;
+
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::CONSTITUTION)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::HEALTH)) * 13.0f / 2100.0f * modifier);
 	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::STAMINA)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::ACTION)) * 13.0f / 2100.0f * modifier);
 	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::WILLPOWER)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::MIND)) * 13.0f / 2100.0f * modifier);
 
 	if (healthTick < 1)
 		healthTick = 1;
@@ -1721,11 +1777,28 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 	if (mindTick < 1)
 		mindTick = 1;
 
-	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick * .5, true, false);
-	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick * .5, true, false);
-	healDamage(asCreatureObject(), CreatureAttribute::MIND, mindTick * .25, true, false);
+	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
+	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
+	healDamage(asCreatureObject(), CreatureAttribute::MIND, mindTick, true, false);
 
-    activatePassiveWoundRegeneration();
+
+	ManagedReference<SceneObject*> obj = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
+
+	if (!isInCombat() && isPet() && obj != nullptr) {
+		healWound(asCreatureObject(), CreatureAttribute::HEALTH, 5, true, false);
+		healWound(asCreatureObject(), CreatureAttribute::STRENGTH, 5, true, false);
+		healWound(asCreatureObject(), CreatureAttribute::CONSTITUTION, 5, true, false);
+		healWound(asCreatureObject(), CreatureAttribute::ACTION, 5, true, false);
+		healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, 5, true, false);
+		healWound(asCreatureObject(), CreatureAttribute::STAMINA, 5, true, false);
+		healWound(asCreatureObject(), CreatureAttribute::MIND, 5, true, false);
+		healWound(asCreatureObject(), CreatureAttribute::FOCUS, 5, true, false);
+		healWound(asCreatureObject(), CreatureAttribute::WILLPOWER, 5, true, false);
+	}
+
+
+//    activatePassiveWoundRegeneration();
+//    CreatureObjectImplementation::activatePassiveWoundRegeneration();
 }
 
 void AiAgentImplementation::updateCurrentPosition(PatrolPoint* pos) {
@@ -2628,38 +2701,105 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 //	alm->insertAttribute("cat_wpn_damage", damageMsg.toString());
 
 
-//	int npchitchance = getChanceHit() * 100;
+//	int mindam = weapon->getMinDamage();
+//	int maxdam = weapon->getMaxDamage();
 //
-//	if (npchitchance < 25) {
-//		npchitchance = 25;
-//	}
-//	if (npchitchance > 55) {
-//		npchitchance = 55;
+//	float attackSpeed = (1.0f - ((float) level / 100.0f)) * weapon->getAttackSpeed();
+//
+//	if (attackSpeed < 1.0)
+//		attackSpeed = 1.0;
+//	if (hasState(CreatureState::STUNNED)) {
+//		attackSpeed *= 1.2;
 //	}
 //
-//	if (npchitchance > 0) {
-//	alm->insertAttribute("basetohit", npchitchance);
+//	alm->insertAttribute("ai speed", attackSpeed);
+//
+//	int aidam = ((mindam + maxdam) / 2) / attackSpeed;
+//
+//	alm->insertAttribute("damage.wpn_damage_min", mindam);
+//
+//	alm->insertAttribute("damage.wpn_damage_max", maxdam);
+//
+//	alm->insertAttribute("AI DPS", aidam);
+
+	if (getArmor() == 0)
+		alm->insertAttribute("armorrating", "None");
+	else if (getArmor() == 1)
+		alm->insertAttribute("armorrating", "Light");
+	else if (getArmor() == 2)
+		alm->insertAttribute("armorrating", "Medium");
+	else if (getArmor() == 3)
+		alm->insertAttribute("armorrating", "Heavy");
+
+	//int npchitchance = getChanceHit() * 100;
+//	int npchitchance = getMaxHAM(CreatureAttribute::FOCUS) / 10;
+//
+//	if (weapon->isMeleeWeapon()) {
+//		npchitchance *= 1.1;
 //	}
+//	if (weapon->isRangedWeapon() && isKneeling()) {
+//		npchitchance *= 1.2;
+//	}
+//	if (weapon->isRangedWeapon() && isProne()) {
+//		npchitchance *= 1.4;
+//	}
+//	if (isRunning()) {
+//		npchitchance *= .6;
+//	}
+//	if (hasState(CreatureState::BLINDED)) {
+//		npchitchance *= .8;
+//	}
+//	if (npchitchance > 150)
+//		npchitchance = 150;
+//
+//	alm->insertAttribute("ai accuracy", npchitchance);
 
-//	if (getArmor() == 0)
-//		alm->insertAttribute("armorrating", "None");
-//	else if (getArmor() == 1)
-//		alm->insertAttribute("armorrating", "Light");
-//	else if (getArmor() == 2)
-//		alm->insertAttribute("armorrating", "Medium");
-//	else if (getArmor() == 3)
-//		//alm->insertAttribute("armorrating", "Medium");
-//		alm->insertAttribute("armorrating", "Heavy");
+//	int targetDefense = getMaxHAM(CreatureAttribute::STRENGTH) / 10;//npc target defense based off 3k ham
+//	targetDefense *= .5;
+//
+//	if (getWeapon()->isMeleeWeapon()) {
+//		targetDefense *= 1.1;
+//	}
+//	if (isKneeling()) {
+//		targetDefense *= .8;
+//	}
+//	if (isProne()) {
+//		targetDefense *= .6;
+//	}
+//	if (isKnockedDown()) {
+//		targetDefense *= .4;
+//	}
+//	if (hasState(CreatureState::INTIMIDATED)) {
+//		targetDefense *= .8;
+//	}
+//	if (targetDefense < 0)
+//		targetDefense = 0;
+//
+//	alm->insertAttribute("ai defense", targetDefense);
 
-	int npcKinetic = getKinetic();
-	int npcEnergy = getEnergy();
-	int npcElectricity = getElectricity();
-	int npcStun = getStun();
-	int npcBlast = getBlast();
-	int npcHeat = getHeat();
-	int npcCold = getCold();
-	int npcAcid = getAcid();
-	int npcLightSaber = getLightSaber();
+
+	//states!!!!!!!!!!!
+//		float statedef = 0.f;
+//
+//		statedef = getMaxHAM(CreatureAttribute::STRENGTH) / 20;
+//
+//		if (statedef > 150)
+//			statedef = 150;
+//
+//		statedef /= 3;
+//
+//		alm->insertAttribute("state Defense", statedef);
+
+
+//	int npcKinetic = getKinetic();
+//	int npcEnergy = getEnergy();
+//	int npcElectricity = getElectricity();
+//	int npcStun = getStun();
+//	int npcBlast = getBlast();
+//	int npcHeat = getHeat();
+//	int npcCold = getCold();
+//	int npcAcid = getAcid();
+//	int npcLightSaber = getLightSaber();
 
 //	if (npcKinetic == nullptr){
 //		npcKinetic = 0;
@@ -2758,86 +2898,86 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 //	}
 
 
-
-	if (npcKinetic < 1000){
-		if (getKinetic() > 80)
-			npcKinetic = 80;
-		if (getKinetic() < 0)
-			npcKinetic = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcKinetic, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_kinetic", txt.toString());
-	}
-
-	if (npcEnergy < 1000){
-		if (getEnergy() > 80)
-			npcEnergy = 80;
-		if (getEnergy() < 0)
-			npcEnergy = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcEnergy, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_energy", txt.toString());
-	}
-
-	if (npcElectricity < 1000){
-		if (getElectricity() > 80)
-			npcElectricity = 80;
-		if (getElectricity() < 0)
-			npcElectricity = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcElectricity, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_electrical", txt.toString());
-	}
-
-	if (npcBlast < 1000){
-		if (getBlast() > 80)
-			npcBlast = 80;
-		if (getBlast() < 0)
-			npcBlast = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcBlast, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_blast", txt.toString());
-	}
-
-	if (npcHeat < 1000){
-		if (getHeat() > 80)
-			npcHeat = 80;
-		if (getHeat() < 0)
-			npcHeat = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcHeat, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_heat", txt.toString());
-	}
-
-	if (npcCold < 1000){
-		if (getCold() > 80)
-			npcCold = 80;
-		if (getCold() < 0)
-			npcCold = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcCold, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_cold", txt.toString());
-	}
-
-	if (npcAcid < 1000){
-		if (getAcid() > 80)
-			npcAcid = 80;
-		if (getAcid() < 0)
-			npcAcid = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcAcid, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_acid", txt.toString());
-	}
-
-	if (getStun() > -10) {
-		if (getStun() > 80)
-			npcStun = 80;
-		if (getStun() < 0)
-			npcStun = 0;
-		StringBuffer txt;
-		txt << Math::getPrecision(npcStun, 1) << "%";
-		alm->insertAttribute("cat_armor_effectiveness.armor_eff_stun", txt.toString());
-	}
+//
+//	if (npcKinetic < 1000){
+//		if (getKinetic() > 80)
+//			npcKinetic = 80;
+//		if (getKinetic() < 0)
+//			npcKinetic = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcKinetic, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_kinetic", txt.toString());
+//	}
+//
+//	if (npcEnergy < 1000){
+//		if (getEnergy() > 80)
+//			npcEnergy = 80;
+//		if (getEnergy() < 0)
+//			npcEnergy = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcEnergy, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_energy", txt.toString());
+//	}
+//
+//	if (npcElectricity < 1000){
+//		if (getElectricity() > 80)
+//			npcElectricity = 80;
+//		if (getElectricity() < 0)
+//			npcElectricity = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcElectricity, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_electrical", txt.toString());
+//	}
+//
+//	if (npcBlast < 1000){
+//		if (getBlast() > 80)
+//			npcBlast = 80;
+//		if (getBlast() < 0)
+//			npcBlast = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcBlast, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_blast", txt.toString());
+//	}
+//
+//	if (npcHeat < 1000){
+//		if (getHeat() > 80)
+//			npcHeat = 80;
+//		if (getHeat() < 0)
+//			npcHeat = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcHeat, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_heat", txt.toString());
+//	}
+//
+//	if (npcCold < 1000){
+//		if (getCold() > 80)
+//			npcCold = 80;
+//		if (getCold() < 0)
+//			npcCold = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcCold, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_cold", txt.toString());
+//	}
+//
+//	if (npcAcid < 1000){
+//		if (getAcid() > 80)
+//			npcAcid = 80;
+//		if (getAcid() < 0)
+//			npcAcid = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcAcid, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_acid", txt.toString());
+//	}
+//
+//	if (getStun() > -10) {
+//		if (getStun() > 80)
+//			npcStun = 80;
+//		if (getStun() < 0)
+//			npcStun = 0;
+//		StringBuffer txt;
+//		txt << Math::getPrecision(npcStun, 1) << "%";
+//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_stun", txt.toString());
+//	}
 
 //	if (getKinetic() <= 0)
 //		alm->insertAttribute("cat_armor_vulnerability.armor_eff_kinetic", "-");

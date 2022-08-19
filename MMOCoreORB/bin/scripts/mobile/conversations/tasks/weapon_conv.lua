@@ -12,16 +12,17 @@ masterweapon_first_screen = ConvoScreen:new {
     options = { 
         --{"Doc/Ent Buffs - 5k", "buff1"},
         --{"1500 Health/Action Buffs - 10k", "buff2"},
-        {"Laser Carbine - 25k", "option1"},
-        {"Laser Rifle - 25k", "option2"},
-        {"FWG5 Pistol - 25k", "option3"},
-        {"1h Curved Sword - 25k", "option4"},
-        {"2h Curved Sword - 25k", "option5"},
-        {"Lance - 25k", "option6"},
-        {"Vibro Knuckler - 25k", "option7"},
-        {"Light Lightning Cannon - 25k", "option8"},
-        {"Flame Thrower - 25k", "option9"},
-        {"Heavy Acid Rifle - 25k", "option10"},
+        {"E11 Carbine - 50k", "option1"},
+        {"E11 Rifle - 50k", "option2"},
+        {"FWG5 Pistol - 50k", "option3"},
+        {"1h Stun Baton - 50k", "option4"},
+        {"2h Cleaver- 50k", "option5"},
+        {"Polearm Vibrolance - 50k", "option6"},
+        {"Vibro Knuckler - 50k", "option7"},
+        {"Light Lightning Cannon - 50k", "option8"},
+        {"Flame Thrower - 50k", "option9"},
+        {"Heavy Acid Rifle - 50k", "option10"},
+        {"Proton Grenade - 50k", "option11"},
         {"No thank you.", "deny_quest"},
     }
 }
@@ -105,6 +106,13 @@ masterweapon_accept_quest = ConvoScreen:new {
 }
 masterweapon_accept_quest = ConvoScreen:new {    
     id = "option10",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+masterweapon_accept_quest = ConvoScreen:new {    
+    id = "option11",
     leftDialog = "",
     customDialogText = "Enjoy!",
     stopConversation = "true",

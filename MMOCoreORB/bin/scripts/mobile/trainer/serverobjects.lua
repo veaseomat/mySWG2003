@@ -43,3 +43,6 @@ includeFile("trainer/master_weaponsmith.lua")
 includeFile("trainer/master_architect.lua")
 includeFile("trainer/master_chef.lua")
 includeFile("trainer/master_artisan.lua")
+
+includeFile("trainer/trainer_myswg.lua")
+includeFile("trainer/myswg_vendor.lua")

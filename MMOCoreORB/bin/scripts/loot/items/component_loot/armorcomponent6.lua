@@ -12,7 +12,7 @@ armorcomponent6 = {
 		{"armor_health_encumbrance",13,1,0},
 		{"armor_action_encumbrance",13,1,0},
 		{"armor_mind_encumbrance",16,1,1},
-		{"armor_rating",1,1,0},
+		{"armor_rating",1,3,0},
 		{"armor_special_type",256,256,0},
 		{"armor_special_effectiveness",1,35,10},
 		{"armor_special_integrity",100,1000,0},

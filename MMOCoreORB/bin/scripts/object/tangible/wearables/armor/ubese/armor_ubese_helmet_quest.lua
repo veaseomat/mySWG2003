@@ -89,7 +89,7 @@ object_tangible_wearables_armor_ubese_armor_ubese_helmet_quest = object_tangible
 	mindEncumbrance = 180,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	maxCondition = 20000,
 

@@ -4,7 +4,7 @@ bone_armor_bicep_l = {
 	customObjectName = "Bone Armor Left Bicep",
 	directObjectTemplate = "object/tangible/wearables/armor/bone/armor_bone_s01_bicep_l.iff",
 	craftingValues = {
-		{"armor_rating",1,1,0},
+		{"armor_rating",1,3,0},
 		{"energyeffectiveness",10,35,10},
 		{"armor_effectiveness",4,19,10},
 		{"armor_integrity",7500, 12500,0},

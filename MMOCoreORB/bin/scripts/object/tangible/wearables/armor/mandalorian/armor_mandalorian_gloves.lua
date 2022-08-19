@@ -97,7 +97,7 @@ object_tangible_wearables_armor_mandalorian_armor_mandalorian_gloves = object_ta
 	mindEncumbrance = 62,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = HEAVY,
 	maxCondition = 40000,
 
 	kinetic = 50,

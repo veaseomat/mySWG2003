@@ -4,7 +4,7 @@ bone_armor_gloves = {
 	customObjectName = "Bone Armor Gloves",
 	directObjectTemplate = "object/tangible/wearables/armor/bone/armor_bone_s01_gloves.iff",
 	craftingValues = {
-		{"armor_rating",1,1,0},
+		{"armor_rating",1,3,0},
 		{"energyeffectiveness",10,35,10},
 		{"armor_effectiveness",4,19,10},
 		{"armor_integrity",7500, 12500,0},

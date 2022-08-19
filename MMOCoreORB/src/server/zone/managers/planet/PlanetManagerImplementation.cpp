@@ -782,6 +782,8 @@ void PlanetManagerImplementation::loadClientRegions(LuaObject* outposts) {
 	dtiff.readObject(iffStream);
 
 	String zoneName = zone->getZoneName();
+
+	//removing this allows building in cities but also allows spawns
 	for (int i = 0; i < dtiff.getTotalRows(); ++i) {
 		String regionName;
 		float x, y, radius;
@@ -881,29 +883,29 @@ bool PlanetManagerImplementation::validateClientCityInRange(CreatureObject* crea
 
 	Locker locker(_this.getReferenceUnsafeStaticCast());
 
-	for (int i = 0; i < regionMap.getTotalRegions(); ++i) {
-		CityRegion* region = regionMap.getRegion(i);
-
-		for (int j = 0; j < region->getRegionsCount(); ++j) {
-			Region* activeRegion = region->getRegion(j);
-			float radius = activeRegion->getRadius();
-
-			if (radius < 512)
-				radius = 512;
-
-			float range = radius * 2;
-
-			Vector3 position(activeRegion->getPositionX(), activeRegion->getPositionY(), 0);
-
-			if (position.squaredDistanceTo(testPosition) <= range * range) {
-				StringIdChatParameter msg("player_structure", "city_too_close");
-				msg.setTO(region->getRegionName());
-
-				creature->sendSystemMessage(msg);
-				return false;
-			}
-		}
-	}
+//	for (int i = 0; i < regionMap.getTotalRegions(); ++i) {
+//		CityRegion* region = regionMap.getRegion(i);
+//
+//		for (int j = 0; j < region->getRegionsCount(); ++j) {
+//			Region* activeRegion = region->getRegion(j);
+//			float radius = activeRegion->getRadius();
+//
+//			if (radius < 512)
+//				radius = 512;
+//
+//			float range = radius * 2;
+//
+//			Vector3 position(activeRegion->getPositionX(), activeRegion->getPositionY(), 0);
+//
+//			if (position.squaredDistanceTo(testPosition) <= range * range) {
+//				StringIdChatParameter msg("player_structure", "city_too_close");
+//				msg.setTO(region->getRegionName());
+//
+//				creature->sendSystemMessage(msg);
+//				return false;
+//			}
+//		}
+//	}
 
 	return true;
 }
@@ -1017,10 +1019,8 @@ bool PlanetManagerImplementation::isSpawningPermittedAt(float x, float y, float 
 
 	targetPos.setZ(zone->getHeight(x, y));
 
-	float newradius = System::random(64);
-
 	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
-	zone->getInRangeActiveAreas(x, y, margin + newradius, &activeAreas, true);//raw value of 0 instead of margin+ x is no area 64.f is vanilla
+	zone->getInRangeActiveAreas(x, y, 32, &activeAreas, true);//raw value of 0 instead of margin+ x is no area 64.f is vanilla
 
 	for (int i = 0; i < activeAreas.size(); ++i) {
 		ActiveArea* area = activeAreas.get(i);
@@ -1041,8 +1041,8 @@ bool PlanetManagerImplementation::isSpawningPermittedAt(float x, float y, float 
 	if (isInRangeWithPoi(x, y, 150))
 		return false;
 
-//	if (terrainManager->getHighestHeightDifference(x - 10, y - 10, x + 10, y + 10) > 15.0)
-//		return false;
+	if (terrainManager->getHighestHeightDifference(x - 10, y - 10, x + 10, y + 10) > 15.0)
+		return false;
 
 	return true;
 }
@@ -1059,13 +1059,13 @@ bool PlanetManagerImplementation::isBuildingPermittedAt(float x, float y, SceneO
 
 	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
 
-//	for (int i = 0; i < activeAreas.size(); ++i) {//removing this lets you drop houses closer to cities
-//		ActiveArea* area = activeAreas.get(i);
-//
-//		if (area->isNoBuildArea()) {
-//			return false;
-//		}
-//	}
+	for (int i = 0; i < activeAreas.size(); ++i) {
+		ActiveArea* area = activeAreas.get(i);
+
+		if (area->isNoBuildArea()) {
+			return false;
+		}
+	}
 
 	if (isInObjectsNoBuildZone(x, y, margin, checkFootprint)) {
 		return false;

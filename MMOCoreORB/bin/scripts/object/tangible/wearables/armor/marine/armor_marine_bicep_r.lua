@@ -98,7 +98,7 @@ object_tangible_wearables_armor_marine_armor_marine_bicep_r = object_tangible_we
 	mindEncumbrance = 19,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	maxCondition = 45000,
 

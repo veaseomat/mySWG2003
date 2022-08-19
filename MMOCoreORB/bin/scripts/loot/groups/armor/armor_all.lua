@@ -6,8 +6,8 @@ armor_all = {
 		{groupTemplate = "ithorian_defender_armor", weight = 500000},
 		{groupTemplate = "kashyyykian_black_mtn_armor", weight = 500000},
 		
-		{groupTemplate = "bone_armor", weight = 3000000},
-		{groupTemplate = "mabari_armor", weight = 2000000},
+		{groupTemplate = "bone_armor", weight = 2500000},
+		{groupTemplate = "mabari_armor", weight = 2500000},
 		{groupTemplate = "chitin_armor", weight = 1500000},
 		{groupTemplate = "ubese_armor", weight = 1000000},
 		{groupTemplate = "padded_armor", weight = 1000000},

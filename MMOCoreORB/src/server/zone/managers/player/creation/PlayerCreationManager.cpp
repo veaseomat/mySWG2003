@@ -576,7 +576,7 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 
 	ManagedReference<SuiMessageBox*> box = new SuiMessageBox(playerCreature, SuiWindowType::NONE);
 	box->setPromptTitle("WELCOME");
-	box->setPromptText("Welcome to mySWG! \n   Character creation is limited to 1 every hour, 2 characters Max. Using multiple accounts will get you banned. \nDon't forget to migrate your stats! They can also be migrated like this in Image Designer tents. Have fun!");
+	box->setPromptText("Welcome to mySWG! \n   Character creation is limited to 1 every hour, 5 characters Max, 2 online at a time. Using multiple accounts will get you banned. \nDon't forget to migrate your stats! Stats can also be migrated in Image Designer tents. Have fun!");
 
 	ghost->addSuiBox(box);
 	playerCreature->sendMessage(box->generateMessage());

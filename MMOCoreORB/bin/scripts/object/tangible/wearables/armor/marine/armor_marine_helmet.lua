@@ -89,7 +89,7 @@ object_tangible_wearables_armor_marine_armor_marine_helmet = object_tangible_wea
 	mindEncumbrance = 225,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	maxCondition = 45000,
 

@@ -1342,10 +1342,15 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 //	}
 
 
+	int currentcredits = player->getCashCredits() / 2;
+
+	player->subtractCashCredits(currentcredits);
+
+
 //PERMADEATH!
 	if (player->hasSkill("force_title_jedi_rank_02") && !attacker->isPlayerCreature())  {
 
-		int jediDeaths = ghost->getExperience("jedi_deaths");
+		int jediDeaths = ghost->getExperience("combat_meleespecialize_onehandlightsaber");
 
 		if (jediDeaths < 1) {
 			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
@@ -1355,7 +1360,7 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 			ghost->addSuiBox(box);
 			player->sendMessage(box->generateMessage());
 
-			awardExperience(player, "jedi_deaths", 1, false, 1, false);
+			awardExperience(player, "combat_meleespecialize_onehandlightsaber", 1, false, 1, false);
 
 		}
 
@@ -1367,7 +1372,7 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 			ghost->addSuiBox(box);
 			player->sendMessage(box->generateMessage());
 
-			awardExperience(player, "jedi_deaths", 1, false, 1, false);
+			awardExperience(player, "combat_meleespecialize_onehandlightsaber", 1, false, 1, false);
 		}
 
 		if (jediDeaths >= 2) {
@@ -1379,7 +1384,7 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 			ghost->setJediState(0);
 
-			awardExperience(player, "jedi_deaths", 0, false, 1, false);
+			awardExperience(player, "combat_meleespecialize_onehandlightsaber", 0, false, 1, false);
 
 			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
 			box->setPromptTitle("PERMADEATH!");
@@ -1940,65 +1945,65 @@ bool PlayerManagerImplementation::checkEncumbrancies(CreatureObject* player, Arm
 	int actionEncumb = armor->getActionEncumbrance();
 	int mindEncumb = armor->getMindEncumbrance();
 
-	if (healthEncumb <= 0 && actionEncumb <= 0 && mindEncumb <= 0)
-		return true;
+//	if (healthEncumb <= 0 && actionEncumb <= 0 && mindEncumb <= 0)
+//		return true;
 
-	if (healthEncumb >= strength || healthEncumb >= constitution ||
-			actionEncumb >= quickness || actionEncumb >= stamina ||
-			mindEncumb >= focus || mindEncumb >= willpower) {
-		player->sendSystemMessage("@system_msg:equip_armor_fail"); // You are not healthy enough to wear this armor!
+//	if (healthEncumb >= strength || healthEncumb >= constitution ||
+//			actionEncumb >= quickness || actionEncumb >= stamina ||
+//			mindEncumb >= focus || mindEncumb >= willpower) {
+//		player->sendSystemMessage("@system_msg:equip_armor_fail"); // You are not healthy enough to wear this armor!
+//
+//		if (healthEncumb >= strength) {
+//			int statStr = (healthEncumb - strength) + 1;
+//			StringIdChatParameter params("@system_msg:equip_armor_fail_prose"); // You need %DI more %TT to wear this armor.
+//			params.setDI(statStr);
+//			params.setTT("@att_n:strength");
+//			player->sendSystemMessage(params);
+//		}
 
-		if (healthEncumb >= strength) {
-			int statStr = (healthEncumb - strength) + 1;
-			StringIdChatParameter params("@system_msg:equip_armor_fail_prose"); // You need %DI more %TT to wear this armor.
-			params.setDI(statStr);
-			params.setTT("@att_n:strength");
-			player->sendSystemMessage(params);
-		}
-
-		if (healthEncumb >= constitution) {
-			int statCon = (healthEncumb - constitution) + 1;
-			StringIdChatParameter params("@system_msg:equip_armor_fail_prose");
-			params.setDI(statCon);
-			params.setTT("@att_n:constitution");
-			player->sendSystemMessage(params);
-		}
-
-		if (actionEncumb >= quickness) {
-			int statQuick = (actionEncumb - quickness) + 1;
-			StringIdChatParameter params("@system_msg:equip_armor_fail_prose");
-			params.setDI(statQuick);
-			params.setTT("@att_n:quickness");
-			player->sendSystemMessage(params);
-		}
-
-		if (actionEncumb >= stamina) {
-			int statStam = (actionEncumb - stamina) + 1;
-			StringIdChatParameter params("@system_msg:equip_armor_fail_prose");
-			params.setDI(statStam);
-			params.setTT("@att_n:stamina");
-			player->sendSystemMessage(params);
-		}
-
-		if (mindEncumb >= focus) {
-			int statFoc = (mindEncumb - focus) + 1;
-			StringIdChatParameter params("@system_msg:equip_armor_fail_prose");
-			params.setDI(statFoc);
-			params.setTT("@att_n:focus");
-			player->sendSystemMessage(params);
-		}
-
-		if (mindEncumb >= willpower) {
-			int statWill = (mindEncumb - willpower) + 1;
-			StringIdChatParameter params("@system_msg:equip_armor_fail_prose");
-			params.setDI(statWill);
-			params.setTT("@att_n:willpower");
-			player->sendSystemMessage(params);
-		}
-
-		return false;
-	}
-	else
+//		if (healthEncumb >= constitution) {
+//			int statCon = (healthEncumb - constitution) + 1;
+//			StringIdChatParameter params("@system_msg:equip_armor_fail_prose");
+//			params.setDI(statCon);
+//			params.setTT("@att_n:constitution");
+//			player->sendSystemMessage(params);
+//		}
+//
+//		if (actionEncumb >= quickness) {
+//			int statQuick = (actionEncumb - quickness) + 1;
+//			StringIdChatParameter params("@system_msg:equip_armor_fail_prose");
+//			params.setDI(statQuick);
+//			params.setTT("@att_n:quickness");
+//			player->sendSystemMessage(params);
+//		}
+//
+//		if (actionEncumb >= stamina) {
+//			int statStam = (actionEncumb - stamina) + 1;
+//			StringIdChatParameter params("@system_msg:equip_armor_fail_prose");
+//			params.setDI(statStam);
+//			params.setTT("@att_n:stamina");
+//			player->sendSystemMessage(params);
+//		}
+//
+//		if (mindEncumb >= focus) {
+//			int statFoc = (mindEncumb - focus) + 1;
+//			StringIdChatParameter params("@system_msg:equip_armor_fail_prose");
+//			params.setDI(statFoc);
+//			params.setTT("@att_n:focus");
+//			player->sendSystemMessage(params);
+//		}
+//
+//		if (mindEncumb >= willpower) {
+//			int statWill = (mindEncumb - willpower) + 1;
+//			StringIdChatParameter params("@system_msg:equip_armor_fail_prose");
+//			params.setDI(statWill);
+//			params.setTT("@att_n:willpower");
+//			player->sendSystemMessage(params);
+//		}
+//
+//		return false;
+//	}
+//	else
 		return true;
 }
 
@@ -2007,31 +2012,31 @@ void PlayerManagerImplementation::applyEncumbrancies(CreatureObject* player, Arm
 	int actionEncumb = Math::max(0, (armor->getActionEncumbrance() / 2));
 	int mindEncumb = Math::max(0, (armor->getMindEncumbrance() / 2));
 
-	player->addEncumbrance(CreatureEncumbrance::HEALTH, healthEncumb, true);
-	player->addEncumbrance(CreatureEncumbrance::ACTION, actionEncumb, true);
-	player->addEncumbrance(CreatureEncumbrance::MIND, mindEncumb, true);
+//	player->addEncumbrance(CreatureEncumbrance::HEALTH, healthEncumb, true);
+//	player->addEncumbrance(CreatureEncumbrance::ACTION, actionEncumb, true);
+//	player->addEncumbrance(CreatureEncumbrance::MIND, mindEncumb, true);
 
-//	player->setEncumbrance(CreatureEncumbrance::HEALTH, 0, true);
-//	player->setEncumbrance(CreatureEncumbrance::ACTION, 0, true);
-//	player->setEncumbrance(CreatureEncumbrance::MIND, 0, true);
+	player->setEncumbrance(CreatureEncumbrance::HEALTH, 0, true);
+	player->setEncumbrance(CreatureEncumbrance::ACTION, 0, true);
+	player->setEncumbrance(CreatureEncumbrance::MIND, 0, true);
 
-	player->inflictDamage(player, CreatureAttribute::STRENGTH, healthEncumb, true);
-	player->addMaxHAM(CreatureAttribute::STRENGTH, -healthEncumb, true);
-
-	player->inflictDamage(player, CreatureAttribute::CONSTITUTION, healthEncumb, true);
-	player->addMaxHAM(CreatureAttribute::CONSTITUTION, -healthEncumb, true);
-
-	player->inflictDamage(player, CreatureAttribute::QUICKNESS, actionEncumb, true);
-	player->addMaxHAM(CreatureAttribute::QUICKNESS, -actionEncumb, true);
-
-	player->inflictDamage(player, CreatureAttribute::STAMINA, actionEncumb, true);
-	player->addMaxHAM(CreatureAttribute::STAMINA, -actionEncumb, true);
-
-	player->inflictDamage(player, CreatureAttribute::FOCUS, mindEncumb, true);
-	player->addMaxHAM(CreatureAttribute::FOCUS, -mindEncumb, true);
-
-	player->inflictDamage(player, CreatureAttribute::WILLPOWER, mindEncumb, true);
-	player->addMaxHAM(CreatureAttribute::WILLPOWER, -mindEncumb, true);
+//	player->inflictDamage(player, CreatureAttribute::STRENGTH, healthEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::STRENGTH, -healthEncumb, true);
+//
+//	player->inflictDamage(player, CreatureAttribute::CONSTITUTION, healthEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::CONSTITUTION, -healthEncumb, true);
+//
+//	player->inflictDamage(player, CreatureAttribute::QUICKNESS, actionEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::QUICKNESS, -actionEncumb, true);
+//
+//	player->inflictDamage(player, CreatureAttribute::STAMINA, actionEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::STAMINA, -actionEncumb, true);
+//
+//	player->inflictDamage(player, CreatureAttribute::FOCUS, mindEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::FOCUS, -mindEncumb, true);
+//
+//	player->inflictDamage(player, CreatureAttribute::WILLPOWER, mindEncumb, true);
+//	player->addMaxHAM(CreatureAttribute::WILLPOWER, -mindEncumb, true);
 }
 
 void PlayerManagerImplementation::removeEncumbrancies(CreatureObject* player, ArmorObject* armor) {
@@ -2039,31 +2044,31 @@ void PlayerManagerImplementation::removeEncumbrancies(CreatureObject* player, Ar
 	int actionEncumb = Math::max(0, (armor->getActionEncumbrance() / 2));
 	int mindEncumb = Math::max(0, (armor->getMindEncumbrance() / 2));
 
-//	player->setEncumbrance(CreatureEncumbrance::HEALTH, 0, true);
-//	player->setEncumbrance(CreatureEncumbrance::ACTION, 0, true);
-//	player->setEncumbrance(CreatureEncumbrance::MIND, 0, true);
+	player->setEncumbrance(CreatureEncumbrance::HEALTH, 0, true);
+	player->setEncumbrance(CreatureEncumbrance::ACTION, 0, true);
+	player->setEncumbrance(CreatureEncumbrance::MIND, 0, true);
 
-	player->addEncumbrance(CreatureEncumbrance::HEALTH, -healthEncumb, true);
-	player->addEncumbrance(CreatureEncumbrance::ACTION, -actionEncumb, true);
-	player->addEncumbrance(CreatureEncumbrance::MIND, -mindEncumb, true);
-
-	player->addMaxHAM(CreatureAttribute::STRENGTH, healthEncumb, true);
-	player->healDamage(player, CreatureAttribute::STRENGTH, healthEncumb, true);
-
-	player->addMaxHAM(CreatureAttribute::CONSTITUTION, healthEncumb, true);
-	player->healDamage(player, CreatureAttribute::CONSTITUTION, healthEncumb, true);
-
-	player->addMaxHAM(CreatureAttribute::QUICKNESS, actionEncumb, true);
-	player->healDamage(player, CreatureAttribute::QUICKNESS, actionEncumb, true);
-
-	player->addMaxHAM(CreatureAttribute::STAMINA, actionEncumb, true);
-	player->healDamage(player, CreatureAttribute::STAMINA, actionEncumb, true);
-
-	player->addMaxHAM(CreatureAttribute::FOCUS, mindEncumb, true);
-	player->healDamage(player, CreatureAttribute::FOCUS, mindEncumb, true);
-
-	player->addMaxHAM(CreatureAttribute::WILLPOWER, mindEncumb, true);
-	player->healDamage(player, CreatureAttribute::WILLPOWER, mindEncumb, true);
+//	player->addEncumbrance(CreatureEncumbrance::HEALTH, -healthEncumb, true);
+//	player->addEncumbrance(CreatureEncumbrance::ACTION, -actionEncumb, true);
+//	player->addEncumbrance(CreatureEncumbrance::MIND, -mindEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::STRENGTH, healthEncumb, true);
+//	player->healDamage(player, CreatureAttribute::STRENGTH, healthEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::CONSTITUTION, healthEncumb, true);
+//	player->healDamage(player, CreatureAttribute::CONSTITUTION, healthEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::QUICKNESS, actionEncumb, true);
+//	player->healDamage(player, CreatureAttribute::QUICKNESS, actionEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::STAMINA, actionEncumb, true);
+//	player->healDamage(player, CreatureAttribute::STAMINA, actionEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::FOCUS, mindEncumb, true);
+//	player->healDamage(player, CreatureAttribute::FOCUS, mindEncumb, true);
+//
+//	player->addMaxHAM(CreatureAttribute::WILLPOWER, mindEncumb, true);
+//	player->healDamage(player, CreatureAttribute::WILLPOWER, mindEncumb, true);
 }
 
 void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, uint32 badgeId) {

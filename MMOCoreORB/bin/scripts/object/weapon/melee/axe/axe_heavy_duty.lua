@@ -115,9 +115,9 @@ object_weapon_melee_axe_axe_heavy_duty = object_weapon_melee_axe_shared_axe_heav
 	maxRangeAccuracy = 0,
 
 	minDamage = 25,
-	maxDamage = 110,
+	maxDamage = 98,
 
-	attackSpeed = 5,
+	attackSpeed = 6.5,
 
 	woundsRatio = 15,
 

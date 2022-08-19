@@ -107,7 +107,7 @@ function sithshadowencounter5:onEncounterSpawned(pPlayer, spawnedObjects)
 		return
 	end
 
-	CreatureObject(pPlayer):sendSystemMessage("You sense a disturbance in the force...")
+	CreatureObject(pPlayer):sendSystemMessage("The rebels have found you!")
 
 	SceneObject(pInventory):setContainerOwnerID(playerID)
 

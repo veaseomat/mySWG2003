@@ -4,7 +4,7 @@ chitin_armor_leggings = {
 	customObjectName = "Chitin Armor Leggings",
 	directObjectTemplate = "object/tangible/wearables/armor/chitin/armor_chitin_s01_leggings.iff",
 	craftingValues = {
-		{"armor_rating",1,1,0},
+		{"armor_rating",1,3,0},
 		{"kineticeffectiveness",10,40,10},
 		{"armor_effectiveness",4,29,10},
 		{"armor_integrity",15000, 25000,0},

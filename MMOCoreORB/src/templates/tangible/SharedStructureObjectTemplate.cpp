@@ -14,9 +14,9 @@ void SharedStructureObjectTemplate::readObject(LuaObject* templateData) {
 
 	lotSize = templateData->getByteField("lotSize");
 
-	baseMaintenanceRate = templateData->getIntField("baseMaintenanceRate") / 50;
+	baseMaintenanceRate = templateData->getIntField("baseMaintenanceRate") * .1;
 
-	basePowerRate = templateData->getIntField("basePowerRate") / 50;
+	basePowerRate = templateData->getIntField("basePowerRate") * .1;
 
 	allowedZones = {"corellia", "talus", "dathomir", "endor", "lok", "naboo", "rori", "tatooine", "yavin4", "dantooine"},
 
@@ -28,7 +28,7 @@ void SharedStructureObjectTemplate::readObject(LuaObject* templateData) {
 
 	uniqueStructure = templateData->getBooleanField("uniqueStructure");
 
-	cityMaintenanceBase = templateData->getIntField("cityMaintenanceBase") / 50;
+	cityMaintenanceBase = templateData->getIntField("cityMaintenanceBase") * .1;
 
-	cityMaintenanceRate = templateData->getIntField("cityMaintenanceRate") / 50;
+	cityMaintenanceRate = templateData->getIntField("cityMaintenanceRate") * .1;
 }

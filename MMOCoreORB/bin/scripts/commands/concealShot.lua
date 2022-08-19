@@ -58,7 +58,7 @@ ConcealShotCommand = {
 
 	combatSpam = "concealedshot",
 	
-	weaponType = RIFLEWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

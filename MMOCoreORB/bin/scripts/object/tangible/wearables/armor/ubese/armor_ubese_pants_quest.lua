@@ -96,7 +96,7 @@ object_tangible_wearables_armor_ubese_armor_ubese_pants_quest = object_tangible_
 	mindEncumbrance = 15,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	maxCondition = 20000,
 

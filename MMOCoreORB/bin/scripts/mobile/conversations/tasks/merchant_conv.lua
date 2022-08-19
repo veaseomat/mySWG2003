@@ -11,10 +11,11 @@ mastermerchant_first_screen = ConvoScreen:new {
     stopConversation = "false",
     options = { 
         {"speederbike - 10k", "option1"},
-        {"crate of resources - 25k", "option2"},
-        {"Random lvl 100 Weapon Loot - 100k", "option3"},
-        {"Random lvl 100 Armor Loot - 100k", "option4"},
-        {"Jedi Holocron - 10mil", "option5"},
+        {"crate of resources - 50k", "option2"},
+        {"Random max lvl Clothing Loot - 50k", "option6"},
+        {"Random max lvl Armor Loot - 50k", "option4"},
+        {"Random max lvl Weapon Loot - 100k", "option3"},
+       -- {"Jedi Holocron - 10mil", "option5"},
         {"No thank you.", "deny_quest"}, 
     }
 }

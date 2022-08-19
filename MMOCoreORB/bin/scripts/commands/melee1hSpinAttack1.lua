@@ -55,7 +55,7 @@ Melee1hSpinAttack1Command = {
 
 	combatSpam = "slashspin",
 	
-	weaponType = ONEHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	areaAction = true,
 	areaRange = 16,

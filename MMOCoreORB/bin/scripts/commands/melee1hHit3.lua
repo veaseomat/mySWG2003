@@ -68,7 +68,7 @@ Melee1hHit3Command = {
 
 	combatSpam = "chomok",
 	
-	weaponType = ONEHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 }

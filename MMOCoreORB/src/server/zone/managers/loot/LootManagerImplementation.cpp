@@ -253,7 +253,7 @@ int LootManagerImplementation::calculateLootCredits(int level) {
 
 //	int credits = mincredits + System::random(maxcredits - mincredits);
 
-	int credits = level + System::random(level * level);
+	int credits = level + System::random(level * 30);
 
 	return credits;
 }
@@ -264,10 +264,10 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
-	if(level > 100)
-		level = 100;
-
-	level *= 3;
+//	if(level > 100)
+//		level = 100;
+//
+//	level *= 3;
 
 //	if(level != 0)
 //		level = 0;
@@ -318,44 +318,29 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	setCustomObjectName(prototype, templateObject);
 
 	// this thing exponentially ruins the variance
-<<<<<<< HEAD
-	float excMod = 1.0;//0.8 + (System::random(20) * .01);// randoms up to 1.0
-=======
-	float excMod = 0.8 + (System::random(20) * .01);// randoms up to 1.0
->>>>>>> refs/remotes/origin/unstable
 
-//	float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);//removing this makes legendary chance same for all levels
+	float excMod = 1.0;// * .625;// randomize the percentage below instead
 
-<<<<<<< HEAD
 //	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
 //		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
 //	}
-//
+
 //	if (prototype->isArmorObject()) {
 //		excMod = 1.2 + (System::random(20) * .01);
 //	}
-=======
-	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
-		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
-	}
-
-	if (prototype->isArmorObject()) {
-		excMod = 1.2 + (System::random(20) * .01);
-	}
->>>>>>> refs/remotes/origin/unstable
 
 //	if (excMod >= 5.0) excMod = 5.0;
 
-//	if ((System::random(legendaryChance) >= legendaryChance) && (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject())) {
-//		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
-//		prototype->setCustomObjectName(newName, false);
-//
-//		excMod = legendaryModifier;
-//
-//		prototype->addMagicBit(false);
-//
-//		legendaryLooted.increment();
-//	}
+	if ((System::random(100) >= 100) && (prototype->isWeaponObject())) {
+		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
+		prototype->setCustomObjectName(newName, false);
+
+		excMod = 2.0;
+
+		prototype->addMagicBit(false);
+
+		legendaryLooted.increment();
+	}
 
 	if (prototype->isLightsaberCrystalObject()) {
 		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
@@ -380,11 +365,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
-<<<<<<< HEAD
-		float percentage = (level / 3) * .01;//(System::random(level / 3) * .01);// + .75;//1;//System::random(10000) / 10000.f;//this is where the variance happens
-=======
-		float percentage = 1;//(System::random(level / 3) * .01);// + .75;//1;//System::random(10000) / 10000.f;//this is where the variance happens
->>>>>>> refs/remotes/origin/unstable
+		float percentage = (((level / 3) * .01) * 0.6) + (System::random(40) * .01);//;//System::random(10000) / 10000.f;//this is where the variance happens
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll
@@ -468,7 +449,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //		prototype->addMagicBit(false);
 //		prototype->setJunkValue((int)(fJunkValue * 1.25));
 //	} else {
-	prototype->setJunkValue((int)(fJunkValue * excMod * 2));
+	prototype->setJunkValue((int)((level / 3) * 50 * excMod));
 //	}
 
 	// Use percentages to recalculate the values
@@ -678,10 +659,10 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		int lootChance = entry->getLootChance(); //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
-		int holochance = 5000;
-		if (System::random(holochance) >= holochance){
-			createLoot(trx, container, "holocron_nd", level);
-		}
+		int holochance = 1000;
+//		if (System::random(holochance) >= holochance){
+//			createLoot(trx, container, "holocron_nd", level);
+//		}
 
 
 		if (lootChance <= 0)
@@ -689,7 +670,7 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 
 		int roll = System::random(100);
 
-		if (roll <= 40)//%chance not to drop
+		if (roll <= 30)//%chance not to drop
 			continue;
 
 		int tempChance = 0; //Start at 0.

@@ -64,7 +64,7 @@ object_tangible_wearables_armor_stormtrooper_armor_stormtrooper_helmet = object_
 	mindEncumbrance = 225,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	maxCondition = 45000,
 

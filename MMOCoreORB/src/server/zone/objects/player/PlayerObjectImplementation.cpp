@@ -584,18 +584,21 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 		}
 	}
 	
-	int xpCap = -1;
+//	int xpCap = -1;
 
-	if (xpTypeCapList.contains(xpType))
-		xpCap = xpTypeCapList.get(xpType);
+//	if (xpTypeCapList.contains(xpType))
+//		xpCap = xpTypeCapList.get(xpType);
+//
+//	if (xpCap < 0)
+//		xpCap = 2000;
+//
+//	if (xp > xpCap) {
+//		valueToAdd = xpCap - (xp - valueToAdd);
+//		xp = xpCap;
+//	}
 
-	if (xpCap < 0)
-		xpCap = 2000;
 
-	if (xp > xpCap) {
-		valueToAdd = xpCap - (xp - valueToAdd);
-		xp = xpCap;
-	}
+
 
 //	int xpCap = 10000000;
 
@@ -642,9 +645,9 @@ void PlayerObjectImplementation::removeExperience(const String& xpType, bool not
 }
 
 bool PlayerObjectImplementation::hasCappedExperience(const String& xpType) const {
-	if (experienceList.contains(xpType) && xpTypeCapList.contains(xpType)) {
-		return experienceList.get(xpType) == xpTypeCapList.get(xpType);
-	}
+//	if (experienceList.contains(xpType) && xpTypeCapList.contains(xpType)) {
+//		return experienceList.get(xpType) == xpTypeCapList.get(xpType);
+//	}
 
 	return false;
 }

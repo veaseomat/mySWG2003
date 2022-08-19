@@ -4,7 +4,7 @@ composite_armor_boots = {
 	customObjectName = "Composite Armor Boots",
 	directObjectTemplate = "object/tangible/wearables/armor/composite/armor_composite_boots.iff",
 	craftingValues = {
-		{"armor_rating",1,1,0},
+		{"armor_rating",1,3,0},
 		{"electricaleffectiveness",10,55,10},
 		{"armor_effectiveness",8,39,10},
 		{"armor_integrity",30000, 55000,0},

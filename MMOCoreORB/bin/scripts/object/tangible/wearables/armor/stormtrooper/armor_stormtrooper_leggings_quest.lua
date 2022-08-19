@@ -98,7 +98,7 @@ object_tangible_wearables_armor_stormtrooper_armor_stormtrooper_leggings_quest =
 	mindEncumbrance = 19,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	maxCondition = 45000,
 

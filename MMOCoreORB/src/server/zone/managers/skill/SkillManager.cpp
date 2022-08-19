@@ -515,13 +515,13 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 //			ghost->addSkillPoints(skill->getSkillPointsRequired());
 //		}
 
-//		int xpcost = skill->getXpCost();
-//		int curExp = ghost->getExperience(skill->getXpType());
+		int xpcost = skill->getXpCost();
+		int curExp = ghost->getExperience(skill->getXpType());
 
-//		if (xpcost > 0) {
-////			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
-//			ghost->addExperience(skill->getXpType(), -curExp, true);
-//		}
+		if (xpcost > 0) {
+//			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+			ghost->addExperience(skill->getXpType(), xpcost, true);
+		}
 
 		//Remove abilities but only if the creature doesn't still have a skill that grants the
 		//ability.  Some abilities are granted by multiple skills. For example Dazzle for dancers
@@ -777,9 +777,9 @@ void SkillManager::updateXpLimits(PlayerObject* ghost) {
 		if (skillBox == nullptr)
 			continue;
 //remove this for no xp cap
-		if (xpTypeCapList->contains(skillBox->getXpType()) && (xpTypeCapList->get(skillBox->getXpType()) < skillBox->getXpCap())) {
-			xpTypeCapList->get(skillBox->getXpType()) = skillBox->getXpCap();
-		}
+//		if (xpTypeCapList->contains(skillBox->getXpType()) && (xpTypeCapList->get(skillBox->getXpType()) < skillBox->getXpCap())) {
+//			xpTypeCapList->get(skillBox->getXpType()) = skillBox->getXpCap();
+//		}
 	}
 
 	//Iterate over the player xp types and cap all xp types to the limits.
@@ -788,9 +788,9 @@ void SkillManager::updateXpLimits(PlayerObject* ghost) {
 	for (int i = 0; i < experienceList->size(); ++i) {
 		String xpType = experienceList->getKeyAt(i);
 //remove this for no xp cap
-		if (experienceList->get(xpType) > xpTypeCapList->get(xpType)) {
-			ghost->addExperience(xpType, xpTypeCapList->get(xpType) - experienceList->get(xpType), true);
-		}
+//		if (experienceList->get(xpType) > xpTypeCapList->get(xpType)) {
+//			ghost->addExperience(xpType, xpTypeCapList->get(xpType) - experienceList->get(xpType), true);
+//		}
 	}
 }
 

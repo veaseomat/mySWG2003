@@ -5,21 +5,21 @@ armor_component = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "armorcomponent1", weight = 1000000},--bone 30%
-		{itemTemplate = "armorcomponent5", weight = 1000000},--mabari 30
-		{itemTemplate = "armorcomponent2", weight = 1000000},--chitin 20
-		{itemTemplate = "armorcomponent4", weight = 750000},--ubese 10
-		{itemTemplate = "armorcomponent3", weight = 750000},--padded 7
-		{itemTemplate = "armorcomponent6", weight = 500000},--comp
-		
-		{itemTemplate = "armorcomponent7", weight = 625000},--layers
-		{itemTemplate = "armorcomponent8", weight = 625000},--
-		{itemTemplate = "armorcomponent9", weight = 625000},--
-		{itemTemplate = "armorcomponent10", weight = 625000},--
-		{itemTemplate = "armorcomponent11", weight = 625000},--
-		{itemTemplate = "armorcomponent12", weight = 625000},--
-		{itemTemplate = "armorcomponent13", weight = 625000},--
-		{itemTemplate = "armorcomponent14", weight = 625000},--
+		{itemTemplate = "armorcomponent1", weight = 2000000},--bone
+		{itemTemplate = "armorcomponent5", weight = 2000000},--mabari
+		{itemTemplate = "armorcomponent2", weight = 2000000},--chitin
+		{itemTemplate = "armorcomponent4", weight = 1500000},--ubese
+		{itemTemplate = "armorcomponent3", weight = 1500000},--padded
+		{itemTemplate = "armorcomponent6", weight = 1000000},--comp 500000
+--		
+--		{itemTemplate = "armorcomponent7", weight = 625000},--
+--		{itemTemplate = "armorcomponent8", weight = 625000},--
+--		{itemTemplate = "armorcomponent9", weight = 625000},--
+--		{itemTemplate = "armorcomponent10", weight = 625000},--
+--		{itemTemplate = "armorcomponent11", weight = 625000},--
+--		{itemTemplate = "armorcomponent12", weight = 625000},--
+--		{itemTemplate = "armorcomponent13", weight = 625000},--
+--		{itemTemplate = "armorcomponent14", weight = 625000},--
 	},
 }
 

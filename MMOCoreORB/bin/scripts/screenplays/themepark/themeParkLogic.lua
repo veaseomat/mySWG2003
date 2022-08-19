@@ -1866,6 +1866,30 @@ function ThemeParkLogic:handleMissionReward(pConversingPlayer)
 			self:giveItemReward(pConversingPlayer, reward.itemTemplate)
 		end
 	end
+	
+	local morecredits = getRandomNumber(1, 5000)
+	self:giveCredits(pConversingPlayer, morecredits)
+	
+	self:giveLoot(pConversingPlayer, "junk")
+	if getRandomNumber(1, 300) >= 300 then
+--			self:giveItemReward(pConversingPlayer, "object/tangible/jedi/no_drop_jedi_holocron_light.iff")
+--			CreatureObject(pConversingPlayer):sendSystemMessage("The questgiver hands you a mysterious item...")
+	local pGhost = CreatureObject(pConversingPlayer):getPlayerObject()
+	
+		if not CreatureObject(pConversingPlayer):hasSkill("force_title_jedi_rank_01") then
+			PlayerObject(pGhost):setJediState(2)
+					
+			awardSkill(pConversingPlayer, "force_title_jedi_rank_01")
+		
+			writeScreenPlayData(pConversingPlayer, "PadawanTrials", "startedTrials", 1)		
+			
+			CreatureObject(pConversingPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+			CreatureObject(pConversingPlayer):playMusicMessage("sound/music_become_jedi.snd")
+
+			FsIntro:startStepDelay(pConversingPlayer, 3)
+		end
+		
+	end
 end
 
 function ThemeParkLogic:givePermission(pConversingPlayer, permissionGroup)
@@ -1898,8 +1922,10 @@ function ThemeParkLogic:giveLoot(pConversingPlayer, lootGroup)
 	if pInventory == nil then
 		return
 	end
+	
+	local ranlvl = getRandomNumber(1, 300)
 
-	createLoot(pInventory, lootGroup, 0, true)
+	createLoot(pInventory, lootGroup, ranlvl, true)
 	CreatureObject(pConversingPlayer):sendSystemMessage("@theme_park/messages:theme_park_reward")
 end
 
@@ -1913,8 +1939,10 @@ function ThemeParkLogic:giveLootSet(pConversingPlayer, lootGroup, setSize)
 	if pInventory == nil then
 		return
 	end
+	
+	local ranlvl = getRandomNumber(1, 300)
 
-	createLootSet(pInventory, lootGroup, 0, true, setSize)
+	createLootSet(pInventory, lootGroup, ranlvl, true, setSize)
 	CreatureObject(pConversingPlayer):sendSystemMessage("@theme_park/messages:theme_park_reward")
 end
 
@@ -2135,7 +2163,7 @@ function ThemeParkLogic:escortedNpcCloseEnough(pConversingPlayer)
 	local objectID = readData(CreatureObject(pConversingPlayer):getObjectID() .. ":missionSpawn:no1")
 	local pNpc = getSceneObject(objectID)
 
-	return pNpc ~= nil and SceneObject(pConversingPlayer):getDistanceTo(pNpc) < 64
+	return pNpc ~= nil --and SceneObject(pConversingPlayer):getDistanceTo(pNpc) < 64
 end
 
 function ThemeParkLogic:resetThemePark(pConversingPlayer)

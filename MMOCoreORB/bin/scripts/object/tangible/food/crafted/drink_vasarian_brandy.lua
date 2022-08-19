@@ -44,10 +44,10 @@
 object_tangible_food_crafted_drink_vasarian_brandy = object_tangible_food_crafted_shared_drink_vasarian_brandy:new {
 	templateType = CONSUMABLE,
 
-	duration = 2546,
-	filling = 48,
-	nutrition = 433,
-
+	duration = 1800,
+	filling = 50,
+	nutrition = 300,
+	useCount = 10,
 	effectType = 1,
 
 	fillingMin = 55,

@@ -94,7 +94,7 @@ object_tangible_wearables_armor_marine_armor_marine_boots = object_tangible_wear
 	mindEncumbrance = 19,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = LIGHT,
+	rating = MEDIUM,
 
 	maxCondition = 45000,
 
