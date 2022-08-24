@@ -58,7 +58,7 @@ BurstShot1Command = {
 
 	combatSpam = "burstshot",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = CARBINEWEAPON,
 
 	range = -1
 }

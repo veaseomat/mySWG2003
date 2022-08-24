@@ -210,6 +210,14 @@ public:
 		float buffModifier = 0;
 		int controlModifier = 0;
 
+		if (councilType == FrsManager::COUNCIL_LIGHT) {
+			controlModifier = player->getSkillMod("force_control_light");
+			buffModifier = frsLightBuffModifier;
+		} else if (councilType == FrsManager::COUNCIL_DARK) {
+			controlModifier = player->getSkillMod("force_control_dark");
+			buffModifier = frsDarkBuffModifier;
+		}
+
 		if (controlModifier == 0 || buffModifier == 0)
 			return amount;
 
@@ -233,6 +241,14 @@ public:
 		int manipulationMod = 0;
 		float frsModifier = 0;
 
+		if (councilType == FrsManager::COUNCIL_LIGHT) {
+			manipulationMod = creature->getSkillMod("force_manipulation_light");
+			frsModifier = frsLightForceCostModifier;
+		} else if (councilType == FrsManager::COUNCIL_DARK) {
+			manipulationMod = creature->getSkillMod("force_manipulation_dark");
+			frsModifier = frsDarkForceCostModifier;
+		}
+
 		if (manipulationMod == 0 || frsModifier == 0)
 			return forceCost;
 
@@ -254,6 +270,14 @@ public:
 
 		int manipulationMod = 0;
 		float frsModifier = 0;
+
+		if (councilType == FrsManager::COUNCIL_LIGHT) {
+			manipulationMod = creature->getSkillMod("force_manipulation_light");
+			frsModifier = frsLightExtraForceCostModifier;
+		} else if (councilType == FrsManager::COUNCIL_DARK) {
+			manipulationMod = creature->getSkillMod("force_manipulation_dark");
+			frsModifier = frsDarkExtraForceCostModifier;
+		}
 
 		if (manipulationMod == 0 || frsModifier == 0)
 			return val;

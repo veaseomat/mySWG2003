@@ -1830,7 +1830,7 @@ void CreatureObjectImplementation::updateTerrainNegotiation()
 }
 
 float CreatureObjectImplementation::getTerrainNegotiation() const {
-	float slopeMod = (((float)getSkillMod("slope_move") * .25) / 50.0f) + (terrainNegotiation);//reduce terrain nego effectiveness
+	float slopeMod = ((float)getSkillMod("slope_move") / 50.0f) + terrainNegotiation;
 
 	if (slopeMod > 1)
 		slopeMod = 1;//next cap it at like .9
@@ -2350,8 +2350,8 @@ void CreatureObjectImplementation::setDizziedState(int durationSeconds) {
 //		state->setSkillModifier("private_dodge_attack", -15);
 //		state->setSkillModifier("private_attack_accuracy", -15);
 
-		state->setSpeedMultiplierMod(0.25f );
-		state->setAccelerationMultiplierMod(0.25f);
+//		state->setSpeedMultiplierMod(0.25f );
+//		state->setAccelerationMultiplierMod(0.25f);
 
 		addBuff(state);
 	}
@@ -2443,31 +2443,19 @@ void CreatureObjectImplementation::setStunnedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_stunned", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_stunned", 0xFF, 0, 0);
-
-//		state->setSkillModifier("private_melee_defense", -50);
-//		state->setSkillModifier("private_ranged_defense", -50);
-
-
-//this one should work but moved to combat manager
-//		int stuneffect1 = getSkillMod("melee_defense") * .75;
-//		int stuneffect2 = getSkillMod("ranged_defense") * .75;
-//
-//		state->setSkillModifier("private_melee_defense", stuneffect1);
-//		state->setSkillModifier("private_ranged_defense", stuneffect2);
-
-
-//		state->setSkillModifier("private_dodge_attack", -75);
+		state->setSkillModifier("private_melee_defense", -50);
+		state->setSkillModifier("private_ranged_defense", -50);
 
 		addBuff(state);
 
-//		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_stun_multiplier"), durationSeconds, BuffType::STATE);
-//
-//		Locker blocker(multBuff);
-//
-//		multBuff->setSkillModifier("private_damage_divisor", 5);
-//		multBuff->setSkillModifier("private_damage_multiplier", 4);
-//
-//		addBuff(multBuff);
+		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_stun_multiplier"), durationSeconds, BuffType::STATE);
+
+		Locker blocker(multBuff);
+
+		multBuff->setSkillModifier("private_damage_divisor", 5);
+		multBuff->setSkillModifier("private_damage_multiplier", 4);
+
+		addBuff(multBuff);
 	}
 }
 
@@ -2484,9 +2472,9 @@ void CreatureObjectImplementation::setBlindedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_blind", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_blind", 0xFF, 0, 0);
-//state effects moved to combat manager
-//		state->setSkillModifier("private_attack_accuracy", -75);
 
+		state->setSkillModifier("private_attack_accuracy", -60);
+		state->setSkillModifier("private_dodge_attack", -60);
 
 		addBuff(state);
 	}
@@ -2510,19 +2498,19 @@ void CreatureObjectImplementation::setIntimidatedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_intimidated", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_intimidated", 0xFF, 0, 0);
-//state effects moved to combat manager
-//		state->setSkillModifier("private_melee_defense", -75);
-//		state->setSkillModifier("private_ranged_defense", -75);
+
+		state->setSkillModifier("private_melee_defense", -20);
+		state->setSkillModifier("private_ranged_defense", -20);
 
 		addBuff(state);
 
-//		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_intimidate_multiplier"), durationSeconds, BuffType::STATE);
-//
-//		Locker blocker(multBuff);
-//
-//		multBuff->setSkillModifier("private_damage_divisor", 2);
-//
-//		addBuff(multBuff);
+		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_intimidate_multiplier"), durationSeconds, BuffType::STATE);
+
+		Locker blocker(multBuff);
+
+		multBuff->setSkillModifier("private_damage_divisor", 2);
+
+		addBuff(multBuff);
 	}
 }
 
@@ -2586,7 +2574,7 @@ void CreatureObjectImplementation::queueDizzyFallEvent() {
 		return;
 
 	dizzyFallDownEvent = new DizzyFallDownEvent(asCreatureObject());
-	dizzyFallDownEvent->schedule(1000);
+	dizzyFallDownEvent->schedule(200);
 }
 
 void CreatureObjectImplementation::activateStateRecovery() {
@@ -2835,7 +2823,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int healthRegen = getSkillMod("private_med_wound_health");
 
 	if(healthRegen > 0) {
-		healthWoundHeal += (int)(healthRegen * 0.1);
+		healthWoundHeal = 5;//+= (int)(healthRegen * 0.1);
 	//	if(healthWoundHeal >= 100) {
 			healWound(asCreatureObject(), CreatureAttribute::HEALTH, healthWoundHeal, true, false);
 			healWound(asCreatureObject(), CreatureAttribute::STRENGTH, healthWoundHeal, true, false);
@@ -2848,7 +2836,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int actionRegen = getSkillMod("private_med_wound_action");
 
 	if(actionRegen > 0) {
-		actionWoundHeal += (int)(actionRegen * 0.1);
+		actionWoundHeal = 5;//+= (int)(actionRegen * 0.1);
 		//if(actionWoundHeal >= 100) {
 			healWound(asCreatureObject(), CreatureAttribute::ACTION, actionWoundHeal, true, false);
 			healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, actionWoundHeal, true, false);
@@ -2861,7 +2849,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int mindRegen = getSkillMod("private_med_wound_mind");
 
 	if(mindRegen > 0) {
-		mindWoundHeal += (int)(mindRegen * 0.1);
+		mindWoundHeal = 5;//+= (int)(mindRegen * 0.1);
 		//if(mindWoundHeal >= 100) {
 			healWound(asCreatureObject(), CreatureAttribute::MIND, mindWoundHeal, true, false);
 			healWound(asCreatureObject(), CreatureAttribute::FOCUS, mindWoundHeal, true, false);
@@ -3573,23 +3561,20 @@ bool CreatureObjectImplementation::hasEffectImmunity(uint8 effectType) const {
 }
 
 bool CreatureObjectImplementation::hasDotImmunity(uint32 dotType) const {
-//	sendSystemMessage("mySWG: DOTs are currently disabled");
-	return true;//backup disable dots
-//
-//	switch (dotType) {
-//	case CreatureState::POISONED:
-//	case CreatureState::BLEEDING:
-//	case CreatureState::DISEASED:
-//		if (const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
-//			return true;
-//		break;
-//	case CreatureState::ONFIRE:
-//		return false;
-//	default:
-//		return false;
-//	}
-//
-//	return false;
+	switch (dotType) {
+	case CreatureState::POISONED:
+	case CreatureState::BLEEDING:
+	case CreatureState::DISEASED:
+		if (isDroidSpecies() || const_cast<CreatureObjectImplementation*>(this)->isVehicleObject())
+			return true;
+		break;
+	case CreatureState::ONFIRE:
+		return false;
+	default:
+		return false;
+	}
+
+	return false;
 }
 
 int CreatureObjectImplementation::getSpecies() const {

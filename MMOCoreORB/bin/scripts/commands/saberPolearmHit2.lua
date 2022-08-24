@@ -64,14 +64,14 @@ SaberPolearmHit2Command = {
 	  )
 	},
 
-	animation = "combo_3b", 
+	animation = "combo_5a", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saberpolearmhit2",
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = POLEARMJEDIWEAPON,
 
 	range = -1
 }

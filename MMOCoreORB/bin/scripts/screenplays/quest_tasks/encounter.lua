@@ -94,7 +94,7 @@ function Encounter:isPlayerInPositionForEncounter(pPlayer)
 		return false
 	end
 --this change is for npc bh
-	return self:isPlayerOnline(pPlayer) and not self:isPlayerInABuilding(pPlayer)
+	return self:isPlayerOnline(pPlayer) --and not self:isPlayerInABuilding(pPlayer)
 end
 
 -- Empty handler for the handleEncounterInRange event.

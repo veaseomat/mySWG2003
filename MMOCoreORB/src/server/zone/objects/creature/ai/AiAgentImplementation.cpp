@@ -144,21 +144,33 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	convoTemplateCRC = npcTemplate->getConversationTemplate();
 
-	bool legendarynpc = false;
+	bool legendarynpc = false;//adds (elite) name tag
 
 	int newlvl = getTemplateLevel();
+
 	if (newlvl > 100) newlvl = 100;
 
 	newlvl *= 3;
 
-	if (System::random(100) >= 100) {
-		legendarynpc = true;
-		newlvl *= 1.5 + (System::random(50) * .01);
-	}
-
 	float lvlrandomizer = .9 + (System::random(20) * .01);
 
-	level = newlvl * lvlrandomizer;
+	newlvl *= lvlrandomizer;
+
+//	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
+//
+//	if (elite > 1.0) {
+//		//legendarynpc = true;
+//		newlvl *= elite;
+//	}
+
+	if (System::random(100) >= 100) {// and elite <= 1.0) {
+		legendarynpc = true;
+		newlvl *= 1.316 + (System::random(20) * .01);//1.516 X lvl 330 = lvl 500
+	}
+
+	//newlvl *= templateData->getElite();
+
+	level = newlvl;
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
@@ -221,9 +233,19 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 			Locker locker(weao);
 			if (weao->isJediWeapon()) {
 
-			int color = System::random(11);
-			weao->setBladeColor(color);
-			weao->setCustomizationVariable("/private/index_color_blade", color, true);
+				int finalColor = System::random(6);// red,green,blue
+
+				if (System::random(10) >= 10){
+				finalColor = System::random(6) + 6;// 1/10 color crystals will be yellow,purp,orange
+				}
+
+				if (System::random(100) >= 100){
+				finalColor = System::random(18) + 12;// 1/100 color crystals will be special named colors
+				}
+
+			//int color = System::random(11);
+			weao->setBladeColor(finalColor);
+			weao->setCustomizationVariable("/private/index_color_blade", finalColor, true);
 			}
 
 			readyWeapon = weao;
@@ -331,11 +353,11 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		int templSpecies = getSpecies();
 
 		if (!npcTemplate->getRandomNameTag()) {
-			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#00FFFF" + " [" + level + "]", false);
+			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]", false);
 			if (legendarynpc == true) {
 				//objectName = npcTemplate->getObjectName() + "(Legendary)";
 				//setCustomObjectName("(Legendary)", false);
-				setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#00FFFF" + " [" + level + "]" + "\\#FF00FF" + " (Legendary)", false);
+				setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false); // + "\\#FF00FF" + " (Legendary)"
 			}
 		} else {
 			String newName = nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies);
@@ -347,9 +369,9 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 				newName += StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString();
 
 			newName += ")";
-			setCustomObjectName(newName + "\\#00FFFF" + " [" + level + "]", false);
+			setCustomObjectName(newName + "\\#C0C0C0" + " [" + level + "]", false);
 			if (legendarynpc == true) {
-				setCustomObjectName(newName + "\\#00FFFF" + " [" + level + "]" + "\\#FF00FF" + " (Legendary)", false);
+				setCustomObjectName(newName + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false);
 			}
 		}
 	} else {
@@ -370,9 +392,9 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 //		newname2 += level;
 //		newname2 += "]";
 
-		setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#00FFFF" + " [" + level + "]", false);
+		setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#C0C0C0" + " [" + level + "]", false);
 		if (legendarynpc == true) {
-			setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#00FFFF" + " [" + level + "]" + "\\#FF00FF" + " (Legendary)", false);
+			setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false);
 		}
 	}
 
@@ -1783,8 +1805,10 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 
 
 	ManagedReference<SceneObject*> obj = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
+	ManagedReference<SceneObject*> obj2 = asCreatureObject()->getParentRecursively(SceneObjectType::HOSPITALBUILDING);
+	ManagedReference<SceneObject*> obj3 = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
 
-	if (!isInCombat() && isPet() && obj != nullptr) {
+	if (!isInCombat() && isPet() && (obj != nullptr || obj2 != nullptr)) {
 		healWound(asCreatureObject(), CreatureAttribute::HEALTH, 5, true, false);
 		healWound(asCreatureObject(), CreatureAttribute::STRENGTH, 5, true, false);
 		healWound(asCreatureObject(), CreatureAttribute::CONSTITUTION, 5, true, false);
@@ -2692,36 +2716,6 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 
 	alm->insertAttribute("challenge_level", level);
 
-//	int minD = getDamageMin() * .75;
-//	int maxD = getDamageMax() * .75;
-//
-//	StringBuffer damageMsg;
-//	damageMsg << (minD) << "-" << (maxD);
-//
-//	alm->insertAttribute("cat_wpn_damage", damageMsg.toString());
-
-
-//	int mindam = weapon->getMinDamage();
-//	int maxdam = weapon->getMaxDamage();
-//
-//	float attackSpeed = (1.0f - ((float) level / 100.0f)) * weapon->getAttackSpeed();
-//
-//	if (attackSpeed < 1.0)
-//		attackSpeed = 1.0;
-//	if (hasState(CreatureState::STUNNED)) {
-//		attackSpeed *= 1.2;
-//	}
-//
-//	alm->insertAttribute("ai speed", attackSpeed);
-//
-//	int aidam = ((mindam + maxdam) / 2) / attackSpeed;
-//
-//	alm->insertAttribute("damage.wpn_damage_min", mindam);
-//
-//	alm->insertAttribute("damage.wpn_damage_max", maxdam);
-//
-//	alm->insertAttribute("AI DPS", aidam);
-
 	if (getArmor() == 0)
 		alm->insertAttribute("armorrating", "None");
 	else if (getArmor() == 1)
@@ -2731,291 +2725,169 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 	else if (getArmor() == 3)
 		alm->insertAttribute("armorrating", "Heavy");
 
-	//int npchitchance = getChanceHit() * 100;
-//	int npchitchance = getMaxHAM(CreatureAttribute::FOCUS) / 10;
-//
-//	if (weapon->isMeleeWeapon()) {
-//		npchitchance *= 1.1;
-//	}
-//	if (weapon->isRangedWeapon() && isKneeling()) {
-//		npchitchance *= 1.2;
-//	}
-//	if (weapon->isRangedWeapon() && isProne()) {
-//		npchitchance *= 1.4;
-//	}
-//	if (isRunning()) {
-//		npchitchance *= .6;
-//	}
-//	if (hasState(CreatureState::BLINDED)) {
-//		npchitchance *= .8;
-//	}
-//	if (npchitchance > 150)
-//		npchitchance = 150;
-//
-//	alm->insertAttribute("ai accuracy", npchitchance);
+	int npcKinetic = getKinetic();
+	int npcEnergy = getEnergy();
+	int npcElectricity = getElectricity();
+	int npcStun = getStun();
+	int npcBlast = getBlast();
+	int npcHeat = getHeat();
+	int npcCold = getCold();
+	int npcAcid = getAcid();
+	int npcLightSaber = getLightSaber();
 
-//	int targetDefense = getMaxHAM(CreatureAttribute::STRENGTH) / 10;//npc target defense based off 3k ham
-//	targetDefense *= .5;
-//
-//	if (getWeapon()->isMeleeWeapon()) {
-//		targetDefense *= 1.1;
-//	}
-//	if (isKneeling()) {
-//		targetDefense *= .8;
-//	}
-//	if (isProne()) {
-//		targetDefense *= .6;
-//	}
-//	if (isKnockedDown()) {
-//		targetDefense *= .4;
-//	}
-//	if (hasState(CreatureState::INTIMIDATED)) {
-//		targetDefense *= .8;
-//	}
-//	if (targetDefense < 0)
-//		targetDefense = 0;
-//
-//	alm->insertAttribute("ai defense", targetDefense);
+	if (isSpecialProtection(SharedWeaponObjectTemplate::KINETIC)) {
+		if (getKinetic() > 90)
+			npcKinetic = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcKinetic, 1) << "%";
+		alm->insertAttribute("cat_armor_special_protection.armor_eff_kinetic", txt.toString());
+	}
 
+	if (isSpecialProtection(SharedWeaponObjectTemplate::ENERGY)) {
+		if (getEnergy() > 90)
+			npcEnergy = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcEnergy, 1) << "%";
+		alm->insertAttribute("cat_armor_special_protection.armor_eff_energy", txt.toString());
+	}
 
-	//states!!!!!!!!!!!
-//		float statedef = 0.f;
-//
-//		statedef = getMaxHAM(CreatureAttribute::STRENGTH) / 20;
-//
-//		if (statedef > 150)
-//			statedef = 150;
-//
-//		statedef /= 3;
-//
-//		alm->insertAttribute("state Defense", statedef);
+	if (isSpecialProtection(SharedWeaponObjectTemplate::ELECTRICITY)) {
+		if (getElectricity() > 90)
+			npcElectricity = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcElectricity, 1) << "%";
+		alm->insertAttribute("cat_armor_special_protection.armor_eff_elemental_electrical", txt.toString());
+	}
 
+	if (isSpecialProtection(SharedWeaponObjectTemplate::BLAST)) {
+		if (getBlast() > 90)
+			npcBlast = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcBlast, 1) << "%";
+		alm->insertAttribute("cat_armor_special_protection.armor_eff_blast", txt.toString());
+	}
 
-//	int npcKinetic = getKinetic();
-//	int npcEnergy = getEnergy();
-//	int npcElectricity = getElectricity();
-//	int npcStun = getStun();
-//	int npcBlast = getBlast();
-//	int npcHeat = getHeat();
-//	int npcCold = getCold();
-//	int npcAcid = getAcid();
-//	int npcLightSaber = getLightSaber();
+	if (isSpecialProtection(SharedWeaponObjectTemplate::HEAT)) {
+		if (getHeat() > 90)
+			npcHeat = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcHeat, 1) << "%";
+		alm->insertAttribute("cat_armor_special_protection.armor_eff_elemental_heat", txt.toString());
+	}
 
-//	if (npcKinetic == nullptr){
-//		npcKinetic = 0;
-//	}
-//
-//	if (npcEnergy == nullptr){
-//		npcEnergy = 0;
-//	}
-//
-//	if (npcElectricity == nullptr){
-//		npcElectricity = 0;
-//	}
-//
-//	if (npcStun == nullptr){
-//		npcStun = 0;
-//	}
-//
-//	if (npcBlast == nullptr){
-//		npcBlast = 0;
-//	}
-//
-//	if (npcHeat == nullptr){
-//		npcHeat = 0;
-//	}
-//
-//	if (npcCold == nullptr){
-//		npcCold = 0;
-//	}
-//
-//	if (npcAcid == nullptr){
-//		npcAcid = 0;
-//	}
+	if (isSpecialProtection(SharedWeaponObjectTemplate::COLD)) {
+		if (getCold() > 90)
+			npcCold = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcCold, 1) << "%";
+		alm->insertAttribute("cat_armor_special_protection.armor_eff_elemental_cold", txt.toString());
+	}
 
-//	if (isSpecialProtection(SharedWeaponObjectTemplate::KINETIC)) {
-//		if (getKinetic() > 90)
-//			npcKinetic = 90;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcKinetic, 1) << "%";
-//		alm->insertAttribute("cat_armor_special_protection.armor_eff_kinetic", txt.toString());
-//	}
-//
-//	if (isSpecialProtection(SharedWeaponObjectTemplate::ENERGY)) {
-//		if (getEnergy() > 90)
-//			npcEnergy = 90;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcEnergy, 1) << "%";
-//		alm->insertAttribute("cat_armor_special_protection.armor_eff_energy", txt.toString());
-//	}
-//
-//	if (isSpecialProtection(SharedWeaponObjectTemplate::ELECTRICITY)) {
-//		if (getElectricity() > 90)
-//			npcElectricity = 90;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcElectricity, 1) << "%";
-//		alm->insertAttribute("cat_armor_special_protection.armor_eff_elemental_electrical", txt.toString());
-//	}
-//
-//	if (isSpecialProtection(SharedWeaponObjectTemplate::BLAST)) {
-//		if (getBlast() > 90)
-//			npcBlast = 90;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcBlast, 1) << "%";
-//		alm->insertAttribute("cat_armor_special_protection.armor_eff_blast", txt.toString());
-//	}
-//
-//	if (isSpecialProtection(SharedWeaponObjectTemplate::HEAT)) {
-//		if (getHeat() > 90)
-//			npcHeat = 90;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcHeat, 1) << "%";
-//		alm->insertAttribute("cat_armor_special_protection.armor_eff_elemental_heat", txt.toString());
-//	}
-//
-//	if (isSpecialProtection(SharedWeaponObjectTemplate::COLD)) {
-//		if (getCold() > 90)
-//			npcCold = 90;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcCold, 1) << "%";
-//		alm->insertAttribute("cat_armor_special_protection.armor_eff_elemental_cold", txt.toString());
-//	}
-//
-//	if (isSpecialProtection(SharedWeaponObjectTemplate::ACID)) {
-//		if (getAcid() > 90)
-//			npcAcid = 90;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcAcid, 1) << "%";
-//		alm->insertAttribute("cat_armor_special_protection.armor_eff_elemental_acid", txt.toString());
-//	}
-//
-//	if (isSpecialProtection(SharedWeaponObjectTemplate::STUN)) {
-//		if (getStun() > 90)
-//			npcStun = 90;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcStun, 1) << "%";
-//		alm->insertAttribute("cat_armor_special_protection.armor_eff_stun", txt.toString());
-//	}
+	if (isSpecialProtection(SharedWeaponObjectTemplate::ACID)) {
+		if (getAcid() > 90)
+			npcAcid = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcAcid, 1) << "%";
+		alm->insertAttribute("cat_armor_special_protection.armor_eff_elemental_acid", txt.toString());
+	}
+
+	if (isSpecialProtection(SharedWeaponObjectTemplate::STUN)) {
+		if (getStun() > 90)
+			npcStun = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcStun, 1) << "%";
+		alm->insertAttribute("cat_armor_special_protection.armor_eff_stun", txt.toString());
+	}
 
 
-//
-//	if (npcKinetic < 1000){
-//		if (getKinetic() > 80)
-//			npcKinetic = 80;
-//		if (getKinetic() < 0)
-//			npcKinetic = 0;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcKinetic, 1) << "%";
-//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_kinetic", txt.toString());
-//	}
-//
-//	if (npcEnergy < 1000){
-//		if (getEnergy() > 80)
-//			npcEnergy = 80;
-//		if (getEnergy() < 0)
-//			npcEnergy = 0;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcEnergy, 1) << "%";
-//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_energy", txt.toString());
-//	}
-//
-//	if (npcElectricity < 1000){
-//		if (getElectricity() > 80)
-//			npcElectricity = 80;
-//		if (getElectricity() < 0)
-//			npcElectricity = 0;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcElectricity, 1) << "%";
-//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_electrical", txt.toString());
-//	}
-//
-//	if (npcBlast < 1000){
-//		if (getBlast() > 80)
-//			npcBlast = 80;
-//		if (getBlast() < 0)
-//			npcBlast = 0;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcBlast, 1) << "%";
-//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_blast", txt.toString());
-//	}
-//
-//	if (npcHeat < 1000){
-//		if (getHeat() > 80)
-//			npcHeat = 80;
-//		if (getHeat() < 0)
-//			npcHeat = 0;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcHeat, 1) << "%";
-//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_heat", txt.toString());
-//	}
-//
-//	if (npcCold < 1000){
-//		if (getCold() > 80)
-//			npcCold = 80;
-//		if (getCold() < 0)
-//			npcCold = 0;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcCold, 1) << "%";
-//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_cold", txt.toString());
-//	}
-//
-//	if (npcAcid < 1000){
-//		if (getAcid() > 80)
-//			npcAcid = 80;
-//		if (getAcid() < 0)
-//			npcAcid = 0;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcAcid, 1) << "%";
-//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_acid", txt.toString());
-//	}
-//
-//	if (getStun() > -10) {
-//		if (getStun() > 80)
-//			npcStun = 80;
-//		if (getStun() < 0)
-//			npcStun = 0;
-//		StringBuffer txt;
-//		txt << Math::getPrecision(npcStun, 1) << "%";
-//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_stun", txt.toString());
-//	}
 
-//	if (getKinetic() <= 0)
-//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_kinetic", "-");
-//
-//	if (getEnergy() <= 0)
-//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_energy", "-");
-//
-//	if (getElectricity() <= 0)
-//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_elemental_electrical", "-");
-//
-//	if (getStun() <= 0)
-//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_stun", "-");
-//
-//	if (getBlast() <= 0)
-//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_blast", "-");
-//
-//	if (getHeat() <= 0)
-//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_elemental_heat", "-");
-//
-//	if (getCold() <= 0)
-//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_elemental_cold", "-");
-//
-//	if (getAcid() <= 0)
-//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_elemental_acid", "-");
+	if (getKinetic() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::KINETIC)) {
+		if (getKinetic() > 90)
+			npcKinetic = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcKinetic, 1) << "%";
+		alm->insertAttribute("cat_armor_effectiveness.armor_eff_kinetic", txt.toString());
+	}
 
-//	if (getLightSaber() <= 100)
-//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_restraint", "-");
+	if (getEnergy() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::ENERGY)) {
+		if (getEnergy() > 90)
+			npcEnergy = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcEnergy, 1) << "%";
+		alm->insertAttribute("cat_armor_effectiveness.armor_eff_energy", txt.toString());
+	}
 
+	if (getElectricity() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::ELECTRICITY)) {
+		if (getElectricity() > 90)
+			npcElectricity = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcElectricity, 1) << "%";
+		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_electrical", txt.toString());
+	}
 
-//	if (isAggressiveTo(player))
-//		alm->insertAttribute("aggro", "yes");
-//	else
-//		alm->insertAttribute("aggro", "no");
-//
-//	if (isStalker())
-//		alm->insertAttribute("stalking", "yes");
-//	else
-//		alm->insertAttribute("stalking", "no");
+	if (getBlast() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::BLAST)) {
+		if (getBlast() > 90)
+			npcBlast = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcBlast, 1) << "%";
+		alm->insertAttribute("cat_armor_effectiveness.armor_eff_blast", txt.toString());
+	}
+
+	if (getHeat() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::HEAT)) {
+		if (getHeat() > 90)
+			npcHeat = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcHeat, 1) << "%";
+		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_heat", txt.toString());
+	}
+
+	if (getCold() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::COLD)) {
+		if (getCold() > 90)
+			npcCold = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcCold, 1) << "%";
+		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_cold", txt.toString());
+	}
+
+	if (getAcid() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::ACID)) {
+		if (getAcid() > 90)
+			npcAcid = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcAcid, 1) << "%";
+		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_acid", txt.toString());
+	}
+
+	if (getStun() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::STUN)) {
+		if (getStun() > 90)
+			npcStun = 90;
+		StringBuffer txt;
+		txt << Math::getPrecision(npcStun, 1) << "%";
+		alm->insertAttribute("cat_armor_effectiveness.armor_eff_stun", txt.toString());
+	}
+
+	if (getKinetic() <= 0)
+		alm->insertAttribute("cat_armor_vulnerability.armor_eff_kinetic", "-");
+
+	if (getEnergy() <= 0)
+		alm->insertAttribute("cat_armor_vulnerability.armor_eff_energy", "-");
+
+	if (getElectricity() <= 0)
+		alm->insertAttribute("cat_armor_vulnerability.armor_eff_elemental_electrical", "-");
+
+	if (getStun() <= 0)
+		alm->insertAttribute("cat_armor_vulnerability.armor_eff_stun", "-");
+
+	if (getBlast() <= 0)
+		alm->insertAttribute("cat_armor_vulnerability.armor_eff_blast", "-");
+
+	if (getHeat() <= 0)
+		alm->insertAttribute("cat_armor_vulnerability.armor_eff_elemental_heat", "-");
+
+	if (getCold() <= 0)
+		alm->insertAttribute("cat_armor_vulnerability.armor_eff_elemental_cold", "-");
+
+	if (getAcid() <= 0)
+		alm->insertAttribute("cat_armor_vulnerability.armor_eff_elemental_acid", "-");
 
 	if (isKiller())
 		alm->insertAttribute("killer", "yes");

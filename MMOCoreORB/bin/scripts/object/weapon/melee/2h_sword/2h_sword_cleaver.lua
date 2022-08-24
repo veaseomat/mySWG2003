@@ -100,34 +100,34 @@ object_weapon_melee_2h_sword_2h_sword_cleaver = object_weapon_melee_2h_sword_sha
 
 
 	-- The values below are the default values.  To be used for blue frog objects primarily
-	healthAttackCost = 95,
-	actionAttackCost = 25,
-	mindAttackCost = 10,
+	healthAttackCost = 38,
+	actionAttackCost = 35,
+	mindAttackCost = 20,
 	forceCost = 0,
 
 	pointBlankRange = 0,
-	pointBlankAccuracy = -35,
+	pointBlankAccuracy = -15,
 
-	idealRange = 3,
-	idealAccuracy = -35,
+	idealRange = 5,
+	idealAccuracy = -15,
 
 	maxRange = 5,
-	maxRangeAccuracy = -35,
+	maxRangeAccuracy = -15,
 
-	minDamage = 78,
-	maxDamage = 276,
+	minDamage = 50,
+	maxDamage = 150,
 
-	attackSpeed = 6,
+	attackSpeed = 4.1,
 
-	woundsRatio = 15,
+	woundsRatio = 27,
 
 	numberExperimentalProperties = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	experimentalProperties = {"XX", "XX", "SR", "SR", "SR", "SR", "SR", "SR", "SR", "XX", "SR", "XX", "SR", "SR", "SR"},
 	experimentalWeights = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "exp_durability", "expRange", "expRange", "null", "expRange", "null", "expEffeciency", "expEffeciency", "expEffeciency"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "hitpoints", "zerorangemod", "maxrangemod", "midrange", "midrangemod", "maxrange", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 53, 235, 8.5, 11, 750, -46, -46, 3, -46, 4, 120, 30, 16},
-	experimentalMax = {0, 0, 98, 436, 5.8, 20, 1500, -25, -25, 3, -25, 4, 63, 15, 7},
+	experimentalMin = {0, 0, 35, 105, 5.3, 19, 750, -20, -20, 3, -20, 4, 49, 46, 26},
+	experimentalMax = {0, 0, 65, 195, 3.7, 35, 1500, -10, -10, 3, -10, 4, 27, 25, 14},
 	experimentalPrecision = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 }

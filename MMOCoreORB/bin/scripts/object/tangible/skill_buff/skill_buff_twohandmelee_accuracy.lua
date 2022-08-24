@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_twohandmelee_accuracy = object_tangible_sk
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 3600,
+	duration = 300,
 	useCount = 5,
-	modifiers = { "twohandmelee_accuracy", 25 },
+	modifiers = { "twohandmelee_accuracy", 10 },
 	buffName = "twohandmelee_accuracy",
 	buffCRC = 0x8F47051E
 }

@@ -89,7 +89,7 @@ object_tangible_wearables_armor_bounty_hunter_armor_bounty_hunter_helmet = objec
 	mindEncumbrance = 1,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = HEAVY,
+	rating = LIGHT,
 
 	kinetic = 15,
 	energy = 15,

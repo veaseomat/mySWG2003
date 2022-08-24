@@ -58,7 +58,7 @@ HeadShot2Command = {
 
 	combatSpam = "expertheadshot",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = RIFLEWEAPON,
 
 	range = -1
 

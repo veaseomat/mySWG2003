@@ -4,7 +4,7 @@ bone_armor_bracer_l = {
 	customObjectName = "a Bone Armor Left Bracer",
 	directObjectTemplate = "object/tangible/wearables/armor/bone/armor_bone_s01_bracer_l.iff",
 	craftingValues = {
-		{"armor_rating",1,3,0},
+		{"armor_rating",1,1,0},
 		{"energyeffectiveness",10,35,10},
 		{"armor_effectiveness",4,19,10},
 		{"armor_integrity",7500, 12500,0},

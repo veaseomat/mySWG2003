@@ -52,7 +52,7 @@ object_draft_schematic_weapon_pistol_flechette_fwg5 = object_draft_schematic_wea
    size = 3, 
 
    xpType = "crafting_weapons_general", 
-   xp = 105, 
+   xp = 100, 
 
    assemblySkill = "weapon_assembly", 
    experimentingSkill = "weapon_experimentation", 
@@ -63,12 +63,13 @@ object_draft_schematic_weapon_pistol_flechette_fwg5 = object_draft_schematic_wea
    customizationDefaults = {},
 
    ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
-   ingredientTitleNames = {"frame_assembly", "receiver_assembly", "grip_assembly", "powerhandler", "barrel", "scope"},
+   ingredientTitleNames = {"frame_assembly", "receiver_assembly", "grip_assembly", "cartridge_feed_unit", "barrel", "scope"},
    ingredientSlotType = {0, 0, 0, 1, 1, 3},
-   resourceTypes = {"iron_plumbum", "metal_ferrous", "metal", "object/tangible/component/weapon/shared_blaster_power_handler.iff", "object/tangible/component/weapon/shared_blaster_pistol_barrel.iff", "object/tangible/component/weapon/shared_scope_weapon.iff"},
-   resourceQuantities = {35, 18, 7, 1, 1, 1},
+   resourceTypes = {"iron", "metal_ferrous", "metal", "object/tangible/component/weapon/shared_projectile_feed_mechanism.iff", "object/tangible/component/weapon/shared_projectile_pistol_barrel.iff", "object/tangible/component/weapon/shared_scope_weapon.iff"},
+   resourceQuantities = {30, 15, 6, 1, 1, 1},
    contribution = {100, 100, 100, 100, 100, 100},
-ingredientAppearance = {"", "", "", "", "", "scope"},
+   ingredientAppearance = {"", "", "", "", "", "scope"},
+
 
    targetTemplate = "object/weapon/ranged/pistol/pistol_fwg5.iff",
 

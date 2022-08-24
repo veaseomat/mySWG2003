@@ -105,7 +105,7 @@ int DroidDetonationModuleDataComponent::calculateDamage(DroidObject* droid) {
 		bonus = moduleCount * 10;
 
 	// generate a damage value 150 - 200 per module 175 is mid so we calc 150 + 1..50 as damage output
-	return ((System::random(50) + 150) * (bonus + rating)) / 2;
+	return ((System::random(50) + 150) * (bonus + rating)) * .2;
 }
 
 void DroidDetonationModuleDataComponent::setSpecies(int i) {

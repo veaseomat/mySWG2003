@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_polearm_speed = object_tangible_skill_buff
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 3600,
+	duration = 300,
 	useCount = 5,
-	modifiers = { "polearm_speed", 25 },
+	modifiers = { "polearm_speed", 10 },
 	buffName = "polearm_speed",
 	buffCRC = 0x6F675FB6
 }

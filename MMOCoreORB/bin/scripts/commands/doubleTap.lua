@@ -58,7 +58,7 @@ DoubleTapCommand = {
 
 	combatSpam = "doubletap",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = PISTOLWEAPON,
 
 	range = -1
 }

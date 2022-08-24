@@ -96,7 +96,7 @@ object_tangible_wearables_armor_ubese_armor_ubese_shirt = object_tangible_wearab
 	mindEncumbrance = 1,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = MEDIUM,
+	rating = LIGHT,
 
 	kinetic = 15,
 	energy = 15,

@@ -2076,29 +2076,29 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 		regen += 10;
 		}
 
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
-			regen *= .75;
-		}
-
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
-			regen *= .5;
-		}
-
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_1)) {
-			regen *= .75;
-		}
-
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_2)) {
-			regen *= .5;
-		}
-
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_1)) {
-			regen *= .75;
-		}
-
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_2)) {
-			regen *= .5;
-		}
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
+//			regen *= .75;
+//		}
+//
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
+//			regen *= .5;
+//		}
+//
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_1)) {
+//			regen *= .75;
+//		}
+//
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_2)) {
+//			regen *= .5;
+//		}
+//
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_1)) {
+//			regen *= .75;
+//		}
+//
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_2)) {
+//			regen *= .5;
+//		}
 
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");

@@ -73,8 +73,6 @@ void WearableObjectImplementation::fillAttributeList(AttributeListMessage* alm,
 		String statname = "cat_skill_mod_bonus.@stat_n:" + key;
 		int value = wearableSkillMods.get(key);
 
-		if (value > 25)	value = 25;
-
 		if (value > 0)
 			alm->insertAttribute(statname, value);
 	}
@@ -125,12 +123,12 @@ void WearableObjectImplementation::generateSockets(CraftingValues* craftingValue
 
 	float roll = System::random(skill + luck + random);
 
-	int generatedCount = System::random(8);
-//socket count
-	if (generatedCount > 8)
-		generatedCount = 8;
-	if (generatedCount < 4)
-		generatedCount = 4;
+	int generatedCount = int(float(MAXSOCKETS * roll) / float(MAXSOCKETS * 100));
+
+	if (generatedCount > MAXSOCKETS)
+		generatedCount = MAXSOCKETS;
+	if (generatedCount < 0)
+		generatedCount = 0;
 
 	// TODO: remove this backwards compatibility fix at next wipe. Only usedSocketCount variable should be used.
 	objectCreatedPreUsedSocketCountFix = false;
@@ -161,8 +159,8 @@ void WearableObjectImplementation::applyAttachment(CreatureObject* player,
 		if (isEquipped()) {
 			removeSkillModsFrom(player);
 		}
-//mods counted per item
-		if (wearableSkillMods.size() < 10) {
+
+		if (wearableSkillMods.size() < 6) {
 			HashTable<String, int>* mods = attachment->getSkillMods();
 			HashTableIterator<String, int> iterator = mods->iterator();
 

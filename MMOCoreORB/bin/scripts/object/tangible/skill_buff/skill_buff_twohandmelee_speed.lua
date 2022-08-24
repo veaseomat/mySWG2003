@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_twohandmelee_speed = object_tangible_skill
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 3600,
+	duration = 300,
 	useCount = 5,
-	modifiers = { "twohandmelee_speed", 25 },
+	modifiers = { "twohandmelee_speed", 10 },
 	buffName = "twohandmelee_speed",
 	buffCRC = 0x5F1BD61A
 }

@@ -71,7 +71,7 @@ PolearmSpinAttack2Command = {
 
 	combatSpam = "limbbreaker",
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = POLEARMWEAPON,
 
 	range = -1
 }

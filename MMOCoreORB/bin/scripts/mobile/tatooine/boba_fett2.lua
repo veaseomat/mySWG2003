@@ -5,6 +5,7 @@ boba_fett2 = Creature:new {
 	socialGroup = "",
 	faction = "",
 	level = 300,
+	elite = 2.0,
 	chanceHit = 55,
 	damageMin = 1200,
 	damageMax = 2300,
@@ -69,7 +70,13 @@ boba_fett2 = Creature:new {
 		"object/mobile/dressed_death_watch_silver.iff",
 		"object/mobile/dressed_death_watch_red.iff",
 		"object/mobile/dressed_death_watch_grey.iff"},
-	lootGroups = {},
+	lootGroups = {
+		{
+			groups = {
+				{group = "junk", chance = 10000000},
+			}
+		},
+	},
 	weapons = {"bh_weapons"},
 	conversationTemplate = "",
 	attacks =	merge(bountyhuntermaster,marksmanmaster,brawlermaster,swordsmanmaster,pistoleermaster,fencermaster,pikemanmaster,riflemanmaster)

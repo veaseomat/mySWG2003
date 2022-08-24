@@ -281,32 +281,32 @@ int StructureManager::placeStructureFromDeed(CreatureObject* creature, Structure
 			dynamic_cast<SharedStructureObjectTemplate*>(templateManager->getTemplate(serverTemplatePath.hashCode()));
 
 	//Check to see if this zone allows this structure.
-//	if (serverTemplate == nullptr || !serverTemplate->isAllowedZone(zone->getZoneName())) {
-//		creature->sendSystemMessage("@player_structure:wrong_planet"); //That deed cannot be used on this planet.
-//		return 1;
-//	}
-//
-//	if (!planetManager->isBuildingPermittedAt(x, y, creature)) {
-//		creature->sendSystemMessage("@player_structure:not_permitted"); //Building is not permitted here.
-//		return 1;
-//	}
+	if (serverTemplate == nullptr || !serverTemplate->isAllowedZone(zone->getZoneName())) {
+		creature->sendSystemMessage("@player_structure:wrong_planet"); //That deed cannot be used on this planet.
+		return 1;
+	}
+
+	if (!planetManager->isBuildingPermittedAt(x, y, creature)) {
+		creature->sendSystemMessage("@player_structure:not_permitted"); //Building is not permitted here.
+		return 1;
+	}
 
 	SortedVector<ManagedReference<ActiveArea*> > objects;
-//	zone->getInRangeActiveAreas(x, y, &objects, true);
+	zone->getInRangeActiveAreas(x, y, &objects, true);
 
 	ManagedReference<CityRegion*> city;
 
-//	for (int i = 0; i < objects.size(); ++i) {
-//		ActiveArea* area = objects.get(i).get();
-//
-//		if (!area->isRegion())
-//			continue;
-//
-//		city = dynamic_cast<Region*>(area)->getCityRegion().get();
-//
-////		if (city != nullptr)
-////			break;
-//	}
+	for (int i = 0; i < objects.size(); ++i) {
+		ActiveArea* area = objects.get(i).get();
+
+		if (!area->isRegion())
+			continue;
+
+		city = dynamic_cast<Region*>(area)->getCityRegion().get();
+
+		if (city != nullptr)
+			break;
+	}
 
 	SortedVector<ManagedReference<QuadTreeEntry*> > inRangeObjects;
 	zone->getInRangeObjects(x, y, 128, &inRangeObjects, true, false);

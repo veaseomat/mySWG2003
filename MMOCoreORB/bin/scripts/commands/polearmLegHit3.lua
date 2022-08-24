@@ -58,7 +58,7 @@ PolearmLegHit3Command = {
 
 	poolsToDamage = ACTION_ATTRIBUTE,
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = POLEARMWEAPON,
 
 	range = -1
 }

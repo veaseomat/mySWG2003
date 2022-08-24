@@ -44,7 +44,7 @@ function sithshadowencounter3:onLoot(pLootedCreature, pLooter, nothing)
 	
 	Logger:log("Looting the sith shadow.", LT_INFO)
 	
-	CreatureObject(pLooter):awardExperience("force_rank_xp", 10000, true)	
+	CreatureObject(pLooter):awardExperience("force_rank_xp", 1000, true)	
 --	CreatureObject(pLooter):sendSystemMessage("You have gained 10,000 Force Rank experience.")
 	return 0
 	

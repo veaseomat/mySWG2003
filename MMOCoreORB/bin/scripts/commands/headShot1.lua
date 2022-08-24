@@ -58,7 +58,7 @@ HeadShot1Command = {
 
 	combatSpam = "headshot",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = RIFLEWEAPON,
 
 	range = -1
 }

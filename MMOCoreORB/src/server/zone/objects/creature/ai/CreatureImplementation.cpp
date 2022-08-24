@@ -79,61 +79,30 @@ void CreatureImplementation::fillAttributeList(AttributeListMessage* alm, Creatu
 
 	int creaKnowledge = player->getSkillMod("creature_knowledge");
 
-
-	//int skillNum = skillCommands.size();
-	const CreatureAttackMap* attackMap = getAttackMap();
-	int skillNum = 0;
-	if (attackMap != nullptr)
-		skillNum = attackMap->size();
-	if (creaKnowledge >= 0) {
-		String skillname = "";
-		if (skillNum >= 1)
-			skillname = attackMap->getCommand(0);
-
-		if (skillname == "creatureareaattack")
-			skillname = "unknown_attack";
-		else if (skillname.isEmpty())
-			skillname = "none";
-
-		StringBuffer skillMsg;
-		skillMsg << "@combat_effects:" << skillname;
-
-		alm->insertAttribute("pet_command_18", skillMsg.toString());
-	}
-
-	if (creaKnowledge >= 0) {
-		String skillname = "";
-		if (skillNum >= 2)
-			skillname = attackMap->getCommand(1);
-
-		if (skillname == "creatureareaattack")
-			skillname = "unknown_attack";
-		else if (skillname.isEmpty())
-			skillname = "none";
-
-		StringBuffer skillMsg;
-		skillMsg << "@combat_effects:" << skillname;
-
-		alm->insertAttribute("pet_command_19", skillMsg.toString());
-	}
-
 	if (getHideType().isEmpty() && getBoneType().isEmpty() && getMeatType().isEmpty()) {
 		if(!isPet()) // we do want to show this for pets
 			return;
 	}
 
-	if (creaKnowledge >= 0) {
-		alm->insertAttribute("ferocity", (int) getFerocity());
+	if (creaKnowledge >= 5) {
+		if (isAggressiveTo(player))
+			alm->insertAttribute("aggro", "yes");
+		else
+			alm->insertAttribute("aggro", "no");
+		if (isStalker())
+			alm->insertAttribute("stalking", "yes");
+		else
+			alm->insertAttribute("stalking", "no");
 	}
 
-	if (creaKnowledge >= 0) {
+	if (creaKnowledge >= 10) {
 		if (getTame() > 0.0f)
 			alm->insertAttribute("tamable", "yes");
 		else
 			alm->insertAttribute("tamable", "no");
 	}
 
-	if (creaKnowledge >= 0 && !isPet()) {
+	if (creaKnowledge >= 20 && !isPet()) {
 		if (!getHideType().isEmpty()) {
 			StringBuffer hideName;
 			hideName << "@obj_attr_n:" << getHideType();
@@ -154,6 +123,65 @@ void CreatureImplementation::fillAttributeList(AttributeListMessage* alm, Creatu
 			alm->insertAttribute("res_meat", "---");
 	}
 
+//	if (creaKnowledge >= 30) {
+//		if (isKiller())
+//			alm->insertAttribute("killer", "yes");
+//		else
+//			alm->insertAttribute("killer", "no");
+//	}
+
+	if (creaKnowledge >= 40) {
+		alm->insertAttribute("ferocity", (int) getFerocity());
+	}
+
+	if (creaKnowledge >= 45)
+		alm->insertAttribute("challenge_level", getAdultLevel());
+
+	//int skillNum = skillCommands.size();
+	const CreatureAttackMap* attackMap = getAttackMap();
+	int skillNum = 0;
+	if (attackMap != nullptr)
+		skillNum = attackMap->size();
+	if (creaKnowledge >= 70) {
+		String skillname = "";
+		if (skillNum >= 1)
+			skillname = attackMap->getCommand(0);
+
+		if (skillname == "creatureareaattack")
+			skillname = "unknown_attack";
+		else if (skillname.isEmpty())
+			skillname = "none";
+
+		StringBuffer skillMsg;
+		skillMsg << "@combat_effects:" << skillname;
+
+		alm->insertAttribute("pet_command_18", skillMsg.toString());
+	}
+
+	if (creaKnowledge >= 80) {
+		String skillname = "";
+		if (skillNum >= 2)
+			skillname = attackMap->getCommand(1);
+
+		if (skillname == "creatureareaattack")
+			skillname = "unknown_attack";
+		else if (skillname.isEmpty())
+			skillname = "none";
+
+		StringBuffer skillMsg;
+		skillMsg << "@combat_effects:" << skillname;
+
+		alm->insertAttribute("pet_command_19", skillMsg.toString());
+	}
+
+	if (creaKnowledge >= 90)
+		alm->insertAttribute("basetohit", getChanceHit());
+
+	if (creaKnowledge >= 100) {
+		StringBuffer damageMsg;
+		damageMsg << getDamageMin() << "-" << getDamageMax();
+		alm->insertAttribute("cat_wpn_damage", damageMsg.toString());
+	}
 }
 
 void CreatureImplementation::scheduleDespawn() {
@@ -373,7 +401,7 @@ bool CreatureImplementation::canCollectDna(CreatureObject* player) {
 void CreatureImplementation::loadTemplateDataForBaby(CreatureTemplate* templateData) {
 	loadTemplateData(templateData);
 
-	setCustomObjectName(getDisplayedName() + " (baby)", false);
+	setCustomObjectName(getDisplayedName() + "\\#F0FFFF" + " (baby)", false);
 
 	setHeight(templateData->getScale() * 0.46, false);
 

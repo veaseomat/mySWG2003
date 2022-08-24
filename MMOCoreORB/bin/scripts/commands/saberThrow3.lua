@@ -46,7 +46,6 @@ SaberThrow3Command = {
 
 	damageMultiplier = 2.0,
 	speedMultiplier = 4.5,
-	speed = 4.0,
 	healthCostMultiplier = 0,
 	actionCostMultiplier = 0,
 	mindCostMultiplier = 0,
@@ -61,7 +60,7 @@ SaberThrow3Command = {
 		{ "knockdownRecovery", "lastKnockdown" }, 
 		{ "knockdown_defense" }, 
 		{},
-		65, 
+		100, 
 		0, 
 		0
 	  )

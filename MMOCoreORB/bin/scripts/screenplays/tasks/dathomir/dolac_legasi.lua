@@ -134,7 +134,7 @@ DolacLegasi = ThemeParkLogic:new {
 	faction = FACTIONIMPERIAL
 }
 
---registerScreenPlay("DolacLegasi", true)
+registerScreenPlay("DolacLegasi", true)
 
 dolac_legasi_mission_giver_conv_handler = mission_giver_conv_handler:new {
 	themePark = DolacLegasi

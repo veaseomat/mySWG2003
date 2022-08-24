@@ -376,7 +376,7 @@ uint32 DamageOverTime::doForceChokeTick(CreatureObject* victim, CreatureObject* 
 		//PSG with lightsaber resistance only
 		ManagedReference<ArmorObject*> psg = CombatManager::instance()->getPSGArmor(victimRef);
 		if (psg != nullptr && !psg->isVulnerable(SharedWeaponObjectTemplate::LIGHTSABER)) {
-			float armorReduction =  CombatManager::instance()->getArmorObjectReduction(victimRef, psg, SharedWeaponObjectTemplate::LIGHTSABER);
+			float armorReduction =  CombatManager::instance()->getArmorObjectReduction(psg, SharedWeaponObjectTemplate::LIGHTSABER);
 
 		if (armorReduction > 0)
 			chokeDam *= 1.f - (armorReduction / 100.f);

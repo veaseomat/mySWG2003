@@ -79,6 +79,7 @@ includeFile("lair/creature_dynamic/dantooine_voritor_jungle_lizard_neutral_none.
 includeFile("lair/creature_dynamic/dantooine_voritor_lizard_neutral_none.lua")
 includeFile("lair/creature_dynamic/dantooine_voritor_tracker_neutral_none.lua")
 includeFile("lair/creature_dynamic/dantooine_voritor_vexed_neutral_none.lua")
+includeFile("lair/creature_dynamic/dantooine_graul_marauder.lua")
 
 includeFile("lair/creature_dynamic/dathomir_baz_nitch_herd_neutral_none.lua")
 includeFile("lair/creature_dynamic/dathomir_baz_nitch_kinad_neutral_none.lua")

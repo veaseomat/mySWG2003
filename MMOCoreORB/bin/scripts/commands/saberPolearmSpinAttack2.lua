@@ -66,14 +66,14 @@ SaberPolearmSpinAttack2Command = {
 	  )
 	},
 
-	animation = "counter_low_left", 
+	animation = "showoff_1", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saberpolearmspinattack2",
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = POLEARMJEDIWEAPON,
 
 	range = -1
 }

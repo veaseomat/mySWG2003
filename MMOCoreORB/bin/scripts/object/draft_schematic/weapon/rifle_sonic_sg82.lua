@@ -66,7 +66,7 @@ object_draft_schematic_weapon_rifle_sonic_sg82 = object_draft_schematic_weapon_s
    ingredientTitleNames = {"frame_assembly", "receiver_assembly", "grip_assembly", "powerhandler", "firing_mechanism"},
    ingredientSlotType = {0, 0, 0, 1, 1},
    resourceTypes = {"copper_codoan", "metal_nonferrous", "metal", "object/tangible/component/weapon/shared_blaster_power_handler.iff", "object/tangible/component/item/shared_electronic_control_unit.iff"},
-   resourceQuantities = {40, 20, 10, 1, 1},
+   resourceQuantities = {40, 20, 10, 2, 1},
    contribution = {100, 100, 100, 100, 100},
 
 

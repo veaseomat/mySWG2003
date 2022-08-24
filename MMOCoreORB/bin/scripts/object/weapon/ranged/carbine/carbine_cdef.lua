@@ -108,16 +108,16 @@ object_weapon_ranged_carbine_carbine_cdef = object_weapon_ranged_carbine_shared_
 	pointBlankRange = 0,
 	pointBlankAccuracy = 20,
 
-	idealRange = 10,
-	idealAccuracy = 40,
+	idealRange = 15,
+	idealAccuracy = 50,
 
 	maxRange = 64,
 	maxRangeAccuracy = -80,
 
-	minDamage = 17,
-	maxDamage = 35,
+	minDamage = 25,
+	maxDamage = 50,
 
-	attackSpeed = 4.6,
+	attackSpeed = 3.5,
 
 	woundsRatio = 4,
 

@@ -71,7 +71,7 @@ PanicShotCommand = {
 	coneAction = true,
 	coneAngle = 45,
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = PISTOLWEAPON,
 
 	range = -1
 }

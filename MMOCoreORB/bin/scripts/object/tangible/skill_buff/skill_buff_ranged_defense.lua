@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_ranged_defense = object_tangible_skill_buf
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 3600,
+	duration = 300,
 	useCount = 5,
-	modifiers = { "ranged_defense", 25 },
+	modifiers = { "ranged_defense", 10 },
 	buffName = "ranged_defense",
 	buffCRC = 0xA6407812
 }

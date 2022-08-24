@@ -67,7 +67,7 @@ object_draft_schematic_chemistry_med_stimpack_e = object_draft_schematic_chemist
 	ingredientTitleNames = {"organic_element", "inorganic_element", "delivery_medium", "drug_duration_compound", "drug_strength_compound"},
 	ingredientSlotType = {0, 0, 1, 1, 1},
 	resourceTypes = {"fruit_berries", "fiberplast", "object/tangible/component/chemistry/shared_liquid_delivery_suspension.iff", "object/tangible/component/chemistry/shared_release_mechanism_duration.iff", "object/tangible/component/chemistry/shared_biologic_effect_controller.iff"},
-	resourceQuantities = {24, 16, 1, 1, 1},
+	resourceQuantities = {24, 16, 1, 1, 3},
 	contribution = {100, 100, 100, 100, 100},
 
 	targetTemplate = "object/tangible/medicine/crafted/crafted_stimpack_sm_s1_e.iff",

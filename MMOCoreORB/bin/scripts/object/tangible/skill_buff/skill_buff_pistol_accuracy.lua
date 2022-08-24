@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_pistol_accuracy = object_tangible_skill_bu
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 3600,
+	duration = 300,
 	useCount = 5,
-	modifiers = { "pistol_accuracy", 25 },
+	modifiers = { "pistol_accuracy", 10 },
 	buffName = "pistol_accuracy",
 	buffCRC = 0x55471D61
 }

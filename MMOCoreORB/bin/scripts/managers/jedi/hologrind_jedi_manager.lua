@@ -4,7 +4,7 @@ local PlayerManager = require("managers.player_manager")
 
 jediManagerName = "HologrindJediManager"
 
-NUMBEROFPROFESSIONSTOMASTER = 2 --this is now how many profs are selected
+NUMBEROFPROFESSIONSTOMASTER = 3 --this is now how many profs are selected
 MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 2
 
 HologrindJediManager = JediManager:new {
@@ -85,7 +85,7 @@ function HologrindJediManager:getNumberOfMasteredProfessions(pCreatureObject)
 	end
 
 	local professions = PlayerObject(pGhost):getHologrindProfessions()
-	local masteredNumberOfProfessions = 0 --this number is now how many of the selected professions you dont need to do
+	local masteredNumberOfProfessions = 0 --increasing this number is now how many of the selected professions you dont need to do
 	for i = 1, #professions, 1 do
 		if PlayerObject(pGhost):hasBadge(professions[i]) then
 			masteredNumberOfProfessions = masteredNumberOfProfessions + 1
@@ -188,7 +188,7 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 	self:checkIfProgressedToJedi(pCreatureObject)
 	self:registerObservers(pCreatureObject)
 	
-		FsIntro3:startStepDelay(pCreatureObject, 3)--faction encoutners
+	FsIntro3:startStepDelay(pCreatureObject, 3)--faction encoutners
 
 	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
 		FsIntro:startStepDelay(pCreatureObject, 3)
@@ -198,12 +198,23 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 --		PlayerObject(pCreatureObject):findmytrainer()
 --	end
 	
---	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_03") then	
---		FsIntro2:startStepDelay(pCreatureObject, 3)
---	end
+	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_03") then	
+		FsIntro2:startStepDelay(pCreatureObject, 3)
+	end
 
 	if JediTrials:isOnKnightTrials(pCreatureObject) then	
-		KnightTrials:showCurrentTrial(pCreatureObject)
+		--KnightTrials:showCurrentTrial(pCreatureObject) --DOES NOT FIX
+		
+		--KnightTrials:startNextKnightTrial(pCreatureObject)--this FIXES KNIGHT TRIAL!!!! well sort of its a workaround that resets current trial every logout or server rest.
+
+--100% fix for knight trial progress
+		local trialNumber = JediTrials:getCurrentTrial(pCreatureObject)
+		local trialData = knightTrialQuests[trialNumber]
+
+		if (trialData.trialType == TRIAL_HUNT or trialData.trialType == TRIAL_HUNT_FACTION) then
+			createObserver(KILLEDCREATURE, "KnightTrials", "notifyKilledHuntTarget", pCreatureObject)
+		end
+		
 	end
 	
 end
@@ -283,21 +294,32 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 --			return
 --		else
 
+--		local skillManager = LuaSkillManager()
+--
+--		CreatureObject(pCreatureObject):addSkillMod(SkillModManager::PERMANENTMOD, "saber_block", 50, true)--notworking
+
 		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
 			ForceShrineMenuComponent:doMeditate(pSceneObject, pCreatureObject)
 		end
 		
-		if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
-			PlayerObject(pGhost):setJediState(2)
-					
-			awardSkill(pCreatureObject, "force_title_jedi_rank_01")
 		
-			writeScreenPlayData(pCreatureObject, "PadawanTrials", "startedTrials", 1)		
+		--this was unlock
+--		if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
+--			PlayerObject(pGhost):setJediState(2)
+--					
+--			awardSkill(pCreatureObject, "force_title_jedi_rank_01")
+--		
+--			writeScreenPlayData(pCreatureObject, "PadawanTrials", "startedTrials", 1)		
+--			
+--			CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+--			CreatureObject(pCreatureObject):playMusicMessage("sound/music_become_jedi.snd")
+--
+--			FsIntro:startStepDelay(pCreatureObject, 3)
+			---
 			
-			CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
-			CreatureObject(pCreatureObject):playMusicMessage("sound/music_become_jedi.snd")
-
-			FsIntro:startStepDelay(pCreatureObject, 3)
+			
+			
+			
 			
 --			local suiManager = LuaSuiManager()		
 --			suiManager:sendMessageBox(pCreatureObject, pCreatureObject, "Jedi Unlock", "You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\nYou have been sent mail with a guide to Jedi on mySWG. First you will need to find your Jedi skill trainer! it could be any starting profession trainer in the galaxy, talk to each one until you find yours.\n\nJedi on mySWG is PERMADEATH with only 3 lives! After you find your trainer you will only have 3 lives, after that all of you Jedi skills will be removed. \n\nCongratulations, good luck, and may the Force be with you... Jedi.", "@ok", "HologrindJediManager", "notifyOkPressed")
@@ -313,9 +335,12 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 --			.."\n\nJedi Knight trials will start when you have learned enough skills. FRS has been removed, instead the Jedi knight skill box grants hidden skill mods. Jedi Knight is not tied to any faction, you do not have to be rebel or imperial and there is no light or dark side, there is just Jedi Knight."
 --			, CreatureObject(pCreatureObject):getFirstName())
 			
-			SceneObject(pSceneObject):destroyObjectFromWorld()
-			SceneObject(pSceneObject):destroyObjectFromDatabase()
-		end
+			
+			
+			
+--			SceneObject(pSceneObject):destroyObjectFromWorld()
+--			SceneObject(pSceneObject):destroyObjectFromDatabase()
+--		end
 	end
 end
 

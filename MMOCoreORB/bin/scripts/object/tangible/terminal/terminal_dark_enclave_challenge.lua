@@ -42,7 +42,7 @@
 
 
 object_tangible_terminal_terminal_dark_enclave_challenge = object_tangible_terminal_shared_terminal_dark_enclave_challenge:new {
-
+	objectMenuComponent = "EnclaveTerminalMenuComponent",
 }
 
 ObjectTemplates:addTemplate(object_tangible_terminal_terminal_dark_enclave_challenge, "object/tangible/terminal/terminal_dark_enclave_challenge.iff")

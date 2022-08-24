@@ -58,7 +58,7 @@ CripplingShotCommand = {
 
 	combatSpam = "cripplingshot",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = CARBINEWEAPON,
 
 	range = -1
 }

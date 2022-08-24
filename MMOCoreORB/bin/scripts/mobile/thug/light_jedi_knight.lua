@@ -1,19 +1,20 @@
 light_jedi_knight = Creature:new {
 	objectName = "",
-	customName = "a Light Jedi Knight",
+	customName = "Light Jedi Knight",
 	randomNameType = NAME_GENERIC,
 	randomNameTag = true,
-	socialGroup = "",
-	faction = "",
+	socialGroup = "rebel",
+	faction = "rebel",
 	level = 350,
+	elite = 2.0,
 	chanceHit = 23.5,
 	damageMin = 2000,
 	damageMax = 4000,
 	baseXp = 25266,
 	baseHAM = 250000,
 	baseHAMmax = 300000,
-	armor = 1,
-	resists = {90,90,90,90,90,90,90,90,-1},
+	armor = 3,
+	resists = {80,80,80,80,80,80,80,80,0},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -40,7 +41,7 @@ light_jedi_knight = Creature:new {
 	lootGroups = {
 		{
 			groups = {
---				{group = "junk", chance = 3000000},
+				{group = "junk", chance = 9000000},
 --				{group = "holocron_dark", chance = 300000},
 				{group = "color_crystals", chance = 1000000},
 --				{group = "sabers", chance = 1000000}
@@ -49,10 +50,7 @@ light_jedi_knight = Creature:new {
 	},
 	weapons = {"dark_jedi_weapons_gen2"},
 	conversationTemplate = "",
-	attacks = {
-		{"dizzyattack",""},
-		{"knockdownattack",""}
-	}
+	attacks =	merge(lightsabermaster)
 }
 
 CreatureTemplates:addCreatureTemplate(light_jedi_knight, "light_jedi_knight")

@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_polearm_accuracy = object_tangible_skill_b
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 3600,
+	duration = 300,
 	useCount = 5,
-	modifiers = { "polearm_accuracy", 25 },
+	modifiers = { "polearm_accuracy", 10 },
 	buffName = "polearm_accuracy",
 	buffCRC = 0xF0C5EEED
 }

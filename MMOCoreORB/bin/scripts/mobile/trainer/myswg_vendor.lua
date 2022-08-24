@@ -1,8 +1,8 @@
-master_weaponsmith = Creature:new {
+myswg_vendor = Creature:new {
 --	objectName = "@mob/creature_names:trainer_weaponsmith",
 	randomNameType = NAME_GENERIC,
 	randomNameTag = true,
-  customName = "Master Weaponsmith",
+  customName = "mySWG Vendor",
 	faction = "",
 	level = 100,
 	chanceHit = 0.390000,
@@ -28,13 +28,24 @@ master_weaponsmith = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {
-		"object/mobile/dressed_weaponsmith_trainer_01.iff",
-		"object/mobile/dressed_weaponsmith_trainer_02.iff",
-		"object/mobile/dressed_weaponsmith_trainer_03.iff"
+		"object/mobile/dressed_criminal_pirate_human_male_01.iff",
+		"object/mobile/dressed_criminal_pirate_human_female_01.iff",
+		"object/mobile/dressed_criminal_thug_bothan_male_01.iff",
+		"object/mobile/dressed_criminal_thug_bothan_female_01.iff",
+		"object/mobile/dressed_criminal_thug_human_male_01.iff",
+		"object/mobile/dressed_criminal_thug_human_male_02.iff",
+		"object/mobile/dressed_criminal_thug_human_female_01.iff",
+		"object/mobile/dressed_criminal_thug_human_female_02.iff",
+		"object/mobile/dressed_criminal_thug_rodian_male_01.iff",
+		"object/mobile/dressed_criminal_thug_rodian_female_01.iff",
+		"object/mobile/dressed_criminal_thug_trandoshan_male_01.iff",
+		"object/mobile/dressed_criminal_thug_trandoshan_female_01.iff",
+		"object/mobile/dressed_criminal_thug_zabrak_male_01.iff",
+		"object/mobile/dressed_criminal_thug_zabrak_female_01.iff"
 	},
 	lootGroups = {},
 	weapons = {},
-	conversationTemplate = "masterweapon_template",
+	conversationTemplate = "myswg_vendor_conv",
 	attacks = {}
 }
-CreatureTemplates:addCreatureTemplate(master_weaponsmith,"master_weaponsmith")
+CreatureTemplates:addCreatureTemplate(myswg_vendor,"myswg_vendor")

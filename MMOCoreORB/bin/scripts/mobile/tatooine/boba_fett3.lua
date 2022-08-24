@@ -5,6 +5,7 @@ boba_fett3 = Creature:new {
 	socialGroup = "imperial",
 	faction = "imperial",
 	level = 300,
+	elite = 2.0,
 	chanceHit = 55,
 	damageMin = 1200,
 	damageMax = 2300,
@@ -62,7 +63,13 @@ boba_fett3 = Creature:new {
 		"object/mobile/dressed_criminal_thug_zabrak_male_01.iff",
 		"object/mobile/dressed_criminal_thug_zabrak_female_01.iff",
 },
-	lootGroups = {},
+	lootGroups = {
+		{
+			groups = {
+				{group = "junk", chance = 10000000},
+			}
+		},
+	},
 	weapons = {"bh_weapons"},
 	conversationTemplate = "",
 	attacks =	merge(bountyhuntermaster,marksmanmaster,brawlermaster,swordsmanmaster,pistoleermaster,fencermaster,pikemanmaster,riflemanmaster)

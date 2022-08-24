@@ -68,7 +68,7 @@ Melee2hArea1Command = {
 
 	combatSpam = "descendingstrike",
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = TWOHANDMELEEWEAPON,
 
 	range = -1
 }

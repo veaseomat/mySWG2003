@@ -85,14 +85,14 @@ Saber2hPhantomCommand = {
 	  )
 	},
 
-	animation = "showoff_1", 
+	animation = "combo_jedi_2", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber2hphantom",
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = TWOHANDJEDIWEAPON,
 
 	range = -1
 }

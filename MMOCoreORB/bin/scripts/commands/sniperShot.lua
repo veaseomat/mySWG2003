@@ -58,7 +58,7 @@ SniperShotCommand = {
 
 	combatSpam = "snipershot",
 
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = RIFLEWEAPON,
 
 	range = -1
 }

@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_unarmed_speed = object_tangible_skill_buff
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 3600,
+	duration = 300,
 	useCount = 5,
-	modifiers = { "unarmed_accuracy", 25 },
+	modifiers = { "unarmed_accuracy", 10 },
 	buffName = "unarmed_accuracy",
 	buffCRC = 0x133ADA2F
 }

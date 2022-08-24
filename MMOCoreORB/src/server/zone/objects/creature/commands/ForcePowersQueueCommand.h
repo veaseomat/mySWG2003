@@ -93,26 +93,18 @@ public:
 		int manipulationMod = 0;
 		float frsModifier = 0;
 
-//		if (councilType == FrsManager::COUNCIL_LIGHT) {
-//			manipulationMod = creature->getSkillMod("force_manipulation_light");
-//			frsModifier = frsLightForceCostModifier;
-//		} else if (councilType == FrsManager::COUNCIL_DARK) {
-//			manipulationMod = creature->getSkillMod("force_manipulation_dark");
-//			frsModifier = frsDarkForceCostModifier;
-//		}
-
-		//frs reduced powers force cost
-		float frscost = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.625);
-		int newforcecost = forceCost;
-
-		if (frscost > 0) {
-			newforcecost *= 1.f - (frscost / 100.f);
+		if (councilType == FrsManager::COUNCIL_LIGHT) {
+			manipulationMod = creature->getSkillMod("force_manipulation_light");
+			frsModifier = frsLightForceCostModifier;
+		} else if (councilType == FrsManager::COUNCIL_DARK) {
+			manipulationMod = creature->getSkillMod("force_manipulation_dark");
+			frsModifier = frsDarkForceCostModifier;
 		}
 
-//		if (manipulationMod == 0 || frsModifier == 0)
-//			return forceCost;
+		if (manipulationMod == 0 || frsModifier == 0)
+			return forceCost;
 
-		return newforcecost;
+		return forceCost + (int)((manipulationMod * frsModifier) + .5);
 	}
 
 	float getCommandDuration(CreatureObject *object, const UnicodeString& arguments) const {

@@ -68,7 +68,7 @@ object_weapon_creature_creature_default_weapon = object_weapon_creature_shared_c
 	creatureAccuracyModifiers = { "unarmed_accuracy" },
 	
 	-- See http://www.ocdsoft.com/files/defense.xls
-	defenderDefenseModifiers = { "unarmed_passive_defense", "melee_defense" },
+	defenderDefenseModifiers = { "melee_defense" },
 	
 	-- can be dodge, counterattack, or block or a combination
 	-- Secondary defense when equipped

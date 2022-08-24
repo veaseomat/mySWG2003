@@ -4,7 +4,7 @@ chitin_armor_helmet = {
 	customObjectName = "Chitin Armor Helmet",
 	directObjectTemplate = "object/tangible/wearables/armor/chitin/armor_chitin_s01_helmet.iff",
 	craftingValues = {
-		{"armor_rating",1,3,0},
+		{"armor_rating",1,1,0},
 		{"kineticeffectiveness",10,40,10},
 		{"armor_effectiveness",4,29,10},
 		{"armor_integrity",15000, 25000,0},

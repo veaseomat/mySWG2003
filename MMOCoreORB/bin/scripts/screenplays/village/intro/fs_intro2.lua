@@ -65,7 +65,7 @@ function FsIntro2:startStepDelay(pPlayer, step)
 --		return
 --	else
 	--player lost bh or first time
-		stepDelay = (getRandomNumber(2, 360) * 60 * 1000) --2min - 720=12hr
+		stepDelay = (getRandomNumber(2, 480) * 60 * 1000) --2min - 720=12hr
 --	end
 
 	writeScreenPlayData(pPlayer, "VillageJediProgression", "FsIntro2Delay", stepDelay + os.time())
@@ -85,7 +85,7 @@ function FsIntro2:doDelayedStep(pPlayer)
 	
 --delay for dead incap or not in good area
 	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer)) then
-		createEvent(getRandomNumber(2, 30) * 60 * 1000, "FsIntro2", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(1, 240) * 60 * 1000, "FsIntro2", "doDelayedStep", pPlayer, "")
 		return
 	end
 	

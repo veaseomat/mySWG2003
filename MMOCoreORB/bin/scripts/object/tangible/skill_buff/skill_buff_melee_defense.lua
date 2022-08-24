@@ -46,9 +46,9 @@ object_tangible_skill_buff_skill_buff_melee_defense = object_tangible_skill_buff
 	objectMenuComponent = "SkillBuffObjectMenuComponent",
 	attributeListComponent = "SkillBuffObjectAttributeListComponent",
 	
-	duration = 3600,
+	duration = 300,
 	useCount = 5,
-	modifiers = { "melee_defense", 25 },
+	modifiers = { "melee_defense", 10 },
 	buffName = "melee_defense",
 	buffCRC = 0xC78FA3B7
 }

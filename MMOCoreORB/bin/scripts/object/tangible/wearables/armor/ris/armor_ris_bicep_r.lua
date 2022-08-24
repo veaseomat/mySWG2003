@@ -96,7 +96,7 @@ object_tangible_wearables_armor_ris_armor_ris_bicep_r = object_tangible_wearable
 	mindEncumbrance = 1,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = HEAVY,
+	rating = LIGHT,
 
 	kinetic = 15,
 	energy = 15,
@@ -113,8 +113,8 @@ object_tangible_wearables_armor_ris_armor_ris_bicep_r = object_tangible_wearable
 	experimentalWeights = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "null", "exp_durability", "exp_quality", "exp_resistance", "exp_durability", "exp_durability", "exp_durability", "null", "null", "exp_resistance", "null"},
 	experimentalSubGroupTitles = {"null", "null", "sockets", "hit_points", "armor_effectiveness", "armor_integrity", "armor_health_encumbrance", "armor_action_encumbrance", "armor_mind_encumbrance", "armor_rating", "armor_special_type", "armor_special_effectiveness", "armor_special_integrity"},
-	experimentalMin = {0, 0, 0, 1000, 5, 30000, 22, 22, 13, 3, 1, 5, 0},
-	experimentalMax = {0, 0, 0, 1000, 50, 50000, 13, 13, 9, 3, 1, 70, 0},
+	experimentalMin = {0, 0, 0, 1000, 5, 30000, 22, 22, 13, 1, 1, 5, 0},
+	experimentalMax = {0, 0, 0, 1000, 50, 50000, 13, 13, 9, 1, 1, 70, 0},
 	experimentalPrecision = {0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 10, 0},
 	experimentalCombineType = {0, 0, 4, 1, 1, 1, 1, 1, 1, 4, 4, 4, 1},
 }

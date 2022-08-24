@@ -319,7 +319,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	// this thing exponentially ruins the variance
 
-	float excMod = 1.0;// * .625;// randomize the percentage below instead
+	float excMod = 0.8 + (System::random(20) * .01);//1.0;// * .625;// randomize the percentage below instead
 
 //	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
 //		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
@@ -331,11 +331,22 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 //	if (excMod >= 5.0) excMod = 5.0;
 
-	if ((System::random(100) >= 100) && (prototype->isWeaponObject())) {
+	if (System::random(100) >= 100) {
+		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
+		prototype->setCustomObjectName(newName, false);
+
+		excMod *= 2.0 + (System::random(50) * .01);//2.5;
+
+		prototype->addMagicBit(false);
+
+		exceptionalLooted.increment();
+	}
+
+	if (System::random(1000) >= 1000) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 
-		excMod = 2.0;
+		excMod *= 4.0 + (System::random(100) * .01);//5;
 
 		prototype->addMagicBit(false);
 
@@ -521,37 +532,27 @@ void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootI
 	bool yellow = false;
 	float modSqr = excMod * excMod;
 
-	if (System::random(skillModChance) >= skillModChance) {
+	if (System::random(skillModChance / modSqr) == 0) {
 		// if it has a skillmod the name will be yellow
 		yellow = true;
-		int modCount = System::random(8);
+		int modCount = 1;
 		int roll = System::random(100);
 
-//		if (modCount <= 0) modCount = 1;
+		if(roll > (100 - modSqr))
+			modCount += 2;
 
-//		if(roll > (100 - modSqr))
-//			modCount += 2;
-//
-//		if(roll < (5 + modSqr))
-//			modCount += 1;
-
-		level /= 3;//lvl 100 cap
+		if(roll < (5 + modSqr))
+			modCount += 1;
 
 		for(int i = 0; i < modCount; ++i) {
 			//Mods can't be lower than -1 or greater than 25
-			int max = (int) Math::max(-1.f, Math::min(30.f, (float) round(0.1f * level + 3)));
-			int min = (int) Math::max(-1.f, Math::min(30.f, (float) round(0.075f * level - 1)));
+			int max = (int) Math::max(-1.f, Math::min(25.f, (float) round(0.1f * level + 3)));
+			int min = (int) Math::max(-1.f, Math::min(25.f, (float) round(0.075f * level - 1)));
 
-			int mod = (System::random(max - min) + min);
-			mod += (System::random(max - min) + min);
+			int mod = System::random(max - min) + min;
 
-			mod = (level * .25) + System::random(2);//new sea stat calc
-
-			if(mod < 5)
-				mod = 5;
-
-			if(mod > 25)
-				mod = 25;
+			if(mod == 0)
+				mod = 1;
 
 			String modName = getRandomLootableMod( object->getGameObjectType() );
 			if( !modName.isEmpty() )
@@ -659,7 +660,7 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		int lootChance = entry->getLootChance(); //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
-		int holochance = 1000;
+//		int holochance = 1000;
 //		if (System::random(holochance) >= holochance){
 //			createLoot(trx, container, "holocron_nd", level);
 //		}
@@ -670,7 +671,7 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 
 		int roll = System::random(100);
 
-		if (roll <= 30)//%chance not to drop
+		if (roll <= 50)//%chance not to drop
 			continue;
 
 		int tempChance = 0; //Start at 0.
@@ -883,7 +884,7 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 		return;
 
 	// Apply the Dot if the chance roll equals the number or is zero.
-	if (System::random(25) == 25) { // Defined in loot item script.//not anymore
+	if (System::random(50) == 50) { // Defined in loot item script.//not anymore
 		shouldGenerateDots = true;
 	}
 

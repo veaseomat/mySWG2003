@@ -44,7 +44,7 @@
 PostureDownAttackCommand = {
         name = "posturedownattack",
         combatSpam = "attack",
-        animation = "", 
+        animation = "",--animation = "creature_attack_special_1", 
 	animType = GENERATE_INTENSITY,
 	stateEffects = {
 	  StateEffect( 

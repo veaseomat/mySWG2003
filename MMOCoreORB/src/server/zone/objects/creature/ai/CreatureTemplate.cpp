@@ -21,6 +21,7 @@ CreatureTemplate::CreatureTemplate() {
 	lightSaber = 0;
 
 	scale = 1.f;
+	elite = 1.f;
 
 	objectName = "";
 	randomNameType = 0;
@@ -120,6 +121,7 @@ void CreatureTemplate::readObject(LuaObject* templateData) {
 		defaultAttack = templateData->getStringField("defaultAttack");
 
 	scale = templateData->getFloatField("scale");
+	elite = templateData->getFloatField("elite");
 
 	if (!templateData->getStringField("milkType").isEmpty()) {
 		milkType = templateData->getStringField("milkType").trim();

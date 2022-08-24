@@ -46,7 +46,6 @@ SaberThrow1Command = {
 
 	damageMultiplier = 1.5,
 	speedMultiplier = 2.0,
-	speed = 4.0,
 	healthCostMultiplier = 0,
 	actionCostMultiplier = 0,
 	mindCostMultiplier = 0,

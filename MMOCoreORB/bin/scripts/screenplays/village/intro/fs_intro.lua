@@ -85,12 +85,12 @@ function FsIntro:doDelayedStep(pPlayer)
 	
 --delay for dead incap or not in good area
 	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer)) then
-		createEvent(getRandomNumber(2, 30) * 60 * 1000, "FsIntro", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(1, 120) * 60 * 1000, "FsIntro", "doDelayedStep", pPlayer, "")
 		return
 	end
 	
 --this is the visibility threshold, vanilla is 1500
-	if PlayerObject(pGhost):getVisibility() >= 4000 then
+	if PlayerObject(pGhost):getVisibility() >= 3000 then
 		encounterResult = SithShadowEncounter:start(pPlayer)
 		return
 		

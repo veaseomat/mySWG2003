@@ -1384,7 +1384,10 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 			ghost->setJediState(0);
 
-			awardExperience(player, "combat_meleespecialize_onehandlightsaber", 0, false, 1, false);
+			awardExperience(player, "combat_meleespecialize_onehandlightsaber", -2, false, 1, false);
+
+			int curExp = ghost->getExperience("jedi_general") * -1;
+			awardExperience(player, "jedi_general", curExp, false, 1, false);
 
 			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
 			box->setPromptTitle("PERMADEATH!");
@@ -1622,9 +1625,9 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 		player->setWounds(CreatureAttribute::WILLPOWER, 0, true);
 		player->setShockWounds(0, true);
 
-		int healthheal = player->getHAM(CreatureAttribute::HEALTH);
-		int actionheal = player->getHAM(CreatureAttribute::ACTION);
-		int mindheal = player->getHAM(CreatureAttribute::MIND);
+		int healthheal = player->getMaxHAM(CreatureAttribute::HEALTH);
+		int actionheal = player->getMaxHAM(CreatureAttribute::ACTION);
+		int mindheal = player->getMaxHAM(CreatureAttribute::MIND);
 
 		player->healDamage(player, CreatureAttribute::HEALTH, healthheal, true);
 		player->healDamage(player, CreatureAttribute::ACTION, actionheal, true);
@@ -1763,13 +1766,13 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 		}
 
 		if (ai != nullptr)
-			baseXp = ai->getBaseXp();
+			baseXp = ai->getLevel() * 5;//ai->getBaseXp();
 
 	} else {
 		ManagedReference<AiAgent*> ai = cast<AiAgent*>(destructedObject);
 
 		if (ai != nullptr)
-			baseXp = ai->getBaseXp();
+			baseXp = ai->getLevel() * 5;//ai->getBaseXp();
 	}
 
 	for (int i = 0; i < threatMap->size(); ++i) {
@@ -1851,7 +1854,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 
 				xpAmount *= (float) damage / totalDamage;
 
-				//******* XP IS NOW CHANGED IN aiagent.idl and creature.idl located in zone/obj/creature/ai
+				//******* XP was CHANGED IN aiagent.idl and creature.idl located in zone/obj/creature/ai
 
 				//Cap xp based on level
 //				xpAmount = Math::min(xpAmount, calculatePlayerLevel(attacker, xpType) * 300.f);
@@ -2072,87 +2075,87 @@ void PlayerManagerImplementation::removeEncumbrancies(CreatureObject* player, Ar
 }
 
 void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, uint32 badgeId) {
-//	const Badge* badge = BadgeList::instance()->get(badgeId);
-//	if (badge != nullptr)
-//		awardBadge(ghost, badge);
+	const Badge* badge = BadgeList::instance()->get(badgeId);
+	if (badge != nullptr)
+		awardBadge(ghost, badge);
 }
 
 void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, const Badge* badge) {
-//	if (badge == nullptr) {
-//		ghost->error("Failed to award null badge.");
-//		return;
-//	}
-//
-//	StringIdChatParameter stringId("badge_n", "");
-//	stringId.setTO("badge_n", badge->getKey());
-//
-//	ManagedReference<CreatureObject*> player = dynamic_cast<CreatureObject*>(ghost->getParent().get().get());
-//	const unsigned int badgeId = badge->getIndex();
-//	if (ghost->hasBadge(badgeId)) {
-//		stringId.setStringId("badge_n", "prose_hasbadge");
-//		player->sendSystemMessage(stringId);
-//		return;
-//	}
-//
-//	ghost->setBadge(badgeId);
-//	stringId.setStringId("badge_n", "prose_grant");
-//	player->sendSystemMessage(stringId);
-//
-//	if (badge->getHasMusic()) {
-//		String music = badge->getMusic();
-//		PlayMusicMessage* musicMessage = new PlayMusicMessage(music);
-//		player->sendMessage(musicMessage);
-//	}
-//
-//	player->notifyObservers(ObserverEventType::BADGEAWARDED, player, badgeId);
-//	BadgeList* badgeList = BadgeList::instance();
-//	switch (ghost->getNumBadges()) {
-//	case 5:
-//		awardBadge(ghost, badgeList->get("count_5"));
-//		break;
-//	case 10:
-//		awardBadge(ghost, badgeList->get("count_10"));
-//		break;
-//	case 25:
-//		awardBadge(ghost, badgeList->get("count_25"));
-//		break;
-//	case 50:
-//		awardBadge(ghost, badgeList->get("count_50"));
-//		break;
-//	case 75:
-//		awardBadge(ghost, badgeList->get("count_75"));
-//		break;
-//	case 100:
-//		awardBadge(ghost, badgeList->get("count_100"));
-//		break;
-//	case 125:
-//		awardBadge(ghost, badgeList->get("count_125"));
-//		break;
-//	default:
-//		break;
-//	}
-//
-//	if (badge->getType() == Badge::EXPLORATION) {
-//		switch (ghost->getBadgeTypeCount(static_cast<uint8>(Badge::EXPLORATION))) {
-//		case 10:
-//			awardBadge(ghost, badgeList->get("bdg_exp_10_badges"));
-//			break;
-//		case 20:
-//			awardBadge(ghost, badgeList->get("bdg_exp_20_badges"));
-//			break;
-//		case 30:
-//			awardBadge(ghost, badgeList->get("bdg_exp_30_badges"));
-//			break;
-//		case 40:
-//			awardBadge(ghost, badgeList->get("bdg_exp_40_badges"));
-//			break;
-//		case 45:
-//			awardBadge(ghost, badgeList->get("bdg_exp_45_badges"));
-//			break;
-//		default:
-//			break;
-//		}
-//	}
+	if (badge == nullptr) {
+		ghost->error("Failed to award null badge.");
+		return;
+	}
+
+	StringIdChatParameter stringId("badge_n", "");
+	stringId.setTO("badge_n", badge->getKey());
+
+	ManagedReference<CreatureObject*> player = dynamic_cast<CreatureObject*>(ghost->getParent().get().get());
+	const unsigned int badgeId = badge->getIndex();
+	if (ghost->hasBadge(badgeId)) {
+		stringId.setStringId("badge_n", "prose_hasbadge");
+		player->sendSystemMessage(stringId);
+		return;
+	}
+
+	ghost->setBadge(badgeId);
+	stringId.setStringId("badge_n", "prose_grant");
+	player->sendSystemMessage(stringId);
+
+	if (badge->getHasMusic()) {
+		String music = badge->getMusic();
+		PlayMusicMessage* musicMessage = new PlayMusicMessage(music);
+		player->sendMessage(musicMessage);
+	}
+
+	player->notifyObservers(ObserverEventType::BADGEAWARDED, player, badgeId);
+	BadgeList* badgeList = BadgeList::instance();
+	switch (ghost->getNumBadges()) {
+	case 5:
+		awardBadge(ghost, badgeList->get("count_5"));
+		break;
+	case 10:
+		awardBadge(ghost, badgeList->get("count_10"));
+		break;
+	case 25:
+		awardBadge(ghost, badgeList->get("count_25"));
+		break;
+	case 50:
+		awardBadge(ghost, badgeList->get("count_50"));
+		break;
+	case 75:
+		awardBadge(ghost, badgeList->get("count_75"));
+		break;
+	case 100:
+		awardBadge(ghost, badgeList->get("count_100"));
+		break;
+	case 125:
+		awardBadge(ghost, badgeList->get("count_125"));
+		break;
+	default:
+		break;
+	}
+
+	if (badge->getType() == Badge::EXPLORATION) {
+		switch (ghost->getBadgeTypeCount(static_cast<uint8>(Badge::EXPLORATION))) {
+		case 10:
+			awardBadge(ghost, badgeList->get("bdg_exp_10_badges"));
+			break;
+		case 20:
+			awardBadge(ghost, badgeList->get("bdg_exp_20_badges"));
+			break;
+		case 30:
+			awardBadge(ghost, badgeList->get("bdg_exp_30_badges"));
+			break;
+		case 40:
+			awardBadge(ghost, badgeList->get("bdg_exp_40_badges"));
+			break;
+		case 45:
+			awardBadge(ghost, badgeList->get("bdg_exp_45_badges"));
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void PlayerManagerImplementation::setExperienceMultiplier(float globalMultiplier) {

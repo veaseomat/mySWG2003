@@ -66,6 +66,7 @@ protected:
 	int range;
 
 	float scale;
+	float elite;
 
 	int baseXp;
 	int baseHAM;
@@ -282,6 +283,10 @@ public:
 
 	inline float getScale() const {
 		return scale;
+	}
+	
+	inline float getElite() const {
+		return elite;
 	}
 
 	inline int getDamageMin() const {

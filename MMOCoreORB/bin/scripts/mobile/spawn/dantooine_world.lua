@@ -793,6 +793,15 @@ dantooine_world = {
 			weighting = 3,
 			size = 25
 		},
+		{
+			lairTemplateName = "dantooine_graul_marauder",
+			spawnLimit = 5,
+			minDifficulty = 155,
+			maxDifficulty = 159,
+			numberToSpawn = 0,
+			weighting = 3,
+			size = 35
+		},
 	}
 }
 

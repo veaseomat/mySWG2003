@@ -66,7 +66,7 @@ object_draft_schematic_weapon_rifle_light_blaster_laser_carbine = object_draft_s
    ingredientTitleNames = {"frame_assembly", "receiver_assembly", "grip_assembly", "powerhandler", "barrel", "scope", "stock"},
    ingredientSlotType = {0, 0, 0, 1, 1, 3, 3},
    resourceTypes = {"aluminum_linksteel", "metal_nonferrous", "metal", "object/tangible/component/weapon/shared_blaster_power_handler.iff", "object/tangible/component/weapon/shared_blaster_rifle_barrel.iff", "object/tangible/component/weapon/shared_scope_weapon.iff", "object/tangible/component/weapon/shared_stock.iff"},
-   resourceQuantities = {50, 30, 12, 1, 1, 1, 1},
+   resourceQuantities = {50, 30, 12, 3, 1, 1, 1},
    contribution = {100, 100, 100, 100, 100, 100, 100},
    ingredientAppearance = {"", "", "", "", "muzzle", "scope", "stock"},
 

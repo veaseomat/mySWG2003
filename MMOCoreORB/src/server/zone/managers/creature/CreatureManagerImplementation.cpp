@@ -736,7 +736,7 @@ void CreatureManagerImplementation::droidHarvest(Creature* creature, CreatureObj
 		return;
 	}
 
-	quantityExtracted *= 50;
+	quantityExtracted *= 10;
 
 	TransactionLog trx(TrxCode::HARVESTED, owner, resourceSpawn);
 
@@ -898,7 +898,7 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 	if (creature->getParent().get() != nullptr)
 		quantityExtracted = 1;
 
-	quantityExtracted *= 20;
+	quantityExtracted *= 10;
 
 	TransactionLog trx(TrxCode::HARVESTED, player, resourceSpawn);
 	resourceManager->harvestResourceToPlayer(trx, player, resourceSpawn, quantityExtracted);

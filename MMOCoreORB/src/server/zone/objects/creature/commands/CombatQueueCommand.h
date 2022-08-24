@@ -447,6 +447,136 @@ public:
 		String intensity = getIntensity(((uint32)weapon->getMaxDamage()) >> 2, damage);
 		StringBuffer buffer;
 
+
+
+
+		int aiquick = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::QUICKNESS);//70+r30
+		int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80 (10 of 30= 1/3)
+		int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);
+
+		if (attacker->isAiAgent() && (aifocus > aiquick)) {//single pool hits
+			if (weapon->isPistolWeapon()){
+				return "fire_1_special_single" + intensity;
+			}
+			if (weapon->isCarbineWeapon()){
+				return "test_homing" + intensity;
+			}
+			if (weapon->isRifleWeapon()){
+				return "fire_1_special_single" + intensity;
+			}
+	//		if (weapon->isRangedWeapon())
+			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon()){
+				return "combo_3a" + intensity;
+			}
+			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon()){
+				return "combo_2d" + intensity;
+			}
+			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon()){
+				return "combo_3b" + intensity;
+			}
+			if (weapon->isUnarmedWeapon()){
+				return "knockdown_unarmed_1" + intensity;
+			}
+			if (weapon->isLightningRifle()){
+				return "fire_lightning_rifle_single_2" + intensity;
+			}
+			if (weapon->isFlameThrower()){
+				return "fire_flame_thrower_cone_2" + intensity;
+			}
+			if (weapon->isHeavyAcidRifle()){
+				return "fire_acid_rifle_single_2" + intensity;
+			}
+//			if (weapon->isMeleeWeapon())
+
+//			if (weapon->isHeavyWeapon())
+
+//			if (weapon->isThrownWeapon())
+
+//			if (weapon->isSpecialHeavyWeapon())
+
+//			if (weapon->isMineWeapon())
+
+			if (weapon->isJediOneHandedWeapon()){
+				return "combo_5a" + intensity;
+			}
+			if (weapon->isJediTwoHandedWeapon()){
+				return "combo_4a" + intensity;
+			}
+			if (weapon->isJediPolearmWeapon()){
+				return "combo_3d" + intensity;
+			}
+//			if (weapon->isJediWeapon())
+		}
+
+		if (attacker->isAiAgent() && (aiquick > aifocus)) {//multipool hits
+			if (weapon->isPistolWeapon()){
+				return "fire_5_special_single" + intensity;
+			}
+			if (weapon->isCarbineWeapon()){
+				return "fire_area" + intensity;
+			}
+			if (weapon->isRifleWeapon()){
+				return "fire_area" + intensity;
+			}
+//			if (weapon->isRangedWeapon())
+
+			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon()){
+				return "combo_5a" + intensity;
+			}
+			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon()){
+				return "combo_2d" + intensity;
+			}
+			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon()){
+				return "combo_5a" + intensity;
+			}
+			if (weapon->isUnarmedWeapon()){
+				return "combo_5a" + intensity;
+			}
+			if (weapon->isLightningRifle()){
+				return "fire_lightning_rifle_single_2" + intensity;
+			}
+			if (weapon->isFlameThrower()){
+				return "fire_flame_thrower_cone_2" + intensity;
+			}
+			if (weapon->isHeavyAcidRifle()){
+				return "fire_acid_rifle_single_2" + intensity;
+			}
+//			if (weapon->isMeleeWeapon())
+
+//			if (weapon->isHeavyWeapon())
+
+//			if (weapon->isThrownWeapon())
+
+//			if (weapon->isSpecialHeavyWeapon())
+
+//			if (weapon->isMineWeapon())
+
+			if (weapon->isJediOneHandedWeapon()){
+				return "combo_jedi_4" + intensity;
+			}
+			if (weapon->isJediTwoHandedWeapon()){
+				return "combo_jedi_2" + intensity;
+			}
+			if (weapon->isJediPolearmWeapon()){
+				return "combo_jedi_2" + intensity;
+			}
+//			if (weapon->isJediWeapon())
+
+		}
+
+//		if (attacker->isAiAgent()) {
+//		if (weapon->isJediOneHandedWeapon()){
+//			return "combo_jedi_4" + intensity;
+//		}
+//		if (weapon->isJediTwoHandedWeapon()){
+//			return "combo_jedi_2" + intensity;
+//		}
+//		if (weapon->isJediPolearmWeapon()){
+//			return "combo_jedi_2" + intensity;
+//		}
+//		}
+
+
 		if (attacker->isDroidObject()) {
 			return "droid_attack" + intensity;
 		} else if (!attacker->isCreature()) {
@@ -506,6 +636,23 @@ public:
 	inline String generateAnimation(uint8 hitLocation, int weaponThreshold, int damage) const {
 		String anim = animation;
 
+//
+//		int aiquick = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::QUICKNESS);//70+r30
+//		int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80 (10 of 30= 1/3)
+//		int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);
+//
+//		if (attacker->isAiAgent()) {
+//		if (weapon->isJediOneHandedWeapon()){
+//			anim = "combo_jedi_4";
+//		}
+//		if (weapon->isJediTwoHandedWeapon()){
+//			anim = "combo_jedi_2";
+//		}
+//		if (weapon->isJediPolearmWeapon()){
+//			anim = "combo_jedi_2";
+//		}
+//		}
+
 		switch(animType) {
 		case GENERATE_NONE:
 			break;
@@ -528,10 +675,31 @@ public:
 	}
 
 	virtual String getAnimation(TangibleObject* attacker, TangibleObject* defender, WeaponObject* weapon, uint8 hitLocation, int damage) const {
-		//if (animation.isEmpty())
+		String anim = animation;
+
+//		int aiquick = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::QUICKNESS);//70+r30
+//		int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80 (10 of 30= 1/3)
+//		int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);
+//
+//		if (attacker->isAiAgent()) {
+//		if (weapon->isJediOneHandedWeapon()){
+//			//anim = "combo_jedi_4";
+//			setAnimationString("combo_jedi_4");
+//		}
+//		if (weapon->isJediTwoHandedWeapon()){
+//			//anim = "combo_jedi_2";
+//			setAnimationString("combo_jedi_2");
+//		}
+//		if (weapon->isJediPolearmWeapon()){
+//			//anim = "combo_jedi_2";
+//			setAnimationString("combo_jedi_2");
+//		}
+//		}
+
+		if (anim.isEmpty())//remove this for no animations
 			return getDefaultAttackAnimation(attacker, weapon, hitLocation, damage);
 
-		//return generateAnimation(hitLocation, ((uint32)weapon->getMaxDamage()) >> 2, damage);
+		return generateAnimation(hitLocation, ((uint32)weapon->getMaxDamage()) >> 2, damage);//remove this for no animations
 	}
 
 	inline const String& getEffectString() const {
@@ -678,7 +846,7 @@ public:
 				defender->setPosture(CreaturePosture::KNOCKEDDOWN, false, false);
 
 			defender->updateKnockdownRecovery();
-			defender->updatePostureChangeDelay(2500);//change kd timer here?
+			defender->updatePostureChangeDelay(5000);
 			defender->removeBuff(STRING_HASHCODE("burstrun"));
 			defender->removeBuff(STRING_HASHCODE("retreat"));
 			defender->sendSystemMessage("@cbt_spam:posture_knocked_down");

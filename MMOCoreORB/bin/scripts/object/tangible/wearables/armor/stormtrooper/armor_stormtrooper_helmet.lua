@@ -64,18 +64,18 @@ object_tangible_wearables_armor_stormtrooper_armor_stormtrooper_helmet = object_
 	mindEncumbrance = 225,
 
 	-- LIGHT, MEDIUM, HEAVY
-	rating = MEDIUM,
+	rating = LIGHT,
 
 	maxCondition = 45000,
 
-	kinetic = 40,
-	energy = 40,
-	electricity = 40,
-	stun = 40,
-	blast = 40,
-	heat = 40,
-	cold = 40,
-	acid = 40,
+	kinetic = 30,
+	energy = 30,
+	electricity = 30,
+	stun = 0,
+	blast = 30,
+	heat = 0,
+	cold = 30,
+	acid = 0,
 	lightSaber = 0
 }
 

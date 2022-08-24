@@ -5,7 +5,8 @@ holocron_nd = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "jedi_holocron_nd", weight = 10000000},
+		{groupTemplate = "junk", weight = 10000000},
+--		{itemTemplate = "jedi_holocron_nd", weight = 10000000},
 	}
 }
 
