@@ -14,7 +14,7 @@ sithshadowencounter4 = Encounter:new {
 	-- Encounter properties
 	encounterDespawnTime = 2 * 60 * 1000, -- 30 sec
 	spawnObjectList = {
-		{ template = "boba_fett3", minimumDistance = 64, maximumDistance = 96, referencePoint = 0, followPlayer = true, setNotAttackable = false, runOnDespawn = true },
+		{ template = "pvpimp", minimumDistance = 64, maximumDistance = 96, referencePoint = 0, followPlayer = true, setNotAttackable = false, runOnDespawn = true },
 	},
 	onEncounterSpawned = nil,
 	isEncounterFinished = nil,

@@ -454,12 +454,12 @@ public:
 		int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80 (10 of 30= 1/3)
 		int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);
 
-		if (attacker->isAiAgent() && (aifocus > aiquick)) {//single pool hits
+		if (attacker->isAiAgent() && !attacker->isCreature() && (aifocus > aiquick)) {//single pool hits
 			if (weapon->isPistolWeapon()){
 				return "fire_1_special_single" + intensity;
 			}
 			if (weapon->isCarbineWeapon()){
-				return "test_homing" + intensity;
+				return "test_homing" + intensity;//no animation?
 			}
 			if (weapon->isRifleWeapon()){
 				return "fire_1_special_single" + intensity;
@@ -475,7 +475,7 @@ public:
 				return "combo_3b" + intensity;
 			}
 			if (weapon->isUnarmedWeapon()){
-				return "knockdown_unarmed_1" + intensity;
+				return "knockdown_unarmed_1" + intensity;//no animation??? added generate intensity to attack need to test
 			}
 			if (weapon->isLightningRifle()){
 				return "fire_lightning_rifle_single_2" + intensity;
@@ -508,7 +508,7 @@ public:
 //			if (weapon->isJediWeapon())
 		}
 
-		if (attacker->isAiAgent() && (aiquick > aifocus)) {//multipool hits
+		if (attacker->isAiAgent() && !attacker->isCreature() && (aiquick > aifocus)) {//multipool hits
 			if (weapon->isPistolWeapon()){
 				return "fire_5_special_single" + intensity;
 			}
@@ -524,7 +524,7 @@ public:
 				return "combo_5a" + intensity;
 			}
 			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon()){
-				return "combo_2d" + intensity;
+				return "combo_4a" + intensity;
 			}
 			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon()){
 				return "combo_5a" + intensity;

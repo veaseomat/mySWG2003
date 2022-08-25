@@ -657,7 +657,7 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = entry->getLootChance(); //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
+		int lootChance = entry->getLootChance() * 1.75; //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
 //		int holochance = 1000;
@@ -669,9 +669,14 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		if (lootChance <= 0)
 			continue;
 
-		int roll = System::random(100);
+//		int roll = System::random(100);
+//
+//		if (roll <= 50)//%chance not to drop
+//			continue;
 
-		if (roll <= 50)//%chance not to drop
+		int roll = System::random(10000000);
+
+		if (roll > lootChance)
 			continue;
 
 		int tempChance = 0; //Start at 0.

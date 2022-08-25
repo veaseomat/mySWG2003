@@ -54,6 +54,7 @@ UnarmedHeadHit1Command = {
 	poolsToDamage = MIND_ATTRIBUTE,
 
 	animation = "knockdown_unarmed_1",
+	animType = GENERATE_INTENSITY,
 
 	combatSpam = "nexugrin",
 	

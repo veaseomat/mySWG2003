@@ -14,7 +14,7 @@ sithshadowencounter2 = Encounter:new {
 	-- Encounter properties
 	encounterDespawnTime = 2 * 60 * 1000, -- 30 sec
 	spawnObjectList = {
-		{ template = "dark_jedi_knight2", minimumDistance = 64, maximumDistance = 96, referencePoint = 0, followPlayer = true, setNotAttackable = false, runOnDespawn = true },
+		{ template = "pvpdjk", minimumDistance = 64, maximumDistance = 96, referencePoint = 0, followPlayer = true, setNotAttackable = false, runOnDespawn = true },
 	},
 	onEncounterSpawned = nil,
 	isEncounterFinished = nil,
