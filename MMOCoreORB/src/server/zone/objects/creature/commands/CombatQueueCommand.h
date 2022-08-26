@@ -475,7 +475,7 @@ public:
 				return "combo_3b" + intensity;
 			}
 			if (weapon->isUnarmedWeapon()){
-				return "knockdown_unarmed_1" + intensity;//no animation??? added generate intensity to attack need to test
+				return "attack_high_center_light_1" + intensity;//no animation??? added generate intensity to attack need to test
 			}
 			if (weapon->isLightningRifle()){
 				return "fire_lightning_rifle_single_2" + intensity;

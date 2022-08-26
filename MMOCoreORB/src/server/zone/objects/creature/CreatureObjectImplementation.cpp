@@ -2776,23 +2776,19 @@ void CreatureObjectImplementation::notifySelfPositionUpdate() {
 }
 
 void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
-	if (isIncapacitated() || isDead())
+	if (isIncapacitated() || isDead()) {
 		return;
-
-	if (!isPlayerCreature())// && isInCombat())
-		return;
+	}
 
 	float modifier = (float)latency/1000.f;
 
-//	if (isKneeling())
-//		modifier *= 1.25f;
-//	else
-	if (isSitting())
-		modifier *= 5.0f;
+	if (isInCombat())
+			modifier *= .3;
 
-//	if (isInCombat())
-//		modifier *= .5f;
-	modifier *= 1.5f;
+	if (isKneeling())
+		modifier *= 1.25f;
+	else if (isSitting())
+		modifier *= 1.75f;
 
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(

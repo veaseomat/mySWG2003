@@ -759,7 +759,7 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		}
 	}
 
-	if (attackerAccuracy > 125) attackerAccuracy = 125;
+//	if (attackerAccuracy > 125) attackerAccuracy = 125;
 
 	return attackerAccuracy;
 }
@@ -848,7 +848,7 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 		for (int i = 0; i < defenseToughMods->size(); ++i) {
 			int toughMod = defender->getSkillMod(defenseToughMods->get(i));
 
-			if (!defender->isPlayerCreature() && !defender->isCreatureObject()) {
+			if (!defender->isPlayerCreature() && !defender->isCreature()) {
 //				if (weapon->isPistolWeapon())
 //				damage /= 4.040;//1.82f;
 //				if (weapon->isCarbineWeapon())
@@ -1320,7 +1320,7 @@ float CombatManager::getArmorPiercing(TangibleObject* defender, int armorPiercin
 	if (defender->isAiAgent()) {
 		AiAgent* aiDefender = cast<AiAgent*>(defender);
 		armorReduction = aiDefender->getArmor();
-
+		//if (aiDefender->getWeapon()->isJediWeapon()) armorReduction = 1;
 	} else if (defender->isArmorObject()) {
 		ArmorObject* armorDefender = cast<ArmorObject*>(defender);
 
@@ -1341,14 +1341,18 @@ float CombatManager::getArmorPiercing(TangibleObject* defender, int armorPiercin
 		}
 	}
 
-	if (defender->asCreatureObject()->getWeapon()->isJediWeapon()) armorReduction = 1;
+	CreatureObject *dcreo = defender->asCreatureObject();
+
+//	if (defender->isPlayerCreature()) {
+//		if (dcreo->getWeapon()->isJediWeapon()) armorReduction = 1;
+//	}
 
 	if (armorReduction > 1) armorReduction = 1;
 
 	if (armorPiercing > armorReduction)
-		return pow(1.25, armorPiercing - armorReduction);
+		return pow(1.12, armorPiercing - armorReduction);
     else
-        return pow(0.50, armorReduction - armorPiercing);
+        return pow(0.24, armorReduction - armorPiercing);
 }
 
 float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* weapon, TangibleObject* defender, const CreatureAttackData& data) const {
@@ -1595,112 +1599,137 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= 1.f / (1.f + ((float)forceDefense / 100.f));
 	}
 
+
 //// mySWG balancing the profs based on highest dmg weapon and special for that class
 		if (attacker->isPlayerCreature() && !data.isForceAttack()) {
 			if (weapon->isPistolWeapon())
-			damage *= 2.5;//4.040;//1.82f;//half correct/fullcorrect/old correct
+			damage *= 1.9;//4.040;//1.82f;//half correct/fullcorrect/old correct
 			if (weapon->isCarbineWeapon())
-			damage *= 1.95;//2.925;//1.24f;
+			damage *= 1.2;//2.925;//1.24f;
 			if (weapon->isRifleWeapon())
-			damage *= 1.25;//1.594;//0.6f;
+			damage *= .8;//1.594;//0.6f;
 //			if (weapon->isRangedWeapon())
 //			damage *= 1.03f;
 			if (weapon->isUnarmedWeapon())
-			damage *= 1.25;//1.536;//1.51f;
+			damage *= .6;//1.536;//1.51f;
 			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
-			damage *= 1.55;//2.112;//1.26f;
+			damage *= 1.2;//2.112;//1.26f;
 			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
-			damage *= 1.35;//1.721;//0.73f;
+			damage *= .8;//1.721;//0.73f;
 			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
-			damage *= 1.35;//1.771;//0.83f;
+			damage *= .9;//1.771;//0.83f;
 //			if (weapon->isMeleeWeapon())
 //			damage *= 0.96f;
 			if (weapon->isLightningRifle())
-			damage *= .85;//.706 * 2;//1.38f;
+			damage *= 1.2;//.706 * 2;//1.38f;
 			if (weapon->isFlameThrower())
-			damage *= .65;//.392 * 4;//0.8f;
+			damage *= .8;//.392 * 4;//0.8f;
 			if (weapon->isHeavyAcidRifle())
-			damage *= .7;//.458 * 4;//0.96f;
+			damage *= .9;//.458 * 4;//0.96f;
 //			if (weapon->isHeavyWeapon())
 //			damage *= 1.0f;
-			if (weapon->isThrownWeapon())
-			damage *= .9;//.892 * 2;//1.0f;
-			if (weapon->isSpecialHeavyWeapon())//this is rocket launcher
-			damage *= .8;//.623 * 4;//1.0f;
+//			if (weapon->isThrownWeapon())
+//			damage *= .9;//.892 * 2;//1.0f;
+//			if (weapon->isSpecialHeavyWeapon())//this is rocket launcher
+//			damage *= .8;//.623 * 4;//1.0f;
 	//		if (weapon->isMineWeapon())
 	//		damage *= 1.0f;
 			if (weapon->isJediOneHandedWeapon())
-			damage *= 1.15;//1.336;//1.18f;
+			damage *= 1.1;//1.336;//1.18f;
 			if (weapon->isJediTwoHandedWeapon())
 			damage *= 1.0;//1.094;//0.96f;
 			if (weapon->isJediPolearmWeapon())
-			damage *= 1.0;//1.009;//0.89f;
-//			if (weapon->isJediWeapon())
-//			damage *= .5f;//jedi does almost exactly 2x damage as lvl 300 weaps normies
+			damage *= .9;//1.009;//0.89f;
+			if (weapon->isJediWeapon())
+			damage *= .9f;//jedi does almost exactly 2x damage as lvl 300 weaps normies
 		}
 
-		//using this to unbalance the NPCs// mySWG balancing the profs based on highest dmg weapon and special for that class
+//		if (data.isForceAttack()) {
+//			damage *= 2.0;
+//		}
+
+		int damagetype = weapon->getDamageType();
+
+		//using this to unbalance the NPCs
 				if (!attacker->isPlayerCreature()) {
-					if (weapon->isPistolWeapon())
-					damage /= 2.5;//4.040;//1.82f;//half correct/fullcorrect/old correct
-					if (weapon->isCarbineWeapon())
-					damage /= 1.95;//2.925;//1.24f;
-					if (weapon->isRifleWeapon())
-					damage /= 1.25;//1.594;//0.6f;
+					if (weapon->isPistolWeapon()){
+					damage /= 1.9;//4.040;//1.82f;//half correct/fullcorrect/old correct
+//					if (damagetype != 2) damage *= .5;
+					}
+					if (weapon->isCarbineWeapon()){
+					damage /= 1.2;//2.925;//1.24f;
+//					if (damagetype != 2) damage *= .5;
+					}
+					if (weapon->isRifleWeapon()){
+					damage /= .8;//1.594;//0.6f;
+//					if (damagetype != 2) damage *= .5;
+					}
 		//			if (weapon->isRangedWeapon())
 		//			damage /= 1.03f;
 					if (weapon->isUnarmedWeapon())
-					damage /= 1.25;//1.536;//1.51f;
-					if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
-					damage /= 1.55;//2.112;//1.26f;
-					if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
-					damage /= 1.35;//1.721;//0.73f;
-					if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
-					damage /= 1.35;//1.771;//0.83f;
+					damage /= .6;//1.536;//1.51f;
+					if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon()){
+					damage /= 1.2;//2.112;//1.26f;
+//					if (damagetype != 2) damage *= .5;
+					}
+					if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon()){
+					damage /= .8;//1.721;//0.73f;
+//					if (damagetype != 2) damage *= .5;
+					}
+					if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon()){
+					damage /= .9;//1.771;//0.83f;
+//					if (damagetype != 2) damage *= .5;
+					}
 		//			if (weapon->isMeleeWeapon())
 		//			damage /= 0.96f;
 					if (weapon->isLightningRifle())
-					damage /= .85;//.706 * 2;//1.38f;
+					damage /= 1.2;//.706 * 2;//1.38f;
 					if (weapon->isFlameThrower())
-					damage /= .65;//.392 * 4;//0.8f;
+					damage /= .8;//.392 * 4;//0.8f;
 					if (weapon->isHeavyAcidRifle())
-					damage /= .7;//.458 * 4;//0.96f;
+					damage /= .9;//.458 * 4;//0.96f;
 		//			if (weapon->isHeavyWeapon())
 		//			damage /= 1.0f;
-					if (weapon->isThrownWeapon())
-					damage /= .9;//.892 * 2;//1.0f;
-					if (weapon->isSpecialHeavyWeapon())//this is rocket launcher
-					damage /= .8;//.623 * 4;//1.0f;
+		//			if (weapon->isThrownWeapon())
+		//			damage /= .9;//.892 * 2;//1.0f;
+		//			if (weapon->isSpecialHeavyWeapon())//this is rocket launcher
+		//			damage /= .8;//.623 * 4;//1.0f;
 			//		if (weapon->isMineWeapon())
 			//		damage /= 1.0f;
 					if (weapon->isJediOneHandedWeapon())
-					damage /= 1.15;//1.336;//1.18f;
+					damage /= 1.1;//1.336;//1.18f;
 					if (weapon->isJediTwoHandedWeapon())
 					damage /= 1.0;//1.094;//0.96f;
 					if (weapon->isJediPolearmWeapon())
-					damage /= 1.0;//1.009;//0.89f;
-		//			if (weapon->isJediWeapon())
-		//			damage /= .5f;//jedi does almost exactly 2x damage as lvl 300 weaps normies
+					damage /= .9;//1.009;//0.89f;
+					if (weapon->isJediWeapon())
+					damage /= .9f;//jedi does almost exactly 2x damage as lvl 300 weaps normies
+					if (damagetype == 8)	damage *= .5;//nerf npc stun dmg
 				}
 
+//jedi suck ass lol
+	if (defender->getWeapon()->isJediWeapon()){
+		damage *= .8;
+		if (!defender->isPlayerCreature()) damage *= .5;
+	}
 
 // PvP Damage Reduction
-	if (attacker->isPlayerCreature() && defender->isPlayerCreature() && !data.isForceAttack())
-		damage *= .8;//vanilla .25
+	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
+		damage *= .5;//vanilla .25
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= .5; //.8 pve and .4 evp is almost perfectly balanced
+		damage *= .4; //
 		
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 1.3; //.8 pve and .4 evp is almost perfectly balanced //any less than .4 and npc cant do significant damage to players in 80%comp
+		damage *= 1.2; //
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 2.0;
+		damage *= 1.2;
 
-//	damage *= .8;//.5 is way too low //.4x.625=.25 vanilla pvp was decent at ns stronghold
+//	damage *= .5;
 
 	if (damage < 1) damage = 1;
 

@@ -174,11 +174,11 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float randomizer = .9 + (System::random(20) * .01);
+	float randomizer = .7 + (System::random(50) * .01);
 	float randomtwo = .9 + (System::random(20) * .01);
 
-	float minDmg = (level * 5) * randomizer;
-	float maxDmg = (level * 10) * randomizer;
+	float minDmg = (level * 5);// * randomizer;
+	float maxDmg = (level * 10);// * randomizer;
 	float speed = (3.5 - (level * .01));// * randomtwo;//calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
@@ -275,24 +275,24 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	int ham = 0;
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
-		int health = (level * 90) + System::random(level * 10);
-		int str = (level * 70) + System::random(level * 30);//npc defenses based on this one
-		int con = (level * 70) + System::random(level * 30);
-		baseHAM.add(health / 10);
-		baseHAM.add(str / 10);
-		baseHAM.add(con / 10);
-		int action = (level * 80) + System::random(level * 20);
-		int quick = (level * 70) + System::random(level * 30);//npc accuracy based on this one
-		int stam = (level * 70) + System::random(level * 30);
-		baseHAM.add(action / 10);
-		baseHAM.add(quick / 10);
-		baseHAM.add(stam / 10);
-		int mind = (level * 60) + System::random(level * 40);
-		int focus = (level * 80);//this one is static for determining if npc will hit single pool
-		int will = (level * 70) + System::random(level * 30);
-		baseHAM.add(mind / 10);
-		baseHAM.add(focus / 10);
-		baseHAM.add(will / 10);
+		int health = (((level * 90) + System::random(level * 10)) *.08) + (50 + System::random(50));// * .67 + (100 + r200)
+		int str = ((level * 70) + System::random(level * 30)) *.08;//npc defenses based on this one
+		int con = ((level * 70) + System::random(level * 30)) *.08;
+		baseHAM.add(health);
+		baseHAM.add(str);
+		baseHAM.add(con);
+		int action = (((level * 80) + System::random(level * 20)) *.08) + (50 + System::random(50));
+		int quick = ((level * 70) + System::random(level * 30)) *.08;//npc accuracy based on this one
+		int stam = ((level * 70) + System::random(level * 30)) *.08;
+		baseHAM.add(action);
+		baseHAM.add(quick);
+		baseHAM.add(stam);
+		int mind = (((level * 60) + System::random(level * 40)) *.08) + (50 + System::random(50));
+		int focus = ((level * 80)) *.067;//this one is static for determining if npc will hit single pool
+		int will = ((level * 70) + System::random(level * 30)) *.08;
+		baseHAM.add(mind);
+		baseHAM.add(focus);
+		baseHAM.add(will);
 
 //		int health = (level * 200) + System::random(level * 40);
 //		baseHAM.add(health);
@@ -1763,24 +1763,19 @@ void AiAgentImplementation::activatePostureRecovery() {
 }
 
 void AiAgentImplementation::activateHAMRegeneration(int latency) {
-    if (isIncapacitated() || isDead())// || isInCombat())
+    if (isIncapacitated() || isDead()) {
         return;
-
-//    uint32 healthTick = (uint32) Math::max(1.f, (float) ceil(getBaseHAM(CreatureAttribute::CONSTITUTION) / 300000.f * latency));
-//    uint32 actionTick = (uint32) Math::max(1.f, (float) ceil(getBaseHAM(CreatureAttribute::STAMINA) / 300000.f * latency));
-//    uint32 mindTick   = (uint32) Math::max(1.f, (float) ceil(getBaseHAM(CreatureAttribute::WILLPOWER) / 300000.f * latency));
-//
-//    //reducing ai regen
-//    healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick * 4.0, true, false);
-//    healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick * 4.0, true, false);
-//    healDamage(asCreatureObject(), CreatureAttribute::MIND,   mindTick * 4.0, true, false);
+    }
 
 	float modifier = (float)latency/1000.f;
 
-	//modifier *= .7f;//npc needs nerf to be similar to player
+	if (isInCombat())
+			modifier *= .3;
 
-	if (!isInCombat() && isPet())
-		modifier *= 3;
+	if (isKneeling())
+		modifier *= 1.25f;
+	else if (isSitting())
+		modifier *= 1.75f;
 
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
@@ -1803,22 +1798,22 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
 	healDamage(asCreatureObject(), CreatureAttribute::MIND, mindTick, true, false);
 
-
-	ManagedReference<SceneObject*> obj = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
-	ManagedReference<SceneObject*> obj2 = asCreatureObject()->getParentRecursively(SceneObjectType::HOSPITALBUILDING);
-	ManagedReference<SceneObject*> obj3 = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
-
-	if (!isInCombat() && isPet() && (obj != nullptr || obj2 != nullptr)) {
-		healWound(asCreatureObject(), CreatureAttribute::HEALTH, 5, true, false);
-		healWound(asCreatureObject(), CreatureAttribute::STRENGTH, 5, true, false);
-		healWound(asCreatureObject(), CreatureAttribute::CONSTITUTION, 5, true, false);
-		healWound(asCreatureObject(), CreatureAttribute::ACTION, 5, true, false);
-		healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, 5, true, false);
-		healWound(asCreatureObject(), CreatureAttribute::STAMINA, 5, true, false);
-		healWound(asCreatureObject(), CreatureAttribute::MIND, 5, true, false);
-		healWound(asCreatureObject(), CreatureAttribute::FOCUS, 5, true, false);
-		healWound(asCreatureObject(), CreatureAttribute::WILLPOWER, 5, true, false);
-	}
+//
+//	ManagedReference<SceneObject*> obj = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
+//	ManagedReference<SceneObject*> obj2 = asCreatureObject()->getParentRecursively(SceneObjectType::HOSPITALBUILDING);
+//	ManagedReference<SceneObject*> obj3 = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
+//
+//	if (!isInCombat() && isPet() && (obj != nullptr || obj2 != nullptr)) {
+//		healWound(asCreatureObject(), CreatureAttribute::HEALTH, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::STRENGTH, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::CONSTITUTION, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::ACTION, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::STAMINA, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::MIND, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::FOCUS, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::WILLPOWER, 5, true, false);
+//	}
 
 
 //    activatePassiveWoundRegeneration();
