@@ -3837,7 +3837,9 @@ int PlayerManagerImplementation::calculatePlayerLevel(CreatureObject* player) {
 	if (player->getPlayerObject() != nullptr && player->getPlayerObject()->isJedi() && weapon->isJediWeapon())
 		skillMod += player->getSkillMod("private_jedi_difficulty");
 
-	int level = Math::min(25, skillMod / 100 + 1);
+	int level = skillMod / 10;//Math::min(25, skillMod / 100 + 1);
+
+	if (level > 250) level = 250;
 
 	return level;
 }
@@ -3864,7 +3866,9 @@ int PlayerManagerImplementation::calculatePlayerLevel(CreatureObject* player, St
 	else
 		weaponType = "heavyweapon";
 
-	int level = Math::min(25, player->getSkillMod("private_" + weaponType + "_combat_difficulty") / 100 + 1);
+	int level = player->getSkillMod("private_" + weaponType + "_combat_difficulty") / 10;//Math::min(25, player->getSkillMod("private_" + weaponType + "_combat_difficulty") / 100 + 1);
+
+	if (level > 250) level = 250;
 
 	return level;
 }

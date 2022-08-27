@@ -2783,7 +2783,7 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 	float modifier = (float)latency/1000.f;
 
 	if (isInCombat())
-			modifier *= .3;
+			modifier *= .4;
 
 	if (isKneeling())
 		modifier *= 1.25f;

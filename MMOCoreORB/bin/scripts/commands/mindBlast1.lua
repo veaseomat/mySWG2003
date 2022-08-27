@@ -88,7 +88,7 @@ MindBlast1Command = {
 
 	combatSpam = "mindblast1",
 
-	poolsToDamage = RANDOM_ATTRIBUTE,
+	poolsToDamage = MIND_ATTRIBUTE,
 
 	forceAttack = true,
 	damageType = STUN_DAMAGE,

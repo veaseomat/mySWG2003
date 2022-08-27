@@ -1644,14 +1644,14 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= .9f;//jedi does almost exactly 2x damage as lvl 300 weaps normies
 		}
 
-//		if (data.isForceAttack()) {
-//			damage *= 2.0;
-//		}
+		if (data.isForceAttack()) {
+			damage *= 1.8;
+		}
 
 		int damagetype = weapon->getDamageType();
 
 		//using this to unbalance the NPCs
-				if (!attacker->isPlayerCreature()) {
+				if (!attacker->isPlayerCreature() && !attacker->isCreature()) {
 					if (weapon->isPistolWeapon()){
 					damage /= 1.9;//4.040;//1.82f;//half correct/fullcorrect/old correct
 //					if (damagetype != 2) damage *= .5;
@@ -1709,8 +1709,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 //jedi suck ass lol
 	if (defender->getWeapon()->isJediWeapon()){
-		damage *= .8;
-		if (!defender->isPlayerCreature()) damage *= .5;
+		damage *= .4;
+		//if (!defender->isPlayerCreature()) damage *= .5;
 	}
 
 // PvP Damage Reduction

@@ -35,7 +35,7 @@ public:
 
 		ManagedReference<SceneObject*> object = server->getZoneServer()->getObject(target);
 
-		if (object == nullptr || !object->isPlayerCreature())
+		if (object == nullptr)
 			return INVALIDTARGET;
 
 		CreatureObject* targetCreature = cast<CreatureObject*>( object.get());
@@ -71,20 +71,34 @@ public:
 				return GENERALERROR;
 			}
 
-			int drain = System::random(maxDamage);
+			int drain = System::random(maxDamage);//+frs control
+
+			float frsbuff = 1.0 + ((creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light")) * .005);
+
+			int newforce = (targetCreature->getHAM(CreatureAttribute::HEALTH) * .1) + (targetCreature->getHAM(CreatureAttribute::ACTION) * .1) + (targetCreature->getHAM(CreatureAttribute::MIND) * .1);
 
 			int targetForce = targetGhost->getForcePower();
-			if (targetForce <= 0) {
+
+			if (targetForce <= 0 && targetCreature->isPlayerCreature()) {
 				creature->sendSystemMessage("@jedi_spam:target_no_force"); //That target does not have any Force Power.
 				return GENERALERROR;
 			}
 
 			int forceDrain = targetForce >= drain ? drain : targetForce; //Drain whatever Force the target has, up to max.
+
 			if (forceDrain > forceSpace)
 				forceDrain = forceSpace; //Drain only what attacker can hold in their own Force pool.
 
-			playerGhost->setForcePower(playerGhost->getForcePower() + (forceDrain - forceCost));
+			if (targetCreature->isPlayerCreature()) {
+			playerGhost->setForcePower(playerGhost->getForcePower() + ((forceDrain * frsbuff) - forceCost));
+
+
 			targetGhost->setForcePower(targetGhost->getForcePower() - forceDrain);
+			}
+
+			if (!targetCreature->isPlayerCreature()) {
+				playerGhost->setForcePower(playerGhost->getForcePower() + ((newforce * frsbuff) - forceCost));
+			}
 
 			uint32 animCRC = getAnimationString().hashCode();
 			creature->doCombatAnimation(targetCreature, animCRC, 0x1, 0xFF);

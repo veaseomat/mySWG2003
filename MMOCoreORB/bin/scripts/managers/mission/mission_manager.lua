@@ -60,7 +60,7 @@ bh_targets_at_mission_level = {
 		"bh_feral_force_wielder", --level 115
 		"bh_force_crystal_hunter", --level 115
 		"bh_tusken_carnage_champion", --level 116
-		"bh_dark_adept" --level 120
+		"bh_dark_adept", --level 120
 	}
 }
 

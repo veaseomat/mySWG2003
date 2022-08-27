@@ -42,7 +42,10 @@
 
 
 object_tangible_loot_misc_ledger_s01 = object_tangible_loot_misc_shared_ledger_s01:new {
-
+--	objectMenuComponent = "BankTerminalMenuComponent",
+--	planetMapCategory = "terminal",
+--	maxCondition = 0,
+--	planetMapSubCategory = "terminal_bank"
 }
 
 ObjectTemplates:addTemplate(object_tangible_loot_misc_ledger_s01, "object/tangible/loot/misc/ledger_s01.iff")

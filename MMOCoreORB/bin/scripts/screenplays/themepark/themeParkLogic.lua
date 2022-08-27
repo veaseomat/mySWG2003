@@ -1877,7 +1877,7 @@ function ThemeParkLogic:handleMissionReward(pConversingPlayer)
 	local pGhost = CreatureObject(pConversingPlayer):getPlayerObject()
 	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pConversingPlayer)
 		
-		if not CreatureObject(pConversingPlayer):hasSkill("force_title_jedi_rank_01") and learnedBranches >= 2 then
+		if not CreatureObject(pConversingPlayer):hasSkill("force_title_jedi_rank_01") and learnedBranches >= 3 then
 			PlayerObject(pGhost):setJediState(2)
 					
 			awardSkill(pConversingPlayer, "force_title_jedi_rank_01")

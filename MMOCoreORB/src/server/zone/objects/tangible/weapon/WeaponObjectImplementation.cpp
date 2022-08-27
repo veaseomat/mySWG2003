@@ -5,6 +5,8 @@
  *      Author: victor
  */
 
+#include "server/zone/managers/player/PlayerManager.h"
+
 #include "server/zone/objects/tangible/weapon/WeaponObject.h"
 #include "server/zone/packets/tangible/WeaponObjectMessage3.h"
 #include "server/zone/packets/tangible/WeaponObjectMessage6.h"
@@ -212,6 +214,13 @@ String WeaponObjectImplementation::getWeaponType() const {
 
 void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, CreatureObject* object) {
 	TangibleObjectImplementation::fillAttributeList(alm, object);
+
+	PlayerManager* playerManager = object->getZoneServer()->getPlayerManager();
+
+	int playerLevel = playerManager->calculatePlayerLevel(object);
+
+	//alm->insertAttribute("level", playerLevel);
+
 
 	bool res = isCertifiedFor(object);
 

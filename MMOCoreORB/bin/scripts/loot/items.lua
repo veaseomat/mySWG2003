@@ -10,6 +10,7 @@ JUNKGUNGAN = 128
 JUNKCORSEC = 256
 
 
+includeFile("items/bank1.lua")
 includeFile("items/attachment_armor.lua")
 includeFile("items/attachment_clothing.lua")
 includeFile("items/balanced_feed_mechanism.lua")

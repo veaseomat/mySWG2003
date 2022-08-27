@@ -148,9 +148,9 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	int newlvl = getTemplateLevel();
 
-	if (newlvl > 100) newlvl = 100;
+	if (newlvl > 150) newlvl = 150;
 
-	newlvl *= 3;
+	newlvl *= 2;
 
 	float lvlrandomizer = .9 + (System::random(20) * .01);
 
@@ -174,11 +174,10 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float randomizer = .7 + (System::random(50) * .01);
-	float randomtwo = .9 + (System::random(20) * .01);
+	float weapran = .6 + (System::random(60) * .01);//weapon dmg randomizer
 
-	float minDmg = (level * 5);// * randomizer;
-	float maxDmg = (level * 10);// * randomizer;
+	float minDmg = (level * 5) * weapran;
+	float maxDmg = (level * 10) * weapran;
 	float speed = (3.5 - (level * .01));// * randomtwo;//calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
@@ -235,6 +234,17 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 				int finalColor = System::random(6);// red,green,blue
 
+				String factionString = npcTemplate->getFaction();
+
+				if (System::random(9) <= 3 && factionString == "imperial") {//gives 1/3 imp jedi red
+					finalColor = System::random(2);
+				}
+
+				if (System::random(9) <= 3 && factionString == "rebel") {// 1/3 reb jedi blue/green
+					finalColor = System::random(4) + 2;
+				}
+
+
 				if (System::random(10) >= 10){
 				finalColor = System::random(6) + 6;// 1/10 color crystals will be yellow,purp,orange
 				}
@@ -275,21 +285,21 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	int ham = 0;
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
-		int health = (((level * 90) + System::random(level * 10)) *.08) + (50 + System::random(50));// * .67 + (100 + r200)
-		int str = ((level * 70) + System::random(level * 30)) *.08;//npc defenses based on this one
-		int con = ((level * 70) + System::random(level * 30)) *.08;
+		int health = ((level * 90) + System::random(level * 10)) *.09;// * .67 + (100 + r200)
+		int str = ((level * 70) + System::random(level * 30)) *.09;//npc defenses based on this one
+		int con = ((level * 70) + System::random(level * 30)) *.09;
 		baseHAM.add(health);
 		baseHAM.add(str);
 		baseHAM.add(con);
-		int action = (((level * 80) + System::random(level * 20)) *.08) + (50 + System::random(50));
-		int quick = ((level * 70) + System::random(level * 30)) *.08;//npc accuracy based on this one
-		int stam = ((level * 70) + System::random(level * 30)) *.08;
+		int action = ((level * 80) + System::random(level * 20)) *.09;
+		int quick = ((level * 70) + System::random(level * 30)) *.09;//npc accuracy based on this one
+		int stam = ((level * 70) + System::random(level * 30)) *.09;
 		baseHAM.add(action);
 		baseHAM.add(quick);
 		baseHAM.add(stam);
-		int mind = (((level * 60) + System::random(level * 40)) *.08) + (50 + System::random(50));
-		int focus = ((level * 80)) *.067;//this one is static for determining if npc will hit single pool
-		int will = ((level * 70) + System::random(level * 30)) *.08;
+		int mind = ((level * 60) + System::random(level * 40)) *.09;
+		int focus = ((level * 80)) *.09;//this one is static for determining if npc will hit single pool
+		int will = ((level * 70) + System::random(level * 30)) *.09;
 		baseHAM.add(mind);
 		baseHAM.add(focus);
 		baseHAM.add(will);
@@ -1770,7 +1780,7 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 	float modifier = (float)latency/1000.f;
 
 	if (isInCombat())
-			modifier *= .3;
+			modifier *= .4;
 
 	if (isKneeling())
 		modifier *= 1.25f;
@@ -1779,11 +1789,11 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::HEALTH)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::CONSTITUTION)) * 13.0f / 2100.0f * modifier);
 	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::ACTION)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::STAMINA)) * 13.0f / 2100.0f * modifier);
 	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::MIND)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::WILLPOWER)) * 13.0f / 2100.0f * modifier);
 
 	if (healthTick < 1)
 		healthTick = 1;
