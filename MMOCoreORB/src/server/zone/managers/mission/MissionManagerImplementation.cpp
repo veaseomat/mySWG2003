@@ -754,7 +754,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 		return;
 	}
 
-	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player);
+	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) / 10;
 	int maxDiff = randomLairSpawn->getMaxDifficulty();
 	int minDiff = randomLairSpawn->getMinDifficulty();
 	int difficultyLevel = System::random(maxDiff - minDiff) + minDiff;
@@ -795,7 +795,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 		int distance = destroyMissionBaseDistance + destroyMissionDifficultyDistanceFactor * difficultyLevel;
 		distance += System::random(destroyMissionRandomDistance) + System::random(destroyMissionDifficultyRandomDistance * difficultyLevel);
-		distance *= .5;//decrease mission distance
+		distance *= .7;//decrease mission distance
 		startPos = player->getWorldCoordinate((float)distance, (float)System::random(360), false);
 
 		if (zone->isWithinBoundaries(startPos)) {
@@ -837,7 +837,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 	int reward = destroyMissionBaseReward + destroyMissionDifficultyRewardFactor * difficultyLevel;
 	reward += System::random(destroyMissionRandomReward) + System::random(destroyMissionDifficultyRandomReward * difficultyLevel);
-	mission->setRewardCredits(reward);//reduce ALL destroy mission rewards here
+	mission->setRewardCredits(reward * .7);//reduce ALL destroy mission rewards here
 
 	mission->setMissionDifficulty(difficultyLevel, diffDisplay, difficulty);
 	mission->setSize(randomLairSpawn->getSize());
@@ -876,7 +876,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
  		mobileName = mobiles->elementAt(0).getKey();
  	}
 
-	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + " mission");
+	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + groupSuffix) + " LVL" + String::valueOf(diffDisplay);
 	mission->setMissionDescription("mission/mission_destroy_neutral" +  messageDifficulty + missionType, "m" + String::valueOf(randTexts) + "d");
 
 	switch (faction) {
@@ -1031,10 +1031,24 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			String name = "";
 
 //hide jedi name
+		//	TangibleObject* tano = creature->asTangibleObject();
 
-			mission->setMissionTargetName("Unknown...");
-			mission->setMissionDifficulty(75);
-			mission->setRewardCredits(1337);
+			//if (player->getFaction() == Factions::FACTIONIMPERIAL) {
+
+			//String factionString = creature->getFaction();//not working yet
+
+			ManagedReference<PlayerManager*> playerManager = creature->getZoneServer()->getPlayerManager();
+
+
+			int jedilvl = playerManager->calculatePlayerLevel(creature);
+
+			int jedireward = jedilvl * 200;
+
+			if (creature->getFaction() == Factions::FACTIONIMPERIAL)	mission->setMissionTargetName("imperial player jedi");
+			if (creature->getFaction() == Factions::FACTIONREBEL)	mission->setMissionTargetName("rebel player jedi");
+			if (creature->getFaction() == Factions::FACTIONNEUTRAL)		mission->setMissionTargetName("neutral player jedi");
+			mission->setMissionDifficulty(jedilvl);
+			mission->setRewardCredits(jedireward);
 
 			// Set the Title, Creator, and Description of the mission.
 
@@ -1053,18 +1067,21 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			mission->setMissionNumber(randTexts);
 
 			UnicodeString possibleCreatorName = StringIdManager::instance()->getStringId(String::hashCode("@" + stfFile + "m" + String::valueOf(randTexts) + "o"));
-			String creatorName = "";
+			String creatorName = "a Concerned Citizen";//"";
 
 
-			if (!possibleCreatorName.isEmpty()) {
-				creatorName = possibleCreatorName.toString();
-			} else {
-				creatorName = nm->makeCreatureName();
-			}
+//			if (!possibleCreatorName.isEmpty()) {
+//				creatorName = possibleCreatorName.toString();
+//			} else {
+//				creatorName = nm->makeCreatureName();
+//			}
 
 			mission->setCreatorName(creatorName);
 
-			mission->setMissionTitle("", "PLAYER JEDI");
+			mission->setMissionTitle("", "\\#FFFF00***PLAYER JEDI***");
+			if (creature->getFaction() == Factions::FACTIONIMPERIAL)	mission->setMissionTitle("", "\\#0000FF***IMPERIAL PLAYER JEDI***");
+			if (creature->getFaction() == Factions::FACTIONREBEL)	mission->setMissionTitle("", "\\#FF0000***REBEL PLAYER JEDI***");
+			if (creature->getFaction() == Factions::FACTIONNEUTRAL)		mission->setMissionTitle("", "\\#FFFF00***NEUTRAL PLAYER JEDI***");
 //			mission->setMissionTitle(stfFile, "m" + String::valueOf(randTexts) + "t");
 			mission->setMissionDescription(stfFile, "m" + String::valueOf(randTexts) + "d");
 		}
@@ -1099,7 +1116,7 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			reward = creoLevel * (300 + System::random(300));
 		}
 
-		mission->setRewardCredits(reward * 2);//increase bh npc reward
+		mission->setRewardCredits(reward * 1.25);//increase bh npc reward
 
 		String diffString = "easy";
 
@@ -1677,7 +1694,8 @@ void MissionManagerImplementation::generateRandomFactionalDestroyMissionDescript
  		mobileName = mobiles->elementAt(0).getKey();
  	}
 
-	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + " mission");
+	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + " mission") + " LVL " + difficulty;
+//	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + " mission");
 //	mission->setMissionTitle("mission/mission_destroy_" + difficultyString, "m" + String::valueOf(randomNumber) + "t");
 	mission->setMissionDescription("mission/mission_destroy_" +  difficultyString, "m" + String::valueOf(randomNumber) + "d");
 }
@@ -1788,7 +1806,7 @@ LairSpawn* MissionManagerImplementation::getRandomLairSpawn(CreatureObject* play
 
 	bool foundLair = false;
 	int counter = availableLairList->size();
-	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player);
+	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) / 10;
 	if (player->isGrouped())
 		playerLevel = player->getGroup()->getGroupLevel();
 
@@ -1990,7 +2008,6 @@ bool MissionManagerImplementation::isBountyValidForPlayer(CreatureObject* player
 //removing this means infinite players can take jedi bounty
 //	if (bounty->numberOfActiveMissions() >= 5)
 //		return false;
-
 
 	uint64 targetId = bounty->getTargetPlayerID();
 	uint64 playerId = player->getObjectID();

@@ -8,13 +8,13 @@ SITH_SHADOW_MILITARY_TAKE_CRYSTAL = "@quest/force_sensitive/intro:military_take_
 local READ_DISK_1_STRING = "@quest/force_sensitive/intro:read_disk1"
 local READ_DISK_ERROR_STRING = "@quest/force_sensitive/intro:read_disk_error"
 
-sithshadowencounter3 = Encounter:new {
+PVPDJKEncounter = Encounter:new {
 	-- Task properties
-	taskName = "sithshadowencounter3",
+	taskName = "PVPDJKEncounter",
 	-- Encounter properties
 	encounterDespawnTime = 2 * 60 * 1000, -- 30 sec
 	spawnObjectList = {
-		{ template = "pvpljk", minimumDistance = 64, maximumDistance = 96, referencePoint = 0, followPlayer = true, setNotAttackable = false, runOnDespawn = true },
+		{ template = "pvpdjk", minimumDistance = 64, maximumDistance = 96, referencePoint = 0, followPlayer = true, setNotAttackable = false, runOnDespawn = true },
 	},
 	onEncounterSpawned = nil,
 	isEncounterFinished = nil,
@@ -26,7 +26,7 @@ sithshadowencounter3 = Encounter:new {
 -- @param pSithShadow pointer to the sith shadow.
 -- @param pPlayer pointer to the creature object of the player.
 -- @return true if the sith shadow is the first one spawned for the player.
-function sithshadowencounter3:isTheFirstSithShadowOfThePlayer(pSithShadow, pPlayer)
+function PVPDJKEncounter:isTheFirstSithShadowOfThePlayer(pSithShadow, pPlayer)
 --	local spawnedSithShadows = SpawnMobiles.getSpawnedMobiles(pPlayer, self.taskName)
 
 --	return true
@@ -37,7 +37,7 @@ end
 -- @param pLooter pointer to the creature object of the looter.
 -- @param nothing unused variable for the default footprint of event handlers.
 -- @return 1 if the correct player looted the creature to remove the observer, 0 otherwise to keep the observer.
-function sithshadowencounter3:onLoot(pLootedCreature, pLooter, nothing)
+function PVPDJKEncounter:onLoot(pLootedCreature, pLooter, nothing)
 	if (pLootedCreature == nil or pLooter == nil) then
 		return 0
 	end
@@ -61,7 +61,7 @@ end
 -- @param pKiller pointer to the creature object of the killer.
 -- @param noting unused variable for the default footprint of event handlers.
 -- @return 1 if the player was killed by one of the sith shadows, otherwise 0 to keep the observer.
-function sithshadowencounter3:onPlayerKilled(pPlayer, pKiller, nothing)
+function PVPDJKEncounter:onPlayerKilled(pPlayer, pKiller, nothing)
 	if (pPlayer == nil or pKiller == nil) then
 		return 0 -- 1 or 0 does nothing?
 	end
@@ -69,7 +69,7 @@ function sithshadowencounter3:onPlayerKilled(pPlayer, pKiller, nothing)
 	local pGhost = CreatureObject(pPlayer):getPlayerObject()
 
 	Logger:log("Player was killed.", LT_INFO)
-	if SpawnMobiles.isFromSpawn(pPlayer, sithshadowencounter3.taskName, pKiller) then
+	if SpawnMobiles.isFromSpawn(pPlayer, PVPDJKEncounter.taskName, pKiller) then
 --		spatialChat(pKiller, "Through victory, my chains are broken. The Force shall free me.")
 --		CreatureObject(pPlayer):awardExperience("force_rank_xp", -5000, true)		
 --		CreatureObject(pPlayer):sendSystemMessage("You have lost 5000 Force Rank experience.")
@@ -83,7 +83,7 @@ function sithshadowencounter3:onPlayerKilled(pPlayer, pKiller, nothing)
 	return 0 --does nothing also
 end
 
---function sithshadowencounter3:onsithKilled(pMellichae, pKiller)
+--function PVPDJKEncounter:onsithKilled(pMellichae, pKiller)
 --	if (pMellichae == nil) then
 --		return 1
 --	end
@@ -94,7 +94,7 @@ end
 -- Register observer for looting one of the sith shadows.
 -- @param pPlayer pointer to the creature object of the player who has this encounter.
 -- @param spawnedObject list of pointers to the spawned sith shadows.
-function sithshadowencounter3:onEncounterSpawned(pPlayer, spawnedObjects)
+function PVPDJKEncounter:onEncounterSpawned(pPlayer, spawnedObjects)
 	if (pPlayer == nil or spawnedObjects == nil or spawnedObjects[1] == nil) then
 		return
 	end
@@ -125,7 +125,7 @@ end
 -- Send a spatial chat from the first sith shadow.
 -- @param pPlayer pointer to the creature object of the player who has this encounter.
 -- @param spawnedObjects list of pointers to the spawned sith shadows.
-function sithshadowencounter3:onEncounterInRange(pPlayer, spawnedObjects)
+function PVPDJKEncounter:onEncounterInRange(pPlayer, spawnedObjects)
 	if (pPlayer == nil or spawnedObjects == nil or spawnedObjects[1] == nil) then
 		return
 	end
@@ -133,7 +133,7 @@ function sithshadowencounter3:onEncounterInRange(pPlayer, spawnedObjects)
 	Logger:log("Sending threaten string.", LT_INFO)
 	local threatenString = LuaStringIdChatParameter(SITH_SHADOW_THREATEN_STRING)
 	threatenString:setTT(CreatureObject(pPlayer):getFirstName())
-	spatialChat(spawnedObjects[1], "There is no emotion, there is peace.")
+	spatialChat(spawnedObjects[1], "Peace is a lie, there is only passion!")
 
 
 	foreach(spawnedObjects, function(pMobile)
@@ -147,7 +147,7 @@ end
 -- Check if the sith shadow encounter is finished or not.
 -- @param pPlayer pointer to the creature object of the player.
 -- @return true if the encounter is finished. I.e. the player has access to the village or lost the crystal.
-function sithshadowencounter3:isEncounterFinished(pPlayer)
+function PVPDJKEncounter:isEncounterFinished(pPlayer)
 	if (pPlayer == nil) then
 		return false
 	end
@@ -158,17 +158,17 @@ end
 -- Handling of the activation of the looted datapad.
 -- @param pSceneObject pointer to the datapad object.
 -- @param pPlayer pointer to the creature object who activated the datapad.
-function sithshadowencounter3:useWaypointDatapad(pSceneObject, pPlayer)
+function PVPDJKEncounter:useWaypointDatapad(pSceneObject, pPlayer)
 	
 
 end
 
-function sithshadowencounter3:taskFinish(pPlayer)
+function PVPDJKEncounter:taskFinish(pPlayer)
 	if (pPlayer == nil) then
 		return true
 	end
-		FsIntro2:startStepDelay(pPlayer, 3) --this is the loop
+		PVPFRSIntro:startStepDelay(pPlayer, 3) --this is the loop
 	return true --false cancels the loop/ removing also breaks loop
 end
 
-return sithshadowencounter3
+return PVPDJKEncounter

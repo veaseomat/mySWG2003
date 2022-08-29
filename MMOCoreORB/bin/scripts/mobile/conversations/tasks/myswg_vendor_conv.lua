@@ -10,6 +10,7 @@ myswg_vendor_first_screen = ConvoScreen:new {
     customDialogText = "What can I help you with?",
     stopConversation = "false",
     options = { 
+        {"*FREE PLAYER LVL BUFF*", "newbuff1"},
         {"Weapons", "weaps1"},
         {"Armor", "armor1"},
         {"Artisan", "art1"},
@@ -18,7 +19,7 @@ myswg_vendor_first_screen = ConvoScreen:new {
         {"Loot", "loot1"},
         {"Doctor", "doc1"},
         
-				{"No thank you.", "deny_quest"},
+			--	{"No thank you.", "deny_quest"},--not needed
     }
 }
 myswg_vendor_conv:addScreen(myswg_vendor_first_screen);
@@ -129,7 +130,7 @@ loot1 = ConvoScreen:new {
     customDialogText = "Would you like to buy some loot?",
     stopConversation = "false",
     options = { 
-        {"crate of resources - 100k", "option46"},
+        --{"crate of resources - 100k", "option46"},
         {"Random lvl 300 Clothing Loot - 100k", "option47"},
         {"Random lvl 300 Armor Loot - 100k", "option48"},
         {"Random lvl 300 Weapon Loot - 100k", "option49"},
@@ -142,11 +143,11 @@ myswg_vendor_conv:addScreen(loot1);
 doc1 = ConvoScreen:new {
     id = "doc1",
     leftDialog = "",
-    customDialogText = "selling buffs and medical supplies, want to buy?",
+    customDialogText = "selling medical supplies, want to buy?",
     stopConversation = "false",
     options = { 
-        {"Doc/Ent Buffs - 10k", "buff1"},
---        {"1500 Health/Action Buffs - 10k", "buff2"},
+        --{"Doc/Ent Buffs - 10k", "buff1"},
+--        {"1500 Health/Action Buffs - 10k", "buff2"},--not working
         {"StimPack A - 500", "option50"},
         {"StimPack B - 1k", "option51"},
         {"StimPack C - 2k", "option52"},
@@ -156,6 +157,24 @@ doc1 = ConvoScreen:new {
     }
 }
 myswg_vendor_conv:addScreen(doc1);
+
+newbuff1 = ConvoScreen:new {
+    id = "newbuff1",
+    leftDialog = "",
+    customDialogText = "These are FREE Doc/Ent Buffs based on your player level with your currently equipped weapon.",
+    stopConversation = "false",
+    options = { 
+        {"GIMMY FREE BUFFS!", "buff1"},
+--        {"1500 Health/Action Buffs - 10k", "buff2"},--not working
+--        {"StimPack A - 500", "option50"},
+--        {"StimPack B - 1k", "option51"},
+--        {"StimPack C - 2k", "option52"},
+--        {"StimPack D - 5k", "option53"},
+--        {"StimPack E - 10k", "option54"},
+      	{"Main menu.", "first_screen"},
+    }
+}
+myswg_vendor_conv:addScreen(newbuff1);
 
 myswg_vendor_accept_quest = ConvoScreen:new {    
     id = "buff1",

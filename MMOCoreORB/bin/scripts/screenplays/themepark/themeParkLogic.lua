@@ -1620,7 +1620,7 @@ function ThemeParkLogic:hasEliteCombatProfession(pPlayer)
 		return false
 	end
 
-	return CreatureObject(pPlayer):getLevel() > 6
+	return CreatureObject(pPlayer):getLevel() > 6    --VERY IMPORTANT calculateplayerlevel or npc getlevel?
 end
 
 function ThemeParkLogic:requiresEliteCombatProfession()

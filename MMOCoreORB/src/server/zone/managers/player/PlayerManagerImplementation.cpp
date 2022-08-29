@@ -2166,7 +2166,7 @@ void PlayerManagerImplementation::setExperienceMultiplier(float globalMultiplier
  * Award experience to a player.
  * Ex.
 	PlayerManager* playerManager = server->getPlayerManager();
-	playerManager->awardExperience(playerCreature, "resource_harvesting_inorganic", 500);
+	awardExperience(playerCreature, "resource_harvesting_inorganic", 500);
  *
  */
 int PlayerManagerImplementation::awardExperience(CreatureObject* player, const String& xpType,
@@ -3823,13 +3823,43 @@ SortedVector<ManagedReference<SceneObject*> > PlayerManagerImplementation::getIn
 
 int PlayerManagerImplementation::calculatePlayerLevel(CreatureObject* player) {
 
+//	ManagedReference<WeaponObject*> weapon = player->getWeapon();
+//
+////	if (weapon == nullptr) {
+////		player->error("player with nullptr weapon");
+////
+////		return 0;
+////	}
+//
+//	String weaponType = weapon->getWeaponType();
+//	int skillMod = player->getSkillMod("private_" + weaponType + "_combat_difficulty");
+//
+//	if (player->getPlayerObject() != nullptr && player->getPlayerObject()->isJedi() && weapon->isJediWeapon())
+//		skillMod += player->getSkillMod("private_jedi_difficulty");
+
+	//level += skillMod;// / 10;//Math::min(25, skillMod / 100 + 1);
+
+
+
+//	if ( player->hasSkill() || player->hasSkill() || player->hasSkill() || player->hasSkill() || player->hasSkill() player->hasSkill() player->hasSkill() ) level += 10
+
+//	int novskillmod = (
+//	  player->getSkillMod("private_unarmed_combat_difficulty")
+//	+ player->getSkillMod("private_onehandmelee_combat_difficulty")
+//	+ player->getSkillMod("private_twohandmelee_combat_difficulty")
+//	+ player->getSkillMod("private_polearm_combat_difficulty")
+//	+ player->getSkillMod("private_rifle_combat_difficulty")
+//	+ player->getSkillMod("private_pistol_combat_difficulty")
+//	+ player->getSkillMod("private_carbine_combat_difficulty")
+//	+ player->getSkillMod("private_heavyweapon_combat_difficulty")
+//	+ player->getSkillMod("private_jedi_difficulty") );
+//
+//	level += novskillmod;
+
+
+	int level = 0;
+
 	ManagedReference<WeaponObject*> weapon = player->getWeapon();
-
-	if (weapon == nullptr) {
-		player->error("player with nullptr weapon");
-
-		return 0;
-	}
 
 	String weaponType = weapon->getWeaponType();
 	int skillMod = player->getSkillMod("private_" + weaponType + "_combat_difficulty");
@@ -3837,11 +3867,154 @@ int PlayerManagerImplementation::calculatePlayerLevel(CreatureObject* player) {
 	if (player->getPlayerObject() != nullptr && player->getPlayerObject()->isJedi() && weapon->isJediWeapon())
 		skillMod += player->getSkillMod("private_jedi_difficulty");
 
-	int level = skillMod / 10;//Math::min(25, skillMod / 100 + 1);
+	level += skillMod / 10;// / 10;//Math::min(25, skillMod / 100 + 1);
+
+//	level += 250 - player->getPlayerObject()->getSkillPoints();//skill pts buff
 
 	if (level > 250) level = 250;
 
+//	bool message = true;
+//
+//	int selfDuration =	365 * 24 * 60 * 60; //hrs x min x sec
+//	int lvlbuff = level * 7;// lvlx7=1750 cap
+//
+//	message = message && doEnhanceCharacter(0x98321361, player, lvlbuff, selfDuration, BuffType::INNATE, 0); //
+//	message = message && doEnhanceCharacter(0x815D85C1, player, lvlbuff, selfDuration, BuffType::INNATE, 1); //
+//	message = message && doEnhanceCharacter(0x7F86D2C1, player, lvlbuff, selfDuration, BuffType::INNATE, 2); //
+//	message = message && doEnhanceCharacter(0x4BF616E1, player, lvlbuff, selfDuration, BuffType::INNATE, 3); //
+//	message = message && doEnhanceCharacter(0x71B5C841, player, lvlbuff, selfDuration, BuffType::INNATE, 4); //
+//	message = message && doEnhanceCharacter(0xED0040D1, player, lvlbuff, selfDuration, BuffType::INNATE, 5); //
+//	message = message && doEnhanceCharacter(0x11C17721, player, lvlbuff, selfDuration, BuffType::INNATE, 6); //
+//	message = message && doEnhanceCharacter(0x2E77F581, player, lvlbuff, selfDuration, BuffType::INNATE, 7); //
+//	message = message && doEnhanceCharacter(0x3EC6FCB1, player, lvlbuff, selfDuration, BuffType::INNATE, 8); //
+
+//		if (message && player->isPlayerCreature())
+//			player->sendSystemMessage("You receive an innate buff based on your overall combat skill level.");
+
+
 	return level;
+
+
+		//	int lvlmod = level;
+
+		//	int health = player->getMaxHAM(0) + level;
+		//		player->setBaseHAM(0, health, false);
+		//		player->setHAM(0, health, false);//appears to only work on seccondaries, raises ham > /max ham
+		//		player->setMaxHAM(0, health, false);//setmaxham acts like a buff
+		//
+		//		//player->addMaxHAM(0, health, false);
+		//
+		//	int str = player->getMaxHAM(1) + level;
+		//		player->setBaseHAM(1, str, false);
+		//		player->setHAM(1, str, false);
+		//		//player->setMaxHAM(1, str, false);
+		//
+		//		//player->addMaxHAM(1, str, false);
+		//
+		//	int con = player->getMaxHAM(2) + level;
+		////			player->setBaseHAM(2, con, false);
+		//		player->setHAM(2, con, false);
+		//		player->setMaxHAM(2, con, false);
+		//
+		//		//player->addMaxHAM(2, con, false);
+		//
+		//	int action = player->getMaxHAM(3) + level;
+		//		player->setBaseHAM(3, action, false);
+		//		//player->setHAM(3, action, false);
+		//		//player->setMaxHAM(3, action, false);
+		//
+		//		//player->addMaxHAM(3, action, false);
+		//
+		//	int quick = player->getMaxHAM(4) + level;
+		////			player->setBaseHAM(4, quick, false);
+		//		player->setHAM(4, quick, false);
+		//		//player->setMaxHAM(4, quick, false);
+		//
+		//		//player->addMaxHAM(4, quick, false);
+		//
+		//	int stam = player->getMaxHAM(5) + level;
+		////			player->setBaseHAM(5, stam, false);
+		//		//player->setHAM(5, stam, false);
+		//		player->setMaxHAM(5, stam, false);
+		//
+		//		//player->addMaxHAM(5, stam, false);
+		//
+		//	int mind = player->getMaxHAM(6) + level;
+		//		player->setBaseHAM(6, mind, false);
+		//		player->setHAM(6, mind, false);
+		//		player->setMaxHAM(6, mind, false);
+		//
+		//		//player->addMaxHAM(6, mind, false);
+		//
+		//	int focus = player->getMaxHAM(7) + level;
+		//		player->setBaseHAM(7, focus, false);
+		//		player->setHAM(7, focus, false);
+		//		//player->setMaxHAM(7, focus, false);
+		//
+		//		//player->addMaxHAM(7, focus, false);
+		//
+		//	int will = player->getMaxHAM(8) + level;
+		//		//player->setBaseHAM(8, will, false);
+		//		player->setHAM(8, will, false);
+		//		player->setMaxHAM(8, will, false);
+		//
+		//		//player->addMaxHAM(8, will, false);
+
+
+
+				//	int lvlmod = level * 10;
+				//
+				//	int health = getHAM(CreatureAttribute::HEALTH) + lvlmod;
+				//		setHAM(CreatureAttribute::HEALTH, health);
+				//
+				//	int str = getHAM(CreatureAttribute::STRENGTH) + lvlmod;
+				//		setHAM(CreatureAttribute::STRENGTH, str);
+				//
+				//	int con = getHAM(CreatureAttribute::CONSTITUTION) + lvlmod;
+				//		setHAM(CreatureAttribute::CONSTITUTION, con);
+				//
+				//	int action = getHAM(CreatureAttribute::ACTION) + lvlmod;
+				//		setHAM(CreatureAttribute::ACTION, action);
+				//
+				//	int quick = getHAM(CreatureAttribute::QUICKNESS) + lvlmod;
+				//		setHAM(CreatureAttribute::QUICKNESS, quick);
+				//
+				//	int stam = getHAM(CreatureAttribute::STAMINA) + lvlmod;
+				//		setHAM(CreatureAttribute::STAMINA, stam);
+				//
+				//	int mind = getHAM(CreatureAttribute::MIND) + lvlmod;
+				//		setHAM(CreatureAttribute::MIND, mind);
+				//
+				//	int focus = getHAM(CreatureAttribute::FOCUS) + lvlmod;
+				//		setHAM(CreatureAttribute::FOCUS, focus);
+				//
+				//	int will = getHAM(CreatureAttribute::WILLPOWER) + lvlmod;
+				//		setHAM(CreatureAttribute::WILLPOWER, will);
+
+
+				//	int healthmax = player->getMaxHAM(CreatureAttribute::HEALTH) * lvlmod;
+				//
+				//		player->addMaxHAM(CreatureAttribute::HEALTH, healthmax, true);
+
+					//	player->inflictDamage(player, CreatureAttribute::STRENGTH, healthEncumb, true);
+					//	player->addMaxHAM(CreatureAttribute::STRENGTH, -healthEncumb, true);
+					//
+					//	player->inflictDamage(player, CreatureAttribute::CONSTITUTION, healthEncumb, true);
+					//	player->addMaxHAM(CreatureAttribute::CONSTITUTION, -healthEncumb, true);
+					//
+					//	player->inflictDamage(player, CreatureAttribute::QUICKNESS, actionEncumb, true);
+					//	player->addMaxHAM(CreatureAttribute::QUICKNESS, -actionEncumb, true);
+					//
+					//	player->inflictDamage(player, CreatureAttribute::STAMINA, actionEncumb, true);
+					//	player->addMaxHAM(CreatureAttribute::STAMINA, -actionEncumb, true);
+					//
+					//	player->inflictDamage(player, CreatureAttribute::FOCUS, mindEncumb, true);
+					//	player->addMaxHAM(CreatureAttribute::FOCUS, -mindEncumb, true);
+					//
+					//	player->inflictDamage(player, CreatureAttribute::WILLPOWER, mindEncumb, true);
+					//	player->addMaxHAM(CreatureAttribute::WILLPOWER, -mindEncumb, true);
+
+
 }
 
 int PlayerManagerImplementation::calculatePlayerLevel(CreatureObject* player, String& xpType) {
@@ -5713,27 +5886,60 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 	if (player == nullptr)
 		return;
 
+	int level = calculatePlayerLevel(player);
+
 	bool message = true;
+
+	int selfDuration = 4 * 60 * 60; //hrs x min x sec
+
+	//if (level > 200) level = 200;
+	int lvlbuff = level * 10;// 250cap x 10
+
+	if (lvlbuff > 1000) lvlbuff = 1000;
+//move to calculate plater (isincombat or isinmunicipal zone or city or w/e
+	message = message && doEnhanceCharacter(0x98321369, player, lvlbuff * 2, selfDuration, BuffType::INNATE, 0); //
+	message = message && doEnhanceCharacter(0x815D85C5, player, lvlbuff * 2, selfDuration, BuffType::INNATE, 1); //
+	message = message && doEnhanceCharacter(0x7F86D2C6, player, lvlbuff * 2, selfDuration, BuffType::INNATE, 2); //
+	message = message && doEnhanceCharacter(0x4BF616E2, player, lvlbuff * 2, selfDuration, BuffType::INNATE, 3); //
+	message = message && doEnhanceCharacter(0x71B5C842, player, lvlbuff * 2, selfDuration, BuffType::INNATE, 4); //
+	message = message && doEnhanceCharacter(0xED0040D9, player, lvlbuff * 2, selfDuration, BuffType::INNATE, 5); //
+	message = message && doEnhanceCharacter(0x11C1772E, player, lvlbuff * 1.5, selfDuration, BuffType::INNATE, 6); //
+	message = message && doEnhanceCharacter(0x2E77F586, player, lvlbuff * 1.5, selfDuration, BuffType::INNATE, 7); //
+	message = message && doEnhanceCharacter(0x3EC6FCB6, player, lvlbuff * 1.5, selfDuration, BuffType::INNATE, 8); //
+
+	//remove the old buff : | keep in for a month or so
+	message = message && doEnhanceCharacter(0x98321361, player, 0, 0, BuffType::INNATE, 0); //
+	message = message && doEnhanceCharacter(0x815D85C1, player, 0, 0, BuffType::INNATE, 1); //
+	message = message && doEnhanceCharacter(0x7F86D2C1, player, 0, 0, BuffType::INNATE, 2); //
+	message = message && doEnhanceCharacter(0x4BF616E1, player, 0, 0, BuffType::INNATE, 3); //
+	message = message && doEnhanceCharacter(0x71B5C841, player, 0, 0, BuffType::INNATE, 4); //
+	message = message && doEnhanceCharacter(0xED0040D1, player, 0, 0, BuffType::INNATE, 5); //
+	message = message && doEnhanceCharacter(0x11C17721, player, 0, 0, BuffType::INNATE, 6); //
+	message = message && doEnhanceCharacter(0x2E77F581, player, 0, 0, BuffType::INNATE, 7); //
+	message = message && doEnhanceCharacter(0x3EC6FCB1, player, 0, 0, BuffType::INNATE, 8); //
+
+		if (message && player->isPlayerCreature())
+			player->sendSystemMessage("\\#FF00FFYou receive DOC/ENT buffs according to your player level, calculated with your currently equipped weapon.");
 //selfbuff
-	int selfMedBuff = 1750;//
-	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.0;//25% is half of vanilla 50%
-	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.0;//.625 is half of 125
-	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.0;//1.0== 100%
-	int selfDuration =	180; //3 hr ;
-
-	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
-	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
-	message = message && doEnhanceCharacter(0x7F86D2C6, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 2); // medical_enhance_constitution
-	message = message && doEnhanceCharacter(0x4BF616E2, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 3); // medical_enhance_action
-	message = message && doEnhanceCharacter(0x71B5C842, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 4); // medical_enhance_quickness
-	message = message && doEnhanceCharacter(0xED0040D9, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 5); // medical_enhance_stamina
-
-	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrengthMind, selfDuration * 60, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
-	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus, selfDuration * 60, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
-	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
-
-	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Doctor Health/Action buffs, Dancer/Musician Mind buffs.");
+//	int selfMedBuff = 1750;//
+//	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.0;//25% is half of vanilla 50%
+//	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.0;//.625 is half of 125
+//	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.0;//1.0== 100%
+//	int selfDuration =	180; //3 hr ;
+//
+//	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
+//	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
+//	message = message && doEnhanceCharacter(0x7F86D2C6, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 2); // medical_enhance_constitution
+//	message = message && doEnhanceCharacter(0x4BF616E2, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 3); // medical_enhance_action
+//	message = message && doEnhanceCharacter(0x71B5C842, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 4); // medical_enhance_quickness
+//	message = message && doEnhanceCharacter(0xED0040D9, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 5); // medical_enhance_stamina
+//
+//	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrengthMind, selfDuration * 60, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
+//	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus, selfDuration * 60, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
+//	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
+//
+//	if (message && player->isPlayerCreature())
+//		player->sendSystemMessage("You receive Doctor Health/Action buffs, Dancer/Musician Mind buffs.");
 }
 
 void PlayerManagerImplementation::enhanceCharacterDocBuff(CreatureObject* player) {
@@ -5769,14 +5975,17 @@ void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
 
 	bool message = true;
 
-	int selfStrength = (player->getBaseHAM(CreatureAttribute::MIND) * (player->getSkillMod("healing_dance_mind") * .01) * .5);//.5 to reduce vanilla buffs
-	int selfDuration =	360; //6 hr ;
+//	int selfStrength = (player->getBaseHAM(CreatureAttribute::MIND) * (player->getSkillMod("healing_dance_mind") * .01) * .5);//.5 to reduce vanilla buffs
+//
+	int selfStrength = player->getSkillMod("healing_dance_mind") * 10;//.5 to reduce vanilla buffs
 
-	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrength, selfDuration * 60, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
+	int selfDuration =	3 * 60 * 60;
+
+	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrength, selfDuration, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
 
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Dancer Mind buff for 6 hours.");
+		player->sendSystemMessage("You receive Dancer Mind buff.");
 
 //no message b/c it will say it every time you stop dance, if u have no buff mod, or a new buff is applied or not b/c cant overbuff
 //	if (message && player->isPlayerCreature())
@@ -5789,15 +5998,18 @@ void PlayerManagerImplementation::enhanceSelfMusic(CreatureObject* player) {
 
 	bool message = true;
 
-	int selfStrengthFocus = (player->getBaseHAM(CreatureAttribute::FOCUS) * (player->getSkillMod("healing_music_mind") * .01) * .5);//1/2 vanilla power
-	int selfStrengthWill = (player->getBaseHAM(CreatureAttribute::WILLPOWER) * (player->getSkillMod("healing_music_mind") * .01) * .5);
-	int selfDuration =	360; //6 hr ;
+//	int selfStrengthFocus = (player->getBaseHAM(CreatureAttribute::FOCUS) * (player->getSkillMod("healing_music_mind") * .01) * .5);//1/2 vanilla power
+//	int selfStrengthWill = (player->getBaseHAM(CreatureAttribute::WILLPOWER) * (player->getSkillMod("healing_music_mind") * .01) * .5);
 
-	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus, selfDuration * 60, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
-	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
+	int selfStrengthFocus = player->getSkillMod("healing_music_mind") * 10;//.5 to reduce vanilla buffs
+	int selfStrengthWill = player->getSkillMod("healing_music_mind") * 10;
+	int selfDuration =	3 * 60 * 60;
+
+	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus, selfDuration, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
+	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Musician Mind buffs for 6 hours. \nmySWG: Doc/Ent buffs are half power.");
+		player->sendSystemMessage("You receive Musician Mind buffs.");
 
 //	if (message && player->isPlayerCreature())
 //		player->sendSystemMessage("An unknown force strengthens you for battles yet to come.");

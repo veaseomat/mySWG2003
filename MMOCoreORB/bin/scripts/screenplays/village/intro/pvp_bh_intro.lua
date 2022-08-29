@@ -1,7 +1,7 @@
 local ObjectManager = require("managers.object.object_manager")
 local QuestManager = require("managers.quest.quest_manager")
 
-FsIntro2 = ScreenPlay:new {
+PVPBHIntro = ScreenPlay:new {
 	OLDMANWAIT = 1,
 	OLDMANMEET = 2,
 	SITHWAIT = 3,
@@ -17,8 +17,8 @@ FsIntro2 = ScreenPlay:new {
 	}
 }
 
-function FsIntro2:getCurrentStep(pPlayer)
-	local curStep = readScreenPlayData(pPlayer, "VillageJediProgression", "FsIntro2Step")
+function PVPBHIntro:getCurrentStep(pPlayer)
+	local curStep = readScreenPlayData(pPlayer, "VillageJediProgression", "PVPBHIntroStep")
 
 	if (curStep == "") then
 		curStep = 1
@@ -28,16 +28,16 @@ function FsIntro2:getCurrentStep(pPlayer)
 	return tonumber(curStep)
 end
 
-function FsIntro2:setCurrentStep(pPlayer, step)
-	writeScreenPlayData(pPlayer, "VillageJediProgression", "FsIntro2Step", step)
+function PVPBHIntro:setCurrentStep(pPlayer, step)
+	writeScreenPlayData(pPlayer, "VillageJediProgression", "PVPBHIntroStep", step)
 end
 
-function FsIntro2:isOnIntro(pPlayer)
+function PVPBHIntro:isOnIntro(pPlayer)
 	return VillageJediManagerCommon.hasJediProgressionScreenPlayState(pPlayer, VILLAGE_JEDI_PROGRESSION_GLOWING) and not QuestManager.hasCompletedQuest(pPlayer, QuestManager.quests.FS_VILLAGE_ELDER)
 end
 
-function FsIntro2:hasDelayPassed(pPlayer)
-	local stepDelay = tonumber(readScreenPlayData(pPlayer, "VillageJediProgression", "FsIntro2Delay"))
+function PVPBHIntro:hasDelayPassed(pPlayer)
+	local stepDelay = tonumber(readScreenPlayData(pPlayer, "VillageJediProgression", "PVPBHIntroDelay"))
 
 	if (stepDelay == nil or stepDelay == 0) then
 		return true
@@ -46,11 +46,11 @@ function FsIntro2:hasDelayPassed(pPlayer)
 	return os.time() >= stepDelay
 end
 
-function FsIntro2:startStepDelay(pPlayer, step)
+function PVPBHIntro:startStepDelay(pPlayer, step)
 	local stepData = self.stepDelay[step]
 
 	if (stepData == nil) then
-		printLuaError("FsIntro2:startStepDelay, invalid step data.")
+		printLuaError("PVPBHIntro:startStepDelay, invalid step data.")
 		return
 	end
 
@@ -65,14 +65,14 @@ function FsIntro2:startStepDelay(pPlayer, step)
 --		return
 --	else
 	--player lost bh or first time
-		stepDelay = (getRandomNumber(2, 480) * 60 * 1000) --2min - 720=12hr
+		stepDelay = (getRandomNumber(15, 240) * 60 * 1000) --10min - 720=12hr
 --	end
 
-	writeScreenPlayData(pPlayer, "VillageJediProgression", "FsIntro2Delay", stepDelay + os.time())
-	createEvent(stepDelay, "FsIntro2", "doDelayedStep", pPlayer, "")
+	writeScreenPlayData(pPlayer, "VillageJediProgression", "PVPBHIntroDelay", stepDelay + os.time())
+	createEvent(stepDelay, "PVPBHIntro", "doDelayedStep", pPlayer, "")
 end
 
-function FsIntro2:doDelayedStep(pPlayer)
+function PVPBHIntro:doDelayedStep(pPlayer)
 	if (pPlayer == nil) then
 		return
 	end
@@ -85,39 +85,24 @@ function FsIntro2:doDelayedStep(pPlayer)
 	
 --delay for dead incap or not in good area
 	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer)) then
-		createEvent(getRandomNumber(1, 240) * 60 * 1000, "FsIntro2", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(15, 120) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "")
 		return
 	end
 	
-	
-	if CreatureObject(pPlayer):hasSkill("force_rank_light_novice") then
-		encounterResult = sithshadowencounter2:start(pPlayer)	
-		return
-
-	else if CreatureObject(pPlayer):hasSkill("force_rank_dark_novice") then
-		encounterResult = sithshadowencounter3:start(pPlayer)	
-		return
-		
-
-	else
-	--chek overt again after
-	--	createEvent(getRandomNumber(1, 1) * 1 * 1000, "FsIntro2", "doDelayedStep", pPlayer, "")
-		return
-	end
-		
-	end
 --this is the visibility threshold, vanilla is 1500
---	if PlayerObject(pGhost):getVisibility() >= 4000 then
---		encounterResult = SithShadowEncounter2:start(pPlayer)
---	else
---	--delay visibility check
---		createEvent(getRandomNumber(20, 720) * 60 * 1000, "FsIntro2", "doDelayedStep", pPlayer, "")
---		return
---	end
+	if PlayerObject(pGhost):getVisibility() >= 3000 then
+		encounterResult = PVPBHEncounter:start(pPlayer)
+		return
+		
+	else
+	--chek visibility again after
+		createEvent(getRandomNumber(15, 60) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "")
+		return
+	end
 
 end
 
-function FsIntro2:startPlayerOnIntro(pPlayer)
+function PVPBHIntro:startPlayerOnIntro(pPlayer)
 	if (not self:isOnIntro(pPlayer)) then
 		return
 	end
@@ -125,7 +110,7 @@ function FsIntro2:startPlayerOnIntro(pPlayer)
 	self:startStepDelay(pPlayer, 1)
 end
 
-function FsIntro2:onLoggedIn(pPlayer)
+function PVPBHIntro:onLoggedIn(pPlayer)
 	if (not self:isOnIntro(pPlayer)) then
 		return
 	end
@@ -161,7 +146,7 @@ function FsIntro2:onLoggedIn(pPlayer)
 		end
 
 		if (self:hasDelayPassed(pPlayer)) then
-			createEvent(getRandomNumber(1, 2) * 1000, "FsIntro2", "startOldMan", pPlayer, "")
+			createEvent(getRandomNumber(1, 2) * 1000, "PVPBHIntro", "startOldMan", pPlayer, "")
 		end
 
 		self:setCurrentStep(pPlayer, self.OLDMANWAIT)
@@ -170,26 +155,26 @@ function FsIntro2:onLoggedIn(pPlayer)
 
 	if (curStep == self.OLDMANWAIT) then
 		if (self:hasDelayPassed(pPlayer)) then
-			createEvent(getRandomNumber(1, 2) * 1000, "FsIntro2", "startOldMan", pPlayer, "")
+			createEvent(getRandomNumber(1, 2) * 1000, "PVPBHIntro", "startOldMan", pPlayer, "")
 			self:setCurrentStep(pPlayer, curStep + 1)
 		end
 	elseif (curStep == self.OLDMANMEET) then
 		QuestManager.resetQuest(pPlayer, QuestManager.quests.OLD_MAN_INITIAL)
-		createEvent(getRandomNumber(1, 2) * 1000, "FsIntro2", "startOldMan", pPlayer, "")
+		createEvent(getRandomNumber(1, 2) * 1000, "PVPBHIntro", "startOldMan", pPlayer, "")
 	elseif (curStep == self.SITHWAIT) then
 		if (self:hasDelayPassed(pPlayer)) then
-			createEvent(getRandomNumber(1, 2) * 1000, "FsIntro2", "startSithAttack", pPlayer, "")
+			createEvent(getRandomNumber(1, 2) * 1000, "PVPBHIntro", "startSithAttack", pPlayer, "")
 			self:setCurrentStep(pPlayer, curStep + 1)
 		end
 	elseif (curStep == self.SITHATTACK) then
-		createEvent(getRandomNumber(1, 2) * 1000, "FsIntro2", "startSithAttack", pPlayer, "")
+		createEvent(getRandomNumber(1, 2) * 1000, "PVPBHIntro", "startSithAttack", pPlayer, "")
 	elseif (curStep == self.USEDATAPADONE) then
 		if (not self:hasFirstDatapad(pPlayer)) then
 			QuestManager.resetQuest(pPlayer, QuestManager.quests.TWO_MILITARY)
 			QuestManager.resetQuest(pPlayer, QuestManager.quests.LOOT_DATAPAD_1)
 			QuestManager.resetQuest(pPlayer, QuestManager.quests.GOT_DATAPAD)
 			self:setCurrentStep(pPlayer, curStep - 1)
-			createEvent(getRandomNumber(1, 2) * 1000, "FsIntro2", "startSithAttack", pPlayer, "")
+			createEvent(getRandomNumber(1, 2) * 1000, "PVPBHIntro", "startSithAttack", pPlayer, "")
 		end
 	elseif (curStep == self.SITHTHEATER) then
 		if (SithShadowIntroTheater:hasTaskStarted(pPlayer)) then
@@ -218,7 +203,7 @@ function FsIntro2:onLoggedIn(pPlayer)
 	end
 end
 
-function FsIntro2:onLoggedOut(pPlayer)
+function PVPBHIntro:onLoggedOut(pPlayer)
 	if (not self:isOnIntro(pPlayer)) then
 		return
 	end
@@ -230,7 +215,7 @@ function FsIntro2:onLoggedOut(pPlayer)
 	end
 end
 
-function FsIntro2:hasFirstDatapad(pPlayer)
+function PVPBHIntro:hasFirstDatapad(pPlayer)
 	local pInventory = SceneObject(pPlayer):getSlottedObject("inventory")
 
 	if (pInventory == nil) then
@@ -240,7 +225,7 @@ function FsIntro2:hasFirstDatapad(pPlayer)
 	return getContainerObjectByTemplate(pInventory, "object/tangible/loot/quest/force_sensitive/waypoint_datapad.iff", true) ~= nil
 end
 
-function FsIntro2:hasSecondDatapad(pPlayer)
+function PVPBHIntro:hasSecondDatapad(pPlayer)
 	local pInventory = SceneObject(pPlayer):getSlottedObject("inventory")
 
 	if (pInventory == nil) then
@@ -250,7 +235,7 @@ function FsIntro2:hasSecondDatapad(pPlayer)
 	return getContainerObjectByTemplate(pInventory, "object/tangible/loot/quest/force_sensitive/theater_datapad.iff", true) ~= nil
 end
 
-function FsIntro2:removeFirstDatapad(pPlayer)
+function PVPBHIntro:removeFirstDatapad(pPlayer)
 	local pInventory = SceneObject(pPlayer):getSlottedObject("inventory")
 
 	if (pInventory == nil) then
@@ -265,7 +250,7 @@ function FsIntro2:removeFirstDatapad(pPlayer)
 	end
 end
 
-function FsIntro2:removeSecondDatapad(pPlayer)
+function PVPBHIntro:removeSecondDatapad(pPlayer)
 	local pInventory = SceneObject(pPlayer):getSlottedObject("inventory")
 
 	if (pInventory == nil) then
@@ -280,7 +265,7 @@ function FsIntro2:removeSecondDatapad(pPlayer)
 	end
 end
 
-function FsIntro2:startOldMan(pPlayer)
+function PVPBHIntro:startOldMan(pPlayer)
 	if (pPlayer == nil) then
 		return
 	end
@@ -294,12 +279,12 @@ function FsIntro2:startOldMan(pPlayer)
 	local result = OldManIntroEncounter:start(pPlayer)
 
 	if (not result) then
-		createEvent(getRandomNumber(1, 2) * 1000, "FsIntro2", "startOldMan", pPlayer, "")
+		createEvent(getRandomNumber(1, 2) * 1000, "PVPBHIntro", "startOldMan", pPlayer, "")
 		return
 	end
 end
 
-function FsIntro2:startSithAttack(pPlayer)
+function PVPBHIntro:startSithAttack(pPlayer)
 	if (pPlayer == nil) then
 		return
 	end
@@ -310,15 +295,15 @@ function FsIntro2:startSithAttack(pPlayer)
 		return
 	end
 
-	local result = sithshadowencounter2:start(pPlayer)
+	local result = SithShadowEncounter:start(pPlayer)
 
 	if (not result) then
-		createEvent(getRandomNumber(1, 2) * 1000, "FsIntro2", "startSithAttack", pPlayer, "")
+		createEvent(getRandomNumber(1, 2) * 1000, "PVPBHIntro", "startSithAttack", pPlayer, "")
 		return
 	end
 end
 
-function FsIntro2:completeVillageIntroFrog(pPlayer)
+function PVPBHIntro:completeVillageIntroFrog(pPlayer)
 	if (pPlayer == nil) then
 		return
 	end

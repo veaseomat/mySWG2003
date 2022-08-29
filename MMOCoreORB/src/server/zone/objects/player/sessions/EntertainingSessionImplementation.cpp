@@ -905,11 +905,11 @@ void EntertainingSessionImplementation::activateEntertainerBuff(CreatureObject* 
 			return;
 
 		// Returns the Number of Minutes for the Buff Duration
-		float buffDuration = getEntertainerBuffDuration(creature, performanceType);
-
-		if (buffDuration * 60 < 10.0f) { //10 sec minimum buff duration
-			return;
-		}
+//		float buffDuration = getEntertainerBuffDuration(creature, performanceType);
+//
+//		if (buffDuration * 60 < 10.0f) { //10 sec minimum buff duration
+//			return;
+//		}
 
 		//1 minute minimum listen/watch time
 //		int timeElapsed = time(0) - getEntertainerBuffStartTime(creature, performanceType);
@@ -922,10 +922,21 @@ void EntertainingSessionImplementation::activateEntertainerBuff(CreatureObject* 
 		int campModTemp = 100;
 
 
-		float buffStrength = getEntertainerBuffStrength(creature, performanceType) / 100.0f;
+//		float buffStrength = getEntertainerBuffStrength(creature, performanceType) / 100.0f;
+
+		int buffStrength = 0;
+
+		if(dancing) {
+			buffStrength = entertainer->getSkillMod("healing_dance_mind") * 10;
+		}
+		else if (playingMusic) {
+			buffStrength = entertainer->getSkillMod("healing_music_mind") * 10;
+		}
 
 		if(buffStrength == 0)
 			return;
+
+		int buffDuration = 3 * 60 * 60;//getEntertainerBuffDuration(creature, performanceType);
 
 		ManagedReference<PerformanceBuff*> oldBuff = nullptr;
 		switch (performanceType){
@@ -936,8 +947,8 @@ void EntertainingSessionImplementation::activateEntertainerBuff(CreatureObject* 
 			oldBuff = cast<PerformanceBuff*>(creature->getBuff(focusBuffCRC));
 			if (oldBuff != nullptr && oldBuff->getBuffStrength() > buffStrength)
 				return;
-			ManagedReference<PerformanceBuff*> focusBuff = new PerformanceBuff(creature, focusBuffCRC, buffStrength, buffDuration * 60, PerformanceBuffType::MUSIC_FOCUS);
-			ManagedReference<PerformanceBuff*> willBuff = new PerformanceBuff(creature, willBuffCRC, buffStrength, buffDuration * 60, PerformanceBuffType::MUSIC_WILLPOWER);
+			ManagedReference<PerformanceBuff*> focusBuff = new PerformanceBuff(creature, focusBuffCRC, buffStrength, buffDuration, PerformanceBuffType::MUSIC_FOCUS);
+			ManagedReference<PerformanceBuff*> willBuff = new PerformanceBuff(creature, willBuffCRC, buffStrength, buffDuration, PerformanceBuffType::MUSIC_WILLPOWER);
 
 			Locker locker(focusBuff);
 			creature->addBuff(focusBuff);
@@ -953,7 +964,7 @@ void EntertainingSessionImplementation::activateEntertainerBuff(CreatureObject* 
 			oldBuff = cast<PerformanceBuff*>(creature->getBuff(mindBuffCRC));
 			if (oldBuff != nullptr && oldBuff->getBuffStrength() > buffStrength)
 				return;
-			ManagedReference<PerformanceBuff*> mindBuff = new PerformanceBuff(creature, mindBuffCRC, buffStrength, buffDuration * 60, PerformanceBuffType::DANCE_MIND);
+			ManagedReference<PerformanceBuff*> mindBuff = new PerformanceBuff(creature, mindBuffCRC, buffStrength, buffDuration, PerformanceBuffType::DANCE_MIND);
 
 			Locker locker(mindBuff);
 			creature->addBuff(mindBuff);

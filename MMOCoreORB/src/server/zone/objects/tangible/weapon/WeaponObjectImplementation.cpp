@@ -215,11 +215,13 @@ String WeaponObjectImplementation::getWeaponType() const {
 void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, CreatureObject* object) {
 	TangibleObjectImplementation::fillAttributeList(alm, object);
 
-	PlayerManager* playerManager = object->getZoneServer()->getPlayerManager();
+	//PlayerManager* playerManager = object->getZoneServer()->getPlayerManager();
 
-	int playerLevel = playerManager->calculatePlayerLevel(object);
+	//playerManager->calculatePlayerLevel(object);//this will reup the buff every time inventory is opened
 
-	//alm->insertAttribute("level", playerLevel);
+//	int playerLevel = object->getPlayerObject()->getSkillPoints();//playerManager->calculatePlayerLevel(object);
+//
+//	alm->insertAttribute("challenge_level", playerLevel);
 
 
 	bool res = isCertifiedFor(object);

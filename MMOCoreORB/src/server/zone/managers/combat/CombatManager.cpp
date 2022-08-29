@@ -2041,7 +2041,7 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 		if (server != nullptr) {
 			PlayerManager* pManager = server->getPlayerManager();
 			if (pManager != nullptr) {
-				playerLevel = pManager->calculatePlayerLevel(targetCreature) - 5;
+				playerLevel = pManager->calculatePlayerLevel(targetCreature) / 10;
 			}
 		}
 	}

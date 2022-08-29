@@ -184,14 +184,16 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 	if (pCreatureObject == nil) then
 		return
 	end
+	
+	--CreatureObject(pCreatureObject):enhanceCharacter()
 
 	self:checkIfProgressedToJedi(pCreatureObject)
 	self:registerObservers(pCreatureObject)
 	
-	FsIntro3:startStepDelay(pCreatureObject, 3)--faction encoutners
+	PVPFactionIntro:startStepDelay(pCreatureObject, 3)--faction encoutners
 
 	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
-		FsIntro:startStepDelay(pCreatureObject, 3)
+		PVPBHIntro:startStepDelay(pCreatureObject, 3)
 	end
 
 --	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then	
@@ -199,7 +201,7 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 --	end
 	
 	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_03") then	
-		FsIntro2:startStepDelay(pCreatureObject, 3)
+		PVPFRSIntro:startStepDelay(pCreatureObject, 3)
 	end
 
 	if JediTrials:isOnKnightTrials(pCreatureObject) then	

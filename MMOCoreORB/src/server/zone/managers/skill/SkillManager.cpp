@@ -3,6 +3,8 @@
 		See file COPYING for copying conditions.
  */
 
+#include "server/zone/objects/creature/CreatureObject.h"
+
 #include "SkillManager.h"
 #include "SkillModManager.h"
 #include "PerformanceManager.h"
@@ -383,6 +385,9 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 		if (playerManager != nullptr) {
 			creature->setLevel(playerManager->calculatePlayerLevel(creature));
+
+			//playerManager->enhanceCharacter(creature);//LEVEL BUFFS IN 3 PLACES
+
 		}
 //this could be useful for quests
 		if (skill->getSkillName().contains("force_sensitive") && skill->getSkillName().contains("_04"))
@@ -583,6 +588,9 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 		ManagedReference<PlayerManager*> playerManager = creature->getZoneServer()->getPlayerManager();
 		if (playerManager != nullptr) {
 			creature->setLevel(playerManager->calculatePlayerLevel(creature));
+
+			//playerManager->enhanceCharacter(creature);//LEVEL BUFFS IN 3 PLACES
+
 		}
 
 		MissionManager* missionManager = creature->getZoneServer()->getMissionManager();
@@ -710,6 +718,9 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 	ManagedReference<PlayerManager*> playerManager = creature->getZoneServer()->getPlayerManager();
 	if (playerManager != nullptr) {
 		creature->setLevel(playerManager->calculatePlayerLevel(creature));
+
+		//playerManager->enhanceCharacter(creature);//LEVEL BUFFS IN 3 PLACES
+
 	}
 
 	MissionManager* missionManager = creature->getZoneServer()->getMissionManager();
