@@ -108,7 +108,7 @@ SceneObject* CreatureManagerImplementation::spawnLair(unsigned int lairTemplate,
  	building->setFaction(lairTmpl->getFaction());
  	building->setPvpStatusBitmask(CreatureFlag::ATTACKABLE);
  	building->setOptionsBitmask(0, false);
- 	building->setMaxCondition(difficultyLevel * (900 + System::random(99)) * .25);
+ 	building->setMaxCondition(difficultyLevel * (900 + System::random(200)) / 2);
  	building->setConditionDamage(0, false);
  	building->initializePosition(x, z, y);
  	building->setDespawnOnNoPlayersInRange(true);
@@ -736,7 +736,7 @@ void CreatureManagerImplementation::droidHarvest(Creature* creature, CreatureObj
 		return;
 	}
 
-	quantityExtracted *= 10;
+	//quantityExtracted *= 10;
 
 	TransactionLog trx(TrxCode::HARVESTED, owner, resourceSpawn);
 
@@ -898,10 +898,10 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 	if (creature->getParent().get() != nullptr)
 		quantityExtracted = 1;
 
-	quantityExtracted *= 10;
+	//quantityExtracted *= 10;
 
 	TransactionLog trx(TrxCode::HARVESTED, player, resourceSpawn);
-	resourceManager->harvestResourceToPlayer(trx, player, resourceSpawn, quantityExtracted);
+	resourceManager->harvestResourceToPlayer(trx, player, resourceSpawn, quantityExtracted * 2);
 	trx.commit();
 
 	/// Send System Messages

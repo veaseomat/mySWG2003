@@ -278,21 +278,20 @@ public:
 			}
 
 			if (atts.contains(CreatureAttribute::ACTION)) {
-//				if (notifyObservers) {
+				if (notifyObservers) {
 					actionHealed = targetCreature->healDamage(creature, CreatureAttribute::ACTION, stimPower);
 					notifyObservers = false;
-//				} else {
-//					actionHealed = targetCreature->healDamage(creature, CreatureAttribute::ACTION, stimPower, true, false);
-//				}
+				} else {
+					actionHealed = targetCreature->healDamage(creature, CreatureAttribute::ACTION, stimPower, true, false);
+				}
 			}
 
 			if (atts.contains(CreatureAttribute::MIND)) {
-//				if (notifyObservers) {
+				if (notifyObservers) {
 					mindHealed = targetCreature->healDamage(creature, CreatureAttribute::MIND, stimPower);
-					notifyObservers = false;
-//				} else {
-//					mindHealed = targetCreature->healDamage(creature, CreatureAttribute::MIND, stimPower, true, false);
-//				}
+				} else {
+					mindHealed = targetCreature->healDamage(creature, CreatureAttribute::MIND, stimPower, true, false);
+				}
 			}
 
 			if (creature->isPlayerCreature()) {
@@ -540,7 +539,7 @@ public:
 //		if (targetCreature != creature && !targetCreature->isPet())
 //			awardXp(creature, "medical", (healthHealed + actionHealed)); //No experience for healing yourself.
 
-			awardXp(creature, "medical", (healthHealed + actionHealed) * 1); //No experience for healing yourself.
+			awardXp(creature, "medical", (healthHealed + actionHealed) * 2); //No experience for healing yourself.
 
 		if (targetCreature != creature)
 			clocker.release();

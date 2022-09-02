@@ -325,19 +325,19 @@ int PlayerObjectImplementation::calculateBhReward() {
 
 	if (getJediState() >= 4) // Minimum if player is knight
 		minReward = 50000;
+//had everything below disabled 
+	int skillPoints = getSpentJediSkillPoints();
+	int reward = skillPoints * 1000;
 
-//	int skillPoints = getSpentJediSkillPoints();
-//	int reward = skillPoints * 1000;
-//
-//	int frsRank = getFrsData()->getRank();
-//
-//	if (frsRank > 0)
-//		reward += frsRank * 100000; // +100k per frs rank
-//
-//	if (reward < minReward)
-//		reward = minReward;
+	int frsRank = getFrsData()->getRank();
 
-	return minReward;
+	if (frsRank > 0)
+		reward += frsRank * 100000; // +100k per frs rank
+
+	if (reward < minReward)
+		reward = minReward;
+
+	return reward;
 }
 
 void PlayerObjectImplementation::sendBaselinesTo(SceneObject* player) {
@@ -999,7 +999,7 @@ void PlayerObjectImplementation::doDigest(int fillingReduction) {
 	if (drinkFilling > drinkFillingMax)
 		drinkFilling = drinkFillingMax;
 
-	fillingReduction *= 3; //speeds up digeston
+	fillingReduction *= 2; //speeds up digeston
 
 	if (foodFilling > 0) {
 		setFoodFilling(foodFilling - fillingReduction);
@@ -2065,6 +2065,18 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	}
 
 	if (!forceRegenerationEvent->isScheduled()) {
+		int forceControlMod = 0, forceManipulationMod = 0;
+
+		if (creature->hasSkill("force_rank_light_novice")) {
+			forceControlMod = creature->getSkillMod("force_control_light");
+			forceManipulationMod = creature->getSkillMod("force_manipulation_light");
+		} else if (creature->hasSkill("force_rank_dark_novice")) {
+			forceControlMod = creature->getSkillMod("force_power_dark");
+			forceManipulationMod = creature->getSkillMod("force_manipulation_dark");
+		}
+
+		regen += (forceControlMod + forceManipulationMod) / 10.f;
+
 
 //		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 2;
 
@@ -2076,30 +2088,29 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 		regen += 10;
 		}
 
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
-//			regen *= .75;
-//		}
-//
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
-//			regen *= .5;
-//		}
-//
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_1)) {
-//			regen *= .75;
-//		}
-//
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_2)) {
-//			regen *= .5;
-//		}
-//
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_1)) {
-//			regen *= .75;
-//		}
-//
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_2)) {
-//			regen *= .5;
-//		}
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
+			regen *= .9;
+		}
 
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
+			regen *= .8;
+		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_1)) {
+			regen *= .9;
+		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_2)) {
+			regen *= .8;
+		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_1)) {
+			regen *= .9;
+		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_2)) {
+			regen *= .8;
+		}
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
 		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
@@ -2342,14 +2353,14 @@ void PlayerObjectImplementation::doForceRegen() {
 
 	if (creature->isSitting()) {
 
-			modifier = 5;
+			modifier = 2;
 	}
 
 	if (creature->isMeditating()) {
 		Reference<ForceMeditateTask*> medTask = creature->getPendingTask("forcemeditate").castTo<ForceMeditateTask*>();
 
 		if (medTask != nullptr)
-			modifier = 10;
+			modifier = 6;
 	}
 
 	uint32 forceTick = tick * modifier;
@@ -2490,7 +2501,7 @@ void PlayerObjectImplementation::schedulePvpTefRemovalTask(bool removeCrackdownG
 			auto gcwCrackdownTefMs = getLastGcwCrackdownCombatActionTimestamp().miliDifference();
 			auto gcwTefMs = getLastGcwPvpCombatActionTimestamp().miliDifference();
 			auto bhTefMs = getLastBhPvpCombatActionTimestamp().miliDifference();
-			auto scheduleTime = gcwTefMs < bhTefMs ? gcwTefMs : bhTefMs;
+			auto scheduleTime = gcwTefMs < bhTefMs ? gcwTefMs : bhTefMs;//strange way to do timers here
 			scheduleTime = gcwCrackdownTefMs < scheduleTime ? gcwCrackdownTefMs : scheduleTime;
 			pvpTefTask->schedule(llabs(scheduleTime));
 		} else {
@@ -2995,11 +3006,6 @@ void PlayerObjectImplementation::checkAndShowTOS() {
 }
 
 void PlayerObjectImplementation::recalculateForcePower() {
-	ManagedReference<CreatureObject*> creature = dynamic_cast<CreatureObject*>(parent.get().get());
-
-	if (creature == nullptr)
-		return;
-
 	ManagedReference<SceneObject*> parent = getParent().get();
 
 	if (parent == nullptr)
@@ -3012,18 +3018,22 @@ void PlayerObjectImplementation::recalculateForcePower() {
 
 	int maxForce = player->getSkillMod("jedi_force_power_max");
 
-//	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 0.625;
-//	float frsMax = (player->getSkillMod("force_manipulation_light") + player->getSkillMod("force_manipulation_dark")) * 25;
-//
-//	if (frsMax > 0) {
-//		maxForce += frsMax;
-//	}
+	int forcePowerMod = 0, forceControlMod = 0;
 
-		if (maxForce > 0) {
-			maxForce += 250;
-		}
+	if (player->hasSkill("force_rank_light_novice")) {
+		forcePowerMod = player->getSkillMod("force_power_light");
+		forceControlMod = player->getSkillMod("force_control_light");
+	} else if (player->hasSkill("force_rank_dark_novice")) {
+		forcePowerMod = player->getSkillMod("force_power_dark");
+		forceControlMod = player->getSkillMod("force_control_dark");
+	}
 
-
+	maxForce += (forcePowerMod + forceControlMod) * 10;
+	
+	if (maxForce > 0) {
+		maxForce += 250;
+	}
+		
 	setForcePowerMax(maxForce, true);
 }
 

@@ -362,7 +362,14 @@ int CombatManager::doTargetCombatAction(CreatureObject* attacker, WeaponObject* 
 	case MISS:
 		doMiss(attacker, weapon, defender, damage);
 		broadcastCombatAction(attacker, defender, weapon, data, 0, hitVal, 0);
-//		checkForTefs(attacker, defender, shouldGcwCrackdownTef, shouldGcwTef, shouldBhTef);
+		checkForTefs(attacker, defender, shouldGcwCrackdownTef, shouldGcwTef, shouldBhTef);
+
+//		if (attacker->isPlayerCreature() && (weapon->isJediWeapon() || data.isForceAttack()))
+//			attacker->setPvpStatusBit(CreatureFlag::ENEMY);
+//
+//		if (defender->isPlayerCreature() && (defender->getWeapon()->isJediWeapon()))
+//			defender->setPvpStatusBit(CreatureFlag::ENEMY);
+
 		return 0;
 		break;
 	case BLOCK:
@@ -410,7 +417,13 @@ int CombatManager::doTargetCombatAction(CreatureObject* attacker, WeaponObject* 
 
 	broadcastCombatAction(attacker, defender, weapon, data, damage, hitVal, hitLocation);
 
-//	checkForTefs(attacker, defender, shouldGcwCrackdownTef, shouldGcwTef, shouldBhTef);
+	checkForTefs(attacker, defender, shouldGcwCrackdownTef, shouldGcwTef, shouldBhTef);
+
+//	if (attacker->isPlayerCreature() && (weapon->isJediWeapon() || data.isForceAttack()))
+//		attacker->setPvpStatusBit(CreatureFlag::ENEMY);
+//
+//	if (defender->isPlayerCreature() && (defender->getWeapon()->isJediWeapon()))
+//		defender->setPvpStatusBit(CreatureFlag::ENEMY);
 
 	return damage;
 }
@@ -3277,37 +3290,56 @@ void CombatManager::checkForTefs(CreatureObject* attacker, CreatureObject* defen
 	ManagedReference<CreatureObject*> attackingCreature = attacker->isPet() ? attacker->getLinkedCreature() : attacker;
 	ManagedReference<CreatureObject*> targetCreature = defender->isPet() || defender->isVehicleObject() ? defender->getLinkedCreature() : defender;
 
-	if (attackingCreature != nullptr && targetCreature != nullptr) {
-		if (attackingCreature->isPlayerCreature() && targetCreature->isPlayerCreature() && !areInDuel(attackingCreature, targetCreature)) {
 
-			if (!(*shouldGcwTef)) {
-				if (attackingCreature->getFaction() != targetCreature->getFaction() && attackingCreature->getFactionStatus() == FactionStatus::OVERT && targetCreature->getFactionStatus() == FactionStatus::OVERT) {
-					*shouldGcwTef = true;
-				}
-			}
-
-			if (!(*shouldBhTef)) {
-				if (attackingCreature->hasBountyMissionFor(targetCreature) || targetCreature->hasBountyMissionFor(attackingCreature)) {
-					*shouldBhTef = true;
-				}
-			}
-		}
-
-		if (!(*shouldGcwCrackdownTef)) {
-			if (attackingCreature->isPlayerObject() && targetCreature->isAiAgent()) {
-				Reference<PlayerObject*> ghost = attackingCreature->getPlayerObject();
-
-				if (ghost->hasCrackdownTefTowards(targetCreature->getFaction())) {
-					*shouldGcwCrackdownTef = true;
-				}
-			}
-			if (targetCreature->isPlayerObject() && attackingCreature->isAiAgent()) {
-				Reference<PlayerObject*> ghost = targetCreature->getPlayerObject();
-
-				if (ghost->hasCrackdownTefTowards(attackingCreature->getFaction())) {
-					*shouldGcwCrackdownTef = true;
-				}
-			}
-		}
+	if (attackingCreature->getWeapon()->isJediWeapon())	{
+		*shouldBhTef = true;
 	}
+
+	if (((attackingCreature->isRebel() && targetCreature->isImperial()) || (attackingCreature->isImperial() && targetCreature->isRebel())) //&& !attackingCreature->isNeutral() && !targetCreature->isNeutral()
+			&& attackingCreature->getFactionStatus() >= FactionStatus::COVERT) {//&& !attackingCreature->isNeutral()
+		*shouldGcwTef = true;
+	}
+
+//	if (attackingCreature != nullptr && targetCreature != nullptr) {
+//
+//		if (attackingCreature->getWeapon()->isJediWeapon())	{
+//			*shouldBhTef = true;
+//		}
+//
+//		if (attackingCreature->getFaction() != targetCreature->getFaction() && attackingCreature->isNeutral()) {
+//			*shouldGcwTef = true;
+//		}
+//
+//		if (attackingCreature->isPlayerCreature() && targetCreature->isPlayerCreature() && !areInDuel(attackingCreature, targetCreature)) {
+//
+//			if (!(*shouldGcwTef)) {
+//				if (attackingCreature->getFaction() != targetCreature->getFaction() && attackingCreature->getFactionStatus() == FactionStatus::OVERT && targetCreature->getFactionStatus() == FactionStatus::OVERT) {
+//					*shouldGcwTef = true;
+//				}
+//			}
+//
+//			if (!(*shouldBhTef)) {
+//				if ((attackingCreature->hasBountyMissionFor(targetCreature) || targetCreature->hasBountyMissionFor(attackingCreature)) || attackingCreature->getWeapon()->isJediWeapon()) {
+//					*shouldBhTef = true;
+//				}
+//			}
+//		}
+//
+//		if (!(*shouldGcwCrackdownTef)) {
+//			if (attackingCreature->isPlayerObject() && targetCreature->isAiAgent()) {
+//				Reference<PlayerObject*> ghost = attackingCreature->getPlayerObject();
+//
+//				if (ghost->hasCrackdownTefTowards(targetCreature->getFaction())) {
+//					*shouldGcwCrackdownTef = true;
+//				}
+//			}
+//			if (targetCreature->isPlayerObject() && attackingCreature->isAiAgent()) {
+//				Reference<PlayerObject*> ghost = targetCreature->getPlayerObject();
+//
+//				if (ghost->hasCrackdownTefTowards(attackingCreature->getFaction())) {
+//					*shouldGcwCrackdownTef = true;
+//				}
+//			}
+//		}
+//	}
 }

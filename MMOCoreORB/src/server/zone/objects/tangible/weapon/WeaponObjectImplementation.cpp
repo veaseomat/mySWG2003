@@ -726,11 +726,11 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 		return;
 	}
 
-	int roll = System::random(20);
-	int chance = 2;
+	int roll = System::random(200);
+	int chance = 5;
 
 	if (hasPowerup())
-		chance += 5;
+		chance += 10;
 
 	if (roll < chance) {
 		Locker locker(_this.getReferenceUnsafeStaticCast());
@@ -745,7 +745,7 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 			for (int i = 0; i < saberInv->getContainerObjectsSize(); i++) {
 				ManagedReference<LightsaberCrystalComponent*> crystal = saberInv->getContainerObject(i).castTo<LightsaberCrystalComponent*>();
 
-				if (crystal->getColor() == 31) {
+				if (crystal != nullptr && crystal->getColor() == 31) {
 					crystal->inflictDamage(crystal, 0, 1, true, true);
 				}
 			}

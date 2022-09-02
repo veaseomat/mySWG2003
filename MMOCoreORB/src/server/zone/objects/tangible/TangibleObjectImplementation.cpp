@@ -263,6 +263,10 @@ void TangibleObjectImplementation::sendPvpStatusTo(CreatureObject* player) {
 	if (getFactionStatus() == FactionStatus::OVERT && getFutureFactionStatus() == FactionStatus::COVERT)
 		newPvpStatusBitmask |= CreatureFlag::WASDECLARED;
 
+//	if (player->getWeapon()->isJediWeapon()){//this makes everything red to player with equipped saber on login
+//		newPvpStatusBitmask |= CreatureFlag::ENEMY;
+//	}
+
 	BaseMessage* pvp = new UpdatePVPStatusMessage(asTangibleObject(), player, newPvpStatusBitmask);
 	player->sendMessage(pvp);
 }
@@ -1112,6 +1116,13 @@ bool TangibleObjectImplementation::isAttackableBy(CreatureObject* object) {
 		if (isRebel() && (!object->isImperial() || object->getFactionStatus() == 0)) {
 			return false;
 		}
+
+
+//		if (object->getWeapon()->isJediWeapon()){
+//			return true;
+//		}
+
+
 	} else if (isImperial() && !(object->isRebel())) {
 		return false;
 	} else if (isRebel() && !(object->isImperial())) {

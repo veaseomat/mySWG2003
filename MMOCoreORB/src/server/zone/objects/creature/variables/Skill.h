@@ -311,7 +311,7 @@ public:
 	 * @return the credits required for training the skill at a trainer.
 	 */
 	inline int getMoneyRequired() const {
-		return moneyRequired * .25;
+		return moneyRequired / 2;
 	}
 
 	/**

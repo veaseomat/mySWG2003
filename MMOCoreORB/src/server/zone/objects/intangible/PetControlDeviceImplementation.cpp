@@ -153,7 +153,7 @@ void PetControlDeviceImplementation::callObject(CreatureObject* player) {
 		bool ch = player->hasSkill("outdoors_creaturehandler_novice");
 
 		if (ch) {
-			maxPets = 1;//player->getSkillMod("keep_creature");//ch called pets
+			maxPets = player->getSkillMod("keep_creature");//max ch
 			maxLevelofPets = player->getSkillMod("tame_level");
 		}
 
@@ -168,7 +168,7 @@ void PetControlDeviceImplementation::callObject(CreatureObject* player) {
 		}
 
 	} else if (petType == PetManager::FACTIONPET){
-		maxPets = 1;//3;
+		maxPets = 3;//max fp
 	}
 
 	for (int i = 0; i < ghost->getActivePetsSize(); ++i) {
@@ -544,7 +544,7 @@ bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force,
 
 	Time currentTime;
 	uint32 timeDelta = currentTime.getTime() - lastGrowth.getTime();
-	int stagesToGrow = timeDelta / 10800; // 4 hour
+	int stagesToGrow = timeDelta / 43200 / 2; // 12 hour// 6hr
 
 	if (adult)
 		stagesToGrow = 10;

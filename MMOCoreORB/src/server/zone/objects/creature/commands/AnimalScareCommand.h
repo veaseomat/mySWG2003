@@ -17,15 +17,13 @@ public:
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
 
-//		if (!checkStateMask(creature))
-//			return INVALIDSTATE;
-//
-//		if (!checkInvalidLocomotions(creature))
-//			return INVALIDLOCOMOTION;
-//
-//		return SUCCESS;
-		creature->sendSystemMessage("mySWG: This ability is disabled.");
-		return GENERALERROR;
+		if (!checkStateMask(creature))
+			return INVALIDSTATE;
+
+		if (!checkInvalidLocomotions(creature))
+			return INVALIDLOCOMOTION;
+
+		return SUCCESS;
 	}
 
 };

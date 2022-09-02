@@ -890,7 +890,7 @@ bool PlanetManagerImplementation::validateClientCityInRange(CreatureObject* crea
 //			Region* activeRegion = region->getRegion(j);
 //			float radius = activeRegion->getRadius();
 //
-//			if (radius < 512)
+//			if (radius < 512)//this is setting no build zone 512m outside of the "has left coronet" municipal zone
 //				radius = 512;
 //
 //			float range = radius * 2;

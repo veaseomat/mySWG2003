@@ -328,8 +328,8 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 
 	auto client = callback->getClient();
 
-	if (client->getCharacterCount(zoneServer.get()->getGalaxyID()) >= 5) {
-		ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are limited to 5 characters on mySWG.", 0x0);
+	if (client->getCharacterCount(zoneServer.get()->getGalaxyID()) >= 3) {
+		ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are limited to 3 characters on mySWG.", 0x0);
 		client->sendMessage(errMsg);
 
 		return false;
@@ -576,7 +576,7 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 
 	ManagedReference<SuiMessageBox*> box = new SuiMessageBox(playerCreature, SuiWindowType::NONE);
 	box->setPromptTitle("WELCOME");
-	box->setPromptText("Welcome to mySWG! \n   Character creation is limited to 1 every hour, 5 characters Max, 2 online at a time. Using multiple accounts will get you banned. \nDon't forget to migrate your stats! Stats can also be migrated in Image Designer tents. Have fun!");
+	box->setPromptText("Welcome to mySWG! \n   Character creation is limited to 1 every hour, 3 characters Max, 2 online at a time. Using multiple accounts will get you banned. \nDon't forget to migrate your stats! Stats can also be migrated in Image Designer tents. Have fun!");
 
 	ghost->addSuiBox(box);
 	playerCreature->sendMessage(box->generateMessage());

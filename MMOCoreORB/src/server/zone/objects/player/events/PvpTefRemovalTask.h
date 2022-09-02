@@ -37,7 +37,7 @@ public:
 			auto gcwCrackdownTefMs = ghost->getLastGcwCrackdownCombatActionTimestamp().miliDifference();
 			auto gcwTefMs = ghost->getLastGcwPvpCombatActionTimestamp().miliDifference();
 			auto bhTefMs = ghost->getLastBhPvpCombatActionTimestamp().miliDifference();
-			auto rescheduleTime = gcwTefMs < bhTefMs ? gcwTefMs : bhTefMs;
+			auto rescheduleTime = gcwTefMs < bhTefMs ? gcwTefMs : bhTefMs;//adding multiplier here affected the flag but not the attackable
 			rescheduleTime = gcwCrackdownTefMs < rescheduleTime ? gcwCrackdownTefMs : rescheduleTime;
 			this->reschedule(llabs(rescheduleTime));
 		} else {

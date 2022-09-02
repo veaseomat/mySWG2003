@@ -19,7 +19,7 @@ class FactionManager : public Singleton<FactionManager>, public Logger, public O
 public:
 	FactionManager();
 
-	static const int TEFTIMER = 1000;
+	static const int TEFTIMER = 5 * 60 * 1000;//300000;//tef timers 1000 = 1 sec
 
 	/**
 	 * Loads faction configuration information from the faction manager lua file: managers/faction_manager.lua

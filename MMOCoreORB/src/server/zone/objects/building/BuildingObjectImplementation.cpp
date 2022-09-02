@@ -915,9 +915,9 @@ uint32 BuildingObjectImplementation::getMaximumNumberOfPlayerItems() {
 
 	//Buildings that don't cost lots have MAXPLAYERITEMS storage space.
 	if (lots == 0)
-		return 1000;
+		return 200;
 
-	int maxItems = (lots * 1000);
+	int maxItems = (lots * 200);
 
 	return maxItems;
 }

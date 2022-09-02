@@ -648,7 +648,7 @@ void EntertainingSessionImplementation::addEntertainerBuffDuration(CreatureObjec
 
 	buffDuration += duration;
 	
-		buffDuration = 720; //12 hr
+		buffDuration = 180; //3 hr
 
 	setEntertainerBuffDuration(creature, performanceType, buffDuration);
 }
@@ -669,8 +669,8 @@ void EntertainingSessionImplementation::addEntertainerBuffStrength(CreatureObjec
 		maxBuffStrength = (float) entertainer->getSkillMod("healing_music_mind");
 	}
 
-//	if(maxBuffStrength > 125.0f)
-//		maxBuffStrength = 125.0f;	//cap at 125% power
+	if(maxBuffStrength > 125.0f)
+		maxBuffStrength = 125.0f;	//cap at 125% power
 
 	float factionPerkStrength = entertainer->getSkillMod("private_faction_buff_mind");
 
@@ -694,12 +694,9 @@ void EntertainingSessionImplementation::addEntertainerBuffStrength(CreatureObjec
 		newBuffStrength = maxBuffStrength;
 	}
 
-//	if(newBuffStrength < 100.0f)
-//		newBuffStrength = 100.0f;
-//new buff strenght x 2
-	int newnewBuffStrength = newBuffStrength * 2;
+	//newBuffStrength = newBuffStrength;
 
-	setEntertainerBuffStrength(creature, performanceType, newnewBuffStrength);
+	setEntertainerBuffStrength(creature, performanceType, newBuffStrength);
 }
 
 void EntertainingSessionImplementation::addWatcher(CreatureObject* creature) {
@@ -1127,10 +1124,10 @@ void EntertainingSessionImplementation::awardEntertainerExperience() {
 			xpAmount = ceil(xpAmount * totalBonus);
 
 			if (playerManager != nullptr)
-				playerManager->awardExperience(player, xptype, (xpAmount * 10), true);
+				playerManager->awardExperience(player, xptype, xpAmount * 2, true);
 //heal xp for noone watching
 			String healxptype("entertainer_healing");
-			playerManager->awardExperience(player, healxptype, (xpAmount * 5), true);
+			playerManager->awardExperience(player, healxptype, xpAmount, true);
 
 			//self buff here doing it here causes a super fast mind heal every update- moved to stopdance/music
 //			if (player->getSkillMod("healing_music_mind") > 0)

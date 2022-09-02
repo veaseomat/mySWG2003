@@ -9,7 +9,7 @@
 #include "server/zone/managers/collision/CollisionManager.h"
 
 class HealMindCommand : public QueueCommand {
-//	float mindCost;
+	float mindCost;
 	float mindWoundCost;
 	float range;
 public:
@@ -17,8 +17,8 @@ public:
 	HealMindCommand(const String& name, ZoneProcessServer* server)
 		: QueueCommand(name, server) {
 		
-//		mindCost = 250;
-		mindWoundCost = 100;
+		mindCost = 250;
+		mindWoundCost = 250;
 		range = 5;
 	}
 
@@ -117,10 +117,10 @@ public:
 			return GENERALERROR;
 		}
 
-//		if (creature->getHAM(CreatureAttribute::MIND) < mindCost) {
-//			creature->sendSystemMessage("@healing_response:not_enough_mind"); //You do not have enough mind to do that.
-//			return GENERALERROR;
-//		}
+		if (creature->getHAM(CreatureAttribute::MIND) < mindCost) {
+			creature->sendSystemMessage("@healing_response:not_enough_mind"); //You do not have enough mind to do that.
+			return GENERALERROR;
+		}
 
 		if (creatureTarget->getHAM(CreatureAttribute::MIND) == 0 || !(creatureTarget->hasDamage(CreatureAttribute::MIND))) {
 			if (creatureTarget->isPlayerCreature()) {

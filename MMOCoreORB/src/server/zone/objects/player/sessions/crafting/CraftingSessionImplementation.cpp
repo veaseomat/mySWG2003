@@ -1204,16 +1204,16 @@ void CraftingSessionImplementation::createPrototype(int clientCounter, bool crea
 		closeCraftingWindow(clientCounter, true);
 
 		String xpType = manufactureSchematic->getDraftSchematic()->getXpType();
-		int xp = manufactureSchematic->getDraftSchematic()->getXpAmount() * 1.25;//crafting xp
+		int xp = manufactureSchematic->getDraftSchematic()->getXpAmount() * 2;//crafting xp
 //crafting timers
 		if (createItem) {
 
-			startCreationTasks(manufactureSchematic->getComplexity() * 0, false);
+			startCreationTasks(manufactureSchematic->getComplexity() * 1, false);
 
 		} else {
 
 			// This is for practicing
-			startCreationTasks(manufactureSchematic->getComplexity() * 0, true);
+			startCreationTasks(manufactureSchematic->getComplexity() * 1, true);
 			xp = round(xp * 1.05f);
 		}
 

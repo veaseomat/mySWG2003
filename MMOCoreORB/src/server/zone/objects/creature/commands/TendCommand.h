@@ -260,7 +260,7 @@ public:
 
 			sendHealMessage(creature, creatureTarget, healedHealth, healedAction);
 
-			awardXp(creature, "medical", round((healedHealth + healedAction) * 2.5f) * 1);
+			awardXp(creature, "medical", (healedHealth + healedAction));
 		} else if (tendWound) {
 			uint8 attribute = CreatureAttribute::UNKNOWN;
 

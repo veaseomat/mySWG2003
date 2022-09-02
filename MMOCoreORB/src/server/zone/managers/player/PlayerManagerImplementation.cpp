@@ -1766,13 +1766,13 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 		}
 
 		if (ai != nullptr)
-			baseXp = ai->getLevel() * 5;//ai->getBaseXp();
+			baseXp = ai->getLevel() * 20;//ai->getBaseXp();
 
 	} else {
 		ManagedReference<AiAgent*> ai = cast<AiAgent*>(destructedObject);
 
 		if (ai != nullptr)
-			baseXp = ai->getLevel() * 5;//ai->getBaseXp();
+			baseXp = ai->getLevel() * 20;//ai->getBaseXp();
 	}
 
 	for (int i = 0; i < threatMap->size(); ++i) {
@@ -1872,8 +1872,8 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //				if (xpType == "jedi_general" && attacker->hasSkill("force_title_jedi_rank_03"))
 //					frsXp += xpAmount;
 //				else
-//				if (xpType == "jedi_general") {
-					//xpAmount *= 0.2f;
+				if (xpType == "jedi_general") //{
+					xpAmount *= 0.2f;
 
 //					if (attacker->hasSkill("force_title_jedi_rank_03"))
 //						frsXp += xpAmount;

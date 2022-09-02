@@ -2,6 +2,8 @@
  				Copyright <SWGEmu>
 		See file COPYING for copying conditions. */
 
+#include "server/zone/objects/area/SpawnArea.h"
+
 #include "server/zone/objects/creature/CreatureObject.h"
 #include "server/zone/objects/creature/ai/AiAgent.h"
 #include "templates/params/creature/CreatureState.h"
@@ -3034,9 +3036,13 @@ bool CreatureObjectImplementation::isAggressiveTo(CreatureObject* object) {
 	if ((pvpStatusBitmask & CreatureFlag::OVERT) && (object->getPvpStatusBitmask() & CreatureFlag::OVERT) && object->getFaction() != getFaction())
 		return true;
 
-	if (ghost->hasBhTef() && (hasBountyMissionFor(object) || object->hasBountyMissionFor(asCreatureObject()))) {
-		return true;
-	}
+//	if (ghost->hasBhTef()) {
+//		return true;
+//	}
+
+//	if (object->getWeapon()->isJediWeapon()){
+//		return true;
+//	}
 
 	ManagedReference<GuildObject*> guildObject = guild.get();
 	if (guildObject != nullptr && guildObject->isInWaringGuild(object))
@@ -3056,6 +3062,11 @@ bool CreatureObjectImplementation::isAttackableBy(TangibleObject* object) {
 
 bool CreatureObjectImplementation::isAttackableBy(TangibleObject* object, bool bypassDeadCheck) {
 	PlayerObject* ghost = getPlayerObject();
+
+
+//	if (object->asCreatureObject()->getWeapon()->isJediWeapon()){//doesnt do anything for players
+//		return true;
+//	}
 
 	if(ghost == nullptr)
 		return false;
@@ -3107,10 +3118,88 @@ bool CreatureObjectImplementation::isAttackableBy(CreatureObject* object, bool b
 		return false;
 
 	if (isPlayerCreature()) {
+
+//		for (int i = 0; i < activeAreas.size(); ++i) {//tested not working
+//			ActiveArea* area = activeAreas.get(i);
+//
+//			if (!area->isNoBuildArea()) {
+//				return true;
+//			}
+//		}
+
+//		for(int i = 0; i < activeAreas.size(); ++i) {//tested not working
+//			if (!activeAreas.get(i)->isNoSpawnArea())
+//				return true;
+//		}
+
+
+//		Zone* currentZone = getZone();//also not working
+//
+//		SortedVector<ActiveArea*> activeAreas;
+//
+//		Vector3 targetPos(getPositionX(), getPositionY(), 0);
+//
+//		//targetPos.setZ(zone->getHeight(x, y)); not needed
+//
+//		currentZone->getInRangeActiveAreas(getPositionX(), getPositionY(), &activeAreas, true);
+//
+//		for (int i = 0; i < activeAreas.size(); ++i) {
+//			ActiveArea* area = activeAreas.get(i);
+//
+//			if (!area->isNoSpawnArea()) {
+//				return true;
+//			}
+//		}
+
+
+
+//		//Reference<CreatureObject*> player = asCreatureObject();//also not working
+//		Zone* currentZone = getZone();
+//		//if (currentZone != nullptr) {
+//			// Notify nearby active areas of faction change
+//			SortedVector<ManagedReference<ActiveArea* > > activeAreas;
+//			currentZone->getInRangeActiveAreas(getPositionX(), getPositionY(), &activeAreas, true);
+//
+//			for (int i = 0; i < activeAreas.size(); i++) {
+//				ActiveArea* area = activeAreas.get(i);
+//
+//				if (!area->isCityRegion()){//isCityRegion() is likely player cities//isNoBuildArea works//isMunicipalZone
+//					return true;
+//				}
+//			}
+//		//}
+
+//			Vector<ManagedWeakReference<SpawnArea*> > noSpawnAreas;
+//
+//			for (int i = 0; i < noSpawnAreas.size(); ++i) {
+//				auto noSpawnArea = noSpawnAreas.get(i).get();
+//
+//				if (noSpawnArea == nullptr && noSpawnArea->containsPoint(getPositionX(), getPositionY())) {
+//					return false;
+//
+//				}
+//			}
+
+
+//		for(int i = 0; i < activeAreas.size(); ++i) {
+//			if(activeAreas.get(i)->isNoBuildArea())//works in reverse isnobuild area attackable and outside not, using ! makes attackable everywhere
+//				return true;
+//		}
+//
+//		if (getWeapon()->isJediWeapon()){//works here
+//			return true;
+//		}
+
+
+
 		PlayerObject* ghost = getPlayerObject();
 		if (ghost != nullptr) {
 			if (ghost->isOnLoadScreen())
 				return false;
+			if (ghost->hasBhTef())
+				return true;
+			if (ghost->hasPvpTef() && object->getFactionStatus() >= FactionStatus::COVERT && ((object->isRebel() && isImperial()) || (object->isImperial() && isRebel())))
+				return true;
 			if (ConfigManager::instance()->getPvpMode())
 				return true;
 
@@ -3161,8 +3250,10 @@ bool CreatureObjectImplementation::isAttackableBy(CreatureObject* object, bool b
 	if (areInDuel)
 		return true;
 
-	if (object->hasBountyMissionFor(asCreatureObject()) || (ghost->hasBhTef() && hasBountyMissionFor(object)))
-		return true;
+//	if (ghost->hasBhTef())
+//		return true;
+
+//	CreatureObject *creo = ghost->asCreatureObject();
 
 	if (getGroupID() != 0 && getGroupID() == object->getGroupID())
 		return false;
@@ -3192,8 +3283,8 @@ bool CreatureObjectImplementation::isHealableBy(CreatureObject* object) {
 	if (ghost == nullptr)
 		return false;
 
-	if (ghost->hasBhTef())
-		return false;
+//	if (ghost->hasBhTef())
+//		return false;
 
 	//if ((pvpStatusBitmask & CreatureFlag::OVERT) && (object->getPvpStatusBitmask() & CreatureFlag::OVERT) && object->getFaction() != getFaction())
 
@@ -3219,11 +3310,11 @@ bool CreatureObjectImplementation::isHealableBy(CreatureObject* object) {
 //	if (!(targetFactionStatus == FactionStatus::ONLEAVE) && (currentFactionStatus == FactionStatus::ONLEAVE))
 //		return false;
 
-	if(targetCreo->isPlayerCreature()) {
-		PlayerObject* targetGhost = targetCreo->getPlayerObject();
-		if(targetGhost != nullptr && targetGhost->hasBhTef())
-			return false;
-	}
+//	if(targetCreo->isPlayerCreature()) {
+//		PlayerObject* targetGhost = targetCreo->getPlayerObject();
+//		if(targetGhost != nullptr && targetGhost->hasBhTef())
+//			return false;
+//	}
 
 	return true;
 }
