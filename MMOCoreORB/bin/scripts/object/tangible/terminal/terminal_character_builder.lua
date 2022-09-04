@@ -1517,6 +1517,10 @@ object_tangible_terminal_terminal_character_builder = object_tangible_terminal_s
 			"Unlearn All Skills", "unlearn_all_skills",
 			"Cleanse Character", "cleanse_character",
 			"Enhance Character", "enhance_character",
+			"Enhance Character2", "enhance_character2",
+--			"Enhance Character3", "enhance_character3",
+--			"Enhance mind 1", "enhance_character4",
+--			"Enhance mind 2", "enhance_character5",
 			"Jedi",
 			{
 				--"Unlock Jedi Initiate", "unlock_jedi_initiate",

@@ -1740,7 +1740,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1.2;
+		damage *= .9;
 
 //	damage *= .5;
 
@@ -2063,9 +2063,64 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 	for (int i = 0; i < stateEffects->size(); i++) {
 		const StateEffect& effect = stateEffects->get(i);
 		bool failed = false;
-		uint8 effectType = effect.getEffectType();
-
+		uint8 effectType = effect.getEffectType();//npcs states need to be added here by weapon type and level : (
 		float accuracyMod = effect.getStateChance() + stateAccuracyBonus;
+
+//		if (creature->isAiAgent() && !creature->isCreature() && creature->getLevel() > 20 && aifocus > aiquick) {// 1/3 on npc get this
+//			if (weapon->isPistolWeapon()){
+//
+//			}
+//			if (weapon->isCarbineWeapon()){
+//
+//			}
+//			if (weapon->isRifleWeapon()){
+//
+//			}
+//	//		if (weapon->isRangedWeapon())
+//			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon()){
+//
+//			}
+//			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon()){
+//
+//			}
+//			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon()){
+//
+//			}
+//			if (weapon->isUnarmedWeapon() && attacker->getLevel() > 100){
+//
+//			}
+//			if (weapon->isLightningRifle() && attacker->getLevel() > 60){
+//
+//			}
+//			if (weapon->isFlameThrower() && attacker->getLevel() > 60){
+//
+//			}
+//			if (weapon->isHeavyAcidRifle() && attacker->getLevel() > 60){
+//
+//			}
+////			if (weapon->isMeleeWeapon())
+//
+////			if (weapon->isHeavyWeapon())
+//
+////			if (weapon->isThrownWeapon())
+//
+////			if (weapon->isSpecialHeavyWeapon())
+//
+////			if (weapon->isMineWeapon())
+//
+//			if (weapon->isJediOneHandedWeapon()){
+//
+//			}
+//			if (weapon->isJediTwoHandedWeapon()){
+//
+//			}
+//			if (weapon->isJediPolearmWeapon()){
+//
+//			}
+////			if (weapon->isJediWeapon())
+//		}
+
+
 		if (data.isStateOnlyAttack())
 			accuracyMod += creature->getSkillMod(data.getCommand()->getAccuracySkillMod());
 
@@ -2217,7 +2272,7 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 	int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80
 	int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);//70r30
 
-	if (attacker->isAiAgent() && !attacker->isCreature() && (aifocus > aiquick)) { // 1/3 on npc get this
+	if (attacker->isAiAgent() && !attacker->isCreature() && attacker->getLevel() > 20 && aifocus > aiquick) { // 1/3 on npc get this
 		if (weapon->isPistolWeapon()){
 			poolsToDamage = HEALTH;
 			damage *= .6;
@@ -2227,8 +2282,7 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 			damage *= .6;
 		}
 		if (weapon->isRifleWeapon()){
-			poolsToDamage = MIND;
-			damage *= .6;
+
 		}
 //			if (weapon->isRangedWeapon())
 //			damage *= 1.03f;
@@ -2237,14 +2291,13 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 			damage *= .6;
 		}
 		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon()){
-			poolsToDamage = MIND;
-			damage *= .6;
+
 		}
 		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon()){
 			poolsToDamage = ACTION;
 			damage *= .6;
 		}
-		if (weapon->isUnarmedWeapon()){
+		if (weapon->isUnarmedWeapon() && attacker->getLevel() > 100){
 			poolsToDamage = MIND;
 			damage *= .6;
 		}
@@ -2268,8 +2321,7 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 //			if (weapon->isMineWeapon())
 //			damage *= 0;
 		if (weapon->isJediOneHandedWeapon()){
-			poolsToDamage = MIND;
-			damage *= .6;
+
 		}
 		if (weapon->isJediTwoHandedWeapon()){
 			poolsToDamage = HEALTH;
@@ -2281,6 +2333,65 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 		}
 //			if (weapon->isJediWeapon())
 //			damage *= 1.1f;
+
+	}
+
+	if (attacker->isAiAgent() && !attacker->isCreature() && attacker->getLevel() > 20 && aiquick > aifocus) {// 2/3 on npc get this
+		if (weapon->isPistolWeapon()){
+
+		}
+		if (weapon->isCarbineWeapon()){
+
+		}
+		if (weapon->isRifleWeapon()){
+			poolsToDamage = MIND;
+			damage *= .6;
+		}
+//			if (weapon->isRangedWeapon())
+
+		if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon() && attacker->getLevel() > 30){
+
+		}
+		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon() && attacker->getLevel() > 30){
+			poolsToDamage = MIND;
+			damage *= .6;
+		}
+		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon() && attacker->getLevel() > 30){
+
+		}
+		if (weapon->isUnarmedWeapon()){
+
+		}
+		if (weapon->isLightningRifle()){
+
+		}
+		if (weapon->isFlameThrower()){
+
+		}
+		if (weapon->isHeavyAcidRifle()){
+
+		}
+//			if (weapon->isMeleeWeapon())
+
+//			if (weapon->isHeavyWeapon())
+
+//			if (weapon->isThrownWeapon())
+
+//			if (weapon->isSpecialHeavyWeapon())
+
+//			if (weapon->isMineWeapon())
+
+		if (weapon->isJediOneHandedWeapon()){
+			poolsToDamage = MIND;
+			damage *= .6;
+		}
+		if (weapon->isJediTwoHandedWeapon()){
+
+		}
+		if (weapon->isJediPolearmWeapon()){
+
+		}
+//			if (weapon->isJediWeapon())
 
 	}
 
@@ -2338,7 +2449,7 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 			return 0;
 		}
 
-		if (weapon->isJediWeapon() && (aihealth < (aihealthmax * .6) || aiaction < (aiactionmax * .6) || aimind < (aimindmax * .6))) {
+		if (weapon->isJediWeapon() && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7) || aimind < (aimindmax * .7))) {
 
 			int jedhealammount = 500;
 

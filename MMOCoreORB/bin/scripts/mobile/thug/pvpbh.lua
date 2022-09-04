@@ -23,7 +23,7 @@ pvpbh = Creature:new {
 	milk = 0,
 	tamingChance = 0,
 	ferocity = 0,
-	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
+	pvpBitmask = ATTACKABLE,
 	creatureBitmask = KILLER + STALKER,
 	optionsBitmask = AIENABLED,
 	diet = HERBIVORE,
@@ -31,9 +31,6 @@ pvpbh = Creature:new {
 	templates = {
 		"object/mobile/dressed_bounty_hunter_zabrak_female_01.iff",
 		"object/mobile/dressed_mercenary_warlord_hum_m.iff",
-		"object/mobile/dressed_tatooine_gunrunner.iff",
-		"object/mobile/dressed_tatooine_desert_demon_bodyguard.iff",
-		"object/mobile/dressed_mugger.iff",
 		"object/mobile/dressed_hoodlum_zabrak_female_01.iff",
 		"object/mobile/dressed_robber_twk_male_01.iff",
 		"object/mobile/dressed_criminal_thug_human_female_01.iff",

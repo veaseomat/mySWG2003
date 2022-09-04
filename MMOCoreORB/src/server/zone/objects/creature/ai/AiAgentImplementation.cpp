@@ -211,7 +211,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 		ManagedReference<WeaponObject*> weao = (getZoneServer()->createObject(crc, getPersistenceLevel())).castTo<WeaponObject*>();
 
-		if (weao != nullptr) {
+		if (readyWeapon == nullptr) {
 			float mod = 1.0;//1 - 0.1*weao->getArmorPiercing();
 
 //			if (System::random(100) >= 100) {
@@ -261,7 +261,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 			readyWeapon = weao;
 		} else {
 			readyWeapon = nullptr;
-			error("could not create weapon " + weaponToUse);
+			//error("could not create weapon " + weaponToUse);
 		}
 	} else {
 		readyWeapon = nullptr;

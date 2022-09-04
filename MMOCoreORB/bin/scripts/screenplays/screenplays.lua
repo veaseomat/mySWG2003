@@ -343,6 +343,7 @@ includeFile("tasks/hero_of_tatooine/conversations/heroOfTatMotherConvoHandler.lu
 includeFile("tasks/hero_of_tatooine/conversations/heroOfTatPirateLeaderConvoHandler.lua")
 includeFile("tasks/hero_of_tatooine/conversations/heroOfTatRanchersWifeConvoHandler.lua")
 includeFile("tasks/hero_of_tatooine/heroOfTatooine.lua")
+includeFile("tasks/hero_of_tatooine/heroOfmyswg.lua")
 includeFile("tasks/hero_of_tatooine/heroOfTatooineContainerComponents.lua")
 includeFile("tasks/hero_of_tatooine/heroOfTatooineMenuComponents.lua")
 

@@ -454,37 +454,42 @@ public:
 		int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80 (10 of 30= 1/3)
 		int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);
 
-		if (attacker->isAiAgent() && !attacker->isCreature() && (aifocus > aiquick)) {//single pool hits
+		if (attacker->isAiAgent() && !attacker->isCreature() && attacker->getLevel() > 20 && aifocus > aiquick) {// 1/3 on npc get this
 			if (weapon->isPistolWeapon()){
-				return "fire_1_special_single" + intensity;
+				return "fire_1_special_single" + intensity;//single pool
 			}
 			if (weapon->isCarbineWeapon()){
-				return "test_homing" + intensity;//no animation?
+				return "fire_1_special_single" + intensity;//single pool
 			}
 			if (weapon->isRifleWeapon()){
-				return "fire_1_special_single" + intensity;
+				return "fire_area" + intensity;//regular
 			}
 	//		if (weapon->isRangedWeapon())
 			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon()){
-				return "combo_3a" + intensity;
+				return "combo_3a" + intensity;//single pool
 			}
 			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon()){
-				return "combo_2d" + intensity;
+				 if (attacker->getLevel() > 230)	return "combo_4a" + intensity;
+				 if (attacker->getLevel() > 60)	return "combo_2a" + intensity;
+				 return "combo_2c" + intensity;//regular hits
 			}
 			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon()){
-				return "combo_3b" + intensity;
+				return "combo_3b" + intensity;//single pool
 			}
-			if (weapon->isUnarmedWeapon()){
-				return "attack_high_center_light_1" + intensity;//no animation??? added generate intensity to attack need to test
+			if (weapon->isUnarmedWeapon() && attacker->getLevel() > 100){
+				return "attack_high_center_light_1" + intensity;//headhit anim now working
 			}
-			if (weapon->isLightningRifle()){
-				return "fire_lightning_rifle_single_2" + intensity;
+			if (weapon->isLightningRifle() && attacker->getLevel() > 60){
+				 if (attacker->getLevel() > 100)	return "fire_lightning_rifle_single_2" + intensity;
+				return "fire_lightning_rifle_single_1" + intensity;
 			}
-			if (weapon->isFlameThrower()){
-				return "fire_flame_thrower_cone_2" + intensity;
+			if (weapon->isFlameThrower() && attacker->getLevel() > 60){
+				 if (attacker->getLevel() > 100)	return "fire_flame_thrower_single_2" + intensity;
+				return "fire_flame_thrower_single_1" + intensity;
 			}
-			if (weapon->isHeavyAcidRifle()){
-				return "fire_acid_rifle_single_2" + intensity;
+			if (weapon->isHeavyAcidRifle() && attacker->getLevel() > 60){
+				 if (attacker->getLevel() > 100)	return "fire_acid_rifle_single_2" + intensity;
+				return "fire_acid_rifle_single_1" + intensity;
 			}
 //			if (weapon->isMeleeWeapon())
 
@@ -497,49 +502,58 @@ public:
 //			if (weapon->isMineWeapon())
 
 			if (weapon->isJediOneHandedWeapon()){
-				return "combo_5a" + intensity;
+				return "combo_jedi_4" + intensity;//flurry2
 			}
 			if (weapon->isJediTwoHandedWeapon()){
-				return "combo_4a" + intensity;
+				return "combo_4a" + intensity;//leghit
 			}
 			if (weapon->isJediPolearmWeapon()){
-				return "combo_3d" + intensity;
+				return "combo_3d" + intensity;//bodyhit
 			}
 //			if (weapon->isJediWeapon())
 		}
 
-		if (attacker->isAiAgent() && !attacker->isCreature() && (aiquick > aifocus)) {//multipool hits
+		if (attacker->isAiAgent() && !attacker->isCreature() && attacker->getLevel() > 20 && aiquick > aifocus) {// 2/3 on npc get this
 			if (weapon->isPistolWeapon()){
-				return "fire_5_special_single" + intensity;
+				return "fire_area" + intensity;//regular
 			}
 			if (weapon->isCarbineWeapon()){
-				return "fire_area" + intensity;
+				return "fire_area" + intensity;//regular
 			}
 			if (weapon->isRifleWeapon()){
-				return "fire_area" + intensity;
+				return "fire_1_special_single" + intensity;//single pool
 			}
 //			if (weapon->isRangedWeapon())
 
-			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon()){
-				return "combo_5a" + intensity;
+			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon() && attacker->getLevel() > 30){
+				 if (attacker->getLevel() > 230)	return "combo_5a" + intensity;
+				 if (attacker->getLevel() > 60)	return "combo_4a" + intensity;
+				 return "counter_high_center" + intensity;//regular hits
 			}
-			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon()){
-				return "combo_4a" + intensity;
+			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon() && attacker->getLevel() > 30){
+				return "combo_2d" + intensity;//single pool
 			}
-			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon()){
-				return "combo_5a" + intensity;
+			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon() && attacker->getLevel() > 30){
+				 if (attacker->getLevel() > 230)	return "combo_5a" + intensity;
+				 if (attacker->getLevel() > 60)	return "combo_3a" + intensity;
+				 return "combo_2b" + intensity;//regular hits
 			}
 			if (weapon->isUnarmedWeapon()){
-				return "combo_5a" + intensity;
+				 if (attacker->getLevel() > 230)	return "combo_5a" + intensity;
+				 if (attacker->getLevel() > 60)	return "combo_3a" + intensity;
+				 return "combo_2d" + intensity;
 			}
-			if (weapon->isLightningRifle()){
-				return "fire_lightning_rifle_single_2" + intensity;
+			if (weapon->isLightningRifle() && attacker->getLevel() > 60){
+				 if (attacker->getLevel() > 100)	return "fire_lightning_rifle_single_2" + intensity;
+				return "fire_lightning_rifle_single_1" + intensity;
 			}
-			if (weapon->isFlameThrower()){
-				return "fire_flame_thrower_cone_2" + intensity;
+			if (weapon->isFlameThrower() && attacker->getLevel() > 60){
+				 if (attacker->getLevel() > 100)	return "fire_flame_thrower_cone_2" + intensity;
+				return "fire_flame_thrower_cone_1" + intensity;
 			}
-			if (weapon->isHeavyAcidRifle()){
-				return "fire_acid_rifle_single_2" + intensity;
+			if (weapon->isHeavyAcidRifle() && attacker->getLevel() > 60){
+				 if (attacker->getLevel() > 100)	return "fire_acid_rifle_single_2" + intensity;
+				return "fire_acid_rifle_single_1" + intensity;
 			}
 //			if (weapon->isMeleeWeapon())
 
@@ -552,13 +566,13 @@ public:
 //			if (weapon->isMineWeapon())
 
 			if (weapon->isJediOneHandedWeapon()){
-				return "combo_jedi_4" + intensity;
+				return "combo_5a" + intensity;//headhit
 			}
 			if (weapon->isJediTwoHandedWeapon()){
-				return "combo_jedi_2" + intensity;
+				return "combo_jedi_2" + intensity;//phant
 			}
 			if (weapon->isJediPolearmWeapon()){
-				return "combo_jedi_2" + intensity;
+				return "combo_jedi_2" + intensity;//derv
 			}
 //			if (weapon->isJediWeapon())
 

@@ -490,10 +490,23 @@ void SuiManager::handleCharacterBuilderSelectItem(CreatureObject* player, SuiBox
 			} else if (templatePath == "enhance_character") {
 				bluefrog->enhanceCharacter(player);
 
+			} else if (templatePath == "enhance_character2") {
+				bluefrog->enhanceCharacterDocBuff(player);
+
+//			}
+//			else if (templatePath == "enhance_character3") {
+//				bluefrog->enhanceCharacterDocBuffTHREE(player);
+//
+//			} else if (templatePath == "enhance_character4") {
+//				bluefrog->enhanceCharacterEntBuffONE(player);
+//
+//			} else if (templatePath == "enhance_character5") {
+//				bluefrog->enhanceCharacterEntBuffTWO(player);
+
 			} else if (templatePath == "credits") {
 				{
-					TransactionLog trx(TrxCode::CHARACTERBUILDER, player, 50000, true);
-					player->addCashCredits(50000, true);
+					TransactionLog trx(TrxCode::CHARACTERBUILDER, player, 950000, true);
+					player->addCashCredits(950000, true);
 				}
 				player->sendSystemMessage("You have received 50.000 Credits");
 

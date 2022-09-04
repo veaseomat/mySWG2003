@@ -10,14 +10,14 @@ myswg_vendor_first_screen = ConvoScreen:new {
     customDialogText = "What can I help you with?",
     stopConversation = "false",
     options = { 
-        {"*FREE PLAYER LVL BUFF*", "newbuff1"},
+        {"DOC/ENT BUFFS", "newbuff1"},
         {"Weapons", "weaps1"},
         {"Armor", "armor1"},
         {"Artisan", "art1"},
         {"Architect", "arch1"},
         {"Chef", "chef1"},        
         {"Loot", "loot1"},
-        {"Doctor", "doc1"},
+        {"Medicine", "doc1"},
         
 			--	{"No thank you.", "deny_quest"},--not needed
     }
@@ -161,11 +161,14 @@ myswg_vendor_conv:addScreen(doc1);
 newbuff1 = ConvoScreen:new {
     id = "newbuff1",
     leftDialog = "",
-    customDialogText = "These are FREE Doc/Ent Buffs based on your player level with your currently equipped weapon.",
+    customDialogText = "Plenty of buffs to offer!",
     stopConversation = "false",
     options = { 
-        {"GIMMY FREE BUFFS!", "buff1"},
---        {"1500 Health/Action Buffs - 10k", "buff2"},--not working
+        {"750/3hr Health/Action Buffs - FREE", "buff1"},
+        {"1500/3hr Health/Action Buffs - 10k", "buff2"},
+        {"2000/3hr Health/Action Buffs - 25k", "buff3"},
+        {"100%/3hr Mind Buffs - FREE", "buff4"},
+        {"125%/3hr Mind Buffs - 5k", "buff5"},
 --        {"StimPack A - 500", "option50"},
 --        {"StimPack B - 1k", "option51"},
 --        {"StimPack C - 2k", "option52"},
