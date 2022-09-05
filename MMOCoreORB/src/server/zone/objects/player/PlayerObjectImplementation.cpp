@@ -1392,7 +1392,7 @@ void PlayerObjectImplementation::notifyOnline() {
 		if (playerTemplate != nullptr) {
 			auto speedTempl = playerTemplate->getSpeed();
 
-			playerCreature->setRunSpeed((speedTempl.get(0) * 1.33));//changing this worked on login
+			playerCreature->setRunSpeed(speedTempl.get(0));
 		}
 	}
 

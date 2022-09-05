@@ -1766,13 +1766,13 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 		}
 
 		if (ai != nullptr)
-			baseXp = ai->getLevel() * 10;//ai->getBaseXp();
+			baseXp = ai->getLevel() * ai->getLevel() * 4;//ai->getBaseXp();
 
 	} else {
 		ManagedReference<AiAgent*> ai = cast<AiAgent*>(destructedObject);
 
 		if (ai != nullptr)
-			baseXp = ai->getLevel() * 10;//ai->getBaseXp();
+			baseXp = ai->getLevel() * ai->getLevel() * 4;//ai->getBaseXp();
 	}
 
 	for (int i = 0; i < threatMap->size(); ++i) {
@@ -2297,19 +2297,19 @@ void PlayerManagerImplementation::handleAddItemToTradeWindow(CreatureObject* pla
 		handleAbortTradeMessage(player);
 		return;
 	}
-
-//	if (objectToTrade->isNoTrade()) {
-//		player->sendSystemMessage("@container_error_message:container26");
-//		handleAbortTradeMessage(player);
-//		return;
-//	}
+//notrade
+	if (objectToTrade->isNoTrade()) {
+		player->sendSystemMessage("@container_error_message:container26");
+		handleAbortTradeMessage(player);
+		return;
+	}
 
 	// Containers containing notrade items...
-//	if (objectToTrade->containsNoTradeObjectRecursive()) {
-//		player->sendSystemMessage("@container_error_message:container26");
-//		handleAbortTradeMessage(player);
-//		return;
-//	}
+	if (objectToTrade->containsNoTradeObjectRecursive()) {
+		player->sendSystemMessage("@container_error_message:container26");
+		handleAbortTradeMessage(player);
+		return;
+	}
 
 	if (objectToTrade->isControlDevice()) {
 		Reference<ControlDevice*> controlDevice = cast<ControlDevice*>(objectToTrade.get());
@@ -2440,9 +2440,9 @@ bool PlayerManagerImplementation::checkTradeItems(CreatureObject* player, Creatu
 
 	for (int i = 0; i < tradeContainer->getTradeSize(); ++i) {
 		ManagedReference<SceneObject*> scene = tradeContainer->getTradeItem(i);
-
-//		if (scene->isNoTrade())
-//			return false;
+//notrade
+		if (scene->isNoTrade())
+			return false;
 
 		if (scene->isTangibleObject()) {
 
@@ -2508,9 +2508,9 @@ bool PlayerManagerImplementation::checkTradeItems(CreatureObject* player, Creatu
 
 	for (int i = 0; i < receiverContainer->getTradeSize(); ++i) {
 		ManagedReference<SceneObject*> scene = receiverContainer->getTradeItem(i);
-
-//		if (scene->isNoTrade())
-//			return false;
+//notrade
+		if (scene->isNoTrade())
+			return false;
 
 		if (scene->isTangibleObject()) {
 
@@ -4654,11 +4654,6 @@ bool PlayerManagerImplementation::promptTeachableSkills(CreatureObject* teacher,
 
 bool PlayerManagerImplementation::offerTeaching(CreatureObject* teacher, CreatureObject* student, Skill* skill) {
 	ManagedReference<PlayerObject*> studentGhost = student->getPlayerObject();
-
-	if (teacher->isPlayerCreature()) {
-		teacher->sendSystemMessage("Players can not teach other players skills."); //You cannot teach yourself.
-		return false;
-	}
 
 	//Do they have an outstanding teaching offer?
 	if (studentGhost->hasSuiBoxWindowType(SuiWindowType::TEACH_OFFER)) {

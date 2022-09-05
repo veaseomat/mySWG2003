@@ -1896,7 +1896,7 @@ bool AiAgentImplementation::findNextPosition(float maxDistance, bool walk) {
 
 	WorldCoordinates nextPosition;
 
-	float newSpeed = runSpeed * 1.822;//Creature AND NPC run speed!
+	float newSpeed = runSpeed; // Is this *1.5? Is that some magic number?
 	if (walk && !(isRetreating() || isFleeing()))
 		newSpeed = walkSpeed;
 
