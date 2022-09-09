@@ -134,8 +134,8 @@ void CreatureImplementation::fillAttributeList(AttributeListMessage* alm, Creatu
 		alm->insertAttribute("ferocity", (int) getFerocity());
 	}
 
-	if (creaKnowledge >= 45)
-		alm->insertAttribute("challenge_level", getAdultLevel());
+//	if (creaKnowledge >= 45)
+//		alm->insertAttribute("challenge_level", getAdultLevel());
 
 	//int skillNum = skillCommands.size();
 	const CreatureAttackMap* attackMap = getAttackMap();
@@ -174,14 +174,14 @@ void CreatureImplementation::fillAttributeList(AttributeListMessage* alm, Creatu
 		alm->insertAttribute("pet_command_19", skillMsg.toString());
 	}
 
-	if (creaKnowledge >= 90)
-		alm->insertAttribute("basetohit", getChanceHit());
+//	if (creaKnowledge >= 90)
+//		alm->insertAttribute("basetohit", getChanceHit());
 
-	if (creaKnowledge >= 100) {
-		StringBuffer damageMsg;
-		damageMsg << getDamageMin() << "-" << getDamageMax();
-		alm->insertAttribute("cat_wpn_damage", damageMsg.toString());
-	}
+//	if (creaKnowledge >= 100) {
+//		StringBuffer damageMsg;
+//		damageMsg << getDamageMin() << "-" << getDamageMax();
+//		alm->insertAttribute("cat_wpn_damage", damageMsg.toString());
+//	}
 }
 
 void CreatureImplementation::scheduleDespawn() {

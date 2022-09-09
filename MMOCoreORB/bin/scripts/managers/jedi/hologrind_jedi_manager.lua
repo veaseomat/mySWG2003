@@ -58,20 +58,30 @@ end
 -- Hologrind professions will be generated for the player.
 -- @param pCreatureObject pointer to the creature object of the created player.
 function HologrindJediManager:onPlayerCreated(pCreatureObject)
-	local skillList = self:getGrindableProfessionList()
+		local unlockluck = getRandomNumber(1, 10)
+		
+		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck)
 
-	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
+--		local canunlock = getRandomNumber(1, 9)
+--		
+--		if canunlock >= 7 then
+--		writeScreenPlayData(pCreatureObject, "forcesensitivecharacter", "canunlock", 1)
+--		end
 
-	if (pGhost == nil) then
-		return
-	end
-
-	for i = 1, NUMBEROFPROFESSIONSTOMASTER, 1 do
-		local numberOfSkillsInList = #skillList
-		local skillNumber = getRandomNumber(1, numberOfSkillsInList)
-		PlayerObject(pGhost):addHologrindProfession(skillList[skillNumber][2])
-		table.remove(skillList, skillNumber)
-	end
+--	local skillList = self:getGrindableProfessionList()
+--
+--	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
+--
+--	if (pGhost == nil) then
+--		return
+--	end
+--
+--	for i = 1, NUMBEROFPROFESSIONSTOMASTER, 1 do
+--		local numberOfSkillsInList = #skillList
+--		local skillNumber = getRandomNumber(1, numberOfSkillsInList)
+--		PlayerObject(pGhost):addHologrindProfession(skillList[skillNumber][2])
+--		table.remove(skillList, skillNumber)
+--	end
 end
 
 -- Check and count the number of mastered hologrind professions.

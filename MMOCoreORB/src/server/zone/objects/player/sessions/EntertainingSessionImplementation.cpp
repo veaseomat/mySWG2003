@@ -388,8 +388,8 @@ void EntertainingSessionImplementation::stopPlayingMusic() {
 
 		entertainer->dropActiveSession(SessionFacadeType::ENTERTAINING);
 	}
-	if (entertainer->getSkillMod("healing_music_mind") > 0)
-	playerManager->enhanceSelfMusic(entertainer);
+//	if (entertainer->getSkillMod("healing_music_mind") > 0)
+//	playerManager->enhanceSelfMusic(entertainer);
 }
 
 void EntertainingSessionImplementation::startDancing(const String& dance, const String& animation) {
@@ -528,8 +528,9 @@ void EntertainingSessionImplementation::stopDancing() {
 
 //	playerManager->doEnhanceCharacter(0x11C1772E, entertainer, performanceBuff, performanceDuration, BuffType::PERFORMANCE, 6);
 //	playerManager->enhanceCharacter(entertainer);
-	if (entertainer->getSkillMod("healing_dance_mind") > 0)
-	playerManager->enhanceSelfDance(entertainer);
+
+//	if (entertainer->getSkillMod("healing_dance_mind") > 0)
+//	playerManager->enhanceSelfDance(entertainer);
 }
 
 bool EntertainingSessionImplementation::canHealBattleFatigue() {
@@ -944,8 +945,8 @@ void EntertainingSessionImplementation::activateEntertainerBuff(CreatureObject* 
 			oldBuff = cast<PerformanceBuff*>(creature->getBuff(focusBuffCRC));
 			if (oldBuff != nullptr && oldBuff->getBuffStrength() > buffStrength)
 				return;
-			ManagedReference<PerformanceBuff*> focusBuff = new PerformanceBuff(creature, focusBuffCRC, buffStrength, buffDuration, PerformanceBuffType::MUSIC_FOCUS);
-			ManagedReference<PerformanceBuff*> willBuff = new PerformanceBuff(creature, willBuffCRC, buffStrength, buffDuration, PerformanceBuffType::MUSIC_WILLPOWER);
+			ManagedReference<PerformanceBuff*> focusBuff = new PerformanceBuff(creature, focusBuffCRC, buffStrength * .5, buffDuration, PerformanceBuffType::MUSIC_FOCUS);
+			ManagedReference<PerformanceBuff*> willBuff = new PerformanceBuff(creature, willBuffCRC, buffStrength * .5, buffDuration, PerformanceBuffType::MUSIC_WILLPOWER);
 
 			Locker locker(focusBuff);
 			creature->addBuff(focusBuff);
@@ -961,7 +962,7 @@ void EntertainingSessionImplementation::activateEntertainerBuff(CreatureObject* 
 			oldBuff = cast<PerformanceBuff*>(creature->getBuff(mindBuffCRC));
 			if (oldBuff != nullptr && oldBuff->getBuffStrength() > buffStrength)
 				return;
-			ManagedReference<PerformanceBuff*> mindBuff = new PerformanceBuff(creature, mindBuffCRC, buffStrength, buffDuration, PerformanceBuffType::DANCE_MIND);
+			ManagedReference<PerformanceBuff*> mindBuff = new PerformanceBuff(creature, mindBuffCRC, buffStrength * .5, buffDuration, PerformanceBuffType::DANCE_MIND);
 
 			Locker locker(mindBuff);
 			creature->addBuff(mindBuff);

@@ -1742,7 +1742,7 @@ void CreatureObjectImplementation::setRunSpeed(float newSpeed,
 	if (runSpeed == newSpeed)
 		return;
 
-	runSpeed = newSpeed * 1.5;//PLAYER RUN SPEED
+	runSpeed = newSpeed;// * 2.0;//does nothing for player? is this npc speed?
 
 	if (notifyClient) {
 		CreatureObjectDeltaMessage4* dcreo4 = new CreatureObjectDeltaMessage4(
@@ -2445,19 +2445,19 @@ void CreatureObjectImplementation::setStunnedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_stunned", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_stunned", 0xFF, 0, 0);
-		state->setSkillModifier("private_melee_defense", -50);
-		state->setSkillModifier("private_ranged_defense", -50);
+//		state->setSkillModifier("private_melee_defense", -50);
+//		state->setSkillModifier("private_ranged_defense", -50);
 
 		addBuff(state);
 
-		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_stun_multiplier"), durationSeconds, BuffType::STATE);
-
-		Locker blocker(multBuff);
-
-		multBuff->setSkillModifier("private_damage_divisor", 5);
-		multBuff->setSkillModifier("private_damage_multiplier", 4);
-
-		addBuff(multBuff);
+//		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_stun_multiplier"), durationSeconds, BuffType::STATE);
+//
+//		Locker blocker(multBuff);
+//
+//		multBuff->setSkillModifier("private_damage_divisor", 5);
+//		multBuff->setSkillModifier("private_damage_multiplier", 4);
+//
+//		addBuff(multBuff);
 	}
 }
 
@@ -2475,8 +2475,8 @@ void CreatureObjectImplementation::setBlindedState(int durationSeconds) {
 		state->setStartFlyText("combat_effects", "go_blind", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_blind", 0xFF, 0, 0);
 
-		state->setSkillModifier("private_attack_accuracy", -60);
-		state->setSkillModifier("private_dodge_attack", -60);
+//		state->setSkillModifier("private_attack_accuracy", -60);
+//		state->setSkillModifier("private_dodge_attack", -60);
 
 		addBuff(state);
 	}
@@ -2501,18 +2501,18 @@ void CreatureObjectImplementation::setIntimidatedState(int durationSeconds) {
 		state->setStartFlyText("combat_effects", "go_intimidated", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_intimidated", 0xFF, 0, 0);
 
-		state->setSkillModifier("private_melee_defense", -20);
-		state->setSkillModifier("private_ranged_defense", -20);
+//		state->setSkillModifier("private_melee_defense", -20);
+//		state->setSkillModifier("private_ranged_defense", -20);
 
 		addBuff(state);
 
-		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_intimidate_multiplier"), durationSeconds, BuffType::STATE);
-
-		Locker blocker(multBuff);
-
-		multBuff->setSkillModifier("private_damage_divisor", 2);
-
-		addBuff(multBuff);
+//		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_intimidate_multiplier"), durationSeconds, BuffType::STATE);
+//
+//		Locker blocker(multBuff);
+//
+//		multBuff->setSkillModifier("private_damage_divisor", 2);
+//
+//		addBuff(multBuff);
 	}
 }
 
@@ -2785,7 +2785,10 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 	float modifier = (float)latency/1000.f;
 
 	if (isInCombat())
-			modifier *= .4;
+			modifier *= .2;
+
+	if (!isInCombat())
+			modifier *= 2;
 
 	if (isKneeling())
 		modifier *= 1.25f;

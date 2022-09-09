@@ -1867,17 +1867,20 @@ function ThemeParkLogic:handleMissionReward(pConversingPlayer)
 		end
 	end
 	
-	local morecredits = getRandomNumber(1, 5000)
+	local morecredits = getRandomNumber(100, 5000)
 	self:giveCredits(pConversingPlayer, morecredits)
 	
 	self:giveLoot(pConversingPlayer, "junk")
-	if getRandomNumber(1, 1000) >= 1000 then
+	
+		local unlockluck = readScreenPlayData(pConversingPlayer, "forcesensitivity", "unlock")
+		
+	if getRandomNumber(1, 999) + unlockluck >= 1000 then
 --			self:giveItemReward(pConversingPlayer, "object/tangible/jedi/no_drop_jedi_holocron_light.iff")
 --			CreatureObject(pConversingPlayer):sendSystemMessage("The questgiver hands you a mysterious item...")
 	local pGhost = CreatureObject(pConversingPlayer):getPlayerObject()
 	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pConversingPlayer)
 		
-		if not CreatureObject(pConversingPlayer):hasSkill("force_title_jedi_rank_01") and learnedBranches >= 3 then
+		if not CreatureObject(pConversingPlayer):hasSkill("force_title_jedi_rank_01") then-- and learnedBranches >= 3 then
 			PlayerObject(pGhost):setJediState(2)
 					
 			awardSkill(pConversingPlayer, "force_title_jedi_rank_01")

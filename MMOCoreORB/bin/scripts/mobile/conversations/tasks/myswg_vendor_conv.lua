@@ -27,20 +27,21 @@ myswg_vendor_conv:addScreen(myswg_vendor_first_screen);
 weaps1 = ConvoScreen:new {    
     id = "weaps1",
     leftDialog = "",
-    customDialogText = "I sell weapons! looking to buy?",
+    customDialogText = "These weapons have vanilla blue frog stats and the game has been balanced FOR them!",
     stopConversation = "false",
     options = { 
-        {"E11 Carbine - 100k", "option1"},
-        {"E11 Rifle - 100k", "option2"},
+        {"DXR6 Carbine - 100k", "option1"},
+        {"T21 Rifle - 100k", "option2"},
         {"FWG5 Pistol - 100k", "option3"},
-        {"1h Stun Baton - 100k", "option4"},
-        {"2h Cleaver- 100k", "option5"},
-        {"Polearm Vibrolance - 100k", "option6"},
+        {"1h Gaderiffi Baton - 100k", "option4"},
+        {"2h Power Hammer - 100k", "option5"},
+        {"Polearm Vibro Axe - 100k", "option6"},
         {"Vibro Knuckler - 100k", "option7"},
         {"Light Lightning Cannon - 100k", "option8"},
         {"Flame Thrower - 100k", "option9"},
         {"Heavy Acid Rifle - 100k", "option10"},
-        {"Proton Grenade - 100k", "option11"},
+        {"Proton Grenades - 100k", "option11"},
+        {"Heavy Rocket Launcher - 100k", "option55"},
         {"Main menu.", "first_screen"},
     }
 }
@@ -49,7 +50,7 @@ myswg_vendor_conv:addScreen(weaps1);
 armor1 = ConvoScreen:new {    
     id = "armor1",
     leftDialog = "",
-    customDialogText = "I sell armor! looking to buy?",
+    customDialogText = "Blue frog stat armor 65% eff, 25% stun! The game has been balanced for this armor.",
     stopConversation = "false",
     options = { 
         {"Composite Leggings - 100k", "option12"},
@@ -80,11 +81,11 @@ art1 = ConvoScreen:new {
         {"Generic Crafting Tool - 1k", "option26"},
         {"Backpack - 5k", "option27"},
         {"Speederbike - 10k", "option28"},
-        {"Personal Mineral Harvester Deed - 25k", "option29"},
-        {"Personal Flora Harvester Deed - 25k", "option30"},
-        {"Personal Gas Harvester Deed - 25k", "option31"},
-        {"Personal Chemical Harvester Deed - 25k", "option32"},
-        {"Personal Moisture Harvester Deed - 25k", "option33"},
+        {"Medium Mineral Harvester Deed - 50k", "option29"},
+        {"Medium Flora Harvester Deed - 50k", "option30"},
+        {"Medium Gas Harvester Deed - 50k", "option31"},
+        {"Medium Chemical Harvester Deed - 50k", "option32"},
+        {"Medium Moisture Harvester Deed - 50k", "option33"},
         {"Main menu.", "first_screen"},
     }
 }
@@ -113,12 +114,12 @@ chef1 = ConvoScreen:new {
     customDialogText = "I sell food! See anything you like?",
     stopConversation = "false",
     options = { 
-        {"Air Cake - 10k", "option40"},
-        {"Crispic - 10k", "option41"},
-        {"Vasarian Brandy - 10k", "option42"},
-        {"Garrmorl - 10k", "option43"},
-        {"Accarragm - 10k", "option44"},
-        {"Blue Milk - 10k", "option45"},
+        {"Air Cake Dodge Food - 10k", "option40"},
+        {"Crispic Accuracy Food - 10k", "option41"},
+        {"Garrmorl Health Buff Drink - 10k", "option43"},
+        {"Accarragm Action Buff Drink - 10k", "option44"},
+        {"Vasarian Brandy Mind Buff Drink - 10k", "option42"},
+        {"Blue Milk Mind Heal Drink - 10k", "option45"},
        	{"Main menu.", "first_screen"},
     }
 }
@@ -127,7 +128,7 @@ myswg_vendor_conv:addScreen(chef1);
 loot1 = ConvoScreen:new {
     id = "loot1",
     leftDialog = "",
-    customDialogText = "Would you like to buy some loot?",
+    customDialogText = "Would you like to buy some loot drops?",
     stopConversation = "false",
     options = { 
         --{"crate of resources - 100k", "option46"},
@@ -143,7 +144,7 @@ myswg_vendor_conv:addScreen(loot1);
 doc1 = ConvoScreen:new {
     id = "doc1",
     leftDialog = "",
-    customDialogText = "selling medical supplies, want to buy?",
+    customDialogText = "medical supplies, need anything?",
     stopConversation = "false",
     options = { 
         --{"Doc/Ent Buffs - 10k", "buff1"},
@@ -161,12 +162,12 @@ myswg_vendor_conv:addScreen(doc1);
 newbuff1 = ConvoScreen:new {
     id = "newbuff1",
     leftDialog = "",
-    customDialogText = "Plenty of buffs to offer!",
+    customDialogText = "DOC/ENT Buffs on mySWG are HALF vanilla power. The game has been balanced for the FREE buffs.",
     stopConversation = "false",
     options = { 
-        {"750/3hr Health/Action Buffs - FREE", "buff1"},
-        {"1500/3hr Health/Action Buffs - 10k", "buff2"},
-        {"2000/3hr Health/Action Buffs - 25k", "buff3"},
+        {"500/3hr Health/Action Buffs - FREE", "buff1"},
+        {"750/3hr Health/Action Buffs - 10k", "buff2"},
+        {"1000/3hr Health/Action Buffs - 20k", "buff3"},
         {"100%/3hr Mind Buffs - FREE", "buff4"},
         {"125%/3hr Mind Buffs - 5k", "buff5"},
 --        {"StimPack A - 500", "option50"},

@@ -477,7 +477,7 @@ public:
 				return "combo_3b" + intensity;//single pool
 			}
 			if (weapon->isUnarmedWeapon() && attacker->getLevel() > 100){
-				return "attack_high_center_light_1" + intensity;//headhit anim now working
+				return "attack_high_center_light_1"; //+ intensity;//headhit anim
 			}
 			if (weapon->isLightningRifle() && attacker->getLevel() > 60){
 				 if (attacker->getLevel() > 100)	return "fire_lightning_rifle_single_2" + intensity;

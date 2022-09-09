@@ -107,7 +107,7 @@ end
 
 function TatooineVillageRuinsScreenPlay:spawnKrayt()
 
-	spawnMobile("tatooine", "krayt_dragon_adolescent", 1800, 5694.2, 34.3, 1847.1, 0, 0)
+--	spawnMobile("tatooine", "krayt_dragon_adolescent", 1800, 5694.2, 34.3, 1847.1, 0, 0)
 
 	spawnMobile("tatooine", "tusken_bantha", 300, 5490.0, 25.8, 2145.7, -90, 0)
 	spawnMobile("tatooine", "tusken_bantha", 300, 5490.0, 25.7, 2154.5, -90, 0)

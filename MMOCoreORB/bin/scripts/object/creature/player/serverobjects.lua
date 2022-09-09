@@ -50,7 +50,7 @@ includeFile("creature/player/bothan_female.lua")
 includeFile("creature/player/bothan_male.lua")
 includeFile("creature/player/human_female.lua")
 includeFile("creature/player/human_male.lua")
-includeFile("creature/player/ithorian_female.lua")
+includeFile("creature/player/ithorian_female.lua")--disable ithor and sullus here lol
 includeFile("creature/player/ithorian_male.lua")
 includeFile("creature/player/moncal_female.lua")
 includeFile("creature/player/moncal_male.lua")

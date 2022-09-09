@@ -85,7 +85,7 @@ Saber2hPhantomCommand = {
 	  )
 	},
 
-	animation = "combo_jedi_2", 
+	animation = "showoff_1", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber2hphantom",

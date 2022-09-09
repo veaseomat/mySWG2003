@@ -1392,7 +1392,7 @@ void PlayerObjectImplementation::notifyOnline() {
 		if (playerTemplate != nullptr) {
 			auto speedTempl = playerTemplate->getSpeed();
 
-			playerCreature->setRunSpeed(speedTempl.get(0));
+			playerCreature->setRunSpeed(speedTempl.get(0) * 1.3);//THIS IS PLAYER RUN SPEED
 		}
 	}
 

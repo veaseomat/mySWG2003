@@ -544,7 +544,7 @@ bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force,
 
 	Time currentTime;
 	uint32 timeDelta = currentTime.getTime() - lastGrowth.getTime();
-	int stagesToGrow = timeDelta / 43200 / 2; // 12 hour// 6hr
+	int stagesToGrow = timeDelta / 60;//sec
 
 	if (adult)
 		stagesToGrow = 10;
@@ -556,7 +556,11 @@ bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force,
 	if (newStage > 10)
 		newStage = 10;
 
-	float newLevel = ((float)pet->getAdultLevel() / 10.0) * (float)newStage;
+	int newlvl = creatureTemplate->getLevel();
+	if (newlvl > 150) newlvl = 150;
+	newlvl *= 2;
+
+	float newLevel = (newlvl / 10.0) * (float)newStage;
 	if (newLevel < 1)
 		newLevel = 1;
 
@@ -890,10 +894,10 @@ void PetControlDeviceImplementation::fillAttributeList(AttributeListMessage* alm
 			else
 				alm->insertAttribute("dna_comp_armor_stun", pet->getStun());
 
-			if (pet->getLightSaber() < 0)
-				alm->insertAttribute("dna_comp_armor_saber", "Vulnerable");
-			else
-				alm->insertAttribute("dna_comp_armor_saber", pet->getLightSaber());
+//			if (pet->getLightSaber() < 0)
+//				alm->insertAttribute("dna_comp_armor_saber", "Vulnerable");
+//			else
+//				alm->insertAttribute("dna_comp_armor_saber", pet->getLightSaber());
 
 			ManagedReference<WeaponObject*> weapon = pet->getWeapon();
 			if (weapon != nullptr){
@@ -1161,7 +1165,9 @@ void PetControlDeviceImplementation::setTrainingCommand(unsigned int commandID) 
 }
 
 void PetControlDeviceImplementation::trainAsMount(CreatureObject* player) {
+//	player->sendSystemMessage("All Vehicles and Mounts are Disabled on mySWG.");
 //	return;
+
 	if (isTrainedAsMount() || !player->hasSkill("outdoors_creaturehandler_support_04"))
 		return;
 

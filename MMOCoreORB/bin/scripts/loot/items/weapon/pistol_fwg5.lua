@@ -16,7 +16,7 @@ pistol_fwg5 = {
 		{"attackmindcost",25,14,0},
 		{"roundsused",15,60,0},
 		{"zerorangemod",18,33,0},
-		{"maxrangemod",-90,-90,0},
+		{"maxrangemod",-70,-70,0},
 		{"midrange",16,16,0},
 		{"midrangemod",14,30,0},
 	},

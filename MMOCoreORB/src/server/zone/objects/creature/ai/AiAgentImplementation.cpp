@@ -165,7 +165,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	if (System::random(100) >= 100) {// and elite <= 1.0) {
 		legendarynpc = true;
-		newlvl *= 1.5 + (System::random(50) * .01);//1.516 X lvl 330 = lvl 500
+		newlvl *= 1.5 + (System::random(100) * .01);//1.516 X lvl 330 = lvl 500
 	}
 
 	//newlvl *= templateData->getElite();
@@ -174,10 +174,10 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float weapran = .6 + (System::random(60) * .01);//weapon dmg randomizer
+	float weapran = .8 + (System::random(30) * .01);//weapon dmg randomizer
 
-	float minDmg = (level * 5) * weapran;
-	float maxDmg = (level * 10) * weapran;
+	float minDmg = sqrt(level) * 10 * weapran;//(level / 2) * weapran;
+	float maxDmg = sqrt(level) * 10 * 2 * weapran;//level * weapran;
 	float speed = (3.5 - (level * .01));// * randomtwo;//calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
@@ -285,21 +285,21 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	int ham = 0;
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
-		int health = ((level * 90) + System::random(level * 10)) *.09;// * .67 + (100 + r200)
-		int str = ((level * 70) + System::random(level * 30)) *.09;//npc defenses based on this one
-		int con = ((level * 70) + System::random(level * 30)) *.09;
+		int health = 25 + System::random(25) + (((level * 90) + System::random(level * 10)) / 22);// * .67 + (100 + r200)
+		int str = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);//npc defenses based on this one
+		int con = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);
 		baseHAM.add(health);
 		baseHAM.add(str);
 		baseHAM.add(con);
-		int action = ((level * 80) + System::random(level * 20)) *.09;
-		int quick = ((level * 70) + System::random(level * 30)) *.09;//npc accuracy based on this one
-		int stam = ((level * 70) + System::random(level * 30)) *.09;
+		int action = 25 + System::random(25) + (((level * 80) + System::random(level * 20)) / 22);
+		int quick = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);//npc accuracy based on this one
+		int stam = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);
 		baseHAM.add(action);
 		baseHAM.add(quick);
 		baseHAM.add(stam);
-		int mind = ((level * 60) + System::random(level * 40)) *.09;
-		int focus = ((level * 80)) *.09;//this one is static for determining if npc will hit single pool
-		int will = ((level * 70) + System::random(level * 30)) *.09;
+		int mind = 25 + System::random(25) + (((level * 60) + System::random(level * 40)) / 22);
+		int focus = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);//this one is static for determining if npc will hit single pool
+		int will = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);
 		baseHAM.add(mind);
 		baseHAM.add(focus);
 		baseHAM.add(will);
@@ -2721,15 +2721,24 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 
 	alm->insertAttribute("challenge_level", level);
 
+//	if (isCreature){
 	if (getArmor() == 0)
 		alm->insertAttribute("armorrating", "None");
-	else if (getArmor() >= 1)
+	else if (getArmor() == 1)
 		alm->insertAttribute("armorrating", "Light");
-//	else if (getArmor() == 2)
-//		alm->insertAttribute("armorrating", "Medium");
-//	else if (getArmor() == 3)
-//		alm->insertAttribute("armorrating", "Heavy");
-
+	else if (getArmor() == 2)
+		alm->insertAttribute("armorrating", "Medium");
+	else if (getArmor() == 3)
+		alm->insertAttribute("armorrating", "Heavy");
+//	}
+//
+//	if (!isCreature){
+//	if (getArmor() == 0)
+//		alm->insertAttribute("armorrating", "None");
+//	else if (getArmor() >= 1)
+//		alm->insertAttribute("armorrating", "Light");
+//	}
+//
 	int npcKinetic = getKinetic();
 	int npcEnergy = getEnergy();
 	int npcElectricity = getElectricity();

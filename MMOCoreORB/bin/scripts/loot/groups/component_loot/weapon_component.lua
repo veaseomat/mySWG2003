@@ -17,7 +17,8 @@ weapon_component = {
 		{itemTemplate = "sword_core", weight = 454545},
 		{itemTemplate = "vibro_unit", weight = 454545},
 		
-		{groupTemplate = "weapon_component_advanced", weight = 5000000},
+		{groupTemplate = "weapon_component_advanced", weight = 4950000},
+		{itemTemplate = "saber_rcp", weight = 50000},
 	},
 }
 

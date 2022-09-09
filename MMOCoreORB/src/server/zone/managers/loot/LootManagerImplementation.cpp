@@ -251,9 +251,9 @@ int LootManagerImplementation::calculateLootCredits(int level) {
 	int maxcredits = (int) round((.03f * level * level) + (3 * level) + 50);
 	int mincredits = (int) round((((float) maxcredits) * .5f) + (2.0f * level));
 
-//	int credits = mincredits + System::random(maxcredits - mincredits);
+	int credits = mincredits + System::random(maxcredits - mincredits) * 2;
 
-	int credits = level + System::random(level * 30);
+//	int credits = level + System::random(level * 10);
 
 	return credits;
 }
@@ -657,7 +657,7 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = entry->getLootChance() * 1.75; //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
+		int lootChance = entry->getLootChance() * 2; //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
 //		int holochance = 1000;
