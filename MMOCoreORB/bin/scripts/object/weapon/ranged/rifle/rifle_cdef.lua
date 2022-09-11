@@ -117,7 +117,7 @@ object_weapon_ranged_rifle_rifle_cdef = object_weapon_ranged_rifle_shared_rifle_
 	minDamage = 25,
 	maxDamage = 50,
 
-	attackSpeed = 3.5,
+	attackSpeed = 4.5,
 
 	woundsRatio = 4,
 

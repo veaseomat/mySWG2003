@@ -3,14 +3,20 @@ weapons_all = {
 	minimumLevel = 0,
 	maximumLevel = -1,
 	lootItems = {
-		{groupTemplate = "melee_weapons", weight = 5200000},
-		
-		{groupTemplate = "pistols", weight = 1300000},
-		{groupTemplate = "rifles", weight = 1300000},	
-		{groupTemplate = "carbines", weight = 1300000},	
 
-		{groupTemplate = "heavy_weapons_rifle", weight = 900000},
-	
+		
+		{groupTemplate = "melee_unarmed", weight = 1250000},		
+		{groupTemplate = "melee_knife", weight = 1250000},
+		{groupTemplate = "melee_two_handed", weight = 1250000},	
+		{groupTemplate = "melee_polearm", weight = 1250000},
+		
+		{groupTemplate = "pistols", weight = 1250000},
+		{groupTemplate = "rifles", weight = 1250000},	
+		{groupTemplate = "carbines", weight = 1250000},	
+		
+		{groupTemplate = "heavy_weapons_rifle", weight = 750000},
+		{groupTemplate = "heavy_weapons_consumable", weight = 250000},
+		{groupTemplate = "grenades_looted", weight = 250000},	
 	
 --		-- Common (1/2)
 --		{itemTemplate = "carbine_cdef", weight = 227272},

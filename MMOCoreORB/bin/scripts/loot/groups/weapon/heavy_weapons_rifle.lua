@@ -3,9 +3,9 @@ heavy_weapons_rifle = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "rifle_acid_beam", weight = 3300000},
-		{itemTemplate = "rifle_flame_thrower", weight = 3400000},
-		{itemTemplate = "rifle_lightning", weight = 3300000}
+		{itemTemplate = "rifle_acid_beam", weight = 2500000},
+		{itemTemplate = "rifle_flame_thrower", weight = 2500000},
+		{itemTemplate = "rifle_lightning", weight = 5000000}
 	}
 }
 

@@ -1208,12 +1208,12 @@ void CraftingSessionImplementation::createPrototype(int clientCounter, bool crea
 //crafting timers
 		if (createItem) {
 
-			startCreationTasks(manufactureSchematic->getComplexity() * 1, false);
+			startCreationTasks(manufactureSchematic->getComplexity() / 2, false);
 
 		} else {
 
 			// This is for practicing
-			startCreationTasks(manufactureSchematic->getComplexity() * 1, true);
+			startCreationTasks(manufactureSchematic->getComplexity() / 2, true);
 			xp = round(xp * 1.05f);
 		}
 

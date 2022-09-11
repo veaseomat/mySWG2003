@@ -132,6 +132,15 @@ loot1 = ConvoScreen:new {
     stopConversation = "false",
     options = { 
         --{"crate of resources - 100k", "option46"},
+        {"Random lvl 100 Pistol Loot - 20k", "option55"},
+        {"Random lvl 100 Carbine Loot - 20k", "option56"},
+        {"Random lvl 100 Rifle Loot - 20k", "option57"},
+        {"Random lvl 100 1h sword Loot - 20k", "option58"},
+        {"Random lvl 100 2h sword Loot - 20k", "option59"},
+        {"Random lvl 100 Polearm Loot - 20k", "option60"},
+				{"Random lvl 100 Unarmed Loot - 20k", "option61"},        
+				{"Random lvl 100 Hvy Weapons (flame/acid/LLC) - 20k", "option62"},  
+				              
         {"Random lvl 300 Clothing Loot - 100k", "option47"},
         {"Random lvl 300 Armor Loot - 100k", "option48"},
         {"Random lvl 300 Weapon Loot - 100k", "option49"},
@@ -614,7 +623,27 @@ myswg_vendor_accept_quest = ConvoScreen:new {
     stopConversation = "true",
     options = { }
 }
-
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option61",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option62",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option63",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
 
 myswg_vendor_conv:addScreen(myswg_vendor_accept_quest);
 myswg_vendor_deny_quest = ConvoScreen:new {

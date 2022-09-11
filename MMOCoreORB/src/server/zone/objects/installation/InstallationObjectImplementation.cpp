@@ -368,7 +368,7 @@ void InstallationObjectImplementation::updateHopper(Time& workingTime, bool shut
 
 	int elapsedTime = (harvestUntil - lastHopperUpdate);
 
-	float harvestAmount = (elapsedTime / 60.0) * (spawnDensity * getExtractionRate());//increase harvest ammount? had it at * 3
+	float harvestAmount = (elapsedTime / 60.0) * (spawnDensity * getExtractionRate()) * 10;//increase harvest ammount? had it at * 3
 
 	int availableCapacity = (int)(getHopperSizeMax() - getHopperSize());
 	harvestAmount = harvestAmount > availableCapacity ? availableCapacity : harvestAmount;
@@ -639,7 +639,7 @@ float InstallationObjectImplementation::getActualRate() {
 	if (resourceHopper.size() == 0)
 		return 0;
 
-	return extractionRate * spawnDensity * 2;
+	return extractionRate * spawnDensity;//adding a multiplier here might have broke harvs?
 }
 
 void InstallationObjectImplementation::setExtractionRate(float rate){

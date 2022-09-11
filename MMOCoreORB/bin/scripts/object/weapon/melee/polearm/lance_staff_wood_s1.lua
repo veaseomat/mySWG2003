@@ -114,10 +114,10 @@ object_weapon_melee_polearm_lance_staff_wood_s1 = object_weapon_melee_polearm_sh
 	maxRange = 5,
 	maxRangeAccuracy = 20,
 
-	minDamage = 35,
-	maxDamage = 80,
+	minDamage = 25,
+	maxDamage = 56,
 
-	attackSpeed = 4.75,
+	attackSpeed = 5.5,
 
 	woundsRatio = 5,
 
