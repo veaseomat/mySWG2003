@@ -27,7 +27,7 @@ myswg_vendor_conv:addScreen(myswg_vendor_first_screen);
 weaps1 = ConvoScreen:new {    
     id = "weaps1",
     leftDialog = "",
-    customDialogText = "These weapons have vanilla blue frog stats and the game has been balanced FOR them!",
+    customDialogText = "The game has been balanced for these exact weapons. they are 100k because they are amazing. if you need a solid grinder weapon check the loot section.",
     stopConversation = "false",
     options = { 
         {"DXR6 Carbine - 100k", "option1"},
@@ -50,7 +50,7 @@ myswg_vendor_conv:addScreen(weaps1);
 armor1 = ConvoScreen:new {    
     id = "armor1",
     leftDialog = "",
-    customDialogText = "Blue frog stat armor 65% eff, 25% stun! The game has been balanced for this armor.",
+    customDialogText = "typical blue frog armor 80%sp/65%eff/25%stun. The game has been balanced for this armor.",
     stopConversation = "false",
     options = { 
         {"Composite Leggings - 100k", "option12"},
@@ -73,7 +73,7 @@ myswg_vendor_conv:addScreen(armor1);
 art1 = ConvoScreen:new {
     id = "art1",
     leftDialog = "",
-    customDialogText = "I sell artisan stuff! Need anything?",
+    customDialogText = "***HARVESTERS CURRENTLY NOT WORKING*** I sell artisan stuff! Need anything?",
     stopConversation = "false",
     options = {
         {"Mineral survey tool - 500", "option24"},
@@ -81,11 +81,11 @@ art1 = ConvoScreen:new {
         {"Generic Crafting Tool - 1k", "option26"},
         {"Backpack - 5k", "option27"},
         {"Speederbike - 10k", "option28"},
-        {"Medium Mineral Harvester Deed - 50k", "option29"},
-        {"Medium Flora Harvester Deed - 50k", "option30"},
-        {"Medium Gas Harvester Deed - 50k", "option31"},
-        {"Medium Chemical Harvester Deed - 50k", "option32"},
-        {"Medium Moisture Harvester Deed - 50k", "option33"},
+--        {"Medium Mineral Harvester Deed - 50k", "option29"},
+--        {"Medium Flora Harvester Deed - 50k", "option30"},
+--        {"Medium Gas Harvester Deed - 50k", "option31"},
+--        {"Medium Chemical Harvester Deed - 50k", "option32"},
+--        {"Medium Moisture Harvester Deed - 50k", "option33"},
         {"Main menu.", "first_screen"},
     }
 }
@@ -132,14 +132,14 @@ loot1 = ConvoScreen:new {
     stopConversation = "false",
     options = { 
         --{"crate of resources - 100k", "option46"},
-        {"Random lvl 100 Pistol Loot - 20k", "option56"},
-        {"Random lvl 100 Carbine Loot - 20k", "option57"},
-        {"Random lvl 100 Rifle Loot - 20k", "option58"},
-        {"Random lvl 100 1h sword Loot - 20k", "option59"},
-        {"Random lvl 100 2h sword Loot - 20k", "option60"},
-        {"Random lvl 100 Polearm Loot - 20k", "option61"},
-				{"Random lvl 100 Unarmed Loot - 20k", "option62"},        
-				{"Random lvl 100 Hvy Weapons (flame/acid/LLC) - 20k", "option63"},  
+        {"Random lvl 50 Pistol Loot - 15k", "option56"},
+        {"Random lvl 50 Carbine Loot - 15k", "option57"},
+        {"Random lvl 50 Rifle Loot - 15k", "option58"},
+        {"Random lvl 50 1h sword Loot - 15k", "option59"},
+        {"Random lvl 50 2h sword Loot - 15k", "option60"},
+        {"Random lvl 50 Polearm Loot - 15k", "option61"},
+				{"Random lvl 50 Unarmed Loot - 15k", "option62"},        
+				{"Random lvl 50 Hvy Weapons (flame/acid/LLC) - 15k", "option63"},  
 				              
         {"Random lvl 300 Clothing Loot - 100k", "option47"},
         {"Random lvl 300 Armor Loot - 100k", "option48"},
@@ -171,7 +171,7 @@ myswg_vendor_conv:addScreen(doc1);
 newbuff1 = ConvoScreen:new {
     id = "newbuff1",
     leftDialog = "",
-    customDialogText = "DOC/ENT Buffs on mySWG are HALF vanilla power. The game has been balanced for the FREE buffs.",
+    customDialogText = "DOC/ENT Buffs on mySWG are HALF power. The game has been balanced for the FREE buffs.",
     stopConversation = "false",
     options = { 
         {"500/3hr Health/Action Buffs - FREE", "buff1"},

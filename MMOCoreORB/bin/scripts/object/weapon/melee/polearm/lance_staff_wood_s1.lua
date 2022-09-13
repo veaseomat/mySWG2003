@@ -117,7 +117,7 @@ object_weapon_melee_polearm_lance_staff_wood_s1 = object_weapon_melee_polearm_sh
 	minDamage = 25,
 	maxDamage = 56,
 
-	attackSpeed = 5.5,
+	attackSpeed = 5.8,
 
 	woundsRatio = 5,
 

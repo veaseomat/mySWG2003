@@ -754,7 +754,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 		return;
 	}
 
-	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) / 10;
+	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player);
 	int maxDiff = randomLairSpawn->getMaxDifficulty();
 	int minDiff = randomLairSpawn->getMinDifficulty();
 	int difficultyLevel = System::random(maxDiff - minDiff) + minDiff;
@@ -764,10 +764,10 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 		difficulty = 4;
 
 	int diffDisplay = difficultyLevel + 7;
-	if (player->isGrouped())
-		diffDisplay += player->getGroup()->getGroupLevel();
+	if (player->isGrouped())//could change group lvl here
+		diffDisplay = 300;//player->getGroup()->getGroupLevel();
 	else
-		diffDisplay += playerLevel;
+		diffDisplay = playerLevel / 2;
 
 	String building = lairTemplateObject->getMissionBuilding(difficulty);
 
@@ -876,7 +876,9 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
  		mobileName = mobiles->elementAt(0).getKey();
  	}
 
-	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + groupSuffix + " LVL" + String::valueOf(diffDisplay));
+ 	int actuallvl = mobileName->asTangibleObject()->getLevel();
+
+	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + groupSuffix + " Lvl " + actuallvl);//String::valueOf(diffDisplay));
 	mission->setMissionDescription("mission/mission_destroy_neutral" +  messageDifficulty + missionType, "m" + String::valueOf(randTexts) + "d");
 
 	switch (faction) {

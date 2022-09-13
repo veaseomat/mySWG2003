@@ -224,13 +224,13 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 //	alm->insertAttribute("challenge_level", playerLevel);
 
 
-	bool res = isCertifiedFor(object);
-
-	if (res) {
-		alm->insertAttribute("weapon_cert_status", "Yes");
-	} else {
-		alm->insertAttribute("weapon_cert_status", "No");
-	}
+//	bool res = isCertifiedFor(object);
+//
+//	if (res) {
+//		alm->insertAttribute("weapon_cert_status", "Yes");
+//	} else {
+//		alm->insertAttribute("weapon_cert_status", "No");
+//	}
 
 	/*if (usesRemaining > 0)
 		alm->insertAttribute("count", usesRemaining);*/
@@ -659,15 +659,15 @@ bool WeaponObjectImplementation::isCertifiedFor(CreatureObject* object) const {
 	if (ghost == nullptr)
 		return false;
 
-	const auto certificationsRequired = weaponTemplate->getCertificationsRequired();
-
-	for (int i = 0; i < certificationsRequired->size(); ++i) {
-		const String& cert = certificationsRequired->get(i);
-
-		if (!ghost->hasAbility(cert) && !object->hasSkill(cert)) {
-			return false;
-		}
-	}
+//	const auto certificationsRequired = weaponTemplate->getCertificationsRequired();
+//
+//	for (int i = 0; i < certificationsRequired->size(); ++i) {
+//		const String& cert = certificationsRequired->get(i);
+//
+//		if (!ghost->hasAbility(cert) && !object->hasSkill(cert)) {
+//			return false;
+//		}
+//	}
 
 	return true;
 }

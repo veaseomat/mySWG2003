@@ -1382,7 +1382,7 @@ void AiAgentImplementation::leash() {
 
 	CombatManager::instance()->forcePeace(asAiAgent());
 //leash range?? i think its working lol
-	if (!homeLocation.isInRange(asAiAgent(), 1.5)) {
+	if (!homeLocation.isInRange(asAiAgent(), 3.0)) {
 		homeLocation.setReached(false);
 		addPatrolPoint(homeLocation);
 	} else {

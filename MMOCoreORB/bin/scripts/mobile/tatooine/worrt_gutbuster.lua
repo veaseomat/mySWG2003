@@ -27,7 +27,7 @@ worrt_gutbuster = Creature:new {
 
 	templates = {"object/mobile/worrt_hue.iff"},
 	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
-	scale = 4.5,
+	scale = 8.5,
 	lootGroups = {},
 	weapons = {},
 	conversationTemplate = "",

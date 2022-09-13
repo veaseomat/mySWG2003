@@ -114,10 +114,10 @@ object_weapon_ranged_rifle_rifle_cdef = object_weapon_ranged_rifle_shared_rifle_
 	maxRange = 64,
 	maxRangeAccuracy = -80,
 
-	minDamage = 25,
-	maxDamage = 50,
+	minDamage = 17,
+	maxDamage = 35,
 
-	attackSpeed = 4.5,
+	attackSpeed = 4.6,
 
 	woundsRatio = 4,
 
