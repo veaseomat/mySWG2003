@@ -832,9 +832,9 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 	if (attacker->isPlayerCreature())
 		attackerAccuracy *= .8;
 
-	if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(cast<CreatureObject*>(attacker))) {
-		attackerAccuracy = 0;//not certified
-	}
+//	if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(cast<CreatureObject*>(attacker))) {
+//		attackerAccuracy = 0;//not certified
+//	}
 
 //	if (attackerAccuracy > 150)
 //		attackerAccuracy = 150;

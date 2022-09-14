@@ -1011,7 +1011,7 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 
 	float cityMultiplier = 1.f + player->getSkillMod("private_spec_samplesize") / 100.f;
 
-	int unitsExtracted = maxUnitsExtracted * (float(surveySkill) / 100.0f) * samplingMultiplier * cityMultiplier * 3;
+	int unitsExtracted = surveySkill * density * 2;//maxUnitsExtracted * (float(surveySkill) / 100.0f) * samplingMultiplier * cityMultiplier * 3;
 //	unitsExtracted *= 5;
 	int xpcap = 2;
 

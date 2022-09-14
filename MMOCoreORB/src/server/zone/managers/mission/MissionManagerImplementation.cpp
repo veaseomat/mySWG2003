@@ -723,12 +723,14 @@ void MissionManagerImplementation::randomizeFactionTerminalMissions(CreatureObje
 			}
 		}
 
+		int newreward = mission->getRewardCredits() * 1.5;
+
 		if (slicer) {
-			mission->setRewardCredits(mission->getRewardCredits() * 1.5);
+			mission->setRewardCredits(newreward * 1.5);
 		}
 
 		float cityBonus = 1.f + player->getSkillMod("private_spec_missions") / 100.f;
-		mission->setRewardCredits(mission->getRewardCredits() * cityBonus);
+		mission->setRewardCredits(newreward * cityBonus);
 
 		mission->setRefreshCounter(counter, true);
 	}
@@ -764,10 +766,10 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 		difficulty = 4;
 
 	int diffDisplay = difficultyLevel + 7;
-	if (player->isGrouped())
-		diffDisplay += player->getGroup()->getGroupLevel();
+	if (player->isGrouped())//could change group lvl here
+		diffDisplay = 300;//player->getGroup()->getGroupLevel();
 	else
-		diffDisplay += playerLevel;
+		diffDisplay = playerLevel;
 
 	String building = lairTemplateObject->getMissionBuilding(difficulty);
 
@@ -837,7 +839,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 	int reward = destroyMissionBaseReward + destroyMissionDifficultyRewardFactor * difficultyLevel;
 	reward += System::random(destroyMissionRandomReward) + System::random(destroyMissionDifficultyRandomReward * difficultyLevel);
-	mission->setRewardCredits(reward * .7);//reduce ALL destroy mission rewards here
+	mission->setRewardCredits(reward * 1.5);//reduce ALL destroy mission rewards here
 
 	mission->setMissionDifficulty(difficultyLevel, diffDisplay, difficulty);
 	mission->setSize(randomLairSpawn->getSize());
@@ -875,8 +877,8 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
  	if (mobiles->size() > 0) {
  		mobileName = mobiles->elementAt(0).getKey();
  	}
-
-	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + groupSuffix + " LVL" + String::valueOf(diffDisplay));
+//creolevel
+	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + groupSuffix);//String::valueOf(diffDisplay));
 	mission->setMissionDescription("mission/mission_destroy_neutral" +  messageDifficulty + missionType, "m" + String::valueOf(randTexts) + "d");
 
 	switch (faction) {

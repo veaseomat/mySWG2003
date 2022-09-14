@@ -148,9 +148,9 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	int newlvl = getTemplateLevel();
 
-	if (newlvl > 150) newlvl = 150;
+	if (newlvl > 100) newlvl = 100;
 
-	newlvl *= 2;
+	newlvl *= 3;
 
 	float lvlrandomizer = .9 + (System::random(20) * .01);
 
@@ -163,10 +163,10 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 //		newlvl *= elite;
 //	}
 
-	if (System::random(100) >= 100) {// and elite <= 1.0) {
-		legendarynpc = true;
-		newlvl *= 1.5 + (System::random(100) * .01);//1.516 X lvl 330 = lvl 500
-	}
+//	if (System::random(100) >= 100) {// and elite <= 1.0) {
+//		legendarynpc = true;
+//		newlvl *= 1.5 + (System::random(100) * .01);//1.516 X lvl 330 = lvl 500
+//	}
 
 	//newlvl *= templateData->getElite();
 
@@ -363,7 +363,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		int templSpecies = getSpecies();
 
 		if (!npcTemplate->getRandomNameTag()) {
-			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]", false);
+			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies), false);
 			if (legendarynpc == true) {
 				//objectName = npcTemplate->getObjectName() + "(Legendary)";
 				//setCustomObjectName("(Legendary)", false);
@@ -379,7 +379,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 				newName += StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString();
 
 			newName += ")";
-			setCustomObjectName(newName + "\\#C0C0C0" + " [" + level + "]", false);
+			setCustomObjectName(newName, false);
 			if (legendarynpc == true) {
 				setCustomObjectName(newName + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false);
 			}
@@ -402,7 +402,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 //		newname2 += level;
 //		newname2 += "]";
 
-		setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#C0C0C0" + " [" + level + "]", false);
+		setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString(), false);
 		if (legendarynpc == true) {
 			setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false);
 		}
@@ -1382,7 +1382,7 @@ void AiAgentImplementation::leash() {
 
 	CombatManager::instance()->forcePeace(asAiAgent());
 //leash range?? i think its working lol
-	if (!homeLocation.isInRange(asAiAgent(), 1.5)) {
+	if (!homeLocation.isInRange(asAiAgent(), 3.0)) {
 		homeLocation.setReached(false);
 		addPatrolPoint(homeLocation);
 	} else {
@@ -2719,7 +2719,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		return;
 	}
 
-	alm->insertAttribute("challenge_level", level);
+//	alm->insertAttribute("challenge_level", level);
 
 //	if (isCreature){
 	if (getArmor() == 0)
