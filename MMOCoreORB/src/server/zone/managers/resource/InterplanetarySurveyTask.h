@@ -118,6 +118,55 @@ public:
 
 				for(int j = 0; j < values->size(); j++) {
 					body << "\t\t\\#pcontrast1 " << values->get(j) << "\\#.\n";
+					for(int x=0; x<resources.size();x++) {
+						resourceSpawn = resources.get(x);
+						String rsType = resourceSpawn->getName();	// Resource Name
+						short cr = resourceSpawn->getValueOf(1);	// Cold Resist
+						short cd = resourceSpawn->getValueOf(2);	// Conductivity
+						short dr = resourceSpawn->getValueOf(3);	// Decay Resist
+						short hr = resourceSpawn->getValueOf(4);	// Heat Resist
+						short fl = resourceSpawn->getValueOf(5);	// Flavor
+						short ma = resourceSpawn->getValueOf(6);	// Mallability
+						short pe = resourceSpawn->getValueOf(7);	// Potential Energy
+						short oq = resourceSpawn->getValueOf(8);	// Overall Quality
+						short sr = resourceSpawn->getValueOf(9);	// Shock Resist
+						short ut = resourceSpawn->getValueOf(10);	// Unit Toughness
+
+						if (rsType == values->get(j)) {
+
+							if (cr != 0) {
+								body << "\t\t\tCR: " << cr << "\n";
+							}
+							if (cd != 0) {
+								body << "\t\t\tCD: " << cd << "\n";
+							}
+							if (dr != 0) {
+								body << "\t\t\tDR: " << dr << "\n";
+							}
+							if (hr != 0) {
+								body << "\t\t\tHR: " << hr << "\n";
+							}
+							if (fl != 0) {
+								body << "\t\t\tFL: " << fl << "\n";
+							}
+							if (ma != 0) {
+								body << "\t\t\tMA: " << ma << "\n";
+							}
+							if (pe != 0) {
+								body << "\t\t\tPE: " << pe << "\n";
+							}
+							if (oq != 0) {
+								body << "\t\t\tOQ: " << oq << "\n";
+							}
+							if (sr != 0) {
+								body << "\t\t\tSR: " << sr << "\n";
+							}
+							if (ut != 0) {
+								body << "\t\t\tUT: " << ut << "\n";
+							}
+
+						}
+					}
 				}
 			}
 		}

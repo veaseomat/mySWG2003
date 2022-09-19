@@ -24,11 +24,11 @@ void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool
 	int roll = System::random(100);
 	int modCount = 1;
 
-	if(roll > 99)
-		modCount += 2;
-
-	if(roll < 5)
-		modCount += 1;
+//	if(roll > 99)
+//		modCount += 2;
+//
+//	if(roll < 5)
+//		modCount += 1;
 
 	for(int i = 0; i < modCount; ++i) {
 		//Mods can't be lower than -1 or greater than 25

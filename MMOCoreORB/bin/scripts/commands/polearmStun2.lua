@@ -70,7 +70,7 @@ PolearmStun2Command = {
 
 	combatSpam = "breathstealer",
 	
-	weaponType = POLEARMWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 }

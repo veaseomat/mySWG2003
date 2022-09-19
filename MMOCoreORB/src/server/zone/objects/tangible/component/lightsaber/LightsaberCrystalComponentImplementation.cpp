@@ -195,7 +195,7 @@ int LightsaberCrystalComponentImplementation::getCrystalQuality() {
 	else if (itemLevel < 330)
 		return PREMIUM;
 	else
-		return FLAWLESS;
+		return PREMIUM;//FLAWLESS;
 }
 
 int LightsaberCrystalComponentImplementation::getRandomizedStat(int min, int max, int itemLevel) {

@@ -43,7 +43,7 @@
 
 Melee2hHit3Command = {
         name = "melee2hhit3",
-	damageMultiplier = 4.0,
+	damageMultiplier = 5.0,
 	speedMultiplier = 2.5,
 	healthCostMultiplier = 1.25,
 	actionCostMultiplier = 2.0,
@@ -62,7 +62,7 @@ Melee2hHit3Command = {
 	  )
 	},
 	
-	weaponType = TWOHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	animation = "combo_4a", 
 	animType = GENERATE_INTENSITY,

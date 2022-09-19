@@ -1683,16 +1683,16 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 
 				Locker clocker(obj, player);
 
-				if (obj->getOptionsBitmask() & OptionBitmask::INSURED) {
-					//1% Decay for insured items
-//					obj->inflictDamage(obj, 0, 0.01 * obj->getMaxCondition(), true, true);
-					//Set uninsured
-					uint32 bitmask = obj->getOptionsBitmask() - OptionBitmask::INSURED;
-					obj->setOptionsBitmask(bitmask);
-				} else {
-					//5% Decay for uninsured items
-//					obj->inflictDamage(obj, 0, 0.03 * obj->getMaxCondition(), true, true);
-				}
+//				if (obj->getOptionsBitmask() & OptionBitmask::INSURED) {
+//					//1% Decay for insured items
+////					obj->inflictDamage(obj, 0, 0.01 * obj->getMaxCondition(), true, true);
+//					//Set uninsured
+//					uint32 bitmask = obj->getOptionsBitmask() - OptionBitmask::INSURED;
+//					obj->setOptionsBitmask(bitmask);
+//				} else {
+					//25% Decay
+					obj->inflictDamage(obj, 0, 0.25 * obj->getMaxCondition(), true, true);
+//				}
 
 				// Calculate condition percentage for decay report
 				int max = obj->getMaxCondition();
@@ -1700,12 +1700,12 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 				int condPercentage = ( min / (float)max ) * 100.0f;
 				String line = " - " + obj->getDisplayedName() + " (@"+String::valueOf(condPercentage)+"%)";
 
-//				suiCloneDecayReport->addMenuItem(line, item->getObjectID());
+				suiCloneDecayReport->addMenuItem(line, item->getObjectID());
 			}
 		}
 
-//		ghost->addSuiBox(suiCloneDecayReport);
-//		player->sendMessage(suiCloneDecayReport->generateMessage());
+		ghost->addSuiBox(suiCloneDecayReport);
+		player->sendMessage(suiCloneDecayReport->generateMessage());
 
 	}
 
@@ -1885,9 +1885,9 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				//******* XP was CHANGED IN aiagent.idl and creature.idl located in zone/obj/creature/ai
 
 				//Cap xp based on level
-				int xpcap = calculatePlayerLevel(attacker, xpType) * 100;
-
-				if (xpAmount > xpcap) xpAmount = xpcap;
+//				int xpcap = calculatePlayerLevel(attacker, xpType) * 100;
+//
+//				if (xpAmount > xpcap) xpAmount = xpcap;
 
 
 				//xpAmount = Math::min(xpAmount, calculatePlayerLevel(attacker, xpType) * 1000.f);
@@ -3902,11 +3902,19 @@ int PlayerManagerImplementation::calculatePlayerLevel(CreatureObject* player) {
 	if (player->getPlayerObject() != nullptr && player->getPlayerObject()->isJedi() && weapon->isJediWeapon())
 		skillMod += player->getSkillMod("private_jedi_difficulty");
 
-	level += skillMod / 10;// / 10;//Math::min(25, skillMod / 100 + 1);
+	level += (skillMod / 10);// / 10;//Math::min(25, skillMod / 100 + 1);
 
 //	level += 250 - player->getPlayerObject()->getSkillPoints();//skill pts buff
 
-	if (level > 250) level = 250;
+//this one affects mission lvl
+
+	level /= 2.5;//250
+
+	if (level > 100) level = 100;
+
+	if (level < 1) level = 1;
+
+	return level;
 
 //	bool message = true;
 //
@@ -3925,9 +3933,6 @@ int PlayerManagerImplementation::calculatePlayerLevel(CreatureObject* player) {
 
 //		if (message && player->isPlayerCreature())
 //			player->sendSystemMessage("You receive an innate buff based on your overall combat skill level.");
-
-
-	return level;
 
 
 		//	int lvlmod = level;
@@ -4091,11 +4096,11 @@ int PlayerManagerImplementation::calculatePlayerLevel(CreatureObject* player, St
 	if (player->getPlayerObject() != nullptr && player->getPlayerObject()->isJedi() && weapon->isJediWeapon())
 		skillMod += player->getSkillMod("private_jedi_difficulty");
 
-	level += skillMod / 10;// / 10;//Math::min(25, skillMod / 100 + 1);
+	level += skillMod / 100;// / 10;//Math::min(25, skillMod / 100 + 1);
 
 //	level += 250 - player->getPlayerObject()->getSkillPoints();//skill pts buff
 
-	if (level > 250) level = 250;
+	if (level > 25) level = 25;//likely not in use/used for xp cap?
 
 	return level;
 }

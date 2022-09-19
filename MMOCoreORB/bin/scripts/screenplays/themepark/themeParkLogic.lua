@@ -1872,7 +1872,7 @@ function ThemeParkLogic:handleMissionReward(pConversingPlayer)
 	
 	self:giveLoot(pConversingPlayer, "junk")
 	
-		local unlockluck = readScreenPlayData(pConversingPlayer, "forcesensitivity", "unlock")
+	local unlockluck = readScreenPlayData(pConversingPlayer, "forcesensitivity", "unlock")
 		
 	if getRandomNumber(1, 999) + unlockluck >= 1000 then
 --			self:giveItemReward(pConversingPlayer, "object/tangible/jedi/no_drop_jedi_holocron_light.iff")

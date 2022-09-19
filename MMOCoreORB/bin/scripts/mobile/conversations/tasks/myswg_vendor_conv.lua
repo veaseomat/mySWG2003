@@ -15,9 +15,10 @@ myswg_vendor_first_screen = ConvoScreen:new {
         {"Armor", "armor1"},
         {"Artisan", "art1"},
         {"Architect", "arch1"},
-        {"Chef", "chef1"},        
+        {"Food", "chef1"},        
         {"Loot", "loot1"},
-        {"Medicine", "doc1"},
+        {"Medic", "doc1"},
+        {"Droids", "droid1"},
         
 			--	{"No thank you.", "deny_quest"},--not needed
     }
@@ -167,6 +168,24 @@ doc1 = ConvoScreen:new {
     }
 }
 myswg_vendor_conv:addScreen(doc1);
+
+droid1 = ConvoScreen:new {
+    id = "droid1",
+    leftDialog = "",
+    customDialogText = "droid stuff, need anything?",
+    stopConversation = "false",
+    options = { 
+        --{"Doc/Ent Buffs - 10k", "buff1"},
+--        {"1500 Health/Action Buffs - 10k", "buff2"},--not working
+--        {"StimPack A - 500", "option50"},
+--        {"StimPack B - 1k", "option51"},
+--        {"StimPack C - 2k", "option52"},
+        {"Seeker Droid - 5k", "option64"},
+        {"Probe Droid - 10k", "option65"},
+      	{"Main menu.", "first_screen"},
+    }
+}
+myswg_vendor_conv:addScreen(droid1);
 
 newbuff1 = ConvoScreen:new {
     id = "newbuff1",
@@ -644,7 +663,20 @@ myswg_vendor_accept_quest = ConvoScreen:new {
     stopConversation = "true",
     options = { }
 }
-
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option64",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option65",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
 myswg_vendor_conv:addScreen(myswg_vendor_accept_quest);
 myswg_vendor_deny_quest = ConvoScreen:new {
     id = "deny_quest",

@@ -58,7 +58,7 @@ Melee2hSpinAttack2Command = {
 
 	combatSpam = "spinslam",
 	
-	weaponType = TWOHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 }

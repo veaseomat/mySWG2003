@@ -756,7 +756,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 		return;
 	}
 
-	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) / 10;
+	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player);
 	int maxDiff = randomLairSpawn->getMaxDifficulty();
 	int minDiff = randomLairSpawn->getMinDifficulty();
 	int difficultyLevel = System::random(maxDiff - minDiff) + minDiff;
@@ -767,7 +767,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 	int diffDisplay = difficultyLevel + 7;
 	if (player->isGrouped())//could change group lvl here
-		diffDisplay = 300;//player->getGroup()->getGroupLevel();
+		diffDisplay = player->getGroup()->getGroupLevel();
 	else
 		diffDisplay = playerLevel;
 
@@ -1807,7 +1807,7 @@ LairSpawn* MissionManagerImplementation::getRandomLairSpawn(CreatureObject* play
 
 	bool foundLair = false;
 	int counter = availableLairList->size();
-	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) / 10;
+	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player);
 	if (player->isGrouped())
 		playerLevel = player->getGroup()->getGroupLevel();
 

@@ -52,14 +52,14 @@ Saber2hHit1Command = {
 	forceCostMultiplier = 1.0,
 	visMod = 25,
 
-	animation = "combo_2c", 
+	animation = "combo_3b", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber2hhit1",
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = TWOHANDJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }

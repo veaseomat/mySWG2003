@@ -50,8 +50,10 @@ FireLightningSingle2Command = {
 	actionCostMultiplier = 1,
 	mindCostMultiplier = 1,
 
-	animation = "fire_lightning_rifle_single_2",
-	animType = GENERATE_INTENSITY,
+--	animation = "fire_lightning_rifle_single_2",
+--	animType = GENERATE_INTENSITY,
+	animation = "fire_1_special_single", 
+	animType = GENERATE_RANGED,
 
 	combatSpam = "firelightningsingle2",
 	

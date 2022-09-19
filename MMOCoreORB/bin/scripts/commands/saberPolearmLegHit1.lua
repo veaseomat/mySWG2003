@@ -52,14 +52,14 @@ SaberPolearmLegHit1Command = {
 	forceCostMultiplier = 1.25,
 	visMod = 25,
 
-	animation = "combo_3a", 
+	animation = "combo_3d", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saberpolearmleghit1",
 
 	poolsToDamage = ACTION_ATTRIBUTE,
 
-	weaponType = POLEARMJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }

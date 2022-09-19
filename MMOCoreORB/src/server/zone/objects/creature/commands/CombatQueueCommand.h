@@ -480,8 +480,8 @@ public:
 				return "attack_high_center_light_1"; //+ intensity;//headhit anim
 			}
 			if (weapon->isLightningRifle() && attacker->getLevel() > 60){
-				 if (attacker->getLevel() > 100)	return "fire_lightning_rifle_single_2" + intensity;
-				return "fire_lightning_rifle_single_1" + intensity;
+				 if (attacker->getLevel() > 100)	return "fire_1_special_single" + intensity;
+				return "fire_1_special_single" + intensity;
 			}
 			if (weapon->isFlameThrower() && attacker->getLevel() > 60){
 				 if (attacker->getLevel() > 100)	return "fire_flame_thrower_single_2" + intensity;
@@ -544,8 +544,8 @@ public:
 				 return "combo_2d" + intensity;
 			}
 			if (weapon->isLightningRifle() && attacker->getLevel() > 60){
-				 if (attacker->getLevel() > 100)	return "fire_lightning_rifle_single_2" + intensity;
-				return "fire_lightning_rifle_single_1" + intensity;
+				 if (attacker->getLevel() > 100)	return "fire_area_no_trails" + intensity;
+				return "fire_area_no_trails" + intensity;
 			}
 			if (weapon->isFlameThrower() && attacker->getLevel() > 60){
 				 if (attacker->getLevel() > 100)	return "fire_flame_thrower_cone_2" + intensity;

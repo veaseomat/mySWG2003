@@ -148,13 +148,15 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	int newlvl = getTemplateLevel();
 
-	if (newlvl > 100) newlvl = 100;
+//	if (newlvl > 100) newlvl = 100;
+//
+//	newlvl *= 3;
 
-	newlvl *= 3;
+//	float lvlrandomizer = .9 + (System::random(20) * .01);
+//
+//	newlvl *= lvlrandomizer;
 
-	float lvlrandomizer = .9 + (System::random(20) * .01);
 
-	newlvl *= lvlrandomizer;
 
 //	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
 //
@@ -174,10 +176,10 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float weapran = .8 + (System::random(30) * .01);//weapon dmg randomizer
+	float weapran = .8 + (System::random(40) * .01);//weapon dmg randomizer
 
-	float minDmg = sqrt(level) * 10 * weapran;//(level / 2) * weapran;
-	float maxDmg = sqrt(level) * 10 * 2 * weapran;//level * weapran;
+	float minDmg = (level) * .7 * weapran;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
+	float maxDmg = (level) * weapran;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
 	float speed = (3.5 - (level * .01));// * randomtwo;//calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
@@ -285,21 +287,21 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	int ham = 0;
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
-		int health = 25 + System::random(25) + (((level * 90) + System::random(level * 10)) / 22);// * .67 + (100 + r200)
-		int str = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);//npc defenses based on this one
-		int con = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);
+		int health = ((level * 90) + System::random(level * 10)) / 20 + 300 + System::random(150);// * .67 + (100 + r200)
+		int str = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);//
+		int con = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);
 		baseHAM.add(health);
 		baseHAM.add(str);
 		baseHAM.add(con);
-		int action = 25 + System::random(25) + (((level * 80) + System::random(level * 20)) / 22);
-		int quick = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);//npc accuracy based on this one
-		int stam = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);
+		int action = ((level * 80) + System::random(level * 20)) / 20 + 300 + System::random(150);
+		int quick = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);//
+		int stam = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);
 		baseHAM.add(action);
 		baseHAM.add(quick);
 		baseHAM.add(stam);
-		int mind = 25 + System::random(25) + (((level * 60) + System::random(level * 40)) / 22);
-		int focus = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);//this one is static for determining if npc will hit single pool
-		int will = 25 + System::random(25) + (((level * 70) + System::random(level * 30)) / 22);
+		int mind = ((level * 60) + System::random(level * 40)) / 20 + 300 + System::random(150);
+		int focus = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);//this one is static for determining if npc will hit single pool
+		int will = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);
 		baseHAM.add(mind);
 		baseHAM.add(focus);
 		baseHAM.add(will);
@@ -1780,7 +1782,7 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 	float modifier = (float)latency/1000.f;
 
 	if (isInCombat())
-			modifier *= .4;
+			modifier *= .2;
 
 	if (isKneeling())
 		modifier *= 1.25f;

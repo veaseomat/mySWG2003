@@ -57,7 +57,7 @@ PolearmHit1Command = {
 
 	combatSpam = "bonebruiser",
 	
-	weaponType = POLEARMWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 

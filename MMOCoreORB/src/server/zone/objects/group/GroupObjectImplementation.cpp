@@ -408,7 +408,7 @@ float GroupObjectImplementation::getGroupHarvestModifier(CreatureObject* player)
 
 void GroupObjectImplementation::calcGroupLevel() {
 	int highestPlayer = 0;
-	groupLevel = 300;
+	groupLevel = 100;
 
 //	for (int i = 0; i < getGroupSize(); i++) {
 //		Reference<CreatureObject*> member = getGroupMember(i);

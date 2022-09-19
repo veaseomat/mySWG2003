@@ -264,6 +264,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
+	level *= (System::random(50) * .01) + 1.0;
+
 //	if(level > 100)
 //		level = 100;
 //
@@ -331,7 +333,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 //	if (excMod >= 5.0) excMod = 5.0;
 
-	if (System::random(100) >= 100) {
+	if (System::random(300) >= 300) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
 		prototype->setCustomObjectName(newName, false);
 
@@ -342,16 +344,16 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		exceptionalLooted.increment();
 	}
 
-	if (System::random(1000) >= 1000) {
-		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
-		prototype->setCustomObjectName(newName, false);
-
-		excMod *= 4.0 + (System::random(100) * .01);//5;
-
-		prototype->addMagicBit(false);
-
-		legendaryLooted.increment();
-	}
+//	if (System::random(1000) >= 1000) {
+//		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
+//		prototype->setCustomObjectName(newName, false);
+//
+//		excMod *= 4.0 + (System::random(100) * .01);//5;
+//
+//		prototype->addMagicBit(false);
+//
+//		legendaryLooted.increment();
+//	}
 
 	if (prototype->isLightsaberCrystalObject()) {
 		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
@@ -377,6 +379,9 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			continue;
 
 		float percentage = (((level / 3) * .01) * 0.6) + (System::random(40) * .01);//;//System::random(10000) / 10000.f;//this is where the variance happens
+
+		if (percentage > 1.0) percentage = 1.0;
+
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll

@@ -67,17 +67,17 @@ public:
 		obj->setCustomObjectName(name, false);
 
 
-		if (player->isPrivileged()) {
+//		if (player->isPrivileged()) {
 
 			ghost->addWaypoint(obj, true, true);
 
 			creature->sendSystemMessage("A waypoint to your Jedi skill trainer has been added to your datapad.");
 
 			return SUCCESS;
-		}
-
-		creature->sendSystemMessage("You must travel to planet " + planet + ". There you will find your Jedi skill trainer.");
-		return SUCCESS;
+//		}
+//
+//		creature->sendSystemMessage("You must travel to planet " + planet + ". There you will find your Jedi skill trainer.");
+//		return SUCCESS;
 	}
 
 	static void setJediTrainer(PlayerObject* ghost) {

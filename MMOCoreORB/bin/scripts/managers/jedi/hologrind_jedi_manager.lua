@@ -185,7 +185,7 @@ end
 -- Register observer on the player for observing badge awards.
 -- @param pCreatureObject pointer to the creature object of the player to register observers on.
 function HologrindJediManager:registerObservers(pCreatureObject)
-	createObserver(BADGEAWARDED, "HologrindJediManager", "badgeAwardedEventHandler", pCreatureObject)
+--	createObserver(BADGEAWARDED, "HologrindJediManager", "badgeAwardedEventHandler", pCreatureObject)
 end
 
 -- Handling of the onPlayerLoggedIn event. The progression of the player will be checked and observers will be registered.
@@ -197,10 +197,14 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 	
 	--CreatureObject(pCreatureObject):enhanceCharacter()
 
-	self:checkIfProgressedToJedi(pCreatureObject)
-	self:registerObservers(pCreatureObject)
+--	self:checkIfProgressedToJedi(pCreatureObject)
+--	self:registerObservers(pCreatureObject)
 	
 	PVPFactionIntro:startStepDelay(pCreatureObject, 3)--faction encoutners
+	
+--	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then	
+--		UnlockIntro:startStepDelay(pCreatureObject, 3)
+--	end
 
 	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
 		PVPBHIntro:startStepDelay(pCreatureObject, 3)

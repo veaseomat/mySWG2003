@@ -330,21 +330,21 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 		pblank << "+";
 
 	pblank << getPointBlankAccuracy() << " @ " << getPointBlankRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_zero", pblank);
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_zero", pblank);
 
 	StringBuffer ideal;
 	if (getIdealAccuracy() >= 0)
 		ideal << "+";
 
 	ideal << getIdealAccuracy() << " @ " << getIdealRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_mid", ideal);
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_mid", ideal);
 
 	StringBuffer maxrange;
 	if (getMaxRangeAccuracy() >= 0)
 		maxrange << "+";
 
 	maxrange << getMaxRangeAccuracy() << " @ " << getMaxRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
 
 	//Special Attack Costs
 	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost() / 5);
@@ -460,7 +460,7 @@ int WeaponObjectImplementation::getPointBlankAccuracy(bool withPup) const {
 	if (powerupObject != nullptr && withPup)
 		return pointBlankAccuracy + (abs(pointBlankAccuracy) * powerupObject->getPowerupStat("pointBlankAccuracy"));
 
-	return pointBlankAccuracy;
+	return 0; //pointBlankAccuracy;//1000
 }
 
 int WeaponObjectImplementation::getPointBlankRange(bool withPup) const {
@@ -488,7 +488,7 @@ int WeaponObjectImplementation::getIdealAccuracy(bool withPup) const {
 	if (powerupObject != nullptr && withPup)
 		return idealAccuracy + (abs(idealAccuracy) * powerupObject->getPowerupStat("idealAccuracy"));
 
-	return idealAccuracy;
+	return 0; //idealAccuracy;
 }
 
 
@@ -496,7 +496,7 @@ int WeaponObjectImplementation::getMaxRangeAccuracy(bool withPup) const {
 	if (powerupObject != nullptr && withPup)
 		return maxRangeAccuracy + (abs(maxRangeAccuracy) * powerupObject->getPowerupStat("maxRangeAccuracy"));
 
-	return maxRangeAccuracy;
+	return 0; //maxRangeAccuracy;
 }
 
 float WeaponObjectImplementation::getAttackSpeed(bool withPup) const {

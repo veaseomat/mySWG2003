@@ -44,7 +44,7 @@
 SurpriseShotCommand = {
         name = "surpriseshot",
 	
-	weaponType = RIFLEWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 }
 
 AddCommand(SurpriseShotCommand)

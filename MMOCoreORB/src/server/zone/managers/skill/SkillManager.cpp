@@ -437,17 +437,20 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 
 		if (skill->getSkillName() == "force_title_jedi_rank_01") {
+
+			creature->enqueueCommand(STRING_HASHCODE("findmytrainer"), 0, 0, "");
+
 			ChatManager* chatManager = creature->getZoneServer()->getChatManager();
 			ChatManager* chatManager2 = zoneServer.get()->getChatManager();
 			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(creature, SuiWindowType::NONE);
 			String planet = ghost->getTrainerZoneName();
 
 			box->setPromptTitle("Jedi Unlock");
-			box->setPromptText("You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\n     You must travel to planet " + planet + ". There you will find your Jedi skill trainer. it could be any starting profession trainer, talk to each one until you find yours.\n\n     Jedi on mySWG is PERMADEATH with only 3 lives! After 3 deaths you will be PERMANENTLY DEAD, deaths do not count until you find your trainer. \n\nCongratulations, good luck, and may the Force be with you... Jedi.");
+			box->setPromptText("You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\n     A waypoint has been added to your datapad for your Jedi skill trainer.\n\n     Jedi on mySWG is PERMADEATH with only 3 lives! After 3 deaths you will be PERMANENTLY DEAD, deaths do not count until you find your trainer. \n\nCongratulations, good luck, and may the Force be with you... Jedi.");
 			ghost->addSuiBox(box);
 			creature->sendMessage(box->generateMessage());
-
-			chatManager2->sendMail("mySWG", "Jedi Guide", "Congratulations on unlocking Jedi on mySWG!\n\n     You must travel to planet " + planet + ". There you will find your Jedi skill trainer. Your Jedi trainer could be any starting profession trainer, you will need to talk to each once until you find the correct one.\n\nPERMADEATH\n\n     Yes, Jedi on mySWG is permadeath. You have 3 lives, after you have died 3 times you will be PERMANENTLY DEAD. Deaths do not count until you find your Jedi trainer.\n\nBOUNTY HUNTERS\n\n     Visibility is slightly more forgiving here but mostly unchanged. Using a lightsaber or any force powers within 32m of any player or humanoid NPC will raise your visibility for the Bounty Hunter terminals. NPC Bounty Hunters will start to come after you once you have enough visibility. As a new Jedi you should just RUN.\n\nJEDI KNIGHT\n\n     Jedi Knight trials will start when you have learned enough skills.", creature->getFirstName());
+//just create a fkn waypoint for the player, theyre too fucking stupid to figure out what to do.
+			chatManager2->sendMail("mySWG", "Jedi Guide", "Congratulations on unlocking Jedi on mySWG!\n\n     The command /findmytrainer will create a waypoint to your jedi skill trainer.\n\nPERMADEATH\n\n     Yes, Jedi on mySWG is permadeath. You have 3 lives, after you have died 3 times you will be PERMANENTLY DEAD. Deaths do not count until you find your Jedi trainer.\n\nBOUNTY HUNTERS\n\n     Visibility is slightly more forgiving here but mostly unchanged. Using a lightsaber or any force powers within 32m of any player or humanoid NPC will raise your visibility for the Bounty Hunter terminals. NPC Bounty Hunters will start to come after you once you have enough visibility. As a new Jedi you should just RUN.\n\nJEDI KNIGHT\n\n     Jedi Knight trials will start when you have learned enough skills.", creature->getFirstName());
 
 			chatManager->broadcastGalaxy("IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR:\n\nLord Vader has detected a vergence in the Force.\n\n     Be on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.", "imperial");
 		}

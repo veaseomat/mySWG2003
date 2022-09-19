@@ -85,7 +85,7 @@ ActionShot2Command = {
 	  )
 	},
 	
-	weaponType = CARBINEWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

@@ -72,7 +72,7 @@ StartleShot2Command = {
 
 	combatSpam = "startleshot",
 	
-	weaponType = RIFLEWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

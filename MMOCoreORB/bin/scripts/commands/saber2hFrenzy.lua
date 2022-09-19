@@ -84,14 +84,14 @@ Saber2hFrenzyCommand = {
 	  )
 	},
 
-	animation = "showoff_2", 
+	animation = "showoff_1", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber2hfrenzy",
 	
 	poolsToDamage = RANDOM_ATTRIBUTE,
 	
-	weaponType = TWOHANDJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }

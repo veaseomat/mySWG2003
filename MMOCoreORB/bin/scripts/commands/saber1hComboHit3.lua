@@ -52,7 +52,7 @@ Saber1hComboHit3Command = {
 	forceCostMultiplier = 2.25,
 	visMod = 25,
 
-	animation = "showoff_1", 
+	animation = "combo_3a", 
 	animType = GENERATE_INTENSITY,
 
 	stateEffects = {
@@ -71,7 +71,7 @@ Saber1hComboHit3Command = {
 
 	poolsToDamage = HEALTH_ATTRIBUTE + ACTION_ATTRIBUTE + MIND_ATTRIBUTE,
 
-	weaponType = ONEHANDJEDIWEAPON,
+	weaponType = JEDIWEAPON,
 
 	range = -1
 }
