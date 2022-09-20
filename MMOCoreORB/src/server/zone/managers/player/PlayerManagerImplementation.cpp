@@ -1191,7 +1191,7 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 	player->sendSystemMessage(stringId);
 
 	player->updateTimeOfDeath();
-//	player->clearBuffs(true, false);
+	player->clearBuffs(true, false);//remove to keep buffs after death
 
 	PlayerObject* ghost = player->getPlayerObject();
 
@@ -1345,7 +1345,6 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 	int currentcredits = player->getCashCredits() / 2;
 
 	player->subtractCashCredits(currentcredits);
-
 
 //PERMADEATH!
 	if (player->hasSkill("force_title_jedi_rank_02") ) {//&& !attacker->isPlayerCreature())  {
@@ -1641,7 +1640,6 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 	uint64 preDesignatedFacilityOid = ghost->getCloningFacility();
 	ManagedReference<SceneObject*> preDesignatedFacility = server->getObject(preDesignatedFacilityOid);
 
-
 		player->setWounds(CreatureAttribute::HEALTH, 0, true);
 		player->setWounds(CreatureAttribute::STRENGTH, 0, true);
 		player->setWounds(CreatureAttribute::CONSTITUTION, 0, true);
@@ -1662,8 +1660,15 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 		player->healDamage(player, CreatureAttribute::MIND, mindheal, true);
 
 
-//	if (player->getFactionStatus() != FactionStatus::ONLEAVE && cbot->getFacilityType() != CloningBuildingObjectTemplate::FACTION_IMPERIAL && cbot->getFacilityType() != CloningBuildingObjectTemplate::FACTION_REBEL && !player->hasSkill("force_title_jedi_rank_03"))
-//		player->setFactionStatus(FactionStatus::ONLEAVE);
+	if (preDesignatedFacility == nullptr) {
+		player->addWounds(CreatureAttribute::HEALTH, healthheal / 2, true, false);
+		player->addWounds(CreatureAttribute::ACTION, actionheal / 2, true, false);
+		player->addWounds(CreatureAttribute::MIND, mindheal / 2, true, false);
+	//	player->addShockWounds(100, true);
+	}
+	
+	if (player->getFactionStatus() != FactionStatus::ONLEAVE && cbot->getFacilityType() != CloningBuildingObjectTemplate::FACTION_IMPERIAL && cbot->getFacilityType() != CloningBuildingObjectTemplate::FACTION_REBEL && !player->hasSkill("force_title_jedi_rank_03"))
+		player->setFactionStatus(FactionStatus::ONLEAVE);
 
 	SortedVector<ManagedReference<SceneObject*> > insurableItems = getInsurableItems(player, false);
 
@@ -1683,16 +1688,16 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 
 				Locker clocker(obj, player);
 
-//				if (obj->getOptionsBitmask() & OptionBitmask::INSURED) {
-//					//1% Decay for insured items
-////					obj->inflictDamage(obj, 0, 0.01 * obj->getMaxCondition(), true, true);
-//					//Set uninsured
-//					uint32 bitmask = obj->getOptionsBitmask() - OptionBitmask::INSURED;
-//					obj->setOptionsBitmask(bitmask);
-//				} else {
-					//25% Decay
+				if (obj->getOptionsBitmask() & OptionBitmask::INSURED) {
+					//1% Decay for insured items
 					obj->inflictDamage(obj, 0, 0.25 * obj->getMaxCondition(), true, true);
-//				}
+					//Set uninsured
+					uint32 bitmask = obj->getOptionsBitmask() - OptionBitmask::INSURED;
+					obj->setOptionsBitmask(bitmask);
+				} else {
+					//5% Decay for uninsured items
+					obj->inflictDamage(obj, 0, 0.5 * obj->getMaxCondition(), true, true);
+				}
 
 				// Calculate condition percentage for decay report
 				int max = obj->getMaxCondition();
@@ -3542,8 +3547,8 @@ int PlayerManagerImplementation::checkSpeedHackFirstTest(CreatureObject* player,
 	if (parent != nullptr && parent->isVehicleObject()) {
 		VehicleObject* vehicle = cast<VehicleObject*>( parent.get());
 
-		allowedSpeedMod = vehicle->getSpeedMultiplierMod();
-		allowedSpeedBase = vehicle->getRunSpeed();
+		allowedSpeedMod = vehicle->getSpeedMultiplierMod();//this shit right here nigga, this shit here!~???!?!
+		allowedSpeedBase = vehicle->getRunSpeed();//vehicle speed?
 	}
 //	else if (parent != nullptr && parent->isMount()) {
 //		Creature* mount = cast<Creature*>( parent.get());
@@ -3560,62 +3565,62 @@ int PlayerManagerImplementation::checkSpeedHackFirstTest(CreatureObject* player,
 
 	float maxAllowedSpeed = allowedSpeedMod * allowedSpeedBase;
 
-	if (parsedSpeed > maxAllowedSpeed * errorMultiplier) {
-		//float delta = abs(parsedSpeed - maxAllowedSpeed);
-
-		if (changeBuffer->size() == 0) { // no speed changes
-			auto msg = player->info();
-			msg << "max allowed speed should be " << maxAllowedSpeed * errorMultiplier;
-			msg << " parsed " << parsedSpeed;
-
-			msg.flush();
-
-			player->teleport(teleportPoint.getX(), teleportPoint.getZ(), teleportPoint.getY(), teleportParentID);
-
-			return 1;
-		}
-
-		SpeedModChange* firstChange = &changeBuffer->get(changeBuffer->size() - 1);
-		const Time* timeStamp = &firstChange->getTimeStamp();
-
-		if (timeStamp->miliDifference() > 2000) { // we already should have lowered the speed, 2 seconds lag
-			auto msg = player->info();
-			msg << "max allowed speed should be " << maxAllowedSpeed * errorMultiplier;
-			msg << " parsed " << parsedSpeed;
-
-			msg.flush();
-
-			player->teleport(teleportPoint.getX(), teleportPoint.getZ(), teleportPoint.getY(), teleportParentID);
-
-			return 1;
-		}
-
-		for (int i = 0; i < changeBuffer->size() - 1; ++i) {
-			SpeedModChange* change = &changeBuffer->get(i);
-			//Time timeStamp = change->getTimeStamp();
-
-			float oldSpeedMod = change->getNewSpeed();
-			float allowed = allowedSpeedBase * oldSpeedMod * errorMultiplier;
-
-			if (allowed >= parsedSpeed) {
-				return 0; // no hack detected
-			}
-
-			if (allowed > maxAllowedSpeed)
-				maxAllowedSpeed = allowed;
-		}
-
-		auto msg = player->info();
-		msg << "max allowed speed should be " << maxAllowedSpeed;
-		msg << " parsed " << parsedSpeed;
-		msg << " changeBufferSize: " << changeBuffer->size();
-
-		msg.flush();
-
-		player->teleport(teleportPoint.getX(), teleportPoint.getZ(), teleportPoint.getY(), teleportParentID);
-
-		return 1;
-	}
+//	if (parsedSpeed > maxAllowedSpeed * errorMultiplier) {
+//		//float delta = abs(parsedSpeed - maxAllowedSpeed);
+//
+//		if (changeBuffer->size() == 0) { // no speed changes
+//			auto msg = player->info();
+//			msg << "max allowed speed should be " << maxAllowedSpeed * errorMultiplier;
+//			msg << " parsed " << parsedSpeed;
+//
+//			msg.flush();
+//
+//			player->teleport(teleportPoint.getX(), teleportPoint.getZ(), teleportPoint.getY(), teleportParentID);
+//
+//			return 1;
+//		}
+//
+//		SpeedModChange* firstChange = &changeBuffer->get(changeBuffer->size() - 1);
+//		const Time* timeStamp = &firstChange->getTimeStamp();
+//
+//		if (timeStamp->miliDifference() > 2000) { // we already should have lowered the speed, 2 seconds lag
+//			auto msg = player->info();
+//			msg << "max allowed speed should be " << maxAllowedSpeed * errorMultiplier;
+//			msg << " parsed " << parsedSpeed;
+//
+//			msg.flush();
+//
+//			player->teleport(teleportPoint.getX(), teleportPoint.getZ(), teleportPoint.getY(), teleportParentID);
+//
+//			return 1;
+//		}
+//
+//		for (int i = 0; i < changeBuffer->size() - 1; ++i) {
+//			SpeedModChange* change = &changeBuffer->get(i);
+//			//Time timeStamp = change->getTimeStamp();
+//
+//			float oldSpeedMod = change->getNewSpeed();
+//			float allowed = allowedSpeedBase * oldSpeedMod * errorMultiplier;
+//
+//			if (allowed >= parsedSpeed) {
+//				return 0; // no hack detected
+//			}
+//
+//			if (allowed > maxAllowedSpeed)
+//				maxAllowedSpeed = allowed;
+//		}
+//
+//		auto msg = player->info();
+//		msg << "max allowed speed should be " << maxAllowedSpeed;
+//		msg << " parsed " << parsedSpeed;
+//		msg << " changeBufferSize: " << changeBuffer->size();
+//
+//		msg.flush();
+//
+//		player->teleport(teleportPoint.getX(), teleportPoint.getZ(), teleportPoint.getY(), teleportParentID);
+//
+//		return 1;
+//	}
 
 	return 0;
 }
@@ -3840,14 +3845,17 @@ SortedVector<ManagedReference<SceneObject*> > PlayerManagerImplementation::getIn
 		if (container->isTangibleObject()) {
 			TangibleObject* item = cast<TangibleObject*>( container);
 
-			if (item == nullptr || item->hasAntiDecayKit())
+			if (item == nullptr)// || item->hasAntiDecayKit())
 				continue;
 
-			if (!(item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject())) {
-				insurableItems.put(item);
-			} else if ((item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject()) && !onlyInsurable) {
-				insurableItems.put(item);
-			}
+			 if	(item->isArmorObject() || item->isWeaponObject())
+			insurableItems.put(item);
+
+//			if (!(item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject())) {
+//				insurableItems.put(item);
+//			} else if ((item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject()) && !onlyInsurable) {
+//				insurableItems.put(item);
+//			}
 		}
 
 		addInsurableItemsRecursive(container, &insurableItems, onlyInsurable);

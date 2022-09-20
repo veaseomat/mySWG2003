@@ -1872,28 +1872,28 @@ function ThemeParkLogic:handleMissionReward(pConversingPlayer)
 	
 	self:giveLoot(pConversingPlayer, "junk")
 	
-	local unlockluck = readScreenPlayData(pConversingPlayer, "forcesensitivity", "unlock")
-		
-	if getRandomNumber(1, 999) + unlockluck >= 1000 then
---			self:giveItemReward(pConversingPlayer, "object/tangible/jedi/no_drop_jedi_holocron_light.iff")
---			CreatureObject(pConversingPlayer):sendSystemMessage("The questgiver hands you a mysterious item...")
-	local pGhost = CreatureObject(pConversingPlayer):getPlayerObject()
-	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pConversingPlayer)
-		
-		if not CreatureObject(pConversingPlayer):hasSkill("force_title_jedi_rank_01") then-- and learnedBranches >= 3 then
-			PlayerObject(pGhost):setJediState(2)
-					
-			awardSkill(pConversingPlayer, "force_title_jedi_rank_01")
-		
-			writeScreenPlayData(pConversingPlayer, "PadawanTrials", "startedTrials", 1)		
-			
-			CreatureObject(pConversingPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
-			CreatureObject(pConversingPlayer):playMusicMessage("sound/music_become_jedi.snd")
-
-			FsIntro:startStepDelay(pConversingPlayer, 3)
-		end
-		
-	end
+--	local unlockluck = readScreenPlayData(pConversingPlayer, "forcesensitivity", "unlock")
+--		
+--	if getRandomNumber(1, 999) + unlockluck >= 1000 then
+----			self:giveItemReward(pConversingPlayer, "object/tangible/jedi/no_drop_jedi_holocron_light.iff")
+----			CreatureObject(pConversingPlayer):sendSystemMessage("The questgiver hands you a mysterious item...")
+--	local pGhost = CreatureObject(pConversingPlayer):getPlayerObject()
+--	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pConversingPlayer)
+--		
+--		if not CreatureObject(pConversingPlayer):hasSkill("force_title_jedi_rank_01") then-- and learnedBranches >= 3 then
+--			PlayerObject(pGhost):setJediState(2)
+--					
+--			awardSkill(pConversingPlayer, "force_title_jedi_rank_01")
+--		
+--			writeScreenPlayData(pConversingPlayer, "PadawanTrials", "startedTrials", 1)		
+--			
+--			CreatureObject(pConversingPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+--			CreatureObject(pConversingPlayer):playMusicMessage("sound/music_become_jedi.snd")
+--
+--			PVPBHIntro:startStepDelay(pConversingPlayer, 3)
+--		end
+--		
+--	end
 end
 
 function ThemeParkLogic:givePermission(pConversingPlayer, permissionGroup)

@@ -55,7 +55,7 @@ function UnlockIntro:startStepDelay(pPlayer, step)
 	end
 
 	self:setCurrentStep(pPlayer, step)
-	local stepDelay = 60 * 60 * 1000 --1hr
+	local stepDelay = 60 * 60 * 1000 --hr/min/sec
 
 	
 --		stepDelay = (getRandomNumber(15, 480) * 60 * 1000) --2min - 720=12hr
@@ -83,10 +83,11 @@ function UnlockIntro:doDelayedStep(pPlayer)
 --	end
 	
 	local unlockluck = readScreenPlayData(pPlayer, "forcesensitivity", "unlock")
+	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer)
 		
-	if getRandomNumber(1, 1679) + unlockluck >= 1680 then
+	if getRandomNumber(1, 1679) + unlockluck >= 1680 then --1 week to 10 weeks 1,1679  >= 1680
 	
-		if not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_01") then-- and learnedBranches >= 3 then
+		if not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_01") and learnedBranches >= 2 then
 			PlayerObject(pGhost):setJediState(2)
 					
 			awardSkill(pPlayer, "force_title_jedi_rank_01")
@@ -96,13 +97,13 @@ function UnlockIntro:doDelayedStep(pPlayer)
 			CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
 			CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")
 
-			FsIntro:startStepDelay(pPlayer, 3)
+			PVPBHIntro:startStepDelay(pPlayer, 3)
 		end
 		
 		return		
 	end
 	
-	local stepDelay = 60 * 60 * 1000 --1hr
+	local stepDelay = 60 * 60 * 1000
 		
 	createEvent(stepDelay, "UnlockIntro", "doDelayedStep", pPlayer, "")
 

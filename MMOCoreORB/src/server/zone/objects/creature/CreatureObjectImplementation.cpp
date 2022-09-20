@@ -1737,8 +1737,9 @@ void CreatureObjectImplementation::setSpeedMultiplierMod(float newMultiplierMod,
 	}
 }
 
-void CreatureObjectImplementation::setRunSpeed(float newSpeed,
-		bool notifyClient) {
+void CreatureObjectImplementation::setRunSpeed(float newSpeed,	bool notifyClient) {
+//	newSpeed *= 1.3;//THIS IS PLAYER RUN SPEED
+
 	if (runSpeed == newSpeed)
 		return;
 

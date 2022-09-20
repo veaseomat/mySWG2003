@@ -44,7 +44,7 @@ public:
 	}
 
 	inline float getNewSpeed() const {
-		return newSpeed;
+		return newSpeed;//changing did nothing on login of on vehicle or after
 	}
 
 	inline const Time& getTimeStamp() const {

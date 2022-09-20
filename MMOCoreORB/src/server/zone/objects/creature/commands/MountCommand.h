@@ -163,6 +163,9 @@ public:
 		if(vehicle->getSpeedMultiplierMod() != 0)
 			newSpeed *= vehicle->getSpeedMultiplierMod();
 
+//		if(vehicle->getSpeedMultiplierMod() != 0)
+//			newSpeed *= vehicle->getSpeedMultiplierMod() * 5;
+
 		// Add our change to the buffer history
 		changeBuffer->add(SpeedModChange(newSpeed / creature->getRunSpeed()));
 
@@ -174,7 +177,7 @@ public:
 			newTurn += creature->getSkillMod("force_vehicle_control");
 		}
 
-		creature->setRunSpeed(newSpeed);
+		creature->setRunSpeed(newSpeed);//not affecting vehicles
 		creature->setTurnScale(newTurn, true);
 		creature->setAccelerationMultiplierMod(newAccel, true);
 		creature->addMountedCombatSlow();

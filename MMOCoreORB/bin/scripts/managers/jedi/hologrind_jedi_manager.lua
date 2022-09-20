@@ -202,9 +202,9 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 	
 	PVPFactionIntro:startStepDelay(pCreatureObject, 3)--faction encoutners
 	
---	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then	
---		UnlockIntro:startStepDelay(pCreatureObject, 3)
---	end
+	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then	
+		UnlockIntro:startStepDelay(pCreatureObject, 3)
+	end
 
 	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
 		PVPBHIntro:startStepDelay(pCreatureObject, 3)
