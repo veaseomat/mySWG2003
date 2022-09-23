@@ -88,21 +88,34 @@ function trainerConvHandler:runScreenHandlers(pConvTemplate, pPlayer, pNpc, sele
 		clonedConversation:setDialogTextStringId(stringTable .. "topped_out")
 	elseif (screenID == "no_qualify") then
 	
-			if isJediTrainer and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_01") then			
-				awardSkill(pPlayer, "force_title_jedi_rank_02")
-				JediTrials:setTrialsCompleted(pPlayer, #padawanTrialQuests)
-				writeScreenPlayData(pPlayer, "PadawanTrials", "completedTrials", 1)
+			if isJediTrainer and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and CreatureObject(pPlayer):hasSkill("force_title_jedi_novice") then			
+--				if not JediTrials:isOnPadawanTrials(pPlayer) then
+--					PadawanTrials:startPadawanTrials(pNpc, pPlayer)
+--					CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+--					CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")
+--				end
+--				
+--				if JediTrials:isOnPadawanTrials(pPlayer) then
+--					PadawanTrials:startNextPadawanTrial(pNpc, pPlayer)
+--					--PadawanTrials:showCurrentTrial(pNpc, pPlayer)--prevents cancelling on accident but doesnt allow to complete trials
+--				end
 				
-				CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
-				CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")
+				--PadawanTrials:startNextPadawanTrial(pObject, pPlayer)
+				
+--				awardSkill(pPlayer, "force_title_jedi_rank_02")
+--				JediTrials:setTrialsCompleted(pPlayer, #padawanTrialQuests)
+--				writeScreenPlayData(pPlayer, "PadawanTrials", "completedTrials", 1)
+				
+--				CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+--				CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")
 			
-				local suiManager = LuaSuiManager()		
-				suiManager:sendMessageBox(pPlayer, pPlayer, "Jedi Padawan", "Well done! this is your personal Jedi skill trainer, they will teach you all of your Jedi skills.", "@ok", "HologrindJediManager", "notifyOkPressed")
+--				local suiManager = LuaSuiManager()		
+--				suiManager:sendMessageBox(pPlayer, pPlayer, "Jedi Padawan", "Well done! this is your personal Jedi skill trainer, they will teach you all of your Jedi skills.", "@ok", "HologrindJediManager", "notifyOkPressed")
 				
-				local pGhost = CreatureObject(pPlayer):getPlayerObject()				
-				local zoneName = SceneObject(pNpc):getZoneName()
-				PlayerObject(pGhost):addWaypoint(zoneName, "Jedi Skill Trainer", "", SceneObject(pNpc):getWorldPositionX(), SceneObject(pNpc):getWorldPositionY(), WAYPOINTYELLOW, true, true, 0)
-				
+--				local pGhost = CreatureObject(pPlayer):getPlayerObject()				
+--				local zoneName = SceneObject(pNpc):getZoneName()
+--				PlayerObject(pGhost):addWaypoint(zoneName, "Jedi Skill Trainer", "", SceneObject(pNpc):getWorldPositionX(), SceneObject(pNpc):getWorldPositionY(), WAYPOINTYELLOW, true, true, 0)
+--				
 			end		
 	
 		if not isJediTrainer then
@@ -292,6 +305,15 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 		clonedConversation:setDialogTextStringId(stringTable .. "msg3_2")
 	  
 		local pGhost = CreatureObject(pPlayer):getPlayerObject()
+		
+		
+	local unlockluck = readScreenPlayData(pPlayer, "forcesensitivity", "unlock")
+		
+	if getRandomNumber(1, 217) >= 217 then
+		if not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_01") then
+				writeScreenPlayData(pPlayer, "forcesensitivity", "unlock", unlockluck + 1)
+		end
+	end
 		
 --		--540 skills enabled in myswg, chance to unlock every time you train a skill, its possible to not unlock -- disabled for new version below
 --		if (pGhost ~= nil and getRandomNumber(1, 500) >= 500 and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and JediTrials:isEligibleForJedi(pPlayer)) then

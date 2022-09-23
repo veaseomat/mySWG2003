@@ -176,11 +176,15 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float weapran = .8 + (System::random(40) * .01);//weapon dmg randomizer
+	float minDmg = npcTemplate->getDamageMin();
+	float maxDmg = npcTemplate->getDamageMax();
+	float speed = calculateAttackSpeed(level);
 
-	float minDmg = (level) * .7 * weapran;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
-	float maxDmg = (level) * weapran;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
-	float speed = (3.5 - (level * .01));// * randomtwo;//calculateAttackSpeed(level);
+//	float weapran = .8 + (System::random(40) * .01);//weapon dmg randomizer
+//	float minDmg = (level + 80) * .7;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
+//	float maxDmg = level + 80;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
+//	float speed = (3.5 - (level * .01));// * randomtwo;//calculateAttackSpeed(level);
+
 	bool allowedWeapon = true;
 
 
@@ -287,24 +291,34 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	int ham = 0;
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
-		int health = ((level * 90) + System::random(level * 10)) / 20 + 300 + System::random(150);// * .67 + (100 + r200)
-		int str = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);//
-		int con = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);
-		baseHAM.add(health);
-		baseHAM.add(str);
-		baseHAM.add(con);
-		int action = ((level * 80) + System::random(level * 20)) / 20 + 300 + System::random(150);
-		int quick = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);//
-		int stam = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);
-		baseHAM.add(action);
-		baseHAM.add(quick);
-		baseHAM.add(stam);
-		int mind = ((level * 60) + System::random(level * 40)) / 20 + 300 + System::random(150);
-		int focus = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);//this one is static for determining if npc will hit single pool
-		int will = ((level * 70) + System::random(level * 30)) / 20 + 300 + System::random(150);
-		baseHAM.add(mind);
-		baseHAM.add(focus);
-		baseHAM.add(will);
+		for (int i = 0; i < 9; ++i) {
+			if (i % 3 == 0) {
+				ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
+				if (isDroidObject() && isPet())
+					ham = getHamMaximum();
+				baseHAM.add(ham);
+			} else
+				baseHAM.add(ham/10);
+		}
+
+//		int health = ((level * 90) + System::random(level * 10)) / 20;// * .67 + (100 + r200)
+//		int str = ((level * 70) + System::random(level * 30)) / 20;//
+//		int con = ((level * 70) + System::random(level * 30)) / 20;
+//		baseHAM.add(health);
+//		baseHAM.add(str);
+//		baseHAM.add(con);
+//		int action = ((level * 80) + System::random(level * 20)) / 20;
+//		int quick = ((level * 70) + System::random(level * 30)) / 20;//
+//		int stam = ((level * 70) + System::random(level * 30)) / 20;
+//		baseHAM.add(action);
+//		baseHAM.add(quick);
+//		baseHAM.add(stam);
+//		int mind = ((level * 60) + System::random(level * 40)) / 20;
+//		int focus = ((level * 70) + System::random(level * 30)) / 20;//this one is static for determining if npc will hit single pool
+//		int will = ((level * 70) + System::random(level * 30)) / 20;
+//		baseHAM.add(mind);
+//		baseHAM.add(focus);
+//		baseHAM.add(will);
 
 //		int health = (level * 200) + System::random(level * 40);
 //		baseHAM.add(health);
@@ -1775,42 +1789,56 @@ void AiAgentImplementation::activatePostureRecovery() {
 }
 
 void AiAgentImplementation::activateHAMRegeneration(int latency) {
-    if (isIncapacitated() || isDead()) {
+    if (isIncapacitated() || isDead() || isInCombat())
         return;
-    }
 
-	float modifier = (float)latency/1000.f;
+    uint32 healthTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::HEALTH) / 300000.f * latency));
+    uint32 actionTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::ACTION) / 300000.f * latency));
+    uint32 mindTick   = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::MIND) / 300000.f * latency));
 
-	if (isInCombat())
-			modifier *= .2;
+    healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
+    healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
+    healDamage(asCreatureObject(), CreatureAttribute::MIND,   mindTick,   true, false);
 
-	if (isKneeling())
-		modifier *= 1.25f;
-	else if (isSitting())
-		modifier *= 1.75f;
+    activatePassiveWoundRegeneration();
 
-	// this formula gives the amount of regen per second
-	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::CONSTITUTION)) * 13.0f / 2100.0f * modifier);
-	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::STAMINA)) * 13.0f / 2100.0f * modifier);
-	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::WILLPOWER)) * 13.0f / 2100.0f * modifier);
 
-	if (healthTick < 1)
-		healthTick = 1;
-
-	if (actionTick < 1)
-		actionTick = 1;
-
-	if (mindTick < 1)
-		mindTick = 1;
-
-	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
-	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
-	healDamage(asCreatureObject(), CreatureAttribute::MIND, mindTick, true, false);
-
+//    if (isIncapacitated() || isDead()) {
+//        return;
+//    }
 //
+//	float modifier = (float)latency/1000.f;
+//
+//	if (isInCombat())
+//			modifier *= .2;
+//
+//	if (isKneeling())
+//		modifier *= 1.25f;
+//	else if (isSitting())
+//		modifier *= 1.75f;
+//
+//	// this formula gives the amount of regen per second
+//	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::CONSTITUTION)) * 13.0f / 2100.0f * modifier);
+//	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::STAMINA)) * 13.0f / 2100.0f * modifier);
+//	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::WILLPOWER)) * 13.0f / 2100.0f * modifier);
+//
+//	if (healthTick < 1)
+//		healthTick = 1;
+//
+//	if (actionTick < 1)
+//		actionTick = 1;
+//
+//	if (mindTick < 1)
+//		mindTick = 1;
+//
+//	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
+//	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
+//	healDamage(asCreatureObject(), CreatureAttribute::MIND, mindTick, true, false);
+
+
 //	ManagedReference<SceneObject*> obj = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
 //	ManagedReference<SceneObject*> obj2 = asCreatureObject()->getParentRecursively(SceneObjectType::HOSPITALBUILDING);
 //	ManagedReference<SceneObject*> obj3 = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);

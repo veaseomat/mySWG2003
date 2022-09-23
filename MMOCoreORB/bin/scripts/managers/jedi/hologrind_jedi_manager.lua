@@ -176,8 +176,16 @@ function HologrindJediManager:badgeAwardedEventHandler(pCreatureObject, pCreatur
 	if (pCreatureObject == nil) then
 		return 0
 	end
+	
+	local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
+		
+	if getRandomNumber(1, 50) >= 50 then
+		if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
+				writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 1)
+		end
+	end
 
-	self:checkIfProgressedToJedi(pCreatureObject)
+--	self:checkIfProgressedToJedi(pCreatureObject)
 
 	return 0
 end
@@ -185,7 +193,7 @@ end
 -- Register observer on the player for observing badge awards.
 -- @param pCreatureObject pointer to the creature object of the player to register observers on.
 function HologrindJediManager:registerObservers(pCreatureObject)
---	createObserver(BADGEAWARDED, "HologrindJediManager", "badgeAwardedEventHandler", pCreatureObject)
+	createObserver(BADGEAWARDED, "HologrindJediManager", "badgeAwardedEventHandler", pCreatureObject)
 end
 
 -- Handling of the onPlayerLoggedIn event. The progression of the player will be checked and observers will be registered.
@@ -204,6 +212,7 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 	
 	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then	
 		UnlockIntro:startStepDelay(pCreatureObject, 3)
+		self:registerObservers(pCreatureObject)
 	end
 
 	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
@@ -316,9 +325,18 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 
 		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
 			ForceShrineMenuComponent:doMeditate(pSceneObject, pCreatureObject)
+			return
 		end
 		
+		local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
 		
+		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+		
+		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 2)
+		
+		SceneObject(pSceneObject):destroyObjectFromWorld()
+		SceneObject(pSceneObject):destroyObjectFromDatabase()
+
 		--this was unlock
 --		if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
 --			PlayerObject(pGhost):setJediState(2)
@@ -332,8 +350,6 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 --
 --			FsIntro:startStepDelay(pCreatureObject, 3)
 			---
-			
-			
 			
 			
 			
@@ -353,11 +369,47 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 			
 			
 			
-			
 --			SceneObject(pSceneObject):destroyObjectFromWorld()
 --			SceneObject(pSceneObject):destroyObjectFromDatabase()
 --		end
 	end
+end
+
+function HologrindJediManager:checkForceStatusCommand(pPlayer)
+	if (pPlayer == nil) then
+		return
+	end
+	
+	CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+	
+	--CreatureObject(pPlayer):sendSystemMessage("these are not the droids you're looking for.")
+	
+--	local unlockluck = readScreenPlayData(pPlayer, "forcesensitivity", "unlock")
+--	
+--	if self.canCheckForce(pPlayer) then
+--	
+--	local unlockodds = (1680 / unlockluck) / 24;
+--	
+--		CreatureObject(pPlayer):sendSystemMessage("the odds are 1 in " .. unlockodds)
+--		
+--		CreatureObject(pPlayer):sendSystemMessage("your current force sensitivity is " .. unlockluck)
+--		
+--		CreatureObject(pPlayer):addCooldown("checked_force", 24 * 60 * 60 * 1000)
+--	else
+--	
+--		CreatureObject(pPlayer):sendSystemMessage("you can only check your force sensitivity once every 24 hours.")
+--	end
+
+end
+
+function HologrindJediManager.canCheckForce(pPlayer)
+	local pGhost = CreatureObject(pPlayer):getPlayerObject()
+
+	if (pGhost == nil) then
+		return false
+	end
+
+	return CreatureObject(pPlayer):checkCooldownRecovery("checked_force")
 end
 
 function HologrindJediManager:canLearnSkill(pPlayer, skillName)
@@ -366,19 +418,19 @@ end
 
 function HologrindJediManager:canSurrenderSkill(pPlayer, skillName)
 
---	if skillName == "force_title_jedi_rank_02" or skillName == "force_title_jedi_novice" then
---		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:revoke_force_title")
---		return false
---	end
+	if skillName == "force_title_jedi_rank_02" or skillName == "force_title_jedi_rank_01" or skillName == "force_title_jedi_novice" then
+		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:revoke_force_title")
+		return false
+	end
 
 --	if string.find(skillName, "force_sensitive_") and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and CreatureObject(pPlayer):getForceSensitiveSkillCount(false) <= 24 then
 --		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:revoke_force_sensitive")
 --		return false
 --	end
 
---	if string.find(skillName, "force_discipline_") and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") and not CreatureObject(pPlayer):villageKnightPrereqsMet(skillName) then
---		return false
---	end
+	if string.find(skillName, "force_discipline_") and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") and not CreatureObject(pPlayer):villageKnightPrereqsMet(skillName) then
+		return false
+	end
 
 	return true
 end

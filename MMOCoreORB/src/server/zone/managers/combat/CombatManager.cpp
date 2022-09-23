@@ -994,54 +994,55 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 
 	if (defender->isPlayerCreature()) {
 		toughMod = playerLevel;
-	} else {
-		toughMod = defender->getLevel() / 3;
-	}
-	if (toughMod > 100) toughMod = 100;//for npc lvl
+		if (toughMod > 100) toughMod = 100;
 
-	if (weapon->isPistolWeapon()){
-		toughMod *= .4;
-	}
-	if (weapon->isCarbineWeapon()){
+		if (weapon->isPistolWeapon()){
+			toughMod *= .4;
+		}
+		if (weapon->isCarbineWeapon()){
+			toughMod *= .35;
+		}
+		if (weapon->isRifleWeapon()){
+			toughMod *= .3;
+		}
+	////		if (weapon->isRangedWeapon())
+	////		toughMod *= 1.03f;
+		if (weapon->isUnarmedWeapon())
+		toughMod *= .45;
+		if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
 		toughMod *= .35;
-	}
-	if (weapon->isRifleWeapon()){
+		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
+		toughMod *= .4;
+		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
 		toughMod *= .3;
+	////		if (weapon->isMeleeWeapon())
+	////		toughMod *= 1.1f;
+		if (weapon->isLightningRifle())
+		toughMod *= .3;
+		if (weapon->isFlameThrower())
+		toughMod *= .3;
+		if (weapon->isHeavyAcidRifle())
+		toughMod *= .3;
+	////		if (weapon->isHeavyWeapon())
+	////		toughMod *= 1.0f;
+	//	if (weapon->isThrownWeapon())
+	//	toughMod *= .91;
+	//	if (weapon->isSpecialHeavyWeapon()  &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
+	//	toughMod *= .8;
+	////		if (weapon->isMineWeapon())
+	////		toughMod *= .5f;
+			if (weapon->isJediOneHandedWeapon())
+			toughMod *= .35f;
+			if (weapon->isJediTwoHandedWeapon())
+			toughMod *= .4f;
+			if (weapon->isJediPolearmWeapon())
+			toughMod *= .3f;
+//		if (weapon->isJediWeapon())
+//		toughMod *= .3;
 	}
-////		if (weapon->isRangedWeapon())
-////		toughMod *= 1.03f;
-	if (weapon->isUnarmedWeapon())
-	toughMod *= .45;
-	if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
-	toughMod *= .35;
-	if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
-	toughMod *= .4;
-	if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
-	toughMod *= .3;
-////		if (weapon->isMeleeWeapon())
-////		toughMod *= 1.1f;
-	if (weapon->isLightningRifle())
-	toughMod *= .3;
-	if (weapon->isFlameThrower())
-	toughMod *= .3;
-	if (weapon->isHeavyAcidRifle())
-	toughMod *= .3;
-////		if (weapon->isHeavyWeapon())
-////		toughMod *= 1.0f;
-//	if (weapon->isThrownWeapon())
-//	toughMod *= .91;
-//	if (weapon->isSpecialHeavyWeapon()  &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
-//	toughMod *= .8;
-////		if (weapon->isMineWeapon())
-////		toughMod *= .5f;
-////		if (weapon->isJediOneHandedWeapon())
-////		toughMod *= 2.0f;
-////		if (weapon->isJediTwoHandedWeapon())
-////		toughMod *= .8f;
-////		if (weapon->isJediPolearmWeapon())
-////		toughMod *= .8f;
-	if (weapon->isJediWeapon())
-	toughMod *= .3;
+//	else {
+//		toughMod = defender->getLevel() / 3;
+//	}
 
 	if (toughMod > 0) damage *= 1.f - (toughMod / 100.f);
 
@@ -1050,9 +1051,9 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 
 	int aiwill = defender->asCreatureObject()->getMaxHAM(CreatureAttribute::WILLPOWER);//70r30
 	int aicon = defender->asCreatureObject()->getMaxHAM(CreatureAttribute::CONSTITUTION);//70r30
-	if (defender->isAiAgent() && aicon > aiwill && weapon->isJediWeapon()) {
-		newjediToughness = defender->getLevel() / 6;
-	}
+//	if (defender->isAiAgent() && aicon > aiwill && weapon->isJediWeapon()) {
+//		newjediToughness = defender->getLevel() / 6;
+//	}
 	if (newjediToughness > 50) newjediToughness = 50;
 
 	if (newjediToughness > 0 && weapon->isJediWeapon())
@@ -1103,7 +1104,7 @@ float CombatManager::hitChanceEquation(float attackerAccuracy, float attackerRol
 int CombatManager::calculateDamageRange(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
 	int attackType = weapon->getAttackType();
 	int damageMitigation = 0;
-	float minDamage = (weapon->getMaxDamage() + 50) * .7, maxDamage = (weapon->getMaxDamage() + 50);
+	float minDamage = weapon->getMaxDamage() * .7, maxDamage = weapon->getMaxDamage();
 
 	// restrict damage if a player is not certified (don't worry about mobs)
 //	if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(cast<CreatureObject*>(attacker))) {
@@ -1422,8 +1423,8 @@ int CombatManager::getArmorReduction(TangibleObject* attacker, WeaponObject* wea
 		int aicon = defender->asCreatureObject()->getMaxHAM(CreatureAttribute::CONSTITUTION);//70r30
 
 		if (defender->isAiAgent() && aiwill > aicon && defender->getWeapon()->isJediWeapon()) {
-			forceArmor = defender->getLevel() / 6.6;
-			if (forceArmor > 45) forceArmor = 45;
+//			forceArmor = defender->getLevel() / 6.6;
+//			if (forceArmor > 45) forceArmor = 45;
 			defender->playEffect("clienteffect/pl_force_armor_hit.cef", "");
 		}
 
@@ -1587,7 +1588,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		damage = minDmg * mod;
 		diff = (maxDmg * mod) - damage;
 	} else {
-		float minDamage = (weapon->getMaxDamage() + 50) * .7, maxDamage = (weapon->getMaxDamage() + 50);
+		float minDamage = weapon->getMaxDamage() * .7, maxDamage = weapon->getMaxDamage();
 
 //		if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(attacker)) {
 //			minDamage = 5.f;
@@ -1763,7 +1764,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		diff = (maxDmg * mod) - damage;
 	} else {
 		diff = calculateDamageRange(attacker, defender, weapon);
-		float minDamage = (weapon->getMaxDamage() + 50) * .7;
+		float minDamage =  weapon->getMaxDamage() * .7;
 
 		damage = minDamage;
 	}
@@ -1833,11 +1834,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			if (weapon->isJediPolearmWeapon())
 			damage *= .9;
 			if (weapon->isJediWeapon())
-			damage *= .8;//
+			damage *= 2;//
 		}
 
 		if (data.isForceAttack()) {
-			damage *= 1.7;
+			damage *= 5;
 		}
 
 		int damagetype = weapon->getDamageType();
@@ -1885,8 +1886,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 								damage *= .8;
 							if (weapon->isJediPolearmWeapon())
 								damage *= .9;
-//					//		if (weapon->isJediWeapon())
-//					//		speedMods *= 1.1f;
+							if (weapon->isJediWeapon())
+								damage *= 2;
 
 					if (damagetype == 8)	damage *= .4;//nerf npc stun dmg
 				}
@@ -1914,15 +1915,15 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1.25 + (playerLevel * .0175); //100, move decimal
+		damage *= 5;//.25 + (playerLevel * .0075); //100, move decimal
 		
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= .6; //
+		damage *= .1; //
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1.5;
+		damage *= 1;
 
 //	if (!attacker->isPlayerCreature())
 //		damage += attacker->getLevel();
@@ -1941,7 +1942,7 @@ float CombatManager::calculateDamage(TangibleObject* attacker, WeaponObject* wea
 	float damage = 0;
 
 	int diff = calculateDamageRange(attacker, defender, weapon);
-	float minDamage = (weapon->getMaxDamage() + 50) * .7;
+	float minDamage =  weapon->getMaxDamage() * .7;//changemaxdmg
 
 	if (diff > 0)
 		damage = System::random(diff) + (int)minDamage;
@@ -2023,7 +2024,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	int postureDefense = calculateTargetPostureModifier(weapon, targetCreature);
 
 	debug() << "Defender posture defense is " << postureDefense;
-	int attackerRoll = System::random(150);// System::random(249) + 1;
+	int attackerRoll = System::random(200);// System::random(249) + 1;
 	int defenderRoll = System::random(100);//System::random(150) + 25;
 
 	// TODO (dannuic): add the trapmods in here somewhere (defense down trapmods)
@@ -2305,32 +2306,32 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 //		}
 //	}
 
-	float health = weapon->getHealthAttackCost() / 5;// * data.getHealthCostMultiplier()) / 7;
-	float action = weapon->getActionAttackCost() / 5;//* data.getActionCostMultiplier()) / 7;
-	float mind = weapon->getMindAttackCost() / 5;// * data.getMindCostMultiplier()) / 7;
-
-	health = attacker->calculateCostAdjustment(CreatureAttribute::STRENGTH, health);
-	action = attacker->calculateCostAdjustment(CreatureAttribute::QUICKNESS, action);
-	mind = attacker->calculateCostAdjustment(CreatureAttribute::FOCUS, mind);
-
-	if (attacker->getHAM(CreatureAttribute::HEALTH) <= health)
-		return false;
-
-	if (attacker->getHAM(CreatureAttribute::ACTION) <= action)
-		return false;
-
-	if (attacker->getHAM(CreatureAttribute::MIND) <= mind)
-		return false;
-
-//	if (health < 1)	health = 1;
-	if (data.getHealthCostMultiplier() > 0)
-		attacker->inflictDamage(attacker, CreatureAttribute::HEALTH, health, true, true, true);
-//	if (action < 1)	action = 1;
-	if (data.getActionCostMultiplier() > 0)
-		attacker->inflictDamage(attacker, CreatureAttribute::ACTION, action, true, true, true);
-//	if (mind < 1) mind = 1;
-	if (data.getMindCostMultiplier() > 0)
-		attacker->inflictDamage(attacker, CreatureAttribute::MIND, mind, true, true, true);
+//	float health = weapon->getHealthAttackCost() / 5;// * data.getHealthCostMultiplier()) / 7;
+//	float action = weapon->getActionAttackCost() / 5;//* data.getActionCostMultiplier()) / 7;
+//	float mind = weapon->getMindAttackCost() / 5;// * data.getMindCostMultiplier()) / 7;
+//
+//	health = attacker->calculateCostAdjustment(CreatureAttribute::STRENGTH, health);
+//	action = attacker->calculateCostAdjustment(CreatureAttribute::QUICKNESS, action);
+//	mind = attacker->calculateCostAdjustment(CreatureAttribute::FOCUS, mind);
+//
+//	if (attacker->getHAM(CreatureAttribute::HEALTH) <= health)
+//		return false;
+//
+//	if (attacker->getHAM(CreatureAttribute::ACTION) <= action)
+//		return false;
+//
+//	if (attacker->getHAM(CreatureAttribute::MIND) <= mind)
+//		return false;
+//
+////	if (health < 1)	health = 1;
+//	if (data.getHealthCostMultiplier() > 0)
+//		attacker->inflictDamage(attacker, CreatureAttribute::HEALTH, health, true, true, true);
+////	if (action < 1)	action = 1;
+//	if (data.getActionCostMultiplier() > 0)
+//		attacker->inflictDamage(attacker, CreatureAttribute::ACTION, action, true, true, true);
+////	if (mind < 1) mind = 1;
+//	if (data.getMindCostMultiplier() > 0)
+//		attacker->inflictDamage(attacker, CreatureAttribute::MIND, mind, true, true, true);
 
 	return true;
 }
@@ -2717,57 +2718,57 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 	int aiactionmax = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::ACTION);
 	int aimindmax = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::MIND);
 
-	if (attacker->isAiAgent() && !attacker->isCreature() && System::random(20) >= 20) {
-
-		if (aistrength > aiquick && !weapon->isJediWeapon() && (aihealth < (aihealthmax * .6) || aiaction < (aiactionmax * .6))  ) {
-
-			int healammount = 100;
-
-			if (attacker->getLevel() > 50) healammount = 250;
-
-			if (attacker->getLevel() > 100) healammount = 500;
-
-			if (attacker->getLevel() > 200) healammount = 1000;
-
-			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::HEALTH, healammount, true);
-			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::ACTION, healammount, true);
-
-			attacker->asCreatureObject()->doAnimation("heal_self");
-			attacker->asCreatureObject()->playEffect("clienteffect/healing_healdamage.cef", "");
-
-			attacker->asCreatureObject()->addCooldown("nextAttackDelay", 8000);
-
-			poolsToDamage = NONE;
-			damage = 0;
-
-			return 0;
-		}
-
-		if (weapon->isJediWeapon() && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7) || aimind < (aimindmax * .7))) {
-
-			int jedhealammount = 500;
-
-			if (attacker->getLevel() > 200) jedhealammount = 1500;
-
-			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::HEALTH, jedhealammount, true);
-			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::ACTION, jedhealammount, true);
-			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::MIND, jedhealammount, true);
-
-			attacker->asCreatureObject()->doAnimation("force_healing_1");
-			attacker->asCreatureObject()->playEffect("clienteffect/pl_force_heal_self.cef", "");
-
-			//attacker->asCreatureObject()->addPendingTask("injuryTreatment", task, 3000);
-
-			//attacker->asCreatureObject()->setNextAttackDelay(0, 3000);
-
-			attacker->asCreatureObject()->addCooldown("nextAttackDelay", 6000);//not sure if working? sometimes working?
-
-			poolsToDamage = NONE;
-			damage = 0;
-
-			return 0;
-		}
-	}
+//	if (attacker->isAiAgent() && !attacker->isCreature() && System::random(20) >= 20) {
+//
+//		if (aistrength > aiquick && !weapon->isJediWeapon() && (aihealth < (aihealthmax * .6) || aiaction < (aiactionmax * .6))  ) {
+//
+//			int healammount = 100;
+//
+//			if (attacker->getLevel() > 50) healammount = 250;
+//
+//			if (attacker->getLevel() > 100) healammount = 500;
+//
+//			if (attacker->getLevel() > 200) healammount = 1000;
+//
+//			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::HEALTH, healammount, true);
+//			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::ACTION, healammount, true);
+//
+//			attacker->asCreatureObject()->doAnimation("heal_self");
+//			attacker->asCreatureObject()->playEffect("clienteffect/healing_healdamage.cef", "");
+//
+//			attacker->asCreatureObject()->addCooldown("nextAttackDelay", 8000);
+//
+//			poolsToDamage = NONE;
+//			damage = 0;
+//
+//			return 0;
+//		}
+//
+//		if (weapon->isJediWeapon() && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7) || aimind < (aimindmax * .7))) {
+//
+//			int jedhealammount = 500;
+//
+//			if (attacker->getLevel() > 200) jedhealammount = 1500;
+//
+//			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::HEALTH, jedhealammount, true);
+//			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::ACTION, jedhealammount, true);
+//			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::MIND, jedhealammount, true);
+//
+//			attacker->asCreatureObject()->doAnimation("force_healing_1");
+//			attacker->asCreatureObject()->playEffect("clienteffect/pl_force_heal_self.cef", "");
+//
+//			//attacker->asCreatureObject()->addPendingTask("injuryTreatment", task, 3000);
+//
+//			//attacker->asCreatureObject()->setNextAttackDelay(0, 3000);
+//
+//			attacker->asCreatureObject()->addCooldown("nextAttackDelay", 6000);//not sure if working? sometimes working?
+//
+//			poolsToDamage = NONE;
+//			damage = 0;
+//
+//			return 0;
+//		}
+//	}
 
 	String xpType;
 	if (data.isForceAttack())

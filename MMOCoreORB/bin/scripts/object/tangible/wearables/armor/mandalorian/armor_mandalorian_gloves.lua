@@ -98,16 +98,16 @@ object_tangible_wearables_armor_mandalorian_armor_mandalorian_gloves = object_ta
 
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
-	maxCondition = 40000,
+	maxCondition = 400000,
 
-	kinetic = 58,
-	energy = 58,
-	electricity = 0,
-	stun = 0,
-	blast = 65,
-	heat = 58,
-	cold = 0,
-	acid = 58,
+	kinetic = 80,
+	energy = 80,
+	electricity = 80,
+	stun = 80,
+	blast = 80,
+	heat = 80,
+	cold = 80,
+	acid = 80,
 	lightSaber = 0
 }
 

@@ -1347,7 +1347,7 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 	player->subtractCashCredits(currentcredits);
 
 //PERMADEATH!
-	if (player->hasSkill("force_title_jedi_rank_02") ) {//&& !attacker->isPlayerCreature())  {
+	if (player->hasSkill("force_title_jedi_rank_01") ) {//&& !attacker->isPlayerCreature())  {
 
 		int jediDeaths = ghost->getExperience("combat_meleespecialize_onehandlightsaber");
 
@@ -1799,13 +1799,13 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 		}
 
 		if (ai != nullptr)
-			baseXp = ai->getLevel() * 20;// * ai->getLevel() * .5;//ai->getBaseXp();
+			baseXp = ai->getBaseXp();//ai->getLevel() * 20;// * ai->getLevel() * .5;//ai->getBaseXp();
 
 	} else {
 		ManagedReference<AiAgent*> ai = cast<AiAgent*>(destructedObject);
 
 		if (ai != nullptr)
-			baseXp = ai->getLevel() * 20;//ai->getLevel() * .5;//ai->getBaseXp();
+			baseXp = ai->getBaseXp();//ai->getLevel() * 20;//ai->getLevel() * .5;//ai->getBaseXp();
 	}
 
 	for (int i = 0; i < threatMap->size(); ++i) {
@@ -1895,7 +1895,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //				if (xpAmount > xpcap) xpAmount = xpcap;
 
 
-				//xpAmount = Math::min(xpAmount, calculatePlayerLevel(attacker, xpType) * 1000.f);
+				xpAmount = Math::min(xpAmount, calculatePlayerLevel(attacker, xpType) * 300.f);
 
 				//Apply group bonus if in group
 //				if (group != nullptr)
@@ -2113,89 +2113,89 @@ void PlayerManagerImplementation::removeEncumbrancies(CreatureObject* player, Ar
 }
 
 void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, uint32 badgeId) {
-//	const Badge* badge = BadgeList::instance()->get(badgeId);
-//	if (badge != nullptr)
-//		awardBadge(ghost, badge);
+	const Badge* badge = BadgeList::instance()->get(badgeId);
+	if (badge != nullptr)
+		awardBadge(ghost, badge);
 }
 
 void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, const Badge* badge) {
 
-	return;
-//	if (badge == nullptr) {
-//		ghost->error("Failed to award null badge.");
-//		return;
-//	}
-//
-//	StringIdChatParameter stringId("badge_n", "");
-//	stringId.setTO("badge_n", badge->getKey());
-//
-//	ManagedReference<CreatureObject*> player = dynamic_cast<CreatureObject*>(ghost->getParent().get().get());
-//	const unsigned int badgeId = badge->getIndex();
-//	if (ghost->hasBadge(badgeId)) {
-//		stringId.setStringId("badge_n", "prose_hasbadge");
-//		player->sendSystemMessage(stringId);
-//		return;
-//	}
-//
-//	ghost->setBadge(badgeId);
-//	stringId.setStringId("badge_n", "prose_grant");
-//	player->sendSystemMessage(stringId);
-//
-//	if (badge->getHasMusic()) {
-//		String music = badge->getMusic();
-//		PlayMusicMessage* musicMessage = new PlayMusicMessage(music);
-//		player->sendMessage(musicMessage);
-//	}
-//
-//	player->notifyObservers(ObserverEventType::BADGEAWARDED, player, badgeId);
-//	BadgeList* badgeList = BadgeList::instance();
-//	switch (ghost->getNumBadges()) {
-//	case 5:
-//		awardBadge(ghost, badgeList->get("count_5"));
-//		break;
-//	case 10:
-//		awardBadge(ghost, badgeList->get("count_10"));
-//		break;
-//	case 25:
-//		awardBadge(ghost, badgeList->get("count_25"));
-//		break;
-//	case 50:
-//		awardBadge(ghost, badgeList->get("count_50"));
-//		break;
-//	case 75:
-//		awardBadge(ghost, badgeList->get("count_75"));
-//		break;
-//	case 100:
-//		awardBadge(ghost, badgeList->get("count_100"));
-//		break;
-//	case 125:
-//		awardBadge(ghost, badgeList->get("count_125"));
-//		break;
-//	default:
-//		break;
-//	}
-//
-//	if (badge->getType() == Badge::EXPLORATION) {
-//		switch (ghost->getBadgeTypeCount(static_cast<uint8>(Badge::EXPLORATION))) {
-//		case 10:
-//			awardBadge(ghost, badgeList->get("bdg_exp_10_badges"));
-//			break;
-//		case 20:
-//			awardBadge(ghost, badgeList->get("bdg_exp_20_badges"));
-//			break;
-//		case 30:
-//			awardBadge(ghost, badgeList->get("bdg_exp_30_badges"));
-//			break;
-//		case 40:
-//			awardBadge(ghost, badgeList->get("bdg_exp_40_badges"));
-//			break;
-//		case 45:
-//			awardBadge(ghost, badgeList->get("bdg_exp_45_badges"));
-//			break;
-//		default:
-//			break;
-//		}
-//	}
+//	return;
+	if (badge == nullptr) {
+		ghost->error("Failed to award null badge.");
+		return;
+	}
+
+	StringIdChatParameter stringId("badge_n", "");
+	stringId.setTO("badge_n", badge->getKey());
+
+	ManagedReference<CreatureObject*> player = dynamic_cast<CreatureObject*>(ghost->getParent().get().get());
+	const unsigned int badgeId = badge->getIndex();
+	if (ghost->hasBadge(badgeId)) {
+		stringId.setStringId("badge_n", "prose_hasbadge");
+		player->sendSystemMessage(stringId);
+		return;
+	}
+
+	ghost->setBadge(badgeId);
+	stringId.setStringId("badge_n", "prose_grant");
+	player->sendSystemMessage(stringId);
+
+	if (badge->getHasMusic()) {
+		String music = badge->getMusic();
+		PlayMusicMessage* musicMessage = new PlayMusicMessage(music);
+		player->sendMessage(musicMessage);
+	}
+
+	player->notifyObservers(ObserverEventType::BADGEAWARDED, player, badgeId);
+	BadgeList* badgeList = BadgeList::instance();
+	switch (ghost->getNumBadges()) {
+	case 5:
+		awardBadge(ghost, badgeList->get("count_5"));
+		break;
+	case 10:
+		awardBadge(ghost, badgeList->get("count_10"));
+		break;
+	case 25:
+		awardBadge(ghost, badgeList->get("count_25"));
+		break;
+	case 50:
+		awardBadge(ghost, badgeList->get("count_50"));
+		break;
+	case 75:
+		awardBadge(ghost, badgeList->get("count_75"));
+		break;
+	case 100:
+		awardBadge(ghost, badgeList->get("count_100"));
+		break;
+	case 125:
+		awardBadge(ghost, badgeList->get("count_125"));
+		break;
+	default:
+		break;
+	}
+
+	if (badge->getType() == Badge::EXPLORATION) {
+		switch (ghost->getBadgeTypeCount(static_cast<uint8>(Badge::EXPLORATION))) {
+		case 10:
+			awardBadge(ghost, badgeList->get("bdg_exp_10_badges"));
+			break;
+		case 20:
+			awardBadge(ghost, badgeList->get("bdg_exp_20_badges"));
+			break;
+		case 30:
+			awardBadge(ghost, badgeList->get("bdg_exp_30_badges"));
+			break;
+		case 40:
+			awardBadge(ghost, badgeList->get("bdg_exp_40_badges"));
+			break;
+		case 45:
+			awardBadge(ghost, badgeList->get("bdg_exp_45_badges"));
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void PlayerManagerImplementation::setExperienceMultiplier(float globalMultiplier) {
@@ -5984,7 +5984,7 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 //			player->sendSystemMessage("\\#FF00FFYou receive DOC/ENT buffs according to your player level, calculated with your currently equipped weapon.");
 
 		//selfbuff
-	int selfMedBuff = 500;//
+	int selfMedBuff = 1000;//
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.0;//25% is half of vanilla 50%
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.0;//.625 is half of 125
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.0;//1.0== 100%
@@ -6002,7 +6002,7 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 //	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Doctor Health/Action buffs for 500, for 3 hours.");
+		player->sendSystemMessage("You receive Doctor Health/Action buffs for 1000, for 3 hours.");
 }
 
 void PlayerManagerImplementation::enhanceCharacterDocBuff(CreatureObject* player) {
@@ -6011,7 +6011,7 @@ void PlayerManagerImplementation::enhanceCharacterDocBuff(CreatureObject* player
 
 	bool message = true;
 //selfbuff
-	int selfMedBuff = 750;//
+	int selfMedBuff = 1500;//
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;//25% is half of vanilla 50%
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;//.625 is half of 125
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;
@@ -6029,7 +6029,7 @@ void PlayerManagerImplementation::enhanceCharacterDocBuff(CreatureObject* player
 //	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Doctor Health/Action buffs for 750 for 3 hours.");
+		player->sendSystemMessage("You receive Doctor Health/Action buffs for 1500 for 3 hours.");
 }
 
 void PlayerManagerImplementation::enhanceCharacterDocBuffTHREE(CreatureObject* player) {
@@ -6038,7 +6038,7 @@ void PlayerManagerImplementation::enhanceCharacterDocBuffTHREE(CreatureObject* p
 
 	bool message = true;
 //selfbuff
-	int selfMedBuff = 1000;//
+	int selfMedBuff = 2000;//
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;//25% is half of vanilla 50%
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;//.625 is half of 125
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;
@@ -6056,7 +6056,7 @@ void PlayerManagerImplementation::enhanceCharacterDocBuffTHREE(CreatureObject* p
 //	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Doctor Health/Action buffs for 1000 for 3 hours.");
+		player->sendSystemMessage("You receive Doctor Health/Action buffs for 2000 for 3 hours.");
 }
 
 void PlayerManagerImplementation::enhanceCharacterEntBuffONE(CreatureObject* player) {
@@ -6066,9 +6066,9 @@ void PlayerManagerImplementation::enhanceCharacterEntBuffONE(CreatureObject* pla
 	bool message = true;
 //selfbuff
 	int selfMedBuff = 2000;//
-	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * .5;//25% is half of vanilla 50%
-	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * .5;//.625 is half of 125
-	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * .5;
+	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND);
+	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS);//
+	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER);
 	int selfDuration =	180; //3 hr ;
 
 //	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
@@ -6093,9 +6093,9 @@ void PlayerManagerImplementation::enhanceCharacterEntBuffTWO(CreatureObject* pla
 	bool message = true;
 //selfbuff
 	int selfMedBuff = 2000;//
-	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * .625;//25% is half of vanilla 50%
-	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * .625;//.625 is half of 125
-	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * .625;
+	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND);
+	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS);//.625 is half of 125
+	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER);
 	int selfDuration =	180; //3 hr ;
 
 //	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health

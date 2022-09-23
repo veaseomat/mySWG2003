@@ -190,12 +190,12 @@ myswg_vendor_conv:addScreen(droid1);
 newbuff1 = ConvoScreen:new {
     id = "newbuff1",
     leftDialog = "",
-    customDialogText = "DOC/ENT Buffs on mySWG are HALF power. The game has been balanced for the FREE buffs.",
+    customDialogText = "I sell buffs!",
     stopConversation = "false",
     options = { 
-        {"500/3hr Health/Action Buffs - FREE", "buff1"},
-        {"750/3hr Health/Action Buffs - 10k", "buff2"},
-        {"1000/3hr Health/Action Buffs - 20k", "buff3"},
+        {"1000/3hr Health/Action Buffs - FREE", "buff1"},
+        {"1500/3hr Health/Action Buffs - 10k", "buff2"},
+        {"2000/3hr Health/Action Buffs - 20k", "buff3"},
         {"100%/3hr Mind Buffs - FREE", "buff4"},
         {"125%/3hr Mind Buffs - 5k", "buff5"},
 --        {"StimPack A - 500", "option50"},

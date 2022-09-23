@@ -2779,14 +2779,21 @@ void CreatureObjectImplementation::notifySelfPositionUpdate() {
 }
 
 void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
-	if (isIncapacitated() || isDead()) {
+	if (isIncapacitated() || isDead())
 		return;
-	}
+
+	if (!isPlayerCreature() && isInCombat())
+		return;
 
 	float modifier = (float)latency/1000.f;
 
+	if (isKneeling())
+		modifier *= 1.25f;
+	else if (isSitting())
+		modifier *= 1.75f;
+
 	if (isInCombat())
-			modifier *= .2;
+			modifier *= .5;
 
 	if (!isInCombat())
 			modifier *= 2;

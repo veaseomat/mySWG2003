@@ -41,6 +41,19 @@ function ForceShrineMenuComponent:doMeditate(pObject, pPlayer)
 --		local pTrainerPlanet =	PlayerObject(pPlayer):getTrainerZoneName()
 --		CreatureObject(pPlayer):sendSystemMessage("You must go to the planet " .. pTrainerPlanet .. ". There you will find your Jedi skill trainer.")
 --	end
+
+	if not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") then
+		local currentTrial = JediTrials:getCurrentTrial(pPlayer)
+
+		if (not JediTrials:isOnPadawanTrials(pPlayer)) then
+			PadawanTrials:startPadawanTrials(pObject, pPlayer)
+		elseif (currentTrial == 0) then
+			PadawanTrials:startNextPadawanTrial(pObject, pPlayer)
+		else
+			PadawanTrials:showCurrentTrial(pObject, pPlayer)
+		end
+	end
+
 	
 	if (JediTrials:isOnKnightTrials(pPlayer)) then
 		local pPlayerShrine = KnightTrials:getTrialShrine(pPlayer)

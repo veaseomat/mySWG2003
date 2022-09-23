@@ -286,7 +286,7 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 	if (ghost != nullptr) {
 		//Withdraw skill points.
-		ghost->addSkillPoints(-skill->getSkillPointsRequired());
+//		ghost->addSkillPoints(-skill->getSkillPointsRequired());
 
 
 //		if (!skill->getSkillName().contains("force_discipline")) {
@@ -370,18 +370,18 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 		const SkillList* list = creature->getSkillList();
 
-		int totalSkillPointsWasted = 250;
-
-		for (int i = 0; i < list->size(); ++i) {
-			Skill* skill = list->get(i);
-
-			totalSkillPointsWasted -= skill->getSkillPointsRequired();
-		}
-
-		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
-			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
-			ghost->setSkillPoints(totalSkillPointsWasted);
-		}
+//		int totalSkillPointsWasted = 250;
+//
+//		for (int i = 0; i < list->size(); ++i) {
+//			Skill* skill = list->get(i);
+//
+//			totalSkillPointsWasted -= skill->getSkillPointsRequired();
+//		}
+//
+//		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
+//			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
+//			ghost->setSkillPoints(totalSkillPointsWasted);
+//		}
 
 		if (playerManager != nullptr) {
 			creature->setLevel(playerManager->calculatePlayerLevel(creature));
@@ -436,7 +436,26 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 //	ZoneProcessServer* server;
 
 
-		if (skill->getSkillName() == "force_title_jedi_rank_01") {
+		if (skill->getSkillName() == "force_title_jedi_novice") {
+
+			//creature->enqueueCommand(STRING_HASHCODE("findmytrainer"), 0, 0, "");
+
+			ChatManager* chatManager = creature->getZoneServer()->getChatManager();
+			ChatManager* chatManager2 = zoneServer.get()->getChatManager();
+			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(creature, SuiWindowType::NONE);
+			String planet = ghost->getTrainerZoneName();
+
+			box->setPromptTitle("Jedi Unlock");
+			box->setPromptText("You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\n     A waypoint has been created to the nearest jedi shrine, visit any jedi shrine to begin your jedi training.\n\n     Jedi on mySWG is PERMADEATH with only 3 lives! After 3 deaths you will be PERMANENTLY DEAD! deaths do not count until you visit a shrine.\n\nCongratulations, good luck, and may the Force be with you... Jedi.");
+			ghost->addSuiBox(box);
+			creature->sendMessage(box->generateMessage());
+//just create a fkn waypoint for the player, theyre too fucking stupid to figure out what to do.
+			chatManager2->sendMail("mySWG", "JEDI UNLOCK", "Congratulations on unlocking Jedi on mySWG!\n\n     To begin training as a jedi you first need to meditate at any Jedi shrine. After you visit a shrine, this character will only have 3 lives!\n\nPERMADEATH\n\n     Jedi on mySWG is permadeath. You have 3 lives, after you have died 3 times you will be PERMANENTLY DEAD. Deaths do not count until you visit a shrine. If you do not want this character to be a jedi, do not meditate at a shrine.\n\nLIGHTSABER TEF\n\n		Using a lightsaber will make you attackable to ANYONE. Jedi in this time period are rare and in hiding!\n\nBOUNTY HUNTERS\n\n     Visibility is slightly more forgiving here but mostly unchanged. Using a lightsaber or any force powers within 32m of any player or humanoid NPC will raise your visibility for the Bounty Hunter terminals. NPC Bounty Hunters will start to come after you once you have enough visibility. As a new Jedi you should just RUN.\n\nJEDI KNIGHT\n\n     Jedi Knight trials will start when you have learned enough skills.", creature->getFirstName());
+
+			//chatManager->broadcastGalaxy("IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR:\n\nLord Vader has detected a vergence in the Force.\n\n     Be on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.", "imperial");
+		}
+
+		if (skill->getSkillName() == "force_title_jedi_rank_02") {
 
 			creature->enqueueCommand(STRING_HASHCODE("findmytrainer"), 0, 0, "");
 
@@ -445,12 +464,12 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(creature, SuiWindowType::NONE);
 			String planet = ghost->getTrainerZoneName();
 
-			box->setPromptTitle("Jedi Unlock");
-			box->setPromptText("You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\n     A waypoint has been added to your datapad for your Jedi skill trainer.\n\n     Jedi on mySWG is PERMADEATH with only 3 lives! After 3 deaths you will be PERMANENTLY DEAD, deaths do not count until you find your trainer. \n\nCongratulations, good luck, and may the Force be with you... Jedi.");
+			box->setPromptTitle("Jedi Padawan");
+			box->setPromptText("A waypoint has been added to your datapad for your personal Jedi skill trainer.");
 			ghost->addSuiBox(box);
 			creature->sendMessage(box->generateMessage());
 //just create a fkn waypoint for the player, theyre too fucking stupid to figure out what to do.
-			chatManager2->sendMail("mySWG", "Jedi Guide", "Congratulations on unlocking Jedi on mySWG!\n\n     The command /findmytrainer will create a waypoint to your jedi skill trainer.\n\nPERMADEATH\n\n     Yes, Jedi on mySWG is permadeath. You have 3 lives, after you have died 3 times you will be PERMANENTLY DEAD. Deaths do not count until you find your Jedi trainer.\n\nBOUNTY HUNTERS\n\n     Visibility is slightly more forgiving here but mostly unchanged. Using a lightsaber or any force powers within 32m of any player or humanoid NPC will raise your visibility for the Bounty Hunter terminals. NPC Bounty Hunters will start to come after you once you have enough visibility. As a new Jedi you should just RUN.\n\nJEDI KNIGHT\n\n     Jedi Knight trials will start when you have learned enough skills.", creature->getFirstName());
+			//chatManager2->sendMail("mySWG", "Jedi Guide", "Congratulations on unlocking Jedi on mySWG!\n\n     The command /findmytrainer will create a waypoint to your jedi skill trainer.\n\nPERMADEATH\n\n     Jedi on mySWG is permadeath. You have 3 lives, after you have died 3 times you will be PERMANENTLY DEAD. Deaths do not count until you have the rank of padawan.\n\nBOUNTY HUNTERS\n\n     Visibility is slightly more forgiving here but mostly unchanged. Using a lightsaber or any force powers within 32m of any player or humanoid NPC will raise your visibility for the Bounty Hunter terminals. NPC Bounty Hunters will start to come after you once you have enough visibility. As a new Jedi you should just RUN.\n\nJEDI KNIGHT\n\n     Jedi Knight trials will start when you have learned enough skills.", creature->getFirstName());
 
 			chatManager->broadcastGalaxy("IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR:\n\nLord Vader has detected a vergence in the Force.\n\n     Be on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.", "imperial");
 		}
@@ -472,8 +491,8 @@ void SkillManager::removeSkillRelatedMissions(CreatureObject* creature, Skill* s
 
 bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creature, bool notifyClient, bool checkFrs) {
 	Skill* skill = skillMap.get(skillName.hashCode());
-	//creature->sendSystemMessage("You can not surrender skills.");
-	//return false;//no skill can be surrendered
+	creature->sendSystemMessage("You can not surrender skills.");
+	return false;//no skill can be surrendered
 
 	if (skill == nullptr)
 		return false;
@@ -518,19 +537,19 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 	if (ghost != nullptr) {
 		//Give the player the used skill points back.
-		ghost->addSkillPoints(skill->getSkillPointsRequired());
+//		ghost->addSkillPoints(skill->getSkillPointsRequired());
 
 //		if (!skill->getSkillName().contains("force_discipline")) {
 //			ghost->addSkillPoints(skill->getSkillPointsRequired());
 //		}
 
-		int xpcost = skill->getXpCost();
-		int curExp = ghost->getExperience(skill->getXpType());
-
-		if (xpcost > 0) {
-//			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
-			ghost->addExperience(skill->getXpType(), xpcost, true);
-		}
+//		int xpcost = skill->getXpCost();
+//		int curExp = ghost->getExperience(skill->getXpType());
+//
+//		if (xpcost > 0) {
+////			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+//			ghost->addExperience(skill->getXpType(), xpcost, true);
+//		}
 
 		//Remove abilities but only if the creature doesn't still have a skill that grants the
 		//ability.  Some abilities are granted by multiple skills. For example Dazzle for dancers
@@ -576,18 +595,18 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 		const SkillList* list = creature->getSkillList();
 
-		int totalSkillPointsWasted = 250;
-
-		for (int i = 0; i < list->size(); ++i) {
-			Skill* skill = list->get(i);
-
-			totalSkillPointsWasted -= skill->getSkillPointsRequired();
-		}
-
-		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
-			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
-			ghost->setSkillPoints(totalSkillPointsWasted);
-		}
+//		int totalSkillPointsWasted = 250;
+//
+//		for (int i = 0; i < list->size(); ++i) {
+//			Skill* skill = list->get(i);
+//
+//			totalSkillPointsWasted -= skill->getSkillPointsRequired();
+//		}
+//
+//		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
+//			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
+//			ghost->setSkillPoints(totalSkillPointsWasted);
+//		}
 
 		ManagedReference<PlayerManager*> playerManager = creature->getZoneServer()->getPlayerManager();
 		if (playerManager != nullptr) {
@@ -683,7 +702,7 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 
 			if (ghost != nullptr) {
 				//Give the player the used skill points back.
-				ghost->addSkillPoints(skill->getSkillPointsRequired());
+	//			ghost->addSkillPoints(skill->getSkillPointsRequired());
 //				int xpcost = skill->getXpCost();
 
 //				if (xpcost > 0) {
@@ -792,9 +811,9 @@ void SkillManager::updateXpLimits(PlayerObject* ghost) {
 		if (skillBox == nullptr)
 			continue;
 //remove this for no xp cap
-//		if (xpTypeCapList->contains(skillBox->getXpType()) && (xpTypeCapList->get(skillBox->getXpType()) < skillBox->getXpCap())) {
-//			xpTypeCapList->get(skillBox->getXpType()) = skillBox->getXpCap();
-//		}
+		if (xpTypeCapList->contains(skillBox->getXpType()) && (xpTypeCapList->get(skillBox->getXpType()) < skillBox->getXpCap())) {
+			xpTypeCapList->get(skillBox->getXpType()) = skillBox->getXpCap();
+		}
 	}
 
 	//Iterate over the player xp types and cap all xp types to the limits.
@@ -803,9 +822,9 @@ void SkillManager::updateXpLimits(PlayerObject* ghost) {
 	for (int i = 0; i < experienceList->size(); ++i) {
 		String xpType = experienceList->getKeyAt(i);
 //remove this for no xp cap
-//		if (experienceList->get(xpType) > xpTypeCapList->get(xpType)) {
-//			ghost->addExperience(xpType, xpTypeCapList->get(xpType) - experienceList->get(xpType), true);
-//		}
+		if (experienceList->get(xpType) > xpTypeCapList->get(xpType)) {
+			ghost->addExperience(xpType, xpTypeCapList->get(xpType) - experienceList->get(xpType), true);
+		}
 	}
 }
 
@@ -841,9 +860,9 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 		}
 //remove for inf sp ??
 		//Check if player has enough skill points to learn the skill.
-		if (ghost->getSkillPoints() < skill->getSkillPointsRequired()) {
-			return false;
-		}
+//		if (ghost->getSkillPoints() < skill->getSkillPointsRequired()) {
+//			return false;
+//		}
 	} else {
 		//Could not retrieve player object.
 		return false;
