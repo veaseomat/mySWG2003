@@ -162,15 +162,18 @@ public:
 						Locker clocker(patient, creature);
 
 						if (patient->isPlayerCreature()) {
-							pm->enhanceCharacter(patient);
+							pm->enhanceCharacterDocBuffTHREE(patient);
+							pm->enhanceCharacterEntBuffTWO(patient);
 							creature->sendSystemMessage(patient->getFirstName() + " has been enhanced.");
 						} else if (patient->isCreature()) {
-							pm->enhanceCharacter(patient);
+							pm->enhanceCharacterDocBuffTHREE(patient);
+							pm->enhanceCharacterEntBuffTWO(patient);
 							creature->sendSystemMessage(patient->getDisplayedName() + " has been enhanced.");
 						}
 
 					} else if (object == nullptr) { // No target, buff self
-						pm->enhanceCharacter(creature);
+						pm->enhanceCharacterDocBuffTHREE(creature);
+						pm->enhanceCharacterEntBuffTWO(patient);
 
 					} else { // Target is not a player or pet
 						creature->sendSystemMessage("Syntax: /gmrevive [buff] [ [<name>] | [area [<range>] [imperial | rebel | neutral]] ]");

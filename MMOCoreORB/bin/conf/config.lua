@@ -144,6 +144,7 @@ Core3 = {
 
 	-- Each tre file (order is important!)
 	TreFiles = {
+		--"pre9.tre",
 		"default_patch.tre",
 		"patch_sku1_14_00.tre",
 		"patch_14_00.tre",

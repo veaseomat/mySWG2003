@@ -96,6 +96,7 @@ public:
 		trainerTypes.add("trainer_marksman");
 		trainerTypes.add("trainer_entertainer");
 		trainerTypes.add("trainer_medic");
+		//trainerTypes.add("trainer_2hsword");
 
 		// Trainer number. Pick a random trainer, there are at least 600 in the galaxy.
 		for (int i=0; i < zServ->getZoneCount(); ++i) {

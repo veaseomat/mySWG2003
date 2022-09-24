@@ -5,6 +5,7 @@
  *      Author: victor
  */
 
+#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/objects/creature/CreatureObject.h"
 #include "server/zone/objects/mission/MissionObjective.h"
 #include "server/zone/objects/mission/MissionObserver.h"
@@ -244,6 +245,11 @@ void MissionObjectiveImplementation::awardReward() {
 		Locker lockerPl(player, _this.getReferenceUnsafeStaticCast());
 		TransactionLog trx(TrxCode::MISSIONSYSTEMDYNAMIC, player, dividedReward, false);
 		player->addBankCredits(dividedReward, true);
+
+		if (System::random(200) >= 200 ){
+			JediManager::instance()->awardFSpoint(player);
+		}
+
 	}
 
 	if (group != nullptr) {

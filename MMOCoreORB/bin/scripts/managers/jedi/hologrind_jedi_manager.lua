@@ -176,13 +176,9 @@ function HologrindJediManager:badgeAwardedEventHandler(pCreatureObject, pCreatur
 	if (pCreatureObject == nil) then
 		return 0
 	end
-	
-	local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
 		
 	if getRandomNumber(1, 50) >= 50 then
-		if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
-				writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 1)
-		end
+				self:awardFSpoint(pCreatureObject)
 	end
 
 --	self:checkIfProgressedToJedi(pCreatureObject)
@@ -323,8 +319,9 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 --
 --		CreatureObject(pCreatureObject):addSkillMod(SkillModManager::PERMANENTMOD, "saber_block", 50, true)--notworking
 
-		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
-			ForceShrineMenuComponent:doMeditate(pSceneObject, pCreatureObject)
+		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") then
+			--ForceShrineMenuComponent:doMeditate(pSceneObject, pCreatureObject)
+			CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 			return
 		end
 		
@@ -332,7 +329,11 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 		
 		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 		
-		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 2)
+		--writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 5)
+		
+		self:awardFSpoint(pCreatureObject)
+		
+		CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
 		
 		SceneObject(pSceneObject):destroyObjectFromWorld()
 		SceneObject(pSceneObject):destroyObjectFromDatabase()
@@ -380,9 +381,9 @@ function HologrindJediManager:checkForceStatusCommand(pPlayer)
 		return
 	end
 	
-	CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+	--CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 	
-	--CreatureObject(pPlayer):sendSystemMessage("these are not the droids you're looking for.")
+	CreatureObject(pPlayer):sendSystemMessage("these are not the droids you're looking for...")
 	
 --	local unlockluck = readScreenPlayData(pPlayer, "forcesensitivity", "unlock")
 --	
@@ -433,6 +434,26 @@ function HologrindJediManager:canSurrenderSkill(pPlayer, skillName)
 	end
 
 	return true
+end
+
+function HologrindJediManager:awardFSpoint(pCreatureObject)
+	local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
+	
+	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") then
+		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 1)
+		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+	end
+
+end
+
+function HologrindJediManager:removeFSpoint(pCreatureObject)
+	local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
+	
+	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") and unlockluck > 1 then
+		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck - 1)
+	--	CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+	end
+
 end
 
 registerScreenPlay("HologrindJediManager", true)

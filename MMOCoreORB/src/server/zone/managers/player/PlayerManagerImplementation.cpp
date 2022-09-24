@@ -5,6 +5,7 @@
  *      Author: TheAnswer
  */
 
+#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/managers/player/PlayerManager.h"
 #include <utility>
 #include <mutex>
@@ -1346,6 +1347,10 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 	player->subtractCashCredits(currentcredits);
 
+	if (!player->hasSkill("force_title_jedi_novice") ) {
+		JediManager::instance()->removeFSpoint(player);
+	}
+
 //PERMADEATH!
 	if (player->hasSkill("force_title_jedi_rank_01") ) {//&& !attacker->isPlayerCreature())  {
 
@@ -1354,7 +1359,7 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 		if (jediDeaths < 1) {
 			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
 			box->setPromptTitle("PERMADEATH!");
-			box->setPromptText("You have died! This character will suffer PERMADEATH when he has died 3 times. You have 2 more lives left, after that you will be permanently dead.");
+			box->setPromptText("You have died! You have 2 more lives left, after that you will be PERMANENTLY DEAD!");
 
 			ghost->addSuiBox(box);
 			player->sendMessage(box->generateMessage());
@@ -1366,7 +1371,7 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 		if (jediDeaths == 1) {
 			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
 			box->setPromptTitle("PERMADEATH!");
-			box->setPromptText("You have died! This character will suffer PERMADEATH when he has died 3 times. You have 1 more life left, the next time you die you will be PERMANENTLY DEAD!");
+			box->setPromptText("You have died! You have 1 life left, after that you will be PERMANENTLY DEAD!");
 
 			ghost->addSuiBox(box);
 			player->sendMessage(box->generateMessage());
@@ -1431,10 +1436,29 @@ void PlayerManagerImplementation::sendActivateCloneRequest(CreatureObject* playe
 
 		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
 		box->setPromptTitle("PERMADEATH!");
-		box->setPromptText("Master Jedi, You have fought valiantly but have died 3 times. As a result this character is PERMANENTLY DEAD and unplayable. This may seem harsh but this feature is necessary to keep Jedi rare and powerful! Thank you for playing and better luck next time!");
+		box->setPromptText("Jedi, You have fought valiantly but have died 3 times. As a result this character is PERMANENTLY DEAD and unplayable. This may seem harsh but this feature is necessary to keep Jedi rare and powerful! Thank you so much for playing on mySWG and better luck next time!");
 
 		ghost->addSuiBox(box);
 		player->sendMessage(box->generateMessage());
+
+//		ZoneServer* server = ServerCore::getZoneServer();
+//
+//		shouldDeleteCharacter(player->getObjectID(), server->getGalaxyID());
+//
+//		cleanupCharacters();
+//
+
+		info("DELETING CHARACTER: " + String::valueOf(player->getObjectID())+ " NAME: " +  player->getFirstName() + " " + player->getLastName() ,true);
+		Locker _lock(player);
+
+		ManagedReference<ZoneClientSession*> client = player->getClient();
+
+		if (client != nullptr)
+			client->disconnect();
+
+		player->destroyObjectFromWorld(true); //i think it might have worked with false, change to true the nafter reset char was gone
+		player->destroyPlayerCreatureFromDatabase(true);
+
 		return;
 	}
 
@@ -3910,15 +3934,15 @@ int PlayerManagerImplementation::calculatePlayerLevel(CreatureObject* player) {
 	if (player->getPlayerObject() != nullptr && player->getPlayerObject()->isJedi() && weapon->isJediWeapon())
 		skillMod += player->getSkillMod("private_jedi_difficulty");
 
-	level += (skillMod / 10);// / 10;//Math::min(25, skillMod / 100 + 1);
+	level += (skillMod / 100);// / 10;//Math::min(25, skillMod / 100 + 1);
 
 //	level += 250 - player->getPlayerObject()->getSkillPoints();//skill pts buff
 
 //this one affects mission lvl
 
-	level /= 2.5;//250
+//	level /= 2.5;//250
 
-	if (level > 100) level = 100;
+	if (level > 25) level = 25;
 
 	if (level < 1) level = 1;
 

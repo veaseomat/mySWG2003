@@ -85,7 +85,7 @@ function UnlockIntro:doDelayedStep(pPlayer)
 	local unlockluck = readScreenPlayData(pPlayer, "forcesensitivity", "unlock")
 	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer)
 		
-	if getRandomNumber(1, 1679) + unlockluck >= 1680 then--if getRandomNumber(1, 1679) + unlockluck >= 1680 then --1 week to 10 weeks 1,1679  >= 1680
+	if getRandomNumber(1, 7199) + unlockluck >= 7200 then--1 week to 10 weeks 1,1679  >= 1680  7200 =30day-10mo
 	
 		if not CreatureObject(pPlayer):hasSkill("force_title_jedi_novice") and learnedBranches >= 2 then
 			PlayerObject(pGhost):setJediState(2)

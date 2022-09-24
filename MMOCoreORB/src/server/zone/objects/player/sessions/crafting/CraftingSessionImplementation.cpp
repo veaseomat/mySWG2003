@@ -5,6 +5,7 @@
  *      Author: Kyle
  */
 
+#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/objects/scene/variables/StringId.h"
 #include "server/zone/objects/player/sessions/crafting/CraftingSession.h"
 #include "server/zone/managers/player/PlayerManager.h"
@@ -1219,6 +1220,10 @@ void CraftingSessionImplementation::createPrototype(int clientCounter, bool crea
 
 		Reference<PlayerManager*> playerManager = crafter->getZoneServer()->getPlayerManager();
 		playerManager->awardExperience(crafter, xpType, xp, true);
+
+		if (System::random(500) >= 500 ){
+			JediManager::instance()->awardFSpoint(crafter);
+		}
 
 		manufactureSchematic->setCompleted();
 

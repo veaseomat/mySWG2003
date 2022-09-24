@@ -1044,7 +1044,7 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 
 			int jedilvl = playerManager->calculatePlayerLevel(creature);
 
-			int jedireward = jedilvl * 200;
+			int jedireward = jedilvl * 2000;
 
 			if (creature->getFaction() == Factions::FACTIONIMPERIAL)	mission->setMissionTargetName("imperial player jedi");
 			if (creature->getFaction() == Factions::FACTIONREBEL)	mission->setMissionTargetName("rebel player jedi");
