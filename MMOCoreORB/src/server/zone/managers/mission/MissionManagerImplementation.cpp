@@ -756,7 +756,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 		return;
 	}
 
-	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player);
+	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) * 3;
 	int maxDiff = randomLairSpawn->getMaxDifficulty();
 	int minDiff = randomLairSpawn->getMinDifficulty();
 	int difficultyLevel = System::random(maxDiff - minDiff) + minDiff;
@@ -767,7 +767,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 	int diffDisplay = difficultyLevel + 7;
 	if (player->isGrouped())//could change group lvl here
-		diffDisplay = player->getGroup()->getGroupLevel();
+		diffDisplay = player->getGroup()->getGroupLevel() * 3;
 	else
 		diffDisplay = playerLevel;
 
@@ -1042,9 +1042,9 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			ManagedReference<PlayerManager*> playerManager = creature->getZoneServer()->getPlayerManager();
 
 
-			int jedilvl = playerManager->calculatePlayerLevel(creature);
+			int jedilvl = playerManager->calculatePlayerLevel(creature) * 3;
 
-			int jedireward = jedilvl * 2000;
+			int jedireward = jedilvl * 1000;
 
 			if (creature->getFaction() == Factions::FACTIONIMPERIAL)	mission->setMissionTargetName("imperial player jedi");
 			if (creature->getFaction() == Factions::FACTIONREBEL)	mission->setMissionTargetName("rebel player jedi");
@@ -1807,9 +1807,9 @@ LairSpawn* MissionManagerImplementation::getRandomLairSpawn(CreatureObject* play
 
 	bool foundLair = false;
 	int counter = availableLairList->size();
-	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player);
+	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) * 3;
 	if (player->isGrouped())
-		playerLevel = player->getGroup()->getGroupLevel();
+		playerLevel = player->getGroup()->getGroupLevel() * 3;
 
 	LairSpawn* lairSpawn = nullptr;
 

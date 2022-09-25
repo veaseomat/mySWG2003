@@ -322,6 +322,7 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") then
 			--ForceShrineMenuComponent:doMeditate(pSceneObject, pCreatureObject)
 			CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+			VillageJediManagerHolocron.useHolocron(pSceneObject, pCreatureObject)
 			return
 		end
 		
@@ -329,9 +330,9 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 		
 		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 		
-		--writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 5)
+		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 4)
 		
-		self:awardFSpoint(pCreatureObject)
+		--self:awardFSpoint(pCreatureObject)
 		
 		CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
 		
@@ -389,13 +390,17 @@ function HologrindJediManager:checkForceStatusCommand(pPlayer)
 --	
 --	if self.canCheckForce(pPlayer) then
 --	
---	local unlockodds = (1680 / unlockluck) / 24;
---	
---		CreatureObject(pPlayer):sendSystemMessage("the odds are 1 in " .. unlockodds)
---		
---		CreatureObject(pPlayer):sendSystemMessage("your current force sensitivity is " .. unlockluck)
+----		local unlockodds = (1680 / unlockluck) / 24;
+----	
+----		CreatureObject(pPlayer):sendSystemMessage("the odds are 1 in " .. unlockodds)
+----		
+----		CreatureObject(pPlayer):sendSystemMessage("your current force sensitivity is " .. unlockluck)
 --		
 --		CreatureObject(pPlayer):addCooldown("checked_force", 24 * 60 * 60 * 1000)
+--		
+--		local progress = "@jedi_spam:fs_progress_" .. unlockluck
+--
+--		CreatureObject(pPlayer):sendSystemMessage(progress)
 --	else
 --	
 --		CreatureObject(pPlayer):sendSystemMessage("you can only check your force sensitivity once every 24 hours.")

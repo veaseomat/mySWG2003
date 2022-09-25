@@ -1456,8 +1456,20 @@ void PlayerManagerImplementation::sendActivateCloneRequest(CreatureObject* playe
 		if (client != nullptr)
 			client->disconnect();
 
-		player->destroyObjectFromWorld(true); //i think it might have worked with false, change to true the nafter reset char was gone
+		player->destroyObjectFromWorld(false);
 		player->destroyPlayerCreatureFromDatabase(true);
+
+		cleanupCharacters();
+
+//		Reference<Task*> task = new PlayerDisconnectEvent(player, true);
+//		task->schedule(3 * 1000);
+
+
+//		Core::getTaskManager()->scheduleTask([
+//				this, playerCreo = Reference<CreatureObject*>(player), adminCreo = Reference<CreatureObject*>(adminPlayer), reason, doBan] {
+//					if (client != nullptr)
+//						client->disconnect();
+//		}, "kickUserTask", 500);
 
 		return;
 	}

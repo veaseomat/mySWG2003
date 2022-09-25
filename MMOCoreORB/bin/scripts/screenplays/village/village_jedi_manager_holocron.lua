@@ -1,7 +1,7 @@
 local ObjectManager = require("managers.object.object_manager")
 
 USEDHOLOCRON = "used_holocron"
-HOLOCRONCOOLDOWNTIME = 12 * 60 * 60 * 1000 -- 4 hours
+HOLOCRONCOOLDOWNTIME = 3 * 60 * 60 * 1000--12 * 60 * 60 * 1000
 
 VillageJediManagerHolocron = ScreenPlay:new {}
 
@@ -43,8 +43,9 @@ function VillageJediManagerHolocron.useTheHolocron(pSceneObject, pPlayer)
 
 	-- The holocrom hums softly as you feel your Force power replenish.
 	CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:holocron_force_replenish")
-	PlayerObject(pGhost):setForcePower(PlayerObject(pGhost):getForcePowerMax());
+	PlayerObject(pGhost):setForcePower(PlayerObject(pGhost):getForcePower() + ((PlayerObject(pGhost):getForcePowerMax() - PlayerObject(pGhost):getForcePower()) / 2));
 	CreatureObject(pPlayer):addCooldown(USEDHOLOCRON, HOLOCRONCOOLDOWNTIME)
+	CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
 
 	SceneObject(pSceneObject):destroyObjectFromWorld()
 	SceneObject(pSceneObject):destroyObjectFromDatabase()
