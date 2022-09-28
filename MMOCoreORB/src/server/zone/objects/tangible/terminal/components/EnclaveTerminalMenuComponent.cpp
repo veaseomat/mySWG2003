@@ -63,7 +63,7 @@ void EnclaveTerminalMenuComponent::fillObjectMenuResponse(SceneObject* sceneObje
 		if (playerRank > 7 && enclaveType == FrsManager::COUNCIL_LIGHT)
 			menuResponse->addRadialMenuItem(75, 3, "@force_rank:demote_member"); // Demote Lower Tier Member
 
-		menuResponse->addRadialMenuItem(74, 3, "@force_rank:recover_jedi_items"); // Recover Jedi Items
+//		menuResponse->addRadialMenuItem(74, 3, "@force_rank:recover_jedi_items"); // Recover Jedi Items
 #if FRS_TESTING
 		if (ghost->isPrivileged())
 			menuResponse->addRadialMenuItem(76, 3, "Force Phase Change");

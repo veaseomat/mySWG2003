@@ -290,6 +290,10 @@ public:
 		ManagedReference<PlayerObject*> playerObject = creature->getPlayerObject();
 		playerObject->setForcePower(playerObject->getForcePower() - getFrsModifiedForceCost(creature));
 		VisibilityManager::instance()->increaseVisibility(creature, visMod);
+
+		Locker olocker(creature, creature);
+		playerObject->updateLastCombatActionTimestamp(false, false, true);
+
 	}
 
 	void setForceCost(int fc) {

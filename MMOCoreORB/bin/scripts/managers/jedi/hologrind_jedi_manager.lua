@@ -177,7 +177,7 @@ function HologrindJediManager:badgeAwardedEventHandler(pCreatureObject, pCreatur
 		return 0
 	end
 		
-	if getRandomNumber(1, 50) >= 50 then
+	if getRandomNumber(1, 28) >= 28 then
 				self:awardFSpoint(pCreatureObject)
 	end
 

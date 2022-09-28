@@ -3197,10 +3197,14 @@ bool CreatureObjectImplementation::isAttackableBy(CreatureObject* object, bool b
 //				return true;
 //		}
 //
+		if (getWeapon()->isJediWeapon()){//works here
+			return true;
+		}
+
+//		ManagedReference<RobeObject*> robe = cast<RobeObject*> (object);
 //		if (getWeapon()->isJediWeapon()){//works here
 //			return true;
 //		}
-
 
 
 		PlayerObject* ghost = getPlayerObject();
