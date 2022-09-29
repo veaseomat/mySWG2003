@@ -645,9 +645,9 @@ void PlayerObjectImplementation::removeExperience(const String& xpType, bool not
 }
 
 bool PlayerObjectImplementation::hasCappedExperience(const String& xpType) const {
-//	if (experienceList.contains(xpType) && xpTypeCapList.contains(xpType)) {
-//		return experienceList.get(xpType) == xpTypeCapList.get(xpType);
-//	}
+	if (experienceList.contains(xpType) && xpTypeCapList.contains(xpType)) {
+		return experienceList.get(xpType) == xpTypeCapList.get(xpType);
+	}//remove for no cap
 
 	return false;
 }

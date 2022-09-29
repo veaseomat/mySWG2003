@@ -259,10 +259,12 @@ int CombatManager::doCombatAction(CreatureObject* attacker, WeaponObject* weapon
 	CreatureObject *dcreo = defenderObject->asCreatureObject();
 
 	PlayerObject* ghost = dcreo->getPlayerObject();
-
-	if (dcreo->isPlayerCreature() && dcreo->getWeapon()->isJediWeapon()){
-	Locker olocker(dcreo, dcreo);
-	ghost->updateLastCombatActionTimestamp(false, false, true);
+	
+	if (ghost != nullptr) {
+		if (dcreo->isPlayerCreature() && dcreo->getWeapon()->isJediWeapon()){
+			Locker olocker(dcreo, dcreo);
+			ghost->updateLastCombatActionTimestamp(false, false, true);
+		}
 	}
 
 	return damage;
