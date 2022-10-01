@@ -99,7 +99,7 @@ function PVPFactionIntro:doDelayedStep(pPlayer)
 		
 	else
 	--chek overt again after
-		--createEvent(getRandomNumber(1, 1) * 1000, "PVPFactionIntro", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(15, 60) * 60 * 1000, "PVPFactionIntro", "doDelayedStep", pPlayer, "")
 		return
 	end
 		

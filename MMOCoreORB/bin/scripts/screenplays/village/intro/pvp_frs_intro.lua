@@ -101,7 +101,7 @@ function PVPFRSIntro:doDelayedStep(pPlayer)
 
 	else
 	--chek overt again after
-	--	createEvent(getRandomNumber(1, 1) * 1 * 1000, "PVPFRSIntro", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(15, 240) * 60 * 1000, "PVPFRSIntro", "doDelayedStep", pPlayer, "")
 		return
 	end
 		

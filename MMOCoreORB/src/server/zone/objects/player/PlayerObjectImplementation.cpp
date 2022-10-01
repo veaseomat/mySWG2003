@@ -583,36 +583,19 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 //			xp = -10000000;
 		}
 	}
-	
-//	int xpCap = -1;
 
-//	if (xpTypeCapList.contains(xpType))
-//		xpCap = xpTypeCapList.get(xpType);
-//
-//	if (xpCap < 0)
-//		xpCap = 2000;
-//
-//	if (xp > xpCap) {
-//		valueToAdd = xpCap - (xp - valueToAdd);
-//		xp = xpCap;
-//	}
+	int xpCap = -1;
 
+	if (xpTypeCapList.contains(xpType))
+		xpCap = xpTypeCapList.get(xpType);
 
+	if (xpCap < 0)
+		xpCap = 2000;
 
-
-//	int xpCap = 10000000;
-
-//	if (xpTypeCapList.contains(xpType))
-//		xpCap = xpTypeCapList.get(xpType);
-
-//	if (xpCap < 0)
-//		xpCap = 2000;
-
-//remove cap entirely
-//	if (xp > xpCap) {
-//		valueToAdd = xpCap - (xp - valueToAdd);
-//		xp = xpCap;
-//	}
+	if (xp > xpCap) {
+		valueToAdd = xpCap - (xp - valueToAdd);
+		xp = xpCap;
+	}
 
 	if (notifyClient) {
 		PlayerObjectDeltaMessage8* dplay8 = new PlayerObjectDeltaMessage8(this);

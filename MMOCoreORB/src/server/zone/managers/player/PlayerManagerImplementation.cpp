@@ -2264,13 +2264,11 @@ int PlayerManagerImplementation::awardExperience(CreatureObject* player, const S
 		buffMultiplier += player->getSkillModFromBuffs("xp_increase") / 100.f;
 
 	int xp = 0;
-//this is where the magic happens
-	if (applyModifiers == false)
-		xp = playerObject->addExperience(xpType, (int)amount);
-//		xp = playerObject->addExperience(xpType, (int) (amount * globalExpMultiplier));
+
+	if (applyModifiers)
+		xp = playerObject->addExperience(xpType, (int) (amount * speciesModifier * buffMultiplier * localMultiplier * globalExpMultiplier));
 	else
-//		xp = playerObject->addExperience(xpType, (int)amount);
-		xp = playerObject->addExperience(xpType, (int) (amount * localMultiplier * globalExpMultiplier));
+		xp = playerObject->addExperience(xpType, (int)amount);
 
 	player->notifyObservers(ObserverEventType::XPAWARDED, player, xp);
 
