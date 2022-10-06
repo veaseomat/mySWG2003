@@ -138,6 +138,16 @@ function HologrindJediManager:awardJediStatusAndSkill(pCreatureObject)
 		return
 	end
 	
+			PlayerObject(pGhost):setJediState(2)
+					
+			awardSkill(pCreatureObject, "force_title_jedi_novice")
+			PadawanTrials:doPadawanTrialsSetup(pCreatureObject)
+			
+			CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+			CreatureObject(pCreatureObject):playMusicMessage("sound/music_become_jedi.snd")
+
+			PVPBHIntro:startStepDelay(pCreatureObject, 3)
+	
 --	CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
 --	
 --	CreatureObject(pCreatureObject):playMusicMessage("sound/music_become_jedi.snd")
@@ -162,7 +172,7 @@ end
 -- @param pCreatureObject pointer to the creature object of the player to check the jedi progression on.
 function HologrindJediManager:checkIfProgressedToJedi(pCreatureObject)
 	if self:getNumberOfMasteredProfessions(pCreatureObject) >= 3 and not self:isJedi(pCreatureObject) then
-		self:sendSuiWindow(pCreatureObject)
+		--self:sendSuiWindow(pCreatureObject)
 		self:awardJediStatusAndSkill(pCreatureObject)
 	end
 end
@@ -225,10 +235,10 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 	
 	PVPFactionIntro:startStepDelay(pCreatureObject, 3)--faction encoutners
 	
-	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then	
-		UnlockIntro:startStepDelay(pCreatureObject, 3)
-		self:registerObservers(pCreatureObject)
-	end
+--	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then	
+--		UnlockIntro:startStepDelay(pCreatureObject, 3)
+--		self:registerObservers(pCreatureObject)
+--	end
 
 	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
 		PVPBHIntro:startStepDelay(pCreatureObject, 3)
