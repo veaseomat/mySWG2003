@@ -4,7 +4,7 @@ local PlayerManager = require("managers.player_manager")
 
 jediManagerName = "HologrindJediManager"
 
-NUMBEROFPROFESSIONSTOMASTER = 3 --this is now how many profs are selected
+NUMBEROFPROFESSIONSTOMASTER = 4 --this is now how many profs are selected
 MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 2
 
 HologrindJediManager = JediManager:new {
@@ -58,9 +58,9 @@ end
 -- Hologrind professions will be generated for the player.
 -- @param pCreatureObject pointer to the creature object of the created player.
 function HologrindJediManager:onPlayerCreated(pCreatureObject)
-		local unlockluck = getRandomNumber(1, 10)
-		
-		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck)
+--		local unlockluck = getRandomNumber(1, 10)
+--		
+--		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck)
 
 --		local canunlock = getRandomNumber(1, 9)
 --		
@@ -68,20 +68,20 @@ function HologrindJediManager:onPlayerCreated(pCreatureObject)
 --		writeScreenPlayData(pCreatureObject, "forcesensitivecharacter", "canunlock", 1)
 --		end
 
---	local skillList = self:getGrindableProfessionList()
---
---	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
---
---	if (pGhost == nil) then
---		return
---	end
---
---	for i = 1, NUMBEROFPROFESSIONSTOMASTER, 1 do
---		local numberOfSkillsInList = #skillList
---		local skillNumber = getRandomNumber(1, numberOfSkillsInList)
---		PlayerObject(pGhost):addHologrindProfession(skillList[skillNumber][2])
---		table.remove(skillList, skillNumber)
---	end
+	local skillList = self:getGrindableProfessionList()
+
+	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
+
+	if (pGhost == nil) then
+		return
+	end
+
+	for i = 1, NUMBEROFPROFESSIONSTOMASTER, 1 do
+		local numberOfSkillsInList = #skillList
+		local skillNumber = getRandomNumber(1, numberOfSkillsInList)
+		PlayerObject(pGhost):addHologrindProfession(skillList[skillNumber][2])
+		table.remove(skillList, skillNumber)
+	end
 end
 
 -- Check and count the number of mastered hologrind professions.
@@ -161,10 +161,10 @@ end
 -- Check if the player has mastered all hologrind professions and send sui window and award skills.
 -- @param pCreatureObject pointer to the creature object of the player to check the jedi progression on.
 function HologrindJediManager:checkIfProgressedToJedi(pCreatureObject)
---	if self:getNumberOfMasteredProfessions(pCreatureObject) >= NUMBEROFPROFESSIONSTOMASTER and not self:isJedi(pCreatureObject) then
---		self:sendSuiWindow(pCreatureObject)
---		self:awardJediStatusAndSkill(pCreatureObject)
---	end
+	if self:getNumberOfMasteredProfessions(pCreatureObject) >= 3 and not self:isJedi(pCreatureObject) then
+		self:sendSuiWindow(pCreatureObject)
+		self:awardJediStatusAndSkill(pCreatureObject)
+	end
 end
 
 -- Event handler for the BADGEAWARDED event.
@@ -177,11 +177,11 @@ function HologrindJediManager:badgeAwardedEventHandler(pCreatureObject, pCreatur
 		return 0
 	end
 		
-	if getRandomNumber(1, 28) >= 28 then
-				self:awardFSpoint(pCreatureObject)
-	end
+--	if getRandomNumber(1, 28) >= 28 then
+--				self:awardFSpoint(pCreatureObject)
+--	end
 
---	self:checkIfProgressedToJedi(pCreatureObject)
+	self:checkIfProgressedToJedi(pCreatureObject)
 
 	return 0
 end
@@ -200,9 +200,28 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 	end
 	
 	--CreatureObject(pCreatureObject):enhanceCharacter()
+	
+	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
 
---	self:checkIfProgressedToJedi(pCreatureObject)
---	self:registerObservers(pCreatureObject)
+	if (pGhost == nil) then
+		return
+	end
+
+	local professions = PlayerObject(pGhost):getHologrindProfessions()
+	
+	if #professions < 4 then
+		local skillList = self:getGrindableProfessionList()
+
+		for i = 1, NUMBEROFPROFESSIONSTOMASTER, 1 do
+			local numberOfSkillsInList = #skillList
+			local skillNumber = getRandomNumber(1, numberOfSkillsInList)
+			PlayerObject(pGhost):addHologrindProfession(skillList[skillNumber][2])
+			table.remove(skillList, skillNumber)
+		end
+	end
+	
+	self:checkIfProgressedToJedi(pCreatureObject)
+	self:registerObservers(pCreatureObject)
 	
 	PVPFactionIntro:startStepDelay(pCreatureObject, 3)--faction encoutners
 	
@@ -256,41 +275,64 @@ end
 -- Find out and send the response from the holocron to the player
 -- @param pCreatureObject pointer to the creature object of the player who used the holocron.
 function HologrindJediManager:sendHolocronMessage(pCreatureObject)
+	if self:getNumberOfMasteredProfessions(pCreatureObject) >= MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON then
+		-- The Holocron is quiet. The ancients' knowledge of the Force will no longer assist you on your journey. You must continue seeking on your own.
+		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_quiet")
+		return true
+	else
 		local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
 
 		if (pGhost == nil) then
 			return false
 		end
-	if self:getNumberOfMasteredProfessions(pCreatureObject) >= MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON then
-		-- The Holocron is quiet. The ancients' knowledge of the Force will no longer assist you on your journey. You must continue seeking on your own.
---this is holocrons replenish force
---		if self:isJedi(pCreatureObject) then
---			if	PlayerObject(pGhost):getForcePower() < PlayerObject(pGhost):getForcePowerMax() then
---				PlayerObject(pGhost):setForcePower(PlayerObject(pGhost):getForcePowerMax());
---				CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
---				CreatureObject(pCreatureObject):sendSystemMessage("The holocron hums softly as you feel your Force power replenish.")
---				return false
---			else
---				CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_force_max")
---				return true
---			end
---		end
-		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_quiet")
-		return true
-	else
 
 		local professions = PlayerObject(pGhost):getHologrindProfessions()
 		for i = 1, #professions, 1 do
 			if not PlayerObject(pGhost):hasBadge(professions[i]) then
 				local professionText = self:getProfessionStringIdFromBadgeNumber(professions[i])
 				CreatureObject(pCreatureObject):sendSystemMessageWithTO("@jedi_spam:holocron_light_information", "@skl_n:" .. professionText)
-				CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
 				break
 			end
 		end
 
 		return false
 	end
+	
+--		local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
+--
+--		if (pGhost == nil) then
+--			return false
+--		end
+--	if self:getNumberOfMasteredProfessions(pCreatureObject) >= MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON then
+--		-- The Holocron is quiet. The ancients' knowledge of the Force will no longer assist you on your journey. You must continue seeking on your own.
+----this is holocrons replenish force
+----		if self:isJedi(pCreatureObject) then
+----			if	PlayerObject(pGhost):getForcePower() < PlayerObject(pGhost):getForcePowerMax() then
+----				PlayerObject(pGhost):setForcePower(PlayerObject(pGhost):getForcePowerMax());
+----				CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+----				CreatureObject(pCreatureObject):sendSystemMessage("The holocron hums softly as you feel your Force power replenish.")
+----				return false
+----			else
+----				CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_force_max")
+----				return true
+----			end
+----		end
+--		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_quiet")
+--		return true
+--	else
+--
+--		local professions = PlayerObject(pGhost):getHologrindProfessions()
+--		for i = 1, #professions, 1 do
+--			if not PlayerObject(pGhost):hasBadge(professions[i]) then
+--				local professionText = self:getProfessionStringIdFromBadgeNumber(professions[i])
+--				CreatureObject(pCreatureObject):sendSystemMessageWithTO("@jedi_spam:holocron_light_information", "@skl_n:" .. professionText)
+--				CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+--				break
+--			end
+--		end
+--
+--		return false
+--	end
 end
 
 -- Handling of the useItem event.
@@ -298,83 +340,104 @@ end
 -- @param itemType the type of item that is used.
 -- @param pCreatureObject pointer to the creature object that used the item.
 function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
-	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
-
-	if (pGhost == nil) then
-		return false
-	end
-	
 	if (pCreatureObject == nil or pSceneObject == nil) then
 		return
 	end
 
 	if itemType == ITEMHOLOCRON then
---		local isSilent = self:sendHolocronMessage(pCreatureObject)
---
---		if isSilent then
---			return
---		else
-
---		local skillManager = LuaSkillManager()
---
---		CreatureObject(pCreatureObject):addSkillMod(SkillModManager::PERMANENTMOD, "saber_block", 50, true)--notworking
-
-		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") then
+	
+		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
 			--ForceShrineMenuComponent:doMeditate(pSceneObject, pCreatureObject)
-			CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+			--CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 			VillageJediManagerHolocron.useHolocron(pSceneObject, pCreatureObject)
 			return
 		end
-		
-		local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
-		
-		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
-		
-		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 4)
-		
-		--self:awardFSpoint(pCreatureObject)
-		
-		CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
-		
-		SceneObject(pSceneObject):destroyObjectFromWorld()
-		SceneObject(pSceneObject):destroyObjectFromDatabase()
-
-		--this was unlock
---		if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
---			PlayerObject(pGhost):setJediState(2)
---					
---			awardSkill(pCreatureObject, "force_title_jedi_rank_01")
---		
---			writeScreenPlayData(pCreatureObject, "PadawanTrials", "startedTrials", 1)		
---			
---			CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
---			CreatureObject(pCreatureObject):playMusicMessage("sound/music_become_jedi.snd")
---
---			FsIntro:startStepDelay(pCreatureObject, 3)
-			---
-			
-			
-			
---			local suiManager = LuaSuiManager()		
---			suiManager:sendMessageBox(pCreatureObject, pCreatureObject, "Jedi Unlock", "You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\nYou have been sent mail with a guide to Jedi on mySWG. First you will need to find your Jedi skill trainer! it could be any starting profession trainer in the galaxy, talk to each one until you find yours.\n\nJedi on mySWG is PERMADEATH with only 3 lives! After you find your trainer you will only have 3 lives, after that all of you Jedi skills will be removed. \n\nCongratulations, good luck, and may the Force be with you... Jedi.", "@ok", "HologrindJediManager", "notifyOkPressed")
-		
---			sendMail("mySWG", "Jedi Guide", "\n\nCongratulations on unlocking Jedi on mySWG!" 
---			.. "\n\nTo get started you first need to find your trainer, the command /findmytrainer does not work, finding your personal Jedi trainer is part of the quest. Your Jedi trainer could be any starting profession trainer in the galaxy, you will need to talk to each once until you find the correct one. Next you will need to craft a lightsaber crafting tool, then you will need to craft refined crystal packs for jedi exp until you have enough for novice lightsaber, there is no training saber on myswg." 
---			.. "\n\nAfter you have trained novice lightsaber you are ready to craft your first lightsaber. You will need to loot a color crystal to use your lightsaber. Color crystals and refined crystal packs can be looted from any npc that normally drops crystals. To craft 2nd, 3rd, and 4th generation lightsabers you will need to loot refined crystal packs in stacks of 2,3,4 respectively, they will not take crafted RCP. In mySWG all lightsaber types have the same damage and can use any lightsaber special, the most powerful specials all have the same stats but different animations, this is for balance and to increase variety. 3 saber types x 3 dfferent animations = 9 MLS animation spam options."
---			.."Lightsabers deal energy damage and decay like normal weapons, pearls and power crystals are now lootable refined crystal packs to be used in crafting 2nd 3rd and 4th generation lightsabers. All lightsabers have 1 slot for a color crystal only, color crystals do NOT decay and are not tradable. A Jedi must find his own color crystal."
---			.."\n\nJEDI CAN WEAR ARMOR! Yes, Jedi can wear armor here like pre-9. Also, Lightsaber toughness and Jedi toughness are now innate armor but only while a lightsaber is equipped. Lightsaber toughness and Jedi toughness stack on top of all armor resists for a maximum of 80%. So if your armor has 20% stun and you have 40 lightsaber toughness and 10 Jedi toughness, you actually have 70% stun armor as long as your lightsaber is equipped."
---			.."\n\n**PERMADEATH!**"
---			.."\nYes, Jedi on mySWG is permadeath. You have 3 lives, after you have died 3 times you will have all of your jedi skill boxes REMOVED. Player kills do not count to avoid any griefing and to allow for safe duels. When killed by a non player character you will receive a pop up upon death informing you that you have lost a life, revives of any kind will not save you and do not affect your death count. Your death counter will show up in experience as 'jedi_deaths'. It is possible to unlock again."
---			.."\n\nVisibility is slightly more forgiving here but mostly unchanged. Using a lightsaber or any force powers within 32m of any player or humanoid NPC will raise your visibility for the Bounty Hunter terminals. NPC Bounty Hunters will start to come after you once you have enough visibility. As a new Jedi you should just RUN."
---			.."\n\nJedi Knight trials will start when you have learned enough skills. FRS has been removed, instead the Jedi knight skill box grants hidden skill mods. Jedi Knight is not tied to any faction, you do not have to be rebel or imperial and there is no light or dark side, there is just Jedi Knight."
---			, CreatureObject(pCreatureObject):getFirstName())
-			
-			
-			
---			SceneObject(pSceneObject):destroyObjectFromWorld()
---			SceneObject(pSceneObject):destroyObjectFromDatabase()
---		end
+	
+		local isSilent = self:sendHolocronMessage(pCreatureObject)
+		if isSilent then
+			return
+		else
+			SceneObject(pSceneObject):destroyObjectFromWorld()
+			SceneObject(pSceneObject):destroyObjectFromDatabase()
+		end
 	end
+--	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
+--
+--	if (pGhost == nil) then
+--		return false
+--	end
+--	
+--	if (pCreatureObject == nil or pSceneObject == nil) then
+--		return
+--	end
+--
+--	if itemType == ITEMHOLOCRON then
+----		local isSilent = self:sendHolocronMessage(pCreatureObject)
+----
+----		if isSilent then
+----			return
+----		else
+--
+----		local skillManager = LuaSkillManager()
+----
+----		CreatureObject(pCreatureObject):addSkillMod(SkillModManager::PERMANENTMOD, "saber_block", 50, true)--notworking
+--
+--		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") then
+--			--ForceShrineMenuComponent:doMeditate(pSceneObject, pCreatureObject)
+--			CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+--			VillageJediManagerHolocron.useHolocron(pSceneObject, pCreatureObject)
+--			return
+--		end
+--		
+----		local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
+----		
+----		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+----		
+----		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 4)
+--		
+--		--self:awardFSpoint(pCreatureObject)
+--		
+--		CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+--		
+--		SceneObject(pSceneObject):destroyObjectFromWorld()
+--		SceneObject(pSceneObject):destroyObjectFromDatabase()
+--
+--		--this was unlock
+----		if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
+----			PlayerObject(pGhost):setJediState(2)
+----					
+----			awardSkill(pCreatureObject, "force_title_jedi_rank_01")
+----		
+----			writeScreenPlayData(pCreatureObject, "PadawanTrials", "startedTrials", 1)		
+----			
+----			CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+----			CreatureObject(pCreatureObject):playMusicMessage("sound/music_become_jedi.snd")
+----
+----			FsIntro:startStepDelay(pCreatureObject, 3)
+--			---
+--			
+--			
+--			
+----			local suiManager = LuaSuiManager()		
+----			suiManager:sendMessageBox(pCreatureObject, pCreatureObject, "Jedi Unlock", "You begin to feel attuned with the power of the Force. Your Jedi skill trees have been unlocked! \n\nYou have been sent mail with a guide to Jedi on mySWG. First you will need to find your Jedi skill trainer! it could be any starting profession trainer in the galaxy, talk to each one until you find yours.\n\nJedi on mySWG is PERMADEATH with only 3 lives! After you find your trainer you will only have 3 lives, after that all of you Jedi skills will be removed. \n\nCongratulations, good luck, and may the Force be with you... Jedi.", "@ok", "HologrindJediManager", "notifyOkPressed")
+--		
+----			sendMail("mySWG", "Jedi Guide", "\n\nCongratulations on unlocking Jedi on mySWG!" 
+----			.. "\n\nTo get started you first need to find your trainer, the command /findmytrainer does not work, finding your personal Jedi trainer is part of the quest. Your Jedi trainer could be any starting profession trainer in the galaxy, you will need to talk to each once until you find the correct one. Next you will need to craft a lightsaber crafting tool, then you will need to craft refined crystal packs for jedi exp until you have enough for novice lightsaber, there is no training saber on myswg." 
+----			.. "\n\nAfter you have trained novice lightsaber you are ready to craft your first lightsaber. You will need to loot a color crystal to use your lightsaber. Color crystals and refined crystal packs can be looted from any npc that normally drops crystals. To craft 2nd, 3rd, and 4th generation lightsabers you will need to loot refined crystal packs in stacks of 2,3,4 respectively, they will not take crafted RCP. In mySWG all lightsaber types have the same damage and can use any lightsaber special, the most powerful specials all have the same stats but different animations, this is for balance and to increase variety. 3 saber types x 3 dfferent animations = 9 MLS animation spam options."
+----			.."Lightsabers deal energy damage and decay like normal weapons, pearls and power crystals are now lootable refined crystal packs to be used in crafting 2nd 3rd and 4th generation lightsabers. All lightsabers have 1 slot for a color crystal only, color crystals do NOT decay and are not tradable. A Jedi must find his own color crystal."
+----			.."\n\nJEDI CAN WEAR ARMOR! Yes, Jedi can wear armor here like pre-9. Also, Lightsaber toughness and Jedi toughness are now innate armor but only while a lightsaber is equipped. Lightsaber toughness and Jedi toughness stack on top of all armor resists for a maximum of 80%. So if your armor has 20% stun and you have 40 lightsaber toughness and 10 Jedi toughness, you actually have 70% stun armor as long as your lightsaber is equipped."
+----			.."\n\n**PERMADEATH!**"
+----			.."\nYes, Jedi on mySWG is permadeath. You have 3 lives, after you have died 3 times you will have all of your jedi skill boxes REMOVED. Player kills do not count to avoid any griefing and to allow for safe duels. When killed by a non player character you will receive a pop up upon death informing you that you have lost a life, revives of any kind will not save you and do not affect your death count. Your death counter will show up in experience as 'jedi_deaths'. It is possible to unlock again."
+----			.."\n\nVisibility is slightly more forgiving here but mostly unchanged. Using a lightsaber or any force powers within 32m of any player or humanoid NPC will raise your visibility for the Bounty Hunter terminals. NPC Bounty Hunters will start to come after you once you have enough visibility. As a new Jedi you should just RUN."
+----			.."\n\nJedi Knight trials will start when you have learned enough skills. FRS has been removed, instead the Jedi knight skill box grants hidden skill mods. Jedi Knight is not tied to any faction, you do not have to be rebel or imperial and there is no light or dark side, there is just Jedi Knight."
+----			, CreatureObject(pCreatureObject):getFirstName())
+--			
+--			
+--			
+----			SceneObject(pSceneObject):destroyObjectFromWorld()
+----			SceneObject(pSceneObject):destroyObjectFromDatabase()
+----		end
+--	end
 end
 
 function HologrindJediManager:checkForceStatusCommand(pPlayer)
@@ -382,11 +445,15 @@ function HologrindJediManager:checkForceStatusCommand(pPlayer)
 		return
 	end
 	
+--	local unlockluck = readScreenPlayData(pPlayer, "forcesensitivity", "unlock")
+
+--	CreatureObject(pPlayer):sendSystemMessage(progress)
+	
 	--CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 	
-	CreatureObject(pPlayer):sendSystemMessage("these are not the droids you're looking for...")
+	CreatureObject(pPlayer):sendSystemMessage("you should master professions, holocrons can guide you...")
 	
---	local unlockluck = readScreenPlayData(pPlayer, "forcesensitivity", "unlock")
+
 --	
 --	if self.canCheckForce(pPlayer) then
 --	
@@ -442,22 +509,22 @@ function HologrindJediManager:canSurrenderSkill(pPlayer, skillName)
 end
 
 function HologrindJediManager:awardFSpoint(pCreatureObject)
-	local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
-	
-	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") then
-		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 1)
-		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
-	end
+--	local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
+--	
+--	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") then
+--		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 1)
+--		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+--	end
 
 end
 
 function HologrindJediManager:removeFSpoint(pCreatureObject)
-	local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
-	
-	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") and unlockluck > 1 then
-		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck - 1)
-	--	CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
-	end
+--	local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
+--	
+--	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") and unlockluck > 1 then
+--		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck - 1)
+--	--	CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+--	end
 
 end
 

@@ -672,10 +672,10 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		int lootChance = entry->getLootChance() * 2; //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
-//		int holochance = 1000;
-//		if (System::random(holochance) >= holochance){
-//			createLoot(trx, container, "holocron_nd", level);
-//		}
+		int holochance = 1000;
+		if (System::random(holochance) >= holochance){
+			createLoot(trx, container, "holocron_light", level);
+		}
 
 
 		if (lootChance <= 0)

@@ -1277,10 +1277,10 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 //jedi xp loss
 
-//	int curExp = ghost->getExperience("jedi_general");
-//	int xpLoss = (curExp / 8) * -1; //divide by global xp multi
-//
-//	awardExperience(player, "jedi_general", xpLoss, true);
+	int curExp = ghost->getExperience("jedi_general");
+	int xpLoss = (curExp / 2) * -1; //divide by global xp multi
+
+	awardExperience(player, "jedi_general", xpLoss, true, 1, false);
 //
 //	int frscurExp = ghost->getExperience("force_rank_xp");
 //	int frsxpLoss = (frscurExp / 8) * -1; //divide by global xp multi
@@ -1347,60 +1347,64 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 	player->subtractCashCredits(currentcredits);
 
-	if (!player->hasSkill("force_title_jedi_novice") ) {
-		JediManager::instance()->removeFSpoint(player);
-	}
+//	if (!player->hasSkill("force_title_jedi_novice") ) {
+//		JediManager::instance()->removeFSpoint(player);
+//	}
 
-//PERMADEATH!
-	if (player->hasSkill("force_title_jedi_rank_01") ) {//&& !attacker->isPlayerCreature())  {
-
-		int jediDeaths = ghost->getExperience("combat_meleespecialize_onehandlightsaber");
-
-		if (jediDeaths < 1) {
-			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
-			box->setPromptTitle("PERMADEATH!");
-			box->setPromptText("You have died! You have 2 more lives left, after that you will be PERMANENTLY DEAD!");
-
-			ghost->addSuiBox(box);
-			player->sendMessage(box->generateMessage());
-
-			awardExperience(player, "combat_meleespecialize_onehandlightsaber", 1, false, 1, false);
-
-		}
-
-		if (jediDeaths == 1) {
-			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
-			box->setPromptTitle("PERMADEATH!");
-			box->setPromptText("You have died! You have 1 life left, after that you will be PERMANENTLY DEAD!");
-
-			ghost->addSuiBox(box);
-			player->sendMessage(box->generateMessage());
-
-			awardExperience(player, "combat_meleespecialize_onehandlightsaber", 1, false, 1, false);
-		}
-//moved to activateclone below
-//		if (jediDeaths >= 2) {
-//			SkillManager::instance()->surrenderAllSkills(player, true, true);
+////PERMADEATH!
+//	if (player->hasSkill("force_title_jedi_rank_01") ) {//&& !attacker->isPlayerCreature())  {
 //
-//			SkillManager::instance()->surrenderSkill("force_title_jedi_rank_02", player, true);
+//		int jediDeaths = ghost->getExperience("combat_meleespecialize_onehandlightsaber");
 //
-//			SkillManager::instance()->surrenderSkill("force_title_jedi_rank_01", player, true);
-//
-//			ghost->setJediState(0);
-//
-//			awardExperience(player, "combat_meleespecialize_onehandlightsaber", -2, false, 1, false);
-//
-//			int curExp = ghost->getExperience("jedi_general") * -1;
-//			awardExperience(player, "jedi_general", curExp, false, 1, false);
-//
+//		if (jediDeaths < 1) {
 //			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
 //			box->setPromptTitle("PERMADEATH!");
-//			box->setPromptText("You have been cut off from the force! All of your jedi abilities have been removed!");
+//			box->setPromptText("You have died! You have 2 more lives left, after that you will be PERMANENTLY DEAD!");
 //
 //			ghost->addSuiBox(box);
 //			player->sendMessage(box->generateMessage());
+//
+//			awardExperience(player, "combat_meleespecialize_onehandlightsaber", 1, false, 1, false);
+//
 //		}
-	}
+//
+//		if (jediDeaths == 1) {
+//			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+//			box->setPromptTitle("PERMADEATH!");
+//			box->setPromptText("You have died! You have 1 life left, after that you will be PERMANENTLY DEAD!");
+//
+//			ghost->addSuiBox(box);
+//			player->sendMessage(box->generateMessage());
+//
+//			awardExperience(player, "combat_meleespecialize_onehandlightsaber", 1, false, 1, false);
+//		}
+//
+//
+////moved to activateclone below
+////		if (jediDeaths >= 2) {
+////			SkillManager::instance()->surrenderAllSkills(player, true, true);
+////
+////			SkillManager::instance()->surrenderSkill("force_title_jedi_rank_02", player, true);
+////
+////			SkillManager::instance()->surrenderSkill("force_title_jedi_rank_01", player, true);
+////
+////			ghost->setJediState(0);
+////
+////			awardExperience(player, "combat_meleespecialize_onehandlightsaber", -2, false, 1, false);
+////
+////			int curExp = ghost->getExperience("jedi_general") * -1;
+////			awardExperience(player, "jedi_general", curExp, false, 1, false);
+////
+////			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+////			box->setPromptTitle("PERMADEATH!");
+////			box->setPromptText("You have been cut off from the force! All of your jedi abilities have been removed!");
+////
+////			ghost->addSuiBox(box);
+////			player->sendMessage(box->generateMessage());
+////		}
+//
+//
+//	}
 
 }
 
@@ -1418,61 +1422,61 @@ void PlayerManagerImplementation::sendActivateCloneRequest(CreatureObject* playe
 		return;
 
 
-	int jediDeaths = ghost->getExperience("combat_meleespecialize_onehandlightsaber");
-
-	if (jediDeaths >= 2) {
-//		SkillManager::instance()->surrenderAllSkills(player, true, true);
+//	int jediDeaths = ghost->getExperience("combat_meleespecialize_onehandlightsaber");
 //
-//		SkillManager::instance()->surrenderSkill("force_title_jedi_rank_02", player, true);
+//	if (jediDeaths >= 2) {
+////		SkillManager::instance()->surrenderAllSkills(player, true, true);
+////
+////		SkillManager::instance()->surrenderSkill("force_title_jedi_rank_02", player, true);
+////
+////		SkillManager::instance()->surrenderSkill("force_title_jedi_rank_01", player, true);
+////
+////		ghost->setJediState(0);
 //
-//		SkillManager::instance()->surrenderSkill("force_title_jedi_rank_01", player, true);
+////		awardExperience(player, "combat_meleespecialize_onehandlightsaber", -2, false, 1, false);
+////
+////		int curExp = ghost->getExperience("jedi_general") * -1;
+////		awardExperience(player, "jedi_general", curExp, false, 1, false);
 //
-//		ghost->setJediState(0);
-
-//		awardExperience(player, "combat_meleespecialize_onehandlightsaber", -2, false, 1, false);
+//		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+//		box->setPromptTitle("PERMADEATH!");
+//		box->setPromptText("Jedi, You have fought valiantly but have died 3 times. As a result this character is PERMANENTLY DEAD and unplayable. This may seem harsh but this feature is necessary to keep Jedi rare and powerful! Thank you so much for playing on mySWG and better luck next time!");
 //
-//		int curExp = ghost->getExperience("jedi_general") * -1;
-//		awardExperience(player, "jedi_general", curExp, false, 1, false);
-
-		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
-		box->setPromptTitle("PERMADEATH!");
-		box->setPromptText("Jedi, You have fought valiantly but have died 3 times. As a result this character is PERMANENTLY DEAD and unplayable. This may seem harsh but this feature is necessary to keep Jedi rare and powerful! Thank you so much for playing on mySWG and better luck next time!");
-
-		ghost->addSuiBox(box);
-		player->sendMessage(box->generateMessage());
-
-//		ZoneServer* server = ServerCore::getZoneServer();
+//		ghost->addSuiBox(box);
+//		player->sendMessage(box->generateMessage());
 //
-//		shouldDeleteCharacter(player->getObjectID(), server->getGalaxyID());
+////		ZoneServer* server = ServerCore::getZoneServer();
+////
+////		shouldDeleteCharacter(player->getObjectID(), server->getGalaxyID());
+////
+////		cleanupCharacters();
+////
+//
+//		info("DELETING CHARACTER: " + String::valueOf(player->getObjectID())+ " NAME: " +  player->getFirstName() + " " + player->getLastName() ,true);
+//		Locker _lock(player);
+//
+//		ManagedReference<ZoneClientSession*> client = player->getClient();
+//
+//		if (client != nullptr)
+//			client->disconnect();
+//
+//		player->destroyObjectFromWorld(false);
+//		player->destroyPlayerCreatureFromDatabase(true);
 //
 //		cleanupCharacters();
 //
-
-		info("DELETING CHARACTER: " + String::valueOf(player->getObjectID())+ " NAME: " +  player->getFirstName() + " " + player->getLastName() ,true);
-		Locker _lock(player);
-
-		ManagedReference<ZoneClientSession*> client = player->getClient();
-
-		if (client != nullptr)
-			client->disconnect();
-
-		player->destroyObjectFromWorld(false);
-		player->destroyPlayerCreatureFromDatabase(true);
-
-		cleanupCharacters();
-
-//		Reference<Task*> task = new PlayerDisconnectEvent(player, true);
-//		task->schedule(3 * 1000);
-
-
-//		Core::getTaskManager()->scheduleTask([
-//				this, playerCreo = Reference<CreatureObject*>(player), adminCreo = Reference<CreatureObject*>(adminPlayer), reason, doBan] {
-//					if (client != nullptr)
-//						client->disconnect();
-//		}, "kickUserTask", 500);
-
-		return;
-	}
+////		Reference<Task*> task = new PlayerDisconnectEvent(player, true);
+////		task->schedule(3 * 1000);
+//
+//
+////		Core::getTaskManager()->scheduleTask([
+////				this, playerCreo = Reference<CreatureObject*>(player), adminCreo = Reference<CreatureObject*>(adminPlayer), reason, doBan] {
+////					if (client != nullptr)
+////						client->disconnect();
+////		}, "kickUserTask", 500);
+//
+//		return;
+//	}
 
 	ghost->removeSuiBoxType(SuiWindowType::CLONE_REQUEST);
 

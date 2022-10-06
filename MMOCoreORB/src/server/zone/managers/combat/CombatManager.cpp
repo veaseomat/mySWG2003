@@ -256,15 +256,15 @@ int CombatManager::doCombatAction(CreatureObject* attacker, WeaponObject* weapon
 		}
 	}
 
-	if (defenderObject != nullptr) {
-		CreatureObject* dcreo = defenderObject->asCreatureObject();
+	if (defenderObject->isPlayerCreature()) {
+		CreatureObject *dcreo = defenderObject->asCreatureObject();
 
-		PlayerObject* ghost = dcreo->getPlayerObject();
+		PlayerObject* dghost = dcreo->getPlayerObject();
 	
-		if (ghost != nullptr) {
+		if (dghost != nullptr) {
 			if (dcreo->isPlayerCreature() && dcreo->getWeapon()->isJediWeapon()){
 				Locker olocker(dcreo, dcreo);
-				ghost->updateLastCombatActionTimestamp(false, false, true);
+				dghost->updateLastCombatActionTimestamp(false, false, true);
 			}
 		}
 	}
