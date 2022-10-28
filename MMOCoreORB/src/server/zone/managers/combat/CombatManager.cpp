@@ -733,18 +733,20 @@ int CombatManager::calculateTargetPostureModifier(WeaponObject* weapon, Creature
 }
 
 int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
-	if (attacker->isAiAgent()) {
+	if (!attacker->isPlayerCreature()) {
 		int npcacc = attacker->getLevel() / 3;// attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH) / 15;//1500 //attacker->getLevel() / 3;// cast<AiAgent*>(attacker)->getChanceHit() * 100;
 
 
 		CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
 
+		if (!attacker->isTurret()) {
 		if (creoAttacker->isRunning()) {
 			npcacc *= .8;
 		}
 
 		if (creoAttacker->hasState(CreatureState::BLINDED)) {
 			npcacc *= .8;
+		}
 		}
 
 		if (npcacc < 1)	npcacc = 1;

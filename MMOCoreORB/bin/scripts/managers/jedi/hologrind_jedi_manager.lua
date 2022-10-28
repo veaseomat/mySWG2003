@@ -45,7 +45,7 @@ function HologrindJediManager:getGrindableProfessionList()
 		{ "combat_rifleman_master", 		COMBAT_RIFLEMAN_MASTER  },
 		{ "outdoors_scout_master", 		OUTDOORS_SCOUT_MASTER  },
 		{ "combat_smuggler_master", 		COMBAT_SMUGGLER_MASTER  },
-		{ "outdoors_squadleader_master", 	OUTDOORS_SQUADLEADER_MASTER  },
+		--{ "outdoors_squadleader_master", 	OUTDOORS_SQUADLEADER_MASTER  },
 		{ "combat_2hsword_master", 		COMBAT_2HSWORD_MASTER  },
 		{ "crafting_tailor_master", 		CRAFTING_TAILOR_MASTER  },
 		{ "crafting_weaponsmith_master", 	CRAFTING_WEAPONSMITH_MASTER  },
