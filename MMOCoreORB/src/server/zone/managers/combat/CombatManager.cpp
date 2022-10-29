@@ -2611,6 +2611,8 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 		return 0;
 	}
 
+if (!attacker->isTurret()) {
+
 	int aiquick = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::QUICKNESS);//70+r30
 	int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80
 	int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);//70r30
@@ -2817,6 +2819,8 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 //			return 0;
 //		}
 //	}
+
+}
 
 	String xpType;
 	if (data.isForceAttack())
