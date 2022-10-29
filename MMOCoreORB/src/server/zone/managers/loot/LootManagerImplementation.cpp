@@ -537,17 +537,24 @@ void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootI
 	bool yellow = false;
 	float modSqr = excMod * excMod;
 
-	if (System::random(skillModChance / modSqr) == 0) {
+	if (System::random(900) + level >= 900) {//(System::random(skillModChance / modSqr) == 0) {
 		// if it has a skillmod the name will be yellow
 		yellow = true;
 		int modCount = 1;
 		int roll = System::random(100);
 
-		if(roll > (100 - modSqr))
-			modCount += 2;
-
-		if(roll < (5 + modSqr))
+		if(roll > 25)
 			modCount += 1;
+		if(roll > 50)
+			modCount += 1;
+		if(roll > 75)
+			modCount += 1;
+
+//		if(roll > (100 - modSqr))
+//			modCount += 2;
+//
+//		if(roll < (5 + modSqr))
+//			modCount += 1;
 
 		for(int i = 0; i < modCount; ++i) {
 			//Mods can't be lower than -1 or greater than 25
@@ -665,10 +672,10 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		int lootChance = entry->getLootChance() * 2; //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
-//		int holochance = 1000;
-//		if (System::random(holochance) >= holochance){
-//			createLoot(trx, container, "holocron_nd", level);
-//		}
+		int holochance = 1000;
+		if (System::random(holochance) >= holochance){
+			createLoot(trx, container, "holocron_light", level);
+		}
 
 
 		if (lootChance <= 0)

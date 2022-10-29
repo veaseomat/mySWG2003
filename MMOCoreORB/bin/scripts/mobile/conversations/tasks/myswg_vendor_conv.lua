@@ -74,7 +74,7 @@ myswg_vendor_conv:addScreen(armor1);
 art1 = ConvoScreen:new {
     id = "art1",
     leftDialog = "",
-    customDialogText = "***HARVESTERS CURRENTLY NOT WORKING*** I sell artisan stuff! Need anything?",
+    customDialogText = "I sell artisan stuff! Need anything?",
     stopConversation = "false",
     options = {
         {"Mineral survey tool - 500", "option24"},

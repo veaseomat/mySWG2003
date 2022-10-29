@@ -583,36 +583,19 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 //			xp = -10000000;
 		}
 	}
-	
-//	int xpCap = -1;
 
-//	if (xpTypeCapList.contains(xpType))
-//		xpCap = xpTypeCapList.get(xpType);
-//
-//	if (xpCap < 0)
-//		xpCap = 2000;
-//
-//	if (xp > xpCap) {
-//		valueToAdd = xpCap - (xp - valueToAdd);
-//		xp = xpCap;
-//	}
+	int xpCap = -1;
 
+	if (xpTypeCapList.contains(xpType))
+		xpCap = xpTypeCapList.get(xpType);
 
+	if (xpCap < 0)
+		xpCap = 2000;
 
-
-//	int xpCap = 10000000;
-
-//	if (xpTypeCapList.contains(xpType))
-//		xpCap = xpTypeCapList.get(xpType);
-
-//	if (xpCap < 0)
-//		xpCap = 2000;
-
-//remove cap entirely
-//	if (xp > xpCap) {
-//		valueToAdd = xpCap - (xp - valueToAdd);
-//		xp = xpCap;
-//	}
+	if (xp > xpCap) {
+		valueToAdd = xpCap - (xp - valueToAdd);
+		xp = xpCap;
+	}
 
 	if (notifyClient) {
 		PlayerObjectDeltaMessage8* dplay8 = new PlayerObjectDeltaMessage8(this);
@@ -645,9 +628,9 @@ void PlayerObjectImplementation::removeExperience(const String& xpType, bool not
 }
 
 bool PlayerObjectImplementation::hasCappedExperience(const String& xpType) const {
-//	if (experienceList.contains(xpType) && xpTypeCapList.contains(xpType)) {
-//		return experienceList.get(xpType) == xpTypeCapList.get(xpType);
-//	}
+	if (experienceList.contains(xpType) && xpTypeCapList.contains(xpType)) {
+		return experienceList.get(xpType) == xpTypeCapList.get(xpType);
+	}//remove for no cap
 
 	return false;
 }
@@ -1294,6 +1277,11 @@ void PlayerObjectImplementation::setTitle(const String& characterTitle, bool not
 		Skill* targetSkill = SkillManager::instance()->getSkill(characterTitle);
 
 		if(targetSkill == nullptr || !targetSkill->isTitle()) {
+			return;
+		}
+
+		//if(targetSkill == "force_title_jedi_rank_03" || targetSkill == "force_title_jedi_rank_02" || targetSkill == "force_title_jedi_rank_01" || targetSkill == "force_title_jedi_novice") {
+		if	(targetSkill->getJediStateRequired() > 0)	{
 			return;
 		}
 	}

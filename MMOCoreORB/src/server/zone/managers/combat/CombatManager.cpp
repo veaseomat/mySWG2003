@@ -256,6 +256,19 @@ int CombatManager::doCombatAction(CreatureObject* attacker, WeaponObject* weapon
 		}
 	}
 
+	if (defenderObject->isPlayerCreature()) {
+		CreatureObject *dcreo = defenderObject->asCreatureObject();
+
+		PlayerObject* dghost = dcreo->getPlayerObject();
+	
+		if (dghost != nullptr) {
+			if (dcreo->isPlayerCreature() && dcreo->getWeapon()->isJediWeapon()){
+				Locker olocker(dcreo, dcreo);
+				dghost->updateLastCombatActionTimestamp(false, false, true);
+			}
+		}
+	}
+
 	return damage;
 }
 
@@ -720,18 +733,20 @@ int CombatManager::calculateTargetPostureModifier(WeaponObject* weapon, Creature
 }
 
 int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
-	if (attacker->isAiAgent()) {
+	if (!attacker->isPlayerCreature()) {
 		int npcacc = attacker->getLevel() / 3;// attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH) / 15;//1500 //attacker->getLevel() / 3;// cast<AiAgent*>(attacker)->getChanceHit() * 100;
 
 
 		CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
 
+		if (!attacker->isTurret()) {
 		if (creoAttacker->isRunning()) {
 			npcacc *= .8;
 		}
 
 		if (creoAttacker->hasState(CreatureState::BLINDED)) {
 			npcacc *= .8;
+		}
 		}
 
 		if (npcacc < 1)	npcacc = 1;
@@ -842,22 +857,22 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 //	if (attacker->isPlayerCreature())
 //		attackerAccuracy *= .8;
 
-//	if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(cast<CreatureObject*>(attacker))) {
-//		attackerAccuracy = 0;//not certified
-//	}
-
 	if (attackerAccuracy > 100)
 		attackerAccuracy = 100;
 
 	if (attackerAccuracy < 1)
 		attackerAccuracy = 1;
 
+	if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(cast<CreatureObject*>(attacker))) {
+		attackerAccuracy = -100;//not certified
+	}
+
 	if (creoAttacker->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
-		attackerAccuracy = -50;
+		attackerAccuracy = -100;
 	}
 
 	if (creoAttacker->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
-		attackerAccuracy = -150;
+		attackerAccuracy = -200;
 	}
 	return attackerAccuracy;
 }
@@ -2596,6 +2611,8 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 		return 0;
 	}
 
+if (!attacker->isTurret()) {
+
 	int aiquick = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::QUICKNESS);//70+r30
 	int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80
 	int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);//70r30
@@ -2802,6 +2819,8 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 //			return 0;
 //		}
 //	}
+
+}
 
 	String xpType;
 	if (data.isForceAttack())
@@ -3729,20 +3748,56 @@ void CombatManager::checkForTefs(CreatureObject* attacker, CreatureObject* defen
 	ManagedReference<CreatureObject*> attackingCreature = attacker->isPet() ? attacker->getLinkedCreature() : attacker;
 	ManagedReference<CreatureObject*> targetCreature = defender->isPet() || defender->isVehicleObject() ? defender->getLinkedCreature() : defender;
 
-	Reference<PlayerObject*> ghost = targetCreature->getPlayerObject();
+	Reference<PlayerObject*> ghostdef = defender->getPlayerObject();
+	Reference<PlayerObject*> ghostatt = attacker->getPlayerObject();
 
-	if ((attackingCreature->getWeapon()->isJediWeapon() && attackingCreature->isPlayerCreature())
-			||	(targetCreature->getWeapon()->isJediWeapon() && targetCreature->isPlayerCreature() && attackingCreature->isPlayerCreature())
-			||	(ghost->hasBhTef() && targetCreature->isPlayerCreature() && attackingCreature->isPlayerCreature()))	{
-		*shouldBhTef = true;
-	}
+	TangibleObject* deftano = defender->asTangibleObject();
 
-	if (((attackingCreature->isRebel() && targetCreature->isImperial()) || (attackingCreature->isImperial() && targetCreature->isRebel())) //&& !attackingCreature->isNeutral() && !targetCreature->isNeutral()
-			&& attackingCreature->getFactionStatus() >= FactionStatus::COVERT) {//&& !attackingCreature->isNeutral()
-		*shouldGcwTef = true;
-	}
+	PlayerObject* newghostd = defender->getPlayerObject();
 
-//	if (attackingCreature != nullptr && targetCreature != nullptr) {
+//	if ((attackingCreature->getWeapon()->isJediWeapon())
+//			||	(targetCreature->getWeapon()->isJediWeapon())// && targetCreature->isPlayerCreature() && attackingCreature->isPlayerCreature())
+//			||	(ghostdef->hasTef())
+//			)	{
+//		*shouldBhTef = true;
+//	}
+//
+//	if (((attackingCreature->isRebel() && targetCreature->isImperial()) || (attackingCreature->isImperial() && targetCreature->isRebel())) //&& !attackingCreature->isNeutral() && !targetCreature->isNeutral()
+//			&& attackingCreature->getFactionStatus() >= FactionStatus::COVERT) {//&& !attackingCreature->isNeutral()
+//		*shouldGcwTef = true;
+//	}
+
+	if ((attackingCreature != nullptr && targetCreature != nullptr) && (attacker->isPlayerCreature())) {
+
+		if (!(*shouldGcwTef)) {
+		if (((attackingCreature->isRebel() && targetCreature->isImperial()) || (attackingCreature->isImperial() && targetCreature->isRebel())) //&& !attackingCreature->isNeutral() && !targetCreature->isNeutral()
+				&& attackingCreature->getFactionStatus() >= FactionStatus::COVERT) {//&& !attackingCreature->isNeutral()
+			*shouldGcwTef = true;
+		}
+		}
+
+		if (!(*shouldBhTef)) {
+
+		if ((attacker->getWeapon()->isJediWeapon())
+				//||	(defender->getWeapon()->isJediWeapon() && defender->isPlayerCreature())// && targetCreature->isPlayerCreature() && attackingCreature->isPlayerCreature())
+				//|| (ghostdef->hasBhTef() && defender->isPlayerCreature())// && !ghostatt->hasBhTef()) && (ghostdef != nullptr && ghostatt != nullptr)
+				//||	(deftano->getPvpStatusBitmask() == CreatureFlag::TEF  && defender->isPlayerCreature())
+				)	{
+			*shouldBhTef = true;
+		}
+
+		if (defender->isPlayerCreature()//ghostdef->hasTef() && defender->isPlayerCreature() && (ghostdef != nullptr)
+				//||	(defender->getWeapon()->isJediWeapon() && defender->isPlayerCreature())// && targetCreature->isPlayerCreature() && attackingCreature->isPlayerCreature())
+				//|| (ghostdef->hasBhTef() && defender->isPlayerCreature())// && !ghostatt->hasBhTef()) && (ghostdef != nullptr && ghostatt != nullptr)
+				//||	(deftano->getPvpStatusBitmask() == CreatureFlag::TEF  && defender->isPlayerCreature())
+				)	{
+			if (ghostdef->hasBhTef() || defender->getWeapon()->isJediWeapon()){
+			*shouldBhTef = true;//need to figure out how to add tef to jedi defender that doesnt attack back, since this section only applies to the ATTACKER
+			}
+		}
+
+		}
+
 //
 //		if (attackingCreature->getWeapon()->isJediWeapon())	{
 //			*shouldBhTef = true;
@@ -3783,5 +3838,5 @@ void CombatManager::checkForTefs(CreatureObject* attacker, CreatureObject* defen
 //				}
 //			}
 //		}
-//	}
+	}
 }

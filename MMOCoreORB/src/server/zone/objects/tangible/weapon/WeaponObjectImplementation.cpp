@@ -224,13 +224,13 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 //	alm->insertAttribute("challenge_level", playerLevel);
 
 
-//	bool res = isCertifiedFor(object);
-//
-//	if (res) {
-//		alm->insertAttribute("weapon_cert_status", "Yes");
-//	} else {
-//		alm->insertAttribute("weapon_cert_status", "No");
-//	}
+	bool res = isCertifiedFor(object);
+
+	if (res) {
+		alm->insertAttribute("weapon_cert_status", "Yes");
+	} else {
+		alm->insertAttribute("weapon_cert_status", "No");
+	}
 
 	/*if (usesRemaining > 0)
 		alm->insertAttribute("count", usesRemaining);*/

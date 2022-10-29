@@ -1118,7 +1118,7 @@ bool TangibleObjectImplementation::isAttackableBy(CreatureObject* object) {
 		}
 
 
-//		if (object->getWeapon()->isJediWeapon()){
+//		if (object->getWeapon()->isJediWeapon()){//did nothing? player is in creature obj
 //			return true;
 //		}
 

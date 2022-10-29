@@ -51,6 +51,12 @@ float VisibilityManager::calculateVisibilityIncrease(CreatureObject* creature) {
 		if (!creature->isInRange(c, 32) || !CollisionManager::checkLineOfSight(creature, c))
 			continue;
 
+		GroupObject* pgrp = creature->getGroup();
+		GroupObject* cgrp = c->getGroup();
+
+		if (pgrp == cgrp)
+			continue;
+
 		if (creature->getFaction() == 0 || (c->getFaction() != factionImperial && c->getFaction() != factionRebel)) {
 			visibilityIncrease += 0.5;
 			//info(c->getCreatureName().toString() + " generating a 0.5 visibility modifier", true);
