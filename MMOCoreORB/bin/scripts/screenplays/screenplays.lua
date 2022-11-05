@@ -345,6 +345,7 @@ includeFile("tasks/hero_of_tatooine/conversations/heroOfTatPirateLeaderConvoHand
 includeFile("tasks/hero_of_tatooine/conversations/heroOfTatRanchersWifeConvoHandler.lua")
 includeFile("tasks/hero_of_tatooine/heroOfTatooine.lua")
 includeFile("tasks/hero_of_tatooine/heroOfmyswg.lua")
+includeFile("tasks/hero_of_tatooine/kraytGYspawns.lua")
 includeFile("tasks/hero_of_tatooine/heroOfTatooineContainerComponents.lua")
 includeFile("tasks/hero_of_tatooine/heroOfTatooineMenuComponents.lua")
 
