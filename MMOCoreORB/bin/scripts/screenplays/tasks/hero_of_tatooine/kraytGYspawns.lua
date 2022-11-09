@@ -31,7 +31,7 @@ function kraytGYspawnsScreenPlay:doIntellectSpawn()
 	
 	self:spawnLocationONE()
 	
-	createEvent(getRandomNumber(60, 120) * 60 * 1000, "kraytGYspawnsScreenPlay", "doDespawn", nil, "")
+	createEvent(getRandomNumber(120, 240) * 60 * 1000, "kraytGYspawnsScreenPlay", "doDespawn", nil, "")
 
 end
 
@@ -41,13 +41,13 @@ function kraytGYspawnsScreenPlay:spawnLocationONE()
 local onex = 6838
 local oney = 4319
 
-	local pKrayt1 = spawnMobile("tatooine", "giant_canyon_krayt_dragon", 15, onex + getRandomNumber(-1000, 1000), 28.00, oney + getRandomNumber(-1000, 1000), -40, 0)
+	local pKrayt1 = spawnMobile("tatooine", "giant_canyon_krayt_dragon", getRandomNumber(60, 600), onex + getRandomNumber(-750, 750), 28.00, oney + getRandomNumber(-750, 750), -40, 0)
 	writeData("krayt_gy_sawns:pKrayt1", SceneObject(pKrayt1):getObjectID())
 
-	local pKrayt2 = spawnMobile("tatooine", "giant_canyon_krayt_dragon", 15, onex + getRandomNumber(-1000, 1000), 28.00, oney + getRandomNumber(-1000, 1000), -40, 0)
+	local pKrayt2 = spawnMobile("tatooine", "giant_canyon_krayt_dragon", getRandomNumber(60, 600), onex + getRandomNumber(-750, 750), 28.00, oney + getRandomNumber(-750, 750), -40, 0)
 	writeData("krayt_gy_sawns:pKrayt2", SceneObject(pKrayt2):getObjectID())
 	
-	local pKrayt3 = spawnMobile("tatooine", "giant_canyon_krayt_dragon", 15, onex + getRandomNumber(-1000, 1000), 28.00, oney + getRandomNumber(-1000, 1000), -40, 0)
+	local pKrayt3 = spawnMobile("tatooine", "giant_canyon_krayt_dragon", getRandomNumber(60, 600), onex + getRandomNumber(-750, 750), 28.00, oney + getRandomNumber(-750, 750), -40, 0)
 	writeData("krayt_gy_sawns:pKrayt3", SceneObject(pKrayt3):getObjectID())
 
 
