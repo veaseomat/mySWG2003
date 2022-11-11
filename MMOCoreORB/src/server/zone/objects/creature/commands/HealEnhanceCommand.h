@@ -238,7 +238,7 @@ public:
 		uint32 buffPower = 0;
 		if (BuffAttribute::isProtection(enhancePack->getAttribute())) {  // If it's a protection enhancement, wound treatment has no effect
 			buffPower = enhancePack->getEffectiveness();
-			//buffPower = buffPower * patient->calculateBFRatio();
+			buffPower = buffPower * patient->calculateBFRatio();
 		} else
 			buffPower = enhancePack->calculatePower(enhancer, patient);//possibly change here
 
@@ -435,7 +435,7 @@ public:
 
 		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
 
-		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower / 2, enhancePack->getDuration(), enhancePack->getAbsorption());
+		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, enhancePack->getDuration(), enhancePack->getAbsorption());
 
 		if (creature->isPlayerCreature() && targetCreature->isPlayerCreature()) {
 			playerManager->sendBattleFatigueMessage(creature, targetCreature);
