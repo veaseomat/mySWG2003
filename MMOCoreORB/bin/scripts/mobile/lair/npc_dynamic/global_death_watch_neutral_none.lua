@@ -1,11 +1,10 @@
-global_black_sun_neutral_none = Lair:new {
+global_death_watch_neutral_none = Lair:new {
 	mobiles = {
-		{"black_sun_assassin",1},
-		{"black_sun_guard",2},
-		{"black_sun_henchman",2},
-		{"black_sun_thug",3}
+		{"death_watch_bloodguard",2},
+		{"death_watch_ghost",2},
+		{"death_watch_wraith",1},
 	},
-	spawnLimit = 6,
+	spawnLimit = 3,
 	buildingsVeryEasy = {"object/building/poi/anywhere_misc_camp_small_1.iff"},
 	buildingsEasy = {"object/building/poi/anywhere_misc_camp_small_1.iff"},
 	buildingsMedium = {"object/building/poi/anywhere_misc_camp_small_1.iff"},
@@ -16,4 +15,4 @@ global_black_sun_neutral_none = Lair:new {
 	buildingType = "theater"
 }
 
-addLairTemplate("global_black_sun_neutral_none", global_black_sun_neutral_none)
+addLairTemplate("global_death_watch_neutral_none", global_death_watch_neutral_none)

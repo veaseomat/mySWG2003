@@ -321,7 +321,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	// this thing exponentially ruins the variance
 
-	float excMod = 0.8 + (System::random(20) * .01);//1.0;// * .625;// randomize the percentage below instead
+	float excMod = 1.5;//0.8 + (System::random(20) * .01);//1.0;// * .625;// randomize the percentage below instead
 
 //	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
 //		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
@@ -333,22 +333,22 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 //	if (excMod >= 5.0) excMod = 5.0;
 
-	if (System::random(350) >= 350) {
+	if (System::random(25) >= 25) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
 		prototype->setCustomObjectName(newName, false);
 
-		excMod *= 2.0 + (System::random(50) * .01);//2.5;
+		excMod *= 3.5;//2.5;
 
 		prototype->addMagicBit(false);
 
 		exceptionalLooted.increment();
 	}
 
-	if (System::random(5000) >= 5000) {
+	if (System::random(125) >= 125) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 
-		excMod *= 4.0 + (System::random(100) * .01);//5;
+		excMod *= 5.0;//5;
 
 		prototype->addMagicBit(false);
 

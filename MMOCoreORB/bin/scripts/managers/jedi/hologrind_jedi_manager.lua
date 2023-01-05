@@ -242,6 +242,12 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 
 	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
 		PVPBHIntro:startStepDelay(pCreatureObject, 3)
+		
+		if tonumber(readScreenPlayData(pCreatureObject, "PadawanTrials", "completedTrials")) ~= 1 then
+			writeScreenPlayData(pCreatureObject, "PadawanTrials", "startedTrials", 1)
+			JediTrials:setTrialsCompleted(pCreatureObject, #padawanTrialQuests)
+		end
+		
 	end
 
 --	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then	

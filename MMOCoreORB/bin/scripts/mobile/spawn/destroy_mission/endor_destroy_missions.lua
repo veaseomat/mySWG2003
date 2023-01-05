@@ -242,12 +242,24 @@ endor_destroy_missions = {
 			maxDifficulty = 57,
 			size = 25,
 		},
---		{
---			lairTemplateName = "endor_marauder_blood_crazed_plains_neutral_medium_theater",
---			minDifficulty = 54,
---			maxDifficulty = 58,
---			size = 25,
---		},
+		{
+			lairTemplateName = "endor_marauder_blood_crazed_plains_neutral_medium_theater",
+			minDifficulty = 54,
+			maxDifficulty = 58,
+			size = 25,
+		},
+		{
+			lairTemplateName = "global_black_sun_neutral_none",
+			minDifficulty = 95,
+			maxDifficulty = 99,
+			size = 25,
+		},
+		{
+			lairTemplateName = "global_death_watch_neutral_none",
+			minDifficulty = 95,
+			maxDifficulty = 99,
+			size = 25,
+		},
 	}
 }
 

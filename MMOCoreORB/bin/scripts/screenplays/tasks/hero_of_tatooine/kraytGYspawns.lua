@@ -28,6 +28,9 @@ function kraytGYspawnsScreenPlay:doIntellectSpawn()
 --	if (location == 3) then
 --		self:spawnLocationTHREE()
 --	end
+
+
+-- idea!!!!!!!!!!!! if spawns < 3 then DO SPAWN, else do intellect spawn pause 1 hr
 	
 	self:spawnLocationONE()
 	

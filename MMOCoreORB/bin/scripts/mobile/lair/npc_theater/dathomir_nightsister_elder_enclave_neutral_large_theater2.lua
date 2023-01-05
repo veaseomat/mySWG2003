@@ -1,14 +1,11 @@
 dathomir_nightsister_elder_enclave_neutral_large_theater2 = Lair:new {
 	mobiles = {
-		{"nightsister_protector",1},
-		{"nightsister_spell_weaver",1},	
-		{"nightsister_sentinel",2},
-		{"nightsister_ranger",2},
-		{"nightsister_initiate",4},
-		{"nightsister_stalker",2},
+		{"nightsister_spell_weaver",2},	
+		{"nightsister_protector",2},
+		{"nightsister_elder",1},
 	},
 	bossMobiles = {{"nightsister_elder",1}},
-	spawnLimit = 15,
+	spawnLimit = 3,
 	buildingsVeryEasy = {"object/tangible/lair/base/poi_all_lair_rocks_large.iff"},
 	buildingsEasy = {"object/tangible/lair/base/poi_all_lair_rocks_large.iff"},
 	buildingsMedium = {"object/tangible/lair/base/poi_all_lair_rocks_large.iff"},

@@ -134,54 +134,60 @@ dantooine_destroy_missions = {
 			maxDifficulty = 47,
 			size = 25,
 		},
---		{
---			lairTemplateName = "dantooine_mokk_scout_neutral_none",
---			minDifficulty = 45,
---			maxDifficulty = 49,
---			size = 25,
---		},
---		{
---			lairTemplateName = "dantooine_kunga_scout_neutral_none",
---			minDifficulty = 46,
---			maxDifficulty = 50,
---			size = 25,
---		},
---		{
---			lairTemplateName = "dantooine_janta_hunter_neutral_none",
---			minDifficulty = 48,
---			maxDifficulty = 52,
---			size = 25,
---		},
---		{
---			lairTemplateName = "dantooine_janta_scout_neutral_none",
---			minDifficulty = 49,
---			maxDifficulty = 53,
---			size = 25,
---		},
---		{
---			lairTemplateName = "dantooine_voritor_jungle_lair_neutral_medium_boss_01",
---			minDifficulty = 51,
---			maxDifficulty = 55,
---			size = 25,
---		},
---		{
---			lairTemplateName = "dantooine_voritor_hunter_lair_neutral_medium",
---			minDifficulty = 55,
---			maxDifficulty = 59,
---			size = 25,
---		},
---		{
---			lairTemplateName = "dantooine_janta_shaman_camp_neutral_medium_theater",
---			minDifficulty = 55,
---			maxDifficulty = 60,
---			size = 25,
---		},
---		{
---			lairTemplateName = "dantooine_mokk_shaman_neutral_none",
---			minDifficulty = 58,
---			maxDifficulty = 62,
---			size = 25,
---		},
+		{
+			lairTemplateName = "dantooine_mokk_scout_neutral_none",
+			minDifficulty = 45,
+			maxDifficulty = 49,
+			size = 25,
+		},
+		{
+			lairTemplateName = "dantooine_kunga_scout_neutral_none",
+			minDifficulty = 46,
+			maxDifficulty = 50,
+			size = 25,
+		},
+		{
+			lairTemplateName = "dantooine_janta_hunter_neutral_none",
+			minDifficulty = 48,
+			maxDifficulty = 52,
+			size = 25,
+		},
+		{
+			lairTemplateName = "dantooine_janta_scout_neutral_none",
+			minDifficulty = 49,
+			maxDifficulty = 53,
+			size = 25,
+		},
+		{
+			lairTemplateName = "dantooine_voritor_jungle_lair_neutral_medium_boss_01",
+			minDifficulty = 51,
+			maxDifficulty = 55,
+			size = 25,
+		},
+		{
+			lairTemplateName = "dantooine_voritor_hunter_lair_neutral_medium",
+			minDifficulty = 55,
+			maxDifficulty = 59,
+			size = 25,
+		},
+		{
+			lairTemplateName = "dantooine_janta_shaman_camp_neutral_medium_theater",
+			minDifficulty = 55,
+			maxDifficulty = 60,
+			size = 25,
+		},
+		{
+			lairTemplateName = "dantooine_mokk_shaman_neutral_none",
+			minDifficulty = 58,
+			maxDifficulty = 62,
+			size = 25,
+		},
+			{
+			lairTemplateName = "global_dark_jedi_camp_dark_jedi_theater",
+			minDifficulty = 95,
+			maxDifficulty = 99,
+			size = 25,
+		},
 	}
 }
 

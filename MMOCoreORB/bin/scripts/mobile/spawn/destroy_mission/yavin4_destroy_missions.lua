@@ -104,6 +104,18 @@ yavin4_destroy_missions = {
 			maxDifficulty = 37,
 			size = 25,
 		},
+			{
+			lairTemplateName = "yavin4_acklay_pack_neutral_lair",
+			minDifficulty = 95,
+			maxDifficulty = 99,
+			size = 25,
+		},
+		{
+			lairTemplateName = "global_black_sun_neutral_none",
+			minDifficulty = 95,
+			maxDifficulty = 99,
+			size = 25,
+		},
 	}
 }
 

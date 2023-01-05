@@ -90,7 +90,7 @@ function PVPBHIntro:doDelayedStep(pPlayer)
 	end
 	
 --this is the visibility threshold, vanilla is 1500
-	if PlayerObject(pGhost):getVisibility() >= 3000 then
+	if PlayerObject(pGhost):getVisibility() >= 3000 then--OR if lightsaber is equipped?
 		encounterResult = PVPBHEncounter:start(pPlayer)
 		return
 		

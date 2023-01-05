@@ -134,36 +134,36 @@ dathomir_destroy_missions = {
 			maxDifficulty = 52,
 			size = 35,
 		},
---		{
---			lairTemplateName = "dathomir_rancor_lair_neutral_large",
---			minDifficulty = 48,
---			maxDifficulty = 52,
---			size = 35,
---		},
---		{
---			lairTemplateName = "dathomir_rancor_bull_lair_neutral_large",
---			minDifficulty = 63,
---			maxDifficulty = 67,
---			size = 35,
---		},
---		{
---			lairTemplateName = "dathomir_rancor_enraged_lair_neutral_large",
---			minDifficulty = 78,
---			maxDifficulty = 82,
---			size = 35,
---		},
---		{
---			lairTemplateName = "dathomir_rancor_enraged_bull_lair_neutral_large_boss_01",
---			minDifficulty = 87,
---			maxDifficulty = 91,
---			size = 35,
---		},
---		{
---			lairTemplateName = "dathomir_nightsister_elder_enclave_neutral_large_theater2",
---			minDifficulty = 95,
---			maxDifficulty = 99,
---			size = 35,
---		},
+		{
+			lairTemplateName = "dathomir_rancor_lair_neutral_large",
+			minDifficulty = 48,
+			maxDifficulty = 52,
+			size = 35,
+		},
+		{
+			lairTemplateName = "dathomir_rancor_bull_lair_neutral_large",
+			minDifficulty = 63,
+			maxDifficulty = 67,
+			size = 35,
+		},
+		{
+			lairTemplateName = "dathomir_rancor_enraged_lair_neutral_large",
+			minDifficulty = 78,
+			maxDifficulty = 82,
+			size = 35,
+		},
+		{
+			lairTemplateName = "dathomir_rancor_enraged_bull_lair_neutral_large_boss_01",
+			minDifficulty = 87,
+			maxDifficulty = 91,
+			size = 35,
+		},
+		{
+			lairTemplateName = "dathomir_nightsister_elder_enclave_neutral_large_theater2",
+			minDifficulty = 95,
+			maxDifficulty = 99,
+			size = 35,
+		},
 	}
 }
 

@@ -1,6 +1,7 @@
-yavin4_acklay_pack_neutral_lair = Lair:new {
-	mobiles = {{"acklay",1}},
-	spawnLimit = 1,
+yavin4_kliknik_lair_neutral_boss_04 = Lair:new {
+	mobiles = {{"kliknik_scout",1},{"kliknik_defender",1},{"kliknik_warrior",1}},
+	bossMobiles = {{"kliknik_queen_harvester",1},{"kliknik_shredder_guardian",1}},
+	spawnLimit = 15,
 	buildingsVeryEasy = {"object/tangible/lair/base/poi_all_lair_garbage_large_evil_fire_green.iff"},
 	buildingsEasy = {"object/tangible/lair/base/poi_all_lair_garbage_large_evil_fire_green.iff"},
 	buildingsMedium = {"object/tangible/lair/base/poi_all_lair_garbage_large_evil_fire_green.iff"},
@@ -8,4 +9,4 @@ yavin4_acklay_pack_neutral_lair = Lair:new {
 	buildingsVeryHard = {"object/tangible/lair/base/poi_all_lair_garbage_large_evil_fire_green.iff"},
 }
 
-addLairTemplate("yavin4_acklay_pack_neutral_lair", yavin4_acklay_pack_neutral_lair)
+addLairTemplate("yavin4_kliknik_lair_neutral_boss_04", yavin4_kliknik_lair_neutral_boss_04)
