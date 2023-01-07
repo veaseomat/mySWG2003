@@ -42,12 +42,6 @@ black_sun_guard = Creature:new {
 				{group = "wearables_uncommon", chance = 500000}
 			}
 		},
-		{
-			groups = {
-				{group = "weapon_component_advanced", chance = 10000000},
-
-			}
-		}
 	},
 	weapons = {"pirate_weapons_heavy"},
 	conversationTemplate = "",
