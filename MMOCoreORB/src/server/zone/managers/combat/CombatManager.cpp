@@ -818,14 +818,14 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		attackerAccuracy *= .8;
 ////		if (weapon->isMineWeapon())
 ////		attackerAccuracy *= .5f;
-////		if (weapon->isJediOneHandedWeapon())
-////		attackerAccuracy *= 2.0f;
-////		if (weapon->isJediTwoHandedWeapon())
-////		attackerAccuracy *= .8f;
-////		if (weapon->isJediPolearmWeapon())
-////		attackerAccuracy *= .8f;
-		if (weapon->isJediWeapon())
-		attackerAccuracy *= .8;
+		if (weapon->isJediOneHandedWeapon())
+		attackerAccuracy *= 1.15f;
+		if (weapon->isJediTwoHandedWeapon())
+		attackerAccuracy *= 1.2f;
+		if (weapon->isJediPolearmWeapon())
+		attackerAccuracy *= 1.1f;
+//		if (weapon->isJediWeapon())
+//		attackerAccuracy *= .8;
 	}
 
 	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy") + creoAttacker->getSkillMod("dead_eye");
@@ -2049,7 +2049,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	debug() << "Defender defense is " << targetDefense;
 
 	int attackerRoll = System::random(100);// System::random(249) + 1;
-	int defenderRoll = System::random(70);//System::random(150) + 25;
+	int defenderRoll = System::random(50);//System::random(150) + 25;
 
 	// TODO (dannuic): add the trapmods in here somewhere (defense down trapmods)
 //	//											100										50
@@ -2079,8 +2079,8 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	float totalatt = attackerAccuracy + attackerRoll;
 	float totaldef = targetDefense + defenderRoll;
 
-	if (weapon->isJediWeapon())
-		totalatt *= 1.5;
+//	if (weapon->isJediWeapon())
+//		totalatt *= 1.5;
 
 	if (totaldef > totalatt) // miss, just return MISS
 		return MISS;
@@ -2149,8 +2149,8 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 		totalatt = attackerAccuracy + attackerRoll;//100 caps
 		totaldef = targetDefense + defenderRoll;
 
-		if (weapon->isJediWeapon())
-			totalatt *= 1.5;
+//		if (weapon->isJediWeapon())
+//			totalatt *= 1.5;
 
 		if (totaldef > totalatt){
 
