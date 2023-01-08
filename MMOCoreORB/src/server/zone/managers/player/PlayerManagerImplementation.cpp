@@ -1072,6 +1072,18 @@ uint8 PlayerManagerImplementation::calculateIncapacitationTimer(CreatureObject* 
 int PlayerManagerImplementation::notifyDestruction(TangibleObject* destructor, TangibleObject* destructedObject, int condition, bool isCombatAction) {
 	fatal(destructor, "destructor cant be nullptr.");
 
+	//PlayerObject* ghost = destructedObject->getPlayerObject();
+
+	if (destructedObject->isPlayerCreature() && destructedObject->asCreatureObject()->getFirstName() == "Quafes"){//lol it works
+		destructedObject->asCreatureObject()->healDamage(destructedObject, CreatureAttribute::HEALTH, 1500, true);
+		destructedObject->asCreatureObject()->healDamage(destructedObject, CreatureAttribute::ACTION, 1500, true);
+		destructedObject->asCreatureObject()->healDamage(destructedObject, CreatureAttribute::MIND, 1500, true);
+
+		destructedObject->asCreatureObject()->doAnimation("force_healing_1");
+		destructedObject->asCreatureObject()->playEffect("clienteffect/pl_force_heal_self.cef", "");
+		return 1;
+	}
+
 	if (!destructedObject->isPlayerCreature())
 		return 1;
 

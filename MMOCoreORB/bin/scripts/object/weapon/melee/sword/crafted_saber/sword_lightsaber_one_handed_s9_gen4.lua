@@ -69,7 +69,7 @@ object_weapon_melee_sword_crafted_saber_sword_lightsaber_one_handed_s9_gen4 = ob
 	attackType = MELEEATTACK,
 
 	-- ENERGY, KINETIC, ELECTRICITY, STUN, BLAST, HEAT, COLD, ACID, LIGHTSABER
-	damageType = ENERGY,
+	damageType = LIGHTSABER,
 
 	-- NONE, LIGHT, MEDIUM, HEAVY
 	armorPiercing = MEDIUM,

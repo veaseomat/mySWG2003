@@ -337,7 +337,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
 		prototype->setCustomObjectName(newName, false);
 
-		excMod *= 3.5;//2.5;
+		excMod = 3.5;//2.5;
 
 		prototype->addMagicBit(false);
 
@@ -348,7 +348,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 
-		excMod *= 5.0;//5;
+		excMod = 5.5;//5;
 
 		prototype->addMagicBit(false);
 
@@ -695,6 +695,25 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 
 		const LootGroups* lootGroups = entry->getLootGroups();
 
+		//Now we do the second roll to determine loot group.
+		roll = System::random(10000000);
+
+		//Select the loot group to use.
+		for (int i = 0; i < lootGroups->count(); ++i) {
+			const LootGroupEntry* entry = lootGroups->get(i);
+
+			tempChance += entry->getLootChance();
+
+			//Is this entry lower than the roll? If yes, then we want to try the next entry.
+			if (tempChance < roll)
+				continue;
+
+			createLoot(trx, container, entry->getLootGroupName(), level);
+
+			break;
+		}
+
+		//double loot
 		//Now we do the second roll to determine loot group.
 		roll = System::random(10000000);
 

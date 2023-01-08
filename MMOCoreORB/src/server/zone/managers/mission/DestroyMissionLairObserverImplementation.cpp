@@ -22,11 +22,11 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 
 	int spawnLimitAdjustment = 0;
 
-	if (difficulty == 0) {
-		spawnLimitAdjustment = -3;
-	} else if (difficulty == 4) {
-		spawnLimitAdjustment = 3;
-	}
+//	if (difficulty == 0) {
+//		spawnLimitAdjustment = -3;
+//	} else if (difficulty == 4) {
+//		spawnLimitAdjustment = 3;
+//	}
 
 	int spawnLimit = lairTemplate->getSpawnLimit() + spawnLimitAdjustment;
 
