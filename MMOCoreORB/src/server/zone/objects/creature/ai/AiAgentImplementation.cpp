@@ -152,7 +152,12 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	newlvl *= 3;
 
-	float lvlrandomizer = .9 + (System::random(20) * .01);
+	if (System::random(100) >= 100) {// and elite <= 1.0) {
+		legendarynpc = true;
+		newlvl *= 1.25;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
+	}
+
+	float lvlrandomizer = .75 + (System::random(25) * .01);
 
 	newlvl *= lvlrandomizer;
 
@@ -165,25 +170,20 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 //		newlvl *= elite;
 //	}
 
-	if (System::random(100) >= 100) {// and elite <= 1.0) {
-		legendarynpc = true;
-		newlvl *= 2;//1.5 + (System::random(100) * .01);//1.516 X lvl 330 = lvl 500
-	}
-
 	//newlvl *= templateData->getElite();
 
-	level = newlvl;
+	level = newlvl;//(pow(newlvl, 2)) / 33; //
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
 	float weapran = .5 + (System::random(100) * .01);//weapon dmg randomizer
 
-	if (legendarynpc == true) {
-		weapran *= 2;
-	}
+//	if (legendarynpc == true) {
+//		weapran *= 2;
+//	}
 
-	float minDmg = (level) * .6 * weapran;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
-	float maxDmg = (level) * weapran;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
+	float minDmg = ((pow((newlvl / 3), 2)) / 33) * .5 * weapran;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
+	float maxDmg = ((pow((newlvl / 3), 2)) / 33) * weapran;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
 	float speed = (3.5 - (level * .01));// * randomtwo;//calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 

@@ -53,8 +53,8 @@ bool CombatManager::startCombat(CreatureObject* attacker, TangibleObject* defend
 	if (!defender->isAttackableBy(attacker))
 		return false;
 
-	if (attacker->isPlayerCreature() && attacker->getPlayerObject()->isAFK())
-		return false;
+//	if (attacker->isPlayerCreature() && attacker->getPlayerObject()->isAFK())
+//		return false;
 
 	CreatureObject *creo = defender->asCreatureObject();
 	if (creo != nullptr && creo->isIncapacitated() && creo->isFeigningDeath() == false) {
@@ -818,14 +818,14 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		attackerAccuracy *= .8;
 ////		if (weapon->isMineWeapon())
 ////		attackerAccuracy *= .5f;
-////		if (weapon->isJediOneHandedWeapon())
-////		attackerAccuracy *= 2.0f;
-////		if (weapon->isJediTwoHandedWeapon())
-////		attackerAccuracy *= .8f;
-////		if (weapon->isJediPolearmWeapon())
-////		attackerAccuracy *= .8f;
-		if (weapon->isJediWeapon())
-		attackerAccuracy *= .8;
+		if (weapon->isJediOneHandedWeapon())
+		attackerAccuracy *= 1.15f;
+		if (weapon->isJediTwoHandedWeapon())
+		attackerAccuracy *= 1.2f;
+		if (weapon->isJediPolearmWeapon())
+		attackerAccuracy *= 1.1f;
+//		if (weapon->isJediWeapon())
+//		attackerAccuracy *= .8;
 	}
 
 	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy") + creoAttacker->getSkillMod("dead_eye");
@@ -926,12 +926,12 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	targetDefense += defender->getSkillMod("dodge_attack");
 	targetDefense += defender->getSkillMod("private_dodge_attack");
 
-	if (targetDefense > 100)
-		targetDefense = 100;
-
 	if (defender->isRunning()) {
 		targetDefense *= 1.2;
 	}
+
+	if (targetDefense > 100)
+		targetDefense = 100;
 
 	if (defender->isKneeling()) {
 		targetDefense *= .7;
@@ -946,7 +946,7 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	}
 
 	if (!defender->isPlayerCreature()) {
-		targetDefense *= .4;
+		targetDefense *= .8;
 	}
 
 	if (targetDefense < 1)
@@ -993,12 +993,12 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 //		targetDefense *= .8;//nerf player target defense
 //	}
 
-	if (targetDefense > 100)
-		targetDefense = 100;
-
 	if (defender->isRunning()) {
 		targetDefense *= 1.2;
 	}
+
+	if (targetDefense > 100)
+		targetDefense = 100;
 
 	if (defender->isKneeling()) {
 		targetDefense *= .7;
@@ -1013,7 +1013,7 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 	}
 
 	if (!defender->isPlayerCreature()) {
-		targetDefense *= .4;
+		targetDefense *= .8;
 	}
 
 	if (targetDefense < 0)
@@ -2048,8 +2048,8 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	int targetDefense = getDefenderDefenseModifier(targetCreature, weapon, attacker);
 	debug() << "Defender defense is " << targetDefense;
 
-	int attackerRoll = System::random(100);// System::random(249) + 1;
-	int defenderRoll = System::random(70);//System::random(150) + 25;
+	int attackerRoll = System::random(30);// System::random(249) + 1;
+	int defenderRoll = System::random(50);//System::random(150) + 25;
 
 	// TODO (dannuic): add the trapmods in here somewhere (defense down trapmods)
 //	//											100										50
@@ -2061,26 +2061,26 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	ManagedReference<WeaponObject*> targetWeapon = targetCreature->getWeapon();
 
 	// saber block is special because it's just a % chance to block based on the skillmod
-	if (targetWeapon->isJediWeapon()) {
-		int jedidodge = getDefenderSecondaryDefenseModifier(targetCreature);
-		jedidodge += targetDefense / 4;
-		jedidodge *= .75;
-		if (jedidodge > 75) jedidodge = 75;
+//	if (targetWeapon->isJediWeapon()) {
+//		int jedidodge = getDefenderSecondaryDefenseModifier(targetCreature);
+//		jedidodge += targetDefense / 4;
+//		jedidodge *= .75;
+//		if (jedidodge > 75) jedidodge = 75;
+//
+//		if (attackerRoll < jedidodge) {
+//			if (!(weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || weapon->isThrownWeapon()) && (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK))
+//				return RICOCHET;
+//
+//			return MISS;
+//		}
+//		return HIT;
+//	}
 
-		if (attackerRoll < jedidodge) {
-			if (!(weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || weapon->isThrownWeapon()) && (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK))
-				return RICOCHET;
+	float totalatt = System::random(attackerAccuracy) + attackerRoll;
+	float totaldef = System::random(targetDefense);// + defenderRoll;
 
-			return MISS;
-		}
-		return HIT;
-	}
-
-	float totalatt = attackerAccuracy + attackerRoll;
-	float totaldef = targetDefense + defenderRoll;
-
-	if (weapon->isJediWeapon())
-		totalatt *= 1.5;
+//	if (weapon->isJediWeapon())
+//		totalatt *= 1.5;
 
 	if (totaldef > totalatt) // miss, just return MISS
 		return MISS;
@@ -2144,13 +2144,13 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 
 			//accTotal = ((targetDefense + defenderRoll) / 2) - ((attackerAccuracy + attackerRoll) / 4);	//hitChanceEquation(attackerAccuracy, attackerRoll, targetDefense, defenderRoll);
 
-		int defenderRoll = System::random(100);//System::random(150) + 25;
+		int defenderRoll = System::random(50);//System::random(150) + 25;
 
-		totalatt = attackerAccuracy + attackerRoll;//100 caps
-		totaldef = targetDefense + defenderRoll;
+		//totalatt = System::random(attackerAccuracy) + 50;// + attackerRoll;//100 caps
+		totaldef = System::random(targetDefense);// + defenderRoll;
 
-		if (weapon->isJediWeapon())
-			totalatt *= 1.5;
+//		if (weapon->isJediWeapon())
+//			totalatt *= 1.5;
 
 		if (totaldef > totalatt){
 
@@ -2779,9 +2779,9 @@ if (!attacker->isTurret()) {
 	int aiactionmax = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::ACTION);
 	int aimindmax = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::MIND);
 
-	if (attacker->isAiAgent() && !attacker->isCreature() && System::random(15) >= 15) {
+	if (attacker->isAiAgent() && !attacker->isCreature()) {
 
-		if (aistrength > aiquick && !weapon->isJediWeapon() && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7))  ) {
+		if (aistrength > aiquick && !weapon->isJediWeapon() && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7)) && System::random(10) >= 10) {
 
 			int healammount = 100;
 
@@ -2805,7 +2805,7 @@ if (!attacker->isTurret()) {
 			return 0;
 		}
 
-		if (weapon->isJediWeapon() && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7) || aimind < (aimindmax * .7))) {
+		if (weapon->isJediWeapon() && System::random(5) >= 5 && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7) || aimind < (aimindmax * .7))) {
 
 			int jedhealammount = 500;
 
