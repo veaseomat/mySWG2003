@@ -293,7 +293,7 @@ end
 function HologrindJediManager:sendHolocronMessage(pCreatureObject)
 	if self:getNumberOfMasteredProfessions(pCreatureObject) >= MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON then
 		-- The Holocron is quiet. The ancients' knowledge of the Force will no longer assist you on your journey. You must continue seeking on your own.
-		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_quiet")
+		--CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_quiet")
 		return true
 	else
 		local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
@@ -371,7 +371,10 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 	
 		local isSilent = self:sendHolocronMessage(pCreatureObject)
 		if isSilent then
-			return
+			self:awardJediStatusAndSkill(pCreatureObject)
+			SceneObject(pSceneObject):destroyObjectFromWorld()
+			SceneObject(pSceneObject):destroyObjectFromDatabase()
+			--return
 		else
 			SceneObject(pSceneObject):destroyObjectFromWorld()
 			SceneObject(pSceneObject):destroyObjectFromDatabase()

@@ -312,7 +312,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	float minDmg = round(getMinDamage());
 	float maxDmg = round(getMaxDamage());
 
-	alm->insertAttribute("damage.wpn_damage_min", minDmg);
+//	alm->insertAttribute("damage.wpn_damage_min", minDmg);
 
 	alm->insertAttribute("damage.wpn_damage_max", maxDmg);
 

@@ -568,8 +568,8 @@ lootableHeavyWeaponStatMods = {
 -- Values used to generate lightsaber crystal stats
 jediCrystalStats = {
 	lightsaber_module_force_crystal = {
-		minDamage = 0,
-		maxDamage = 50,
+		minDamage = 10,
+		maxDamage = 100,
 		minHitpoints = 700,
 		maxHitpoints = 1400,
 		minHealthSac = 0,
@@ -587,7 +587,7 @@ jediCrystalStats = {
 	},
 	lightsaber_module_krayt_dragon_pearl = {
 		minDamage = 20,
-		maxDamage = 50,
+		maxDamage = 100,
 		minHitpoints = 900,
 		maxHitpoints = 1400,
 		minHealthSac = -6,
