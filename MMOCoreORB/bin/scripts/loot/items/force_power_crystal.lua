@@ -12,6 +12,7 @@ force_power_crystal = {
 --		{"maxdamage", 0,50,0},
 --		{"attackspeed",0,-0.6,1},
 --		{"woundchance",0,4,1},
+--		{"useCount",1,10,0},
 	},
 	customizationStringNames = {},
 	customizationValues = {}
