@@ -2913,6 +2913,8 @@ int PlayerManagerImplementation::healEnhance(CreatureObject* enhancer, CreatureO
 		}
 	}
 
+	duration = 8 * 60 * 60;//8hrs?
+
 	Reference<Buff*> buff = new Buff(patient, buffcrc, duration, BuffType::MEDICAL);
 
 	Locker locker(buff);
@@ -6036,7 +6038,7 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.0;//25% is half of vanilla 50%
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.0;//.625 is half of 125
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.0;//1.0== 100%
-	int selfDuration =	180; //3 hr ;
+	int selfDuration =	480; //8 hr ;
 
 	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
 	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
@@ -6063,7 +6065,7 @@ void PlayerManagerImplementation::enhanceCharacterDocBuff(CreatureObject* player
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;//25% is half of vanilla 50%
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;//.625 is half of 125
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;
-	int selfDuration =	180; //3 hr ;
+	int selfDuration =	480; //8 hr ;
 
 	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
 	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
@@ -6090,7 +6092,7 @@ void PlayerManagerImplementation::enhanceCharacterDocBuffTHREE(CreatureObject* p
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;//25% is half of vanilla 50%
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;//.625 is half of 125
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;
-	int selfDuration =	180; //3 hr ;
+	int selfDuration =	480; //8 hr ;
 
 	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
 	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
@@ -6117,7 +6119,7 @@ void PlayerManagerImplementation::enhanceCharacterEntBuffONE(CreatureObject* pla
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND);
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS);//
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER);
-	int selfDuration =	180; //3 hr ;
+	int selfDuration =	480; //8 hr ;
 
 //	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
 //	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
@@ -6144,7 +6146,7 @@ void PlayerManagerImplementation::enhanceCharacterEntBuffTWO(CreatureObject* pla
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND);
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS);//.625 is half of 125
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER);
-	int selfDuration =	180; //3 hr ;
+	int selfDuration =	480; //8 hr ;
 
 //	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
 //	message = message && doEnhanceCharacter(0x815D85C5, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 1); // medical_enhance_strength
@@ -6171,7 +6173,7 @@ void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
 
 //	int selfStrength = player->getSkillMod("healing_dance_mind") * 10;//.5 to reduce vanilla buffs
 
-	int selfDuration =	3 * 60 * 60;
+	int selfDuration =	8 * 60 * 60;
 
 	message = message && doEnhanceCharacter(0x11C1772E, player, selfStrength, selfDuration, BuffType::PERFORMANCE, 6); // performance_enhance_dance_mind
 
@@ -6195,7 +6197,7 @@ void PlayerManagerImplementation::enhanceSelfMusic(CreatureObject* player) {
 
 //	int selfStrengthFocus = player->getSkillMod("healing_music_mind") * 10;//.5 to reduce vanilla buffs
 //	int selfStrengthWill = player->getSkillMod("healing_music_mind") * 10;
-	int selfDuration =	3 * 60 * 60;
+	int selfDuration =	8 * 60 * 60;
 
 	message = message && doEnhanceCharacter(0x2E77F586, player, selfStrengthFocus, selfDuration, BuffType::PERFORMANCE, 7); // performance_enhance_music_focus
 	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower

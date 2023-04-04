@@ -708,6 +708,9 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 			if (tempChance < roll)
 				continue;
 
+			if (System::random(100) > 80)
+				level = System::random(300);
+
 			createLoot(trx, container, entry->getLootGroupName(), level);
 
 			break;
@@ -726,6 +729,31 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 			//Is this entry lower than the roll? If yes, then we want to try the next entry.
 			if (tempChance < roll)
 				continue;
+
+			if (System::random(100) > 80)
+				level = System::random(300);
+
+			createLoot(trx, container, entry->getLootGroupName(), level);
+
+			break;
+		}
+
+		//triple loot
+		//Now we do the second roll to determine loot group.
+		roll = System::random(10000000);
+
+		//Select the loot group to use.
+		for (int i = 0; i < lootGroups->count(); ++i) {
+			const LootGroupEntry* entry = lootGroups->get(i);
+
+			tempChance += entry->getLootChance();
+
+			//Is this entry lower than the roll? If yes, then we want to try the next entry.
+			if (tempChance < roll)
+				continue;
+
+			if (System::random(100) > 80)
+				level = System::random(300);
 
 			createLoot(trx, container, entry->getLootGroupName(), level);
 
