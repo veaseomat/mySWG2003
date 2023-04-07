@@ -5,7 +5,8 @@ death_watch_bunker_ingredient_binary = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "binary_liquid", weight = 10000000}
+		{itemTemplate = "binary_liquid", weight = 5000000},
+		{itemTemplate = "protective_liquid_coating", weight = 5000000}
 	}
 }
 

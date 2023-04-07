@@ -1850,7 +1850,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //			if (weapon->isMeleeWeapon())
 //			damage *= 1.25;//was balanced with this
 			if (weapon->isUnarmedWeapon())
-			damage *= .8f;
+			damage *= 1.0f;
 			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
 			damage *= .9f;//was at .6
 			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
@@ -1866,7 +1866,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			if (weapon->isHeavyWeapon() &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
 			damage *= .3;
 			if (weapon->isThrownWeapon())// 4sec
-			damage *= .6;
+			damage *= .4;
 //			if (weapon->isSpecialHeavyWeapon() &! weapon->isHeavyAcidRifle() &! weapon->isFlameThrower() &! weapon->isLightningRifle())// 4 sec rocket launcher
 //			damage *= .001;
 	//		if (weapon->isMineWeapon())
@@ -1954,7 +1954,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PvP Damage Reduction
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 1.0;//vanilla .25
+		damage *= .5;//vanilla .25
 
 	ZoneServer* server = attacker->getZoneServer();
 	PlayerManager* pManager = server->getPlayerManager();
@@ -1962,15 +1962,15 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1;//.25 + (playerLevel * .0075); //100, move decimal
+		damage *= .5;//.25 + (playerLevel * .0075); //100, move decimal
 		
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 7; //
+		damage *= 5.5; //
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 7;
+		damage *= 5.5;
 
 //	if (!attacker->isPlayerCreature())
 //		damage += attacker->getLevel();
@@ -1978,7 +1978,21 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 //	damage *= .5;
 
-	if (damage < 1) damage = 1;
+	if (damage < 25)
+	damage = 15 + System::random(10);
+
+//	if (!attacker->isPlayerCreature() && damage < 50)
+//	damage = 30 + System::random(20);
+
+	//damage += 10;
+
+//	int plvl = pManager->calculatePlayerLevel(attacker);
+//
+//	if (attacker->isPlayerCreature() && damage < plvl){
+//		damage = plvl / 2 + System::random(plvl / 2);
+//	}
+
+//	if (damage < 1) damage = 1;
 
 	debug() << "damage to be dealt is " << damage;
 
@@ -2238,8 +2252,8 @@ float CombatManager::calculateWeaponAttackSpeed(CreatureObject* attacker, Weapon
 //		if (weapon->isHeavyAcidRifle() && (attackSpeed < 5))//4sec cap
 //			attackSpeed = 5;
 		if (weapon->isThrownWeapon()){
-			speedcap = 5.0;
-			if (attackSpeed < 5.0) attackSpeed = 5.0;
+			speedcap = 7.5;
+			if (attackSpeed < 10.0) attackSpeed = 10.0;
 		}
 		if (weapon->isSpecialHeavyWeapon()){
 			speedcap = 5.0;
