@@ -256,7 +256,7 @@ void MissionManagerImplementation::handleMissionAccept(MissionTerminal* missionT
 	}
 
 	//Limit to two missions (only one of them can be a bounty mission)
-	if (missionCount >= 3 || (hasBountyMission && mission->getTypeCRC() == MissionTypes::BOUNTY)) {
+	if (missionCount >= 4 || (hasBountyMission && mission->getTypeCRC() == MissionTypes::BOUNTY)) {
 		StringIdChatParameter stringId("mission/mission_generic", "too_many_missions");
 		player->sendSystemMessage(stringId);
 		return;
@@ -797,7 +797,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 		int distance = destroyMissionBaseDistance + destroyMissionDifficultyDistanceFactor * difficultyLevel;
 		distance += System::random(destroyMissionRandomDistance) + System::random(destroyMissionDifficultyRandomDistance * difficultyLevel);
-		distance *= .7;//decrease mission distance
+		distance *= .5;//decrease mission distance
 		startPos = player->getWorldCoordinate((float)distance, (float)System::random(360), false);
 
 		if (zone->isWithinBoundaries(startPos)) {

@@ -6052,7 +6052,7 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 //	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Doctor Health/Action buffs for 1000, for 3 hours.");
+		player->sendSystemMessage("You receive Doctor Health/Action buffs for 1000, for 8 hours.");
 }
 
 void PlayerManagerImplementation::enhanceCharacterDocBuff(CreatureObject* player) {
@@ -6079,7 +6079,7 @@ void PlayerManagerImplementation::enhanceCharacterDocBuff(CreatureObject* player
 //	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Doctor Health/Action buffs for 1500 for 3 hours.");
+		player->sendSystemMessage("You receive Doctor Health/Action buffs for 1500 for 8 hours.");
 }
 
 void PlayerManagerImplementation::enhanceCharacterDocBuffTHREE(CreatureObject* player) {
@@ -6106,7 +6106,7 @@ void PlayerManagerImplementation::enhanceCharacterDocBuffTHREE(CreatureObject* p
 //	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Doctor Health/Action buffs for 2000 for 3 hours.");
+		player->sendSystemMessage("You receive Doctor Health/Action buffs for 2000 for 8 hours.");
 }
 
 void PlayerManagerImplementation::enhanceCharacterEntBuffONE(CreatureObject* player) {
@@ -6133,7 +6133,7 @@ void PlayerManagerImplementation::enhanceCharacterEntBuffONE(CreatureObject* pla
 	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Dancer/Musician Mind buffs for 100% for 3 hours.");
+		player->sendSystemMessage("You receive Dancer/Musician Mind buffs for 100% for 8 hours.");
 }
 
 void PlayerManagerImplementation::enhanceCharacterEntBuffTWO(CreatureObject* player) {
@@ -6160,7 +6160,7 @@ void PlayerManagerImplementation::enhanceCharacterEntBuffTWO(CreatureObject* pla
 	message = message && doEnhanceCharacter(0x3EC6FCB6, player, selfStrengthWill, selfDuration * 60, BuffType::PERFORMANCE, 8); // performance_enhance_music_willpower
 
 	if (message && player->isPlayerCreature())
-		player->sendSystemMessage("You receive Dancer/Musician Mind buffs for 125% for 3 hours.");
+		player->sendSystemMessage("You receive Dancer/Musician Mind buffs for 125% for 8 hours.");
 }
 
 void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
