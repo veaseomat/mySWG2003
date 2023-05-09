@@ -6143,9 +6143,9 @@ void PlayerManagerImplementation::enhanceCharacterEntBuffTWO(CreatureObject* pla
 	bool message = true;
 //selfbuff
 	int selfMedBuff = 2000;//
-	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND);
-	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS);//.625 is half of 125
-	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER);
+	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;
+	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;//.625 is half of 125
+	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;
 	int selfDuration =	480; //8 hr ;
 
 //	message = message && doEnhanceCharacter(0x98321369, player, selfMedBuff, selfDuration * 60, BuffType::MEDICAL, 0); // medical_enhance_health
