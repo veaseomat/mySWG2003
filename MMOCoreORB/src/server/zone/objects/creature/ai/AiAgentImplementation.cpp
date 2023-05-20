@@ -186,8 +186,12 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 //		legendarynpc = true;
 //		weapran += 1.3;	}
 
-	float minDmg =  newlvl * (4 + (newlvl / 10)) * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
-	float maxDmg = newlvl * (4 + (newlvl / 10));//((pow(newlvl, 2)) / 20) * weapran + 5;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
+	float minDmg = ((newlvl * 15) - 100) * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
+	float maxDmg = (newlvl * 15) - 100;//((pow(newlvl, 2)) / 20) * weapran + 5;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
+
+	if (minDmg < 15) minDmg = 15;
+	if (maxDmg < 25) maxDmg = 25;
+
 	float speed = (5.0 - ((level * 4) * .01));// * randomtwo;//calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
@@ -292,7 +296,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	setupAttackMaps();
 
-	int lvlham = newlvl * (5 + (newlvl / 5));
+	int lvlham = 50 * (1 + (newlvl * .40));//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
 
 	int ham = 0;
 	baseHAM.removeAll();
@@ -1785,7 +1789,8 @@ void AiAgentImplementation::activatePostureRecovery() {
 }
 
 void AiAgentImplementation::activateHAMRegeneration(int latency) {
-//	return;
+	if (getLevel() < 10)
+		return;
 
     if (isIncapacitated() || isDead()) {
         return;
