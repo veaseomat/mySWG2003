@@ -89,23 +89,28 @@ object_tangible_wearables_armor_ubese_armor_ubese_bracer_l = object_tangible_wea
 
 	-- Damage types in WeaponObject
 	vulnerability = HEAT + COLD + STUN + LIGHTSABER,
+	
+	specialResists = KINETIC,
+
 
 	-- These are default Blue Frog stats
-	healthEncumbrance = 1,
-	actionEncumbrance = 1,
-	mindEncumbrance = 1,
+	healthEncumbrance = 11,
+	actionEncumbrance = 14,
+	mindEncumbrance = 19,
+
+	maxCondition = 30000,
 
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
 
-	kinetic = 15,
-	energy = 15,
-	electricity = 15,
-	stun = 15,
-	blast = 15,
-	heat = 15,
-	cold = 15,
-	acid = 15,
+	kinetic = 80,
+	energy = 35,
+	electricity = 35,
+	stun = 0,
+	blast = 35,
+	heat = 0,
+	cold = 0,
+	acid = 35,
 	lightSaber = 0,
 
 	numberExperimentalProperties = {1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 2, 1},

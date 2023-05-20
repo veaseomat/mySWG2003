@@ -115,9 +115,9 @@ object_weapon_ranged_pistol_pistol_fwg5 = object_weapon_ranged_pistol_shared_pis
 	maxRangeAccuracy = -70,
 
 	minDamage = 30,
-	maxDamage = 140,
+	maxDamage = 130,
 
-	attackSpeed = 3.4,
+	attackSpeed = 3.2,
 
 	woundsRatio = 9,
 

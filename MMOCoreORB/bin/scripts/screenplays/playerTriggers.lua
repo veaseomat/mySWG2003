@@ -5,7 +5,7 @@ function PlayerTriggers:playerLoggedIn(pPlayer)
 		return
 	end
 	ServerEventAutomation:playerLoggedIn(pPlayer)
-	BestineElection:playerLoggedIn(pPlayer)
+--	BestineElection:playerLoggedIn(pPlayer)
 end
 
 function PlayerTriggers:playerLoggedOut(pPlayer)

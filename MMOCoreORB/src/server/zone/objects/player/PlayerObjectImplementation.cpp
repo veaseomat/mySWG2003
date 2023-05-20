@@ -586,16 +586,16 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 
 	int xpCap = -1;
 
-	if (xpTypeCapList.contains(xpType))
-		xpCap = xpTypeCapList.get(xpType);
-
-	if (xpCap < 0)
-		xpCap = 2000;
-
-	if (xp > xpCap) {
-		valueToAdd = xpCap - (xp - valueToAdd);
-		xp = xpCap;
-	}
+//	if (xpTypeCapList.contains(xpType))
+//		xpCap = xpTypeCapList.get(xpType);
+//
+//	if (xpCap < 0)
+//		xpCap = 2000;
+//
+//	if (xp > xpCap) {
+//		valueToAdd = xpCap - (xp - valueToAdd);
+//		xp = xpCap;
+//	}
 
 	if (notifyClient) {
 		PlayerObjectDeltaMessage8* dplay8 = new PlayerObjectDeltaMessage8(this);
@@ -2053,17 +2053,17 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	}
 
 	if (!forceRegenerationEvent->isScheduled()) {
-		int forceControlMod = 0, forceManipulationMod = 0;
-
-		if (creature->hasSkill("force_rank_light_novice")) {
-			forceControlMod = creature->getSkillMod("force_control_light");
-			forceManipulationMod = creature->getSkillMod("force_manipulation_light");
-		} else if (creature->hasSkill("force_rank_dark_novice")) {
-			forceControlMod = creature->getSkillMod("force_power_dark");
-			forceManipulationMod = creature->getSkillMod("force_manipulation_dark");
-		}
-
-		regen += (forceControlMod + forceManipulationMod) / 10.f;
+//		int forceControlMod = 0, forceManipulationMod = 0;
+//
+//		if (creature->hasSkill("force_rank_light_novice")) {
+//			forceControlMod = creature->getSkillMod("force_control_light");
+//			forceManipulationMod = creature->getSkillMod("force_manipulation_light");
+//		} else if (creature->hasSkill("force_rank_dark_novice")) {
+//			forceControlMod = creature->getSkillMod("force_power_dark");
+//			forceManipulationMod = creature->getSkillMod("force_manipulation_dark");
+//		}
+//
+//		regen += (forceControlMod + forceManipulationMod) / 10.f;
 
 
 //		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 2;
@@ -2073,32 +2073,32 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 //		}
 
 		if (regen > 0) {
-		regen += 10;
+		regen += 25;
 		}
 
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
-			regen *= .9;
-		}
-
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
-			regen *= .8;
-		}
-
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_1)) {
-			regen *= .9;
-		}
-
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_2)) {
-			regen *= .8;
-		}
-
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_1)) {
-			regen *= .9;
-		}
-
-		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_2)) {
-			regen *= .8;
-		}
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
+//			regen *= .9;
+//		}
+//
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
+//			regen *= .8;
+//		}
+//
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_1)) {
+//			regen *= .9;
+//		}
+//
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_2)) {
+//			regen *= .8;
+//		}
+//
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_1)) {
+//			regen *= .9;
+//		}
+//
+//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_2)) {
+//			regen *= .8;
+//		}
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
 		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
@@ -3019,7 +3019,7 @@ void PlayerObjectImplementation::recalculateForcePower() {
 	maxForce += (forcePowerMod + forceControlMod) * 10;
 	
 	if (maxForce > 0) {
-		maxForce += 250;
+		maxForce += 500;
 	}
 		
 	setForcePowerMax(maxForce, true);

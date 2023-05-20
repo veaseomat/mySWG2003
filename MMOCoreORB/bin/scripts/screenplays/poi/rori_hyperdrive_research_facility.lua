@@ -15,11 +15,11 @@ function HyperdriveResearchFacilityScreenPlay:start()
 		local pBuilding = getSceneObject(self.buildingID)
 		createObserver(FACTIONBASEFLIPPED, "HyperdriveResearchFacilityScreenPlay", "flipBase", pBuilding)
 
---		if getRandomNumber(100) >= 50 then
+		if getRandomNumber(100) >= 50 then
 			self:spawnRebels(pBuilding)
---		else
---			self:spawnImperials(pBuilding)
---		end
+		else
+			self:spawnImperials(pBuilding)
+		end
 	end
 end
 
@@ -33,7 +33,7 @@ function HyperdriveResearchFacilityScreenPlay:flipBase(pBuilding)
 	if BuildingObject(pBuilding):getFaction() == FACTIONIMPERIAL then
 		self:spawnRebels(pBuilding)
 	elseif BuildingObject(pBuilding):getFaction() == FACTIONREBEL then
-			self:spawnRebels(pBuilding)
+		self:spawnImperials(pBuilding)
 	end
 
 	return 0

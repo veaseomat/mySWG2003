@@ -160,6 +160,7 @@ int PlayerContainerComponent::notifyObjectInserted(SceneObject* sceneObject, Sce
 
 		if (object->isRobeObject()) {
 			ghost->recalculateForcePower();
+			VisibilityManager::instance()->increaseVisibility(creo, VisibilityManager::SABERVISMOD);
 		} else if (object->isWeaponObject()) {
 			WeaponObject* weaponObject = cast<WeaponObject*>(object);
 			if (weaponObject->isJediWeapon()) {

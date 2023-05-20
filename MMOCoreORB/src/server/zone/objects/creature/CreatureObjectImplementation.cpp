@@ -613,8 +613,8 @@ void CreatureObjectImplementation::addShockWounds(int shockToAdd, bool notifyCli
 
 	if (newShockWounds < 0) {
 		newShockWounds = 0;
-	} else if (newShockWounds > 0) {
-		newShockWounds = 0;
+	} else if (newShockWounds > 1000) {
+		newShockWounds = 1000;
 	}
 
 	if (sendSpam && shockToAdd > 0 && asCreatureObject()->isPlayerCreature())
@@ -2111,7 +2111,7 @@ void CreatureObjectImplementation::notifyLoadFromDatabase() {
 
 	const SkillList* playerSkillList = getSkillList();
 
-	int totalSkillPointsWasted = 250;
+	int totalSkillPointsWasted = 500;
 
 	for (int i = 0; i < playerSkillList->size(); ++i) {
 		Skill* skill = playerSkillList->get(i);
@@ -2343,19 +2343,6 @@ void CreatureObjectImplementation::setDizziedState(int durationSeconds) {
 		state->setStartFlyText("combat_effects", "go_dizzy", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_dizzy", 0xFF, 0, 0);
 
-//		state->setSkillModifier("private_block", -50);
-//		state->setSkillModifier("private_dodge", -50);
-//		state->setSkillModifier("private_counterattack", -50);
-//		state->setSkillModifier("private_saber_block", -50);
-
-//		state->setSkillModifier("private_melee_defense", -15);
-//		state->setSkillModifier("private_ranged_defense", -15);
-//		state->setSkillModifier("private_dodge_attack", -15);
-//		state->setSkillModifier("private_attack_accuracy", -15);
-
-//		state->setSpeedMultiplierMod(0.25f );
-//		state->setAccelerationMultiplierMod(0.25f);
-
 		addBuff(state);
 	}
 }
@@ -2446,19 +2433,19 @@ void CreatureObjectImplementation::setStunnedState(int durationSeconds) {
 
 		state->setStartFlyText("combat_effects", "go_stunned", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_stunned", 0xFF, 0, 0);
-//		state->setSkillModifier("private_melee_defense", -50);
-//		state->setSkillModifier("private_ranged_defense", -50);
+		state->setSkillModifier("private_melee_defense", -50);
+		state->setSkillModifier("private_ranged_defense", -50);
 
 		addBuff(state);
 
-//		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_stun_multiplier"), durationSeconds, BuffType::STATE);
-//
-//		Locker blocker(multBuff);
-//
-//		multBuff->setSkillModifier("private_damage_divisor", 5);
-//		multBuff->setSkillModifier("private_damage_multiplier", 4);
-//
-//		addBuff(multBuff);
+		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_stun_multiplier"), durationSeconds, BuffType::STATE);
+
+		Locker blocker(multBuff);
+
+		multBuff->setSkillModifier("private_damage_divisor", 5);
+		multBuff->setSkillModifier("private_damage_multiplier", 4);
+
+		addBuff(multBuff);
 	}
 }
 
@@ -2476,8 +2463,8 @@ void CreatureObjectImplementation::setBlindedState(int durationSeconds) {
 		state->setStartFlyText("combat_effects", "go_blind", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_blind", 0xFF, 0, 0);
 
-//		state->setSkillModifier("private_attack_accuracy", -60);
-//		state->setSkillModifier("private_dodge_attack", -60);
+		state->setSkillModifier("private_attack_accuracy", -60);
+		state->setSkillModifier("private_dodge_attack", -60);
 
 		addBuff(state);
 	}
@@ -2502,18 +2489,18 @@ void CreatureObjectImplementation::setIntimidatedState(int durationSeconds) {
 		state->setStartFlyText("combat_effects", "go_intimidated", 0, 0xFF, 0);
 		state->setEndFlyText("combat_effects", "no_intimidated", 0xFF, 0, 0);
 
-//		state->setSkillModifier("private_melee_defense", -20);
-//		state->setSkillModifier("private_ranged_defense", -20);
+		state->setSkillModifier("private_melee_defense", -20);
+		state->setSkillModifier("private_ranged_defense", -20);
 
 		addBuff(state);
 
-//		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_intimidate_multiplier"), durationSeconds, BuffType::STATE);
-//
-//		Locker blocker(multBuff);
-//
-//		multBuff->setSkillModifier("private_damage_divisor", 2);
-//
-//		addBuff(multBuff);
+		Reference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(asCreatureObject(), STRING_HASHCODE("private_intimidate_multiplier"), durationSeconds, BuffType::STATE);
+
+		Locker blocker(multBuff);
+
+		multBuff->setSkillModifier("private_damage_divisor", 2);
+
+		addBuff(multBuff);
 	}
 }
 
@@ -2782,34 +2769,31 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 	if (isIncapacitated() || isDead())
 		return;
 
-	if (!isPlayerCreature() && isInCombat())
+	if (!isPlayerCreature())
 		return;
 
-	float modifier = (float)latency/1000.f;
+	float modifier = 1.0;//(float)latency/1000.f;
 
-	if (isKneeling())
-		modifier *= 1.25f;
-	else if (isSitting())
-		modifier *= 1.75f;
+//	if (isInCombat())
+//			modifier *= 0;
 
-	if (isInCombat())
-			modifier *= .5;
+//	if (!isInCombat())
+//			modifier *= 2;
 
-	if (!isInCombat())
-			modifier *= 2;
+//	if (isKneeling())
+//		modifier *= 1.25f;
+//	else
 
-	if (isKneeling())
-		modifier *= 1.25f;
-	else if (isSitting())
-		modifier *= 1.75f;
+	if (isSitting())
+		modifier = 3.0;
 
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::CONSTITUTION)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::CONSTITUTION)) * 10.0f / 2000.0f * modifier);
 	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::STAMINA)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::STAMINA)) * 10.0f / 2000.0f * modifier);
 	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::WILLPOWER)) * 13.0f / 2100.0f * modifier);
+			CreatureAttribute::WILLPOWER)) * 10.0f / 2000.0f * modifier);
 
 	if (healthTick < 1)
 		healthTick = 1;
@@ -2832,7 +2816,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int healthRegen = getSkillMod("private_med_wound_health");
 
 	if(healthRegen > 0) {
-		healthWoundHeal = 5;//+= (int)(healthRegen * 0.1);
+		healthWoundHeal = 1;//+= (int)(healthRegen * 0.1);
 	//	if(healthWoundHeal >= 100) {
 			healWound(asCreatureObject(), CreatureAttribute::HEALTH, healthWoundHeal, true, false);
 			healWound(asCreatureObject(), CreatureAttribute::STRENGTH, healthWoundHeal, true, false);
@@ -2845,7 +2829,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int actionRegen = getSkillMod("private_med_wound_action");
 
 	if(actionRegen > 0) {
-		actionWoundHeal = 5;//+= (int)(actionRegen * 0.1);
+		actionWoundHeal = 1;//+= (int)(actionRegen * 0.1);
 		//if(actionWoundHeal >= 100) {
 			healWound(asCreatureObject(), CreatureAttribute::ACTION, actionWoundHeal, true, false);
 			healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, actionWoundHeal, true, false);
@@ -2858,11 +2842,12 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int mindRegen = getSkillMod("private_med_wound_mind");
 
 	if(mindRegen > 0) {
-		mindWoundHeal = 5;//+= (int)(mindRegen * 0.1);
+		mindWoundHeal = 1;//+= (int)(mindRegen * 0.1);
 		//if(mindWoundHeal >= 100) {
 			healWound(asCreatureObject(), CreatureAttribute::MIND, mindWoundHeal, true, false);
 			healWound(asCreatureObject(), CreatureAttribute::FOCUS, mindWoundHeal, true, false);
 			healWound(asCreatureObject(), CreatureAttribute::WILLPOWER, mindWoundHeal, true, false);
+			addShockWounds(-5, true, false);
 			//mindWoundHeal -= 100;
 		//}
 	}

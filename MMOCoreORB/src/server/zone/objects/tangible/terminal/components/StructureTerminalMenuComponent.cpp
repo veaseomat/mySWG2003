@@ -93,17 +93,17 @@ void StructureTerminalMenuComponent::fillObjectMenuResponse(SceneObject* sceneOb
 			menuResponse->addRadialMenuItemToRadialID(118, 127, 3, "@player_structure:management_residence"); //Declare Residence
 			menuResponse->addRadialMenuItemToRadialID(118, 125, 3, "@player_structure:management_privacy"); //Privacy
 
-			if (creature->hasSkill("crafting_artisan_business_01") && structureObject->isOnAdminList(creature)) {
-				BuildingObject* building = cast<BuildingObject*>(structureObject.get());
-				if(!building->hasAccessFee())
-					menuResponse->addRadialMenuItemToRadialID(118, 68, 3, "@player_structure:management_add_turnstile"); //Set Access Fee
-				else
-					menuResponse->addRadialMenuItemToRadialID(118, 68, 3, "@player_structure:management_remove_turnstile"); //Remove Access Fee
+//			if (creature->hasSkill("crafting_artisan_business_01") && structureObject->isOnAdminList(creature)) {
+//				BuildingObject* building = cast<BuildingObject*>(structureObject.get());
+//				if(!building->hasAccessFee())
+//					menuResponse->addRadialMenuItemToRadialID(118, 68, 3, "@player_structure:management_add_turnstile"); //Set Access Fee
+//				else
+//					menuResponse->addRadialMenuItemToRadialID(118, 68, 3, "@player_structure:management_remove_turnstile"); //Remove Access Fee
+//
+//			}
 
-			}
-
-			if (creature->hasSkill("crafting_artisan_business_03"))
-				menuResponse->addRadialMenuItemToRadialID(118, 130, 3, "@player_structure:create_vendor"); //Create Vendor
+//			if (creature->hasSkill("crafting_artisan_business_03"))
+//				menuResponse->addRadialMenuItemToRadialID(118, 130, 3, "@player_structure:create_vendor"); //Create Vendor
 
 
 			menuResponse->addRadialMenuItemToRadialID(118, 69, 3, "@player_structure:management_change_sign"); //Change Sign
@@ -122,7 +122,7 @@ void StructureTerminalMenuComponent::fillObjectMenuResponse(SceneObject* sceneOb
 	} else if(structureObject->isOnPermissionList("VENDOR", creature)) {
 		if (creature->hasSkill("crafting_artisan_business_03")) {
 			menuResponse->addRadialMenuItem(118, 3, "@player_structure:management"); //Structure Management
-			menuResponse->addRadialMenuItemToRadialID(118, 130, 3, "@player_structure:create_vendor"); //Create Vendor
+			//menuResponse->addRadialMenuItemToRadialID(118, 130, 3, "@player_structure:create_vendor"); //Create Vendor
 		}
 	}
 }

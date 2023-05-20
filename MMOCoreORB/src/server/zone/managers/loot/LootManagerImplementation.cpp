@@ -264,12 +264,12 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
-	level *= (System::random(50) * .01) + 1.0;
+	if(level > 100)
+		level = 100;
 
-//	if(level > 100)
-//		level = 100;
-//
-//	level *= 3;
+//	level *= (System::random(50) * .01) + .50;
+
+	level *= 3.5;//simulate lvl 350 max loot
 
 //	if(level != 0)
 //		level = 0;
@@ -321,7 +321,12 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	// this thing exponentially ruins the variance
 
-	float excMod = 1.5;//0.8 + (System::random(20) * .01);//1.0;// * .625;// randomize the percentage below instead
+	float excMod = 1.0;//.75 + (System::random(75) * .01);
+
+//	if (prototype->isWeaponObject()) excMod = 1.1;
+	if (prototype->isArmorObject()) excMod = 2.0;
+//	if (prototype->isComponent()) excMod = 2;
+//	if (prototype->isLightsaberCrystalObject()) excMod = 2.0 + (System::random(200) * .01);
 
 //	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
 //		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
@@ -333,27 +338,32 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 //	if (excMod >= 5.0) excMod = 5.0;
 
-	if (System::random(25) >= 25  && !prototype->isLightsaberCrystalObject()) {
+	if ((System::random(100) == 100) && (prototype->isArmorObject() || prototype->isWeaponObject() || prototype->isComponent() || prototype->isLightsaberCrystalObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
 		prototype->setCustomObjectName(newName, false);
 
-		excMod = 3.5;//2.5;
+		excMod *= 2.0;// + (System::random(50) * .01);
 
 		prototype->addMagicBit(false);
 
 		//exceptionalLooted.increment();
 	}
 
-	if (System::random(125) >= 125 && !prototype->isLightsaberCrystalObject()) {
-		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
-		prototype->setCustomObjectName(newName, false);
+//	if (prototype->isWeaponObject()) level *= .1 + (System::random(40) * .1);//System::random(level);//(System::random(33) * .1);
+//	if (prototype->isArmorObject()) level *= 2 + (System::random(20) * .1);//4;
+//	if (prototype->isComponent()) level *= 2;
+//	if (prototype->isLightsaberCrystalObject()) level *= 2;
 
-		excMod = 5.5;//5;
-
-		prototype->addMagicBit(false);
-
-		//legendaryLooted.increment();
-	}
+//	if (System::random(10) >= 10) {// && !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
+//		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
+//		prototype->setCustomObjectName(newName, false);
+//
+//		excMod = 5;
+//
+//		prototype->addMagicBit(false);
+//
+//		//legendaryLooted.increment();
+//	}
 
 	if (prototype->isLightsaberCrystalObject()) {
 		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
@@ -378,10 +388,16 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
-		float percentage = (((level / 3) * .01) * 0.6) + (System::random(40) * .01);//;//System::random(10000) / 10000.f;//this is where the variance happens
+//		if (subtitle == "armor_health_encumbrance" || subtitle == "armor_action_encumbrance" || subtitle == "armor_mind_encumbrance") {
+//			//craftingValues->setMaxValue(subtitle, max / 4);//attempt to increase looted armor encumb
+//			min *= 4;
+//			max *= 4;
+//		}
 
-		if (percentage > 1.0) percentage = 1.0;
+		float percentage = System::random(10000) / 10000.f;//System::random(1500) * .001;//(level * .01) * (System::random(150) * .01);//System::random(10000) / 10000.f;//this is where the variance happens
 
+//		if (percentage > 1.0) percentage = 1.0;
+//		if (percentage < 0.01) percentage = 0.01;
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll
@@ -465,7 +481,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //		prototype->addMagicBit(false);
 //		prototype->setJunkValue((int)(fJunkValue * 1.25));
 //	} else {
-	prototype->setJunkValue((int)((level / 3) * 50 * excMod));
+	prototype->setJunkValue((int)(level * 50 * excMod));
 //	}
 
 	// Use percentages to recalculate the values
@@ -528,6 +544,8 @@ void LootManagerImplementation::addConditionDamage(TangibleObject* loot, Craftin
 }
 
 void LootManagerImplementation::setSkillMods(TangibleObject* object, const LootItemTemplate* templateObject, int level, float excMod) {
+	return;//disable sea
+
 	if (!object->isWearableObject())//only clothing/armor get sea
 		return;
 
@@ -669,13 +687,13 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = entry->getLootChance() * 2; //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
+		int lootChance = entry->getLootChance() * 1.5; //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
-		int holochance = 1000;
-		if (System::random(holochance) >= holochance){
-			createLoot(trx, container, "holocron_light", level);
-		}
+//		int holochance = 1000;
+//		if (System::random(holochance) >= holochance){
+//			createLoot(trx, container, "holocron_light", level);
+//		}
 
 
 		if (lootChance <= 0)
@@ -708,57 +726,59 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 			if (tempChance < roll)
 				continue;
 
-			if (System::random(100) > 80)
-				level = System::random(300);
+//			if (System::random(100) > 80)
+//				level = System::random(300);
 
 			createLoot(trx, container, entry->getLootGroupName(), level);
 
 			break;
 		}
 
-		//double loot
-		//Now we do the second roll to determine loot group.
-		roll = System::random(10000000);
+//		//double loot
+//		//Now we do the second roll to determine loot group.
+//		roll = System::random(10000000);
+//
+//		if (System::random(100) > 70){
+//		//Select the loot group to use.
+//		for (int i = 0; i < lootGroups->count(); ++i) {
+//			const LootGroupEntry* entry = lootGroups->get(i);
+//
+//			tempChance += entry->getLootChance();
+//
+//			//Is this entry lower than the roll? If yes, then we want to try the next entry.
+//			if (tempChance < roll)
+//				continue;
+//
+////			if (System::random(100) > 80)
+////				level = System::random(300);
+//
+//			createLoot(trx, container, entry->getLootGroupName(), level);
+//
+//			break;
+//		}
+//		}
 
-		//Select the loot group to use.
-		for (int i = 0; i < lootGroups->count(); ++i) {
-			const LootGroupEntry* entry = lootGroups->get(i);
-
-			tempChance += entry->getLootChance();
-
-			//Is this entry lower than the roll? If yes, then we want to try the next entry.
-			if (tempChance < roll)
-				continue;
-
-			if (System::random(100) > 80)
-				level = System::random(300);
-
-			createLoot(trx, container, entry->getLootGroupName(), level);
-
-			break;
-		}
-
-		//triple loot
-		//Now we do the second roll to determine loot group.
-		roll = System::random(10000000);
-
-		//Select the loot group to use.
-		for (int i = 0; i < lootGroups->count(); ++i) {
-			const LootGroupEntry* entry = lootGroups->get(i);
-
-			tempChance += entry->getLootChance();
-
-			//Is this entry lower than the roll? If yes, then we want to try the next entry.
-			if (tempChance < roll)
-				continue;
-
-			if (System::random(100) > 80)
-				level = System::random(300);
-
-			createLoot(trx, container, entry->getLootGroupName(), level);
-
-			break;
-		}
+//		//triple loot
+//		//Now we do the second roll to determine loot group.
+//		roll = System::random(10000000);
+//
+//		//Select the loot group to use.
+//		for (int i = 0; i < lootGroups->count(); ++i) {
+//			const LootGroupEntry* entry = lootGroups->get(i);
+//
+//			tempChance += entry->getLootChance();
+//
+//			//Is this entry lower than the roll? If yes, then we want to try the next entry.
+//			if (tempChance < roll)
+//				continue;
+//
+//			if (System::random(100) > 80)
+//				level = System::random(300);
+//
+//			createLoot(trx, container, entry->getLootGroupName(), level);
+//
+//			break;
+//		}
 	}
 
 	return true;

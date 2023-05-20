@@ -31,7 +31,7 @@ public:
 		if (ghost == nullptr)
 			return GENERALERROR;
 
-		if (ghost->getJediState() < 2 || !creature->hasSkill("force_title_jedi_rank_02"))
+		if (ghost->getJediState() < 2)
 			return GENERALERROR;
 
 		//removing the findmytrainer command

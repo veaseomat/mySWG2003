@@ -53,7 +53,7 @@ public:
 
 		multBuff->setSkillModifier("private_damage_divisor", 20);
 
-//		creature->addBuff(multBuff);
+		creature->addBuff(multBuff);
 
 		locker.release();
 

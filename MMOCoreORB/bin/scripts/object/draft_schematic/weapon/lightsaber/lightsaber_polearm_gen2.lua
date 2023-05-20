@@ -52,7 +52,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_polearm_gen2 = object_draft_
    size = 1, 
 
    xpType = "jedi_general", 
-   xp = 0, 
+   xp = 20, 
 
    assemblySkill = "jedi_saber_assembly", 
    experimentingSkill = "jedi_saber_experimentation", 
@@ -67,7 +67,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_polearm_gen2 = object_draft_
    ingredientTitleNames = {"emitter_shroud", "primary_crystal", "activator", "handgrip", "focusing_crystals", "power_field_insulator", "energizers"},
    ingredientSlotType = {0, 1, 0, 0, 1, 0, 0},
    resourceTypes = {"metal", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "metal_nonferrous", "petrochem_inert", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "gas_inert_known", "metal_nonferrous"},
-   resourceQuantities = {30, 1, 42, 20, 1, 42, 42},
+   resourceQuantities = {55, 1, 66, 60, 1, 82, 82},
    contribution = {100, 100, 100, 100, 100, 100, 100},
 
 

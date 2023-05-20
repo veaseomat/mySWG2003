@@ -281,7 +281,7 @@ void EntertainingSessionImplementation::doPerformanceAction() {
 		return;
 	}
 
-	int actionDrain = 1;
+	int actionDrain = performance->getActionPointsPerLoop() - (int)(entertainer->getHAM(CreatureAttribute::QUICKNESS)/35.f);
 
 	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
 		if (isDancing()) {
@@ -294,7 +294,7 @@ void EntertainingSessionImplementation::doPerformanceAction() {
 			entertainer->sendSystemMessage("@performance:music_too_tired");
 		}
 	} else {
-//		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, 1, false, true);
+		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain / 2, false, true);
 	}
 }
 
@@ -611,12 +611,12 @@ void EntertainingSessionImplementation::doFlourish(int flourishNumber, bool gran
 	//float baseActionDrain = -40 + (getQuickness() / 37.5);
 	float flourishActionDrain = baseActionDrain / 2.0;
 
-	int actionDrain = (int)round((flourishActionDrain * 10 + 0.5) / 10.0) / 3; // Round to nearest dec for actual int cost
+	int actionDrain = (int)round((flourishActionDrain * 10 + 0.5) / 10.0); // Round to nearest dec for actual int cost
 
 	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
 		entertainer->sendSystemMessage("@performance:flourish_too_tired");
 	} else {
-//		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, 1, false, true);
+		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain / 2, false, true);
 
 		if (dancing) {
 			StringBuffer msg;
@@ -649,7 +649,7 @@ void EntertainingSessionImplementation::addEntertainerBuffDuration(CreatureObjec
 
 	buffDuration += duration;
 	
-		buffDuration = 180; //3 hr
+		buffDuration = 480; //8 hr
 
 	setEntertainerBuffDuration(creature, performanceType, buffDuration);
 }
@@ -934,7 +934,7 @@ void EntertainingSessionImplementation::activateEntertainerBuff(CreatureObject* 
 		if(buffStrength == 0)
 			return;
 
-		int buffDuration = 3 * 60 * 60;//getEntertainerBuffDuration(creature, performanceType);
+		int buffDuration = 8 * 60 * 60;//getEntertainerBuffDuration(creature, performanceType);
 
 		ManagedReference<PerformanceBuff*> oldBuff = nullptr;
 		switch (performanceType){

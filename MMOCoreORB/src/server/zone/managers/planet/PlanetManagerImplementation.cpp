@@ -783,7 +783,7 @@ void PlanetManagerImplementation::loadClientRegions(LuaObject* outposts) {
 
 	String zoneName = zone->getZoneName();
 
-	//removing this allows building in cities but also allows spawns
+	//removing all this allows building in cities but also allows spawns
 	for (int i = 0; i < dtiff.getTotalRows(); ++i) {
 		String regionName;
 		float x, y, radius;
@@ -860,10 +860,10 @@ void PlanetManagerImplementation::loadClientRegions(LuaObject* outposts) {
 
 		Locker shapeLocker(areaShape);
 
-		areaShape->setRadius(radius * 2);
+		areaShape->setRadius(radius * 1);//setting radius to 1x allows building after "has left city"
 		areaShape->setAreaCenter(x, y);
 		noBuild->setAreaShape(areaShape);
-		noBuild->setRadius(radius * 2);
+		noBuild->setRadius(radius * 1);
 		noBuild->setNoBuildArea(true);
 		// Cities already have "Municipal" protection so the structure no-build should not apply to camps
 		noBuild->setCampingPermitted(true);
@@ -1020,7 +1020,7 @@ bool PlanetManagerImplementation::isSpawningPermittedAt(float x, float y, float 
 	targetPos.setZ(zone->getHeight(x, y));
 
 	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
-	zone->getInRangeActiveAreas(x, y, 32, &activeAreas, true);//raw value of 0 instead of margin+ x is no area 64.f is vanilla
+	zone->getInRangeActiveAreas(x, y, margin + 32.f, &activeAreas, true);//raw value of 0 instead of margin+ x is no area 64.f is vanilla
 
 	for (int i = 0; i < activeAreas.size(); ++i) {
 		ActiveArea* area = activeAreas.get(i);
@@ -1059,6 +1059,8 @@ bool PlanetManagerImplementation::isBuildingPermittedAt(float x, float y, SceneO
 
 	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
 
+
+	//removing these 2 ignore the regions no build lua file
 	for (int i = 0; i < activeAreas.size(); ++i) {
 		ActiveArea* area = activeAreas.get(i);
 

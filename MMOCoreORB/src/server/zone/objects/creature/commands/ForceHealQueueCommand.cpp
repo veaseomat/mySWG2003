@@ -9,6 +9,7 @@
 #include "server/zone/managers/collision/CollisionManager.h"
 #include "server/zone/managers/frs/FrsManager.h"
 #include "server/zone/objects/building/BuildingObject.h"
+#include "server/zone/managers/player/PlayerManager.h"
 
 ForceHealQueueCommand::ForceHealQueueCommand(const String& name, ZoneProcessServer* server) : JediQueueCommand(name, server) {
 	speed = 3;//force heal timer here
@@ -110,6 +111,9 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 						targetCreature->healWound(creature, attrib, woundAmount, true);
 						healPerformed = true;
 						sendHealMessage(creature, targetCreature, HEAL_WOUNDS, attrib, woundAmount);
+
+						PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
+						playerManager->awardExperience(creature, "jedi_general", woundAmount, true, 1.0, false);
 					}
 				}
 			}
@@ -141,6 +145,11 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 					targetCreature->healDamage(creature, attrib, amtToHeal, true);
 					healPerformed = true;
 					sendHealMessage(creature, targetCreature, HEAL_DAMAGE, attrib, amtToHeal);
+
+					PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
+					playerManager->awardExperience(creature, "jedi_general", amtToHeal / 5, true, 1.0, false);
+
+					//awardXp(creature, "jedi_general", amtToHeal * 2);
 				}
 			}
 		}
@@ -165,6 +174,8 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 			targetCreature->addShockWounds(-battleFatigue, true, false);
 			sendHealMessage(creature, targetCreature, HEAL_FATIGUE, 0, battleFatigue);
 			healPerformed = true;
+			PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
+			playerManager->awardExperience(creature, "jedi_general", battleFatigue / 2, true, 1.0, false);
 		}
 	}
 
@@ -184,6 +195,8 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 					totalCost = newTotal;
 					healPerformed = true;
 					healedStates++;
+					PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
+					playerManager->awardExperience(creature, "jedi_general", 25, true, 1.0, false);
 				}
 			}
 		}
@@ -209,6 +222,9 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 			sendHealMessage(creature, targetCreature, HEAL_BLEEDING, 0, 0);
 		}
 
+		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
+		playerManager->awardExperience(creature, "jedi_general", 25, true, 1.0, false);
+
 		healPerformed = true;
 	}
 
@@ -228,6 +244,9 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 		} else {
 			sendHealMessage(creature, targetCreature, HEAL_POISON, 0, 0);
 		}
+
+		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
+		playerManager->awardExperience(creature, "jedi_general", 25, true, 1.0, false);
 
 		healPerformed = true;
 	}
@@ -249,6 +268,9 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 			sendHealMessage(creature, targetCreature, HEAL_DISEASE, 0, 0);
 		}
 
+		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
+		playerManager->awardExperience(creature, "jedi_general", 25, true, 1.0, false);
+
 		healPerformed = true;
 	}
 
@@ -268,6 +290,9 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 		} else {
 			sendHealMessage(creature, targetCreature, HEAL_FIRE, 0, 0);
 		}
+
+		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
+		playerManager->awardExperience(creature, "jedi_general", 25, true, 1.0, false);
 
 		healPerformed = true;
 	}

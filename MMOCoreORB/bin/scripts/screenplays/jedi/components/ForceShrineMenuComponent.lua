@@ -3,9 +3,9 @@ ForceShrineMenuComponent = {}
 function ForceShrineMenuComponent:fillObjectMenuResponse(pSceneObject, pMenuResponse, pPlayer)
 	local menuResponse = LuaObjectMenuResponse(pMenuResponse)
 
-	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_novice")) then
+--	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_novice")) then
 		menuResponse:addRadialMenuItem(120, 3, "@jedi_trials:meditate") -- Meditate
-	end
+--	end
 
 --	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
 --		menuResponse:addRadialMenuItem(121, 3, "@force_rank:recover_jedi_items") -- Recover Jedi Items
@@ -17,15 +17,38 @@ function ForceShrineMenuComponent:handleObjectMenuSelect(pObject, pPlayer, selec
 	if (pPlayer == nil or pObject == nil) then
 		return 0
 	end
-
-	if (selectedID == 120 and CreatureObject(pPlayer):hasSkill("force_title_jedi_novice")) then
+	
+	if (selectedID == 120 and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
 		if (CreatureObject(pPlayer):getPosture() ~= CROUCHED) then
 			CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:show_respect") -- Must respect
 		else
-			self:doMeditate(pObject, pPlayer)
+			CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 		end
-	elseif (selectedID == 121 and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
-		self:recoverRobe(pPlayer)
+	end
+
+	if (selectedID == 120 and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
+		if (CreatureObject(pPlayer):getPosture() ~= CROUCHED) then
+			CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:show_respect") -- Must respect
+		else
+
+		local pGhost = CreatureObject(pPlayer):getPlayerObject()
+
+		if (pGhost == nil) then
+			return
+		end
+
+		local professions = PlayerObject(pGhost):getHologrindProfessions()
+		for i = 1, #professions, 1 do
+			if not PlayerObject(pGhost):hasBadge(professions[i]) then
+				local professionText = HologrindJediManager:getProfessionStringIdFromBadgeNumber(professions[i])
+				CreatureObject(pPlayer):sendSystemMessageWithTO("@jedi_spam:holocron_light_information", "@skl_n:" .. professionText)
+				break
+			end
+		end
+			
+		end
+--	elseif (selectedID == 121 and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02")) then
+--		self:recoverRobe(pPlayer)
 	end
 
 	return 0

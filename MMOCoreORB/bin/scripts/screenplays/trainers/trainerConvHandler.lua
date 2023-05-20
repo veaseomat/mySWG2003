@@ -88,7 +88,7 @@ function trainerConvHandler:runScreenHandlers(pConvTemplate, pPlayer, pNpc, sele
 		clonedConversation:setDialogTextStringId(stringTable .. "topped_out")
 	elseif (screenID == "no_qualify") then
 	
-			if isJediTrainer and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and CreatureObject(pPlayer):hasSkill("force_title_jedi_novice") then			
+--			if isJediTrainer and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and CreatureObject(pPlayer):hasSkill("force_title_jedi_novice") then			
 --				if not JediTrials:isOnPadawanTrials(pPlayer) then
 --					PadawanTrials:startPadawanTrials(pNpc, pPlayer)
 --					CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
@@ -116,7 +116,7 @@ function trainerConvHandler:runScreenHandlers(pConvTemplate, pPlayer, pNpc, sele
 --				local zoneName = SceneObject(pNpc):getZoneName()
 --				PlayerObject(pGhost):addWaypoint(zoneName, "Jedi Skill Trainer", "", SceneObject(pNpc):getWorldPositionX(), SceneObject(pNpc):getWorldPositionY(), WAYPOINTYELLOW, true, true, 0)
 --				
-			end		
+--			end		
 	
 		if not isJediTrainer then
 			pConvScreen = screen:cloneScreen()
@@ -380,26 +380,26 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 
 --		end
 
-		if (pGhost ~= nil and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") and JediTrials:isEligibleForKnightTrials(pPlayer)) then
-
---			awardSkill(pPlayer, "force_title_jedi_rank_03")	
+--		if (pGhost ~= nil and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03") and JediTrials:isEligibleForKnightTrials(pPlayer)) then
+--
+----			awardSkill(pPlayer, "force_title_jedi_rank_03")	
+----			
+----			CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
+----			CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")		
+----			
+----			local suiManager = LuaSuiManager()
+----			suiManager:sendMessageBox(pPlayer, pPlayer, "Jedi Knight", "Your hard work has paid off and you are now worthy of the title Jedi Knight! \nJedi Knight gives you a hidden +25 Lightsaber Toughness, Lightsaber toughness is innate armor on mySWG. A Jedi Knight with master lightsaber has 80% innate armor when no armor is equipped, if a Jedi equips armor it removes the lightsaber toughness armor. There is no need for a MLS/Knight to wear armor. Congratulations! You are among the most powerful in the universe.", "@ok", "HologrindJediManager", "notifyOkPressed")
+----			
+--			KnightTrials:startKnightTrials(pPlayer)
 --			
---			CreatureObject(pPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
---			CreatureObject(pPlayer):playMusicMessage("sound/music_become_jedi.snd")		
+----			local sui = SuiMessageBox.new("KnightTrials", "startNextKnightTrial")
+----			sui.setTitle("Jedi Knight Unlock")
+----			sui.setPrompt("Congratulations! You now have enough Jedi skill points to become a Jedi Knight! Here there is no trial you just pick a side. It does not matter what faction you are, and you do not need to join a faction at all. Force Ranking System experience is earned the same way combat exp is earned and also through random spawning encounters with Jedi NPCs, These Jedi NPC encoutners will happen as long as you are outside. Here FRS gives you innate increases to Armor, Damage, and Force Power Max. Light side gets slightly more armor, Dark side gets slightly more damage. Are you ready to become a Jedi knight?")
+----			sui.setOkButtonText("@jedi_trials:button_yes")
+----			sui.setCancelButtonText("@jedi_trials:button_no")
+----			sui.sendTo(pPlayer)
 --			
---			local suiManager = LuaSuiManager()
---			suiManager:sendMessageBox(pPlayer, pPlayer, "Jedi Knight", "Your hard work has paid off and you are now worthy of the title Jedi Knight! \nJedi Knight gives you a hidden +25 Lightsaber Toughness, Lightsaber toughness is innate armor on mySWG. A Jedi Knight with master lightsaber has 80% innate armor when no armor is equipped, if a Jedi equips armor it removes the lightsaber toughness armor. There is no need for a MLS/Knight to wear armor. Congratulations! You are among the most powerful in the universe.", "@ok", "HologrindJediManager", "notifyOkPressed")
---			
-			KnightTrials:startKnightTrials(pPlayer)
-			
---			local sui = SuiMessageBox.new("KnightTrials", "startNextKnightTrial")
---			sui.setTitle("Jedi Knight Unlock")
---			sui.setPrompt("Congratulations! You now have enough Jedi skill points to become a Jedi Knight! Here there is no trial you just pick a side. It does not matter what faction you are, and you do not need to join a faction at all. Force Ranking System experience is earned the same way combat exp is earned and also through random spawning encounters with Jedi NPCs, These Jedi NPC encoutners will happen as long as you are outside. Here FRS gives you innate increases to Armor, Damage, and Force Power Max. Light side gets slightly more armor, Dark side gets slightly more damage. Are you ready to become a Jedi knight?")
---			sui.setOkButtonText("@jedi_trials:button_yes")
---			sui.setCancelButtonText("@jedi_trials:button_no")
---			sui.sendTo(pPlayer)
-			
-		end
+--		end
 	else
 		local messageString = LuaStringIdChatParameter(stringTable .. "prose_train_failed")
 		messageString:setTO(skillStringId)

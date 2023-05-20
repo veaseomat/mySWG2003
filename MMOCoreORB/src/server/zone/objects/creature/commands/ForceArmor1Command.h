@@ -33,7 +33,7 @@ public:
 			return;
 
 		// Client Effect upon hit (needed)
-		//player->playEffect("clienteffect/pl_force_armor_hit.cef", "");
+		player->playEffect("clienteffect/pl_force_armor_hit.cef", "");
 
 		int fCost = param * getFrsModifiedExtraForceCost(player, 0.5);
 		if (ghost->getForcePower() <= fCost) { // Remove buff if not enough force.

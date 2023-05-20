@@ -28,21 +28,29 @@ myswg_vendor_conv:addScreen(myswg_vendor_first_screen);
 weaps1 = ConvoScreen:new {    
     id = "weaps1",
     leftDialog = "",
-    customDialogText = "The game has been balanced for these exact weapons. they are 100k because they are amazing. if you need a solid grinder weapon check the loot section.",
+    customDialogText = "Selling high end weapons.",
     stopConversation = "false",
     options = { 
-        {"DXR6 Carbine - 100k", "option1"},
-        {"T21 Rifle - 100k", "option2"},
-        {"FWG5 Pistol - 100k", "option3"},
-        {"1h Gaderiffi Baton - 100k", "option4"},
-        {"2h Power Hammer - 100k", "option5"},
-        {"Polearm Vibro Axe - 100k", "option6"},
-        {"Vibro Knuckler - 100k", "option7"},
-        {"Light Lightning Cannon - 100k", "option8"},
-        {"Flame Thrower - 100k", "option9"},
-        {"Heavy Acid Rifle - 100k", "option10"},
-        {"Proton Grenades - 100k", "option11"},
-        {"Heavy Rocket Launcher - 100k", "option55"},
+        {"FWG5 Pistol (130damage, 3.2speed) - 100k", "option3"},
+        {"DXR6 Carbine (143damage, 4.1speed) - 100k", "option1"},
+        {"T21 Rifle	(360damage, 6.5speed) - 100k", "option2"},
+        {"Vibro Knuckler (111damage, 2.5speed) - 100k", "option7"},
+        {"1h Gaderiffi Baton (182damage, 4.0speed) - 100k", "option4"},
+        {"2h Power Hammer (357damage, 4.8speed) - 100k", "option5"},
+        {"Polearm Vibro Axe (364damage, 4.5speed) - 100k", "option6"},
+        {"Light Lightning Cannon (730damage, 4.7speed) - 100k", "option8"},
+        {"Flame Thrower (830damage, 6.0speed) - 100k", "option9"},
+        {"Heavy Acid Rifle (770damage, 5.5speed) - 100k", "option10"},
+--        {"Proton Grenades (150damage, 4.4speed) - 100k", "option11"},
+--        {"Heavy Rocket Launcher (150damage, 4.4speed) - 100k", "option55"},
+--        {"Random lvl 50 Pistol - 15k", "option56"},
+--        {"Random lvl 50 Carbine Loot - 15k", "option57"},
+--        {"Random lvl 50 Rifle Loot - 15k", "option58"},
+--        {"Random lvl 50 1h sword Loot - 15k", "option59"},
+--        {"Random lvl 50 2h sword Loot - 15k", "option60"},
+--        {"Random lvl 50 Polearm Loot - 15k", "option61"},
+--				{"Random lvl 50 Unarmed Loot - 15k", "option62"},        
+--				{"Random lvl 50 Hvy Weapons (flame/acid/LLC) - 15k", "option63"}, 
         {"Main menu.", "first_screen"},
     }
 }
@@ -51,21 +59,21 @@ myswg_vendor_conv:addScreen(weaps1);
 armor1 = ConvoScreen:new {    
     id = "armor1",
     leftDialog = "",
-    customDialogText = "typical blue frog armor 80%sp/65%eff/25%stun. The game has been balanced for this armor.",
+    customDialogText = "Selling 80% kinetic, 35% base effectiveness, 0% cold/heat/stun ubese armor, total encumbrance H160/A179/M278.",
     stopConversation = "false",
     options = { 
-        {"Composite Leggings - 100k", "option12"},
-        {"Composite Chest Plate - 100k", "option13"},
-        {"Composite Helmet - 100k", "option14"},
-        {"Composite Right Bracer - 100k", "option15"},
-        {"Wookie hunting leggings - 100k", "option16"},
-        {"Wookie hunting chest plate - 100k", "option17"},
-        {"Wookie hunting right bracer - 100k", "option18"},
-        {"Wookie hunting left bracer - 100k", "option19"},
-        {"Ithorian sentinel leggings - 100k", "option20"},
-        {"Ithorian sentinel chest plate - 100k", "option21"},
-        {"Ithorian sentinel helmet - 100k", "option22"},
-        {"Ithorian sentinel right bicep - 100k", "option23"},                               
+        {"Ubese Leggings - 100k", "option12"},
+        {"Ubese Chest Plate - 100k", "option13"},
+        {"Ubese Helmet - 100k", "option14"},
+        {"Ubese Left Bracer - 100k", "option15"},
+--        {"Random lvl 50 Kashyyykian Hunting Armor Loot - 15k", "option16"},
+--        {"Wookie hunting chest plate - 100k", "option17"},
+--        {"Wookie hunting right bracer - 100k", "option18"},
+--        {"Wookie hunting left bracer - 100k", "option19"},
+--        {"Random lvl 50 Ithorian sentinel Armor Loot - 15k", "option20"},
+--        {"Ithorian sentinel chest plate - 100k", "option21"},
+--        {"Ithorian sentinel helmet - 100k", "option22"},
+--        {"Ithorian sentinel right bicep - 100k", "option23"},                               
         {"Main menu.", "first_screen"},
     }
 }
@@ -82,6 +90,8 @@ art1 = ConvoScreen:new {
         {"Generic Crafting Tool - 1k", "option26"},
         {"Backpack - 5k", "option27"},
         {"Speederbike - 10k", "option28"},
+        {"Weapon Repair Tool - 10k", "option66"},
+        {"Armor Repair Tool - 10k", "option67"},
 --        {"Medium Mineral Harvester Deed - 50k", "option29"},
 --        {"Medium Flora Harvester Deed - 50k", "option30"},
 --        {"Medium Gas Harvester Deed - 50k", "option31"},
@@ -133,19 +143,19 @@ loot1 = ConvoScreen:new {
     stopConversation = "false",
     options = { 
         --{"crate of resources - 100k", "option46"},
-        {"Random lvl 50 Pistol Loot - 15k", "option56"},
-        {"Random lvl 50 Carbine Loot - 15k", "option57"},
-        {"Random lvl 50 Rifle Loot - 15k", "option58"},
-        {"Random lvl 50 1h sword Loot - 15k", "option59"},
-        {"Random lvl 50 2h sword Loot - 15k", "option60"},
-        {"Random lvl 50 Polearm Loot - 15k", "option61"},
-				{"Random lvl 50 Unarmed Loot - 15k", "option62"},        
-				{"Random lvl 50 Hvy Weapons (flame/acid/LLC) - 15k", "option63"},  
+--        {"Random lvl 50 Pistol Loot - 15k", "option56"},
+--        {"Random lvl 50 Carbine Loot - 15k", "option57"},
+--        {"Random lvl 50 Rifle Loot - 15k", "option58"},
+--        {"Random lvl 50 1h sword Loot - 15k", "option59"},
+--        {"Random lvl 50 2h sword Loot - 15k", "option60"},
+--        {"Random lvl 50 Polearm Loot - 15k", "option61"},
+--				{"Random lvl 50 Unarmed Loot - 15k", "option62"},        
+--				{"Random lvl 50 Hvy Weapons (flame/acid/LLC) - 15k", "option63"},  
 				              
         {"Random lvl 300 Clothing Loot - 100k", "option47"},
         {"Random lvl 300 Armor Loot - 100k", "option48"},
         {"Random lvl 300 Weapon Loot - 100k", "option49"},
-       -- {"Jedi Holocron - 10mil", "option5"},
+       	--{"Jedi Holocron - 10mil", "option5"},
         {"Main menu.", "first_screen"},
     }
 }
@@ -193,11 +203,12 @@ newbuff1 = ConvoScreen:new {
     customDialogText = "I sell buffs!",
     stopConversation = "false",
     options = { 
-        {"1000/3hr Health/Action Buffs - FREE", "buff1"},
-        {"1500/3hr Health/Action Buffs - 10k", "buff2"},
-        {"2000/3hr Health/Action Buffs - 20k", "buff3"},
-        {"100%/3hr Mind Buffs - FREE", "buff4"},
-        {"125%/3hr Mind Buffs - 5k", "buff5"},
+        {"1000/8hr Health/Action Buffs w/ 125% mind - 5k", "buff1"},
+        {"1500/8hr Health/Action Buffs w/ 125% mind - 10k", "buff2"},
+ --       {"2000/8hr Health/Action Buffs w/ 125% mind - 20k", "buff3"},
+ 
+--        {"100%/3hr Mind Buffs - FREE", "buff4"},
+--        {"125%/3hr Mind Buffs - 5k", "buff5"},
 --        {"StimPack A - 500", "option50"},
 --        {"StimPack B - 1k", "option51"},
 --        {"StimPack C - 2k", "option52"},
@@ -677,6 +688,21 @@ myswg_vendor_accept_quest = ConvoScreen:new {
     stopConversation = "true",
     options = { }
 }
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option66",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option67",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+
 myswg_vendor_conv:addScreen(myswg_vendor_accept_quest);
 myswg_vendor_deny_quest = ConvoScreen:new {
     id = "deny_quest",

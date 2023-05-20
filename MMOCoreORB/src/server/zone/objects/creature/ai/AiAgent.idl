@@ -1067,8 +1067,6 @@ class AiAgent extends CreatureObject {
 		int newlvl = npcTemplate.get().getLevel();
 		
 		if (newlvl > 100) newlvl = 100;
-		
-		newlvl *= 3;
 
 		return npcTemplate.get().getLevel();
 	}

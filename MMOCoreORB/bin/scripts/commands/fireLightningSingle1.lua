@@ -44,7 +44,7 @@
 FireLightningSingle1Command = {
         name = "firelightningsingle1",
 
-	damageMultiplier = 3.0,
+	damageMultiplier = 2.0,
 	speedMultiplier = 2.0,
 	healthCostMultiplier = 1,
 	actionCostMultiplier = 1,

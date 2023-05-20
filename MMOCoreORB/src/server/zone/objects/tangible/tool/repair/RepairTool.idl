@@ -43,6 +43,6 @@ class RepairTool extends TangibleObject {
 
 	@dirty
 	public float getQuality() {
-		return quality;
+		return 100;	//quality;
 	}
 }

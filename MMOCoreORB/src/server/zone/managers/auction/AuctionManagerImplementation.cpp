@@ -1285,8 +1285,8 @@ void AuctionManagerImplementation::buyItem(CreatureObject* player, uint64 object
 int AuctionManagerImplementation::checkRetrieve(CreatureObject* player, uint64 objectIdToRetrieve, SceneObject* vendor) {
     // Check both Bazaar and Vendors
 
-//	if (!auctionMap->containsItem(objectIdToRetrieve))
-//		return RetrieveAuctionItemResponseMessage::NOTALLOWED;
+	if (!auctionMap->containsItem(objectIdToRetrieve))
+		return RetrieveAuctionItemResponseMessage::NOTALLOWED;
 
 	ManagedReference<SceneObject*> saleItem = zoneServer->getObject(objectIdToRetrieve);
 
@@ -1334,8 +1334,8 @@ int AuctionManagerImplementation::checkRetrieve(CreatureObject* player, uint64 o
 		return RetrieveAuctionItemResponseMessage::NOTALLOWED;
 	}
 
-//	if(vendor->isVendor() && !vendor->isInRange(player, 8.0f))
-//		return RetrieveAuctionItemResponseMessage::TOOFAR;
+	if(vendor->isVendor() && !vendor->isInRange(player, 8.0f))
+		return RetrieveAuctionItemResponseMessage::TOOFAR;
 
 
 	if (vendor->isBazaarTerminal()) {
@@ -1347,18 +1347,18 @@ int AuctionManagerImplementation::checkRetrieve(CreatureObject* player, uint64 o
 			location += region->getRegionName();
 			//String region = terminal->getBazaarRegion();
 
-//			if (!item->getVendorUID().beginsWith(location)) {
-//				return RetrieveAuctionItemResponseMessage::TOOFAR;
-//			}
+			if (!item->getVendorUID().beginsWith(location)) {
+				return RetrieveAuctionItemResponseMessage::TOOFAR;
+			}
 		} else {
 			StringBuffer msg;
 			msg << "null area for bazaar terminal at" << vendor->getPositionX() << " " << vendor->getPositionY() << " zone " << vendor->getZone()->getZoneName();
 			error(msg);
 		}
 
-//		if (!item->getVendorUID().beginsWith(location)) {
-//			return RetrieveAuctionItemResponseMessage::TOOFAR;
-//		}
+		if (!item->getVendorUID().beginsWith(location)) {
+			return RetrieveAuctionItemResponseMessage::TOOFAR;
+		}
 	}
 
 	return 0;

@@ -4,7 +4,7 @@ local PlayerManager = require("managers.player_manager")
 
 jediManagerName = "HologrindJediManager"
 
-NUMBEROFPROFESSIONSTOMASTER = 4 --this is now how many profs are selected
+NUMBEROFPROFESSIONSTOMASTER = 5 --vanilla 6
 MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 2
 
 HologrindJediManager = JediManager:new {
@@ -22,14 +22,14 @@ function HologrindJediManager:getGrindableProfessionList()
 		{ "crafting_architect_master", 		CRAFTING_ARCHITECT_MASTER  },
 		{ "crafting_armorsmith_master", 	CRAFTING_ARMORSMITH_MASTER  },
 		{ "crafting_artisan_master", 		CRAFTING_ARTISAN_MASTER  },
-		{ "outdoors_bio_engineer_master", 	OUTDOORS_BIO_ENGINEER_MASTER  },
+		--{ "outdoors_bio_engineer_master", 	OUTDOORS_BIO_ENGINEER_MASTER  },
 		{ "combat_bountyhunter_master", 	COMBAT_BOUNTYHUNTER_MASTER  },
 		{ "combat_brawler_master", 		COMBAT_BRAWLER_MASTER  },
 		{ "combat_carbine_master", 		COMBAT_CARBINE_MASTER  },
 		{ "crafting_chef_master", 		CRAFTING_CHEF_MASTER  },
-		{ "science_combatmedic_master", 	SCIENCE_COMBATMEDIC_MASTER  },
+		--{ "science_combatmedic_master", 	SCIENCE_COMBATMEDIC_MASTER  },
 		{ "combat_commando_master", 		COMBAT_COMMANDO_MASTER  },
-		{ "outdoors_creaturehandler_master", 	OUTDOORS_CREATUREHANDLER_MASTER  },
+		--{ "outdoors_creaturehandler_master", 	OUTDOORS_CREATUREHANDLER_MASTER  },
 		{ "social_dancer_master", 		SOCIAL_DANCER_MASTER  },
 		{ "science_doctor_master", 		SCIENCE_DOCTOR_MASTER  },
 		{ "crafting_droidengineer_master", 	CRAFTING_DROIDENGINEER_MASTER  },
@@ -140,13 +140,15 @@ function HologrindJediManager:awardJediStatusAndSkill(pCreatureObject)
 	
 			PlayerObject(pGhost):setJediState(2)
 					
-			awardSkill(pCreatureObject, "force_title_jedi_novice")
-			PadawanTrials:doPadawanTrialsSetup(pCreatureObject)
+			awardSkill(pCreatureObject, "force_title_jedi_rank_02")
+			
+			--PadawanTrials:doPadawanTrialsSetup(pCreatureObject)
 			
 			CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
 			CreatureObject(pCreatureObject):playMusicMessage("sound/music_become_jedi.snd")
 
 			PVPBHIntro:startStepDelay(pCreatureObject, 3)
+			
 	
 --	CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
 --	
@@ -171,10 +173,30 @@ end
 -- Check if the player has mastered all hologrind professions and send sui window and award skills.
 -- @param pCreatureObject pointer to the creature object of the player to check the jedi progression on.
 function HologrindJediManager:checkIfProgressedToJedi(pCreatureObject)
-	if self:getNumberOfMasteredProfessions(pCreatureObject) >= 3 and not self:isJedi(pCreatureObject) then
+	if self:getNumberOfMasteredProfessions(pCreatureObject) >= 5 and not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then
 		--self:sendSuiWindow(pCreatureObject)
 		self:awardJediStatusAndSkill(pCreatureObject)
+		return
 	end
+	
+--	if self:getNumberOfMasteredProfessions(pCreatureObject) >= 1 and not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then
+--		local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
+--
+--		if (pGhost == nil) then
+--			return
+--		end
+--
+--		local professions = PlayerObject(pGhost):getHologrindProfessions()
+--		for i = 1, #professions, 1 do
+--			if not PlayerObject(pGhost):hasBadge(professions[i]) then
+--				local professionText = self:getProfessionStringIdFromBadgeNumber(professions[i])
+--				CreatureObject(pCreatureObject):sendSystemMessageWithTO("@jedi_spam:holocron_light_information", "@skl_n:" .. professionText)
+--				break
+--			end
+--		end
+--
+--	end
+	
 end
 
 -- Event handler for the BADGEAWARDED event.
@@ -217,20 +239,20 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 		return
 	end
 
-	local professions = PlayerObject(pGhost):getHologrindProfessions()
+--	local professions = PlayerObject(pGhost):getHologrindProfessions()
+--	
+--	if #professions < 4 then
+--		local skillList = self:getGrindableProfessionList()
+--
+--		for i = 1, NUMBEROFPROFESSIONSTOMASTER, 1 do
+--			local numberOfSkillsInList = #skillList
+--			local skillNumber = getRandomNumber(1, numberOfSkillsInList)
+--			PlayerObject(pGhost):addHologrindProfession(skillList[skillNumber][2])
+--			table.remove(skillList, skillNumber)
+--		end
+--	end
 	
-	if #professions < 4 then
-		local skillList = self:getGrindableProfessionList()
-
-		for i = 1, NUMBEROFPROFESSIONSTOMASTER, 1 do
-			local numberOfSkillsInList = #skillList
-			local skillNumber = getRandomNumber(1, numberOfSkillsInList)
-			PlayerObject(pGhost):addHologrindProfession(skillList[skillNumber][2])
-			table.remove(skillList, skillNumber)
-		end
-	end
-	
-	self:checkIfProgressedToJedi(pCreatureObject)
+--	self:checkIfProgressedToJedi(pCreatureObject)
 	self:registerObservers(pCreatureObject)
 	
 	PVPFactionIntro:startStepDelay(pCreatureObject, 3)--faction encoutners
@@ -291,7 +313,7 @@ end
 -- Find out and send the response from the holocron to the player
 -- @param pCreatureObject pointer to the creature object of the player who used the holocron.
 function HologrindJediManager:sendHolocronMessage(pCreatureObject)
-	if self:getNumberOfMasteredProfessions(pCreatureObject) >= MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON then
+	if self:getNumberOfMasteredProfessions(pCreatureObject) >= 2 then--this number is how many profs need to be done
 		-- The Holocron is quiet. The ancients' knowledge of the Force will no longer assist you on your journey. You must continue seeking on your own.
 		--CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_quiet")
 		return true
@@ -362,7 +384,7 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 
 	if itemType == ITEMHOLOCRON then
 	
-		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then
+		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then
 			--ForceShrineMenuComponent:doMeditate(pSceneObject, pCreatureObject)
 			--CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 			VillageJediManagerHolocron.useHolocron(pSceneObject, pCreatureObject)
@@ -470,7 +492,7 @@ function HologrindJediManager:checkForceStatusCommand(pPlayer)
 	
 	--CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 	
-	CreatureObject(pPlayer):sendSystemMessage("you should master professions, holocrons can guide you...")
+--	CreatureObject(pPlayer):sendSystemMessage("...")
 	
 
 --	

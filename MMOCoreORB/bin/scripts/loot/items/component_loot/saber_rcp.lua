@@ -12,7 +12,7 @@ saber_rcp = {
 		{"attackspeed",-0.1,-0.3,1},
 		{"woundchance",2,10,1},
 --		{"forcecost",-0.1,-9.0,0},
---		{"attackhealthcost",0,-1,0},
+--		{"color",1,30,0},
 --		{"attackactioncost",0,-1,0},
 --		{"attackmindcost",0,-1,0},
 		{"useCount",1,4,0}

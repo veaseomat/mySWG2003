@@ -170,24 +170,24 @@ dantooine_destroy_missions = {
 			maxDifficulty = 59,
 			size = 25,
 		},
-		{
-			lairTemplateName = "dantooine_janta_shaman_camp_neutral_medium_theater",
-			minDifficulty = 55,
-			maxDifficulty = 60,
-			size = 25,
-		},
-		{
-			lairTemplateName = "dantooine_mokk_shaman_neutral_none",
-			minDifficulty = 58,
-			maxDifficulty = 62,
-			size = 25,
-		},
-			{
-			lairTemplateName = "global_dark_jedi_camp_dark_jedi_theater",
-			minDifficulty = 95,
-			maxDifficulty = 99,
-			size = 25,
-		},
+--		{
+--			lairTemplateName = "dantooine_janta_shaman_camp_neutral_medium_theater",
+--			minDifficulty = 55,
+--			maxDifficulty = 60,
+--			size = 25,
+--		},
+--		{
+--			lairTemplateName = "dantooine_mokk_shaman_neutral_none",
+--			minDifficulty = 58,
+--			maxDifficulty = 62,
+--			size = 25,
+--		},
+--			{
+--			lairTemplateName = "global_dark_jedi_camp_dark_jedi_theater",
+--			minDifficulty = 95,
+--			maxDifficulty = 99,
+--			size = 25,
+--		},
 	}
 }
 

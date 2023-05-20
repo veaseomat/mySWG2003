@@ -56,7 +56,7 @@ OverChargeShot2Command = {
 
 	combatSpam = "overchargeshot",
 	
-	weaponType = RANGEDWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 

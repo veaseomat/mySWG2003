@@ -344,8 +344,8 @@ includeFile("tasks/hero_of_tatooine/conversations/heroOfTatMotherConvoHandler.lu
 includeFile("tasks/hero_of_tatooine/conversations/heroOfTatPirateLeaderConvoHandler.lua")
 includeFile("tasks/hero_of_tatooine/conversations/heroOfTatRanchersWifeConvoHandler.lua")
 includeFile("tasks/hero_of_tatooine/heroOfTatooine.lua")
-includeFile("tasks/hero_of_tatooine/heroOfmyswg.lua")
-includeFile("tasks/hero_of_tatooine/kraytGYspawns.lua")
+--includeFile("tasks/hero_of_tatooine/heroOfmyswg.lua")
+--includeFile("tasks/hero_of_tatooine/kraytGYspawns.lua")
 includeFile("tasks/hero_of_tatooine/heroOfTatooineContainerComponents.lua")
 includeFile("tasks/hero_of_tatooine/heroOfTatooineMenuComponents.lua")
 
@@ -670,7 +670,7 @@ includeFile("treasure_map/TreasureMapMenuComponent.lua")
 includeFile("racetracks/racetracks.lua")
 
 --Space
-includeFile("space/space_chassis_dealer_conv_handler.lua")
+--includeFile("space/space_chassis_dealer_conv_handler.lua")
 
 --Record Keepers
 includeFile("record_keepers/record_keepers.lua")

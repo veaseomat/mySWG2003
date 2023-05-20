@@ -56,7 +56,7 @@ PointBlankSingle1Command = {
 
 	combatSpam = "pointblankshot",
 	
-	weaponType = RANGEDWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = 12
 }

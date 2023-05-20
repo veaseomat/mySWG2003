@@ -16,9 +16,9 @@ void RepairToolImplementation::loadTemplateData(SharedObjectTemplate* templateDa
 
 void RepairToolImplementation::fillAttributeList(AttributeListMessage* msg, CreatureObject* object) {
 	TangibleObjectImplementation::fillAttributeList(msg, object);
-	msg->insertAttribute("quality", Math::getPrecision(quality, 1));
+	msg->insertAttribute("quality", 100);//Math::getPrecision(quality, 1));
 }
 
 void RepairToolImplementation::updateCraftingValues(CraftingValues* values, bool firstUpdate) {
-	quality = values->getCurrentValue("quality");
+	quality = 100;//values->getCurrentValue("quality");
 }

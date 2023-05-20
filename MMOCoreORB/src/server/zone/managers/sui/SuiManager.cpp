@@ -505,10 +505,10 @@ void SuiManager::handleCharacterBuilderSelectItem(CreatureObject* player, SuiBox
 
 			} else if (templatePath == "credits") {
 				{
-					TransactionLog trx(TrxCode::CHARACTERBUILDER, player, 950000, true);
-					player->addCashCredits(950000, true);
+					TransactionLog trx(TrxCode::CHARACTERBUILDER, player, 1000000, true);
+					player->addCashCredits(1000000, true);
 				}
-				player->sendSystemMessage("You have received 50.000 Credits");
+				player->sendSystemMessage("You have received 1mil Credits");
 
 			} else if (templatePath == "faction_rebel") {
 				ghost->increaseFactionStanding("rebel", 100000);

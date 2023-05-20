@@ -547,15 +547,15 @@ void TangibleObjectImplementation::fillAttributeList(AttributeListMessage* alm, 
 		StringBuffer cond;
 		cond << (maxCondition-(int)conditionDamage) << "/" << maxCondition;
 
-		auto config = ConfigManager::instance();
-
-		if (isForceNoTrade()) {
-			cond << config->getForceNoTradeMessage();
-		} else if (antiDecayKitObject != nullptr && antiDecayKitObject->isForceNoTrade()) {
-			cond << config->getForceNoTradeADKMessage();
-		} else if (isNoTrade() || containsNoTradeObjectRecursive()) {
-			cond << config->getNoTradeMessage();
-		}
+//		auto config = ConfigManager::instance();
+//
+//		if (isForceNoTrade()) {
+//			cond << config->getForceNoTradeMessage();
+//		} else if (antiDecayKitObject != nullptr && antiDecayKitObject->isForceNoTrade()) {
+//			cond << config->getForceNoTradeADKMessage();
+//		} else if (isNoTrade() || containsNoTradeObjectRecursive()) {
+//			cond << config->getNoTradeMessage();
+//		}
 
 		alm->insertAttribute("condition", cond);
 	}
@@ -711,8 +711,8 @@ int TangibleObjectImplementation::inflictDamage(TangibleObject* attacker, int da
 }
 
 int TangibleObjectImplementation::inflictDamage(TangibleObject* attacker, int damageType, float damage, bool destroy, const String& xp, bool notifyClient, bool isCombatAction) {
-	if (hasAntiDecayKit())
-		return 0;
+//	if (hasAntiDecayKit())
+//		return 0;
 
 	float newConditionDamage = conditionDamage + damage;
 

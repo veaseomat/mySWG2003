@@ -51,11 +51,11 @@ float VisibilityManager::calculateVisibilityIncrease(CreatureObject* creature) {
 		if (!creature->isInRange(c, 32) || !CollisionManager::checkLineOfSight(creature, c))
 			continue;
 
-		GroupObject* pgrp = creature->getGroup();
-		GroupObject* cgrp = c->getGroup();
-
-		if (pgrp == cgrp)
-			continue;
+//		GroupObject* pgrp = creature->getGroup();
+//		GroupObject* cgrp = c->getGroup();
+//
+//		if (pgrp == cgrp) // was breaking visibilty, try adding && group != nil next time
+//			continue;
 
 		if (creature->getFaction() == 0 || (c->getFaction() != factionImperial && c->getFaction() != factionRebel)) {
 			visibilityIncrease += 0.5;

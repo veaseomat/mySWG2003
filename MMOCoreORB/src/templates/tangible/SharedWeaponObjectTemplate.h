@@ -23,7 +23,7 @@ protected:
 	int healthAttackCost;
 	int actionAttackCost;
 	int mindAttackCost;
-	float forceCost;
+	int forceCost;
 
 	int pointBlankAccuracy;
 	int pointBlankRange;
@@ -126,7 +126,7 @@ public:
 		healthAttackCost = 0;
 		actionAttackCost = 0;
 		mindAttackCost = 0;
-		forceCost = 0.0;
+		forceCost = 0;
 
 		pointBlankAccuracy = 0;
 		pointBlankRange = 0;
@@ -181,7 +181,7 @@ public:
 		return attackSpeed;
 	}
 
-	inline float getForceCost() const {
+	inline int getForceCost() const {
 		return forceCost;
 	}
 
@@ -245,7 +245,7 @@ public:
 		this->attackSpeed = attackSpeed;
 	}
 
-	void setForceCost(float forceCost) {
+	void setForceCost(int forceCost) {
 		this->forceCost = forceCost;
 	}
 

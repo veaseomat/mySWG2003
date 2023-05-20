@@ -59,7 +59,7 @@ PointBlankArea2Command = {
 
 	combatSpam = "areashot",
 	
-	weaponType = PISTOLWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = 12
 }

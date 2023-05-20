@@ -233,7 +233,7 @@ void SlicingSessionImplementation::endSlicing() {
 	}
 
 	if (tangibleObject->isMissionTerminal())
-		player->addCooldown("slicing.terminal", (1 * (60 * 1000))); // 2min Cooldown
+		player->addCooldown("slicing.terminal", (1 * (60 * 1000))); // 1min Cooldown
 
 	cancelSession();
 

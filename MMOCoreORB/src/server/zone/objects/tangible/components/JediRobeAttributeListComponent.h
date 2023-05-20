@@ -22,7 +22,7 @@ public:
 		}
 
 		const auto skills = robe->getTemplateSkillMods();
-//remove these for no jedi robe
+//show stats on jedi robe
 		if (skills->contains("jedi_force_power_max")) {
 			int mod = skills->get("jedi_force_power_max");
 			alm->insertAttribute("jedi_robe_power", "+" + String::valueOf(mod));

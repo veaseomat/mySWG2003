@@ -5,7 +5,7 @@ weapon_component_advanced = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{groupTemplate = "weapon_component", weight = 4500000},
+		{groupTemplate = "weapon_component", weight = 5000000},
 		
 		{itemTemplate = "blaster_pistol_barrel_advanced", weight = 454545},
 		{itemTemplate = "blaster_power_handler_advanced", weight = 454545},
@@ -18,7 +18,7 @@ weapon_component_advanced = {
 		{itemTemplate = "reinforcement_core_advanced", weight = 454545},
 		{itemTemplate = "sword_core_advanced", weight = 454545},
 		{itemTemplate = "vibro_unit_advanced", weight = 454545},
-		{itemTemplate = "saber_rcp", weight = 500000},
+		--{itemTemplate = "saber_rcp", weight = 500000},
 	},
 }
 

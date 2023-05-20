@@ -46,7 +46,7 @@ int SaberInventoryContainerComponent::canAddObject(SceneObject* sceneObject, Sce
 		return TransferErrorCode::INVALIDTYPE;
 	}
 
-	if (sceneObject->getContainerObjectsSize() >= sceneObject->getContainerVolumeLimit()) {
+	if (sceneObject->getContainerObjectsSize() >= sceneObject->getContainerVolumeLimit()) { // >= 1){ //this sets max saber inventory
 		errorDescription = "@container_error_message:container03"; //This container is full.
 		return TransferErrorCode::CONTAINERFULL;
 	}

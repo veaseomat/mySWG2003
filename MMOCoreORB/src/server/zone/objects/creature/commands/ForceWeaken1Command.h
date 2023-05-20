@@ -50,11 +50,11 @@ public:
 
 			float frsbuff = ((creature->getSkillMod("force_power_dark") + creature->getSkillMod("force_power_light")) / 600);//120/600=.2
 
-			newhammax *= (.2 + frsbuff);//percent dbuff of average ham
+			newhammax *= (.25 + frsbuff);//percent dbuff of average ham
 
 			newhammax /= 5;//number of ticks
 
-			ManagedReference<Buff*> buff = new ForceWeakenDebuff(creatureTarget, getNameCRC(), newhammax, 500, 90);
+			ManagedReference<Buff*> buff = new ForceWeakenDebuff(creatureTarget, getNameCRC(), newhammax, 500, 60);
 
 			Locker locker(buff);
 

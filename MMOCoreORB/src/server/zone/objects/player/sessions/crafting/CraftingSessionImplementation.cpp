@@ -1205,25 +1205,27 @@ void CraftingSessionImplementation::createPrototype(int clientCounter, bool crea
 		closeCraftingWindow(clientCounter, true);
 
 		String xpType = manufactureSchematic->getDraftSchematic()->getXpType();
-		int xp = manufactureSchematic->getDraftSchematic()->getXpAmount() * 4;//crafting xp
+		int xp = manufactureSchematic->getDraftSchematic()->getXpAmount();
 //crafting timers
 		if (createItem) {
 
-			startCreationTasks(manufactureSchematic->getComplexity() / 2, false);
+			startCreationTasks(manufactureSchematic->getComplexity() / 5, false);
 
 		} else {
 
 			// This is for practicing
-			startCreationTasks(manufactureSchematic->getComplexity() / 2, true);
-			xp = round(xp * 1.05f);
+			startCreationTasks(manufactureSchematic->getComplexity() / 5, true);
+			xp = round(xp * 1.10f);
 		}
+
+		if (xpType == "jedi_general") xp *= 1.0;
 
 		Reference<PlayerManager*> playerManager = crafter->getZoneServer()->getPlayerManager();
-		playerManager->awardExperience(crafter, xpType, xp, true);
+		playerManager->awardExperience(crafter, xpType, xp * 2, true);
 
-		if (System::random(500) >= 500 ){
-			JediManager::instance()->awardFSpoint(crafter);
-		}
+//		if (System::random(500) >= 500 ){
+//			JediManager::instance()->awardFSpoint(crafter);
+//		}
 
 		manufactureSchematic->setCompleted();
 

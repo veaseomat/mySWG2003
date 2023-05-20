@@ -79,6 +79,8 @@ object_tangible_wearables_armor_zam_armor_zam_wesell_helmet_quest = object_tangi
 	
 	-- Damage types in WeaponObject
 	vulnerability = ACID + ENERGY + STUN + LIGHTSABER,
+	
+	specialResists = BLAST,
 
 	-- These are default Blue Frog stats
 	healthEncumbrance = 6,

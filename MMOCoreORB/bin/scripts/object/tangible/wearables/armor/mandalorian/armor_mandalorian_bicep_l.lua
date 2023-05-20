@@ -44,10 +44,10 @@
 object_tangible_wearables_armor_mandalorian_armor_mandalorian_bicep_l = object_tangible_wearables_armor_mandalorian_shared_armor_mandalorian_bicep_l:new {
 	templateType = ARMOROBJECT,
 
-	certificationsRequired = { "combat_bountyhunter_master",
-					"combat_commando_master",
-					"outdoors_squadleader_master",
-					"outdoors_ranger_master" },
+--	certificationsRequired = { "combat_bountyhunter_master",
+--					"combat_commando_master",
+--					"outdoors_squadleader_master",
+--					"outdoors_ranger_master" },
 
 	playerRaces = { "object/creature/player/bothan_male.iff",
 				"object/creature/player/bothan_female.iff",

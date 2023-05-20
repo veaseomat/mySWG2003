@@ -5,12 +5,12 @@ melee_polearm = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "polearm_lance", weight = 2000000},
-		{itemTemplate = "polearm_lance_vibrolance", weight = 2000000},
-		{itemTemplate = "polearm_staff_metal", weight = 1500000},
-		{itemTemplate = "polearm_staff_wood", weight = 1000000},
-		{itemTemplate = "polearm_staff_wood_reinforced", weight = 1500000},
-		{itemTemplate = "polearm_vibro_axe", weight = 2000000},
+		{itemTemplate = "polearm_staff_wood", weight = 2500000},
+		{itemTemplate = "polearm_staff_wood_reinforced", weight = 2000000},
+		{itemTemplate = "polearm_staff_metal", weight = 2000000},
+		{itemTemplate = "polearm_lance", weight = 1500000},
+		{itemTemplate = "polearm_lance_vibrolance", weight = 1500000},
+		{itemTemplate = "polearm_vibro_axe", weight = 500000},
 	}
 }
 

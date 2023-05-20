@@ -116,7 +116,7 @@ object_weapon_ranged_rifle_rifle_acid_beam = object_weapon_ranged_rifle_shared_r
 	minDamage = 330,
 	maxDamage = 770,
 
-	attackSpeed = 6,
+	attackSpeed = 5.5,
 
 	woundsRatio = 27,
 

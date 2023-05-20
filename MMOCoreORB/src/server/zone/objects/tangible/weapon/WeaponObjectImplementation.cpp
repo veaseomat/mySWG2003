@@ -215,15 +215,6 @@ String WeaponObjectImplementation::getWeaponType() const {
 void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, CreatureObject* object) {
 	TangibleObjectImplementation::fillAttributeList(alm, object);
 
-	//PlayerManager* playerManager = object->getZoneServer()->getPlayerManager();
-
-	//playerManager->calculatePlayerLevel(object);//this will reup the buff every time inventory is opened
-
-//	int playerLevel = object->getPlayerObject()->getSkillPoints();//playerManager->calculatePlayerLevel(object);
-//
-//	alm->insertAttribute("challenge_level", playerLevel);
-
-
 	bool res = isCertifiedFor(object);
 
 	if (res) {
@@ -312,13 +303,15 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	float minDmg = round(getMinDamage());
 	float maxDmg = round(getMaxDamage());
 
-//	alm->insertAttribute("damage.wpn_damage_min", minDmg);
+	alm->insertAttribute("damage.wpn_damage_min", minDmg);
 
 	alm->insertAttribute("damage.wpn_damage_max", maxDmg);
 
 	StringBuffer woundsratio;
 
 	float wnd = round(10 * getWoundsRatio()) / 10.0f;
+
+	if (wnd > 50) wnd = 50;
 
 	woundsratio << wnd << "%";
 
@@ -330,37 +323,37 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 		pblank << "+";
 
 	pblank << getPointBlankAccuracy() << " @ " << getPointBlankRange() << "m";
-//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_zero", pblank);
+	alm->insertAttribute("cat_wpn_rangemods.wpn_range_zero", pblank);
 
 	StringBuffer ideal;
 	if (getIdealAccuracy() >= 0)
 		ideal << "+";
 
 	ideal << getIdealAccuracy() << " @ " << getIdealRange() << "m";
-//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_mid", ideal);
+	alm->insertAttribute("cat_wpn_rangemods.wpn_range_mid", ideal);
 
 	StringBuffer maxrange;
 	if (getMaxRangeAccuracy() >= 0)
 		maxrange << "+";
 
 	maxrange << getMaxRangeAccuracy() << " @ " << getMaxRange() << "m";
-//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
+	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
 
 	//Special Attack Costs
-	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost() / 5);
+	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost());
 
-	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost() / 5);
+	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost());
 
-	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost() / 5);
+	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost());
 
 	//Anti Decay Kit
 	if(hasAntiDecayKit()){
 		alm->insertAttribute("@veteran_new:antidecay_examine_title", "@veteran_new:antidecay_examine_text");
 	}
 
-	// Force Cost // float shows decimal points on sabers!
-//	if (getForceCost() > 0)
-//		alm->insertAttribute("forcecost", (float)getForceCost());
+	// Force Cost
+	if (getForceCost() > 0)
+		alm->insertAttribute("forcecost", (int)getForceCost());
 
 	for (int i = 0; i < getNumberOfDots(); i++) {
 
@@ -460,7 +453,7 @@ int WeaponObjectImplementation::getPointBlankAccuracy(bool withPup) const {
 	if (powerupObject != nullptr && withPup)
 		return pointBlankAccuracy + (abs(pointBlankAccuracy) * powerupObject->getPowerupStat("pointBlankAccuracy"));
 
-	return 0; //pointBlankAccuracy;//1000
+	return pointBlankAccuracy;
 }
 
 int WeaponObjectImplementation::getPointBlankRange(bool withPup) const {
@@ -488,7 +481,7 @@ int WeaponObjectImplementation::getIdealAccuracy(bool withPup) const {
 	if (powerupObject != nullptr && withPup)
 		return idealAccuracy + (abs(idealAccuracy) * powerupObject->getPowerupStat("idealAccuracy"));
 
-	return 0; //idealAccuracy;
+	return idealAccuracy;
 }
 
 
@@ -496,7 +489,7 @@ int WeaponObjectImplementation::getMaxRangeAccuracy(bool withPup) const {
 	if (powerupObject != nullptr && withPup)
 		return maxRangeAccuracy + (abs(maxRangeAccuracy) * powerupObject->getPowerupStat("maxRangeAccuracy"));
 
-	return 0; //maxRangeAccuracy;
+	return maxRangeAccuracy;
 }
 
 float WeaponObjectImplementation::getAttackSpeed(bool withPup) const {
@@ -659,15 +652,15 @@ bool WeaponObjectImplementation::isCertifiedFor(CreatureObject* object) const {
 	if (ghost == nullptr)
 		return false;
 
-//	const auto certificationsRequired = weaponTemplate->getCertificationsRequired();
-//
-//	for (int i = 0; i < certificationsRequired->size(); ++i) {
-//		const String& cert = certificationsRequired->get(i);
-//
-//		if (!ghost->hasAbility(cert) && !object->hasSkill(cert)) {
-//			return false;
-//		}
-//	}
+	const auto certificationsRequired = weaponTemplate->getCertificationsRequired();
+
+	for (int i = 0; i < certificationsRequired->size(); ++i) {
+		const String& cert = certificationsRequired->get(i);
+
+		if (!ghost->hasAbility(cert) && !object->hasSkill(cert)) {
+			return false;
+		}
+	}
 
 	return true;
 }
@@ -700,20 +693,22 @@ void WeaponObjectImplementation::decreasePowerupUses(CreatureObject* player) {
 String WeaponObjectImplementation::repairAttempt(int repairChance) {
 	String message = "@error_message:";
 
-	if(repairChance < 25) {
+	repairChance = System::random(100);
+
+	if(repairChance <= 1) {
 		message += "sys_repair_failed";
 		setMaxCondition(1, true);
 		setConditionDamage(0, true);
-	} else if(repairChance < 50) {
+	} else if(repairChance < 34) {
 		message += "sys_repair_imperfect";
 		setMaxCondition(getMaxCondition() * .65f, true);
 		setConditionDamage(0, true);
-	} else if(repairChance < 75) {
+	} else if(repairChance < 67) {
 		setMaxCondition(getMaxCondition() * .80f, true);
 		setConditionDamage(0, true);
 		message += "sys_repair_slight";
 	} else {
-		setMaxCondition(getMaxCondition() * .95f, true);
+		setMaxCondition(getMaxCondition() * 1.0f, true);
 		setConditionDamage(0, true);
 		message += "sys_repair_perfect";
 	}
@@ -726,7 +721,7 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 		return;
 	}
 
-	int roll = System::random(200);
+	int roll = System::random(100);
 	int chance = 5;
 
 	if (hasPowerup())
@@ -745,11 +740,21 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 			for (int i = 0; i < saberInv->getContainerObjectsSize(); i++) {
 				ManagedReference<LightsaberCrystalComponent*> crystal = saberInv->getContainerObject(i).castTo<LightsaberCrystalComponent*>();
 
-				if (crystal != nullptr && crystal->getColor() == 31) {
+				if (crystal != nullptr && crystal->getColor() == 31) {//only
 					crystal->inflictDamage(crystal, 0, 1, true, true);
 				}
 			}
-		} else {
+
+			if (roll * 5 < chance) {//saber hilt decays but 5x less likely
+				inflictDamage(_this.getReferenceUnsafeStaticCast(), 0, 1, true, true);
+
+				if (((float)conditionDamage - 1 / (float)maxCondition < 0.75) && ((float)conditionDamage / (float)maxCondition > 0.75))
+					user->sendSystemMessage("@combat_effects:weapon_quarter");
+				if (((float)conditionDamage - 1 / (float)maxCondition < 0.50) && ((float)conditionDamage / (float)maxCondition > 0.50))
+					user->sendSystemMessage("@combat_effects:weapon_half");
+			}
+
+		} else {//remove else so saber hilts take damage also
 			inflictDamage(_this.getReferenceUnsafeStaticCast(), 0, 1, true, true);
 
 			if (((float)conditionDamage - 1 / (float)maxCondition < 0.75) && ((float)conditionDamage / (float)maxCondition > 0.75))
