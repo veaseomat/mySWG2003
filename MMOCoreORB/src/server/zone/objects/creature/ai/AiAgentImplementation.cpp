@@ -189,8 +189,8 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	float minDmg = ((newlvl * 15) - 100) * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
 	float maxDmg = (newlvl * 15) - 100;//((pow(newlvl, 2)) / 20) * weapran + 5;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
 
-	if (minDmg < 15) minDmg = 15;
-	if (maxDmg < 25) maxDmg = 25;
+	if (minDmg < 30) minDmg = 30;
+	if (maxDmg < 50) maxDmg = 50;
 
 	float speed = (5.0 - ((level * 4) * .01));// * randomtwo;//calculateAttackSpeed(level);
 	bool allowedWeapon = true;
@@ -1789,8 +1789,8 @@ void AiAgentImplementation::activatePostureRecovery() {
 }
 
 void AiAgentImplementation::activateHAMRegeneration(int latency) {
-	if (getLevel() < 10)
-		return;
+//	if (getLevel() < 10)
+//		return;
 
     if (isIncapacitated() || isDead()) {
         return;
@@ -1810,29 +1810,27 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 //		modifier *= 1.75f;
 
 	// this formula gives the amount of regen per second
-	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::CONSTITUTION)) * 10.0f / 2000.0f * modifier);
-	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::STAMINA)) * 10.0f / 2000.0f * modifier);
-	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::WILLPOWER)) * 10.0f / 2000.0f * modifier);
+//	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::CONSTITUTION)) * 10.0f / 2000.0f * modifier);
+//	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::STAMINA)) * 10.0f / 2000.0f * modifier);
+//	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::WILLPOWER)) * 10.0f / 2000.0f * modifier);
 
 //	int aicon = getMaxHAM(CreatureAttribute::CONSTITUTION);//70+r30
 //	int aistam = getMaxHAM(CreatureAttribute::STAMINA);//80
 //	int aiwill = getMaxHAM(CreatureAttribute::WILLPOWER);//70r30
-//
-//	healthTick = aicon * .01;
-//	actionTick = 1;
-//	mindTick = 1;
+
+	int healthTick = getLevel() / 10 * modifier;
+	int actionTick = getLevel() / 10 * modifier;
+	int mindTick = getLevel() / 10 * modifier;
 
 	if (healthTick < 1)
-		healthTick = 1;
-
+		return;
 	if (actionTick < 1)
-		actionTick = 1;
-
+		return;
 	if (mindTick < 1)
-		mindTick = 1;
+		return;
 
 	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
 	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);

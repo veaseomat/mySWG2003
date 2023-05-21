@@ -1722,15 +1722,20 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PvP Damage Reduction
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= .5;//vanilla .25
+		damage *= .25;//vanilla .25
+
+//// PVE
+//	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
+//		damage *= 1.0;//.25 + (playerLevel * .0075);
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= .5;//.25 + (playerLevel * .0075); //100, move decimal
+		damage *= 1.0 - (defender->getLevel() * .0075);//theory is that this nerfs pve dmg down to .25 at creature lvl 100 like pvp .25 mult
+
 		
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 1.0;
+		damage *= .9;
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
@@ -1908,8 +1913,10 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 }
 
 float CombatManager::calculateWeaponAttackSpeed(CreatureObject* attacker, WeaponObject* weapon, float skillSpeedRatio) const {
-	if (attacker->isAiAgent())
-		return weapon->getAttackSpeed();
+	if (attacker->isAiAgent()){
+		float npcspeed = (5.0 - ((attacker->getLevel() * 4) * .01));
+		return npcspeed;//weapon->getAttackSpeed();
+	}
 
 	int speedMod = getSpeedModifier(attacker, weapon);
 	float jediSpeed = attacker->getSkillMod("combat_haste") / 100.0f;

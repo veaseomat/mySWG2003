@@ -597,11 +597,9 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 
 		//return xp from surender
-		int xpcost = skill->getXpCost();
-		int curExp = ghost->getExperience(skill->getXpType());
 
-		if (xpcost > 0) {
-			ghost->addExperience(skill->getXpType(), curExp + xpcost, true);
+		if (skill->getXpCost() > 0) {
+			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
 		}
 
 		//Remove abilities but only if the creature doesn't still have a skill that grants the

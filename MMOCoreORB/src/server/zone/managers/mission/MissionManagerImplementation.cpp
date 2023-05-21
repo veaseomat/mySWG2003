@@ -723,7 +723,7 @@ void MissionManagerImplementation::randomizeFactionTerminalMissions(CreatureObje
 			}
 		}
 
-		int newreward = mission->getRewardCredits() * 1.5;
+		int newreward = mission->getRewardCredits();// * 1.5;
 
 		if (slicer) {
 			mission->setRewardCredits(newreward * 1.5);
@@ -797,7 +797,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 		int distance = destroyMissionBaseDistance + destroyMissionDifficultyDistanceFactor * difficultyLevel;
 		distance += System::random(destroyMissionRandomDistance) + System::random(destroyMissionDifficultyRandomDistance * difficultyLevel);
-		distance *= .5;//decrease mission distance
+		distance *= .75;//decrease mission distance
 		startPos = player->getWorldCoordinate((float)distance, (float)System::random(360), false);
 
 		if (zone->isWithinBoundaries(startPos)) {
@@ -839,7 +839,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 
 	int reward = destroyMissionBaseReward + destroyMissionDifficultyRewardFactor * difficultyLevel;
 	reward += System::random(destroyMissionRandomReward) + System::random(destroyMissionDifficultyRandomReward * difficultyLevel);
-	mission->setRewardCredits(reward * 1.5);//reduce ALL destroy mission rewards here
+	mission->setRewardCredits(reward);//reduce ALL destroy mission rewards here
 
 	mission->setMissionDifficulty(difficultyLevel, diffDisplay, difficulty);
 	mission->setSize(randomLairSpawn->getSize());
@@ -1118,7 +1118,7 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			reward = creoLevel * (300 + System::random(300));
 		}
 
-		mission->setRewardCredits(reward * 1.25);//increase bh npc reward
+		mission->setRewardCredits(reward);//increase bh npc reward
 
 		String diffString = "easy";
 

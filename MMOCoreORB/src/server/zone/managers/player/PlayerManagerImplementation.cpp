@@ -1849,13 +1849,13 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 		}
 
 		if (ai != nullptr)
-			baseXp = ai->getLevel() * 100;//ai->getLevel() * 20;// * ai->getLevel() * .5;//ai->getBaseXp();
+			baseXp = ai->getLevel() * ai->getLevel() * 2.5;//ai->getLevel() * 20;// * ai->getLevel() * .5;//ai->getBaseXp();
 
 	} else {
 		ManagedReference<AiAgent*> ai = cast<AiAgent*>(destructedObject);
 
 		if (ai != nullptr)
-			baseXp = ai->getLevel() * 100;//ai->getLevel() * 20;//ai->getLevel() * .5;//ai->getBaseXp();
+			baseXp = ai->getLevel() * ai->getLevel() * 2.5;//ai->getLevel() * 20;//ai->getLevel() * .5;//ai->getBaseXp();
 	}
 
 	for (int i = 0; i < threatMap->size(); ++i) {
@@ -1976,8 +1976,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //						//xpType = "combat_meleespecialize_polearmlightsaber";
 //						awardExperience(attacker, "combat_meleespecialize_polearmlightsaber", xpAmount, true, 1.0f, false);
 
-					awardExperience(attacker, "jedi_general", xpAmount, true, 0.2f, false);
-					xpAmount = 0;//jedi xp is awarded above
+					awardExperience(attacker, "jedi_general", xpAmount * .2, true, 1, false);
 
 //					if (attacker->hasSkill("force_title_jedi_rank_03"))
 //						frsXp += xpAmount;
@@ -1985,8 +1984,8 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 
 				if (xpType != "jedi_general") {
 				//Award individual expType
-					awardExperience(attacker, xpType, xpAmount, true, 1.0f, false);
-					awardExperience(attacker, "combat_general", xpAmount, true, 0.1f, false);
+					awardExperience(attacker, xpType, xpAmount, true, 1, false);
+					awardExperience(attacker, "combat_general", xpAmount * .1, true, 1, false);
 				}
 			}
 
