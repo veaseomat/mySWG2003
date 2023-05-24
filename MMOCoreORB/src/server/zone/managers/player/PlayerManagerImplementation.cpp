@@ -1849,13 +1849,13 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 		}
 
 		if (ai != nullptr)
-			baseXp = ai->getBaseXp();//ai->getLevel() * ai->getLevel() * 2.5;//shit works;
+			baseXp = ai->getLevel() * ai->getLevel() * 2.5;//ai->getLevel() * 20;// * ai->getLevel() * .5;//ai->getBaseXp();
 
 	} else {
 		ManagedReference<AiAgent*> ai = cast<AiAgent*>(destructedObject);
 
 		if (ai != nullptr)
-			baseXp = ai->getBaseXp();;//ai->getLevel() * ai->getLevel() * 2.5;
+			baseXp = ai->getLevel() * ai->getLevel() * 2.5;//ai->getLevel() * 20;//ai->getLevel() * .5;//ai->getBaseXp();
 	}
 
 	for (int i = 0; i < threatMap->size(); ++i) {

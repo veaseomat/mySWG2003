@@ -128,7 +128,7 @@ int AiAgentImplementation::calculateAttackMaxDamage(int level) {
 	return dmg;
 }
 float AiAgentImplementation::calculateAttackSpeed(int level) {
-	float speed = 3.5f - ((float)level / 100.f);
+	float speed = 1.0f;//(1.0f + (System::random(20) * .1)) - ((float)level / 100.f);
 	return speed;
 }
 
@@ -144,67 +144,56 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	convoTemplateCRC = npcTemplate->getConversationTemplate();
 
-	level = getTemplateLevel();
+	bool legendarynpc = false;//adds (elite) name tag
 
-//	if (level > 300) level = 300;
+	int newlvl = getTemplateLevel();
+
+	if (newlvl > 100) newlvl = 100;
+
+//	newlvl *= 3;
+
+//	if (System::random(25) == 25) {// and elite <= 1.0) {
+//		legendarynpc = true;
+//		newlvl *= 2;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
+//	}
+
+//	float lvlrandomizer = .75 + (System::random(25) * .01);
+//	newlvl *= lvlrandomizer;
+
+//	if (newlvl > 500) newlvl = 500;
+
+
+//	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
+//
+//	if (elite > 1.0) {
+//		//legendarynpc = true;
+//		newlvl *= elite;
+//	}
+
+	//newlvl *= templateData->getElite();
+
+	level = newlvl;//(pow(newlvl, 2)) / 33; //
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float minDmg = npcTemplate->getDamageMin();
-	float maxDmg = npcTemplate->getDamageMax();
-	float speed = calculateAttackSpeed(level);
-	bool allowedWeapon = true;
+	float weapran = .6 + (System::random(20) * .01);
 
-//	bool legendarynpc = false;//adds (elite) name tag
-//
-//	int newlvl = getTemplateLevel();
-//
-//	if (newlvl > 100) newlvl = 100;
-//
-////	newlvl *= 3;
-//
-////	if (System::random(25) == 25) {// and elite <= 1.0) {
-////		legendarynpc = true;
-////		newlvl *= 2;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
-////	}
-//
-////	float lvlrandomizer = .75 + (System::random(25) * .01);
-////	newlvl *= lvlrandomizer;
-//
-////	if (newlvl > 500) newlvl = 500;
-//
-//
-////	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
-////
-////	if (elite > 1.0) {
-////		//legendarynpc = true;
-////		newlvl *= elite;
-////	}
-//
-//	//newlvl *= templateData->getElite();
-//
-//	level = newlvl;//(pow(newlvl, 2)) / 33; //
-//
-//	planetMapCategory = npcTemplate->getPlanetMapCategory();
-//
-//	float weapran = .6 + (System::random(20) * .01);
-//
-//	if (isAiAgent() && !isCreature()){
-//		weapran = .6 + (System::random(40) * .01);
-//	}
-//
-////	if (System::random(100) == 100) {//simulate exceptional
-////		legendarynpc = true;
-////		weapran += 1.3;	}
-//
-//	float minDmg = ((newlvl * 15) - 100) * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
-//	float maxDmg = (newlvl * 15) - 100;//((pow(newlvl, 2)) / 20) * weapran + 5;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
-//
-//	if (minDmg < 30) minDmg = 30;
-//	if (maxDmg < 50) maxDmg = 50;
-//
-//	float speed = (5.0 - ((level * 4) * .01));// * randomtwo;//calculateAttackSpeed(level);
-//	bool allowedWeapon = true;
+	if (isAiAgent() && !isCreature()){
+		weapran = .6 + (System::random(40) * .01);
+	}
+
+//	if (System::random(100) == 100) {//simulate exceptional
+//		legendarynpc = true;
+//		weapran += 1.3;	}
+
+	float minDmg = ((newlvl * 15) - 100) * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
+	float maxDmg = (newlvl * 15) - 100;//((pow(newlvl, 2)) / 20) * weapran + 5;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
+
+	if (minDmg < 30) minDmg = 30;
+	if (maxDmg < 50) maxDmg = 50;
+
+	float speed = (5.0 - ((level * 4) * .01));// * randomtwo;//calculateAttackSpeed(level);
+	bool allowedWeapon = true;
 
 
 	if (petDeed != nullptr) {
@@ -307,82 +296,55 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	setupAttackMaps();
 
-	int ham = 0;
+	int lvlham = 50 * (1 + (newlvl * .40));//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
 
+	int ham = 0;
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
-		for (int i = 0; i < 9; ++i) {
-			if (i % 3 == 0) {
-				//ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
+		int health = (lvlham * .80) + System::random(lvlham * .20);// * .67 + (100 + r200)
+		int str = (lvlham * .70) + System::random(lvlham * .30);//
+		int con = (lvlham * .70) + System::random(lvlham * .30);
+		baseHAM.add(health);
+		baseHAM.add(str);
+		baseHAM.add(con);
+		int action = (lvlham * .75) + System::random(lvlham * .25);
+		int quick = (lvlham * .70) + System::random(lvlham * .30);//hit pools
+		int stam = (lvlham * .70) + System::random(lvlham * .30);
+		baseHAM.add(action);
+		baseHAM.add(quick);
+		baseHAM.add(stam);
+		int mind = (lvlham * .60) + System::random(lvlham * .40);
+		int focus = (lvlham * .70) + System::random(lvlham * .10);//this one is for determining if npc will hit single pool
+		int will = (lvlham * .70) + System::random(lvlham * .30);
+		baseHAM.add(mind);
+		baseHAM.add(focus);
+		baseHAM.add(will);
 
-				ham = getHamMaximum();//level * 100;
-//				ham -= 350;
-//				if (ham < 100) ham = 100;
-
-				if (ham > 30000) ham = 30000;
-
-				ham *= .800 + (System::random(20000) * .00001);
-
-//				if (ham > 100000) ham = 100000;
-
-				// 1.0 - (hamlvl / 333);// / (level / 20)
-
-				if (isDroidObject() && isPet())
-					ham = getHamMaximum();
-				baseHAM.add(ham);
-			} else
-				baseHAM.add(ham/10);
-		}
-
-//	int lvlham = 50 * (1 + (newlvl * .40));//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
-//
-//	int ham = 0;
-//	baseHAM.removeAll();
-//	if (petDeed == nullptr) {
-//		int health = (lvlham * .80) + System::random(lvlham * .20);// * .67 + (100 + r200)
-//		int str = (lvlham * .70) + System::random(lvlham * .30);//
-//		int con = (lvlham * .70) + System::random(lvlham * .30);
+//		int health = (level * 200) + System::random(level * 40);
 //		baseHAM.add(health);
-//		baseHAM.add(str);
-//		baseHAM.add(con);
-//		int action = (lvlham * .75) + System::random(lvlham * .25);
-//		int quick = (lvlham * .70) + System::random(lvlham * .30);//hit pools
-//		int stam = (lvlham * .70) + System::random(lvlham * .30);
+//		baseHAM.add(health * .50);
+//		baseHAM.add(health * .50);
+//		int action = (level * 200) + System::random(level * 40);
 //		baseHAM.add(action);
-//		baseHAM.add(quick);
-//		baseHAM.add(stam);
-//		int mind = (lvlham * .60) + System::random(lvlham * .40);
-//		int focus = (lvlham * .70) + System::random(lvlham * .10);//this one is for determining if npc will hit single pool
-//		int will = (lvlham * .70) + System::random(lvlham * .30);
+//		baseHAM.add(action * .50);
+//		baseHAM.add(action * .50);
+//		int mind = ((level * 200) + System::random(level * 40)) * .75;
 //		baseHAM.add(mind);
-//		baseHAM.add(focus);
-//		baseHAM.add(will);
-//
-////		int health = (level * 200) + System::random(level * 40);
-////		baseHAM.add(health);
-////		baseHAM.add(health * .50);
-////		baseHAM.add(health * .50);
-////		int action = (level * 200) + System::random(level * 40);
-////		baseHAM.add(action);
-////		baseHAM.add(action * .50);
-////		baseHAM.add(action * .50);
-////		int mind = ((level * 200) + System::random(level * 40)) * .75;
-////		baseHAM.add(mind);
-////		baseHAM.add(mind * .50);
-////		baseHAM.add(mind * .50);
-//
-////		for (int i = 0; i < 9; ++i) {
-////			if (i % 3 == 0) {
-////				//ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
-////				ham = level * 200;
-////				ham += System::random(level * 40);
-//////				if (ham > 100000) ham = 100000;
-////				if (isDroidObject() && isPet())
-////					ham = getHamMaximum();
-////				baseHAM.add(ham);
-////			} else
-////				baseHAM.add(ham/10);
-////		}
+//		baseHAM.add(mind * .50);
+//		baseHAM.add(mind * .50);
+
+//		for (int i = 0; i < 9; ++i) {
+//			if (i % 3 == 0) {
+//				//ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
+//				ham = level * 200;
+//				ham += System::random(level * 40);
+////				if (ham > 100000) ham = 100000;
+//				if (isDroidObject() && isPet())
+//					ham = getHamMaximum();
+//				baseHAM.add(ham);
+//			} else
+//				baseHAM.add(ham/10);
+//		}
 
 	} else {
 		int health = petDeed->getHealth();
@@ -417,14 +379,12 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		int templSpecies = getSpecies();
 
 		if (!npcTemplate->getRandomNameTag()) {
-			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies), false);
-
-//			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]", false);
-//			if (legendarynpc == true) {
-//				//objectName = npcTemplate->getObjectName() + "(Legendary)";
-//				//setCustomObjectName("(Legendary)", false);
-//				setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false); // + "\\#FF00FF" + " (Legendary)"
-//			}
+			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]", false);
+			if (legendarynpc == true) {
+				//objectName = npcTemplate->getObjectName() + "(Legendary)";
+				//setCustomObjectName("(Legendary)", false);
+				setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false); // + "\\#FF00FF" + " (Legendary)"
+			}
 		} else {
 			String newName = nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies);
 			newName += " (";
@@ -435,19 +395,33 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 				newName += StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString();
 
 			newName += ")";
-			setCustomObjectName(newName, false);
-//			setCustomObjectName(newName + "\\#C0C0C0" + " [" + level + "]", false);
-//			if (legendarynpc == true) {
-//				setCustomObjectName(newName + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false);
-//			}
+			setCustomObjectName(newName + "\\#C0C0C0" + " [" + level + "]", false);
+			if (legendarynpc == true) {
+				setCustomObjectName(newName + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false);
+			}
 		}
 	} else {
-		setCustomObjectName(templateData->getCustomName(), false);
+//		NameManager* nm = server->getNameManager();
+//		int templSpecies = getSpecies();
+//		String newName2 = nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies);
+//		newName2 += " (";
+//
+//			newName2 += templateData->getCustomName();
+//
+//		newName2 += ")";
+//
+//		setCustomObjectName(newName2 + " [" + level + "]", false);
 
-//		setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#C0C0C0" + " [" + level + "]", false);
-//		if (legendarynpc == true) {
-//			setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false);
-//		}
+//		String newname2 = templateData->getCustomName();
+//
+//		newname2 += " [";
+//		newname2 += level;
+//		newname2 += "]";
+
+		setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#C0C0C0" + " [" + level + "]", false);
+		if (legendarynpc == true) {
+			setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false);
+		}
 	}
 
 	setHeight(templateData->getScale(), false);
@@ -1815,86 +1789,73 @@ void AiAgentImplementation::activatePostureRecovery() {
 }
 
 void AiAgentImplementation::activateHAMRegeneration(int latency) {
-    if (isIncapacitated() || isDead() || isInCombat())
+//	if (getLevel() < 10)
+//		return;
+
+    if (isIncapacitated() || isDead()) {
         return;
+    }
 
-    uint32 healthTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::HEALTH) / 300000.f * latency));
-    uint32 actionTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::ACTION) / 300000.f * latency));
-    uint32 mindTick   = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::MIND) / 300000.f * latency));
+	float modifier = 1.0;//(float)latency/1000.f;
 
-    healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
-    healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
-    healDamage(asCreatureObject(), CreatureAttribute::MIND,   mindTick,   true, false);
+//	if (isInCombat())
+//			modifier *= 0;
 
-    activatePassiveWoundRegeneration();
+	if (!isInCombat())
+			modifier = 3.0;
 
-////	if (getLevel() < 10)
-////		return;
+//	if (isKneeling())
+//		modifier *= 1.25f;
+//	else if (isSitting())
+//		modifier *= 1.75f;
+
+	// this formula gives the amount of regen per second
+//	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::CONSTITUTION)) * 10.0f / 2000.0f * modifier);
+//	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::STAMINA)) * 10.0f / 2000.0f * modifier);
+//	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::WILLPOWER)) * 10.0f / 2000.0f * modifier);
+
+//	int aicon = getMaxHAM(CreatureAttribute::CONSTITUTION);//70+r30
+//	int aistam = getMaxHAM(CreatureAttribute::STAMINA);//80
+//	int aiwill = getMaxHAM(CreatureAttribute::WILLPOWER);//70r30
+
+	int healthTick = getLevel() / 10 * modifier;
+	int actionTick = getLevel() / 10 * modifier;
+	int mindTick = getLevel() / 10 * modifier;
+
+	if (healthTick < 1)
+		return;
+	if (actionTick < 1)
+		return;
+	if (mindTick < 1)
+		return;
+
+	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
+	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
+	healDamage(asCreatureObject(), CreatureAttribute::MIND, mindTick, true, false);
+
 //
-//    if (isIncapacitated() || isDead()) {
-//        return;
-//    }
+//	ManagedReference<SceneObject*> obj = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
+//	ManagedReference<SceneObject*> obj2 = asCreatureObject()->getParentRecursively(SceneObjectType::HOSPITALBUILDING);
+//	ManagedReference<SceneObject*> obj3 = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
 //
-//	float modifier = 1.0;//(float)latency/1000.f;
-//
-////	if (isInCombat())
-////			modifier *= 0;
-//
-//	if (!isInCombat())
-//			modifier = 3.0;
-//
-////	if (isKneeling())
-////		modifier *= 1.25f;
-////	else if (isSitting())
-////		modifier *= 1.75f;
-//
-//	// this formula gives the amount of regen per second
-////	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
-////			CreatureAttribute::CONSTITUTION)) * 10.0f / 2000.0f * modifier);
-////	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
-////			CreatureAttribute::STAMINA)) * 10.0f / 2000.0f * modifier);
-////	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
-////			CreatureAttribute::WILLPOWER)) * 10.0f / 2000.0f * modifier);
-//
-////	int aicon = getMaxHAM(CreatureAttribute::CONSTITUTION);//70+r30
-////	int aistam = getMaxHAM(CreatureAttribute::STAMINA);//80
-////	int aiwill = getMaxHAM(CreatureAttribute::WILLPOWER);//70r30
-//
-//	int healthTick = getLevel() / 10 * modifier;
-//	int actionTick = getLevel() / 10 * modifier;
-//	int mindTick = getLevel() / 10 * modifier;
-//
-//	if (healthTick < 1)
-//		return;
-//	if (actionTick < 1)
-//		return;
-//	if (mindTick < 1)
-//		return;
-//
-//	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
-//	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
-//	healDamage(asCreatureObject(), CreatureAttribute::MIND, mindTick, true, false);
-//
-////
-////	ManagedReference<SceneObject*> obj = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
-////	ManagedReference<SceneObject*> obj2 = asCreatureObject()->getParentRecursively(SceneObjectType::HOSPITALBUILDING);
-////	ManagedReference<SceneObject*> obj3 = asCreatureObject()->getParentRecursively(SceneObjectType::CAMPAREA);
-////
-////	if (!isInCombat() && isPet() && (obj != nullptr || obj2 != nullptr)) {
-////		healWound(asCreatureObject(), CreatureAttribute::HEALTH, 5, true, false);
-////		healWound(asCreatureObject(), CreatureAttribute::STRENGTH, 5, true, false);
-////		healWound(asCreatureObject(), CreatureAttribute::CONSTITUTION, 5, true, false);
-////		healWound(asCreatureObject(), CreatureAttribute::ACTION, 5, true, false);
-////		healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, 5, true, false);
-////		healWound(asCreatureObject(), CreatureAttribute::STAMINA, 5, true, false);
-////		healWound(asCreatureObject(), CreatureAttribute::MIND, 5, true, false);
-////		healWound(asCreatureObject(), CreatureAttribute::FOCUS, 5, true, false);
-////		healWound(asCreatureObject(), CreatureAttribute::WILLPOWER, 5, true, false);
-////	}
-//
-//
-////    activatePassiveWoundRegeneration();
-////    CreatureObjectImplementation::activatePassiveWoundRegeneration();
+//	if (!isInCombat() && isPet() && (obj != nullptr || obj2 != nullptr)) {
+//		healWound(asCreatureObject(), CreatureAttribute::HEALTH, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::STRENGTH, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::CONSTITUTION, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::ACTION, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::STAMINA, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::MIND, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::FOCUS, 5, true, false);
+//		healWound(asCreatureObject(), CreatureAttribute::WILLPOWER, 5, true, false);
+//	}
+
+
+//    activatePassiveWoundRegeneration();
+//    CreatureObjectImplementation::activatePassiveWoundRegeneration();
 }
 
 void AiAgentImplementation::updateCurrentPosition(PatrolPoint* pos) {
@@ -2788,6 +2749,7 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 
 //	alm->insertAttribute("challenge_level", level);
 
+	if (isAiAgent() && isCreature()){
 	if (getArmor() == 0)
 		alm->insertAttribute("armorrating", "None");
 	else if (getArmor() == 1)
@@ -2796,24 +2758,14 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("armorrating", "Medium");
 	else if (getArmor() == 3)
 		alm->insertAttribute("armorrating", "Heavy");
+	}
 
-//	if (isAiAgent() && isCreature()){
-//	if (getArmor() == 0)
-//		alm->insertAttribute("armorrating", "None");
-//	else if (getArmor() == 1)
-//		alm->insertAttribute("armorrating", "Light");
-//	else if (getArmor() == 2)
-//		alm->insertAttribute("armorrating", "Medium");
-//	else if (getArmor() == 3)
-//		alm->insertAttribute("armorrating", "Heavy");
-//	}
-//
-//	if (isAiAgent() && !isCreature()){
-//	if (getArmor() == 0)
-//		alm->insertAttribute("armorrating", "None");
-//	else if (getArmor() >= 1)
-//		alm->insertAttribute("armorrating", "Light");
-//	}
+	if (isAiAgent() && !isCreature()){
+	if (getArmor() == 0)
+		alm->insertAttribute("armorrating", "None");
+	else if (getArmor() >= 1)
+		alm->insertAttribute("armorrating", "Light");
+	}
 
 	int npcKinetic = getKinetic();
 	int npcEnergy = getEnergy();
@@ -2998,6 +2950,10 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 //	if (getLightSaber() <= 0)
 //		alm->insertAttribute("cat_armor_vulnerability.armor_eff_restraint", "-");
 
+	if (isKiller())
+		alm->insertAttribute("killer", "yes");
+	else
+		alm->insertAttribute("killer", "no");
 
 	if (isPet())
 	{

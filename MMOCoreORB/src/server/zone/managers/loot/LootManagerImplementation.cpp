@@ -264,10 +264,12 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
-	if(level > 350)
-		level = 350;
+	if(level > 100)
+		level = 100;
 
-//	level *= 3;
+//	level *= (System::random(50) * .01) + .50;
+
+	level *= 3.5;//simulate lvl 350 max loot
 
 //	int maxlvl = templateObject->getnewmaximumLevel();
 //	if (maxlvl == 1) {
