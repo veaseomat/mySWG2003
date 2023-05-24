@@ -70,7 +70,7 @@ Melee1hSpinAttack2Command = {
 	  )
 	},
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = ONEHANDMELEEWEAPON,
 
 	range = -1
 }

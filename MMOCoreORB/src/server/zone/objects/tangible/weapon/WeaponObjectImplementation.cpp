@@ -217,6 +217,8 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 
 	bool res = isCertifiedFor(object);
 
+//	alm->insertAttribute("junk value", getJunkValue());
+
 	if (res) {
 		alm->insertAttribute("weapon_cert_status", "Yes");
 	} else {

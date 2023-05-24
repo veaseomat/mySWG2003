@@ -738,6 +738,9 @@ void CraftingSessionImplementation::initialAssembly(int clientCounter) {
 	// Update the prototype with new values
 	prototype->updateCraftingValues(craftingValues, true);
 
+	prototype->setJunkDealerNeeded(1);
+	prototype->setJunkValue(manufactureSchematic->getComplexity() * manufactureSchematic->getComplexity());
+
 	addSkillMods();
 
 	addWeaponDots();
@@ -954,6 +957,12 @@ void CraftingSessionImplementation::experiment(int rowsAttempted, const String& 
 
 	}
 
+//	if(System::random(1) <= 1 && ) {//use this stuff possibly in the name area in craftingsessionimplementation customization section
+//		prototype->setIsCraftedEnhancedItem(true);
+//		prototype->addMagicBit(false);//makes it yellow
+//
+//	}
+
 	manufactureSchematic->setExperimentingCounter(
 			manufactureSchematic->getExperimentingCounter() + rowsAttempted);
 
@@ -962,6 +971,8 @@ void CraftingSessionImplementation::experiment(int rowsAttempted, const String& 
 
 	// Update the Tano with new values
 	prototype->updateCraftingValues(manufactureSchematic->getCraftingValues(), false);
+
+//	prototype->setJunkValue((manufactureSchematic->getComplexity() * 10) + );
 
 	// Sets the result for display
 	experimentationResult = lowestExpSuccess;
@@ -1023,7 +1034,7 @@ void CraftingSessionImplementation::customization(const String& name, byte templ
 	ManagedReference<ManufactureSchematic*> manufactureSchematic = this->manufactureSchematic.get();
 	ManagedReference<TangibleObject*> prototype = this->prototype.get();
 
-	if (manufactureSchematic == nullptr) {
+	if (manufactureSchematic == nullptr) {//add ifyellow here to prevent mfg schem legendary
 		sendSlotMessage(0, IngredientSlot::NOSCHEMATIC);
 		return;
 	}
@@ -1093,6 +1104,11 @@ void CraftingSessionImplementation::customization(const String& name, byte templ
 
 	/// Set Name
 	manufactureSchematic->setObjectName(newObjectName, false);
+
+//	if(prototype->getIsCraftedEnhancedItem()) {//use this stuff possibly in the name area in craftingsessionimplementation customization section
+//
+//
+//	}
 
 	/// Set Manufacture Schematic Custom name
 	if (!newName.isEmpty())

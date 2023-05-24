@@ -44,7 +44,7 @@
 FullAutoArea1Command = {
         name = "fullautoarea1",
 
-	damageMultiplier = 3.5,
+	damageMultiplier = 1.5,
 	speedMultiplier = 1.5,
 	healthCostMultiplier = 1.75,
 	actionCostMultiplier = 2.5,
@@ -91,7 +91,7 @@ FullAutoArea1Command = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = CARBINEWEAPON,
 
 	range = -1
 }

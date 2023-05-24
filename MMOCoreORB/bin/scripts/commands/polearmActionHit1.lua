@@ -68,7 +68,7 @@ PolearmActionHit1Command = {
 	  )
 	},
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = POLEARMWEAPON,
 
 	poolsToDamage = ACTION_ATTRIBUTE,
 

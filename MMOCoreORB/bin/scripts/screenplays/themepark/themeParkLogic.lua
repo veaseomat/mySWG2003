@@ -13,7 +13,7 @@ ThemeParkLogic = ScreenPlay:new {
 	genericGiver = false,
 	className = "ThemeParkLogic",
 	screenPlayState = "theme_park_general",
-	distance = 1000,
+	distance = 1000,--distance to generic npc deliver?
 	missionDescriptionStf = "",
 	missionCompletionMessageStf = "",
 	planetName = "",
@@ -1868,7 +1868,7 @@ function ThemeParkLogic:handleMissionReward(pConversingPlayer)
 	end
 	
 	local morecredits = getRandomNumber(100, 5000)
-	self:giveCredits(pConversingPlayer, morecredits)
+--	self:giveCredits(pConversingPlayer, morecredits)
 	
 --	self:giveLoot(pConversingPlayer, "junk")
 	

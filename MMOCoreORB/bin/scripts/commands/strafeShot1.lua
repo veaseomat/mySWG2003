@@ -70,7 +70,7 @@ StrafeShot1Command = {
 
 	combatSpam = "strafeshot",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = RIFLEWEAPON,
 
 	range = -1
 }

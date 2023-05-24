@@ -92,7 +92,7 @@ Saber2hPhantomCommand = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = TWOHANDJEDIWEAPON,
 
 	range = -1
 }

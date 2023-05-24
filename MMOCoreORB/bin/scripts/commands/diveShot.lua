@@ -55,7 +55,7 @@ DiveShotCommand = {
 
 	combatSpam = "diveshot",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = PISTOLWEAPON,
 
 	range = -1,
 	stateEffects = {

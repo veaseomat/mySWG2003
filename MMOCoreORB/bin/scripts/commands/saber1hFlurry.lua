@@ -91,7 +91,7 @@ Saber1hFlurryCommand = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = ONEHANDJEDIWEAPON,
 
 	range = -1
 }

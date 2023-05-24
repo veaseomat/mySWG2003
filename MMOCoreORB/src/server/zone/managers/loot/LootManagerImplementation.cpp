@@ -264,20 +264,12 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
-	if(level > 100)
-		level = 100;
+	if(level > 350)
+		level = 350;
 
-//	level *= (System::random(50) * .01) + .50;
-
-	level *= 3.5;//simulate lvl 350 max loot
-
-//	if(level != 0)
-//		level = 0;
-
-//	float excMod = (System::random(40) * .1) + 1.0;
+//	level *= 3;
 
 //	int maxlvl = templateObject->getnewmaximumLevel();
-
 //	if (maxlvl == 1) {
 //		level = 0;
 //		excMod = 1.0;
@@ -303,7 +295,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		prototype->setSerialNumber(serial);
 	}
 
-	prototype->setJunkDealerNeeded(templateObject->getJunkDealerTypeNeeded());
+	prototype->setJunkDealerNeeded(1);//templateObject->getJunkDealerTypeNeeded());
 	float junkMinValue = templateObject->getJunkMinValue() * junkValueModifier;
 	float junkMaxValue = templateObject->getJunkMaxValue() * junkValueModifier;
 	float fJunkValue = junkMinValue+System::random(junkMaxValue-junkMinValue) * 2;
@@ -320,39 +312,28 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	setCustomObjectName(prototype, templateObject);
 
 	// this thing exponentially ruins the variance
-
 	float excMod = 1.0;//.75 + (System::random(75) * .01);
 
 //	if (prototype->isWeaponObject()) excMod = 1.1;
-	if (prototype->isArmorObject()) excMod = 2.0;
+//	if (prototype->isArmorObject()) excMod = 1.5;
 //	if (prototype->isComponent()) excMod = 2;
 //	if (prototype->isLightsaberCrystalObject()) excMod = 2.0 + (System::random(200) * .01);
 
-//	if (prototype->isComponent()) {//&! prototype->isPharmaceuticalObject()
-//		excMod = 1.2 + (System::random(30) * .01);// + (System::random(100) * .01) + (System::random(level) * .01);
-//	}
-
-//	if (prototype->isArmorObject()) {
-//		excMod = 1.2 + (System::random(20) * .01);
-//	}
-
-//	if (excMod >= 5.0) excMod = 5.0;
-
-	if ((System::random(100) == 100) && (prototype->isArmorObject() || prototype->isWeaponObject() || prototype->isComponent() || prototype->isLightsaberCrystalObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
-		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
-		prototype->setCustomObjectName(newName, false);
-
-		excMod *= 2.0;// + (System::random(50) * .01);
-
-		prototype->addMagicBit(false);
-
-		//exceptionalLooted.increment();
-	}
-
 //	if (prototype->isWeaponObject()) level *= .1 + (System::random(40) * .1);//System::random(level);//(System::random(33) * .1);
-//	if (prototype->isArmorObject()) level *= 2 + (System::random(20) * .1);//4;
+//	if (prototype->isArmorObject()) level *= 1.5;// + (System::random(20) * .1);//4;
 //	if (prototype->isComponent()) level *= 2;
 //	if (prototype->isLightsaberCrystalObject()) level *= 2;
+
+//	if ((System::random(100) == 100) && (prototype->isArmorObject() || prototype->isWeaponObject() || prototype->isComponent() || prototype->isLightsaberCrystalObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
+//		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
+//		prototype->setCustomObjectName(newName, false);
+//
+//		excMod *= 2.0;// + (System::random(50) * .01);
+//
+//		prototype->addMagicBit(false);
+//
+//		//exceptionalLooted.increment();
+//	}
 
 //	if (System::random(10) >= 10) {// && !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
 //		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
@@ -394,7 +375,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //			max *= 4;
 //		}
 
-		float percentage = System::random(10000) / 10000.f;//System::random(1500) * .001;//(level * .01) * (System::random(150) * .01);//System::random(10000) / 10000.f;//this is where the variance happens
+		float percentage = System::random(10000) / 10000.f;;//System::random(1500) * .001;//(level * .01) * (System::random(150) * .01);//System::random(10000) / 10000.f;//this is where the variance happens
 
 //		if (percentage > 1.0) percentage = 1.0;
 //		if (percentage < 0.01) percentage = 0.01;
@@ -408,17 +389,15 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (precision == (int)ValuesMap::VALUENOTFOUND) {
 			error ("No precision found for " + subtitle);
 		}
-//		else if (precision == 0) {//this part ruins all crafting values with 0 at the end, ie. {"useCount",3,11,0}
-//			int range = abs(max-min);
-//			int randomValue = System::random(range);
-//			percentage = (float)randomValue / (float)(range);
-//		}
+		else if (precision == 0) {//this part ruins all crafting values with 0 at the end, ie. {"useCount",3,11,0}
+			int range = abs(max-min);
+			int randomValue = System::random(range);
+			percentage = (float)randomValue / (float)(range);
+		}
 
 		if (subtitle == "useCount") {
 			//craftingValues->setMaxValue(subtitle, min * 2);
 			craftingValues->setMaxValue(subtitle, max * 2);
-
-			//float max = craftingValues->getMaxValue(subtitle);
 
 			int range = abs(max-min);
 			int randomValue = System::random(range);

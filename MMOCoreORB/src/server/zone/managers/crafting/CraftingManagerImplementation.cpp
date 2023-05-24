@@ -102,8 +102,8 @@ int CraftingManagerImplementation::calculateExperimentationSuccess(CreatureObjec
 	if(luckRoll < (5 - expbonus - failMitigate))
 		luckRoll -= System::random(100);
 
-	//if(luckRoll < 5)
-	//	return CRITICALFAILURE;
+	if(luckRoll < 5)
+		return CRITICALFAILURE;
 
 	luckRoll += System::random(player->getSkillMod("luck") + player->getSkillMod("force_luck"));
 

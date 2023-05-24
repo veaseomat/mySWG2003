@@ -492,7 +492,7 @@ function HologrindJediManager:checkForceStatusCommand(pPlayer)
 	
 	--CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 	
---	CreatureObject(pPlayer):sendSystemMessage("...")
+	CreatureObject(pPlayer):sendSystemMessage("You must go to a Jedi shrine and meditate...")
 	
 
 --	

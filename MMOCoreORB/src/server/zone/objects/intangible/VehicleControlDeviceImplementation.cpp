@@ -91,7 +91,7 @@ void VehicleControlDeviceImplementation::generateObject(CreatureObject* player) 
 		message.setDI(2);
 		player->sendSystemMessage(message);
 
-		player->addPendingTask("call_mount", callMount, 2 * 1000);
+		player->addPendingTask("call_mount", callMount, 5 * 1000);
 
 		if (vehicleControlObserver == nullptr) {
 			vehicleControlObserver = new VehicleControlObserver(_this.getReferenceUnsafeStaticCast());
@@ -182,7 +182,7 @@ void VehicleControlDeviceImplementation::storeObject(CreatureObject* player, boo
 	/*if (!controlledObject->isInQuadTree())
 		return;*/
 
-	if (!force && (player->isInCombat() || player->isDead()))
+	if (!force && ( player->isDead()))//player->isInCombat() ||
 		return;
 
 	if (player->isRidingMount() && player->getParent() == controlledObject) {

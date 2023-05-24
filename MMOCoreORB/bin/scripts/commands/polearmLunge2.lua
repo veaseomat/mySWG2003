@@ -58,7 +58,7 @@ PolearmLunge2Command = {
 
 	range = 20,
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = POLEARMWEAPON,
 
 	stateEffects = {
 	  StateEffect( 

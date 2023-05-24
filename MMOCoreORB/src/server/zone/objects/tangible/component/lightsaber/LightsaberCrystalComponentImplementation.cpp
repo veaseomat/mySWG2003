@@ -83,10 +83,10 @@ void LightsaberCrystalComponentImplementation::generateCrystalStats() {
 
 		damage = getRandomizedStat(minStat, maxStat, itemLevel);
 
-		if (getCustomObjectName().toString().contains("(Exceptional)"))
-			damage *= 2.5;
-		if (getCustomObjectName().toString().contains("(Legendary)"))
-			damage *= 5;
+//		if (getCustomObjectName().toString().contains("(Exceptional)"))
+//			damage *= 2.5;
+//		if (getCustomObjectName().toString().contains("(Legendary)"))
+//			damage *= 5;
 
 		minStat = crystalData->getMinHealthSac();
 		maxStat = crystalData->getMaxHealthSac();
@@ -148,10 +148,10 @@ void LightsaberCrystalComponentImplementation::validateCrystalStats() {
 		if (damage > maxStat || damage < minStat)
 			damage = getRandomizedStat(minStat, maxStat, itemLevel);
 
-		if (getCustomObjectName().toString().contains("(Exceptional)"))
-			damage *= 2.5;
-		if (getCustomObjectName().toString().contains("(Legendary)"))
-			damage *= 5;
+//		if (getCustomObjectName().toString().contains("(Exceptional)"))
+//			damage *= 2.5;
+//		if (getCustomObjectName().toString().contains("(Legendary)"))
+//			damage *= 5;
 
 		minStat = crystalData->getMinHealthSac();
 		maxStat = crystalData->getMaxHealthSac();

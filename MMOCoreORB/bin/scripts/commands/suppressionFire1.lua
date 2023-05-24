@@ -67,7 +67,7 @@ SuppressionFire1Command = {
 
 	combatSpam = "suppressionfire",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = RANGEDWEAPON,
 
 	range = -1
 }

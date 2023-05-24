@@ -59,7 +59,7 @@ SaberPolearmLegHit2Command = {
 
 	poolsToDamage = ACTION_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = POLEARMJEDIWEAPON,
 
 	range = -1
 }

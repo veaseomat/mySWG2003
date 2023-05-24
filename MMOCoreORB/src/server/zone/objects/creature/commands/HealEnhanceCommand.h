@@ -452,7 +452,7 @@ public:
 			enhancePack->decreaseUseCount();
 		}
 
-		if (patient != enhancer)
+//		if (patient != enhancer)
 			awardXp(enhancer, "medical", amountEnhanced); //No experience for healing yourself.
 
 		doAnimations(enhancer, patient);

@@ -70,7 +70,7 @@ Saber2hSweep1Command = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = TWOHANDJEDIWEAPON,
 
 	range = -1
 }

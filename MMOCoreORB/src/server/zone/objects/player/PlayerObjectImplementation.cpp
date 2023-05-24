@@ -2043,7 +2043,7 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	if (creature == nullptr)
 		return;
 
-	float regen = (float)creature->getSkillMod("jedi_force_power_regen") / 2;//reduce by half inf skill points
+	float regen = (float)creature->getSkillMod("jedi_force_power_regen");//reduce by half inf skill points
 
 	if(regen == 0.0f)
 		return;
@@ -2073,7 +2073,7 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 //		}
 
 		if (regen > 0) {
-		regen += 25;
+		regen += 10;
 		}
 
 //		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
@@ -3004,7 +3004,7 @@ void PlayerObjectImplementation::recalculateForcePower() {
 	if (player == nullptr)
 		return;
 
-	int maxForce = player->getSkillMod("jedi_force_power_max") / 2;//reduce for inf skill points
+	int maxForce = player->getSkillMod("jedi_force_power_max");//reduce for inf skill points
 
 	int forcePowerMod = 0, forceControlMod = 0;
 
@@ -3019,7 +3019,7 @@ void PlayerObjectImplementation::recalculateForcePower() {
 	maxForce += (forcePowerMod + forceControlMod) * 10;
 	
 	if (maxForce > 0) {
-		maxForce += 500;
+		maxForce += 250;
 	}
 		
 	setForcePowerMax(maxForce, true);
