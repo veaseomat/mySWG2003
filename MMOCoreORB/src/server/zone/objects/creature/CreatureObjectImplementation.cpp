@@ -2333,9 +2333,12 @@ void CreatureObjectImplementation::feignDeath() {
 void CreatureObjectImplementation::setDizziedState(int durationSeconds) {
 	uint32 buffCRC = Long::hashCode(CreatureState::DIZZY);
 
+	if (durationSeconds > 15) durationSeconds = 15;
+
 	if (hasBuff(buffCRC)) {
-		Reference<CreatureObject*> creo = asCreatureObject();
-		creo->renewBuff(buffCRC, durationSeconds);
+		return;
+//		Reference<CreatureObject*> creo = asCreatureObject();
+//		creo->renewBuff(buffCRC, durationSeconds);
 	} else {
 		Reference<StateBuff*> state = new StateBuff(asCreatureObject(), CreatureState::DIZZY, durationSeconds);
 		Locker locker(state);

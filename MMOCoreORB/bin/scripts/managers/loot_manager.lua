@@ -567,7 +567,7 @@ jediCrystalStats = {
 		minAttackSpeed = 0,
 		maxAttackSpeed = -0.6,
 		minForceCost = 0,
-		maxForceCost = -10,
+		maxForceCost = -9,
 		minWoundChance = 0,
 		maxWoundChance = 4,
 	},
@@ -585,7 +585,7 @@ jediCrystalStats = {
 		minAttackSpeed = -0.3,
 		maxAttackSpeed = -0.6,
 		minForceCost = -5,
-		maxForceCost = -10,
+		maxForceCost = -9,
 		minWoundChance = 2,
 		maxWoundChance = 4,
 	}

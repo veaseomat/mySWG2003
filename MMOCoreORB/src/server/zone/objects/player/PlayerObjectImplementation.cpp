@@ -2076,6 +2076,10 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 		regen += 10;
 		}
 
+//		if (regen > 100) {
+//		regen = 100;
+//		}
+
 //		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
 //			regen *= .9;
 //		}
@@ -2100,14 +2104,14 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 //			regen *= .8;
 //		}
 
-		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
-		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
-
-		if (regenMultiplier != 0)
-			regen *= regenMultiplier;
-
-		if (regenDivisor != 0)
-			regen /= regenDivisor;
+//		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
+//		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
+//
+//		if (regenMultiplier != 0)
+//			regen *= regenMultiplier;
+//
+//		if (regenDivisor != 0)
+//			regen /= regenDivisor;
 
 		float timer = regen / 5.f;
 
@@ -3018,9 +3022,11 @@ void PlayerObjectImplementation::recalculateForcePower() {
 
 	maxForce += (forcePowerMod + forceControlMod) * 10;
 	
-	if (maxForce > 0) {
+	if (maxForce > 0)
 		maxForce += 250;
-	}
+
+//	if (maxForce > 10000)
+//		maxForce = 10000;
 		
 	setForcePowerMax(maxForce, true);
 }

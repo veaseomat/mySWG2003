@@ -1734,16 +1734,16 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1.5;//1.0 - (defender->getLevel() * .0075);//theory is that this nerfs pve dmg down to .25 at creature lvl 100 like pvp .25 mult. it works
+		damage *= 1.75;//1.0 - (defender->getLevel() * .0075);//theory is that this nerfs pve dmg down to .25 at creature lvl 100 like pvp .25 mult. it works
 
 		
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= .5;
+		damage *= .40;
 
 // EVE
-	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1.0;
+//	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
+//		damage *= .5;
 
 	if (damage < 1) damage = 1;
 
@@ -2095,7 +2095,7 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 			targetDefense /= 1.5;
 			targetDefense += playerLevel;
 
-			if (targetCreature->isAiAgent()) targetDefense = targetCreature->getLevel() / 3;
+//			if (targetCreature->isAiAgent()) targetDefense = targetCreature->getLevel() / 4;
 
 			if (targetDefense > 90)
 				targetDefense = 90.f;

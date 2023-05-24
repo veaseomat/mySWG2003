@@ -44,11 +44,14 @@ public:
 //				creature->setPosture(CreaturePosture::UPRIGHT);
 //			}
 //		} else {
-			if (creature->isDizzied() && System::random(100) < 75) {
+
+			if (creature->isDizzied()) { // && System::random(100) < 75) {
 				creature->queueDizzyFallEvent();
-			} else {
-				creature->setPosture(CreaturePosture::UPRIGHT);
 			}
+//			else {
+//				creature->setPosture(CreaturePosture::UPRIGHT);
+//			}
+
 //		}
 
 		return SUCCESS;

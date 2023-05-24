@@ -146,6 +146,8 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	level = getTemplateLevel();
 
+//	if (level > 300) level = 300;
+
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
 	float minDmg = npcTemplate->getDamageMin();
@@ -306,11 +308,25 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	setupAttackMaps();
 
 	int ham = 0;
+
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
 		for (int i = 0; i < 9; ++i) {
 			if (i % 3 == 0) {
-				ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
+				//ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
+
+				ham = getHamMaximum();//level * 100;
+//				ham -= 350;
+//				if (ham < 100) ham = 100;
+
+				if (ham > 30000) ham = 30000;
+
+				ham *= .800 + (System::random(20000) * .00001);
+
+//				if (ham > 100000) ham = 100000;
+
+				// 1.0 - (hamlvl / 333);// / (level / 20)
+
 				if (isDroidObject() && isPet())
 					ham = getHamMaximum();
 				baseHAM.add(ham);
