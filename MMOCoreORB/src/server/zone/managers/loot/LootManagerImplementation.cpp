@@ -348,12 +348,12 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //		//legendaryLooted.increment();
 //	}
 
-	if (prototype->isLightsaberCrystalObject()) {
-		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
-
-		if (crystal != nullptr)
-			crystal->setItemLevel(level);
-	}
+//	if (prototype->isLightsaberCrystalObject()) {
+//		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
+//
+//		if (crystal != nullptr)
+//			crystal->setItemLevel(uncappedLevel);
+//	}
 
 	String subtitle;
 	bool yellow = false;
@@ -398,12 +398,26 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		}
 
 		if (subtitle == "useCount") {
-			//craftingValues->setMaxValue(subtitle, min * 2);
+			craftingValues->setMaxValue(subtitle, min * 2);
 			craftingValues->setMaxValue(subtitle, max * 2);
 
 			int range = abs(max-min);
 			int randomValue = System::random(range);
 			percentage = (float)randomValue / (float)(range);
+		}
+
+		if (subtitle == "color") {
+			int ncolor = System::random(5);//color max set in loot color crystal lua file
+
+			if (System::random(4) >= 4 && level >= 85){//lvl 25 x 3.5 loot mult = 87
+				ncolor = System::random(6) + 5;//color crystals will be yellow,purp,orange
+			}
+			if (System::random(9) >= 9 && level >= 300){
+				ncolor = System::random(19) + 11;//color crystals will be special named colors
+			}
+
+			craftingValues->setCurrentValue(subtitle, ncolor);
+			continue;
 		}
 
 		craftingValues->setCurrentPercentage(subtitle, percentage);

@@ -43,7 +43,7 @@
 
 AttackCommand = {
         name = "attack",
-	damageMultiplier = 1,
+	damageMultiplier = 1.5,
 	speedMultiplier = 1,
 
 	combatSpam = "attack",

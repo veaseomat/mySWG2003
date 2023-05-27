@@ -77,8 +77,9 @@ bool CombatManager::startCombat(CreatureObject* attacker, TangibleObject* defend
 
 	Locker clocker(defender, attacker);
 
+	ManagedReference<WeaponObject*> weapon = creo->getWeapon();
 	if (creo != nullptr && creo->isPlayerCreature() && !creo->hasDefender(attacker)) {
-		ManagedReference<WeaponObject*> weapon = creo->getWeapon();
+
 
 		if (weapon != nullptr && weapon->isJediWeapon())
 			VisibilityManager::instance()->increaseVisibility(creo, 25);
@@ -356,6 +357,9 @@ int CombatManager::doTargetCombatAction(CreatureObject* attacker, WeaponObject* 
 
 	float damageMultiplier = data.getDamageMultiplier();
 
+	if (!attacker->isPlayerCreature())
+		damageMultiplier = 1.0;
+
 	// need to calculate damage here to get proper client spam
 	int damage = 0;
 
@@ -457,6 +461,9 @@ int CombatManager::doTargetCombatAction(TangibleObject* attacker, WeaponObject* 
 	defenderObject->addDefender(attacker);
 
 	float damageMultiplier = data.getDamageMultiplier();
+
+	if (!attacker->isPlayerCreature())
+		damageMultiplier = 1.0;
 
 	// need to calculate damage here to get proper client spam
 	int damage = 0;
@@ -747,6 +754,10 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 ////				npcacc = attacker->getLevel();
 //		}
 
+		if (defender->hasState(CreatureState::BLINDED)) {
+			npcacc *= .5;
+		}
+
 		return npcacc;
 
 	}
@@ -792,6 +803,10 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		case SceneObjectType::HEAVYWEAPON:
 			attackerAccuracy += 25.f;
 		}
+	}
+
+	if (defender->hasState(CreatureState::BLINDED)) {
+		attackerAccuracy *= .5;
 	}
 
 	return attackerAccuracy;
@@ -847,13 +862,17 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	targetDefense += defender->getSkillMod("dodge_attack");
 	targetDefense += defender->getSkillMod("private_dodge_attack");
 
+	if (defender->hasState(CreatureState::INTIMIDATED)) {
+		targetDefense *= .5;
+	}
+
 	debug() << "Target defense after state affects and cap is " << targetDefense;
 
 	return targetDefense;
 }
 
 int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender) const {
-	if (defender->isIntimidated() || defender->isBerserked() || defender->isVehicleObject()) return 0;
+	if (defender->isBerserked() || defender->isVehicleObject()) return 0; //defender->isIntimidated() ||
 	int targetDefense = defender->isPlayerCreature() ? 0 : defender->getLevel();
 	ManagedReference<WeaponObject*> weapon = defender->getWeapon();
 
@@ -867,6 +886,10 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 
 	if (targetDefense > 125)
 		targetDefense = 125;
+
+//	if (defender->hasState(CreatureState::INTIMIDATED)) {
+//		targetDefense *= .5;
+//	}
 
 	return targetDefense;
 }
@@ -1245,7 +1268,19 @@ int CombatManager::getArmorReduction(TangibleObject* attacker, WeaponObject* wea
 		float rawDamage = damage;
 
 		int forceArmor = defender->getSkillMod("force_armor");
+
 		if (forceArmor > 0) {
+
+			//put wearing armor force cost increase here?
+			bool jarmor = false;
+			for (int i = 0; i < defender->getSlottedObjectsSize(); ++i) {
+				SceneObject* item = defender->getSlottedObject(i);
+				if (item != nullptr && item->isArmorObject()){
+					jarmor = true;
+				}
+			}
+			if (jarmor == true) forceArmor *= .5;
+
 			float dmgAbsorbed = rawDamage - (damage *= 1.f - (forceArmor / 100.f));
 			defender->notifyObservers(ObserverEventType::FORCEARMOR, attacker, dmgAbsorbed);
 			sendMitigationCombatSpam(defender, nullptr, (int)dmgAbsorbed, FORCEARMOR);
@@ -1914,6 +1949,11 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 float CombatManager::calculateWeaponAttackSpeed(CreatureObject* attacker, WeaponObject* weapon, float skillSpeedRatio) const {
 	if (attacker->isAiAgent()){
 		float npcspeed = (5.0 - ((attacker->getLevel() * 4) * .01));
+
+		if (attacker->hasState(CreatureState::STUNNED)) {
+			npcspeed *= 1.5;
+		}
+
 		return npcspeed;//weapon->getAttackSpeed();
 	}
 
@@ -1924,6 +1964,10 @@ float CombatManager::calculateWeaponAttackSpeed(CreatureObject* attacker, Weapon
 
 	if (jediSpeed > 0)
 		attackSpeed = attackSpeed - (attackSpeed * jediSpeed);
+
+	if (attacker->hasState(CreatureState::STUNNED)) {
+		attackSpeed *= 1.5;
+	}
 
 	return Math::max(attackSpeed, 1.0f);
 }
@@ -1997,7 +2041,22 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 
 	float force = weapon->getForceCost() * data.getForceCostMultiplier();
 
+
+	if (weapon->isJediWeapon()){
+		VisibilityManager::instance()->increaseVisibility(attacker, data.getCommand()->getVisMod()); // Give visibility
+	}
+
 	if (force > 0) { // Need Force check first otherwise it can be spammed.
+		//put wearing armor force cost increase here?
+		bool jarmor = false;
+		for (int i = 0; i < attacker->getSlottedObjectsSize(); ++i) {
+			SceneObject* item = attacker->getSlottedObject(i);
+			if (item != nullptr && item->isArmorObject()){
+				jarmor = true;
+			}
+		}
+		if (jarmor == true) force *= 1.5;
+
 		ManagedReference<PlayerObject*> playerObject = attacker->getPlayerObject();
 		if (playerObject != nullptr) {
 			if (playerObject->getForcePower() <= force) {
@@ -2575,6 +2634,9 @@ int CombatManager::applyDamage(CreatureObject* attacker, WeaponObject* weapon, T
 
 	float damageMultiplier = data.getDamageMultiplier();
 
+	if (!attacker->isPlayerCreature())
+		damageMultiplier = 1.0;
+
 	if (damageMultiplier != 0)
 		damage *= damageMultiplier;
 
@@ -3083,6 +3145,10 @@ Reference<SortedVector<ManagedReference<TangibleObject*> >* > CombatManager::get
 	}
 
 	if (range < 0) {
+		range = weapon->getMaxRange();
+	}
+
+	if (weapon->isMeleeWeapon()) {
 		range = weapon->getMaxRange();
 	}
 

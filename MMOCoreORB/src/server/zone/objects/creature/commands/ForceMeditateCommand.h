@@ -17,9 +17,6 @@ public:
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
 
-		creature->sendSystemMessage("This ability is disabled.");
-		return GENERALERROR;
-
 		if (!checkStateMask(creature))
 			return INVALIDSTATE;
 

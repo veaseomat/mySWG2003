@@ -29,17 +29,17 @@ int SaberInventoryContainerComponent::canAddObject(SceneObject* sceneObject, Sce
 
 	LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (object);
 
-	if (crystal->getOwnerID() == 0) {
-		errorDescription = "@jedi_spam:saber_crystal_not_tuned";
-		return TransferErrorCode::INVALIDTYPE;
-	}
+//	if (crystal->getOwnerID() == 0) {
+//		errorDescription = "@jedi_spam:saber_crystal_not_tuned";
+//		return TransferErrorCode::INVALIDTYPE;
+//	}
 
 	ManagedReference<CreatureObject*> creature = crystal->getParentRecursively(SceneObjectType::PLAYERCREATURE).castTo<CreatureObject*>();
 
-	if (creature == nullptr || crystal->getOwnerID() != creature->getObjectID()){
-		errorDescription = "@jedi_spam:saber_crystal_not_owner";
-		return TransferErrorCode::INVALIDTYPE;
-	}
+//	if (creature == nullptr || crystal->getOwnerID() != creature->getObjectID()){
+//		errorDescription = "@jedi_spam:saber_crystal_not_owner";
+//		return TransferErrorCode::INVALIDTYPE;
+//	}
 
 	if (crystal->isDestroyed()) {
 		errorDescription = "You cannot add a broken crystal to your lightsaber.";
@@ -74,7 +74,7 @@ int SaberInventoryContainerComponent::notifyObjectInserted(SceneObject* sceneObj
 
 	if (weao->isJediWeapon()) {
 		ManagedReference<LightsaberCrystalComponent*> crystal = cast<LightsaberCrystalComponent*>( object);
-		if (crystal->getColor() == 31){
+//		if (crystal->getColor() == 31){
 			weao->setAttackSpeed(weao->getAttackSpeed() + crystal->getAttackSpeed());
 			weao->setMinDamage(weao->getMinDamage() + crystal->getDamage());
 			weao->setMaxDamage(weao->getMaxDamage() + crystal->getDamage());
@@ -83,13 +83,13 @@ int SaberInventoryContainerComponent::notifyObjectInserted(SceneObject* sceneObj
 			weao->setMindAttackCost(weao->getMindAttackCost() + crystal->getSacMind());
 			weao->setWoundsRatio(weao->getWoundsRatio() + crystal->getWoundChance());
 			weao->setForceCost(weao->getForceCost() + crystal->getForceCost());
-		}
-
-		if (crystal->getColor() != 31) {
-			int color = crystal->getColor();
-			weao->setBladeColor(color);
-			weao->setCustomizationVariable("/private/index_color_blade", color, true);
-		}
+//		}
+//
+//		if (crystal->getColor() != 31) {
+//			int color = crystal->getColor();
+//			weao->setBladeColor(color);
+//			weao->setCustomizationVariable("/private/index_color_blade", color, true);
+//		}
 	}
 
 	return sceneObject->notifyObjectInserted(object);
@@ -111,7 +111,7 @@ int SaberInventoryContainerComponent::notifyObjectRemoved(SceneObject* sceneObje
 
 			Locker locker(weao);
 
-			if (crystal->getColor() == 31){
+//			if (crystal->getColor() == 31){
 				weao->setAttackSpeed(weao->getAttackSpeed() - crystal->getAttackSpeed());
 				weao->setMinDamage(weao->getMinDamage() - crystal->getDamage());
 				weao->setMaxDamage(weao->getMaxDamage() - crystal->getDamage());
@@ -120,12 +120,12 @@ int SaberInventoryContainerComponent::notifyObjectRemoved(SceneObject* sceneObje
 				weao->setMindAttackCost(weao->getMindAttackCost() - crystal->getSacMind());
 				weao->setWoundsRatio(weao->getWoundsRatio() - crystal->getWoundChance());
 				weao->setForceCost(weao->getForceCost() - crystal->getForceCost());
-			}
-
-			if (crystal->getColor() != 31) {
-				weao->setBladeColor(31);
-				weao->setCustomizationVariable("/private/index_color_blade", 31, true);
-			}
+//			}
+//
+//			if (crystal->getColor() != 31) {
+//				weao->setBladeColor(31);
+//				weao->setCustomizationVariable("/private/index_color_blade", 31, true);
+//			}
 		}
 
 	return sceneObject->notifyObjectRemoved(object);

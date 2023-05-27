@@ -132,8 +132,8 @@ object_weapon_melee_polearm_crafted_saber_sword_lightsaber_polearm_gen3 = object
 	experimentalWeights = {1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "expEffeciency", "expEffeciency", "expEffeciency", "expEffeciency"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "forcecost", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 195, 285, 5.1, 19, 40, 50, 85, 35},
-	experimentalMax = {0, 0, 215, 305, 4.8, 31, 36, 45, 55, 30},
+	experimentalMin = {0, 0, 150, 300, 3.0, 20, 26, 35, 50, 85},
+	experimentalMax = {0, 0, 300, 600, 2.0, 40, 16, 30, 45, 55},
 	experimentalPrecision = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
 }

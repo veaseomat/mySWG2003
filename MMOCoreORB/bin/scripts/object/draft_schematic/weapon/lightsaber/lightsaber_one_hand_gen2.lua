@@ -63,12 +63,12 @@ object_draft_schematic_weapon_lightsaber_lightsaber_one_hand_gen2 = object_draft
    customizationStringNames = {},
    customizationDefaults = {},
 
-   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
-   ingredientTitleNames = {"emitter_shroud", "primary_crystal", "activator", "handgrip", "focusing_crystals", "power_field_insulator", "energizers"},
-   ingredientSlotType = {0, 1, 0, 0, 1, 0, 0},
-   resourceTypes = {"metal", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "metal_nonferrous", "petrochem_inert", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "gas_inert_known", "metal_nonferrous"},
-   resourceQuantities = {40, 1, 32, 37, 1, 42, 34},
-   contribution = {100, 100, 100, 100, 100, 100, 100},
+   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
+   ingredientTitleNames = {"emitter_shroud", "primary_crystal", "activator", "handgrip", "power_field_insulator", "energizers"},
+   ingredientSlotType = {0, 1, 0, 0, 0, 0},
+   resourceTypes = {"metal", "object/tangible/component/weapon/lightsaber/shared_lightsaber_module_force_crystal.iff", "metal_nonferrous", "petrochem_inert", "gas_inert_known", "metal_nonferrous"},
+   resourceQuantities = {40, 1, 32, 37, 42, 34},
+   contribution = {100, 100, 100, 100, 100, 100},
 
 
    targetTemplate = "object/weapon/melee/sword/crafted_saber/sword_lightsaber_one_handed_gen2.iff",

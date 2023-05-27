@@ -44,7 +44,7 @@
 PointBlankSingle2Command = {
         name = "pointblanksingle2",
 	damageMultiplier = 3.0,
-	speedMultiplier = 1.8,
+	speedMultiplier = 1.5,
 	healthCostMultiplier = 1,
 	actionCostMultiplier = 1,
 	mindCostMultiplier = 1,

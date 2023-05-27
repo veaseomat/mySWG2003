@@ -342,11 +342,13 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
 
 	//Special Attack Costs
+	if (!isJediWeapon()) {
 	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost());
 
 	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost());
 
 	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost());
+	}
 
 	//Anti Decay Kit
 	if(hasAntiDecayKit()){
@@ -356,6 +358,21 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	// Force Cost
 	if (getForceCost() > 0)
 		alm->insertAttribute("forcecost", (int)getForceCost());
+
+	if (isJediWeapon()) {
+//		setForceCost(Math::getPrecision(values->getCurrentValue("forcecost"), 1));
+//		//setBladeColor(31);
+//		setBladeColor(values->getCurrentValue("color"));
+
+		StringBuffer str3;
+		str3 << "@jedi_spam:saber_color_" << getBladeColor();
+
+		alm->insertAttribute("color", str3);
+		setCustomizationVariable("/private/index_color_blade", getBladeColor(), true);
+
+//		setBladeColor(4);
+//		setBladeColor(values->getCurrentValue("color"));
+	}
 
 	for (int i = 0; i < getNumberOfDots(); i++) {
 
@@ -606,7 +623,9 @@ void WeaponObjectImplementation::updateCraftingValues(CraftingValues* values, bo
 
 	if (isJediWeapon()) {
 		setForceCost(Math::getPrecision(values->getCurrentValue("forcecost"), 1));
-		setBladeColor(31);
+		//setBladeColor(31);//vanilla
+		setBladeColor(values->getCurrentValue("color"));
+		//setCustomizationVariable("/private/index_color_blade", values->getCurrentValue("color"), true);//didnt work here? cant remember
 	}
 
 	value = values->getCurrentValue("woundchance");
@@ -733,19 +752,19 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 		Locker locker(_this.getReferenceUnsafeStaticCast());
 
 		if (isJediWeapon()) {
-			ManagedReference<SceneObject*> saberInv = getSlottedObject("saber_inv");
-
-			if (saberInv == nullptr)
-				return;
-
-			// TODO: is this supposed to be every crystal, or random crystal(s)?
-			for (int i = 0; i < saberInv->getContainerObjectsSize(); i++) {
-				ManagedReference<LightsaberCrystalComponent*> crystal = saberInv->getContainerObject(i).castTo<LightsaberCrystalComponent*>();
-
-				if (crystal != nullptr && crystal->getColor() == 31) {//only
-					crystal->inflictDamage(crystal, 0, 1, true, true);
-				}
-			}
+//			ManagedReference<SceneObject*> saberInv = getSlottedObject("saber_inv");
+//
+//			if (saberInv == nullptr)
+//				return;
+//
+//			// TODO: is this supposed to be every crystal, or random crystal(s)?
+//			for (int i = 0; i < saberInv->getContainerObjectsSize(); i++) {
+//				ManagedReference<LightsaberCrystalComponent*> crystal = saberInv->getContainerObject(i).castTo<LightsaberCrystalComponent*>();
+//
+//				if (crystal != nullptr && crystal->getColor() == 31) {//only
+//					crystal->inflictDamage(crystal, 0, 1, true, true);
+//				}
+//			}
 
 			if (roll * 5 < chance) {//saber hilt decays but 5x less likely
 				inflictDamage(_this.getReferenceUnsafeStaticCast(), 0, 1, true, true);

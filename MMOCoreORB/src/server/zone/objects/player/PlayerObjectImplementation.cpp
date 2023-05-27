@@ -2113,6 +2113,16 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 //		if (regenDivisor != 0)
 //			regen /= regenDivisor;
 
+		//put wearing armor force cost increase here?
+		bool jarmor = false;
+		for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
+			SceneObject* item = creature->getSlottedObject(i);
+			if (item != nullptr && item->isArmorObject()){
+				jarmor = true;
+			}
+		}
+		if (jarmor == true) regen *= .5;
+
 		float timer = regen / 5.f;
 
 		float scheduledTime = 10 / timer;

@@ -12,16 +12,13 @@ public:
 
 	AvoidIncapacitationCommand(const String& name, ZoneProcessServer* server)
 : JediQueueCommand(name, server) {
-//		 buffCRC = BuffCRC::JEDI_AVOID_INCAPACITATION;
-//		 skillMods.put("avoid_incapacitation", 1);
+		 buffCRC = BuffCRC::JEDI_AVOID_INCAPACITATION;
+		 skillMods.put("avoid_incapacitation", 1);
 	}
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
 		// SPECIAL - For Avoid Incapacitation, which is a special case buff, if it's determined that it should only be stacked up to 6 times for a new buff object, then it'll needs a new crc from the other 5 in string-files.
 		// PLUS: There is no concrete evidence for what's stated in 'SPECIAL' sentence above, beyond the existence of 6 CRCs themselves.
-
-		creature->sendSystemMessage("This ability is disabled.");
-		return GENERALERROR;
 
 		if (creature->hasBuff(BuffCRC::JEDI_AVOID_INCAPACITATION)) {
 

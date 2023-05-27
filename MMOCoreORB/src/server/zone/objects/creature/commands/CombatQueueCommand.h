@@ -844,10 +844,10 @@ public:
 		case CommandEffect::STUN:
 			defender->setStunnedState(duration);
 			break;
-		case CommandEffect::KNOCKDOWN:
+		case CommandEffect::KNOCKDOWN://creatureobject.idl has knodown recovery timer
 			if (!defender->checkKnockdownRecovery()) {
-				if (defender->getPosture() != CreaturePosture::UPRIGHT)
-					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
+//				if (defender->getPosture() != CreaturePosture::UPRIGHT)
+//					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
 				break;
 			}
 
@@ -860,7 +860,7 @@ public:
 				defender->setPosture(CreaturePosture::KNOCKEDDOWN, false, false);
 
 			defender->updateKnockdownRecovery();
-			defender->updatePostureChangeDelay(5000);
+			defender->updatePostureChangeDelay(5000);//works here added checkkdrecovery to stand command
 			defender->removeBuff(STRING_HASHCODE("burstrun"));
 			defender->removeBuff(STRING_HASHCODE("retreat"));
 			defender->sendSystemMessage("@cbt_spam:posture_knocked_down");
@@ -868,8 +868,8 @@ public:
 			break;
 		case CommandEffect::POSTUREUP:
 			if (!defender->checkPostureUpRecovery()) {
-				if (defender->getPosture() != CreaturePosture::UPRIGHT)
-					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
+//				if (defender->getPosture() != CreaturePosture::UPRIGHT)
+//					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
 				break;
 			}
 
@@ -895,8 +895,8 @@ public:
 			break;
 		case CommandEffect::POSTUREDOWN:
 			if (!defender->checkPostureDownRecovery()) {
-				if (defender->getPosture() != CreaturePosture::UPRIGHT)
-					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
+//				if (defender->getPosture() != CreaturePosture::UPRIGHT)
+//					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
 				break;
 			}
 
