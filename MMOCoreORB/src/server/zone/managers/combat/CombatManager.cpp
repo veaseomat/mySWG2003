@@ -725,6 +725,8 @@ int CombatManager::calculateTargetPostureModifier(WeaponObject* weapon, Creature
 }
 
 int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
+	CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
+
 	if (attacker->isAiAgent()) {
 		int npcacc = attacker->getLevel();// cast<AiAgent*>(attacker)->getChanceHit() * 100;
 
@@ -753,15 +755,33 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 ////				npcacc = attacker->getLevel();
 //		}
 
-		if (defender->hasState(CreatureState::BLINDED)) {
+		if (creoAttacker->hasState(CreatureState::BLINDED)) {
+			npcacc *= .5;
+		}
+
+		if (weapon->isMeleeWeapon() &! creoAttacker->isRunning()) {
+			npcacc *= 1.1;
+		}
+
+	//	if (weapon->isRangedWeapon() && creoAttacker->isStanding()) {
+	//		attackerAccuracy *= 1.25;
+	//	}
+
+		if (weapon->isRangedWeapon() && creoAttacker->isKneeling()) {
+			npcacc *= 1.25;
+		}
+
+		if (weapon->isRangedWeapon() && creoAttacker->isProne()) {
+			npcacc *= 1.5;
+		}
+
+		if (creoAttacker->isRunning()) {
 			npcacc *= .5;
 		}
 
 		return npcacc;
 
 	}
-
-	CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
 
 	int attackerAccuracy = 0;
 
@@ -777,6 +797,60 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		}
 	}
 
+	float currentRange = attacker->getWorldPosition().distanceTo(defender->getWorldPosition()) - defender->getTemplateRadius() - attacker->getTemplateRadius();
+
+	if (attacker->isPlayerCreature()) {
+		if (weapon->isPistolWeapon()){
+			//attackerAccuracy *= .84;
+			if (currentRange > 32)	attackerAccuracy *= .7;
+			if (currentRange > 48)	attackerAccuracy *= .7;
+		}
+		if (weapon->isCarbineWeapon()){
+			//attackerAccuracy *= .65;
+			if (currentRange < 16 || currentRange > 48)	attackerAccuracy *= .7;
+		}
+		if (weapon->isRifleWeapon()){
+			//attackerAccuracy *= .55;
+			if (currentRange < 32)	attackerAccuracy *= .7;
+			if (currentRange < 16)	attackerAccuracy *= .7;
+		}
+
+//////		if (weapon->isRangedWeapon())
+//////		attackerAccuracy *= 1.03f;
+//		if (weapon->isUnarmedWeapon())
+//		attackerAccuracy *= .44;
+//		if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
+//		attackerAccuracy *= .58;
+//		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
+//		attackerAccuracy *= .65;
+//		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
+//		attackerAccuracy *= .58;
+//////		if (weapon->isMeleeWeapon())
+//////		attackerAccuracy *= 1.1f;
+//		if (weapon->isLightningRifle())
+//		attackerAccuracy *= 1.06;
+//		if (weapon->isFlameThrower())
+//		attackerAccuracy *= .75;
+//		if (weapon->isHeavyAcidRifle())
+//		attackerAccuracy *= .75;
+//////		if (weapon->isHeavyWeapon())
+//////		attackerAccuracy *= 1.0f;
+//		if (weapon->isThrownWeapon())
+//		attackerAccuracy *= .91;
+//		if (weapon->isSpecialHeavyWeapon()  &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
+//		attackerAccuracy *= .8;
+//////		if (weapon->isMineWeapon())
+//////		attackerAccuracy *= .5f;
+//		if (weapon->isJediOneHandedWeapon())
+//		attackerAccuracy *= 1.15f;
+//		if (weapon->isJediTwoHandedWeapon())
+//		attackerAccuracy *= 1.2f;
+//		if (weapon->isJediPolearmWeapon())
+//		attackerAccuracy *= 1.1f;
+////		if (weapon->isJediWeapon())
+////		attackerAccuracy *= .8;
+	}
+
 	if (attackerAccuracy == 0) attackerAccuracy = -15; // unskilled penalty, TODO: this might be -50 or -125, do research
 
 	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy") + creoAttacker->getSkillMod("dead_eye");
@@ -788,23 +862,43 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		attackerAccuracy += creoAttacker->getSkillMod("ranged_accuracy");
 
 	// now apply overall weapon defense mods
-	if (weapon->isMeleeWeapon()) {
-		switch (defender->getWeapon()->getGameObjectType()) {
-		case SceneObjectType::PISTOL:
-			attackerAccuracy += 20.f;
-			/* no break */
-		case SceneObjectType::CARBINE:
-			attackerAccuracy += 55.f;
-			/* no break */
-		case SceneObjectType::RIFLE:
-		case SceneObjectType::MINE:
-		case SceneObjectType::SPECIALHEAVYWEAPON:
-		case SceneObjectType::HEAVYWEAPON:
-			attackerAccuracy += 25.f;
-		}
+//	if (weapon->isMeleeWeapon()) {
+//		switch (defender->getWeapon()->getGameObjectType()) {
+//		case SceneObjectType::PISTOL:
+//			attackerAccuracy += 20.f;
+//			/* no break */
+//		case SceneObjectType::CARBINE:
+//			attackerAccuracy += 55.f;
+//			/* no break */
+//		case SceneObjectType::RIFLE:
+//		case SceneObjectType::MINE:
+//		case SceneObjectType::SPECIALHEAVYWEAPON:
+//		case SceneObjectType::HEAVYWEAPON:
+//			attackerAccuracy += 25.f;
+//		}
+//	}
+
+	if (creoAttacker->hasState(CreatureState::BLINDED)) {
+		attackerAccuracy *= .5;
 	}
 
-	if (defender->hasState(CreatureState::BLINDED)) {
+	if (weapon->isMeleeWeapon() &! creoAttacker->isRunning()) {
+		attackerAccuracy *= 1.1;
+	}
+
+//	if (weapon->isRangedWeapon() && creoAttacker->isStanding()) {
+//		attackerAccuracy *= 1.25;
+//	}
+
+	if (weapon->isRangedWeapon() && creoAttacker->isKneeling()) {
+		attackerAccuracy *= 1.25;
+	}
+
+	if (weapon->isRangedWeapon() && creoAttacker->isProne()) {
+		attackerAccuracy *= 1.5;
+	}
+
+	if (creoAttacker->isRunning()) {
 		attackerAccuracy *= .5;
 	}
 
@@ -1997,7 +2091,7 @@ void CombatManager::doLightsaberBlock(TangibleObject* attacker, WeaponObject* we
 }
 
 void CombatManager::showHitLocationFlyText(CreatureObject *attacker, CreatureObject *defender, uint8 location) const {
-
+	return;
 	if (defender->isVehicleObject())
 		return;
 
