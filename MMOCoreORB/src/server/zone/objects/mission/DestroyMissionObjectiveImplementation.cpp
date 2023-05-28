@@ -93,7 +93,7 @@ Vector3 DestroyMissionObjectiveImplementation::findValidSpawnPosition(Zone* zone
 	if (zone == nullptr)
 		return position;
 
-	float newX = spawnActiveArea->getPositionX() + (256.0f - (float) System::random(512));
+	float newX = spawnActiveArea->getPositionX() + (256.0f - (float) System::random(512));//mission distances here
 	float newY = spawnActiveArea->getPositionY() + (256.0f - (float) System::random(512));
 
 	float height = zone->isWithinBoundaries(Vector3(newX, newY, 0)) ? zone->getHeight(newX, newY) : 0;

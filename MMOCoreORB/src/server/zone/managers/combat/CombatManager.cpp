@@ -984,6 +984,9 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 //		targetDefense *= .5;
 //	}
 
+	if (defender->isKnockedDown())
+		targetDefense *= .5;
+
 	return targetDefense;
 }
 
@@ -1721,17 +1724,17 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= 1.5;
 	}
 
-	if (!data.isForceAttack() && weapon->getAttackType() == SharedWeaponObjectTemplate::MELEEATTACK)
-		damage *= 1.25;
-
-	if (defender->isKnockedDown()) {
-		damage *= 1.5f;
-	} else if (data.isForceAttack() && data.getCommandName().hashCode() == STRING_HASHCODE("forcechoke")) {
-		if  (defender->isProne())
-			damage *= 1.5f;
-		else if (defender->isKneeling())
-			damage *= 1.25f;
-	}
+//	if (!data.isForceAttack() && weapon->getAttackType() == SharedWeaponObjectTemplate::MELEEATTACK)
+//		damage *= 1.25;
+//
+//	if (defender->isKnockedDown()) {
+//		damage *= 1.5f;
+//	} else if (data.isForceAttack() && data.getCommandName().hashCode() == STRING_HASHCODE("forcechoke")) {
+//		if  (defender->isProne())
+//			damage *= 1.5f;
+//		else if (defender->isKneeling())
+//			damage *= 1.25f;
+//	}
 
 	// Toughness reduction
 	if (data.isForceAttack())

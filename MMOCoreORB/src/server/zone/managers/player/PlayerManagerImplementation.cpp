@@ -1740,7 +1740,7 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 
 				if (obj->getOptionsBitmask() & OptionBitmask::INSURED) {
 					//1% Decay for insured items
-//					obj->inflictDamage(obj, 0, 0.05 * obj->getMaxCondition(), true, true);
+					obj->inflictDamage(obj, 0, 0.0 * obj->getMaxCondition(), true, true);
 					//Set uninsured
 					uint32 bitmask = obj->getOptionsBitmask() - OptionBitmask::INSURED;
 					obj->setOptionsBitmask(bitmask);
@@ -1767,7 +1767,7 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 
 
 	Reference<Task*> task = new PlayerIncapacitationRecoverTask(player, true);
-	task->schedule(30 * 1000);
+	task->schedule(3 * 1000);
 
 	player->notifyObservers(ObserverEventType::PLAYERCLONED, player, 0);
 

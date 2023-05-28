@@ -91,7 +91,7 @@ object_tangible_wearables_armor_chitin_armor_chitin_s01_helmet = object_tangible
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
 
-	kinetic = 25,
+	kinetic = 65,
 	energy = 15,
 	electricity = 0,
 	stun = 0,
