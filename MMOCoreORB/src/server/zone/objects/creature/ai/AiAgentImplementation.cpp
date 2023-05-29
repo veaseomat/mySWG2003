@@ -1398,7 +1398,7 @@ void AiAgentImplementation::leash() {
 
 	CombatManager::instance()->forcePeace(asAiAgent());
 //leash range?? i think its working lol
-	if (!homeLocation.isInRange(asAiAgent(), 3.0)) {
+	if (!homeLocation.isInRange(asAiAgent(), 1.5)) {//leash located in scripts/ai/actions/movebase
 		homeLocation.setReached(false);
 		addPatrolPoint(homeLocation);
 	} else {
@@ -1924,7 +1924,7 @@ bool AiAgentImplementation::findNextPosition(float maxDistance, bool walk) {
 
 	WorldCoordinates nextPosition;
 
-	float newSpeed = runSpeed; // Is this *1.5? Is that some magic number?
+	float newSpeed = runSpeed * .85; //this is ai speed
 	if (walk && !(isRetreating() || isFleeing()))
 		newSpeed = walkSpeed;
 
@@ -1934,9 +1934,9 @@ bool AiAgentImplementation::findNextPosition(float maxDistance, bool walk) {
 	if (hasState(CreatureState::FROZEN))
 		newSpeed = 0.01f;
 
-//add creature dizzy snare if state doesnt do it to them, NOT TESTED		
-//	if (hasState(CreatureState::DIZZY))
-//		newSpeed = 0.025f;
+//add creature dizzy snare
+	if (hasState(CreatureState::DIZZY))
+		newSpeed *= 0.5f;
 
 	float updateTicks = float(UPDATEMOVEMENTINTERVAL) / 1000.f;
 

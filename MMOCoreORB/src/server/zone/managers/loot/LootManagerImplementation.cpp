@@ -476,7 +476,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //		prototype->addMagicBit(false);
 //		prototype->setJunkValue((int)(fJunkValue * 1.25));
 //	} else {
-	prototype->setJunkValue((int)(level * 50 * excMod));
+	prototype->setJunkValue((int)(level * 8 * excMod));
 //	}
 
 	// Use percentages to recalculate the values

@@ -2569,11 +2569,11 @@ void CreatureObjectImplementation::setMeditateState() {
 }
 
 void CreatureObjectImplementation::queueDizzyFallEvent() {
-	if (hasDizzyEvent())
-		return;
-
-	dizzyFallDownEvent = new DizzyFallDownEvent(asCreatureObject());
-	dizzyFallDownEvent->schedule(200);
+//	if (hasDizzyEvent())
+//		return;
+//
+//	dizzyFallDownEvent = new DizzyFallDownEvent(asCreatureObject());
+//	dizzyFallDownEvent->schedule(200);
 }
 
 void CreatureObjectImplementation::activateStateRecovery() {
