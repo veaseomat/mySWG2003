@@ -13,13 +13,14 @@ myswg_vendor_first_screen = ConvoScreen:new {
         {"DOC/ENT BUFFS", "newbuff1"},
         {"Weapons", "weaps1"},
         {"Armor", "armor1"},
+        {"Loot", "loot1"},
         {"Artisan", "art1"},
         {"Architect", "arch1"},
-        {"Food", "chef1"},        
-        {"Loot", "loot1"},
+        {"Chef", "chef1"},        
         {"Medic", "doc1"},
         {"Droids", "droid1"},
-        
+         {"Tailor", "tailor1"},
+                
 			--	{"No thank you.", "deny_quest"},--not needed
     }
 }
@@ -92,6 +93,9 @@ art1 = ConvoScreen:new {
         {"Speederbike - 10k", "option28"},
         {"Weapon Repair Tool - 10k", "option66"},
         {"Armor Repair Tool - 10k", "option67"},
+        {"Weapon Upgrade Kit - 10k", "option68"},
+        {"Armor Upgrade Kit - 10k", "option69"},       
+        
 --        {"Medium Mineral Harvester Deed - 50k", "option29"},
 --        {"Medium Flora Harvester Deed - 50k", "option30"},
 --        {"Medium Gas Harvester Deed - 50k", "option31"},
@@ -108,12 +112,16 @@ arch1 = ConvoScreen:new {
     customDialogText = "I sell structures! See anything you like?",
     stopConversation = "false",
     options = { 
-        {"Small Generic House - 50k", "option34"},
+        {"45 effectiveness Weapon/Item Crafting Station - 50k", "option74"},
+        {"45 effectiveness Structure Crafting Station - 50k", "option75"},
+      	{"45 effectiveness Clothing Crafting Station - 50k", "option72"},
+        {"45 effectiveness Food Crafting Station - 50k", "option73"},
+      	{"Small Generic House - 50k", "option34"},
         {"Medium Generic House - 100k", "option35"},
-        {"Clothing Factory Deed - 100k", "option36"},
-        {"Food Factory Deed - 100k", "option37"},
-        {"item Factory Deed - 100k", "option38"},
-        {"Structure Factory Deed - 100k", "option39"},
+--        {"Clothing Factory Deed - 100k", "option36"},
+--        {"Food Factory Deed - 100k", "option37"},
+--        {"item Factory Deed - 100k", "option38"},
+--        {"Structure Factory Deed - 100k", "option39"},
         {"Main menu.", "first_screen"},
     }
 }
@@ -196,6 +204,20 @@ droid1 = ConvoScreen:new {
     }
 }
 myswg_vendor_conv:addScreen(droid1);
+
+tailor1 = ConvoScreen:new {
+    id = "tailor1",
+    leftDialog = "",
+    customDialogText = "Tailor stuff, need anything?",
+    stopConversation = "false",
+    options = { 
+        {"10 Reinforced Fiber Panel - 5k", "option70"},
+        {"10 Synthetic Cloth- 5k", "option71"},     
+        
+      	{"Main menu.", "first_screen"},
+    }
+}
+myswg_vendor_conv:addScreen(tailor1);
 
 newbuff1 = ConvoScreen:new {
     id = "newbuff1",
@@ -703,7 +725,90 @@ myswg_vendor_accept_quest = ConvoScreen:new {
     stopConversation = "true",
     options = { }
 }
-
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option68",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option69",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option70",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option71",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option72",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option73",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option74",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option75",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option76",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option77",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option78",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option79",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
 myswg_vendor_conv:addScreen(myswg_vendor_accept_quest);
 myswg_vendor_deny_quest = ConvoScreen:new {
     id = "deny_quest",

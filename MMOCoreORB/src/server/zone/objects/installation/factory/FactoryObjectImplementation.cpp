@@ -373,6 +373,8 @@ void FactoryObjectImplementation::handleRemoveFactorySchem(CreatureObject* playe
 }
 
 void FactoryObjectImplementation::handleOperateToggle(CreatureObject* player) {
+	player->sendSystemMessage("mySWG: Factories are disabled!");
+	return;
 
 	if(getContainerObjectsSize() == 0) {
 		player->sendSystemMessage("No schematic, unable to start");

@@ -69,6 +69,7 @@ object_tangible_crafting_station_public_clothing_station = object_tangible_craft
    customizationDefaults = {},
 
    stationType = 1,   complexityLevel = 100,
+   	effectiveness = 45,
 }
 
 ObjectTemplates:addTemplate(object_tangible_crafting_station_public_clothing_station, "object/tangible/crafting/station/public_clothing_station.iff")

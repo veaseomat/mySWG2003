@@ -69,6 +69,7 @@ object_tangible_crafting_station_public_weapon_station = object_tangible_craftin
    customizationDefaults = {},
 
    stationType = 7,   complexityLevel = 100,
+   	effectiveness = 45,
 }
 
 ObjectTemplates:addTemplate(object_tangible_crafting_station_public_weapon_station, "object/tangible/crafting/station/public_weapon_station.iff")
