@@ -87,6 +87,8 @@ object_tangible_wearables_armor_chitin_armor_chitin_s01_helmet = object_tangible
 	healthEncumbrance = 13,
 	actionEncumbrance = 13,
 	mindEncumbrance = 188,
+	
+		maxCondition = 20000,
 
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,

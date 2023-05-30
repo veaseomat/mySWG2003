@@ -96,6 +96,8 @@ object_tangible_wearables_armor_chitin_armor_chitin_s01_bracer_l = object_tangib
 	healthEncumbrance = 13,
 	actionEncumbrance = 13,
 	mindEncumbrance = 16,
+	
+	maxCondition = 20000,
 
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,

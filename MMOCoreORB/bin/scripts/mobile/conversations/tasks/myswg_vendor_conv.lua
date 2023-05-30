@@ -209,7 +209,7 @@ newbuff1 = ConvoScreen:new {
  --       {"2000/8hr Health/Action Buffs w/ 125% mind - 20k", "buff3"},
  
 --        {"100%/3hr Mind Buffs - FREE", "buff4"},
-        {"125%/3hr Mind Buffs - 5k", "buff5"},
+--        {"125%/3hr Mind Buffs - 5k", "buff5"},
 --        {"StimPack A - 500", "option50"},
 --        {"StimPack B - 1k", "option51"},
 --        {"StimPack C - 2k", "option52"},

@@ -756,20 +756,22 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 		return;
 	}
 
-	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) * 3;
+	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) * 2;
 	int maxDiff = randomLairSpawn->getMaxDifficulty();
 	int minDiff = randomLairSpawn->getMinDifficulty();
 	int difficultyLevel = System::random(maxDiff - minDiff) + minDiff;
 	int difficulty = (difficultyLevel - minDiff) / ((maxDiff > (minDiff + 5) ? maxDiff - minDiff : 5) / 5);
+
+//	difficulty = 4 + System::random(46);
 
 	if (difficulty == 5)
 		difficulty = 4;
 
 	int diffDisplay = difficultyLevel + 7;
 	if (player->isGrouped())//could change group lvl here
-		diffDisplay = player->getGroup()->getGroupLevel() * 3;
+		diffDisplay = minDiff;//player->getGroup()->getGroupLevel();
 	else
-		diffDisplay = playerLevel;
+		diffDisplay = minDiff;//playerLevel;
 
 	String building = lairTemplateObject->getMissionBuilding(difficulty);
 
@@ -878,7 +880,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
  		mobileName = mobiles->elementAt(0).getKey();
  	}
 //creolevel
-	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + groupSuffix);//String::valueOf(diffDisplay));
+	mission->setMissionTitle(String::valueOf(minDiff), mobileName.replaceAll("_", " ") + groupSuffix);//String::valueOf(diffDisplay));
 	mission->setMissionDescription("mission/mission_destroy_neutral" +  messageDifficulty + missionType, "m" + String::valueOf(randTexts) + "d");
 
 	switch (faction) {
@@ -1696,7 +1698,9 @@ void MissionManagerImplementation::generateRandomFactionalDestroyMissionDescript
  		mobileName = mobiles->elementAt(0).getKey();
  	}
 
-	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + " mission");
+	int minDiff = randomLairSpawn->getMinDifficulty();
+
+	mission->setMissionTitle(String::valueOf(minDiff), mobileName.replaceAll("_", " ") + " mission");
 //	mission->setMissionTitle("mission/mission_destroy_" + difficultyString, "m" + String::valueOf(randomNumber) + "t");
 	mission->setMissionDescription("mission/mission_destroy_" +  difficultyString, "m" + String::valueOf(randomNumber) + "d");
 }
@@ -1807,20 +1811,20 @@ LairSpawn* MissionManagerImplementation::getRandomLairSpawn(CreatureObject* play
 
 	bool foundLair = false;
 	int counter = availableLairList->size();
-	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) * 3;
+	int playerLevel = server->getPlayerManager()->calculatePlayerLevel(player) * 2;
 	if (player->isGrouped())
-		playerLevel = player->getGroup()->getGroupLevel() * 3;
+		playerLevel = player->getGroup()->getGroupLevel();
 
 	LairSpawn* lairSpawn = nullptr;
 
 	//Cap the minLevel to prevent a group from being too high to get missions on a planet
-	int minLevel = Math::min(playerLevel - 5, minLevelCeiling);
+	int minLevel = Math::min(playerLevel, minLevelCeiling);
 
 	//Try to pick random lair within playerLevel +-5;
 	while (counter > 0 && !foundLair) {
 		LairSpawn* randomLairSpawn = availableLairList->get(System::random(availableLairList->size() - 1));
 		if (randomLairSpawn != nullptr) {
-			if (randomLairSpawn->getMinDifficulty() <= (playerLevel + 5) && randomLairSpawn->getMaxDifficulty() >= minLevel) {
+			if (randomLairSpawn->getMinDifficulty() <= (playerLevel + 10) && randomLairSpawn->getMaxDifficulty() >= minLevel) {
 				if (type == MissionTypes::DESTROY) {
 					lairSpawn = randomLairSpawn;
 					foundLair = true;
@@ -1842,7 +1846,7 @@ LairSpawn* MissionManagerImplementation::getRandomLairSpawn(CreatureObject* play
 		//No random lair found, iterate through all lairs and find the first within playerLevel +-5;
 		for (int i = 0; i < availableLairList->size(); i++) {
 			LairSpawn* randomLairSpawn = availableLairList->get(i);
-			if (randomLairSpawn->getMinDifficulty() <= (playerLevel + 5) && randomLairSpawn->getMaxDifficulty() >= minLevel) {
+			if (randomLairSpawn->getMinDifficulty() <= (playerLevel + 10) && randomLairSpawn->getMaxDifficulty() >= minLevel) {
 				if (type == MissionTypes::DESTROY) {
 					lairSpawn = randomLairSpawn;
 					foundLair = true;
@@ -1864,7 +1868,7 @@ LairSpawn* MissionManagerImplementation::getRandomLairSpawn(CreatureObject* play
 		//There are no lairs within playerLevel +-5, pick the first lair below playerLevel +5
 		for (int i = 0; i < availableLairList->size(); i++) {
 			LairSpawn* randomLairSpawn = availableLairList->get(i);
-			if (randomLairSpawn->getMinDifficulty() <= (playerLevel + 5)) {
+			if (randomLairSpawn->getMinDifficulty() <= (playerLevel + 10)) {
 				if (type == MissionTypes::DESTROY) {
 					lairSpawn = randomLairSpawn;
 					break;

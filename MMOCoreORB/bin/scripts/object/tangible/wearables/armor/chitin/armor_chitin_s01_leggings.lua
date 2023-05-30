@@ -96,6 +96,8 @@ object_tangible_wearables_armor_chitin_armor_chitin_s01_leggings = object_tangib
 	healthEncumbrance = 38,
 	actionEncumbrance = 100,
 	mindEncumbrance = 16,
+	
+		maxCondition = 20000,
 
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
