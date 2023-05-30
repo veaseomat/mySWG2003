@@ -880,7 +880,7 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
  		mobileName = mobiles->elementAt(0).getKey();
  	}
 //creolevel
-	mission->setMissionTitle(String::valueOf(minDiff), mobileName.replaceAll("_", " ") + groupSuffix);//String::valueOf(diffDisplay));
+	mission->setMissionTitle("",  "lvl " + String::valueOf(minDiff) + " " + mobileName.replaceAll("_", " ") + groupSuffix);//String::valueOf(diffDisplay));
 	mission->setMissionDescription("mission/mission_destroy_neutral" +  messageDifficulty + missionType, "m" + String::valueOf(randTexts) + "d");
 
 	switch (faction) {
@@ -1700,7 +1700,7 @@ void MissionManagerImplementation::generateRandomFactionalDestroyMissionDescript
 
 	int minDiff = randomLairSpawn->getMinDifficulty();
 
-	mission->setMissionTitle(String::valueOf(minDiff), mobileName.replaceAll("_", " ") + " mission");
+	mission->setMissionTitle("", "lvl " + String::valueOf(minDiff) + " " + mobileName.replaceAll("_", " ") + " mission");
 //	mission->setMissionTitle("mission/mission_destroy_" + difficultyString, "m" + String::valueOf(randomNumber) + "t");
 	mission->setMissionDescription("mission/mission_destroy_" +  difficultyString, "m" + String::valueOf(randomNumber) + "d");
 }
