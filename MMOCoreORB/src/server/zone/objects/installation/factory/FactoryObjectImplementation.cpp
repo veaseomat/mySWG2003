@@ -373,8 +373,8 @@ void FactoryObjectImplementation::handleRemoveFactorySchem(CreatureObject* playe
 }
 
 void FactoryObjectImplementation::handleOperateToggle(CreatureObject* player) {
-	player->sendSystemMessage("mySWG: Factories are disabled!");
-	return;
+//	player->sendSystemMessage("mySWG: Factories are disabled!");
+//	return;
 
 	if(getContainerObjectsSize() == 0) {
 		player->sendSystemMessage("No schematic, unable to start");
@@ -428,7 +428,7 @@ bool FactoryObjectImplementation::startFactory() {
 			return false;
 	}
 
-	timer = ((int)schematic->getComplexity());// * 8;
+	timer = ((int)schematic->getComplexity()) * 2;
 
 	if(!populateSchematicBlueprint(schematic))
 		return false;

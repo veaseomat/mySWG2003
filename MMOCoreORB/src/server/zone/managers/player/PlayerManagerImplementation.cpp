@@ -6207,6 +6207,23 @@ void PlayerManagerImplementation::enhanceCharacterEntBuffTWO(CreatureObject* pla
 		player->sendSystemMessage("You receive Dancer/Musician Mind buffs for 125% for 8 hours.");
 }
 
+//bool PlayerManagerImplementation::isjediovert(CreatureObject* player) {
+//	if (player == nullptr)
+//		return false;
+//
+//	ManagedReference<WeaponObject*> weapon = player->getWeapon();
+//
+//	PlayerObject* ghost = player->getPlayerObject();
+//
+//	if (ghost == nullptr)
+//		return false;
+//
+//	if (weapon->isJediWeapon() || ghost->hasTef())
+//		return true;
+//
+//	return false;
+//}
+
 void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
 	if (player == nullptr)
 		return;

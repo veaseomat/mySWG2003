@@ -266,7 +266,7 @@ public:
 	}
 
 	inline uint32 getOptionsBitmask() const {
-		return optionsBitmask;
+		return optionsBitmask; // also this
 	}
 
 	inline const String& getFaction() const {
@@ -335,7 +335,9 @@ public:
 	}
 
 	inline uint32 getPvpBitmask() const {
-		return pvpBitmask;
+//	uint32 newpvpBitmask = pvpBitmask;
+//	if (newpvpBitmask == 0) newpvpBitmask = 1;
+		return pvpBitmask;//changing this works
 	}
 
 	inline uint32 getCreatureBitmask() const {

@@ -65,7 +65,7 @@ function PVPBHIntro:startStepDelay(pPlayer, step)
 --		return
 --	else
 	--player lost bh or first time
-		stepDelay = (getRandomNumber(15, 240) * 60 * 1000) --10min - 720=12hr
+		stepDelay = (getRandomNumber(1, 1) * 60 * 1000) --mins 15, 240
 --	end
 
 	writeScreenPlayData(pPlayer, "VillageJediProgression", "PVPBHIntroDelay", stepDelay + os.time())
@@ -83,6 +83,13 @@ function PVPBHIntro:doDelayedStep(pPlayer)
 		return
 	end
 	
+--encounter is for equipped saber or tef	
+--	if (Encounter:isPlayerInNpcCity(pPlayer) and CreatureObject(pPlayer):isjediovert()) then --(CreatureObject(pPlayer):getPvpStatusBitmask() == 8 or CreatureObject(pPlayer):isAttackableBy() == true)
+--		encounterResult = PVPBHEncounter:start(pPlayer)
+--		--createEvent(getRandomNumber(15, 120) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "")
+--		--return
+--	end
+	
 --delay for dead incap or not in good area
 	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer)) then
 		createEvent(getRandomNumber(15, 120) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "")
@@ -93,10 +100,9 @@ function PVPBHIntro:doDelayedStep(pPlayer)
 	if PlayerObject(pGhost):getVisibility() >= 3000 then--OR if lightsaber is equipped?
 		encounterResult = PVPBHEncounter:start(pPlayer)
 		return
-		
 	else
 	--chek visibility again after
-		createEvent(getRandomNumber(15, 60) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(1, 1) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "") -- 15, 60
 		return
 	end
 

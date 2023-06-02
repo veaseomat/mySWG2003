@@ -83,8 +83,9 @@ void InstallationObjectImplementation::fillAttributeList(AttributeListMessage* a
 void InstallationObjectImplementation::setOperating(bool value, bool notifyClient) {
 	//updateInstallationWork();
 
-	broadcastToOperators(new ChatSystemMessage("mySWG: Harvesters are disabled!"));
-	return;
+//disable harvesters here
+//	broadcastToOperators(new ChatSystemMessage("mySWG: Harvesters are disabled!"));
+//	return;
 
 	if (operating == value)
 		return;

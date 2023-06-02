@@ -739,7 +739,7 @@ void CraftingSessionImplementation::initialAssembly(int clientCounter) {
 	prototype->updateCraftingValues(craftingValues, true);
 
 	prototype->setJunkDealerNeeded(1);
-	prototype->setJunkValue(manufactureSchematic->getComplexity() * manufactureSchematic->getComplexity());
+	prototype->setJunkValue((manufactureSchematic->getComplexity() * manufactureSchematic->getComplexity()) / 2);
 
 	addSkillMods();
 

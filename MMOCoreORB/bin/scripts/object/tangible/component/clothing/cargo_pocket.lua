@@ -42,7 +42,7 @@
 
 
 object_tangible_component_clothing_cargo_pocket = object_tangible_component_clothing_shared_cargo_pocket:new {
-
+	useCount = 25,
 
 	numberExperimentalProperties = {1, 1, 1},
 	experimentalProperties = {"XX", "XX", "XX"},

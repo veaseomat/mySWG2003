@@ -211,8 +211,9 @@ tailor1 = ConvoScreen:new {
     customDialogText = "Tailor stuff, need anything?",
     stopConversation = "false",
     options = { 
-        {"10 Reinforced Fiber Panel - 5k", "option70"},
-        {"10 Synthetic Cloth- 5k", "option71"},     
+--        {"25 Fiberplast Panel - 5k", "option71"},    //not useable in crafting : /
+--        {"25 Reinforced Fiber Panel - 5k", "option70"},
+--        {"25 Synthetic Cloth- 5k", "option76"},     
         
       	{"Main menu.", "first_screen"},
     }
