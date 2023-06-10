@@ -20,6 +20,8 @@
 #include "server/zone/managers/planet/PlanetManager.h"
 #include "server/zone/managers/planet/PlanetTravelPoint.h"
 #include "server/zone/objects/group/GroupObject.h"
+#include "server/zone/managers/visibility/VisibilityManager.h"
+#include "server/zone/objects/tangible/weapon/WeaponObject.h"
 
 //#define ENABLE_CITY_TRAVEL_LIMIT
 
@@ -44,6 +46,13 @@ public:
 
 		if (zone == nullptr)
 			return GENERALERROR;
+
+//		ManagedReference<WeaponObject*> weapon = creature->getWeapon();
+		Reference<PlayerObject*> ghostdef = creature->getPlayerObject();
+
+		if (creature->getWeapon()->isJediWeapon() || ghostdef->hasBhTef()) {
+			VisibilityManager::instance()->increaseVisibility(creature, 25);
+		}
 
 		ManagedReference<PlanetManager*> planetManager = zone->getPlanetManager();
 

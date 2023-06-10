@@ -743,6 +743,13 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 		return;
 	}
 
+	ManagedReference<WeaponObject*> weapon = player->getWeapon();
+	Reference<PlayerObject*> ghostdef = player->getPlayerObject();
+
+	if (weapon->isJediWeapon() || ghostdef->hasBhTef()) {
+		VisibilityManager::instance()->increaseVisibility(player, 25);
+	}
+
 	LairSpawn* randomLairSpawn = getRandomLairSpawn(player, faction, MissionTypes::DESTROY);
 
 	if (randomLairSpawn == nullptr) {

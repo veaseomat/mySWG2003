@@ -56,7 +56,7 @@ public:
 			return GENERALERROR;
 
 		//Determine the loot rights.
-		bool looterIsOwner = (lootContainer->getContainerPermissions()->getOwnerID() == creature->getObjectID());
+		bool looterIsOwner = true;//(lootContainer->getContainerPermissions()->getOwnerID() == creature->getObjectID());
 		bool groupIsOwner = (lootContainer->getContainerPermissions()->getOwnerID() == creature->getGroupID());
 
 		//Allow player to loot the corpse if they own it.

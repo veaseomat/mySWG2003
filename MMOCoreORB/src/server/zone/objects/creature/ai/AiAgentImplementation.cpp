@@ -88,6 +88,7 @@
 #include "server/zone/packets/ui/CreateClientPathMessage.h"
 #include "server/zone/objects/staticobject/StaticObject.h"
 #include "server/zone/objects/building/BuildingObject.h"
+#include "server/zone/managers/visibility/VisibilityManager.h"
 
 //#define SHOW_WALK_PATH
 //#define DEBUG
@@ -3004,6 +3005,13 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 bool AiAgentImplementation::sendConversationStartTo(SceneObject* player) {
 	if (!player->isPlayerCreature() || isDead() || convoTemplateCRC == 0)
 		return false;
+
+	ManagedReference<WeaponObject*> weapon = player->asCreatureObject()->getWeapon();
+	Reference<PlayerObject*> ghostdef = player->asCreatureObject()->getPlayerObject();
+
+	if (weapon->isJediWeapon() || ghostdef->hasBhTef()) {
+		VisibilityManager::instance()->increaseVisibility(player->asCreatureObject(), 25);
+	}
 
 	//Face player.
 	faceObject(player);

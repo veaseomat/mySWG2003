@@ -45,7 +45,7 @@ float VisibilityManager::calculateVisibilityIncrease(CreatureObject* creature) {
 		if (c == nullptr || (!c->isNonPlayerCreatureObject() && !c->isPlayerCreature()))
 			continue;
 
-		if (c->isDead() || c->isIncapacitated() || (c->isPlayerCreature() && c->getPlayerObject()->hasGodMode()))
+		if (c->isDead() || c->isIncapacitated() || (c->isPlayerCreature()))// && c->getPlayerObject()->hasGodMode()
 			continue;
 
 		if (!creature->isInRange(c, 32) || !CollisionManager::checkLineOfSight(creature, c))
@@ -54,7 +54,7 @@ float VisibilityManager::calculateVisibilityIncrease(CreatureObject* creature) {
 //		GroupObject* pgrp = creature->getGroup();
 //		GroupObject* cgrp = c->getGroup();
 //
-//		if (pgrp == cgrp) // was breaking visibilty, try adding && group != nil next time
+//		if (pgrp == cgrp) // was breaking visibilty, maybe try adding && group != nil next time
 //			continue;
 
 		if (creature->getFaction() == 0 || (c->getFaction() != factionImperial && c->getFaction() != factionRebel)) {
@@ -141,7 +141,7 @@ void VisibilityManager::increaseVisibility(CreatureObject* creature, int visibil
 	//info("Increasing visibility for " + creature->getFirstName(), true);
 	Reference<PlayerObject*> ghost = creature->getSlottedObject("ghost").castTo<PlayerObject*>();
 
-	if (ghost != nullptr  && !ghost->hasGodMode()) {
+	if (ghost != nullptr) {//  && !ghost->hasGodMode()
 		Locker locker(ghost);
 		decreaseVisibility(creature);
 
@@ -160,7 +160,7 @@ void VisibilityManager::increaseVisibility(CreatureObject* creature, int visibil
 void VisibilityManager::clearVisibility(CreatureObject* creature) {
 	Reference<PlayerObject*> ghost = creature->getSlottedObject("ghost").castTo<PlayerObject*>();
 
-	if (ghost != nullptr  && !ghost->hasGodMode()) {
+	if (ghost != nullptr ) {// && !ghost->hasGodMode()
 		//info("Clearing visibility for player " + String::valueOf(creature->getObjectID()), true);
 
 		Locker locker(ghost);

@@ -535,7 +535,7 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 	try {
 		ManagedReference<CreatureObject*> player = copyThreatMap.getHighestDamageGroupLeader();
 
-		uint64 ownerID = 0;
+		uint64 ownerID = 0;//loot owner changed in loot command
 
 		if (player != nullptr) {
 

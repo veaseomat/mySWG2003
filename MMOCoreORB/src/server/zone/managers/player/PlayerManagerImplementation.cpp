@@ -1937,7 +1937,9 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				String xpType = entry->elementAt(j).getKey();
 				float xpAmount = baseXp;
 
-				xpAmount *= (float) damage / totalDamage;
+				xpAmount /= (float) entry->size() / 1;
+
+//				xpAmount *= (float) damage / totalDamage;
 
 				//******* XP was CHANGED IN aiagent.idl and creature.idl located in zone/obj/creature/ai
 
