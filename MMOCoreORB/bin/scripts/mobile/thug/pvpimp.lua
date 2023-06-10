@@ -4,6 +4,7 @@ pvpimp = Creature:new {
 --	randomNameTag = true,
 	socialGroup = "imperial",
 	faction = "imperial",
+--	outfit = "pvpgear1",
 	level = 300,
 	elite = 2.0,
 	chanceHit = 55,

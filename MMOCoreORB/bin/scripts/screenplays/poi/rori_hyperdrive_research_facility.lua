@@ -18,7 +18,7 @@ function HyperdriveResearchFacilityScreenPlay:start()
 		if getRandomNumber(100) >= 50 then
 			self:spawnRebels(pBuilding)
 		else
-			self:spawnImperials(pBuilding)
+			self:spawnRebels(pBuilding)
 		end
 	end
 end
@@ -33,7 +33,7 @@ function HyperdriveResearchFacilityScreenPlay:flipBase(pBuilding)
 	if BuildingObject(pBuilding):getFaction() == FACTIONIMPERIAL then
 		self:spawnRebels(pBuilding)
 	elseif BuildingObject(pBuilding):getFaction() == FACTIONREBEL then
-		self:spawnImperials(pBuilding)
+			self:spawnRebels(pBuilding)
 	end
 
 	return 0

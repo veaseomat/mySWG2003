@@ -14,7 +14,7 @@ function WeaponFacilityScreenPlay:start()
 		createObserver(FACTIONBASEFLIPPED, "WeaponFacilityScreenPlay", "flipBase", pBuilding)
 
 		if getRandomNumber(100) >= 50 then
-			self:spawnRebels(pBuilding)
+			self:spawnImperials(pBuilding)
 		else
 			self:spawnImperials(pBuilding)
 		end
@@ -29,7 +29,7 @@ function WeaponFacilityScreenPlay:flipBase(pBuilding)
 	BuildingObject(pBuilding):destroyChildObjects()
 
 	if BuildingObject(pBuilding):getFaction() == FACTIONIMPERIAL then
-		self:spawnRebels(pBuilding)
+			self:spawnImperials(pBuilding)
 	elseif BuildingObject(pBuilding):getFaction() == FACTIONREBEL then
 		self:spawnImperials(pBuilding)
 	end
