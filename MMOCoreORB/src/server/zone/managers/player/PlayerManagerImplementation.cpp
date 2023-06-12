@@ -110,6 +110,10 @@
 #include <sys/stat.h>
 #include "server/zone/objects/transaction/TransactionLog.h"
 #include "server/zone/objects/creature/commands/TransferItemMiscCommand.h"
+#include "server/zone/managers/visibility/VisibilityManager.h"
+#include "server/zone/objects/mission/MissionObjective.h"
+#include "server/zone/objects/mission/MissionObject.h"
+#include "server/zone/managers/mission/MissionManager.h"
 
 PlayerManagerImplementation::PlayerManagerImplementation(ZoneServer* zoneServer, ZoneProcessServer* impl,
 					bool trackOnlineUsers) : Logger("PlayerManager") {
@@ -1287,14 +1291,125 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 //jedi xp loss
 
-	int curExp = ghost->getExperience("jedi_general");
-	int xpLoss = (curExp / 2) * -1;
+	// Jedi experience loss.
+	if (ghost->getJediState() >= 2) {
+		MissionManager* missionManager = player->getZoneServer()->getMissionManager();
+		if (missionManager != nullptr && player->hasSkill("force_title_jedi_rank_02")) {
+			missionManager->removePlayerFromBountyList(player->getObjectID());
+			missionManager->failPlayerBountyMission(attacker->getObjectID());
+		}
 
-	awardExperience(player, "jedi_general", xpLoss, true, 1, false);
+		int skillboxes = SkillManager::instance()->getJediSkillCount(player, true);
+		int jediXpCap = skillboxes * 100000;//calculatePlayerLevel(ghost->asCreatureObject()) * 50000;// 1 million ghost->getXpCap("jedi_general");
+		int xpLoss = System::random(jediXpCap) * -1;//-0.05
+		int curExp = ghost->getExperience("jedi_general");
+
+		int negXpCap = -10000000; // Cap on negative jedi experience
+
+		if ((curExp + xpLoss) < negXpCap)
+			xpLoss = negXpCap - curExp;
+
+		awardExperience(player, "jedi_general", xpLoss, true, 1.0, false);
+		StringIdChatParameter message("base_player","prose_revoke_xp");
+		message.setDI(xpLoss * -1);
+		message.setTO("exp_n", "jedi_general");
+		player->sendSystemMessage(message);
+
+		VisibilityManager::instance()->clearVisibility(player);
+
+		//random skill loss
+		int skilltree = System::random(4) + 1;
+		int skillbranch = System::random(3) + 1;
+		int rowheight = System::random(3) + 1;
+
+		String tree = "";
+		String branch = "";
+		String row = "";
+
+		if (skilltree == 1) {
+			tree = "force_discipline_light_saber";
+			if (skillbranch == 1) branch = "_one_hand";
+			if (skillbranch == 2) branch = "_two_hand";
+			if (skillbranch == 3) branch = "_polearm";
+			if (skillbranch == 4) branch = "_technique";
+		}
+
+		if (skilltree == 2) {
+			tree = "force_discipline_powers";
+			if (skillbranch == 1) branch = "_lightning";
+			if (skillbranch == 2) branch = "_mental";
+			if (skillbranch == 3) branch = "_debuff";
+			if (skillbranch == 4) branch = "_push";
+		}
+
+		if (skilltree == 3) {
+			tree = "force_discipline_healing";
+			if (skillbranch == 1) branch = "_damage";
+			if (skillbranch == 2) branch = "_wound";
+			if (skillbranch == 3) branch = "_other";
+			if (skillbranch == 4) branch = "_states";
+		}
+
+		if (skilltree == 4) {
+			tree = "force_discipline_enhancements";
+			if (skillbranch == 1) branch = "_movement";
+			if (skillbranch == 2) branch = "_protection";
+			if (skillbranch == 3) branch = "_resistance";
+			if (skillbranch == 4) branch = "_synergy";
+		}
+
+		if (skilltree == 5) {
+			tree = "force_discipline_defender";
+			if (skillbranch == 1) branch = "_melee_defense";
+			if (skillbranch == 2) branch = "_ranged_defense";
+			if (skillbranch == 3) branch = "_force_defense";
+			if (skillbranch == 4) branch = "_preternatural_defense";
+		}
+
+
+		if (ghost->getExperience("jedi_general") < 0 || System::random(99) < 50)	{
+			if (rowheight == 4) {
+				row = "_04";
+				if (player->hasSkill(tree + branch + row))	player->sendSystemMessage("you lost the skill: " + tree + branch + row);
+				SkillManager::instance()->surrenderSkill(tree + "_master", player, true, true);
+				SkillManager::instance()->surrenderSkill(tree + branch + "_04", player, true, true);
+			}
+			if (rowheight == 3) {
+				row = "_03";
+				if (player->hasSkill(tree + branch + row))	player->sendSystemMessage("you lost the skill: " + tree + branch + row);
+				SkillManager::instance()->surrenderSkill(tree + "_master", player, true, true);
+				SkillManager::instance()->surrenderSkill(tree + branch + "_04", player, true, true);
+				SkillManager::instance()->surrenderSkill(tree + branch + "_03", player, true, true);
+			}
+			if (rowheight == 2) {
+				row = "_02";
+				if (player->hasSkill(tree + branch + row))	player->sendSystemMessage("you lost the skill: " + tree + branch + row);
+				SkillManager::instance()->surrenderSkill(tree + "_master", player, true, true);
+				SkillManager::instance()->surrenderSkill(tree + branch + "_04", player, true, true);
+				SkillManager::instance()->surrenderSkill(tree + branch + "_03", player, true, true);
+				SkillManager::instance()->surrenderSkill(tree + branch + "_02", player, true, true);
+			}
+			if (rowheight == 1) {
+				row = "_01";
+				if (player->hasSkill(tree + branch + row))	player->sendSystemMessage("you lost the skill: " + tree + branch + row);
+				SkillManager::instance()->surrenderSkill(tree + "_master", player, true, true);
+				SkillManager::instance()->surrenderSkill(tree + branch + "_04", player, true, true);
+				SkillManager::instance()->surrenderSkill(tree + branch + "_03", player, true, true);
+				SkillManager::instance()->surrenderSkill(tree + branch + "_02", player, true, true);
+				SkillManager::instance()->surrenderSkill(tree + branch + "_01", player, true, true);
+			}
+		}
+	}
+
+//	int curExp = ghost->getExperience("jedi_general");
+//	int xpLoss = (curExp / 2) * -1;
 //
+//	awardExperience(player, "jedi_general", xpLoss, true, 1, false);
+
+
+
 //	int frscurExp = ghost->getExperience("force_rank_xp");
 //	int frsxpLoss = (frscurExp / 8) * -1; //divide by global xp multi
-//
 //	awardExperience(player, "force_rank_xp", frsxpLoss, true);
 
 	//		StringIdChatParameter message("base_player","prose_revoke_xp");
@@ -1978,7 +2093,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //						//xpType = "combat_meleespecialize_polearmlightsaber";
 //						awardExperience(attacker, "combat_meleespecialize_polearmlightsaber", xpAmount, true, 1.0f, false);
 
-					awardExperience(attacker, "jedi_general", xpAmount * .2, true, 1.0, false);
+					awardExperience(attacker, "jedi_general", xpAmount, true, 1.0, false);
 
 //					if (attacker->hasSkill("force_title_jedi_rank_03"))
 //						frsXp += xpAmount;

@@ -18,6 +18,8 @@
 #include "server/zone/objects/player/sui/callbacks/ColorArmorSuiCallback.h"
 #include "server/zone/ZoneServer.h"
 #include "templates/customization/AssetCustomizationManagerTemplate.h"
+#include "server/zone/managers/visibility/VisibilityManager.h"
+#include "server/zone/objects/tangible/weapon/WeaponObject.h"
 
 void WearableObjectMenuComponent::fillObjectMenuResponse(SceneObject* sceneObject, ObjectMenuResponse* menuResponse, CreatureObject* player) const {
 	if (!sceneObject->isTangibleObject())
@@ -26,6 +28,12 @@ void WearableObjectMenuComponent::fillObjectMenuResponse(SceneObject* sceneObjec
 	TangibleObject* tano = cast<TangibleObject*>(sceneObject);
 	if (tano == nullptr)
 		return;
+
+//	Reference<PlayerObject*> ghostdef = player->getPlayerObject();//moved to weaponobjectimp
+//
+//	if (player->getWeapon()->isJediWeapon() || ghostdef->hasBhTef()) {
+//		VisibilityManager::instance()->increaseVisibility(player, 25);
+//	}
 
 	if (tano->getConditionDamage() > 0 && tano->canRepair(player)) {
 		menuResponse->addRadialMenuItem(70, 3, "@sui:repair"); // Slice

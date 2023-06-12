@@ -309,9 +309,9 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 		
 	local unlockluck = readScreenPlayData(pPlayer, "forcesensitivity", "unlock")
 		
-	if getRandomNumber(1, 217) >= 217 then
-		HologrindJediManager:awardFSpoint(pPlayer)
-	end
+--	if getRandomNumber(1, 217) >= 217 then
+--		HologrindJediManager:awardFSpoint(pPlayer)
+--	end
 		
 --		--540 skills enabled in myswg, chance to unlock every time you train a skill, its possible to not unlock -- disabled for new version below
 --		if (pGhost ~= nil and getRandomNumber(1, 500) >= 500 and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and JediTrials:isEligibleForJedi(pPlayer)) then

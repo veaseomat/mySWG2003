@@ -47,12 +47,12 @@ public:
 		if (zone == nullptr)
 			return GENERALERROR;
 
-//		ManagedReference<WeaponObject*> weapon = creature->getWeapon();
-		Reference<PlayerObject*> ghostdef = creature->getPlayerObject();
-
-		if (creature->getWeapon()->isJediWeapon() || ghostdef->hasBhTef()) {
-			VisibilityManager::instance()->increaseVisibility(creature, 25);
-		}
+////		ManagedReference<WeaponObject*> weapon = creature->getWeapon();
+//		Reference<PlayerObject*> ghostdef = creature->getPlayerObject();
+//
+//		if (creature->getWeapon()->isJediWeapon() || ghostdef->hasBhTef()) {
+//			VisibilityManager::instance()->increaseVisibility(creature, 25);
+//		}
 
 		ManagedReference<PlanetManager*> planetManager = zone->getPlanetManager();
 

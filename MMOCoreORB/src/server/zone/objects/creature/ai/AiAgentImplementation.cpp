@@ -666,6 +666,16 @@ void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
 
 	if (isInCombat()) return;
 
+	if (pObject->isPlayerCreature()){
+		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
+		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
+		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
+
+		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon() || pghost->hasBhTef())) {
+			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
+		}
+	}
+
 	float levelDiff = creoObject->getLevel() - getLevel();
 	float mod = Math::max(0.04f, Math::min((1.f - (levelDiff / 20.f)), 1.2f));
 
@@ -792,6 +802,16 @@ bool AiAgentImplementation::runAwarenessLogicCheck(SceneObject* pObject) {
 	if (getCreatureBitmask() & CreatureFlag::SCANNING_FOR_CONTRABAND) {
 		getZoneUnsafe()->getGCWManager()->runCrackdownScan(thisAiAgent, creoObject);
 	}
+
+//	if (pObject->isPlayerCreature()){
+//		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
+//		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
+//		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
+//
+//		if (pweapon->isJediWeapon() || pghost->hasBhTef()){
+//			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility to defender
+//		}
+//	}
 
 	ManagedReference<SceneObject*> follow = getFollowObject().get();
 

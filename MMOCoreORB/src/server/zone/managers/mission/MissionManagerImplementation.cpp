@@ -34,6 +34,7 @@
 #include "server/zone/managers/stringid/StringIdManager.h"
 #include "server/zone/objects/player/FactionStatus.h"
 #include "server/zone/managers/visibility/VisibilityManager.h"
+#include "server/zone/managers/skill/SkillManager.h"
 
 void MissionManagerImplementation::loadLuaSettings() {
 	try {
@@ -1073,19 +1074,12 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			ManagedReference<CreatureObject*> creature = server->getObject(target->getTargetPlayerID()).castTo<CreatureObject*>();
 			String name = "";
 
-//hide jedi name
-		//	TangibleObject* tano = creature->asTangibleObject();
-
-			//if (player->getFaction() == Factions::FACTIONIMPERIAL) {
-
-			//String factionString = creature->getFaction();//not working yet
-
 			ManagedReference<PlayerManager*> playerManager = creature->getZoneServer()->getPlayerManager();
 
-
 			int jedilvl = playerManager->calculatePlayerLevel(creature) * 3;
+			int skillboxes = SkillManager::instance()->getJediSkillCount(player, true);
 
-			int jedireward = jedilvl * 1000;
+			int jedireward = skillboxes * 1000;//jedilvl * 1000;
 
 			if (creature->getFaction() == Factions::FACTIONIMPERIAL)	mission->setMissionTargetName("imperial player jedi");
 			if (creature->getFaction() == Factions::FACTIONREBEL)	mission->setMissionTargetName("rebel player jedi");

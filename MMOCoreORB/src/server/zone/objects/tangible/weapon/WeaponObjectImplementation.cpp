@@ -20,6 +20,8 @@
 #include "server/zone/objects/tangible/component/lightsaber/LightsaberCrystalComponent.h"
 #include "server/zone/packets/object/WeaponRanges.h"
 #include "server/zone/ZoneProcessServer.h"
+#include "server/zone/managers/visibility/VisibilityManager.h"
+#include "server/zone/objects/tangible/weapon/WeaponObject.h"
 
 
 void WeaponObjectImplementation::initializeTransientMembers() {
@@ -213,6 +215,12 @@ String WeaponObjectImplementation::getWeaponType() const {
 }
 
 void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, CreatureObject* object) {
+//	Reference<PlayerObject*> ghostdef = object->getPlayerObject();
+//
+//	if (object->getWeapon()->isJediWeapon() || ghostdef->hasBhTef()) {
+//		VisibilityManager::instance()->increaseVisibility(object, 25);
+//	}
+
 	TangibleObjectImplementation::fillAttributeList(alm, object);
 
 	bool res = isCertifiedFor(object);

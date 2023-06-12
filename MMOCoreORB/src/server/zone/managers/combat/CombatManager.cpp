@@ -71,8 +71,8 @@ bool CombatManager::startCombat(CreatureObject* attacker, TangibleObject* defend
 	if (attacker->isPlayerCreature() && !attacker->hasDefender(defender)) {
 		ManagedReference<WeaponObject*> weapon = attacker->getWeapon();
 
-		if (weapon != nullptr && weapon->isJediWeapon())
-			VisibilityManager::instance()->increaseVisibility(attacker, 25);
+//		if (weapon != nullptr && weapon->isJediWeapon())
+//			VisibilityManager::instance()->increaseVisibility(attacker, 25);
 	}
 
 	Locker clocker(defender, attacker);
@@ -80,8 +80,8 @@ bool CombatManager::startCombat(CreatureObject* attacker, TangibleObject* defend
 	if (creo != nullptr && creo->isPlayerCreature() && !creo->hasDefender(attacker)) {
 		ManagedReference<WeaponObject*> weapon = creo->getWeapon();
 
-		if (weapon != nullptr && weapon->isJediWeapon())
-			VisibilityManager::instance()->increaseVisibility(creo, 25);
+//		if (weapon != nullptr && weapon->isJediWeapon())
+//			VisibilityManager::instance()->increaseVisibility(creo, 25);
 	}
 
 	attacker->setDefender(defender);
@@ -923,6 +923,11 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	int targetDefense = 0;
 
 	ManagedReference<WeaponObject*> defweapon = defender->getWeapon();
+//	Reference<PlayerObject*> ghostdef = defender->getPlayerObject();
+//
+//	if (defweapon->isJediWeapon() || ghostdef->hasBhTef()){
+//		VisibilityManager::instance()->increaseVisibility(defender, 25); // Give visibility to defender
+//	}
 
 	if (attacker->isAiAgent())
 		targetDefense = defender->getLevel();
@@ -2016,6 +2021,18 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 		}
 	}
 
+	ManagedReference<WeaponObject*> defweapon = targetCreature->getWeapon();
+	Reference<PlayerObject*> ghostdef = targetCreature->getPlayerObject();
+	Reference<PlayerObject*> ghostatt = creoAttacker->getPlayerObject();
+
+//	if (defweapon->isJediWeapon() || ghostdef->hasBhTef()){
+//		VisibilityManager::instance()->increaseVisibility(targetCreature, 10); // Give visibility to defender
+//	}
+//	if (weapon->isJediWeapon() || ghostatt->hasBhTef()){
+//		VisibilityManager::instance()->increaseVisibility(creoAttacker, 10); // Give visibility to defender
+//	}
+
+
 	debug() << "Calculating hit chance for " << attacker->getObjectID()
 		<< " Attacker accuracy bonus is " << accuracyBonus;
 	float weaponAccuracy = 0.0f;
@@ -2256,11 +2273,11 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 		return true;
 
 	float force = weapon->getForceCost() * data.getForceCostMultiplier();
-
-
-	if (weapon->isJediWeapon()){
-		VisibilityManager::instance()->increaseVisibility(attacker, data.getCommand()->getVisMod()); // Give visibility
-	}
+//	Reference<PlayerObject*> ghostdef = defender->getPlayerObject();
+//
+//	if (weapon->isJediWeapon() || ghostdef->hasBhTef()){
+//		VisibilityManager::instance()->increaseVisibility(attacker, 25); // Give visibility
+//	}
 
 	if (force > 0) { // Need Force check first otherwise it can be spammed.
 		//put wearing armor force cost increase here?
@@ -2280,7 +2297,11 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 				return false;
 			} else {
 				playerObject->setForcePower(playerObject->getForcePower() - force);
-				VisibilityManager::instance()->increaseVisibility(attacker, data.getCommand()->getVisMod()); // Give visibility
+				//VisibilityManager::instance()->increaseVisibility(attacker, data.getCommand()->getVisMod()); // Give visibility
+
+				ZoneServer* server = attacker->getZoneServer();
+				PlayerManager* pManager = server->getPlayerManager();
+				pManager->awardExperience(attacker, "jedi_general", force * 5, true, 1.0, false);
 			}
 		}
 	}

@@ -15,6 +15,7 @@
 #include "server/zone/managers/collision/CollisionManager.h"
 #include "CombatQueueCommand.h"
 #include "server/zone/managers/visibility/VisibilityManager.h"
+#include "server/zone/managers/player/PlayerManager.h"
 
 class ForcePowersQueueCommand : public CombatQueueCommand {
 public:
@@ -61,8 +62,11 @@ public:
 				return GENERALERROR;
 			}
 
-			if (ghost != nullptr)
+			if (ghost != nullptr){
 				ghost->setForcePower(ghost->getForcePower() - getFrsModifiedForceCost(creature));
+				PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
+				playerManager->awardExperience(creature, "jedi_general", getFrsModifiedForceCost(creature) * 5, true, 1.0, false);
+			}
 
 		} catch (Exception& e) {
 			error("unreported exception caught in ForcePowersQueueCommand::doCombatAction");
