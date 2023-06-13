@@ -12,6 +12,7 @@
 #include "server/zone/objects/area/ForageAreaCollection.h"
 #include "templates/params/creature/CreatureAttribute.h"
 #include "server/zone/Zone.h"
+#include "server/zone/managers/planet/PlanetManager.h"
 
 void ForageManagerImplementation::startForaging(CreatureObject* player, int forageType) {
 	if (player == nullptr)
@@ -40,6 +41,11 @@ void ForageManagerImplementation::startForaging(CreatureObject* player, int fora
 		return;
 	}
 
+	Reference<PlayerObject*> pghost = player->getPlayerObject();
+	Zone* nzone = player->getZone();
+
+	if (!pghost->isJedi() && nzone->getZoneName() != "dantooine" && (player->getParentID() != 8535483 || player->getParentID() != 8535484 || player->getParentID() != 8535485 || player->getParentID() != 8535486 )) { //this allows foraging inside cave
+
 	//Check if player is inside a structure.
 	if (player->getParentID() != 0) {
 		if (forageType == ForageManager::SHELLFISH)
@@ -47,6 +53,8 @@ void ForageManagerImplementation::startForaging(CreatureObject* player, int fora
 		else
 			player->sendSystemMessage("@skl_use:sys_forage_inside"); //"You can't forage inside a structure."
 		return;
+	}
+
 	}
 
 	//Check if a player is swimming for shellfish harvesting
@@ -227,12 +235,12 @@ bool ForageManagerImplementation::forageGiveItems(CreatureObject* player, int fo
 
 	int itemCount = 1;
 	//Determine how many items the player finds.
-	if (forageType == ForageManager::SCOUT) {
-		if (player->hasSkill("outdoors_scout_camp_03") && System::random(5) == 1)
-			itemCount += 1;
-		if (player->hasSkill("outdoors_scout_master") && System::random(5) == 1)
-			itemCount += 1;
-	}
+//	if (forageType == ForageManager::SCOUT) {
+//		if (player->hasSkill("outdoors_scout_camp_03") && System::random(5) == 1)
+//			itemCount += 1;
+//		if (player->hasSkill("outdoors_scout_master") && System::random(5) == 1)
+//			itemCount += 1;
+//	}
 
 	//Discard items if player's inventory does not have enough space.
 	int inventorySpace = inventory->getContainerVolumeLimit() - inventory->getCountableObjectsRecursive();
@@ -287,6 +295,31 @@ bool ForageManagerImplementation::forageGiveItems(CreatureObject* player, int fo
 			} else {
 				lootGroup = "forage_rare";
 			}
+
+			Reference<PlayerObject*> pghost = player->getPlayerObject();
+			Zone* zone = player->getZone();
+			//ManagedReference<SceneObject*> obj = player->getParentRecursively(SceneObjectType::POIBUILDING);
+			//SortedVector<ActiveArea*> activeAreas;
+			//zone->getInRangeActiveAreas(forageX, forageY, &activeAreas, true);
+			ManagedReference<PlanetManager*> planetManager = zone->getPlanetManager();
+			//TangibleObject* tano = player->asTangibleObject();
+			//uint64 parentID = 0;
+
+//			if (player->isInRange(player, 128.f) && (player->getPositionX() >= 900 && player->getPositionX() <= 1100) ) {
+//
+//			}
+
+			if (pghost->isJedi() && zone->getZoneName() == "dantooine" && (player->getParentID() == 8535483 || player->getParentID() == 8535484 || player->getParentID() == 8535485 || player->getParentID() == 8535486 )) { //(player->getPositionX() >= 900 && player->getPositionX() <= 1100) && (player->getPositionY() >= 1900 && player->getPositionY() <= 2100)
+				lootGroup = "color_crystals";
+				level = 1 + System::random(9);
+				//lootManager->createLoot(trx, inventory, lootGroup, level);
+			}
+
+//			if (zone->getZoneName() == "dantooine" && planetManager->isInRangeWithPoi(forageX, forageY, 100) && System::random(20) == 20) { //pghost->isJedi() &&   // && obj != nullptr
+//				lootGroup = "color_crystals";
+//				level = System::random(10);
+//				//lootManager->createLoot(trx, inventory, lootGroup, level);
+//			}
 
 			lootManager->createLoot(trx, inventory, lootGroup, level);
 		}

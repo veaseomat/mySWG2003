@@ -51,11 +51,11 @@ float VisibilityManager::calculateVisibilityIncrease(CreatureObject* creature) {
 		if (!creature->isInRange(c, 64) || !CollisionManager::checkLineOfSight(creature, c))
 			continue;
 
-//		GroupObject* pgrp = creature->getGroup();
-//		GroupObject* cgrp = c->getGroup();
-//
-//		if (pgrp == cgrp) // was breaking visibilty, maybe try adding && group != nil next time
-//			continue;
+		GroupObject* pgrp = creature->getGroup();
+		GroupObject* cgrp = c->getGroup();
+
+		if (pgrp != nullptr && cgrp != nullptr && pgrp == cgrp) //
+			continue;
 
 		visibilityIncrease = 1;
 
@@ -84,17 +84,15 @@ void VisibilityManager::decreaseVisibility(CreatureObject* creature) {
 
 	if (ghost != nullptr) {
 		Locker locker(ghost);
-		if (ghost->getVisibility() > 0)
-		{
-
+		if (ghost->getVisibility() >= 1)	{
 			//info("VisDecayTickRate: " + String::valueOf(visDecayTickRate) + " DecayPerTick: " + String::valueOf(visDecayPerTick), true);
-			float visibilityDecrease = (((ghost->getLastVisibilityUpdateTimestamp().miliDifference() / 1000.0f) / visDecayTickRate) * visDecayPerTick);
+			float visibilityDecrease = 1;//(((ghost->getLastVisibilityUpdateTimestamp().miliDifference() / 1000.0f) / visDecayTickRate) * visDecayPerTick);
 
 			//info("Decreasing visibility of player " + creature->getFirstName() + " by " + String::valueOf(visibilityDecrease), true);
-			if (ghost->getVisibility() - visibilityDecrease < 1) {
-				clearVisibility(creature);
-				creature->sendSystemMessage("Visibility decreased to 0. You are not yet on the Bounty Hunter Terminals.");
-			} else {
+//			if (ghost->getVisibility() - visibilityDecrease < 1) {
+//				clearVisibility(creature);
+//				creature->sendSystemMessage("Visibility decreased to 0. You are not yet on the Bounty Hunter Terminals.");
+//			} else {
 				ghost->setVisibility(ghost->getVisibility() - visibilityDecrease);
 				//creature->sendSystemMessage("visibility decreased to " + String::valueOf(ghost->getVisibility() - visibilityDecrease));
 
@@ -102,8 +100,10 @@ void VisibilityManager::decreaseVisibility(CreatureObject* creature) {
 					creature->sendSystemMessage("Visibility decreased to " + String::valueOf(ghost->getVisibility() - visibilityDecrease) + ". You are listed on the Bounty Hunter Terminals.");
 				if (ghost->getVisibility() < terminalVisThreshold)
 					creature->sendSystemMessage("Visibility decreased to " + String::valueOf(ghost->getVisibility() - visibilityDecrease) + ". You are not yet on the Bounty Hunter Terminals.");
-			}
+//			}
 		}
+		if (ghost->getVisibility() <= 0)
+			clearVisibility(creature);
 	}
 }
 
