@@ -65,7 +65,7 @@ function PVPBHIntro:startStepDelay(pPlayer, step)
 --		return
 --	else
 	--player lost bh or first time
-		stepDelay = (getRandomNumber(15, 45) * 60 * 1000) --mins 15, 240
+		stepDelay = (getRandomNumber(30, 120) * 60 * 1000) --mins 15, 240
 --	end
 
 	writeScreenPlayData(pPlayer, "VillageJediProgression", "PVPBHIntroDelay", stepDelay + os.time())
@@ -92,16 +92,16 @@ function PVPBHIntro:doDelayedStep(pPlayer)
 	
 	--delay for dead incap or not in good area
 	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer)) then
-		createEvent(getRandomNumber(15, 45) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(30, 120) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "")
 		return
 	end
 	
 	--this is the visibility threshold, vanilla is 1500
-	if PlayerObject(pGhost):getVisibility() >= 100 then--OR if lightsaber is equipped?
+	if PlayerObject(pGhost):getVisibility() >= 10 then--OR if lightsaber is equipped?
 		encounterResult = PVPBHEncounter:start(pPlayer)
 		return
 	else
-		createEvent(getRandomNumber(15, 45) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "") -- 15, 60
+		createEvent(getRandomNumber(30, 120) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "") -- 15, 60
 		return
 	end
 

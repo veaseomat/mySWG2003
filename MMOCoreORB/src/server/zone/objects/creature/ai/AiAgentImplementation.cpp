@@ -671,7 +671,7 @@ void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
 		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
 		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
 
-		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon() || pghost->hasBhTef())) {
+		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()
 			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
 		}
 	}
@@ -3029,9 +3029,9 @@ bool AiAgentImplementation::sendConversationStartTo(SceneObject* player) {
 	ManagedReference<WeaponObject*> weapon = player->asCreatureObject()->getWeapon();
 	Reference<PlayerObject*> ghostdef = player->asCreatureObject()->getPlayerObject();
 
-	if (weapon->isJediWeapon() || ghostdef->hasBhTef()) {
-		VisibilityManager::instance()->increaseVisibility(player->asCreatureObject(), 25);
-	}
+//	if (weapon->isJediWeapon() || ghostdef->hasBhTef()) {
+//		VisibilityManager::instance()->increaseVisibility(player->asCreatureObject(), 25);
+//	}
 
 	//Face player.
 	faceObject(player);

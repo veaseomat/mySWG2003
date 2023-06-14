@@ -24,7 +24,13 @@ public:
 		if (creature->hasAttackDelay())
 			return GENERALERROR;
 
+		if (!creature->checkPostureChangeDelay()) {
+
+		}
+		else {
+
 		creature->setPosture(CreaturePosture::CROUCHED, true);
+		}
 
 //		if (creature->isDizzied() && System::random(100) < 85)
 //			creature->queueDizzyFallEvent();

@@ -48,7 +48,7 @@ float VisibilityManager::calculateVisibilityIncrease(CreatureObject* creature) {
 		if (c->isDead() || c->isIncapacitated())// || (c->isPlayerCreature() && c->getPlayerObject()->hasGodMode())
 			continue;
 
-		if (!creature->isInRange(c, 64) || !CollisionManager::checkLineOfSight(creature, c))
+		if (!creature->isInRange(c, 48) || !CollisionManager::checkLineOfSight(creature, c))
 			continue;
 
 		GroupObject* pgrp = creature->getGroup();
@@ -96,10 +96,13 @@ void VisibilityManager::decreaseVisibility(CreatureObject* creature) {
 				ghost->setVisibility(ghost->getVisibility() - visibilityDecrease);
 				//creature->sendSystemMessage("visibility decreased to " + String::valueOf(ghost->getVisibility() - visibilityDecrease));
 
-				if (ghost->getVisibility() >= terminalVisThreshold)
-					creature->sendSystemMessage("Visibility decreased to " + String::valueOf(ghost->getVisibility() - visibilityDecrease) + ". You are listed on the Bounty Hunter Terminals.");
-				if (ghost->getVisibility() < terminalVisThreshold)
-					creature->sendSystemMessage("Visibility decreased to " + String::valueOf(ghost->getVisibility() - visibilityDecrease) + ". You are not yet on the Bounty Hunter Terminals.");
+				creature->sendSystemMessage("Jedi visibility decreased.");
+
+//				if (ghost->getVisibility() >= terminalVisThreshold)
+//					creature->sendSystemMessage("Visibility decreased to " + String::valueOf(ghost->getVisibility() - visibilityDecrease) + ". You are listed on the Bounty Hunter Terminals.");
+//				if (ghost->getVisibility() < terminalVisThreshold)
+//					creature->sendSystemMessage("Visibility decreased to " + String::valueOf(ghost->getVisibility() - visibilityDecrease) + ". You are not yet on the Bounty Hunter Terminals.");
+
 //			}
 		}
 		if (ghost->getVisibility() <= 0)
@@ -164,10 +167,12 @@ void VisibilityManager::increaseVisibility(CreatureObject* creature, int visibil
 
 			ghost->setVisibility(finalVis);
 
-			if (ghost->getVisibility() >= terminalVisThreshold)
-				creature->sendSystemMessage("Visibility increased to " + String::valueOf(finalVis) + ". You are listed on the Bounty Hunter Terminals.");
-			if (ghost->getVisibility() < terminalVisThreshold)
-				creature->sendSystemMessage("Visibility increased to " + String::valueOf(finalVis) + ". You are not yet on the Bounty Hunter Terminals.");
+			creature->sendSystemMessage("Jedi visibility increased.");
+
+//			if (ghost->getVisibility() >= terminalVisThreshold)
+//				creature->sendSystemMessage("Visibility increased to " + String::valueOf(finalVis) + ". You are listed on the Bounty Hunter Terminals.");
+//			if (ghost->getVisibility() < terminalVisThreshold)
+//				creature->sendSystemMessage("Visibility increased to " + String::valueOf(finalVis) + ". You are not yet on the Bounty Hunter Terminals.");
 
 		}
 

@@ -13,6 +13,8 @@
 #include "server/zone/managers/city/CityRemoveAmenityTask.h"
 #include "server/zone/objects/player/sessions/SlicingSession.h"
 #include "server/zone/managers/director/DirectorManager.h"
+#include "server/zone/objects/player/PlayerObject.h"
+#include "server/zone/managers/visibility/VisibilityManager.h"
 
 void MissionTerminalImplementation::fillObjectMenuResponse(ObjectMenuResponse* menuResponse, CreatureObject* player) {
 	TerminalImplementation::fillObjectMenuResponse(menuResponse, player);
@@ -34,6 +36,12 @@ void MissionTerminalImplementation::fillObjectMenuResponse(ObjectMenuResponse* m
 		menuResponse->addRadialMenuItem(112, 3, "Choose Mission Level");
 		menuResponse->addRadialMenuItem(113, 3, "Choose Mission Direction");
 	}
+
+	if (isBountyTerminal() && player->getPlayerObject()->isJedi()){
+		menuResponse->addRadialMenuItem(114, 3, "Check Visibility");
+
+	}
+
 }
 
 int MissionTerminalImplementation::handleObjectMenuSelect(CreatureObject* player, byte selectedID) {
@@ -100,6 +108,13 @@ int MissionTerminalImplementation::handleObjectMenuSelect(CreatureObject* player
 
 		mission_direction_choice->callFunction();
 		return 0;
+	} else if (selectedID == 114) {
+		int terminalVisThreshold = VisibilityManager::instance()->getTerminalVisThreshold();
+
+		if (player->getPlayerObject()->getVisibility() >= terminalVisThreshold)
+			player->sendSystemMessage("You are listed on the Bounty Hunter Terminals.");
+		if (player->getPlayerObject()->getVisibility() < terminalVisThreshold)
+			player->sendSystemMessage("You are not listed on the Bounty Hunter Terminals.");
 	}
 
 	return TangibleObjectImplementation::handleObjectMenuSelect(player, selectedID);

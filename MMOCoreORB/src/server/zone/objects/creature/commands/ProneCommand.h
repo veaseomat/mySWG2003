@@ -25,10 +25,15 @@ public:
 		if (creature->hasAttackDelay())
 			return GENERALERROR;
 
-		creature->setPosture(CreaturePosture::PRONE);
+		if (!creature->checkPostureChangeDelay()) {
 
-		if (creature->isDizzied() && System::random(100) < 85)
-			creature->queueDizzyFallEvent();
+		}
+		else {
+		creature->setPosture(CreaturePosture::PRONE);
+		}
+
+//		if (creature->isDizzied() && System::random(100) < 85)
+//			creature->queueDizzyFallEvent();
 
 		return SUCCESS;
 	}
