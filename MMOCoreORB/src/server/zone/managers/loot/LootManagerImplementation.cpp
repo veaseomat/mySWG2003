@@ -507,7 +507,9 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	setSkillMods(prototype, templateObject, level, excMod);
 
-	setSockets(prototype, craftingValues);
+
+	if (System::random(3) == 3)
+		setSockets(prototype, craftingValues);
 
 	// Update the Tano with new values
 	prototype->updateCraftingValues(craftingValues, true);
@@ -663,10 +665,12 @@ String LootManagerImplementation::getRandomLootableMod( unsigned int sceneObject
 }
 
 void LootManagerImplementation::setSockets(TangibleObject* object, CraftingValues* craftingValues) {
-	if (object->isWearableObject() && craftingValues->hasProperty("sockets")) {
+	if (object->isWearableObject()) { // && craftingValues->hasProperty("sockets")
 		ManagedReference<WearableObject*> wearableObject = cast<WearableObject*>(object);
+
+	//	int level = craftingValues->getMaxValue("creatureLevel");
 		// Round number of sockets to closes integer.
-		wearableObject->setMaxSockets(craftingValues->getCurrentValue("sockets") + 0.5);
+		wearableObject->setMaxSockets(System::random(8));// craftingValues->getCurrentValue("sockets") + 0.5);
 	}
 }
 

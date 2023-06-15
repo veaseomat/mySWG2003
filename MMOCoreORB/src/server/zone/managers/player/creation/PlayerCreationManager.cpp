@@ -484,7 +484,7 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 							Time timeVal(sec);
 
 							if (timeVal.miliDifference() < 10 * 60 * 1000) {
-								ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per hour. Repeat attempts prior to 1 hour elapsing will reset the timer.", 0x0);
+								ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per 10min. Repeat attempts prior to 10min elapsing will reset the timer.", 0x0);
 								client->sendMessage(errMsg);
 
 								playerCreature->destroyPlayerCreatureFromDatabase(true);
@@ -501,7 +501,7 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 						Time lastCreatedTime = lastCreatedCharacter.get(accID);
 
 						if (lastCreatedTime.miliDifference() < 10 * 60 * 1000) {
-							ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per hour. Repeat attempts prior to 1 hour elapsing will reset the timer.", 0x0);
+							ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per 10min. Repeat attempts prior to 10min elapsing will reset the timer.", 0x0);
 							client->sendMessage(errMsg);
 
 							playerCreature->destroyPlayerCreatureFromDatabase(true);
@@ -576,7 +576,7 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 
 	ManagedReference<SuiMessageBox*> box = new SuiMessageBox(playerCreature, SuiWindowType::NONE);
 	box->setPromptTitle("WELCOME");
-	box->setPromptText("Welcome to mySWG! \n   Character creation is limited to 1 every hour, 5 characters Max, 2 online at a time. Using multiple accounts will get you banned. \nDon't forget to migrate your stats! Stats can also be migrated in Image Designer tents. Have fun!");
+	box->setPromptText("Welcome to mySWG! \n   Character creation is limited to 1 every 10min, 5 characters Max, 2 online at a time. Using multiple accounts will get you banned. \nDon't forget to migrate your stats! Stats can also be migrated in Image Designer tents. Have fun!");
 
 	ghost->addSuiBox(box);
 	playerCreature->sendMessage(box->generateMessage());

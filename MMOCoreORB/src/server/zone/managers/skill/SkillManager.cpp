@@ -251,15 +251,14 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 	if (skill == nullptr)
 		return false;
 
-	if (skill->getSkillName() == "outdoors_creaturehandler_novice"
-		|| creature->hasSkill("outdoors_bio_engineer_novice")
-		|| creature->hasSkill("crafting_merchant_novice")
-		|| creature->hasSkill("science_combatmedic_novice")
-		|| creature->hasSkill("outdoors_squadleader_novice")
-		|| creature->hasSkill("crafting_shipwright_novice")
-	) {
+	if (skill->getSkillName().contains("outdoors_creaturehandler")
+		//||  skill->getSkillName() == "outdoors_bio_engineer_novice"
+		//|| skill->getSkillName() == "crafting_merchant_novice"
+		|| skill->getSkillName().contains("science_combatmedic")
+		|| skill->getSkillName().contains("outdoors_squadleader")
+		|| skill->getSkillName().contains("crafting_shipwright") ) {
 
-			creature->sendSystemMessage("This skill is currently disabled in mySWG.");
+		creature->sendSystemMessage("This profession is currently disabled in mySWG.");
 		return false;
 	}
 

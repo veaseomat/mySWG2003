@@ -671,7 +671,7 @@ void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
 		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
 		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
 
-		if (System::random(60) == 60 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
+		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
 			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
 		}
 	}

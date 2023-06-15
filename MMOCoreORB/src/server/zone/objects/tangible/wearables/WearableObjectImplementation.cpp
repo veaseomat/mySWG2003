@@ -112,7 +112,7 @@ void WearableObjectImplementation::generateSockets(CraftingValues* craftingValue
 
 			if (player != nullptr && draftSchematic != nullptr) {
 				String assemblySkill = draftSchematic->getAssemblySkill();
-				skill = player->getSkillMod(assemblySkill) * 2.5; // 0 to 250 max
+				skill = player->getSkillMod(assemblySkill) ; // * 2.5 //0 to 250 max
 				luck = System::random(player->getSkillMod("luck")
 						+ player->getSkillMod("force_luck"));
 			}
@@ -123,7 +123,9 @@ void WearableObjectImplementation::generateSockets(CraftingValues* craftingValue
 
 	float roll = System::random(skill + luck + random);
 
-	int generatedCount = int(float(MAXSOCKETS * roll) / float(MAXSOCKETS * 100));
+	//int generatedCount = int(float(MAXSOCKETS * roll) / float(MAXSOCKETS * 100));
+
+	int generatedCount = (skill / 100) * MAXSOCKETS;
 
 	if (generatedCount > MAXSOCKETS)
 		generatedCount = MAXSOCKETS;
@@ -160,7 +162,7 @@ void WearableObjectImplementation::applyAttachment(CreatureObject* player,
 			removeSkillModsFrom(player);
 		}
 
-		if (wearableSkillMods.size() < 6) {
+		if (wearableSkillMods.size() < 10) {
 			HashTable<String, int>* mods = attachment->getSkillMods();
 			HashTableIterator<String, int> iterator = mods->iterator();
 
