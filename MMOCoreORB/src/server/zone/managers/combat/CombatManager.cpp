@@ -89,7 +89,7 @@ bool CombatManager::startCombat(CreatureObject* attacker, TangibleObject* defend
 	}
 
 	if (attacker->isPlayerCreature() && attacker->getWeapon()->isJediWeapon() && !attacker->hasDefender(defender)){
-		VisibilityManager::instance()->increaseVisibility(creo, 25);
+		VisibilityManager::instance()->increaseVisibility(attacker, 25);
 	}
 
 	attacker->setDefender(defender);

@@ -2054,7 +2054,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 
 //				xpAmount /= (float) entry->size() / 1;//this is for xp split but its exploitable 1 hit with saber, finish with tk gives jedi xp equip to weap finished with bonus
 
-				xpAmount *= (float) damage / totalDamage;
+				xpAmount *= (float) damage / totalDamage;//damage with that weapon / total damage done
 
 				//******* XP was CHANGED IN aiagent.idl and creature.idl located in zone/obj/creature/ai
 
