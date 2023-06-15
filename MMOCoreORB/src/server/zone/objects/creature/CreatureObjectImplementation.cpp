@@ -91,6 +91,7 @@
 #include "templates/params/PaletteColorCustomizationVariable.h"
 #include "templates/appearance/PaletteTemplate.h"
 #include "server/zone/managers/auction/AuctionSearchTask.h"
+#include "server/zone/managers/visibility/VisibilityManager.h"
 
 float CreatureObjectImplementation::DEFAULTRUNSPEED = 5.376f;
 
@@ -2779,6 +2780,13 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 
 	if (isIncapacitated() || isDead())
 		return;
+
+	ManagedReference<WeaponObject*> pweapon = asCreatureObject()->getWeapon();
+	Reference<PlayerObject*> pghost = asCreatureObject()->getPlayerObject();
+
+//	if (System::random(15) == 15 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()
+//		VisibilityManager::instance()->increaseVisibility(asCreatureObject(), 10); // Give visibility
+//	}
 
 //	if (!isPlayerCreature())
 //		return;

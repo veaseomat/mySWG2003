@@ -48,7 +48,7 @@ float VisibilityManager::calculateVisibilityIncrease(CreatureObject* creature) {
 		if (c->isDead() || c->isIncapacitated())// || (c->isPlayerCreature() && c->getPlayerObject()->hasGodMode())
 			continue;
 
-		if (!creature->isInRange(c, 48) || !CollisionManager::checkLineOfSight(creature, c))
+		if (!creature->isInRange(c, 32) || !CollisionManager::checkLineOfSight(creature, c))//distance
 			continue;
 
 		GroupObject* pgrp = creature->getGroup();
@@ -168,6 +168,8 @@ void VisibilityManager::increaseVisibility(CreatureObject* creature, int visibil
 			ghost->setVisibility(finalVis);
 
 			creature->sendSystemMessage("Jedi visibility increased.");
+
+//			ghost->updateLastCombatActionTimestamp(false,false,true);
 
 //			if (ghost->getVisibility() >= terminalVisThreshold)
 //				creature->sendSystemMessage("Visibility increased to " + String::valueOf(finalVis) + ". You are listed on the Bounty Hunter Terminals.");

@@ -2129,6 +2129,14 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 		float scheduledTime = 10 / timer;
 		uint64 miliTime = static_cast<uint64>(scheduledTime * 1000.f);
 		forceRegenerationEvent->schedule(miliTime);
+
+//			ManagedReference<WeaponObject*> pweapon = creature->getWeapon();
+//			Reference<PlayerObject*> pghost = creature->getPlayerObject();
+//
+//			if (System::random(10) == 10 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()
+//				VisibilityManager::instance()->increaseVisibility(creature, 10); // Give visibility
+//			}
+
 	}
 }
 

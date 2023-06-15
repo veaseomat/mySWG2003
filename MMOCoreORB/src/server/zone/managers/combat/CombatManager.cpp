@@ -68,20 +68,28 @@ bool CombatManager::startCombat(CreatureObject* attacker, TangibleObject* defend
 
 	attacker->clearState(CreatureState::PEACE);
 
-	if (attacker->isPlayerCreature() && !attacker->hasDefender(defender)) {
-		ManagedReference<WeaponObject*> weapon = attacker->getWeapon();
-
-		if (weapon != nullptr && weapon->isJediWeapon())
-			VisibilityManager::instance()->increaseVisibility(attacker, 25);
-	}
+//	if (attacker->isPlayerCreature() && !attacker->hasDefender(defender)) {
+//		ManagedReference<WeaponObject*> weapon = attacker->getWeapon();
+//
+////		if (weapon != nullptr && weapon->isJediWeapon())
+////			VisibilityManager::instance()->increaseVisibility(attacker, 25);
+//	}
 
 	Locker clocker(defender, attacker);
 
-	if (creo != nullptr && creo->isPlayerCreature() && !creo->hasDefender(attacker)) {
-		ManagedReference<WeaponObject*> weapon = creo->getWeapon();
+//	if (creo != nullptr && creo->isPlayerCreature() && !creo->hasDefender(attacker)) {
+//		ManagedReference<WeaponObject*> weapon = creo->getWeapon();
+//
+//		if (weapon != nullptr && weapon->isJediWeapon())
+//			VisibilityManager::instance()->increaseVisibility(creo, 25);
+//	}
 
-		if (weapon != nullptr && weapon->isJediWeapon())
-			VisibilityManager::instance()->increaseVisibility(creo, 25);
+	if (defender->isPlayerCreature() && creo->getWeapon()->isJediWeapon() && !creo->hasDefender(attacker)){
+		VisibilityManager::instance()->increaseVisibility(creo, 25);
+	}
+
+	if (attacker->isPlayerCreature() && attacker->getWeapon()->isJediWeapon() && !attacker->hasDefender(defender)){
+		VisibilityManager::instance()->increaseVisibility(creo, 25);
 	}
 
 	attacker->setDefender(defender);
@@ -256,18 +264,19 @@ int CombatManager::doCombatAction(CreatureObject* attacker, WeaponObject* weapon
 		}
 	}
 
-	if (defenderObject->isPlayerCreature()) {
-		CreatureObject *dcreo = defenderObject->asCreatureObject();
-
-		PlayerObject* dghost = dcreo->getPlayerObject();
-	
-		if (dghost != nullptr) {
-			if (dcreo->isPlayerCreature() && dcreo->getWeapon()->isJediWeapon()){
-				Locker olocker(dcreo, dcreo);
-				dghost->updateLastCombatActionTimestamp(false, false, true);
-			}
-		}
-	}
+//	if (defenderObject->isPlayerCreature()) {
+//		CreatureObject *dcreo = defenderObject->asCreatureObject();
+//
+//		PlayerObject* dghost = dcreo->getPlayerObject();
+//
+//		if (dghost != nullptr) {
+//			if (dcreo->isPlayerCreature() && (dcreo->getWeapon()->isJediWeapon() || dghost->hasBhTef())){
+//				Locker olocker(dcreo, dcreo);
+//				dghost->updateLastCombatActionTimestamp(false, false, true);
+////				VisibilityManager::instance()->increaseVisibility(dcreo, 25);
+//			}
+//		}
+//	}
 
 	return damage;
 }
@@ -923,10 +932,11 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	int targetDefense = 0;
 
 	ManagedReference<WeaponObject*> defweapon = defender->getWeapon();
-//	Reference<PlayerObject*> ghostdef = defender->getPlayerObject();
-//
+	Reference<PlayerObject*> ghostdef = defender->getPlayerObject();
+
 //	if (defweapon->isJediWeapon() || ghostdef->hasBhTef()){
-//		VisibilityManager::instance()->increaseVisibility(defender, 25); // Give visibility to defender
+//		//VisibilityManager::instance()->increaseVisibility(defender, 25); // Give visibility to defender
+//		ghostdef->updateLastCombatActionTimestamp(false, false, true);
 //	}
 
 	if (attacker->isAiAgent())
@@ -2026,10 +2036,12 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	Reference<PlayerObject*> ghostatt = creoAttacker->getPlayerObject();
 
 //	if (defweapon->isJediWeapon() || ghostdef->hasBhTef()){
-//		VisibilityManager::instance()->increaseVisibility(targetCreature, 10); // Give visibility to defender
+////		VisibilityManager::instance()->increaseVisibility(targetCreature, 10); // Give visibility to defender
+//		ghostdef->updateLastCombatActionTimestamp(false, false, true);
 //	}
+
 //	if (weapon->isJediWeapon() || ghostatt->hasBhTef()){
-//		VisibilityManager::instance()->increaseVisibility(creoAttacker, 10); // Give visibility to defender
+//		VisibilityManager::instance()->increaseVisibility(creoAttacker, 10); // Give visibility to attacker
 //	}
 
 
@@ -3670,18 +3682,6 @@ void CombatManager::checkForTefs(CreatureObject* attacker, CreatureObject* defen
 
 	PlayerObject* newghostd = defender->getPlayerObject();
 
-//	if ((attackingCreature->getWeapon()->isJediWeapon())
-//			||	(targetCreature->getWeapon()->isJediWeapon())// && targetCreature->isPlayerCreature() && attackingCreature->isPlayerCreature())
-//			||	(ghostdef->hasTef())
-//			)	{
-//		*shouldBhTef = true;
-//	}
-//
-//	if (((attackingCreature->isRebel() && targetCreature->isImperial()) || (attackingCreature->isImperial() && targetCreature->isRebel())) //&& !attackingCreature->isNeutral() && !targetCreature->isNeutral()
-//			&& attackingCreature->getFactionStatus() >= FactionStatus::COVERT) {//&& !attackingCreature->isNeutral()
-//		*shouldGcwTef = true;
-//	}
-
 	if ((attackingCreature != nullptr && targetCreature != nullptr) && (attacker->isPlayerCreature())) {
 
 		if (!(*shouldGcwTef)) {
@@ -3713,45 +3713,5 @@ void CombatManager::checkForTefs(CreatureObject* attacker, CreatureObject* defen
 
 		}
 
-//
-//		if (attackingCreature->getWeapon()->isJediWeapon())	{
-//			*shouldBhTef = true;
-//		}
-//
-//		if (attackingCreature->getFaction() != targetCreature->getFaction() && attackingCreature->isNeutral()) {
-//			*shouldGcwTef = true;
-//		}
-//
-//		if (attackingCreature->isPlayerCreature() && targetCreature->isPlayerCreature() && !areInDuel(attackingCreature, targetCreature)) {
-//
-//			if (!(*shouldGcwTef)) {
-//				if (attackingCreature->getFaction() != targetCreature->getFaction() && attackingCreature->getFactionStatus() == FactionStatus::OVERT && targetCreature->getFactionStatus() == FactionStatus::OVERT) {
-//					*shouldGcwTef = true;
-//				}
-//			}
-//
-//			if (!(*shouldBhTef)) {
-//				if ((attackingCreature->hasBountyMissionFor(targetCreature) || targetCreature->hasBountyMissionFor(attackingCreature)) || attackingCreature->getWeapon()->isJediWeapon()) {
-//					*shouldBhTef = true;
-//				}
-//			}
-//		}
-//
-//		if (!(*shouldGcwCrackdownTef)) {
-//			if (attackingCreature->isPlayerObject() && targetCreature->isAiAgent()) {
-//				Reference<PlayerObject*> ghost = attackingCreature->getPlayerObject();
-//
-//				if (ghost->hasCrackdownTefTowards(targetCreature->getFaction())) {
-//					*shouldGcwCrackdownTef = true;
-//				}
-//			}
-//			if (targetCreature->isPlayerObject() && attackingCreature->isAiAgent()) {
-//				Reference<PlayerObject*> ghost = targetCreature->getPlayerObject();
-//
-//				if (ghost->hasCrackdownTefTowards(attackingCreature->getFaction())) {
-//					*shouldGcwCrackdownTef = true;
-//				}
-//			}
-//		}
 	}
 }

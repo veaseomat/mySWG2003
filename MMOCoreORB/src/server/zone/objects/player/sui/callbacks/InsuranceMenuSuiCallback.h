@@ -93,7 +93,7 @@ public:
 
 				Locker locker(item, player);
 
-				if (!(item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject())) {
+				if (!(item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject() || item->isWeaponObject())) {
 
 					if (bank < cost) {
 						int diff = cost - bank;

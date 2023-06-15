@@ -666,12 +666,12 @@ void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
 
 	if (isInCombat()) return;
 
-	if (pObject->isPlayerCreature()){
+	if (pObject->isPlayerCreature() && thisAgent->isInRange(pObject, 32)){
 		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
 		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
 		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
 
-		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()
+		if (System::random(60) == 60 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
 			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
 		}
 	}

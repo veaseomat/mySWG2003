@@ -2052,9 +2052,9 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				String xpType = entry->elementAt(j).getKey();
 				float xpAmount = baseXp;
 
-				xpAmount /= (float) entry->size() / 1;
+//				xpAmount /= (float) entry->size() / 1;//this is for xp split but its exploitable 1 hit with saber, finish with tk gives jedi xp equip to weap finished with bonus
 
-//				xpAmount *= (float) damage / totalDamage;
+				xpAmount *= (float) damage / totalDamage;
 
 				//******* XP was CHANGED IN aiagent.idl and creature.idl located in zone/obj/creature/ai
 
@@ -4025,9 +4025,9 @@ void PlayerManagerImplementation::addInsurableItemsRecursive(SceneObject* obj, S
 		if (item == nullptr || item->hasAntiDecayKit())
 			continue;
 
-		if (!(item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject())) {
+		if (!(item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject() || item->isWeaponObject())) {
 			items->put(item);
-		} else if ((item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject()) && !onlyInsurable) {
+		} else if ((item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject() || item->isWeaponObject()) && !onlyInsurable) {
 			items->put(item);
 		}
 
@@ -4062,9 +4062,9 @@ SortedVector<ManagedReference<SceneObject*> > PlayerManagerImplementation::getIn
 			 if	(item->isArmorObject() || item->isWeaponObject())
 			insurableItems.put(item);
 
-			if (!(item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject())) {
+			if (!(item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject() || item->isWeaponObject())) {
 				insurableItems.put(item);
-			} else if ((item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject()) && !onlyInsurable) {
+			} else if ((item->getOptionsBitmask() & OptionBitmask::INSURED) && (item->isArmorObject() || item->isWearableObject() || item->isWeaponObject()) && !onlyInsurable) {
 				insurableItems.put(item);
 			}
 		}
