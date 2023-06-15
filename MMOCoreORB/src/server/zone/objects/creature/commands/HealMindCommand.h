@@ -17,9 +17,10 @@ public:
 	HealMindCommand(const String& name, ZoneProcessServer* server)
 		: QueueCommand(name, server) {
 		
-		mindCost = 250;
+		mindCost = 0;
 		mindWoundCost = 250;
 		range = 5;
+		defaultTime = 5.0;
 	}
 
 	void doAnimations(CreatureObject* creature, CreatureObject* creatureTarget) const {
@@ -146,7 +147,7 @@ public:
 		}
 
 		float modSkill = (float) creature->getSkillMod("combat_medic_effectiveness");
-		int healPower = (int) (System::random(500)+800) * modSkill / 100;
+		int healPower = (int) 250 + (250 * (modSkill / 100));//(System::random(500)+800) * modSkill / 100;
 
 		// Check BF
 		healPower = (int) (healPower * creature->calculateBFRatio());
@@ -158,7 +159,7 @@ public:
 		}
 
 		sendHealMessage(creature, creatureTarget, healedMind);
-		int mindWound = (int) healedMind * .05; // 5% of mind healed in wounds
+		int mindWound = 25;//(int) healedMind * .05; // 5% of mind healed in wounds
 
 		creature->addWounds(CreatureAttribute::MIND, mindWound, true, false);
 		creature->addWounds(CreatureAttribute::FOCUS, mindWound, true, false);

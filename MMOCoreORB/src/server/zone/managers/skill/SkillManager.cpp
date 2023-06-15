@@ -254,7 +254,7 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 	if (skill->getSkillName().contains("outdoors_creaturehandler")
 		//||  skill->getSkillName() == "outdoors_bio_engineer_novice"
 		//|| skill->getSkillName() == "crafting_merchant_novice"
-		|| skill->getSkillName().contains("science_combatmedic")
+		//|| skill->getSkillName().contains("science_combatmedic")
 		|| skill->getSkillName().contains("outdoors_squadleader")
 		|| skill->getSkillName().contains("crafting_shipwright") ) {
 
@@ -460,11 +460,6 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 	SkillModManager::instance()->verifySkillBoxSkillMods(creature);
 
-	//works with frog not with trainer --now located in trainerconvohander
-//	if (skill->getSkillName().contains("social_politician")) { //if (skill->getSkillName() == "social_politician_novice") {
-//		awardSkill("social_politician_master", creature, true, true, true);
-//	}
-
 //	ZoneProcessServer* server;
 
 	if (skill->getSkillName() == "force_title_jedi_rank_02") {
@@ -523,6 +518,12 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 //
 //			chatManager->broadcastGalaxy("IMPERIAL COMMUNICATION FROM THE REGIONAL GOVERNOR:\n\nLord Vader has detected a vergence in the Force.\n\n     Be on the lookout for any suspicious persons displaying unique or odd abilities. Lord Vader authorizes all citizens to use deadly force to eliminate this threat to the Empire.", "imperial");
 //		}
+
+	if (skill->getSkillName() == "social_politician_novice") { //if (skill->getSkillName() == "social_politician_novice") { //skill->getSkillName().contains("social_politician")
+		awardSkill("social_politician_master", creature, true, true, true);
+//		skillName = "social_politician_master";
+//		skill = skillMap.get(skillName.hashCode());
+	}
 
 	return true;
 }

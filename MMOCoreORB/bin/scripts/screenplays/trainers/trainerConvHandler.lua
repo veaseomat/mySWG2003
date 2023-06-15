@@ -274,11 +274,12 @@ function trainerConvHandler:handleConfirmLearnScreen(pConvTemplate, pPlayer, pNp
 		return self:runScreenHandlers(pConvTemplate, pPlayer, pNpc, selectedOption, pConvScreen)
 	end
 	
-	if (skillName == "social_politician_novice") then
-	awardSkill("social_politician_master", creature, notifyClient, awardRequiredSkills, noXpRequired);
-		skillName = "social_politician_master"
-		skillManager:awardSkill(pPlayer, "social_politician_master")
-	end
+--	if (skillName == "social_politician_novice") //doesnt work here anymore lol back in skill manager
+--		--skillManager:awardSkill("social_politician_master", pPlayer, true, true, true);
+----		skillName = "social_politician_master"
+--		skillManager:awardSkill(pPlayer, "social_politician_master")
+--		return
+--	end
 
 	local success = skillManager:awardSkill(pPlayer, skillName)
 
