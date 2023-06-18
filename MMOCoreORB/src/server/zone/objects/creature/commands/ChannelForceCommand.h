@@ -36,14 +36,21 @@ public:
 		int forceBonus = 250 + (forceRandom);
 
 		//put wearing armor force cost increase here?
-		bool jarmor = false;
 		for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
 			SceneObject* item = creature->getSlottedObject(i);
 			if (item != nullptr && item->isArmorObject()){
-				jarmor = true;
+				forceBonus *= .85;
 			}
 		}
-		if (jarmor == true) forceBonus *= .5;
+
+//		bool jarmor = false;
+//		for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
+//			SceneObject* item = creature->getSlottedObject(i);
+//			if (item != nullptr && item->isArmorObject()){
+//				jarmor = true;
+//			}
+//		}
+//		if (jarmor == true) forceBonus *= .5;
 
 		ManagedReference<PlayerObject*> playerObject = creature->getPlayerObject();
 		if (playerObject == nullptr)

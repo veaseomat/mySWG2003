@@ -898,6 +898,13 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 		return false;
 	}
 
+	if (creature->hasSkill("force_rank_dark_novice") && skillName.beginsWith("force_rank_light")){
+		return false;
+	}
+	if (creature->hasSkill("force_rank_light_novice") && skillName.beginsWith("force_rank_dark")){
+		return false;
+	}
+
 	//jedi can not have other combat skills
 //	if (creature->hasSkill("force_title_jedi_rank_02") && !skillName.beginsWith("force_")) {// && skillName.beginsWith("combat_")) {
 //		creature->sendSystemMessage("Jedi can not learn non Jedi skills.");

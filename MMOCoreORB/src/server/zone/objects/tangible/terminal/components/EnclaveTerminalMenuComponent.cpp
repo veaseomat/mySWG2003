@@ -10,6 +10,8 @@
 #include "server/zone/objects/player/variables/FrsData.h"
 
 void EnclaveTerminalMenuComponent::fillObjectMenuResponse(SceneObject* sceneObject, ObjectMenuResponse* menuResponse, CreatureObject* player) const {
+	return;//disable enclaves
+
 	ManagedReference<BuildingObject*> building = sceneObject->getParentRecursively(SceneObjectType::BUILDING).castTo<BuildingObject*>();
 
 	if (building == nullptr || player->isDead() || player->isIncapacitated())

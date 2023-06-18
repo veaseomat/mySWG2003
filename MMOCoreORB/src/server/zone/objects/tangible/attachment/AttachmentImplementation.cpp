@@ -21,23 +21,36 @@ void AttachmentImplementation::initializeTransientMembers() {
 
 void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool firstUpdate) {
 	int level = values->getMaxValue("creatureLevel");
-	int roll = System::random(100);
+	//int roll = System::random(100);
 	int modCount = 1;
 
-//	if(roll > 99)
-//		modCount += 2;
-//
-//	if(roll < 5)
-//		modCount += 1;
+
+	// if(false && roll > 99)
+	// 	modCount += 2;
+	//
+	// if(false && roll < 5)
+	// 	modCount += 1;
 
 	for(int i = 0; i < modCount; ++i) {
 		//Mods can't be lower than -1 or greater than 25
-		int max = (int) Math::max(-1.f, Math::min(25.f, (float) round(0.1f * level + 3)));
-		int min = (int) Math::max(-1.f, Math::min(25.f, (float) round(0.075f * level - 1)));
+//		int max = (int) Math::max(-1.f, Math::min(50.f, (float) round(0.1f * level + 3)));
+//		int min = (int) Math::max(-1.f, Math::min(50.f, (float) round(0.075f * level - 1)));
+//
+//		int mod = System::random(max - min) + min;
+
+		int max = (level / 7) * 1.3;
+		int min = (level / 7) / 2;
 
 		int mod = System::random(max - min) + min;
 
-		if(mod == 0)
+		//int nlvl = (level / 7) / 2;//max lvl 350 lootmanag
+
+		//int mod = System::random(nlvl) + nlvl;
+
+		if(mod > 50)
+			mod = 50;
+
+		if(mod <= 0)
 			mod = 1;
 
 		String modName = server->getZoneServer()->getLootManager()->getRandomLootableMod(gameObjectType);
@@ -76,6 +89,29 @@ void AttachmentImplementation::fillAttributeList(AttributeListMessage* msg, Crea
 		name << "cat_skill_mod_bonus.@stat_n:" << key;
 
 		msg->insertAttribute(name.toString(), value);
+
+		if (customName.isEmpty()){
+
+			StringId SEAName;
+
+			SEAName.setStringId("stat_n", key);
+
+			setCustomObjectName("", false);
+
+			setObjectName(SEAName, false);
+
+			setCustomObjectName(getDisplayedName() + " +" + String::valueOf(value), true);
+
+			StringId originalName;
+
+			if (isArmorAttachment())
+				originalName.setStringId("item_n", "socket_gem_armor");
+
+			else
+				originalName.setStringId("item_n", "socket_gem_clothing");
+
+			setObjectName(originalName, true);
+		}
 
 		name.deleteAll();
 	}

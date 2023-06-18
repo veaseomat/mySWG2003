@@ -887,6 +887,8 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 //		}
 //	}
 
+	if (attackerAccuracy > 200) attackerAccuracy = 200;
+
 	if (creoAttacker->hasState(CreatureState::BLINDED)) {
 		attackerAccuracy *= .5;
 	}
@@ -954,8 +956,8 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	debug() << "Base target defense is " << targetDefense;
 
 	// defense hardcap
-	if (targetDefense > 125)
-		targetDefense = 125;
+//	if (targetDefense > 200)
+//		targetDefense = 200;
 
 	if (attacker->isPlayerCreature())
 		targetDefense += defender->getSkillMod("private_defense");
@@ -965,6 +967,9 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 		const String& mod = defenseAccMods->get(i);
 		targetDefense += defender->getSkillMod("private_group_" + mod);
 	}
+
+	if (targetDefense > 150)
+		targetDefense = 150;
 
 	// food bonus goes on top as well
 	targetDefense += defender->getSkillMod("dodge_attack");
@@ -992,12 +997,15 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 		targetDefense += defender->getSkillMod("private_" + mod);
 	}
 
-	if (targetDefense > 125)
-		targetDefense = 125;
+//	if (targetDefense > 200)
+//		targetDefense = 200;
 
 //	if (defender->hasState(CreatureState::INTIMIDATED)) {
 //		targetDefense *= .5;
 //	}
+
+	if (targetDefense > 150)
+		targetDefense = 150;
 
 	if (defender->isKnockedDown())
 		targetDefense *= .5;
@@ -1459,15 +1467,22 @@ int CombatManager::getArmorReduction(TangibleObject* attacker, WeaponObject* wea
 
 		if (forceArmor > 0) {
 
-			//put wearing armor force cost increase here?
-			bool jarmor = false;
 			for (int i = 0; i < defender->getSlottedObjectsSize(); ++i) {
 				SceneObject* item = defender->getSlottedObject(i);
 				if (item != nullptr && item->isArmorObject()){
-					jarmor = true;
+					forceArmor *= .85;
 				}
 			}
-			if (jarmor == true) forceArmor *= .5;
+
+			//put wearing armor force cost increase here?
+//			bool jarmor = false;
+//			for (int i = 0; i < defender->getSlottedObjectsSize(); ++i) {
+//				SceneObject* item = defender->getSlottedObject(i);
+//				if (item != nullptr && item->isArmorObject()){
+//					jarmor = true;
+//				}
+//			}
+//			if (jarmor == true) forceArmor *= .5;
 
 			float dmgAbsorbed = rawDamage - (damage *= 1.f - (forceArmor / 100.f));
 			defender->notifyObservers(ObserverEventType::FORCEARMOR, attacker, dmgAbsorbed);
@@ -1956,6 +1971,36 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			//if (damagetype == 16)	damage *= .5;//nerf npc saber dmg
 		}
 
+		//frsdamage
+		float lightDamage = attacker->getSkillMod("force_manipulation_light") * 0.3;
+
+		if (lightDamage > 0) {
+			lightDamage += 5;
+			damage *= 1.f + (lightDamage / 100.f);
+		}
+
+		float darkDamage = attacker->getSkillMod("force_manipulation_dark") * 0.4;
+
+		if (darkDamage > 0) {
+			darkDamage += 10;
+			damage *= 1.f + (darkDamage / 100.f);
+		}
+
+		//frsarmor
+		float lightarmor = defender->getSkillMod("force_manipulation_light") * 0.4;
+
+		if (lightarmor > 0) {
+			lightarmor += 10;
+			damage *= 1.f - (lightarmor / 100.f);
+		}
+
+		float darkarmor = defender->getSkillMod("force_manipulation_dark") * 0.3;
+
+		if (darkarmor > 0) {
+			lightarmor += 5;
+			damage *= 1.f - (darkarmor / 100.f);
+		}
+
 // PvP Damage Reduction
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
 		damage *= .5;//vanilla .25
@@ -2105,6 +2150,16 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 		ManagedReference<WeaponObject*> targetWeapon = targetCreature->getWeapon();
 		const auto defenseAccMods = targetWeapon->getDefenderSecondaryDefenseModifiers();
 		const String& def = defenseAccMods->get(0); // FIXME: this is hacky, but a lot faster than using contains()
+
+		//FRS DODGE SYSTEM
+		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .4;
+
+		if (frsdodge > 0) {
+			frsdodge += 10;
+			if (frsdodge > System::random(100))
+				return MISS;
+
+		}
 
 		// saber block is special because it's just a % chance to block based on the skillmod
 		if (targetWeapon->isJediWeapon()) {
@@ -2292,15 +2347,23 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 //	}
 
 	if (force > 0) { // Need Force check first otherwise it can be spammed.
-		//put wearing armor force cost increase here?
-		bool jarmor = false;
+
 		for (int i = 0; i < attacker->getSlottedObjectsSize(); ++i) {
 			SceneObject* item = attacker->getSlottedObject(i);
 			if (item != nullptr && item->isArmorObject()){
-				jarmor = true;
+				force *= 1.1;
 			}
 		}
-		if (jarmor == true) force *= 1.5;
+
+		//put wearing armor force cost increase here?
+//		bool jarmor = false;
+//		for (int i = 0; i < attacker->getSlottedObjectsSize(); ++i) {
+//			SceneObject* item = attacker->getSlottedObject(i);
+//			if (item != nullptr && item->isArmorObject()){
+//				jarmor = true;
+//			}
+//		}
+//		if (jarmor == true) force *= 1.5;
 
 		ManagedReference<PlayerObject*> playerObject = attacker->getPlayerObject();
 		if (playerObject != nullptr) {

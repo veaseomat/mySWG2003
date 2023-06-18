@@ -60,32 +60,32 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 	float newhealAmount = healAmount;
 	float newhealWoundAmount = healWoundAmount;
 
-//	float frsheal = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.625);
-//
-//	if (frsheal > 0) {
-//		newhealAmount *= 1.f + (frsheal / 100.f);
-//		newhealWoundAmount *= 1.f + (frsheal / 100.f);
-//	}
+	float frsheal = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.5);
 
-//	for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
-//		SceneObject* item = creature->getSlottedObject(i);
-//		if (item != nullptr && item->isArmorObject()){
-//			newhealAmount *= .9;
-//			newhealWoundAmount *= .9;
-//		}
-//	}
+	if (frsheal > 0) {
+		newhealAmount *= 1.f + (frsheal / 100.f);
+		newhealWoundAmount *= 1.f + (frsheal / 100.f);
+	}
 
-	bool jarmor = false;
 	for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
 		SceneObject* item = creature->getSlottedObject(i);
 		if (item != nullptr && item->isArmorObject()){
-			jarmor = true;
+			newhealAmount *= .85;
+			newhealWoundAmount *= .85;
 		}
 	}
-	if (jarmor == true) {
-		newhealAmount *= .5;
-		newhealWoundAmount *= .5;
-	}
+
+//	bool jarmor = false;
+//	for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
+//		SceneObject* item = creature->getSlottedObject(i);
+//		if (item != nullptr && item->isArmorObject()){
+//			jarmor = true;
+//		}
+//	}
+//	if (jarmor == true) {
+//		newhealAmount *= .5;
+//		newhealWoundAmount *= .5;
+//	}
 
 //reduce healing force cost based on number of force healing boxes the jedi has? NOT FINISHED
 //	const SkillList* skillList = creature->getSkillList();
@@ -320,16 +320,23 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 
 	bool selfHeal = creature->getObjectID() == targetCreature->getObjectID();
 
-//	//frs reduced heal force cost
-//	float frscost = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.625);
-//
-//	if (frscost > 0) {
-//		totalCost *= 1.f - (frscost / 100.f);
-//	}
-
 	//put wearing armor force cost increase here?
 
-	if (jarmor == true) totalCost *= 1.5;
+	for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
+		SceneObject* item = creature->getSlottedObject(i);
+		if (item != nullptr && item->isArmorObject()){
+			totalCost *= 1.1;
+		}
+	}
+
+	//if (jarmor == true) totalCost *= 1.5;
+
+	//	//frs reduced heal force cost
+	float frscost = (creature->getSkillMod("force_manipulation_dark") + creature->getSkillMod("force_manipulation_light") * 0.5);
+
+	if (frscost > 0) {
+		totalCost *= 1.f - (frscost / 100.f);
+	}
 
 	if (healPerformed) {
 		if (selfHeal)

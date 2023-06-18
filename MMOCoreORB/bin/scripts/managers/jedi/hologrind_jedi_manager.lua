@@ -280,20 +280,20 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 		PVPFRSIntro:startStepDelay(pCreatureObject, 3)
 	end
 
-	if JediTrials:isOnKnightTrials(pCreatureObject) then	
-		--KnightTrials:showCurrentTrial(pCreatureObject) --DOES NOT FIX
-		
-		--KnightTrials:startNextKnightTrial(pCreatureObject)--this FIXES KNIGHT TRIAL!!!! well sort of its a workaround that resets current trial every logout or server rest.
-
---100% fix for knight trial progress
-		local trialNumber = JediTrials:getCurrentTrial(pCreatureObject)
-		local trialData = knightTrialQuests[trialNumber]
-
-		if (trialData.trialType == TRIAL_HUNT or trialData.trialType == TRIAL_HUNT_FACTION) then
-			createObserver(KILLEDCREATURE, "KnightTrials", "notifyKilledHuntTarget", pCreatureObject)
-		end
-		
-	end
+--	if JediTrials:isOnKnightTrials(pCreatureObject) then	
+--		--KnightTrials:showCurrentTrial(pCreatureObject) --DOES NOT FIX
+--		
+--		--KnightTrials:startNextKnightTrial(pCreatureObject)--this FIXES KNIGHT TRIAL!!!! well sort of its a workaround that resets current trial every logout or server rest.
+--
+----100% fix for knight trial progress
+--		local trialNumber = JediTrials:getCurrentTrial(pCreatureObject)
+--		local trialData = knightTrialQuests[trialNumber]
+--
+--		if (trialData.trialType == TRIAL_HUNT or trialData.trialType == TRIAL_HUNT_FACTION) then
+--			createObserver(KILLEDCREATURE, "KnightTrials", "notifyKilledHuntTarget", pCreatureObject)
+--		end
+--		
+--	end
 	
 end
 

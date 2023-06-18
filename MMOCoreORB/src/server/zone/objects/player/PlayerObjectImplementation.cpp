@@ -2067,7 +2067,7 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 //		regen += (forceControlMod + forceManipulationMod) / 10.f;
 
 
-//		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 2;
+		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 2;
 
 //		if (frsregen > 0) {
 //			regen *= 1.f + (frsregen / 100.f);
@@ -2075,6 +2075,7 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 
 		if (regen > 0) {
 		regen += 10;
+		regen += frsregen;
 		}
 
 //		if (regen > 100) {
@@ -2115,14 +2116,21 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 //			regen /= regenDivisor;
 
 		//put wearing armor force cost increase here?
-		bool jarmor = false;
 		for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
 			SceneObject* item = creature->getSlottedObject(i);
 			if (item != nullptr && item->isArmorObject()){
-				jarmor = true;
+				regen *= .85;
 			}
 		}
-		if (jarmor == true) regen *= .5;
+
+//		bool jarmor = false;
+//		for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
+//			SceneObject* item = creature->getSlottedObject(i);
+//			if (item != nullptr && item->isArmorObject()){
+//				jarmor = true;
+//			}
+//		}
+//		if (jarmor == true) regen *= .5;
 
 		float timer = regen / 5.f;
 

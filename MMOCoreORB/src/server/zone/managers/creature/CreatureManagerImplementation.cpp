@@ -874,19 +874,22 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 
 	String creatureHealth = "";
 
-	if (density > 0.75f) {
-		quantityExtracted = int(quantityExtracted * 1.25f);
-		creatureHealth = "creature_quality_fat";
-	} else if (density > 0.50f) {
-		quantityExtracted = int(quantityExtracted * 1.00f);
-		creatureHealth = "creature_quality_medium";
-	} else if (density > 0.25f) {
-		quantityExtracted = int(quantityExtracted * 0.75f);
-		creatureHealth = "creature_quality_scrawny";
-	} else {
-		quantityExtracted = int(quantityExtracted * 0.50f);
-		creatureHealth = "creature_quality_skinny";
-	}
+	quantityExtracted = int(quantityExtracted * 1.25f);
+	creatureHealth = "creature_quality_fat";
+
+//	if (density > 0.75f) {
+//		quantityExtracted = int(quantityExtracted * 1.25f);
+//		creatureHealth = "creature_quality_fat";
+//	} else if (density > 0.50f) {
+//		quantityExtracted = int(quantityExtracted * 1.00f);
+//		creatureHealth = "creature_quality_medium";
+//	} else if (density > 0.25f) {
+//		quantityExtracted = int(quantityExtracted * 0.75f);
+//		creatureHealth = "creature_quality_scrawny";
+//	} else {
+//		quantityExtracted = int(quantityExtracted * 0.50f);
+//		creatureHealth = "creature_quality_skinny";
+//	}
 
 	float modifier = 1;
 	int baseAmount = quantityExtracted;

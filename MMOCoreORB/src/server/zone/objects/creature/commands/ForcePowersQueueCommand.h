@@ -100,14 +100,21 @@ public:
 		float newfc = forceCost;
 
 		//put wearing armor force cost increase here?
-		bool jarmor = false;
 		for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
 			SceneObject* item = creature->getSlottedObject(i);
 			if (item != nullptr && item->isArmorObject()){
-				jarmor = true;
+				newfc *= 1.1;
 			}
 		}
-		if (jarmor == true) newfc *= 1.5;
+
+//		bool jarmor = false;
+//		for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
+//			SceneObject* item = creature->getSlottedObject(i);
+//			if (item != nullptr && item->isArmorObject()){
+//				jarmor = true;
+//			}
+//		}
+//		if (jarmor == true) newfc *= 1.5;
 
 		return newfc;
 

@@ -1408,48 +1408,48 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 
 
-//	int frscurExp = ghost->getExperience("force_rank_xp");
-//	int frsxpLoss = (frscurExp / 8) * -1; //divide by global xp multi
-//	awardExperience(player, "force_rank_xp", frsxpLoss, true);
+	int frscurExp = ghost->getExperience("force_rank_xp");
+	int frsxpLoss = (frscurExp) * -1; //divide by global xp multi
+	awardExperience(player, "force_rank_xp", frsxpLoss, false, 1, false);
 
-	//		StringIdChatParameter message("base_player","prose_revoke_xp");
-	//		message.setDI(frsxpLoss * -1 * 8); //multiply by global xp mult
-	//		message.setTO("exp_n", "force_rank_xp");
-	//		player->sendSystemMessage(message);
+	StringIdChatParameter message("base_player","prose_revoke_xp");
+	message.setDI(frsxpLoss * -1); //multiply by global xp mult
+	message.setTO("exp_n", "force_rank_xp");
+	player->sendSystemMessage(message);
 
 	// FRS skill loss.
-//	if (player->hasSkill("force_title_jedi_rank_03")) {
-//
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_master", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_10", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_09", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_08", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_07", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_06", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_05", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_04", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_03", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_02", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_01", player, true, true);
-//
-//		SkillManager::instance()->surrenderSkill("force_rank_light_master", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_10", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_09", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_08", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_07", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_06", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_05", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_04", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_03", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_02", player, true, true);
-//		SkillManager::instance()->surrenderSkill("force_rank_light_rank_01", player, true, true);
-//
-//		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
-//		box->setPromptTitle("FRS SKILL LOSS"); // You feel a tingle in the Force.
-//		box->setPromptText("Rest easy son, you've had a busy day. Unfortunately, all of your Force Ranking System progress has been lost because of this death. This may seem like a severe punishment but it is necessicary to keep Jedi powerful. May the force be with you.");
-//		ghost->addSuiBox(box);
-//		player->sendMessage(box->generateMessage());
-//	}
+	if (player->hasSkill("force_title_jedi_rank_03")) {
+
+		SkillManager::instance()->surrenderSkill("force_rank_dark_master", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_10", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_09", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_08", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_07", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_06", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_05", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_04", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_03", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_02", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_dark_rank_01", player, true, true);
+
+		SkillManager::instance()->surrenderSkill("force_rank_light_master", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_light_rank_10", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_light_rank_09", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_light_rank_08", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_light_rank_07", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_light_rank_06", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_light_rank_05", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_light_rank_04", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_light_rank_03", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_light_rank_02", player, true, true);
+		SkillManager::instance()->surrenderSkill("force_rank_light_rank_01", player, true, true);
+
+		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(player, SuiWindowType::NONE);
+		box->setPromptTitle("FRS SKILL LOSS"); // You feel a tingle in the Force.
+		box->setPromptText("Rest easy son, you've had a busy day. Unfortunately, all of your Force Ranking System progress has been lost because of this death. This may seem like a severe punishment but it is necessary to keep FRS powerful. May the force be with you.");
+		ghost->addSuiBox(box);
+		player->sendMessage(box->generateMessage());
+	}
 
 	// Jedi skill loss.
 
@@ -2052,7 +2052,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				String xpType = entry->elementAt(j).getKey();
 				float xpAmount = baseXp;
 
-//				xpAmount /= (float) entry->size() / 1;//this is for xp split but its exploitable 1 hit with saber, finish with tk gives jedi xp equip to weap finished with bonus
+//				xpAmount *= (float) 1 / entry->size(); //size is how many weaps used
 
 				xpAmount *= (float) damage / totalDamage;//damage with that weapon / total damage done
 
