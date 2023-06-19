@@ -43,7 +43,7 @@
 #include "AuctionQueryCommand.h"
 #include "AuctionRetrieveCommand.h"
 #include "AuctionsayCommand.h"
-//#include "AvoidIncapacitationCommand.h"
+#include "AvoidIncapacitationCommand.h"
 #include "BandFlourishCommand.h"
 #include "BattlefieldStatusCommand.h"
 #include "Berserk1Command.h"
