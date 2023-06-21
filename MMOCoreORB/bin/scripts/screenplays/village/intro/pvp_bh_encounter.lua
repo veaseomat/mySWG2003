@@ -45,10 +45,10 @@ function PVPBHEncounter:onLoot(pLootedCreature, pLooter, nothing)
 
 	Logger:log("Looting the sith shadow.", LT_INFO)
 	
-	CreatureObject(pLooter):awardExperience("jedi_general", 50000 / 4, true)		
+	CreatureObject(pLooter):awardExperience("jedi_general", 50000, true)		
 		
 	if CreatureObject(pLooter):hasSkill("force_rank_light_novice") or CreatureObject(pLooter):hasSkill("force_rank_dark_novice") then	
-		CreatureObject(pLooter):awardExperience("force_rank_xp", 500 / 4, true)	
+		CreatureObject(pLooter):awardExperience("force_rank_xp", 500, true)	
 	end	
 --	if QuestManager.hasActiveQuest(pLooter, QuestManager.quests.TWO_MILITARY) then
 --		if self:isTheFirstSithShadowOfThePlayer(pLootedCreature, pLooter) then

@@ -314,7 +314,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	setCustomObjectName(prototype, templateObject);
 
 	// this thing exponentially ruins the variance
-	float excMod = 1.0;//.75 + (System::random(75) * .01);
+	float excMod = 1.0;//.70 + (System::random(300) * .001);
 
 //	if (prototype->isWeaponObject()) excMod = 1.1;
 //	if (prototype->isArmorObject()) excMod = 1.5;
@@ -326,27 +326,30 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //	if (prototype->isComponent()) level *= 2;
 //	if (prototype->isLightsaberCrystalObject()) level *= 2;
 
-//	if ((System::random(100) == 100) && (prototype->isArmorObject() || prototype->isWeaponObject() || prototype->isComponent() || prototype->isLightsaberCrystalObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
-//		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
-//		prototype->setCustomObjectName(newName, false);
-//
-//		excMod *= 2.0;// + (System::random(50) * .01);
-//
-//		prototype->addMagicBit(false);
-//
-//		//exceptionalLooted.increment();
-//	}
+	int leggy = 0;
 
-//	if (System::random(10) >= 10) {// && !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
-//		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
-//		prototype->setCustomObjectName(newName, false);
-//
-//		excMod = 5;
-//
-//		prototype->addMagicBit(false);
-//
-//		//legendaryLooted.increment();
-//	}
+	if (System::random(200) == 200 && (prototype->isComponent() || prototype->isLightsaberCrystalObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
+		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
+		prototype->setCustomObjectName(newName, false);
+
+		excMod = 5;
+		leggy = 1;
+
+		prototype->addMagicBit(false);
+
+		//legendaryLooted.increment();
+	}
+
+	if (leggy == 0 && System::random(50) == 50 && (prototype->isComponent() || prototype->isLightsaberCrystalObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
+		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
+		prototype->setCustomObjectName(newName, false);
+
+		excMod = 2.5;// + (System::random(50) * .01);
+
+		prototype->addMagicBit(false);
+
+		//exceptionalLooted.increment();
+	}
 
 //	if (prototype->isLightsaberCrystalObject()) {
 //		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
@@ -377,7 +380,9 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //			max *= 4;
 //		}
 
-		float percentage = System::random(10000) / 10000.f;;//System::random(1500) * .001;//(level * .01) * (System::random(150) * .01);//System::random(10000) / 10000.f;//this is where the variance happens
+		float percentage = System::random(10000) / 10000.f;//.7 + ((level / 350) * .2) + (System::random(200) * .001);//((level / 350) * .90) + (System::random(2000) * .0001);//System::random(10000) / 10000.f;;//System::random(1500) * .001;//(level * .01) * (System::random(150) * .01);//System::random(10000) / 10000.f;//this is where the variance happens
+		percentage /= 3;
+		percentage += (level / 3.5) * .007;
 
 //		if (percentage > 1.0) percentage = 1.0;
 //		if (percentage < 0.01) percentage = 0.01;
@@ -395,30 +400,40 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			int range = abs(max-min);
 			int randomValue = System::random(range);
 			percentage = (float)randomValue / (float)(range);
+			percentage /= 3;
+			percentage += (level / 3.5) * .007;
 		}
 
-		if (subtitle == "useCount") {
-			craftingValues->setMaxValue(subtitle, min * 2);
-			craftingValues->setMaxValue(subtitle, max * 2);
 
-			int range = abs(max-min);
-			int randomValue = System::random(range);
-			percentage = (float)randomValue / (float)(range);
-		}
+//		if (subtitle == "useCount") {
+////			craftingValues->setMaxValue(subtitle, min * 2);
+////			craftingValues->setMaxValue(subtitle, max * 2);
+//
+//			int range = abs(max-min);
+//			int randomValue = System::random(range);
+//			percentage = (float)randomValue / (float)(range);
+//		}
 
 		if (subtitle == "color") {
 			int ncolor = System::random(5);//color max set in loot color crystal lua file
 
-			if (System::random(4) >= 4 && level >= 85){//lvl 25 x 3.5 loot mult = 87
+			if (System::random(5) >= 5){//&& level >= 85//lvl 25 x 3.5 loot mult = 87
 				ncolor = System::random(6) + 5;//color crystals will be yellow,purp,orange
 			}
-			if (System::random(9) >= 9 && level >= 300){
+			if (System::random(25) >= 25){
 				ncolor = System::random(19) + 11;//color crystals will be special named colors
 			}
 
 			craftingValues->setCurrentValue(subtitle, ncolor);
 			continue;
 		}
+
+//		if (subtitle == "forcecost") {
+//			int nfc = (level / 3.5) / 100 * 10;
+//
+//			craftingValues->setCurrentValue(subtitle, nfc);
+//			continue;
+//		}
 
 		craftingValues->setCurrentPercentage(subtitle, percentage);
 
@@ -431,6 +446,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		}
 
 		if (subtitle == "useCount" || subtitle == "quantity" || subtitle == "charges" || subtitle == "uses" || subtitle == "charge") {
+			craftingValues->setMinValue(subtitle, min * 2);
+			craftingValues->setMaxValue(subtitle, max * 2);
 			continue;
 		}
 
@@ -440,32 +457,44 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (max > min && min >= 0) { // Both max and min non-negative, max is higher
 			min = ((min * level / minMod) + min) * excMod;
 			max = ((max * level / maxMod) + max) * excMod;
+//			min = min * ((level / 3.5) * .01) * excMod;
+//			max = max * ((level / 3.5) * .01) * excMod;
 
 		} else if (max > min && max <= 0) { // Both max and min are non-positive, max is higher
 			minMod *= -1;
 			maxMod *= -1;
 			min = ((min * level / minMod) + min) / excMod;
 			max = ((max * level / maxMod) + max) / excMod;
+//			min = min * ((level / 3.5) * .01) / excMod * -1;
+//			max = max * ((level / 3.5) * .01) / excMod * -1;
 
 		} else if (max > min) { // max is positive, min is negative
 			minMod *= -1;
 			min = ((min * level / minMod) + min) / excMod;
 			max = ((max * level / maxMod) + max) * excMod;
+//			min = min * ((level / 3.5) * .01) / excMod * -1;
+//			max = max * ((level / 3.5) * .01) * excMod;
 
 		} else if (max < min && max >= 0) { // Both max and min are non-negative, min is higher
 			min = ((min * level / minMod) + min) / excMod;
 			max = ((max * level / maxMod) + max) / excMod;
+//			min = min * ((level / 3.5) * .01) / excMod;
+//			max = max * ((level / 3.5) * .01) / excMod;
 
 		} else if (max < min && min <= 0) { // Both max and min are non-positive, min is higher
 			minMod *= -1;
 			maxMod *= -1;
 			min = ((min * level / minMod) + min) * excMod;
 			max = ((max * level / maxMod) + max) * excMod;
+//			min = min * ((level / 3.5) * .01) * excMod * -1;
+//			max = max * ((level / 3.5) * .01) * excMod * -1;
 
 		} else { // max is negative, min is positive
 			maxMod *= -1;
 			min = ((min * level / minMod) + min) / excMod;
 			max = ((max * level / maxMod) + max) * excMod;
+//			min = min * ((level / 3.5) * .01) / excMod;
+//			max = max * ((level / 3.5) * .01) * excMod * -1;
 		}
 
 		craftingValues->setMinValue(subtitle, min);
@@ -496,8 +525,6 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 				craftingValues->setCurrentValue("maxdamage", oldMin);
 			}
 
-//			float newDam = (craftingValues->getCurrentValue("mindamage") + craftingValues->getCurrentValue("maxdamage")) / 2;
-//			craftingValues->setCurrentValue("damage", newDam);
 		}
 	}
 

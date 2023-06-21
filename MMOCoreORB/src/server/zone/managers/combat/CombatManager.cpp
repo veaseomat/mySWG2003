@@ -1960,12 +1960,12 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //				speedMods *= .5f;
 			if (weapon->isJediWeapon())
 				damage *= 2;
-			if (weapon->isJediOneHandedWeapon())
-				damage *= .7;
-			if (weapon->isJediTwoHandedWeapon())
-				damage *= .8;
-			if (weapon->isJediPolearmWeapon())
-				damage *= .9;
+//			if (weapon->isJediOneHandedWeapon())
+//				damage *= .7;
+//			if (weapon->isJediTwoHandedWeapon())
+//				damage *= .8;
+//			if (weapon->isJediPolearmWeapon())
+//				damage *= .9;
 
 			if (damagetype == 8  && !weapon->isJediWeapon())	damage *= .4;//nerf npc stun dmg
 			//if (damagetype == 16)	damage *= .5;//nerf npc saber dmg
@@ -1988,6 +1988,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 		//frsarmor
 		float lightarmor = defender->getSkillMod("force_manipulation_light") * 0.4;
+		if (defender->getWeapon()->isJediWeapon() && defender->isAiAgent()) lightarmor = defender->getLevel() * .3;
 
 		if (lightarmor > 0) {
 			lightarmor += 10;
@@ -2153,6 +2154,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 
 		//FRS DODGE SYSTEM
 		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .4;
+		if (targetWeapon->isJediWeapon() && targetCreature->isAiAgent()) frsdodge = targetCreature->getLevel() * .3;
 
 		if (frsdodge > 0) {
 			frsdodge += 10;

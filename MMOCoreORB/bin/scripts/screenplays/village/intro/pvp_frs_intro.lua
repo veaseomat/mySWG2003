@@ -85,17 +85,17 @@ function PVPFRSIntro:doDelayedStep(pPlayer)
 	
 --delay for dead incap or not in good area
 	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer)) then
-		createEvent(getRandomNumber(30, 180) * 60 * 1000, "PVPFRSIntro", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(5, 15) * 60 * 1000, "PVPFRSIntro", "doDelayedStep", pPlayer, "")
 		return
 	end
 	
 	
 	if CreatureObject(pPlayer):hasSkill("force_rank_light_novice") then
-		encounterResult = PVPLJKEncounter:start(pPlayer)	
+		encounterResult = PVPDJKEncounter:start(pPlayer)	
 		return
 
 	else if CreatureObject(pPlayer):hasSkill("force_rank_dark_novice") then
-		encounterResult = PVPDJKEncounter:start(pPlayer)	
+		encounterResult = PVPLJKEncounter:start(pPlayer)	
 		return
 		
 

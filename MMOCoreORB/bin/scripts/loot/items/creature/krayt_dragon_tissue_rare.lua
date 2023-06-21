@@ -3,7 +3,7 @@
 krayt_dragon_tissue_rare = {
 	minimumLevel = 0,
 	maximumLevel = -1,
-	customObjectName = "",
+	customObjectName = "Krayt Tissue Rare",
 	directObjectTemplate = "object/tangible/component/weapon/blaster_power_handler_enhancement_krayt.iff",
 	craftingValues = {
 		{"maxdamage",70,165,0},
