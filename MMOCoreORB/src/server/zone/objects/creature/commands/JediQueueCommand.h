@@ -312,8 +312,8 @@ public:
 		playerObject->setForcePower(playerObject->getForcePower() - getFrsModifiedForceCost(creature));
 		VisibilityManager::instance()->increaseVisibility(creature, visMod);
 
-		Locker olocker(creature, creature);
-		playerObject->updateLastCombatActionTimestamp(false, false, true);
+//		Locker olocker(creature, creature);
+//		playerObject->updateLastCombatActionTimestamp(false, false, true);
 
 	}
 

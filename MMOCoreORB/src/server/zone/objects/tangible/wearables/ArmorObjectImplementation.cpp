@@ -32,6 +32,10 @@ void ArmorObjectImplementation::loadTemplateData(SharedObjectTemplate* templateD
 	actionEncumbrance = armorTemplate->getActionEncumbrance();
 	mindEncumbrance = armorTemplate->getMindEncumbrance();
 
+	if (healthEncumbrance < 1) healthEncumbrance = 1;
+	if (actionEncumbrance < 1) actionEncumbrance = 1;
+	if (mindEncumbrance < 1) mindEncumbrance = 1;
+
 	rating = armorTemplate->getRating();
 
 	kinetic = armorTemplate->getKinetic();
@@ -267,11 +271,19 @@ void ArmorObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cre
 //		alm->insertAttribute("cat_armor_vulnerability.armor_eff_restraint", "-");
 
 	//Encumbrances
-	alm->insertAttribute("cat_armor_encumbrance.health", getHealthEncumbrance());
 
-	alm->insertAttribute("cat_armor_encumbrance.action", getActionEncumbrance());
+	int healthenc = getHealthEncumbrance();
+	if (healthenc < 1) healthenc = 1;
+	int actionenc = getActionEncumbrance();
+	if (actionenc < 1) actionenc = 1;
+	int mindenc = getMindEncumbrance();
+	if (mindenc < 1) mindenc = 1;
 
-	alm->insertAttribute("cat_armor_encumbrance.mind", getMindEncumbrance());
+	alm->insertAttribute("cat_armor_encumbrance.health", healthenc);
+
+	alm->insertAttribute("cat_armor_encumbrance.action", actionenc);
+
+	alm->insertAttribute("cat_armor_encumbrance.mind", mindenc);
 
 	//Anti Decay Kit
 	if(hasAntiDecayKit()){
@@ -381,12 +393,16 @@ void ArmorObjectImplementation::updateCraftingValues(CraftingValues* values, boo
 		setConditionDamage(0);
 	}
 
-	setHealthEncumbrance((int) values->getCurrentValue(
-			"armor_health_encumbrance"));
-	setActionEncumbrance((int) values->getCurrentValue(
-			"armor_action_encumbrance"));
-	setMindEncumbrance((int) values->getCurrentValue(
-			"armor_mind_encumbrance"));
+	int healthenc = (int) values->getCurrentValue("armor_health_encumbrance");
+	if (healthenc < 1) healthenc = 1;
+	int actionenc = (int) values->getCurrentValue("armor_action_encumbrance");
+	if (actionenc < 1) actionenc = 1;
+	int mindenc = (int) values->getCurrentValue("armor_mind_encumbrance");
+	if (mindenc < 1) mindenc = 1;
+
+	setHealthEncumbrance(healthenc);
+	setActionEncumbrance(actionenc);
+	setMindEncumbrance(mindenc);
 
 	setMaxCondition((int) values->getCurrentValue("armor_integrity"));
 

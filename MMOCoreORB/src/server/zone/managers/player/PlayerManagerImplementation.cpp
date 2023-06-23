@@ -2216,6 +2216,10 @@ bool PlayerManagerImplementation::checkEncumbrancies(CreatureObject* player, Arm
 	int actionEncumb = armor->getActionEncumbrance();
 	int mindEncumb = armor->getMindEncumbrance();
 
+	if (healthEncumb < 1) healthEncumb = 1;
+	if (actionEncumb < 1) actionEncumb = 1;
+	if (mindEncumb < 1) mindEncumb = 1;
+
 	if (healthEncumb <= 0 && actionEncumb <= 0 && mindEncumb <= 0)
 		return true;
 
@@ -2283,6 +2287,10 @@ void PlayerManagerImplementation::applyEncumbrancies(CreatureObject* player, Arm
 	int actionEncumb = Math::max(0, (armor->getActionEncumbrance()));
 	int mindEncumb = Math::max(0, (armor->getMindEncumbrance()));
 
+	if (healthEncumb < 1) healthEncumb = 1;
+	if (actionEncumb < 1) actionEncumb = 1;
+	if (mindEncumb < 1) mindEncumb = 1;
+
 //	player->setEncumbrance(CreatureEncumbrance::HEALTH, 0, true);
 //	player->setEncumbrance(CreatureEncumbrance::ACTION, 0, true);
 //	player->setEncumbrance(CreatureEncumbrance::MIND, 0, true);
@@ -2314,6 +2322,10 @@ void PlayerManagerImplementation::removeEncumbrancies(CreatureObject* player, Ar
 	int healthEncumb = Math::max(0, (armor->getHealthEncumbrance()));
 	int actionEncumb = Math::max(0, (armor->getActionEncumbrance()));
 	int mindEncumb = Math::max(0, (armor->getMindEncumbrance()));
+
+	if (healthEncumb < 1) healthEncumb = 1;
+	if (actionEncumb < 1) actionEncumb = 1;
+	if (mindEncumb < 1) mindEncumb = 1;
 
 //	player->setEncumbrance(CreatureEncumbrance::HEALTH, 0, true);
 //	player->setEncumbrance(CreatureEncumbrance::ACTION, 0, true);
