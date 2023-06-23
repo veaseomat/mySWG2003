@@ -6347,7 +6347,7 @@ void PlayerManagerImplementation::enhanceSelfDance(CreatureObject* player) {
 
 	bool message = true;
 
-	int selfStrength = (player->getBaseHAM(CreatureAttribute::MIND) * (player->getSkillMod("healing_dance_mind") * .01) * .5);//.5 to reduce vanilla buffs
+	int selfStrength = (player->getBaseHAM(CreatureAttribute::MIND) * (player->getSkillMod("healing_dance_mind") * .01) );//
 
 //	int selfStrength = player->getSkillMod("healing_dance_mind") * 10;//.5 to reduce vanilla buffs
 
@@ -6370,8 +6370,8 @@ void PlayerManagerImplementation::enhanceSelfMusic(CreatureObject* player) {
 
 	bool message = true;
 
-	int selfStrengthFocus = (player->getBaseHAM(CreatureAttribute::FOCUS) * (player->getSkillMod("healing_music_mind") * .01) * .5);//1/2 vanilla power
-	int selfStrengthWill = (player->getBaseHAM(CreatureAttribute::WILLPOWER) * (player->getSkillMod("healing_music_mind") * .01) * .5);
+	int selfStrengthFocus = (player->getBaseHAM(CreatureAttribute::FOCUS) * (player->getSkillMod("healing_music_mind") * .01) );//
+	int selfStrengthWill = (player->getBaseHAM(CreatureAttribute::WILLPOWER) * (player->getSkillMod("healing_music_mind") * .01) );
 
 //	int selfStrengthFocus = player->getSkillMod("healing_music_mind") * 10;//.5 to reduce vanilla buffs
 //	int selfStrengthWill = player->getSkillMod("healing_music_mind") * 10;

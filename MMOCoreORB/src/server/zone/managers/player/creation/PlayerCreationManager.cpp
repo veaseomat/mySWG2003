@@ -328,8 +328,8 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 
 	auto client = callback->getClient();
 
-	if (client->getCharacterCount(zoneServer.get()->getGalaxyID()) >= 5) {
-		ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are limited to 5 characters on mySWG.", 0x0);
+	if (client->getCharacterCount(zoneServer.get()->getGalaxyID()) >= 10) {
+		ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are limited to 10 characters on mySWG.", 0x0);
 		client->sendMessage(errMsg);
 
 		return false;
@@ -483,13 +483,13 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 
 							Time timeVal(sec);
 
-							if (timeVal.miliDifference() < 10 * 60 * 1000) {
-								ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per 10min. Repeat attempts prior to 10min elapsing will reset the timer.", 0x0);
-								client->sendMessage(errMsg);
-
-								playerCreature->destroyPlayerCreatureFromDatabase(true);
-								return false;
-							}
+//							if (timeVal.miliDifference() < 10 * 60 * 1000) {
+//								ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per 10min. Repeat attempts prior to 10min elapsing will reset the timer.", 0x0);
+//								client->sendMessage(errMsg);
+//
+//								playerCreature->destroyPlayerCreatureFromDatabase(true);
+//								return false;
+//							}
 						}
 					} catch (const DatabaseException& e) {
 						error(e.getMessage());
@@ -500,17 +500,17 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 					if (lastCreatedCharacter.containsKey(accID)) {
 						Time lastCreatedTime = lastCreatedCharacter.get(accID);
 
-						if (lastCreatedTime.miliDifference() < 10 * 60 * 1000) {
-							ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per 10min. Repeat attempts prior to 10min elapsing will reset the timer.", 0x0);
-							client->sendMessage(errMsg);
-
-							playerCreature->destroyPlayerCreatureFromDatabase(true);
-							return false;
-						} else {
+//						if (lastCreatedTime.miliDifference() < 10 * 60 * 1000) {
+//							ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per 10min. Repeat attempts prior to 10min elapsing will reset the timer.", 0x0);
+//							client->sendMessage(errMsg);
+//
+//							playerCreature->destroyPlayerCreatureFromDatabase(true);
+//							return false;
+//						} else {
 							lastCreatedTime.updateToCurrentTime();
 
 							lastCreatedCharacter.put(accID, lastCreatedTime);
-						}
+//						}
 					} else {
 						lastCreatedCharacter.put(accID, Time());
 					}
@@ -576,7 +576,7 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 
 	ManagedReference<SuiMessageBox*> box = new SuiMessageBox(playerCreature, SuiWindowType::NONE);
 	box->setPromptTitle("WELCOME");
-	box->setPromptText("Welcome to mySWG! \n   Character creation is limited to 1 every 10min, 5 characters Max, 2 online at a time. Using multiple accounts will get you banned. \nDon't forget to migrate your stats! Stats can also be migrated in Image Designer tents. Have fun!");
+	box->setPromptText("Welcome to mySWG! \nDon't forget to migrate your stats! Stats can also be migrated in Image Designer tents. Have fun!");
 
 	ghost->addSuiBox(box);
 	playerCreature->sendMessage(box->generateMessage());

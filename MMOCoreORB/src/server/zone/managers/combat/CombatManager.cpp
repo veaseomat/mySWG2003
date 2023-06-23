@@ -2154,7 +2154,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 
 		//FRS DODGE SYSTEM
 		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .4;
-		if (targetWeapon->isJediWeapon() && targetCreature->isAiAgent()) frsdodge = targetCreature->getLevel() * .3;
+		if (targetWeapon->isJediWeapon() && targetCreature->isAiAgent()) frsdodge = targetCreature->getLevel() * .15;
 
 		if (frsdodge > 0) {
 			frsdodge += 10;
