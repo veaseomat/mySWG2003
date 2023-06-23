@@ -3733,6 +3733,7 @@ void CombatManager::initializeDefaultAttacks() {
 }
 
 void CombatManager::checkForTefs(CreatureObject* attacker, CreatureObject* defender, bool* shouldGcwCrackdownTef, bool* shouldGcwTef, bool* shouldBhTef) const {
+	return; // disable tef
 	if (*shouldGcwCrackdownTef && *shouldGcwTef && *shouldBhTef) {
 		return;
 	}

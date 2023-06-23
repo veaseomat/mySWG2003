@@ -96,7 +96,7 @@ void VisibilityManager::decreaseVisibility(CreatureObject* creature) {
 				ghost->setVisibility(ghost->getVisibility() - visibilityDecrease);
 				//creature->sendSystemMessage("visibility decreased to " + String::valueOf(ghost->getVisibility() - visibilityDecrease));
 
-				creature->sendSystemMessage("Jedi visibility decreased.");
+//				creature->sendSystemMessage("Jedi visibility decreased.");
 
 //				if (ghost->getVisibility() >= terminalVisThreshold)
 //					creature->sendSystemMessage("Visibility decreased to " + String::valueOf(ghost->getVisibility() - visibilityDecrease) + ". You are listed on the Bounty Hunter Terminals.");
@@ -167,7 +167,7 @@ void VisibilityManager::increaseVisibility(CreatureObject* creature, int visibil
 
 			ghost->setVisibility(finalVis);
 
-			creature->sendSystemMessage("Jedi visibility increased.");
+//			creature->sendSystemMessage("Jedi visibility increased.");
 
 //			ghost->updateLastCombatActionTimestamp(false,false,true);
 

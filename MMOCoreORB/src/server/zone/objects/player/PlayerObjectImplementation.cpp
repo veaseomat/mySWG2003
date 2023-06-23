@@ -1282,9 +1282,9 @@ void PlayerObjectImplementation::setTitle(const String& characterTitle, bool not
 		}
 
 		//if(targetSkill == "force_title_jedi_rank_03" || targetSkill == "force_title_jedi_rank_02" || targetSkill == "force_title_jedi_rank_01" || targetSkill == "force_title_jedi_novice") {
-		if	(targetSkill->getJediStateRequired() > 0)	{
-			return;
-		}
+//		if	(targetSkill->getJediStateRequired() > 0)	{
+//			return;
+//		}
 	}
 
 	title = characterTitle;

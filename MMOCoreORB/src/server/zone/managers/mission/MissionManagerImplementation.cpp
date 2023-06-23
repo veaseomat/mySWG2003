@@ -174,12 +174,12 @@ void MissionManagerImplementation::handleMissionListRequest(MissionTerminal* mis
 		return;
 	}
 
-	if (missionTerminal->isBountyTerminal()) {
-		if (!player->hasSkill("combat_bountyhunter_novice")) {
-			player->sendSystemMessage("@mission/mission_generic:not_bounty_hunter_terminal");
-			return;
-		}
-	}
+//	if (missionTerminal->isBountyTerminal()) {
+//		if (!player->hasSkill("combat_bountyhunter_novice")) {
+//			player->sendSystemMessage("@mission/mission_generic:not_bounty_hunter_terminal");
+//			return;
+//		}
+//	}
 
 	ManagedReference<CityRegion*> terminalCity = missionTerminal->getCityRegion().get();
 
@@ -257,7 +257,7 @@ void MissionManagerImplementation::handleMissionAccept(MissionTerminal* missionT
 	}
 
 	//Limit to two missions (only one of them can be a bounty mission)
-	if (missionCount >= 4 || (hasBountyMission && mission->getTypeCRC() == MissionTypes::BOUNTY)) {
+	if (missionCount >= 5 || (hasBountyMission && mission->getTypeCRC() == MissionTypes::BOUNTY)) {
 		StringIdChatParameter stringId("mission/mission_generic", "too_many_missions");
 		player->sendSystemMessage(stringId);
 		return;
@@ -1019,10 +1019,10 @@ void MissionManagerImplementation::randomizeGenericSurveyMission(CreatureObject*
 }
 
 void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject* player, MissionObject* mission, const uint32 faction, Vector<ManagedReference<PlayerBounty*>>* potentialTargets) {
-	if (!player->hasSkill("combat_bountyhunter_novice")) {
-		player->sendSystemMessage("@mission/mission_generic:not_bounty_hunter_terminal");
-		return;
-	}
+//	if (!player->hasSkill("combat_bountyhunter_novice")) {
+//		player->sendSystemMessage("@mission/mission_generic:not_bounty_hunter_terminal");
+//		return;
+//	}
 
 	Zone* playerZone = player->getZone();
 
@@ -1030,14 +1030,18 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 		return;
 	}
 
-	int level = 1;
+	int level = 3;
 	int randomTexts = 25;
+	if (player->hasSkill("combat_bountyhunter_novice")) {
+		level = 1;
+	}
 	if (player->hasSkill("combat_bountyhunter_investigation_03")) {
 		level = 3;
-	} else if (player->hasSkill("combat_bountyhunter_investigation_01")) {
-		level = 2;
-		randomTexts = 50;
 	}
+//	else if (player->hasSkill("combat_bountyhunter_investigation_01")) {
+//		level = 2;
+//		randomTexts = 50;
+//	}
 
 	NameManager* nm = processor->getNameManager();
 
@@ -1079,7 +1083,7 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			int jedilvl = playerManager->calculatePlayerLevel(creature) * 3;
 			int skillboxes = SkillManager::instance()->getJediSkillCount(player, true);
 
-			int jedireward = skillboxes * 1000;//jedilvl * 1000;
+			int jedireward = 1337;//skillboxes * 1000;//jedilvl * 1000;
 
 			if (creature->getFaction() == Factions::FACTIONIMPERIAL)	mission->setMissionTargetName("imperial player jedi");
 			if (creature->getFaction() == Factions::FACTIONREBEL)	mission->setMissionTargetName("rebel player jedi");

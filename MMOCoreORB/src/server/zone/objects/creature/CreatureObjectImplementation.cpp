@@ -3201,9 +3201,10 @@ bool CreatureObjectImplementation::isAttackableBy(CreatureObject* object, bool b
 //				return true;
 //		}
 //
-		if (getWeapon()->isJediWeapon()){//works here
-			return true;
-		}
+
+//		if (getWeapon()->isJediWeapon()){//THIS IS THE ONE THAT WORKS**************
+//			return true;//saber equip tef found in playercontainercomponent
+//		}
 
 //		ManagedReference<RobeObject*> robe = cast<RobeObject*> (object);
 //		if (getWeapon()->isJediWeapon()){//works here

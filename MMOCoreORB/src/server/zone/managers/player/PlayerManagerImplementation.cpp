@@ -1290,6 +1290,50 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 	player->notifyObjectKillObservers(attacker);
 
 //jedi xp loss
+	if (!attacker->isPlayerCreature()) {
+
+		SortedVector<ManagedReference<SceneObject*> > insurableItems = getInsurableItems(player, false);
+
+		if (typeofdeath == 0 && insurableItems.size() > 0) {
+
+			ManagedReference<SuiListBox*> suiCloneDecayReport = new SuiListBox(player, SuiWindowType::CLONE_REQUEST_DECAY, SuiListBox::HANDLESINGLEBUTTON);
+			suiCloneDecayReport->setPromptTitle("DECAY REPORT");
+			suiCloneDecayReport->setPromptText("The following report summarizes the status of your items after the decay event.");
+			suiCloneDecayReport->addMenuItem("\\#00FF00DECAYED ITEMS");
+
+			for (int i = 0; i < insurableItems.size(); i++) {
+				SceneObject* item = insurableItems.get(i);
+
+				if (item != nullptr && item->isTangibleObject()) {
+					ManagedReference<TangibleObject*> obj = cast<TangibleObject*>(item);
+
+					Locker clocker(obj, player);
+
+					if (obj->getOptionsBitmask() & OptionBitmask::INSURED) {
+						//1% Decay for insured items
+						obj->inflictDamage(obj, 0, 0.0 * obj->getMaxCondition(), true, true);
+						//Set uninsured
+						uint32 bitmask = obj->getOptionsBitmask() - OptionBitmask::INSURED;
+						obj->setOptionsBitmask(bitmask);
+					} else {
+						//5% Decay for uninsured items
+						obj->inflictDamage(obj, 0, 0.05 * obj->getMaxCondition(), true, true);
+					}
+
+					// Calculate condition percentage for decay report
+					int max = obj->getMaxCondition();
+					int min = max - obj->getConditionDamage();
+					int condPercentage = ( min / (float)max ) * 100.0f;
+					String line = " - " + obj->getDisplayedName() + " (@"+String::valueOf(condPercentage)+"%)";
+
+					suiCloneDecayReport->addMenuItem(line, item->getObjectID());
+				}
+			}
+
+			ghost->addSuiBox(suiCloneDecayReport);
+			player->sendMessage(suiCloneDecayReport->generateMessage());
+
+		}
 
 	// Jedi experience loss.
 	if (ghost->getJediState() >= 2) {
@@ -1450,6 +1494,8 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 		ghost->addSuiBox(box);
 		player->sendMessage(box->generateMessage());
 	}
+
+	}// for !attackerisplayercreature
 
 	// Jedi skill loss.
 
@@ -1838,46 +1884,46 @@ void PlayerManagerImplementation::sendPlayerToCloner(CreatureObject* player, uin
 	SortedVector<ManagedReference<SceneObject*> > insurableItems = getInsurableItems(player, false);
 
 	// Decay
-	if (typeofdeath == 0 && insurableItems.size() > 0) {
-
-		ManagedReference<SuiListBox*> suiCloneDecayReport = new SuiListBox(player, SuiWindowType::CLONE_REQUEST_DECAY, SuiListBox::HANDLESINGLEBUTTON);
-		suiCloneDecayReport->setPromptTitle("DECAY REPORT");
-		suiCloneDecayReport->setPromptText("The following report summarizes the status of your items after the decay event.");
-		suiCloneDecayReport->addMenuItem("\\#00FF00DECAYED ITEMS");
-
-		for (int i = 0; i < insurableItems.size(); i++) {
-			SceneObject* item = insurableItems.get(i);
-
-			if (item != nullptr && item->isTangibleObject()) {
-				ManagedReference<TangibleObject*> obj = cast<TangibleObject*>(item);
-
-				Locker clocker(obj, player);
-
-				if (obj->getOptionsBitmask() & OptionBitmask::INSURED) {
-					//1% Decay for insured items
-					obj->inflictDamage(obj, 0, 0.0 * obj->getMaxCondition(), true, true);
-					//Set uninsured
-					uint32 bitmask = obj->getOptionsBitmask() - OptionBitmask::INSURED;
-					obj->setOptionsBitmask(bitmask);
-				} else {
-					//5% Decay for uninsured items
-					obj->inflictDamage(obj, 0, 0.05 * obj->getMaxCondition(), true, true);
-				}
-
-				// Calculate condition percentage for decay report
-				int max = obj->getMaxCondition();
-				int min = max - obj->getConditionDamage();
-				int condPercentage = ( min / (float)max ) * 100.0f;
-				String line = " - " + obj->getDisplayedName() + " (@"+String::valueOf(condPercentage)+"%)";
-
-				suiCloneDecayReport->addMenuItem(line, item->getObjectID());
-			}
-		}
-
-		ghost->addSuiBox(suiCloneDecayReport);
-		player->sendMessage(suiCloneDecayReport->generateMessage());
-
-	}
+//	if (typeofdeath == 0 && insurableItems.size() > 0) {
+//
+//		ManagedReference<SuiListBox*> suiCloneDecayReport = new SuiListBox(player, SuiWindowType::CLONE_REQUEST_DECAY, SuiListBox::HANDLESINGLEBUTTON);
+//		suiCloneDecayReport->setPromptTitle("DECAY REPORT");
+//		suiCloneDecayReport->setPromptText("The following report summarizes the status of your items after the decay event.");
+//		suiCloneDecayReport->addMenuItem("\\#00FF00DECAYED ITEMS");
+//
+//		for (int i = 0; i < insurableItems.size(); i++) {
+//			SceneObject* item = insurableItems.get(i);
+//
+//			if (item != nullptr && item->isTangibleObject()) {
+//				ManagedReference<TangibleObject*> obj = cast<TangibleObject*>(item);
+//
+//				Locker clocker(obj, player);
+//
+//				if (obj->getOptionsBitmask() & OptionBitmask::INSURED) {
+//					//1% Decay for insured items
+//					obj->inflictDamage(obj, 0, 0.0 * obj->getMaxCondition(), true, true);
+//					//Set uninsured
+//					uint32 bitmask = obj->getOptionsBitmask() - OptionBitmask::INSURED;
+//					obj->setOptionsBitmask(bitmask);
+//				} else {
+//					//5% Decay for uninsured items
+//					obj->inflictDamage(obj, 0, 0.05 * obj->getMaxCondition(), true, true);
+//				}
+//
+//				// Calculate condition percentage for decay report
+//				int max = obj->getMaxCondition();
+//				int min = max - obj->getConditionDamage();
+//				int condPercentage = ( min / (float)max ) * 100.0f;
+//				String line = " - " + obj->getDisplayedName() + " (@"+String::valueOf(condPercentage)+"%)";
+//
+//				suiCloneDecayReport->addMenuItem(line, item->getObjectID());
+//			}
+//		}
+//
+//		ghost->addSuiBox(suiCloneDecayReport);
+//		player->sendMessage(suiCloneDecayReport->generateMessage());
+//
+//	}
 
 
 
@@ -2052,9 +2098,9 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				String xpType = entry->elementAt(j).getKey();
 				float xpAmount = baseXp;
 
-//				xpAmount *= (float) 1 / entry->size(); //size is how many weaps used
+				xpAmount *= (float) 1 / entry->size(); //size is how many weaps used
 
-				xpAmount *= (float) damage / totalDamage;//damage with that weapon / total damage done
+//				xpAmount *= (float) damage / totalDamage;//damage with that weapon / total damage done
 
 				//******* XP was CHANGED IN aiagent.idl and creature.idl located in zone/obj/creature/ai
 
@@ -2093,7 +2139,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //						//xpType = "combat_meleespecialize_polearmlightsaber";
 //						awardExperience(attacker, "combat_meleespecialize_polearmlightsaber", xpAmount, true, 1.0f, false);
 
-					awardExperience(attacker, "jedi_general", xpAmount, true, 1.0, false);
+					awardExperience(attacker, "jedi_general", xpAmount / 2, true, 1.0, true);
 
 //					if (attacker->hasSkill("force_title_jedi_rank_03"))
 //						frsXp += xpAmount;

@@ -163,10 +163,10 @@ int PlayerContainerComponent::notifyObjectInserted(SceneObject* sceneObject, Sce
 			VisibilityManager::instance()->increaseVisibility(creo, VisibilityManager::SABERVISMOD);
 		} else if (object->isWeaponObject()) {
 			WeaponObject* weaponObject = cast<WeaponObject*>(object);
-			if (weaponObject->isJediWeapon()) {
-				VisibilityManager::instance()->increaseVisibility(creo, VisibilityManager::SABERVISMOD);
-				ghost->updateLastCombatActionTimestamp(false, false, true);
-			}
+//			if (weaponObject->isJediWeapon()) {
+//				VisibilityManager::instance()->increaseVisibility(creo, VisibilityManager::SABERVISMOD);
+//				ghost->updateLastCombatActionTimestamp(false, false, true);
+//			}
 		}
 	}
 
@@ -226,14 +226,14 @@ int PlayerContainerComponent::notifyObjectRemoved(SceneObject* sceneObject, Scen
 			VisibilityManager::instance()->increaseVisibility(creo, VisibilityManager::SABERVISMOD);
 		} else if (object->isWeaponObject()) {
 			WeaponObject* weaponObject = cast<WeaponObject*>(object);
-			if (weaponObject->isJediWeapon()) {
-				//VisibilityManager::instance()->increaseVisibility(creo, VisibilityManager::SABERVISMOD);
-				ghost->updateLastCombatActionTimestamp(false, false, true);
-			}
+//			if (weaponObject->isJediWeapon()) {
+//				//VisibilityManager::instance()->increaseVisibility(creo, VisibilityManager::SABERVISMOD);
+//				ghost->updateLastCombatActionTimestamp(false, false, true);
+//			}
 		}
-//		if (object->isRobeObject()) {
-//			ghost->recalculateForcePower();
-//		}
+		if (object->isRobeObject()) {
+			ghost->recalculateForcePower();
+		}
 	}
 
 	return ContainerComponent::notifyObjectRemoved(sceneObject, object, destination);
