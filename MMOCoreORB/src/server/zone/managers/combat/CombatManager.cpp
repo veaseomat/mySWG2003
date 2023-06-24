@@ -2079,7 +2079,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 
 	ManagedReference<WeaponObject*> defweapon = targetCreature->getWeapon();
 	Reference<PlayerObject*> ghostdef = targetCreature->getPlayerObject();
-	Reference<PlayerObject*> ghostatt = creoAttacker->getPlayerObject();
+//	Reference<PlayerObject*> ghostatt = creoAttacker->getPlayerObject();
 
 //	if (defweapon->isJediWeapon() || ghostdef->hasBhTef()){
 ////		VisibilityManager::instance()->increaseVisibility(targetCreature, 10); // Give visibility to defender
