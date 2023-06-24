@@ -598,8 +598,13 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 		//return xp from surender
 
-		if (skill->getXpCost() > 0  && (!creature->isDead() && skillName.beginsWith("force_"))) { //dead jedi dont get xp back
+		if (skill->getXpCost() > 0) { //dead jedi dont get xp back
+			if (creature->isDead() && skillName.beginsWith("force_"))	{
+
+			}
+			else	{
 			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+			}
 		}
 
 		//Remove abilities but only if the creature doesn't still have a skill that grants the

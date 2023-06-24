@@ -172,17 +172,17 @@ end
 
 function RecruiterConvoHandler:addJoinMilitaryOption(faction, screen, playerObject, pNpc)
 	if (faction == "rebel") then
-		if (playerObject:getFactionStanding(recruiterScreenplay:getRecruiterFaction(pNpc)) < recruiterScreenplay.minimumFactionStanding) then
-			screen:addOption("@conversation/faction_recruiter_rebel:s_580", "neutral_need_more_points")
-		else
+--		if (playerObject:getFactionStanding(recruiterScreenplay:getRecruiterFaction(pNpc)) < recruiterScreenplay.minimumFactionStanding) then
+--			screen:addOption("@conversation/faction_recruiter_rebel:s_580", "neutral_need_more_points")
+--		else
 			screen:addOption("@conversation/faction_recruiter_rebel:s_580", "join_military")
-		end
+--		end
 	elseif (faction == "imperial") then
-		if (playerObject:getFactionStanding(recruiterScreenplay:getRecruiterFaction(pNpc)) < recruiterScreenplay.minimumFactionStanding) then
-			screen:addOption("@conversation/faction_recruiter_imperial:s_428", "neutral_need_more_points")
-		else
+--		if (playerObject:getFactionStanding(recruiterScreenplay:getRecruiterFaction(pNpc)) < recruiterScreenplay.minimumFactionStanding) then
+--			screen:addOption("@conversation/faction_recruiter_imperial:s_428", "neutral_need_more_points")
+--		else
 			screen:addOption("@conversation/faction_recruiter_imperial:s_428", "join_military")
-		end
+--		end
 	end
 end
 
