@@ -764,6 +764,8 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 ////				npcacc = attacker->getLevel();
 //		}
 
+		if (!attacker->isTurret()) {
+
 		if (creoAttacker->hasState(CreatureState::BLINDED)) {
 			npcacc *= .5;
 		}
@@ -786,6 +788,8 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 
 		if (creoAttacker->isRunning()) {
 			npcacc *= .5;
+		}
+
 		}
 
 		return npcacc;
