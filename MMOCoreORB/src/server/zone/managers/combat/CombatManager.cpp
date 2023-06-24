@@ -736,7 +736,7 @@ int CombatManager::calculateTargetPostureModifier(WeaponObject* weapon, Creature
 int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
 	CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
 
-	if (attacker->isAiAgent()) {
+	if (!attacker->isPlayerCreature()) {
 		int npcacc = attacker->getLevel();// cast<AiAgent*>(attacker)->getChanceHit() * 100;
 
 //		if (attacker->isAiAgent() && !attacker->isCreature()) {
