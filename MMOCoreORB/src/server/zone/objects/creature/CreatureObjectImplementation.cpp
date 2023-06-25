@@ -3270,6 +3270,14 @@ bool CreatureObjectImplementation::isAttackableBy(CreatureObject* object, bool b
 	if (areInDuel)
 		return true;
 
+	//frs attackable
+	if (asCreatureObject()->hasSkill("force_rank_light_novice") && object->hasSkill("force_rank_dark_novice")){
+		return true;
+	}
+	if (asCreatureObject()->hasSkill("force_rank_dark_novice") && object->hasSkill("force_rank_light_novice")){
+		return true;
+	}
+
 //	if (ghost->hasBhTef())
 //		return true;
 

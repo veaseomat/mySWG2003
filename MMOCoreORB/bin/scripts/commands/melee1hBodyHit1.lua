@@ -52,7 +52,7 @@ Melee1hBodyHit1Command = {
         accuracyBonus = 25,
 
 	poolsToDamage = HEALTH_ATTRIBUTE,
-	weaponType = ONEHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	animation = "counter_high_right", 
 	animType = GENERATE_INTENSITY,

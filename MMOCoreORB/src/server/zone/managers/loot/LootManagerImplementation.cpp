@@ -340,7 +340,20 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		//legendaryLooted.increment();
 	}
 
-	if (leggy == 0 && System::random(50) == 50 && (prototype->isComponent() || prototype->isLightsaberCrystalObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
+//	CreatureTemplate* creoTempl = creatureTemplateManager->getTemplate(templateCRC);
+//
+//	if (creoTempl == nullptr)
+//		return nullptr;
+
+//	AiAgent* aicre = cast<AiAgent*>(creature);
+//
+////	Locker locker(creature);
+//
+//	creature->loadTemplateData(aicre);
+
+	//|| aicre->getElite() >= 1
+
+	if (leggy == 0 && (System::random(50) == 50 ) && (prototype->isComponent() || prototype->isLightsaberCrystalObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
 		prototype->setCustomObjectName(newName, false);
 

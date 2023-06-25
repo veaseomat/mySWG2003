@@ -164,7 +164,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 //	if (newlvl > 500) newlvl = 500;
 
 
-//	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
+	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
 //
 //	if (elite > 1.0) {
 //		//legendarynpc = true;
@@ -183,9 +183,11 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		weapran = .6 + (System::random(40) * .01);
 	}
 
-//	if (System::random(100) == 100) {//simulate exceptional
-//		legendarynpc = true;
-//		weapran += 1.3;	}
+	if (System::random(50) == 50) {//simulate exceptional
+		legendarynpc = true;
+		weapran += 2.5;
+		npcTemplate->setElite(1.0);
+	}
 
 	float minDmg = ((newlvl * 15) - 100) * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
 	float maxDmg = (newlvl * 15) - 100;//((pow(newlvl, 2)) / 20) * weapran + 5;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
@@ -297,7 +299,11 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	setupAttackMaps();
 
-	int lvlham = 50 * (1 + (newlvl * .40));//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
+	int lvlham = 50 * (newlvl * .4) * 1.5;//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
+
+	if (legendarynpc == true) {
+		lvlham *= 2.5;
+	}
 
 	int ham = 0;
 	baseHAM.removeAll();

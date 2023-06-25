@@ -288,6 +288,10 @@ public:
 	inline float getElite() const {
 		return elite;
 	}
+	
+	void setElite(float e) {
+		elite = e;
+	}
 
 	inline int getDamageMin() const {
 		return damageMin;

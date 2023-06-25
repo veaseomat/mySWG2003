@@ -611,7 +611,7 @@ class AiAgent extends CreatureObject {
 
 	@preLocked
 	public void setRespawnTimer(float resp) {
-		respawnTimer = resp;
+		respawnTimer = 2 * 60;//resp;//this affects static spawn timers in seconds
 	}
 
 	@preLocked

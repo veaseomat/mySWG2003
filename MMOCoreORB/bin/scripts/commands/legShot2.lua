@@ -69,7 +69,7 @@ LegShot2Command = {
 
 	combatSpam = "legshot",
 	
-	weaponType = CARBINEWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 

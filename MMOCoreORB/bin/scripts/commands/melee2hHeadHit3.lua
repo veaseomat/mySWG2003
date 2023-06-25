@@ -52,7 +52,7 @@ Melee2hHeadHit3Command = {
 
 	poolsToDamage = MIND_ATTRIBUTE,
 	
-	weaponType = TWOHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	animation = "combo_2d", 
 	animType = GENERATE_INTENSITY,

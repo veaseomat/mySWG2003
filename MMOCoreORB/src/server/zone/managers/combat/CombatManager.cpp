@@ -1921,7 +1921,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		}
 
 		if (data.isForceAttack()) {
-			damage *= 3;
+			damage *= 5;
 		}
 
 		int damagetype = weapon->getDamageType();
@@ -2020,11 +2020,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= .45;
+		damage *= .6;
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= .45;
+		damage *= .6;
 
 	if (damage < 1) damage = 1;
 
