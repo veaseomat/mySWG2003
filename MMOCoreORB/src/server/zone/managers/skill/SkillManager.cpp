@@ -642,9 +642,9 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 		FrsManager* frsManager = creature->getZoneServer()->getFrsManager();
 
-		if (checkFrs && frsManager->isFrsEnabled()) {
-			frsManager->handleSkillRevoked(creature, skillName);
-		}
+//		if (checkFrs && frsManager->isFrsEnabled()) {
+//			frsManager->handleSkillRevoked(creature, skillName);
+//		}
 
 		/// Update Force Power Max
 		ghost->recalculateForcePower();
