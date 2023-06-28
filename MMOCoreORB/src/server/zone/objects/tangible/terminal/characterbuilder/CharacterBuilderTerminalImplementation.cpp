@@ -100,6 +100,69 @@ void CharacterBuilderTerminalImplementation::enhanceCharacterDocBuff(CreatureObj
 	}
 }
 
+void CharacterBuilderTerminalImplementation::enhanceCharacterDocBuffTHREE(CreatureObject* player) {
+	PlayerManager* pm = player->getZoneServer()->getPlayerManager();
+
+	pm->enhanceCharacterDocBuffTHREE(player);
+
+	ManagedReference<PlayerObject*> ghost = player->getPlayerObject();
+
+	if (ghost == nullptr)
+		return;
+
+	for (int i = 0; i < ghost->getActivePetsSize(); i++) {
+		ManagedReference<AiAgent*> pet = ghost->getActivePet(i);
+
+		if (pet != nullptr) {
+			Locker crossLocker(pet, player);
+
+			pm->enhanceCharacterDocBuffTHREE(pet);
+		}
+	}
+}
+
+void CharacterBuilderTerminalImplementation::enhanceCharacterEntBuffONE(CreatureObject* player) {
+	PlayerManager* pm = player->getZoneServer()->getPlayerManager();
+
+	pm->enhanceCharacterEntBuffONE(player);
+
+	ManagedReference<PlayerObject*> ghost = player->getPlayerObject();
+
+	if (ghost == nullptr)
+		return;
+
+	for (int i = 0; i < ghost->getActivePetsSize(); i++) {
+		ManagedReference<AiAgent*> pet = ghost->getActivePet(i);
+
+		if (pet != nullptr) {
+			Locker crossLocker(pet, player);
+
+			pm->enhanceCharacterEntBuffONE(pet);
+		}
+	}
+}
+
+void CharacterBuilderTerminalImplementation::enhanceCharacterEntBuffTWO(CreatureObject* player) {
+	PlayerManager* pm = player->getZoneServer()->getPlayerManager();
+
+	pm->enhanceCharacterEntBuffTWO(player);
+
+	ManagedReference<PlayerObject*> ghost = player->getPlayerObject();
+
+	if (ghost == nullptr)
+		return;
+
+	for (int i = 0; i < ghost->getActivePetsSize(); i++) {
+		ManagedReference<AiAgent*> pet = ghost->getActivePet(i);
+
+		if (pet != nullptr) {
+			Locker crossLocker(pet, player);
+
+			pm->enhanceCharacterEntBuffTWO(pet);
+		}
+	}
+}
+
 void CharacterBuilderTerminalImplementation::giveLanguages(CreatureObject* player) {
 	SkillManager* skillManager = server->getSkillManager();
 

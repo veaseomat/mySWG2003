@@ -63,11 +63,11 @@ skillModLimits = {
 }
 
 disabledWearableSkillMods = {
-	"combat_healing_ability",
-	"healing_ability",
-	"keep_creature",
-	"stored_pets",
-	"combat_medic_effectiveness",
-	"jedi_force_power_regen",
-	"saber_block",
+--	"combat_healing_ability",
+--	"healing_ability",
+--	"keep_creature",
+--	"stored_pets",
+--	"combat_medic_effectiveness",
+--	"jedi_force_power_regen",
+--	"saber_block",
 }

@@ -27,6 +27,7 @@
 #include "server/zone/objects/installation/InstallationObject.h"
 #include "server/zone/packets/object/ShowFlyText.h"
 #include "server/zone/managers/frs/FrsManager.h"
+#include "server/zone/managers/skill/SkillManager.h"
 
 #define COMBAT_SPAM_RANGE 85
 
@@ -1066,8 +1067,10 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 //					newplayertough *= .2f;
 //					if (weapon->isJediPolearmWeapon())
 //					newplayertough *= .1f;
-				if (weapon->isJediWeapon())
+				if (weapon->isJediWeapon()){
+					toughMod = 0;
 					newplayertough = 0;
+				}
 
 				if (newplayertough > 0)
 					toughMod += newplayertough;
@@ -2157,27 +2160,45 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 		const String& def = defenseAccMods->get(0); // FIXME: this is hacky, but a lot faster than using contains()
 
 		//FRS DODGE SYSTEM
-		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .4;
-		if (targetWeapon->isJediWeapon() && targetCreature->isAiAgent()) frsdodge = targetCreature->getLevel() * .15;
-
-		if (frsdodge > 0) {
-			frsdodge += 10;
-			if (frsdodge > System::random(100))
-				return MISS;
-
-		}
+//		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .4;
+//		if (targetWeapon->isJediWeapon() && targetCreature->isAiAgent()) frsdodge = targetCreature->getLevel() * .15;
+//
+//		if (frsdodge > 0) {
+//			frsdodge += 10;
+//			if (frsdodge > System::random(100))
+//				return MISS;
+//
+//		}
 
 		// saber block is special because it's just a % chance to block based on the skillmod
 		if (targetWeapon->isJediWeapon()) {
-			int saberblockmod = targetCreature->getSkillMod("saber_block");
-			if (targetCreature->isAiAgent()) saberblockmod = targetCreature->getLevel() * .85;
-			if (targetCreature->isKnockedDown())
-				saberblockmod *= .5;
+			float forcedodge = 0.2;
+			//float saberblockmod = targetCreature->getSkillMod("saber_block");
+			float skillboxes = SkillManager::instance()->getJediSkillCount(targetCreature, true) / 300;//90
+			float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .004;//100
 
-//			if (weapon->isJediWeapon() && (System::random(100) < saberblockmod))
-//				return MISS;
-			if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) && ((System::random(100)) < targetCreature->getSkillMod(def))))
-				return RICOCHET;
+			if (targetCreature->isAiAgent()) forcedodge = targetCreature->getLevel() * .003;
+
+			forcedodge += skillboxes;
+			forcedodge += frsdodge;
+
+			for (int i = 0; i < targetCreature->getSlottedObjectsSize(); ++i) {
+				SceneObject* item = targetCreature->getSlottedObject(i);
+				if (item != nullptr && item->isArmorObject()){
+					forcedodge *= .85;
+				}
+			}
+
+			if (targetCreature->isKnockedDown())
+				forcedodge *= .5;
+
+			float dodgeroll = System::random(10000) / 10000;
+			if (dodgeroll < forcedodge) {
+				if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) ))
+					return RICOCHET;
+				else
+					return MISS;
+			}
 			else return HIT;
 		}
 

@@ -58,7 +58,28 @@ class CharacterBuilderTerminal extends Terminal {
 	 * @post { player is locked }
 	 */
 	public native void enhanceCharacterDocBuff(CreatureObject player);
-
+	
+	/**
+	 * Enhances the target character with doc/ent buffs
+	 * @pre { player is locked }
+	 * @post { player is locked }
+	 */
+	public native void enhanceCharacterDocBuffTHREE(CreatureObject player);
+	
+	/**
+	 * Enhances the target character with doc/ent buffs
+	 * @pre { player is locked }
+	 * @post { player is locked }
+	 */
+	public native void enhanceCharacterEntBuffONE(CreatureObject player);
+	
+	/**
+	 * Enhances the target character with doc/ent buffs
+	 * @pre { player is locked }
+	 * @post { player is locked }
+	 */
+	public native void enhanceCharacterEntBuffTWO(CreatureObject player);
+	
 	/**
 	 * Grants badges to the player to make them glowy in the village jedi progression system
 	 * @pre { player is locked }

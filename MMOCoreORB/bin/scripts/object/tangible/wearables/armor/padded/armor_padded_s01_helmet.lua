@@ -78,7 +78,7 @@ object_tangible_wearables_armor_padded_armor_padded_s01_helmet = object_tangible
 				"object/mobile/vendor/zabrak_male.iff" },
 
 	-- Damage types in WeaponObject
-	vulnerability = HEAT + ACID + STUN + LIGHTSABER,
+	vulnerability = STUN + LIGHTSABER,
 	
 	specialResists = BLAST,
 

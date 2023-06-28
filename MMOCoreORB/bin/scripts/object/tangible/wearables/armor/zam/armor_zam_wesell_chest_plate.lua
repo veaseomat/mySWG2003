@@ -88,7 +88,7 @@ object_tangible_wearables_armor_zam_armor_zam_wesell_chest_plate = object_tangib
 				"object/mobile/vendor/zabrak_male.iff" },
 
 	-- Damage types in WeaponObject
-	vulnerability = ACID + ENERGY + STUN + LIGHTSABER,
+	vulnerability = STUN + LIGHTSABER,
 	
 	specialResists = BLAST,
 
