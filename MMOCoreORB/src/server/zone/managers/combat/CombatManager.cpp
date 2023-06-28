@@ -1117,7 +1117,7 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 		}
 	}
 
-	int jediToughness = defender->getSkillMod("jedi_toughness");
+	int jediToughness = defender->getSkillMod("jedi_toughness") * 2;
 	if (jediToughness > 0)
 		damage *= 1.f - (jediToughness / 100.f);
 
@@ -2140,6 +2140,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	int postureDefense = calculateTargetPostureModifier(weapon, targetCreature);
 
 	debug() << "Defender posture defense is " << postureDefense;
+
 	float attackerRoll = (float)System::random(249) + 1.f;
 	float defenderRoll = (float)System::random(150) + 25.f;
 
@@ -2155,32 +2156,35 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 
 	// now we have a successful hit, so calculate secondary defenses if there is a damage component
 	if (damage > 0) {
+
+
 		ManagedReference<WeaponObject*> targetWeapon = targetCreature->getWeapon();
 		const auto defenseAccMods = targetWeapon->getDefenderSecondaryDefenseModifiers();
 		const String& def = defenseAccMods->get(0); // FIXME: this is hacky, but a lot faster than using contains()
 
 		//FRS DODGE SYSTEM
-//		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .4;
-//		if (targetWeapon->isJediWeapon() && targetCreature->isAiAgent()) frsdodge = targetCreature->getLevel() * .15;
-//
-//		if (frsdodge > 0) {
-//			frsdodge += 10;
-//			if (frsdodge > System::random(100))
-//				return MISS;
-//
-//		}
+	//		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .4;
+	//		if (targetWeapon->isJediWeapon() && targetCreature->isAiAgent()) frsdodge = targetCreature->getLevel() * .15;
+	//
+	//		if (frsdodge > 0) {
+	//			frsdodge += 10;
+	//			if (frsdodge > System::random(100))
+	//				return MISS;
+	//
+	//		}
 
 		// saber block is special because it's just a % chance to block based on the skillmod
 		if (targetWeapon->isJediWeapon()) {
-			float forcedodge = 0.2;
+
 			//float saberblockmod = targetCreature->getSkillMod("saber_block");
-			float skillboxes = SkillManager::instance()->getJediSkillCount(targetCreature, true) / 300;//90
-			float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .004;//100
+			int skillboxes = SkillManager::instance()->getJediSkillCount(targetCreature, true) / 3;//90//targetCreature->getSkillMod("jedi_force_power_regen") / 1.3 * .004;
+			int frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .3;//100
 
-			if (targetCreature->isAiAgent()) forcedodge = targetCreature->getLevel() * .003;
+			if (targetCreature->isAiAgent()) skillboxes = targetCreature->getLevel() * .25;
 
-			forcedodge += skillboxes;
-			forcedodge += frsdodge;
+			int forcedodge = (skillboxes + frsdodge + 25);
+
+			if (forcedodge > 85) forcedodge = 85;
 
 			for (int i = 0; i < targetCreature->getSlottedObjectsSize(); ++i) {
 				SceneObject* item = targetCreature->getSlottedObject(i);
@@ -2192,14 +2196,15 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 			if (targetCreature->isKnockedDown())
 				forcedodge *= .5;
 
-			float dodgeroll = System::random(10000) / 10000;
-			if (dodgeroll < forcedodge) {
+			//int dodgeroll = System::random(100);
+			if (System::random(100) < forcedodge) {
 				if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) ))
 					return RICOCHET;
 				else
 					return MISS;
 			}
-			else return HIT;
+			else
+				return HIT;
 		}
 
 		targetDefense = getDefenderSecondaryDefenseModifier(targetCreature);
