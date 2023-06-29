@@ -1117,9 +1117,16 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 		}
 	}
 
-	int jediToughness = defender->getSkillMod("jedi_toughness") * 2;
-	if (jediToughness > 0)
+	int jediToughness = defender->getSkillMod("jedi_toughness") * 1.78;
+	if (jediToughness > 0 && weapon->isJediWeapon()) {
+		for (int i = 0; i < defender->getSlottedObjectsSize(); ++i) {
+			SceneObject* item = defender->getSlottedObject(i);
+			if (item != nullptr && item->isArmorObject()){
+				jediToughness *= .9;
+			}
+		}
 		damage *= 1.f - (jediToughness / 100.f);
+	}
 
 	return damage < 0 ? 0 : damage;
 }
@@ -2176,20 +2183,20 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 		// saber block is special because it's just a % chance to block based on the skillmod
 		if (targetWeapon->isJediWeapon()) {
 
-			//float saberblockmod = targetCreature->getSkillMod("saber_block");
-			int skillboxes = SkillManager::instance()->getJediSkillCount(targetCreature, true) / 3;//90//targetCreature->getSkillMod("jedi_force_power_regen") / 1.3 * .004;
-			int frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .3;//100
+			int saberblockmod = targetCreature->getSkillMod("saber_block") * .5;
+			//int skillboxes = SkillManager::instance()->getJediSkillCount(targetCreature, true) / 3;//90//targetCreature->getSkillMod("jedi_force_power_regen") / 1.3 * .004;
+			int frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .425;//100
 
-			if (targetCreature->isAiAgent()) skillboxes = targetCreature->getLevel() * .25;
+			int forcedodge = saberblockmod + frsdodge;
 
-			int forcedodge = (skillboxes + frsdodge + 25);
+			if (targetCreature->isAiAgent()) forcedodge = targetCreature->getLevel() * .5;
 
 			if (forcedodge > 85) forcedodge = 85;
 
 			for (int i = 0; i < targetCreature->getSlottedObjectsSize(); ++i) {
 				SceneObject* item = targetCreature->getSlottedObject(i);
 				if (item != nullptr && item->isArmorObject()){
-					forcedodge *= .85;
+					forcedodge *= .8;
 				}
 			}
 
@@ -2408,7 +2415,7 @@ bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObjec
 
 				ZoneServer* server = attacker->getZoneServer();
 				PlayerManager* pManager = server->getPlayerManager();
-				pManager->awardExperience(attacker, "jedi_general", force * 5, true, 1.0, false);
+//				pManager->awardExperience(attacker, "jedi_general", force * 5, true, 1.0, false);
 			}
 		}
 	}

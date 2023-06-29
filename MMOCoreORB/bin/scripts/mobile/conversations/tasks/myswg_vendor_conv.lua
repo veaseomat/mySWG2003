@@ -60,7 +60,7 @@ myswg_vendor_conv:addScreen(weaps1);
 armor1 = ConvoScreen:new {    
     id = "armor1",
     leftDialog = "",
-    customDialogText = "Selling Chitin Armor 65% kinetic, 15% base eff\n\nUbese armor with 80% kinetic and 35% base eff.\n\nComposite with 80%kinetic/electic and 50% base 0% stun",
+    customDialogText = "Selling Chitin Armor 65% kinetic, 25% base eff\n\nUbese armor with 80% kinetic and 50% base eff.\n\nComposite with 80%kinetic/electic and 65% base 0% stun",
     stopConversation = "false",
     options = { 
         {"Chitin Leggings - 25k", "option16"},

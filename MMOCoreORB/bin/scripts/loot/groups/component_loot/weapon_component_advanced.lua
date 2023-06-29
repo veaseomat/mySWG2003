@@ -4,21 +4,23 @@ weapon_component_advanced = {
 	description = "",
 	minimumLevel = 0,
 	maximumLevel = 0,
-	lootItems = {
-		{groupTemplate = "weapon_component", weight = 5000000},
-		
-		{itemTemplate = "blaster_pistol_barrel_advanced", weight = 454545},
-		{itemTemplate = "blaster_power_handler_advanced", weight = 454545},
-		{itemTemplate = "blaster_rifle_barrel_advanced", weight = 454545},
-		{itemTemplate = "scope_weapon_advanced", weight = 454545},
-		{itemTemplate = "stock_advanced", weight = 454545},
-		{itemTemplate = "projectile_feed_mechanism_advanced", weight = 454545},
-		{itemTemplate = "projectile_rifle_barrel_advanced", weight = 454545},
-		{itemTemplate = "projectile_pistol_barrel_advanced", weight = 454545},
-		{itemTemplate = "reinforcement_core_advanced", weight = 454545},
-		{itemTemplate = "sword_core_advanced", weight = 454545},
-		{itemTemplate = "vibro_unit_advanced", weight = 454545},
+	lootItems = {	
+		{itemTemplate = "blaster_pistol_barrel_advanced", weight = 300000},
+		{itemTemplate = "blaster_power_handler_advanced", weight = 300000},
+		{itemTemplate = "blaster_rifle_barrel_advanced", weight = 300000},
+		{itemTemplate = "scope_weapon_advanced", weight = 300000},
+		{itemTemplate = "stock_advanced", weight = 300000},
+		{itemTemplate = "projectile_feed_mechanism_advanced", weight = 300000},
+		{itemTemplate = "projectile_rifle_barrel_advanced", weight = 300000},
+		{itemTemplate = "projectile_pistol_barrel_advanced", weight = 300000},
+		{itemTemplate = "reinforcement_core_advanced", weight = 300000},
+		{itemTemplate = "sword_core_advanced", weight = 300000},
+		{itemTemplate = "vibro_unit_advanced", weight = 300000},
 		--{itemTemplate = "saber_rcp", weight = 500000},
+				
+		{groupTemplate = "weapon_component", weight = 3300000},
+		
+		{groupTemplate = "armor_component", weight = 3400000},
 	},
 }
 
