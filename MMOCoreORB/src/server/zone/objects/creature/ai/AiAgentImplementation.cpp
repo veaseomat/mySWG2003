@@ -189,8 +189,8 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		npcTemplate->setElite(1.0);
 	}
 
-	float minDmg = ((newlvl * 15) - 100) * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
-	float maxDmg = (newlvl * 15) - 100;//((pow(newlvl, 2)) / 20) * weapran + 5;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
+	float minDmg = ((newlvl * 15) - 100) * weapran * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
+	float maxDmg = ((newlvl * 15) - 100) * weapran;//((pow(newlvl, 2)) / 20) * weapran + 5;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
 
 	if (minDmg < 30) minDmg = 30;
 	if (maxDmg < 50) maxDmg = 50;
@@ -299,7 +299,9 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	setupAttackMaps();
 
-	int lvlham = 50 * (newlvl * .4) * 1.5;//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
+	float lvlmult = ((float)newlvl / (float)100);
+
+	int lvlham = (3500 * lvlmult) + 50;//50 * (newlvl * .4) * 1.5;//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
 
 	if (legendarynpc == true) {
 		lvlham *= 2.5;
@@ -1823,13 +1825,13 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
         return;
     }
 
-	float modifier = 1.0;//(float)latency/1000.f;
+	float modifier = 1.5;//(float)latency/1000.f;
 
 //	if (isInCombat())
 //			modifier *= 0;
 
 	if (!isInCombat())
-			modifier = 3.0;
+			modifier = 5.0;
 
 //	if (isKneeling())
 //		modifier *= 1.25f;
@@ -1848,10 +1850,12 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 //	int aistam = getMaxHAM(CreatureAttribute::STAMINA);//80
 //	int aiwill = getMaxHAM(CreatureAttribute::WILLPOWER);//70r30
 
-	int healthTick = getLevel() / 10 * modifier;
-	int actionTick = getLevel() / 10 * modifier;
-	int mindTick = getLevel() / 10 * modifier;
+	int healthTick = getHAM(CreatureAttribute::CONSTITUTION) / 200 * modifier;// /200 = ~12-17 tick at lvl 100
+	int actionTick = getHAM(CreatureAttribute::STAMINA) / 200 * modifier;
+	int mindTick = getHAM(CreatureAttribute::WILLPOWER) / 200 * modifier;
 
+	if (getLevel() < 10)
+		return;
 	if (healthTick < 1)
 		return;
 	if (actionTick < 1)

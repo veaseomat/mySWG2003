@@ -1025,14 +1025,14 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 
 	if (attackType == weapon->getAttackType()) {
 		for (int i = 0; i < defenseToughMods->size(); ++i) {
-			int toughMod = defender->getSkillMod(defenseToughMods->get(i));
+			float toughMod = (float)defender->getSkillMod(defenseToughMods->get(i));
 
 			ZoneServer* server = defender->getZoneServer();
 			PlayerManager* pManager = server->getPlayerManager();
 			int playerLevel = pManager->calculatePlayerLevel(defender);
 
 			if (defender->isPlayerCreature()) {
-				int newplayertough = playerLevel * 4;
+				float newplayertough = (float)playerLevel * 4;
 				if (newplayertough > 100) newplayertough = 100;
 
 				if (weapon->isPistolWeapon())
@@ -1117,7 +1117,7 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 		}
 	}
 
-	int jediToughness = defender->getSkillMod("jedi_toughness") * 1.78;
+	float jediToughness = (float)defender->getSkillMod("jedi_toughness") * 1.78;
 	if (jediToughness > 0 && weapon->isJediWeapon()) {
 		for (int i = 0; i < defender->getSlottedObjectsSize(); ++i) {
 			SceneObject* item = defender->getSlottedObject(i);
@@ -2022,7 +2022,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 2.0;//.25 + (playerLevel * .0075);
+		damage *= 1.25;//.25 + (playerLevel * .0075);
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
@@ -2030,11 +2030,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= .6;
+		damage *= .75;
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= .6;
+		damage *= .75;
 
 	if (damage < 1) damage = 1;
 
@@ -2183,15 +2183,15 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 		// saber block is special because it's just a % chance to block based on the skillmod
 		if (targetWeapon->isJediWeapon()) {
 
-			int saberblockmod = targetCreature->getSkillMod("saber_block") * .5;
+			float saberblockmod = (float)targetCreature->getSkillMod("saber_block") * .005;
 			//int skillboxes = SkillManager::instance()->getJediSkillCount(targetCreature, true) / 3;//90//targetCreature->getSkillMod("jedi_force_power_regen") / 1.3 * .004;
-			int frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .425;//100
+			float frsdodge = ((float)targetCreature->getSkillMod("force_manipulation_light") + (float)targetCreature->getSkillMod("force_manipulation_dark")) * .00425;//100
 
-			int forcedodge = saberblockmod + frsdodge;
+			float forcedodge = (float)saberblockmod + (float)frsdodge;
 
-			if (targetCreature->isAiAgent()) forcedodge = targetCreature->getLevel() * .5;
+			if (targetCreature->isAiAgent()) forcedodge = (float)targetCreature->getLevel() * .005;
 
-			if (forcedodge > 85) forcedodge = 85;
+			if (forcedodge > .85) forcedodge = .85;
 
 			for (int i = 0; i < targetCreature->getSlottedObjectsSize(); ++i) {
 				SceneObject* item = targetCreature->getSlottedObject(i);
@@ -2203,8 +2203,8 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 			if (targetCreature->isKnockedDown())
 				forcedodge *= .5;
 
-			//int dodgeroll = System::random(100);
-			if (System::random(100) < forcedodge) {
+			float dodgeroll = (float)System::random(10000) / 10000;
+			if (dodgeroll < forcedodge) {
 				if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) ))
 					return RICOCHET;
 				else
