@@ -13,6 +13,8 @@
 #include "templates/params/creature/CreatureAttribute.h"
 #include "server/zone/Zone.h"
 #include "server/zone/managers/planet/PlanetManager.h"
+#include "server/zone/managers/player/PlayerManager.h"
+#include "server/zone/managers/skill/SkillManager.h"
 
 void ForageManagerImplementation::startForaging(CreatureObject* player, int forageType) {
 	if (player == nullptr)
@@ -309,9 +311,16 @@ bool ForageManagerImplementation::forageGiveItems(CreatureObject* player, int fo
 //
 //			}
 
+			ZoneServer* server = player->getZoneServer();
+			PlayerManager* pManager = server->getPlayerManager();
+			//int plvl = pManager->calculatePlayerLevel(player) * 4;
+			int skillboxes = SkillManager::instance()->getJediSkillCount(player, true);
+			if (skillboxes > 36) skillboxes = 36;//36 is 2 full skill trees worth
+			skillboxes *= 2.78;//36 * 2.78 = 100
+
 			if (pghost->isJedi() && zone->getZoneName() == "dantooine" && (player->getParentID() == 8535483 || player->getParentID() == 8535484 || player->getParentID() == 8535485 || player->getParentID() == 8535486 )) { //(player->getPositionX() >= 900 && player->getPositionX() <= 1100) && (player->getPositionY() >= 1900 && player->getPositionY() <= 2100)
 				lootGroup = "color_crystals";
-				level = 1 + System::random(9);
+				level = System::random(skillboxes) + 1;
 				//lootManager->createLoot(trx, inventory, lootGroup, level);
 			}
 

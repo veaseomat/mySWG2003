@@ -328,6 +328,14 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	int leggy = 0;
 
+//	ManagedReference<ZoneClientSession*> client = getClient();
+//
+//	int accID = client->getAccountID();
+//
+//	if (accID == 1)	{
+//
+//	}
+
 	if (System::random(200) == 200 && (prototype->isComponent() || prototype->isLightsaberCrystalObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
@@ -430,10 +438,10 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (subtitle == "color") {
 			int ncolor = System::random(5);//color max set in loot color crystal lua file
 
-			if (System::random(5) >= 5){//&& level >= 85//lvl 25 x 3.5 loot mult = 87
+			if (System::random(4) >= 4){//&& level >= 85//lvl 25 x 3.5 loot mult = 87
 				ncolor = System::random(6) + 5;//color crystals will be yellow,purp,orange
 			}
-			if (System::random(25) >= 25){
+			if (System::random(20) >= 20){
 				ncolor = System::random(19) + 11;//color crystals will be special named colors
 			}
 
@@ -773,11 +781,18 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 			break;
 		}
 
-//		//double loot
+		//double loot
+//
+//		ManagedReference<CreatureObject*> player = dynamic_cast<CreatureObject*>(container->getParent().get().get());
+//		ManagedReference<ZoneClientSession*> client = player->getClient();
+//
+//		int accID = client->getAccountID();
+//
+//		if (accID == 1 || accID == 83)	{
 //		//Now we do the second roll to determine loot group.
 //		roll = System::random(10000000);
 //
-//		if (System::random(100) > 70){
+//		if (System::random(100) > 50){
 //		//Select the loot group to use.
 //		for (int i = 0; i < lootGroups->count(); ++i) {
 //			const LootGroupEntry* entry = lootGroups->get(i);
@@ -794,6 +809,7 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 //			createLoot(trx, container, entry->getLootGroupName(), level);
 //
 //			break;
+//		}
 //		}
 //		}
 

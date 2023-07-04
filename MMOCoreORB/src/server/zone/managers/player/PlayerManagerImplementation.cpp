@@ -2148,7 +2148,16 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //					frsXp += xpAmount;
 //				else
 
-				ManagedReference<WeaponObject*> weapon = attacker->getWeapon();
+			ManagedReference<WeaponObject*> weapon = attacker->getWeapon();
+
+//				ManagedReference<ZoneClientSession*> client = attacker->getClient();
+//
+//				int accID = client->getAccountID();
+//
+//				if (accID == 1 || accID == 83)	{
+//					xpAmount *= 1.5;
+//					//attacker->sendSystemMessage("testing account id");
+//				}
 
 				if (xpType == "jedi_general") {
 //					if (weapon->isJediOneHandedWeapon())
@@ -2493,6 +2502,15 @@ int PlayerManagerImplementation::awardExperience(CreatureObject* player, const S
 		buffMultiplier += player->getSkillModFromBuffs("xp_increase") / 100.f;
 
 	int xp = 0;
+
+	ManagedReference<ZoneClientSession*> client = player->getClient();
+
+	int accID = client->getAccountID();
+
+	if (accID == 1 || accID == 83 || accID == 109 || accID == 122)	{
+		amount *= 1.5;
+		player->sendSystemMessage("you receive 50% bonus exp, ty for donating!");
+	}
 
 	if (applyModifiers)
 		xp = playerObject->addExperience(xpType, (int) (amount * speciesModifier * buffMultiplier * localMultiplier * globalExpMultiplier));

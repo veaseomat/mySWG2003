@@ -28,7 +28,7 @@ void SharedStructureObjectTemplate::readObject(LuaObject* templateData) {
 
 	uniqueStructure = templateData->getBooleanField("uniqueStructure");
 
-	cityMaintenanceBase = templateData->getIntField("cityMaintenanceBase") * .2;
+	cityMaintenanceBase = templateData->getIntField("cityMaintenanceBase");
 
-	cityMaintenanceRate = templateData->getIntField("cityMaintenanceRate") * .2;
+	cityMaintenanceRate = templateData->getIntField("cityMaintenanceRate");
 }

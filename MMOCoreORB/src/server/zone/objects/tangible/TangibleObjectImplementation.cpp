@@ -1069,11 +1069,9 @@ void TangibleObjectImplementation::repair(CreatureObject* player) {
 	/// Subtract complexity
 	repairChance -= (getComplexity() / 3);
 
-	/// 5% random failure
-	if (getMaxCondition() < 20 || roll < 5)
+	if (getMaxCondition() < 5)
 		repairChance = 0;
-
-	if (roll > 95)
+	else
 		repairChance = 100;
 
 	String result = repairAttempt(repairChance);
