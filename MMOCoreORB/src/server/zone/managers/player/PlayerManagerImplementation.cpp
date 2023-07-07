@@ -2505,11 +2505,14 @@ int PlayerManagerImplementation::awardExperience(CreatureObject* player, const S
 
 	ManagedReference<ZoneClientSession*> client = player->getClient();
 
-	int accID = client->getAccountID();
+	if (client != nullptr) {
 
-	if (accID == 1 || accID == 83 || accID == 109 || accID == 122)	{
-		amount *= 1.5;
-		player->sendSystemMessage("you receive 50% bonus exp, ty for donating!");
+		int accID = client->getAccountID();
+
+		if (accID == 1 || accID == 83 || accID == 109 || accID == 122  || accID == 101)	{
+			amount *= 1.5;
+			player->sendSystemMessage("you receive 50% bonus exp, ty for donating!");
+		}
 	}
 
 	if (applyModifiers)

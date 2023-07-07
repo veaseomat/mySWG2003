@@ -782,8 +782,8 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		}
 
 		//double loot
-//
-//		ManagedReference<CreatureObject*> player = dynamic_cast<CreatureObject*>(container->getParent().get().get());
+
+//		ManagedReference<CreatureObject*> player = container->getParent();
 //		ManagedReference<ZoneClientSession*> client = player->getClient();
 //
 //		int accID = client->getAccountID();
