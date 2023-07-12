@@ -607,20 +607,20 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 				trx.abort() << "createLoot failed for ai object.";
 			}
 
-			ManagedReference<ZoneClientSession*> client = player->getClient();
-
-			if (client != nullptr) {
-				int accID = client->getAccountID();
-
-				if (accID == 1 || accID == 83 || accID == 122)	{
-					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-						trx.commit(true);
-						player->sendSystemMessage("you receive extra loot, ty for donating!");
-					} else {
-						trx.abort() << "createLoot failed for ai object.";
-					}
-				}
-			}
+//			ManagedReference<ZoneClientSession*> client = player->getClient();
+//
+//			if (client != nullptr) {
+//				int accID = client->getAccountID();
+//
+//				if (accID == 1 || accID == 83 || accID == 122)	{
+//					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
+//						trx.commit(true);
+//						player->sendSystemMessage("you receive extra loot, ty for donating!");
+//					} else {
+//						trx.abort() << "createLoot failed for ai object.";
+//					}
+//				}
+//			}
 
 		}
 

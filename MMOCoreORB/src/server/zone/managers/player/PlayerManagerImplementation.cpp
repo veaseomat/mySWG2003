@@ -2159,9 +2159,9 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //					//attacker->sendSystemMessage("testing account id");
 //				}
 
-			ManagedReference<AiAgent*> cai = cast<AiAgent*>(destructedObject);
-
-			int clvl = cai->getLevel();
+//			ManagedReference<AiAgent*> cai = cast<AiAgent*>(destructedObject);
+//
+//			int clvl = cai->getLevel();
 
 				if (xpType == "jedi_general") {
 //					if (weapon->isJediOneHandedWeapon())
@@ -2177,7 +2177,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 					awardExperience(attacker, "jedi_general", xpAmount / 2, true, 1.0, true);
 
 					if (attacker->hasSkill("force_title_jedi_rank_03"))
-						awardExperience(attacker, "force_rank_xp", clvl * 3, true, 1.0, false);
+						awardExperience(attacker, "force_rank_xp", xpAmount / 2 * 3, true, .001, true);
 						//frsXp += xpAmount;
 				}
 
@@ -2507,17 +2507,17 @@ int PlayerManagerImplementation::awardExperience(CreatureObject* player, const S
 
 	int xp = 0;
 
-	ManagedReference<ZoneClientSession*> client = player->getClient();
-
-	if (client != nullptr) {
-
-		int accID = client->getAccountID();
-
-		if (accID == 1 || accID == 83 || accID == 109 || accID == 122  || accID == 101)	{
-			amount *= 1.5;
-			player->sendSystemMessage("you receive 50% bonus exp, ty for donating!");
-		}
-	}
+//	ManagedReference<ZoneClientSession*> client = player->getClient();
+//
+//	if (client != nullptr) {
+//
+//		int accID = client->getAccountID();
+//
+//		if (accID == 1 || accID == 83 || accID == 109 || accID == 122  || accID == 101)	{
+//			amount *= 1.5;
+//			player->sendSystemMessage("you receive 50% bonus exp, ty for donating!");
+//		}
+//	}
 
 	if (applyModifiers)
 		xp = playerObject->addExperience(xpType, (int) (amount * speciesModifier * buffMultiplier * localMultiplier * globalExpMultiplier));
