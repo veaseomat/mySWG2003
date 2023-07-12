@@ -2159,6 +2159,8 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //					//attacker->sendSystemMessage("testing account id");
 //				}
 
+			int clvl = attacker->getLevel();
+
 				if (xpType == "jedi_general") {
 //					if (weapon->isJediOneHandedWeapon())
 //						//xpType = "combat_meleespecialize_onehandlightsaber";
@@ -2173,7 +2175,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 					awardExperience(attacker, "jedi_general", xpAmount / 2, true, 1.0, true);
 
 					if (attacker->hasSkill("force_title_jedi_rank_03"))
-						awardExperience(attacker, "force_rank_xp", xpAmount / 2, true, 0.001, true);
+						awardExperience(attacker, "force_rank_xp", clvl * 3, true, 1.0, false);
 						//frsXp += xpAmount;
 				}
 
