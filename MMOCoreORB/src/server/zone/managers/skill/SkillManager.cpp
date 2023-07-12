@@ -320,7 +320,13 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 		//Witdraw experience.
 		if (!noXpRequired) {
+			if (skillName.beginsWith("force_rank"))	{
+				//frs doesnt remove exp
+			} else {
+
 			ghost->addExperience(skill->getXpType(), -skill->getXpCost(), true);
+
+			}
 		}
 
 		creature->addSkill(skill, notifyClient);
@@ -600,6 +606,9 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 		if (skill->getXpCost() > 0) { //dead jedi dont get xp back
 			if (creature->isDead() && skillName.beginsWith("force_"))	{
+
+			}
+			if (skillName.beginsWith("force_rank"))	{
 
 			}
 			else	{
