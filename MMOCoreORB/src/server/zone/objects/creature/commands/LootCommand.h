@@ -56,7 +56,7 @@ public:
 			return GENERALERROR;
 
 		//Determine the loot rights.
-		bool looterIsOwner = true;//(lootContainer->getContainerPermissions()->getOwnerID() == creature->getObjectID());
+		bool looterIsOwner = (lootContainer->getContainerPermissions()->getOwnerID() == creature->getObjectID());
 		bool groupIsOwner = (lootContainer->getContainerPermissions()->getOwnerID() == creature->getGroupID());
 
 		//Allow player to loot the corpse if they own it.
@@ -66,36 +66,36 @@ public:
 				playerManager->lootAll(creature, ai);
 
 
-				Zone* zone = creature->getZone();
-
-				SortedVector<QuadTreeEntry*> closeObjects;
-				CloseObjectsVector* closeObjectsVector = (CloseObjectsVector*) creature->getCloseObjects();
-				if (closeObjectsVector == nullptr) {
-					zone->getInRangeObjects(creature->getWorldPositionX(), creature->getWorldPositionY(), 32, &closeObjects, true);
-				} else {
-					closeObjectsVector->safeCopyReceiversTo(closeObjects, CloseObjectsVector::CREOTYPE);
-				}
-
-				for (int i = 0; i < closeObjects.size(); ++i) {
-					SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
-
-					if (obj == nullptr)
-						continue;
-
-					if (obj->getObjectID() == creature->getObjectID())
-						continue;
-
-					CreatureObject* c = obj->asCreatureObject();
-
-					if (c == nullptr || c->isPlayerCreature() || !ai->isDead())
-						continue;
-
-					if (!creature->isInRange(c, 32))//distance
-						continue;
-
-					playerManager->lootAll(creature, c);
-
-				}
+//				Zone* zone = creature->getZone();
+//
+//				SortedVector<QuadTreeEntry*> closeObjects;
+//				CloseObjectsVector* closeObjectsVector = (CloseObjectsVector*) creature->getCloseObjects();
+//				if (closeObjectsVector == nullptr) {
+//					zone->getInRangeObjects(creature->getWorldPositionX(), creature->getWorldPositionY(), 32, &closeObjects, true);
+//				} else {
+//					closeObjectsVector->safeCopyReceiversTo(closeObjects, CloseObjectsVector::CREOTYPE);
+//				}
+//
+//				for (int i = 0; i < closeObjects.size(); ++i) {
+//					SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
+//
+//					if (obj == nullptr)
+//						continue;
+//
+//					if (obj->getObjectID() == creature->getObjectID())
+//						continue;
+//
+//					CreatureObject* c = obj->asCreatureObject();
+//
+//					if (c == nullptr || c->isPlayerCreature() || !ai->isDead())
+//						continue;
+//
+//					if (!creature->isInRange(c, 32))//distance
+//						continue;
+//
+//					playerManager->lootAll(creature, c);
+//
+//				}
 
 			} else {
 				//Check if the corpse's inventory contains any items.
