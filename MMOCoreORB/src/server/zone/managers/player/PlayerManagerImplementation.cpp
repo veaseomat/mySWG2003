@@ -2159,7 +2159,9 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 //					//attacker->sendSystemMessage("testing account id");
 //				}
 
-			int clvl = attacker->getLevel();
+			ManagedReference<AiAgent*> cai = cast<AiAgent*>(destructedObject);
+
+			int clvl = cai->getLevel();
 
 				if (xpType == "jedi_general") {
 //					if (weapon->isJediOneHandedWeapon())
