@@ -783,7 +783,7 @@ void PlanetManagerImplementation::loadClientRegions(LuaObject* outposts) {
 
 	String zoneName = zone->getZoneName();
 
-	//removing all this allows building in cities but also allows spawns
+	//removing this allows building in cities but also allows spawns
 	for (int i = 0; i < dtiff.getTotalRows(); ++i) {
 		String regionName;
 		float x, y, radius;

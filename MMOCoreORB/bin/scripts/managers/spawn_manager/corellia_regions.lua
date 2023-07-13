@@ -44,7 +44,7 @@ corellia_regions = {
 	{"corellia_rebel_riverside_fort", 0, 0, {CIRCLE, 0}, UNDEFINEDAREA},
 --	{"coronet_easy_newbie", -230, -4460, {CIRCLE, 1750}, SPAWNAREA + NOWORLDSPAWNAREA, {"corellia_easy"}, 256},
 	{"coronet", 0, 0, {CIRCLE, 0}, UNDEFINEDAREA},
---	{"coronet_house", -325,-4656, {CIRCLE, 250}, NOSPAWNAREA},
+	{"coronet_house", -325,-4656, {CIRCLE, 250}, NOSPAWNAREA},
 --	{"coronet", -178, -4504, {CIRCLE, 581}, NOSPAWNAREA},--this one works
 --	{"coronet_medium_newbie", -230, -4460, {RING, 1750, 2500}, SPAWNAREA + NOWORLDSPAWNAREA, {"corellia_medium"}, 384},
 	{"crystal_arch_hall", -6831, 2200, {CIRCLE, 30}, NOSPAWNAREA + NOBUILDZONEAREA},
