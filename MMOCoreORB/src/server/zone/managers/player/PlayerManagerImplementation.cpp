@@ -2513,7 +2513,7 @@ int PlayerManagerImplementation::awardExperience(CreatureObject* player, const S
 
 		int accID = client->getAccountID();
 
-		if (accID == 1 || accID == 83 || accID == 109 || accID == 122  || accID == 101)	{
+		if (accID == 1 || accID == 83 || accID == 109 || accID == 122  || accID == 101 || accID == 10838)	{
 			amount *= 1.5;
 			player->sendSystemMessage("you receive 50% bonus exp, ty for donating!");
 		}

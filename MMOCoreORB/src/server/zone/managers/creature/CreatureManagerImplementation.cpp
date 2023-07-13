@@ -612,7 +612,7 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 			if (client != nullptr) {
 				int accID = client->getAccountID();
 
-				if (accID == 1 || accID == 83 || accID == 122)	{
+				if (accID == 1 || accID == 83 || accID == 122 || accID == 10838)	{
 					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
 						trx.commit(true);
 						player->sendSystemMessage("you receive extra loot, ty for donating!");
