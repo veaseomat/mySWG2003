@@ -336,7 +336,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //
 //	}
 
-	if (System::random(200) == 200 && (prototype->isComponent() || prototype->isLightsaberCrystalObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
+	if (System::random(200) == 200 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 
@@ -361,7 +361,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	//|| aicre->getElite() >= 1
 
-	if (leggy == 0 && (System::random(50) == 50 ) && (prototype->isComponent() || prototype->isLightsaberCrystalObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
+	if (leggy == 0 && (System::random(50) == 50 ) && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
 		prototype->setCustomObjectName(newName, false);
 
@@ -438,10 +438,10 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (subtitle == "color") {
 			int ncolor = System::random(5);//color max set in loot color crystal lua file
 
-			if (System::random(4) >= 4){//&& level >= 85//lvl 25 x 3.5 loot mult = 87
+			if (System::random(3) >= 3){//&& level >= 85//lvl 25 x 3.5 loot mult = 87
 				ncolor = System::random(6) + 5;//color crystals will be yellow,purp,orange
 			}
-			if (System::random(20) >= 20){
+			if (System::random(10) >= 10 && level >= 300){
 				ncolor = System::random(19) + 11;//color crystals will be special named colors
 			}
 

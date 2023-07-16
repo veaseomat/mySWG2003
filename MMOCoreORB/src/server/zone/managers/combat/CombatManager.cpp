@@ -1995,7 +1995,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= 1.f + (lightDamage / 100.f);
 		}
 
-		float darkDamage = attacker->getSkillMod("force_manipulation_dark") * 0.4;
+		float darkDamage = attacker->getSkillMod("force_manipulation_dark") * 0.5;
 
 		if (darkDamage > 0) {
 			darkDamage += 10;
@@ -2014,7 +2014,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		float darkarmor = defender->getSkillMod("force_manipulation_dark") * 0.3;
 
 		if (darkarmor > 0) {
-			lightarmor += 5;
+			darkarmor += 10;
 			damage *= 1.f - (darkarmor / 100.f);
 		}
 

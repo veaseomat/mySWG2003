@@ -43,7 +43,7 @@
 
 object_tangible_component_weapon_lightsaber_lightsaber_module_force_crystal = object_tangible_component_weapon_lightsaber_shared_lightsaber_module_force_crystal:new {
 		gameObjectType = 262156,
-		noTrade = 1,
+--		noTrade = 1,
 		
 --	numberExperimentalProperties = {1, 1, 1},
 --	experimentalProperties = {"XX", "XX", "XX"},

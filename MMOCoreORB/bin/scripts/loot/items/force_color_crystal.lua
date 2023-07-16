@@ -7,8 +7,8 @@ force_color_crystal = {
 	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_module_force_crystal.iff",
 	craftingValues = {
 		{"color",0,30,0},--actual color now managed in lootmanagerimp.cpp
-		{"mindamage", 1,125,0},
-		{"maxdamage", 1,125,0},
+		{"mindamage", 5,125,0},
+		{"maxdamage", 5,125,0},
 		{"attackspeed",0.0,-0.6,1},
 		{"woundchance",0,0,0},
 		{"forcecost",0,-10,0},

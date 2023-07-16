@@ -8,11 +8,11 @@ krayt_dragon_pearl = {
 	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_module_force_crystal.iff",
 	craftingValues = {
 		{"color",0,30,0},--actual color now managed in lootmanagerimp.cpp
-		{"mindamage", 1,125,0},
-		{"maxdamage", 1,125,0},
+		{"mindamage", 40,125,0},
+		{"maxdamage", 40,125,0},
 		{"attackspeed",0.0,-0.6,1},
 		{"woundchance",0,0,0},
-		{"forcecost",0,-10,0},
+		{"forcecost",-4,-10,0},
 		--{"hitpoints",20,100,0},forcecost
 		--{"midrangemod",4,20,0},
 --		{"attackhealthcost",0,-9,0},

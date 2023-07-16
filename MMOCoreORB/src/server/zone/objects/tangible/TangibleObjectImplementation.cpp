@@ -544,8 +544,11 @@ void TangibleObjectImplementation::fillAttributeList(AttributeListMessage* alm, 
 	SceneObjectImplementation::fillAttributeList(alm, object);
 
 	if (maxCondition > 0) {
+		StringBuffer newcond;
+		newcond << ", " << (maxCondition-(int)conditionDamage) * 100 / maxCondition << "%";// << maxCondition;
+
 		StringBuffer cond;
-		cond << (maxCondition-(int)conditionDamage) << "/" << maxCondition;
+		cond << (maxCondition-(int)conditionDamage) << "/" << maxCondition << newcond;
 
 //		auto config = ConfigManager::instance();
 //
@@ -557,7 +560,9 @@ void TangibleObjectImplementation::fillAttributeList(AttributeListMessage* alm, 
 //			cond << config->getNoTradeMessage();
 //		}
 
-		alm->insertAttribute("condition", cond);
+		//int newcond = (maxCondition-(int)conditionDamage) * 100 / maxCondition;
+
+		alm->insertAttribute("condition", cond);//cond
 	}
 
 	alm->insertAttribute("volume", volume);
