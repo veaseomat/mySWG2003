@@ -3269,6 +3269,9 @@ bool CreatureObjectImplementation::isAttackableBy(CreatureObject* object, bool b
 
 	if (areInDuel)
 		return true;
+		
+	if (object->hasBountyMissionFor(asCreatureObject()))
+		return true;
 
 	//frs attackable
 	if (asCreatureObject()->hasSkill("force_rank_light_novice") && object->hasSkill("force_rank_dark_novice")){

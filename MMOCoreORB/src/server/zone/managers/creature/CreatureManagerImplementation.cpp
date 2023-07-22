@@ -611,11 +611,20 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 
 			if (client != nullptr) {
 				int accID = client->getAccountID();
-
-				if (accID == 1 || accID == 83 || accID == 122 || accID == 4490)	{
+				//$50
+				if (accID == 1 || accID == 83 || accID == 122 || accID == 4490 || accID == 696969)	{
 					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
 						trx.commit(true);
-						player->sendSystemMessage("you receive extra loot, ty for donating!");
+						player->sendSystemMessage("you double loot, ty for donating!");
+					} else {
+						trx.abort() << "createLoot failed for ai object.";
+					}
+				}
+				//$125
+				if (accID == 1 || accID == 696969)	{
+					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
+						trx.commit(true);
+						player->sendSystemMessage("you receive triple loot, ty for donating!");
 					} else {
 						trx.abort() << "createLoot failed for ai object.";
 					}
