@@ -3270,7 +3270,7 @@ bool CreatureObjectImplementation::isAttackableBy(CreatureObject* object, bool b
 	if (areInDuel)
 		return true;
 		
-	if (object->hasBountyMissionFor(asCreatureObject()))
+	if (object->hasBountyMissionFor(asCreatureObject()) || hasBountyMissionFor(object))
 		return true;
 
 	//frs attackable
