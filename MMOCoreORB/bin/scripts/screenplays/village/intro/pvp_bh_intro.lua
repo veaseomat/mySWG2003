@@ -91,7 +91,7 @@ function PVPBHIntro:doDelayedStep(pPlayer)
 --	end
 	
 	--delay for dead incap or not in good area
-	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer)) then
+	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer) or not CreatureObject(pPlayer):isOvert()) then
 		createEvent(getRandomNumber(5, 15) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "")
 		return
 	end

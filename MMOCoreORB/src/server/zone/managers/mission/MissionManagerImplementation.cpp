@@ -681,7 +681,7 @@ void MissionManagerImplementation::randomizeBountyTerminalMissions(CreatureObjec
 		}
 
 		float cityBonus = 1.f + player->getSkillMod("private_spec_missions") / 100.f;
-		mission->setRewardCredits(mission->getRewardCredits() * cityBonus);
+		mission->setRewardCredits(mission->getRewardCredits() * cityBonus * 5);
 
 		mission->setRefreshCounter(counter, true);
 	}
@@ -2082,8 +2082,8 @@ bool MissionManagerImplementation::isBountyValidForPlayer(CreatureObject* player
 		return false;
 
 
-//	if (creature->getFactionStatus() != FactionStatus::OVERT)//if jedi not overt then dont add to terminal
-//		return false;
+	if (creature->getFactionStatus() != FactionStatus::OVERT)//if jedi not overt then dont add to terminal
+		return false;
 
 	auto targetGhost = creature->getPlayerObject();
 	float terminalVisibilityThreshold = VisibilityManager::instance()->getTerminalVisThreshold();
