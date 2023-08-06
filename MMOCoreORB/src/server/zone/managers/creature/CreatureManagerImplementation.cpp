@@ -607,29 +607,47 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 				trx.abort() << "createLoot failed for ai object.";
 			}
 
-			ManagedReference<ZoneClientSession*> client = player->getClient();
-
-			if (client != nullptr) {
-				int accID = client->getAccountID();
-				//$50
-				if (accID == 1 || accID == 83 || accID == 122 || accID == 4490 || accID == 696969)	{
-					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-						trx.commit(true);
-						player->sendSystemMessage("you double loot, ty for donating!");
-					} else {
-						trx.abort() << "createLoot failed for ai object.";
-					}
-				}
-				//$125
-				if (accID == 1 || accID == 696969)	{
-					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-						trx.commit(true);
-						player->sendSystemMessage("you receive triple loot, ty for donating!");
-					} else {
-						trx.abort() << "createLoot failed for ai object.";
-					}
+			if (System::random(100) >= 50){
+				if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
+					trx.commit(true);
+				} else {
+					trx.abort() << "createLoot failed for ai object.";
 				}
 			}
+
+			if (System::random(100) >= 75){
+				if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
+					trx.commit(true);
+				} else {
+					trx.abort() << "createLoot failed for ai object.";
+				}
+			}
+
+//			ManagedReference<ZoneClientSession*> client = player->getClient();
+//
+//			if (client != nullptr) {
+//				int accID = client->getAccountID();
+//				//$50
+//
+//
+//				if (accID == 1 || accID == 83 || accID == 122 || accID == 4490 || accID == 696969)	{
+//					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
+//						trx.commit(true);
+//						player->sendSystemMessage("you double loot, ty for donating!");
+//					} else {
+//						trx.abort() << "createLoot failed for ai object.";
+//					}
+//				}
+//				//$125
+//				if (accID == 1 || accID == 696969)	{
+//					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
+//						trx.commit(true);
+//						player->sendSystemMessage("you receive triple loot, ty for donating!");
+//					} else {
+//						trx.abort() << "createLoot failed for ai object.";
+//					}
+//				}
+//			}
 
 		}
 

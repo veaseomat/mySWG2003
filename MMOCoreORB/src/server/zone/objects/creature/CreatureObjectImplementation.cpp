@@ -3262,24 +3262,21 @@ bool CreatureObjectImplementation::isAttackableBy(CreatureObject* object, bool b
 	if (ghost == nullptr || targetGhost == nullptr)
 		return false;
 
-	if (hasPersonalEnemyFlag(object) && object->hasPersonalEnemyFlag(asCreatureObject()))
-		return true;
+//	if (hasPersonalEnemyFlag(object) && object->hasPersonalEnemyFlag(asCreatureObject()))
+//		return true;
 
 	bool areInDuel = (ghost->requestedDuelTo(object) && targetGhost->requestedDuelTo(asCreatureObject()));
 
 	if (areInDuel)
 		return true;
 		
-	if (object->hasBountyMissionFor(asCreatureObject()) || hasBountyMissionFor(object))
-		return true;
-
 	//frs attackable
-	if (asCreatureObject()->hasSkill("force_rank_light_novice") && object->hasSkill("force_rank_dark_novice")){
-		return true;
-	}
-	if (asCreatureObject()->hasSkill("force_rank_dark_novice") && object->hasSkill("force_rank_light_novice")){
-		return true;
-	}
+//	if (asCreatureObject()->hasSkill("force_rank_light_novice") && object->hasSkill("force_rank_dark_novice")){
+//		return true;
+//	}
+//	if (asCreatureObject()->hasSkill("force_rank_dark_novice") && object->hasSkill("force_rank_light_novice")){
+//		return true;
+//	}
 
 //	if (ghost->hasBhTef())
 //		return true;
@@ -3288,6 +3285,9 @@ bool CreatureObjectImplementation::isAttackableBy(CreatureObject* object, bool b
 
 	if (getGroupID() != 0 && getGroupID() == object->getGroupID())
 		return false;
+
+	if (object->hasBountyMissionFor(asCreatureObject()) || hasBountyMissionFor(object))
+		return true;
 
 	if ((pvpStatusBitmask & CreatureFlag::OVERT) && (object->getPvpStatusBitmask() & CreatureFlag::OVERT) && object->getFaction() != getFaction())
 		return true;

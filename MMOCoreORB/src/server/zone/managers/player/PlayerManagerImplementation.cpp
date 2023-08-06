@@ -2509,22 +2509,24 @@ int PlayerManagerImplementation::awardExperience(CreatureObject* player, const S
 
 	ManagedReference<ZoneClientSession*> client = player->getClient();
 
-	if (client != nullptr) {
+//	if (client != nullptr) {
+//
+//		int accID = client->getAccountID();
+//
+//		//$15
+//		if (accID == 1 || accID == 83 || accID == 109 || accID == 122  || accID == 101 || accID == 4490 || accID == 696969 || accID == 3)	{
+//			amount *= 1.5;
+//			player->sendSystemMessage("you receive 50% bonus exp, ty for donating!");
+//		}
+//		//$75
+//		if (accID == 1 || accID == 122  || accID == 4490 || accID == 696969)	{
+//			amount *= 1.334;//1.5 x 1.334 = 2.001
+//			player->sendSystemMessage("you receive 100% bonus exp, ty for donating!");
+//		}
+//
+//	}
 
-		int accID = client->getAccountID();
-
-		//$15
-		if (accID == 1 || accID == 83 || accID == 109 || accID == 122  || accID == 101 || accID == 4490 || accID == 696969 || accID == 3)	{
-			amount *= 1.5;
-			player->sendSystemMessage("you receive 50% bonus exp, ty for donating!");
-		}
-		//$75
-		if (accID == 1 || accID == 122  || accID == 4490 || accID == 696969)	{
-			amount *= 1.334;//1.5 x 1.334 = 2.001
-			player->sendSystemMessage("you receive 100% bonus exp, ty for donating!");
-		}
-
-	}
+	amount *= 2.0;
 
 	if (applyModifiers)
 		xp = playerObject->addExperience(xpType, (int) (amount * speciesModifier * buffMultiplier * localMultiplier * globalExpMultiplier));

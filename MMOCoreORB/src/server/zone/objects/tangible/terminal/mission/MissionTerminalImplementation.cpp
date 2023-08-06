@@ -112,7 +112,8 @@ int MissionTerminalImplementation::handleObjectMenuSelect(CreatureObject* player
 		int terminalVisThreshold = VisibilityManager::instance()->getTerminalVisThreshold();
 
 		if (player->getPlayerObject()->getVisibility() >= terminalVisThreshold)
-			player->sendSystemMessage("You are listed on the Bounty Hunter Terminals.");
+			player->sendSystemMessage("You have enough visibility for the Bounty Hunter Terminals, but you will not appear on the terminals if you are not Special Forces reb/imp.");
+
 		if (player->getPlayerObject()->getVisibility() < terminalVisThreshold)
 			player->sendSystemMessage("You are not listed on the Bounty Hunter Terminals.");
 	}

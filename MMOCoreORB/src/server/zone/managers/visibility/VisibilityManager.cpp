@@ -167,7 +167,7 @@ void VisibilityManager::increaseVisibility(CreatureObject* creature, int visibil
 
 			ghost->setVisibility(finalVis);
 
-//			creature->sendSystemMessage("Jedi visibility increased.");
+			creature->sendSystemMessage("Jedi visibility increased.");
 
 //			ghost->updateLastCombatActionTimestamp(false,false,true);
 
