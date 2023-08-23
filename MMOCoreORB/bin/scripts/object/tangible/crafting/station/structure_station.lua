@@ -71,7 +71,7 @@ object_tangible_crafting_station_structure_station = object_tangible_crafting_st
 
 	stationType = 6,
 	complexityLevel = 100,
-		effectiveness = 45,
+	usemodifier = 45,
 
 
 	numberExperimentalProperties = {1, 1, 1, 1},

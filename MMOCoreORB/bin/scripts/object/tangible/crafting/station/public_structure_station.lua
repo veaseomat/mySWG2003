@@ -69,7 +69,7 @@ object_tangible_crafting_station_public_structure_station = object_tangible_craf
    customizationDefaults = {},
 
    stationType = 6,   complexityLevel = 100,
-   	effectiveness = 45,
+	usemodifier = 45,
 }
 
 ObjectTemplates:addTemplate(object_tangible_crafting_station_public_structure_station, "object/tangible/crafting/station/public_structure_station.iff")

@@ -71,6 +71,7 @@ object_tangible_crafting_station_space_station = object_tangible_crafting_statio
 
 	stationType = 5,
 	complexityLevel = 100,
+		usemodifier = 45,
 
 	numberExperimentalProperties = {1, 1, 1, 1},
 	experimentalProperties = {"XX", "XX", "XX", "CD"},

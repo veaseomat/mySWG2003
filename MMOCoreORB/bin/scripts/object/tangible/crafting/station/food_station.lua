@@ -71,7 +71,7 @@ object_tangible_crafting_station_food_station = object_tangible_crafting_station
 
 	stationType = 2,
 	complexityLevel = 100,
-		effectiveness = 45,
+	usemodifier = 45,
 
 	numberExperimentalProperties = {1, 1, 1, 1},
 	experimentalProperties = {"XX", "XX", "XX", "CD"},

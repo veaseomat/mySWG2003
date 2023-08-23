@@ -54,7 +54,7 @@ int CraftingStationImplementation::handleObjectMenuSelect(CreatureObject* player
 void CraftingStationImplementation::fillAttributeList(AttributeListMessage* alm, CreatureObject* object) {
 	TangibleObjectImplementation::fillAttributeList(alm, object);
 
-	alm->insertAttribute("stationmod", Math::getPrecision(effectiveness, 2));
+	alm->insertAttribute("stationmod", 45);//Math::getPrecision(effectiveness, 2));
 }
 
 void CraftingStationImplementation::sendInputHopper(CreatureObject* player) {
@@ -113,7 +113,7 @@ void CraftingStationImplementation::createChildObjects() {
 void CraftingStationImplementation::updateCraftingValues(CraftingValues* values, bool firstUpdate) {
 	/// useModifer is the effectiveness
 
-	effectiveness = values->getCurrentValue("usemodifier");
+	effectiveness = 45;//values->getCurrentValue("usemodifier");
 
 	/*if(firstUpdate && values->hasSlotFilled("storage_compartment")) {
 		String ingredientHopperName = "object/tangible/hopper/crafting_station_hopper/crafting_station_ingredient_hopper_structure_small.iff";
