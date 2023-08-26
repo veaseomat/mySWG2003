@@ -1,0 +1,38 @@
+trainer_dark_sentinel = Creature:new {
+	objectName = "",
+	customName = "Dark Council Member",
+	randomNameType = NAME_GENERIC,
+	randomNameTag = true,
+	socialGroup = "self",
+	faction = "",
+	level = 500,
+	chanceHit = 30,
+	damageMin = 2645,
+	damageMax = 5000,
+	baseXp = 45,
+	baseHAM = 1106000,
+	baseHAMmax = 1352000,
+	armor = 1,
+	resists = {80,80,80,80,80,80,80,80,-1},
+	meatType = "",
+	meatAmount = 0,
+	hideType = "",
+	hideAmount = 0,
+	boneType = "",
+	boneAmount = 0,
+	milk = 0,
+	tamingChance = 0,
+	ferocity = 0,
+	pvpBitmask = NONE,
+	creatureBitmask = NONE,
+	optionsBitmask = INVULNERABLE + CONVERSABLE,
+	diet = HERBIVORE,
+
+	templates = { "dark_jedi" },
+	lootGroups = {},
+	weapons = {"dark_jedi_weapons_gen2"},
+	conversationTemplate = "darkfrsTrainerConvoTemplate",
+	attacks = merge(lightsabermaster,forcepowermaster)
+}
+
+CreatureTemplates:addCreatureTemplate(trainer_dark_sentinel, "trainer_dark_sentinel")
