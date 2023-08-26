@@ -1,12 +1,12 @@
-pvpljk3 = Creature:new {
+pvpljk4 = Creature:new {
 	objectName = "",
-	customName = "Jedi Arbiter",
+	customName = "Jedi Coincil Member",
 	randomNameType = NAME_GENERIC,
 	randomNameTag = true,
 	socialGroup = "",
 	faction = "",
 	level = 350,
-	elite = 2.5,
+	elite = 3.0,
 	chanceHit = 23.5,
 	damageMin = 1645,
 	damageMax = 3000,
@@ -14,7 +14,7 @@ pvpljk3 = Creature:new {
 	baseHAM = 90000,
 	baseHAMmax = 101000,
 	armor = 1,
-	resists = {80,80,80,80,80,80,80,40,-1},
+	resists = {80,80,80,80,80,80,80,50,-1},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -53,4 +53,4 @@ pvpljk3 = Creature:new {
 	attacks =	merge(lightsabermaster)
 }
 
-CreatureTemplates:addCreatureTemplate(pvpljk3, "pvpljk3")
+CreatureTemplates:addCreatureTemplate(pvpljk4, "pvpljk4")

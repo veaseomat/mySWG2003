@@ -762,7 +762,7 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 //			if (weapon->isHeavyAcidRifle())//4sec cap
 //				npcacc = attacker->getLevel() * 1.1;
 			if (weapon->isJediWeapon())
-				npcacc *= 1.25;
+				npcacc *= 2.0;
 		}
 
 		if (!attacker->isTurret()) {
@@ -2504,6 +2504,10 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 
 			if (targetCreature->isAiAgent()) targetDefense = targetCreature->getLevel() / 2;
 
+			ManagedReference<WeaponObject*> targetWeapon = targetCreature->getWeapon();
+			if (targetCreature->isAiAgent() && targetWeapon->isJediWeapon())
+				targetDefense *= 1.65;
+
 			if (targetDefense > 90)
 				targetDefense = 90.f;
 
@@ -2812,7 +2816,7 @@ if (!attacker->isTurret()) {
 			return 0;
 		}
 
-		if (weapon->isJediWeapon() && System::random(15) == 15 && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7) || aimind < (aimindmax * .7))) {
+		if (weapon->isJediWeapon() && System::random(10) == 10 && (aihealth < (aihealthmax * .5) || aiaction < (aiactionmax * .5) || aimind < (aimindmax * .5))) {
 
 			int jedhealammount = 500;
 

@@ -12,7 +12,7 @@ function ForceShrineMenuComponent:fillObjectMenuResponse(pSceneObject, pMenuResp
 	end
 	
 	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03")) then
-		menuResponse:addRadialMenuItem(122, 3, "Spawn FRS Encounter") -- Recover Jedi Items
+		menuResponse:addRadialMenuItem(122, 3, "Spawn FRS Encounter (3hr timer)")
 	end
 
 end
@@ -58,10 +58,22 @@ function ForceShrineMenuComponent:handleObjectMenuSelect(pObject, pPlayer, selec
 		self:recoverRobe(pPlayer)
 	end
 		
-	if (selectedID == 122) then
+	if (selectedID == 122) and VillageJediManagerHolocron.canUseHolocron(pPlayer) then 
+	--and VillageJediManagerHolocron.canUseHolocron(pPlayer)
 	
 --	local encounter = 0;
 --	local count = 1;
+
+		CreatureObject(pPlayer):addCooldown("used_holocron", 3 * 60 * 60 * 1000)
+
+		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_10") then
+			PVPDJKEncounter4:start(pPlayer)	
+			return
+		end
+		if CreatureObject(pPlayer):hasSkill("force_rank_dark_rank_10") then
+			PVPLJKEncounter4:start(pPlayer)	
+			return
+		end
 	
 		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_08") then
 			PVPDJKEncounter3:start(pPlayer)	
@@ -93,6 +105,9 @@ function ForceShrineMenuComponent:handleObjectMenuSelect(pObject, pPlayer, selec
 --		if encounter == 1 then
 --		
 --		end
+
+	else
+	CreatureObject(pPlayer):sendSystemMessage("You can only spawn an encounter once every 3 hours.")
 		
 	end
 
