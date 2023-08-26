@@ -148,5 +148,7 @@ createTrainerConversationTemplate("weaponsmithTrainerConvoTemplate", "trainer_we
 
 createTrainerConversationTemplate("fsTrainerConvoTemplate", "trainer_fs")
 createTrainerConversationTemplate("jediTrainerConvoTemplate", "trainer_jedi")
+createTrainerConversationTemplate("darkfrsTrainerConvoTemplate", "trainer_frs_dark")
+createTrainerConversationTemplate("lightfrsTrainerConvoTemplate", "trainer_frs_light")
 
 createTrainerConversationTemplate("myswgTrainerConvoTemplate", "trainer_myswg")

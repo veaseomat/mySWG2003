@@ -163,14 +163,6 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 //	if (newlvl > 500) newlvl = 500;
 
-
-	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
-//
-//	if (elite > 1.0) {
-//		//legendarynpc = true;
-//		newlvl *= elite;
-//	}
-
 	//newlvl *= templateData->getElite();
 
 	level = newlvl;//(pow(newlvl, 2)) / 33; //
@@ -187,6 +179,14 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		legendarynpc = true;
 		weapran += 2.5;
 		npcTemplate->setElite(1.0);
+	}
+
+	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
+//
+	if (elite > 1.0) {
+		//legendarynpc = true;
+		//newlvl *= elite;
+		weapran *= elite;
 	}
 
 	float minDmg = ((newlvl * 15) - 100) * weapran * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;

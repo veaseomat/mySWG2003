@@ -46,3 +46,6 @@ includeFile("trainer/master_artisan.lua")
 
 includeFile("trainer/trainer_myswg.lua")
 includeFile("trainer/myswg_vendor.lua")
+includeFile("trainer/trainer_dark_sentinel.lua")
+includeFile("trainer/trainer_light_sentinel.lua")
+

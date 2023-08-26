@@ -44,10 +44,10 @@ function PVPLJKEncounter:onLoot(pLootedCreature, pLooter, nothing)
 	
 	Logger:log("Looting the sith shadow.", LT_INFO)
 	
---	CreatureObject(pLooter):awardExperience("force_rank_xp", 1000, true)	
+	CreatureObject(pLooter):awardExperience("force_rank_xp", 2500, true)	
 	
 	
---	CreatureObject(pLooter):sendSystemMessage("You have gained 10,000 Force Rank experience.")
+--	CreatureObject(pLooter):sendSystemMessage("You have gained 1,000 Force Rank experience.")
 	return 0
 	
 --	if QuestManager.hasActiveQuest(pLooter, QuestManager.quests.TWO_MILITARY) then

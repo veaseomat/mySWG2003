@@ -534,7 +534,7 @@ void SlicingSessionImplementation::handleWeaponSlice() {
 //edit slicechance here
 	uint8 percentage = System::random(max - min) + min;
 
-	switch(System::random(1)) {
+	switch(0) {//System::random(1)) {
 	case 0:
 		handleSliceDamage(percentage);
 		break;
@@ -618,7 +618,7 @@ void SlicingSessionImplementation::handleArmorSlice() {
 	if (tangibleObject == nullptr || player == nullptr)
 		return;
 
-	uint8 sliceType = System::random(1);
+	uint8 sliceType = 0;//System::random(1);
 	int sliceSkill = getSlicingSkill(player);
 	uint8 min = 0;
 	uint8 max = 0;

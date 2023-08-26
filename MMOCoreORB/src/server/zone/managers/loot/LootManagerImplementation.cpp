@@ -336,11 +336,12 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //
 //	}
 
-	if (System::random(200) == 200 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
+	if (System::random(50) == 50 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 
 		excMod = 5;
+		if (prototype->isWeaponObject()) excMod = 4;
 		leggy = 1;
 
 		prototype->addMagicBit(false);
@@ -366,6 +367,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		prototype->setCustomObjectName(newName, false);
 
 		excMod = 2.5;// + (System::random(50) * .01);
+		if (prototype->isWeaponObject()) excMod = 2;
 
 		prototype->addMagicBit(false);
 
@@ -556,7 +558,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	setSkillMods(prototype, templateObject, level, excMod);
 
 
-	if (System::random(3) == 3)
+	if (System::random(3) == 3)// || prototype->isRobeObject())
 		setSockets(prototype, craftingValues);
 
 	// Update the Tano with new values
@@ -718,6 +720,10 @@ void LootManagerImplementation::setSockets(TangibleObject* object, CraftingValue
 
 	//	int level = craftingValues->getMaxValue("creatureLevel");
 		// Round number of sockets to closes integer.
+
+//		if (object->isRobeObject())
+//			wearableObject->setMaxSockets(8);
+//		else
 		wearableObject->setMaxSockets(System::random(8));// craftingValues->getCurrentValue("sockets") + 0.5);
 	}
 }

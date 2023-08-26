@@ -740,9 +740,9 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 	if (!attacker->isPlayerCreature()) {
 		int npcacc = attacker->getLevel();// cast<AiAgent*>(attacker)->getChanceHit() * 100;
 
-//		if (attacker->isAiAgent() && !attacker->isCreature()) {
-////			if (weapon->isPistolWeapon())
-////				npcacc = attacker->getLevel() * .95;
+		if (attacker->isAiAgent() && !attacker->isCreature()) {
+//			if (weapon->isPistolWeapon())
+//				npcacc = attacker->getLevel() * .95;
 //			if (weapon->isCarbineWeapon())
 //				npcacc = attacker->getLevel() * 1.3;
 //			if (weapon->isRifleWeapon())
@@ -761,9 +761,9 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 //				npcacc = attacker->getLevel() * 1.1;
 //			if (weapon->isHeavyAcidRifle())//4sec cap
 //				npcacc = attacker->getLevel() * 1.1;
-////			if (weapon->isJediWeapon())
-////				npcacc = attacker->getLevel();
-//		}
+			if (weapon->isJediWeapon())
+				npcacc *= 1.25;
+		}
 
 		if (!attacker->isTurret()) {
 
@@ -2812,7 +2812,7 @@ if (!attacker->isTurret()) {
 			return 0;
 		}
 
-		if (weapon->isJediWeapon() && System::random(5) >= 5 && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7) || aimind < (aimindmax * .7))) {
+		if (weapon->isJediWeapon() && System::random(15) == 15 && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7) || aimind < (aimindmax * .7))) {
 
 			int jedhealammount = 500;
 
