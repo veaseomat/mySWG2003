@@ -993,39 +993,39 @@ function myswg_vendor_convo_handler:getNextConversationScreen(conversationTempla
                     
 --DOCTOR
 
-                elseif (optionLink == "buff1" and credits < 5000) then
-                    -- Bail if the player doesn’t have enough cash on hand.  
-                    -- Plays a chat box message from the NPC as well as a system message.
-                      nextConversationScreen = conversation:getScreen("insufficient_funds")
-                      creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "buff1" and credits >= 5000) then
+--                elseif (optionLink == "buff1" and credits < 5000) then
+--                    -- Bail if the player doesn’t have enough cash on hand.  
+--                    -- Plays a chat box message from the NPC as well as a system message.
+--                      nextConversationScreen = conversation:getScreen("insufficient_funds")
+--                      creature:sendSystemMessage("You have insufficient funds") 
+                elseif (optionLink == "buff1") then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    creature:subtractCashCredits(5000)
+                    --creature:subtractCashCredits(5000)
                    
 										CreatureObject(conversingPlayer):enhanceCharacter()
 										--buffTerminalMenuComponent:logUsage(conversingPlayer, "enhanceCharacter")
                     --giveItem(pInventory, "object/tangible/deed/vehicle_deed/speederbike_deed.iff", -1)
                     --createLoot(pInventory, "junk", 1, false)
                     
-                elseif (optionLink == "buff2" and credits < 10000) then
+                elseif (optionLink == "buff2" and credits < 5000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "buff2" and credits >= 10000) then
+                elseif (optionLink == "buff2" and credits >= 5000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    creature:subtractCashCredits(10000)
+                    creature:subtractCashCredits(5000)
 
 										CreatureObject(conversingPlayer):enhanceCharacterDocBuff()
 
-                elseif (optionLink == "buff3" and credits < 20000) then
+                elseif (optionLink == "buff3" and credits < 10000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "buff3" and credits >= 20000) then
+                elseif (optionLink == "buff3" and credits >= 10000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    creature:subtractCashCredits(20000)
+                    creature:subtractCashCredits(10000)
 
 										CreatureObject(conversingPlayer):enhanceCharacterDocBuffTHREE()
 
@@ -1033,14 +1033,15 @@ function myswg_vendor_convo_handler:getNextConversationScreen(conversationTempla
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
 										CreatureObject(conversingPlayer):enhanceCharacterEntBuffONE()
 
-                elseif (optionLink == "buff5" and credits < 10000) then
+                elseif (optionLink == "buff5" and credits < 5000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "buff5") then
+                elseif (optionLink == "buff5" and credits >= 5000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
---                    creature:subtractCashCredits(5000)
+                    
+	                  creature:subtractCashCredits(5000)
 
 										CreatureObject(conversingPlayer):enhanceCharacterEntBuffTWO()
 

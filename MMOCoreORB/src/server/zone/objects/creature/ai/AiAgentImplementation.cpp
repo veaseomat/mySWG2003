@@ -151,6 +151,13 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	if (newlvl > 100) newlvl = 100;
 
+//	if (System::random(50) == 50) {//(elite)
+//		legendarynpc = true;
+//		newlvl *= 2;
+////		weapran += 2.5;
+////		npcTemplate->setElite(1.0);
+//	}
+
 //	newlvl *= 3;
 
 //	if (System::random(25) == 25) {// and elite <= 1.0) {
@@ -175,11 +182,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		weapran = .6 + (System::random(40) * .01);
 	}
 
-	if (System::random(50) == 50) {//simulate exceptional
-		legendarynpc = true;
-		weapran += 2.5;
-		npcTemplate->setElite(1.0);
-	}
+
 
 	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
 //
@@ -1955,7 +1958,7 @@ bool AiAgentImplementation::findNextPosition(float maxDistance, bool walk) {
 
 	WorldCoordinates nextPosition;
 
-	float newSpeed = runSpeed * .85; //this is ai speed
+	float newSpeed = runSpeed * 1.5; //this is ai speed
 	if (walk && !(isRetreating() || isFleeing()))
 		newSpeed = walkSpeed;
 

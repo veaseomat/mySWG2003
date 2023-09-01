@@ -156,6 +156,7 @@ void LairObserverImplementation::checkForHeal(TangibleObject* lair, TangibleObje
 }
 
 void LairObserverImplementation::healLair(TangibleObject* lair, TangibleObject* attacker){
+	return;
 	Locker locker(lair);
 
 	if (lair->getZone() == nullptr)

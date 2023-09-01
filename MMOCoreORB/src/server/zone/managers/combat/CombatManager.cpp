@@ -2377,6 +2377,7 @@ void CombatManager::doDodge(TangibleObject* attacker, WeaponObject* weapon, Crea
 }
 
 bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObject* weapon, const CreatureAttackData& data) const {
+	return true;
 	if (attacker->isAiAgent() || data.isForceAttack())
 		return true;
 

@@ -925,6 +925,8 @@ int CityManagerImplementation::collectNonStructureMaintenance(SceneObject* objec
 	if(object == nullptr || city == nullptr)
 		return 0;
 
+	maintenanceDue *= .1;
+
 	int amountPaid = 0;
 	if(city->getCityTreasury() >= maintenanceDue && object->getLocalZone() != nullptr) {
 		city->subtractFromCityTreasury(maintenanceDue);
@@ -951,6 +953,8 @@ int CityManagerImplementation::collectNonStructureMaintenance(SceneObject* objec
 int CityManagerImplementation::collectCivicStructureMaintenance(StructureObject* structure, CityRegion* city, int maintenanceDue) {
 	if(structure == nullptr || city == nullptr)
 		return 0;
+
+	maintenanceDue *= .1;
 
 	Locker clocker(structure, city);
 

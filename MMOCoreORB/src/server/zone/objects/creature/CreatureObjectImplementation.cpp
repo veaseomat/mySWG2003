@@ -2803,8 +2803,8 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 //		modifier *= 1.25f;
 //	else
 
-	if (isSitting())
-		modifier = 3.0;
+//	if (isSitting())
+//		modifier = 3.0;
 
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
@@ -2813,6 +2813,12 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 			CreatureAttribute::STAMINA)) * 10.0f / 2000.0f * modifier);
 	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
 			CreatureAttribute::WILLPOWER)) * 10.0f / 2000.0f * modifier);
+
+	if (isSitting()){
+		mindTick += 50;
+		actionTick += 50;
+		healthTick += 50;
+	}
 
 	if (healthTick < 1)
 		healthTick = 1;
