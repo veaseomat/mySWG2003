@@ -264,7 +264,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
-	level *= 2.0 + (System::random(200) * .01);
+	level *= 2.0 + (System::random(300) * .01);
 
 	if(level > 500)
 		level = 500;
@@ -336,7 +336,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //
 //	}
 
-	if (System::random(50) == 50 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
+	if (System::random(100) == 100 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 
@@ -743,10 +743,10 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		int lootChance = entry->getLootChance() * 1.5; //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
-//		int holochance = 1000;
-//		if (System::random(holochance) >= holochance){
-//			createLoot(trx, container, "holocron_light", level);
-//		}
+		int holochance = 1000;
+		if (System::random(holochance) >= holochance){
+			createLoot(trx, container, "holocron_3", level);
+		}
 
 
 		if (lootChance <= 0)

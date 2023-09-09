@@ -5,6 +5,7 @@ bh_dark_adept = Creature:new {
 	socialGroup = "dark_jedi",
 	faction = "",
 	level = 120,
+		elite = 2.0,
 	chanceHit = 4.75,
 	damageMin = 945,
 	damageMax = 1600,

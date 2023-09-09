@@ -986,6 +986,8 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 
 	debug() << "Target defense after state affects and cap is " << targetDefense;
 
+	targetDefense *= .75;
+
 	return targetDefense;
 }
 
@@ -1014,6 +1016,8 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 
 	if (defender->isKnockedDown())
 		targetDefense *= .5;
+
+	targetDefense *= .75;
 
 	return targetDefense;
 }
@@ -2020,23 +2024,23 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PvP Damage Reduction
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= .5;//vanilla .25
+		damage *= .25;//vanilla .25
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1.25;//.25 + (playerLevel * .0075);
+		damage *= 1.0;//.25 + (playerLevel * .0075);
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1.0 - (defender->getLevel() * .005);//this nerfs pve dmg down to .25 at creature lvl 100 like pvp .25 mult
+		damage *= 1.0 - (defender->getLevel() * .0075);//this nerfs pve dmg down to .25 at creature lvl 100 like pvp .25 mult
 
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= .75;
+		damage *= 1.0;
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= .75;
+		damage *= 1.0;
 
 	if (damage < 1) damage = 1;
 
@@ -2465,7 +2469,7 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 		if (server != nullptr) {
 			PlayerManager* pManager = server->getPlayerManager();
 			if (pManager != nullptr) {
-				playerLevel = pManager->calculatePlayerLevel(targetCreature) - 5;
+				playerLevel = pManager->calculatePlayerLevel(targetCreature);//- 5
 			}
 		}
 	}
@@ -2500,34 +2504,38 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 			for (int j = 0; j < defenseMods.size(); j++)
 				targetDefense += targetCreature->getSkillMod(defenseMods.get(j));
 
-			targetDefense /= 1.5;
+			//targetDefense /= 1.5;
 			targetDefense += playerLevel;
 
-			if (targetCreature->isAiAgent()) targetDefense = targetCreature->getLevel() / 2;
+			if (targetCreature->isAiAgent()) targetDefense = targetCreature->getLevel() * .75;
 
 			ManagedReference<WeaponObject*> targetWeapon = targetCreature->getWeapon();
-			if (targetCreature->isAiAgent() && targetWeapon->isJediWeapon())
-				targetDefense *= 1.65;
+//			if (targetCreature->isAiAgent() && targetWeapon->isJediWeapon())
+//				targetDefense *= 1.65;
 
-			if (targetDefense > 90)
-				targetDefense = 90.f;
+			if (targetDefense > 75)
+				targetDefense = 75.f;
+
+			targetDefense *= .75;
 
 			if (System::random(100) > accuracyMod - targetDefense)
 				failed = true;
 
 			// no reason to apply jedi defenses if primary defense was successful
 			// and only perform extra rolls if the character is a Jedi
-			if (!failed && targetCreature->isPlayerCreature() && targetCreature->getPlayerObject()->isJedi()) {
+			if (!failed && targetCreature->isPlayerCreature()  && targetWeapon->isJediWeapon()) {
 				const Vector<String>& jediMods = effect.getDefenderJediStateDefenseModifiers();
 				// second chance for jedi, roll against their special defenses jedi_state_defense & resistance_states
 				for (int j = 0; j < jediMods.size(); j++) {
 					targetDefense = targetCreature->getSkillMod(jediMods.get(j));
 
-					targetDefense /= 1.5;
+					//targetDefense /= 1.5;
 					targetDefense += playerLevel;
 
-					if (targetDefense > 90)
-						targetDefense = 90.f;
+					if (targetDefense > 75)
+						targetDefense = 75.f;
+
+					targetDefense *= .75;
 
 					if (System::random(100) > accuracyMod - targetDefense) {
 						failed = true;
@@ -2787,7 +2795,7 @@ if (!attacker->isTurret()) {
 
 	if (attacker->isAiAgent() && !attacker->isCreature()) {
 
-		if (aistrength > aiquick && !weapon->isJediWeapon() && (aihealth < (aihealthmax * .7) || aiaction < (aiactionmax * .7)) && System::random(15) >= 15) {
+		if (aistrength > aiquick && !weapon->isJediWeapon() && (aihealth < (aihealthmax * .5) || aiaction < (aiactionmax * .5) || aimind < (aimindmax * .5)) && System::random(15) >= 15) {
 
 			int healammount = 100;
 
@@ -2799,6 +2807,7 @@ if (!attacker->isTurret()) {
 
 			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::HEALTH, healammount, true);
 			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::ACTION, healammount, true);
+			attacker->asCreatureObject()->healDamage(attacker->asCreatureObject(), CreatureAttribute::MIND, healammount, true);
 
 			attacker->asCreatureObject()->doAnimation("heal_self");
 			attacker->asCreatureObject()->playEffect("clienteffect/healing_healdamage.cef", "");

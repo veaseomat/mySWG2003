@@ -38,12 +38,12 @@ void SpawnAreaImplementation::buildSpawnList(Vector<uint32>* groupCRCs) {
 Vector3 SpawnAreaImplementation::getRandomPosition(SceneObject* player) {
 	Vector3 position;
 	bool positionFound = false;
-	int retries = 10;//10 is vanilla, ive used 20 previously, have not thouroghly tested
+	int retries = 1;//10 is vanilla, seems to affect spawn SPEED, setting 0 nothing spawns
 
 	const auto worldPosition = player->getWorldPosition();
 
 	while (!positionFound && retries-- > 0) {
-		position = areaShape->getRandomPosition(worldPosition, 64.0f, 160.0f);//this is how close to the player stuff can spawn min max
+		position = areaShape->getRandomPosition(worldPosition, 160.0f, 320.0f);//this is how close to the player stuff can spawn min max //margin
 
 		positionFound = true;
 
@@ -97,14 +97,14 @@ int SpawnAreaImplementation::notifyObserverEvent(unsigned int eventType, Observa
 
 			Locker locker(area);
 
-			area->setRadius(32);//set no spawn radius?
+			area->setRadius(16);//set no spawn radius? margin
 			area->setNoSpawnArea(true);
 			area->initializePosition(sceno->getPositionX(), sceno->getPositionZ(), sceno->getPositionY());
 
 			thisZone->transferObject(area, -1, true);
 
 			Reference<Task*> task = new RemoveNoSpawnAreaTask(area);
-			task->schedule(60000);//timer for despawn? 60,000 = 1min, vanilla 300000
+			task->schedule(600000);//timer for despawn? 60,000 = 1min, vanilla 300000
 		}
 	}
 
@@ -124,8 +124,8 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	if (totalSpawnCount >= maxSpawnLimit)
 		return;
 
-	if (lastSpawn.miliDifference() < MINSPAWNINTERVAL)
-		return;
+//	if (lastSpawn.miliDifference() < MINSPAWNINTERVAL)
+//		return;
 
 	int choice = System::random(totalWeighting - 1);
 	int counter = 0;
@@ -135,7 +135,7 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	for (int i = 0; i < possibleSpawns.size(); i++) {
 		LairSpawn* spawn = possibleSpawns.get(i);
 
-		counter += spawn->getWeighting();
+		counter += spawn->getWeighting() * 10;
 
 		if (choice < counter) {
 			finalSpawn = spawn;
@@ -167,11 +167,11 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	//	return;
 
 	// Check the spot to see if spawning is allowed
-	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), finalSpawn->getSize() + 32.f)) {//this is spawn density, was set to 0 prior
+	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), 16)) {//finalSpawn->getSize() + 32.f //this is spawn density, was set to 0 prior //margin
 		return;
 	}
 
-	int spawnLimit = finalSpawn->getSpawnLimit();
+	int spawnLimit = -1;//finalSpawn->getSpawnLimit();//untested
 
 	String lairTemplate = finalSpawn->getLairTemplateName();
 	uint32 lairHashCode = lairTemplate.hashCode();

@@ -3,6 +3,7 @@ krayt_dragon_ancient = Creature:new {
 	socialGroup = "krayt",
 	faction = "",
 	level = 336,
+	elite = 3.0,
 	chanceHit = 30.0,
 	damageMin = 2270,
 	damageMax = 4250,

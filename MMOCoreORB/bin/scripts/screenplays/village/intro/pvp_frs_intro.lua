@@ -65,7 +65,7 @@ function PVPFRSIntro:startStepDelay(pPlayer, step)
 --		return
 --	else
 	--player lost bh or first time
-		stepDelay = (getRandomNumber(30, 120) * 60 * 1000) --2min - 720=12hr
+		stepDelay = (getRandomNumber(15, 30) * 60 * 1000) --2min - 720=12hr
 --	end
 
 	writeScreenPlayData(pPlayer, "VillageJediProgression", "PVPFRSIntroDelay", stepDelay + os.time())
@@ -85,27 +85,64 @@ function PVPFRSIntro:doDelayedStep(pPlayer)
 	
 --delay for dead incap or not in good area
 	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer) or not CreatureObject(pPlayer):isOvert()) then
-		createEvent(getRandomNumber(15, 45) * 60 * 1000, "PVPFRSIntro", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(3, 10) * 60 * 1000, "PVPFRSIntro", "doDelayedStep", pPlayer, "")
 		return
 	end
 	
 	
-	if CreatureObject(pPlayer):hasSkill("force_rank_light_novice") then
-		encounterResult = PVPDJKEncounter:start(pPlayer)	
-		return
-
-	else if CreatureObject(pPlayer):hasSkill("force_rank_dark_novice") then
-		encounterResult = PVPLJKEncounter:start(pPlayer)	
-		return
+--	if CreatureObject(pPlayer):hasSkill("force_rank_light_novice") then
+--		encounterResult = PVPDJKEncounter:start(pPlayer)	
+--		return
+--
+--	else if CreatureObject(pPlayer):hasSkill("force_rank_dark_novice") then
+--		encounterResult = PVPLJKEncounter:start(pPlayer)	
+--		return
+		
+		
+		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_10") then
+			PVPDJKEncounter4:start(pPlayer)	
+			return
+		end
+		if CreatureObject(pPlayer):hasSkill("force_rank_dark_rank_10") then
+			PVPLJKEncounter4:start(pPlayer)	
+			return
+		end
+	
+		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_08") then
+			PVPDJKEncounter3:start(pPlayer)	
+			return
+		end
+		if CreatureObject(pPlayer):hasSkill("force_rank_dark_rank_08") then
+			PVPLJKEncounter3:start(pPlayer)	
+			return
+		end
+		
+		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_05") then
+			PVPDJKEncounter2:start(pPlayer)	
+			return
+		end
+		if CreatureObject(pPlayer):hasSkill("force_rank_dark_rank_05") then
+			PVPLJKEncounter2:start(pPlayer)	
+			return
+		end
+		
+		if CreatureObject(pPlayer):hasSkill("force_rank_light_novice") then
+			PVPDJKEncounter:start(pPlayer)	
+			return
+		end
+		if CreatureObject(pPlayer):hasSkill("force_rank_dark_novice") then
+			PVPLJKEncounter:start(pPlayer)
+			return
+		end
 		
 
-	else
+	--else
 	--chek overt again after
-		createEvent(getRandomNumber(30, 120) * 60 * 1000, "PVPFRSIntro", "doDelayedStep", pPlayer, "")
+		createEvent(getRandomNumber(15, 30) * 60 * 1000, "PVPFRSIntro", "doDelayedStep", pPlayer, "")
 		return
-	end
+	--end
 		
-	end
+	--end
 --this is the visibility threshold, vanilla is 1500
 --	if PlayerObject(pGhost):getVisibility() >= 4000 then
 --		encounterResult = SithShadowEncounter2:start(pPlayer)

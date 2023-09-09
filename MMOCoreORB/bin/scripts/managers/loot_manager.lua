@@ -145,6 +145,11 @@ lootableArmorAttachmentStatMods = {
 }
 
 lootableClothingAttachmentStatMods = {
+--"force_experimentation",
+--"force_assembly",
+--"force_repair_bonus",
+--"force_failure_reduction",
+
 	"heavy_flame_thrower_accuracy",
 	"heavy_flame_thrower_speed",
 	"heavy_rifle_acid_accuracy",

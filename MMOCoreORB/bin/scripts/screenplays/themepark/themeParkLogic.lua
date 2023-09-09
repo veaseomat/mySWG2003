@@ -1867,8 +1867,20 @@ function ThemeParkLogic:handleMissionReward(pConversingPlayer)
 		end
 	end
 	
-	local morecredits = getRandomNumber(100, 5000)
---	self:giveCredits(pConversingPlayer, morecredits)
+	local morecredits = getRandomNumber(100, 10000)
+	self:giveCredits(pConversingPlayer, morecredits)
+	
+	local pInventory = CreatureObject(pConversingPlayer):getSlottedObject("inventory")
+	local ranlvl = getRandomNumber(1, 100)
+	createLoot(pInventory, "junk", ranlvl, false)
+	
+	if getRandomNumber(1, 10) >= 10 then --moved to palyer manager
+			HologrindJediManager.awardFSpoint(pConversingPlayer)
+	end
+	
+--	if getRandomNumber(1, 100) >= 100 then --moved to palyer manager
+--			createLoot(pInventory, "holocron_light", 100, false)
+--	end
 	
 --	self:giveLoot(pConversingPlayer, "junk")
 	
@@ -1930,9 +1942,9 @@ function ThemeParkLogic:giveLoot(pConversingPlayer, lootGroup)
 		return
 	end
 	
-	local ranlvl = getRandomNumber(1, 300)
+--	local ranlvl = getRandomNumber(1, 300)
 
-	createLoot(pInventory, lootGroup, ranlvl, true)
+--	createLoot(pInventory, lootGroup, ranlvl, true)
 	CreatureObject(pConversingPlayer):sendSystemMessage("@theme_park/messages:theme_park_reward")
 end
 
@@ -1947,9 +1959,9 @@ function ThemeParkLogic:giveLootSet(pConversingPlayer, lootGroup, setSize)
 		return
 	end
 	
-	local ranlvl = getRandomNumber(1, 300)
+--	local ranlvl = getRandomNumber(1, 300)
 
-	createLootSet(pInventory, lootGroup, ranlvl, true, setSize)
+--	createLootSet(pInventory, lootGroup, ranlvl, true, setSize)
 	CreatureObject(pConversingPlayer):sendSystemMessage("@theme_park/messages:theme_park_reward")
 end
 

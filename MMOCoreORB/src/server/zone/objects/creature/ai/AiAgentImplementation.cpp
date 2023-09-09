@@ -165,10 +165,10 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 //		newlvl *= 2;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
 //	}
 
-//	float lvlrandomizer = .75 + (System::random(25) * .01);
+//	float lvlrandomizer = .9 + (System::random(20) * .01);
 //	newlvl *= lvlrandomizer;
 
-//	if (newlvl > 500) newlvl = 500;
+//	if (newlvl > 100) newlvl = 100;
 
 	//newlvl *= templateData->getElite();
 
@@ -176,16 +176,17 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float weapran = .6 + (System::random(20) * .01);
+	float weapran = .3 + (System::random(20) * .01);
 
 	if (isAiAgent() && !isCreature()){
-		weapran = .6 + (System::random(40) * .01);
+		weapran += System::random(50) * .01;
+		//weapran = .3 + (System::random(70) * .01);
 	}
 
 
 
 	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
-//
+
 	if (elite > 1.0) {
 		//legendarynpc = true;
 		//newlvl *= elite;

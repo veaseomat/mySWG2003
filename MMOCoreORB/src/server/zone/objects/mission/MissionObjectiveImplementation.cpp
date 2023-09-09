@@ -225,42 +225,54 @@ void MissionObjectiveImplementation::awardReward() {
 	int divisor = mission->getRewardCreditsDivisor();
 	bool expanded = false;
 
-	if (playerCount > divisor) {
-		divisor = playerCount;
-		expanded = true;
+//	if (playerCount > divisor) {
+//		divisor = playerCount;
+//		expanded = true;
+//	}
+
+//	if (playerCount > players.size()) {
+//		owner->sendSystemMessage("@mission/mission_generic:group_too_far"); // Mission Alert! Some group members are too far away from the group to receive their reward and and are not eligible for reward.
+//	}
+
+	int newReward = mission->getRewardCredits();
+
+	//ManagedReference<CreatureObject*> player = players.get(i);
+	StringIdChatParameter stringId("mission/mission_generic", "success_w_amount");
+	stringId.setDI(newReward);
+	owner->sendSystemMessage(stringId);
+
+	Locker lockerPl(owner, _this.getReferenceUnsafeStaticCast());
+	TransactionLog trx(TrxCode::MISSIONSYSTEMDYNAMIC, owner, newReward, false);
+	owner->addBankCredits(newReward, true);
+
+
+	if (System::random(25) >= 25 ){
+		JediManager::instance()->awardFSpoint(owner);
 	}
 
-	if (playerCount > players.size()) {
-		owner->sendSystemMessage("@mission/mission_generic:group_too_far"); // Mission Alert! Some group members are too far away from the group to receive their reward and and are not eligible for reward.
-	}
+//	int dividedReward = mission->getRewardCredits() / Math::max(divisor, 1);
+//
+//	for (int i = 0; i < players.size(); i++) {
+//		ManagedReference<CreatureObject*> player = players.get(i);
+//		StringIdChatParameter stringId("mission/mission_generic", "success_w_amount");
+//		stringId.setDI(dividedReward);
+//		player->sendSystemMessage(stringId);
+//
+//		Locker lockerPl(player, _this.getReferenceUnsafeStaticCast());
+//		TransactionLog trx(TrxCode::MISSIONSYSTEMDYNAMIC, player, dividedReward, false);
+//		player->addBankCredits(dividedReward, true);
+//
+//	}
+//
+//	if (group != nullptr) {
+//		if (expanded) {
+//			owner->sendSystemMessage("@mission/mission_generic:group_expanded"); // Group Mission Success! Reward credits have been transmitted to the bank account of all group members in the immediate area. They have been recalculated to reflect the newly added members.
+//		} else {
+//			owner->sendSystemMessage("@mission/mission_generic:group_success"); // Group Mission Success! Reward credits have been transmitted to the bank account of all group members in the immediate area.
+//		}
+//	}
 
-	int dividedReward = mission->getRewardCredits() / Math::max(divisor, 1);
-
-	for (int i = 0; i < players.size(); i++) {
-		ManagedReference<CreatureObject*> player = players.get(i);
-		StringIdChatParameter stringId("mission/mission_generic", "success_w_amount");
-		stringId.setDI(dividedReward);
-		player->sendSystemMessage(stringId);
-
-		Locker lockerPl(player, _this.getReferenceUnsafeStaticCast());
-		TransactionLog trx(TrxCode::MISSIONSYSTEMDYNAMIC, player, dividedReward, false);
-		player->addBankCredits(dividedReward, true);
-
-		if (System::random(200) >= 200 ){
-			JediManager::instance()->awardFSpoint(player);
-		}
-
-	}
-
-	if (group != nullptr) {
-		if (expanded) {
-			owner->sendSystemMessage("@mission/mission_generic:group_expanded"); // Group Mission Success! Reward credits have been transmitted to the bank account of all group members in the immediate area. They have been recalculated to reflect the newly added members.
-		} else {
-			owner->sendSystemMessage("@mission/mission_generic:group_success"); // Group Mission Success! Reward credits have been transmitted to the bank account of all group members in the immediate area.
-		}
-	}
-
-	int creditsDistributed = dividedReward * players.size();
+	int creditsDistributed = newReward;//dividedReward * players.size();
 
 	StatisticsManager::instance()->completeMission(mission->getTypeCRC(), creditsDistributed);
 }

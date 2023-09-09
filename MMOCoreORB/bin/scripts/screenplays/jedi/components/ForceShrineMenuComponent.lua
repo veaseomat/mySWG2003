@@ -11,9 +11,9 @@ function ForceShrineMenuComponent:fillObjectMenuResponse(pSceneObject, pMenuResp
 		menuResponse:addRadialMenuItem(121, 3, "@force_rank:recover_jedi_items") -- Recover Jedi Items
 	end
 	
-	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03")) then
-		menuResponse:addRadialMenuItem(122, 3, "Spawn FRS Encounter (3hr timer)")
-	end
+--	if (CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_03")) then
+--		menuResponse:addRadialMenuItem(122, 3, "Spawn FRS Encounter (3hr timer)")
+--	end
 
 end
 
@@ -41,14 +41,16 @@ function ForceShrineMenuComponent:handleObjectMenuSelect(pObject, pPlayer, selec
 			return
 		end
 
-		local professions = PlayerObject(pGhost):getHologrindProfessions()
-		for i = 1, #professions, 1 do
-			if not PlayerObject(pGhost):hasBadge(professions[i]) then
-				local professionText = HologrindJediManager:getProfessionStringIdFromBadgeNumber(professions[i])
-				CreatureObject(pPlayer):sendSystemMessageWithTO("@jedi_spam:holocron_light_information", "@skl_n:" .. professionText)
-				break
-			end
-		end
+--		local professions = PlayerObject(pGhost):getHologrindProfessions()
+--		for i = 1, #professions, 1 do
+--			if not PlayerObject(pGhost):hasBadge(professions[i]) then
+--				local professionText = HologrindJediManager:getProfessionStringIdFromBadgeNumber(professions[i])
+--				CreatureObject(pPlayer):sendSystemMessageWithTO("@jedi_spam:holocron_light_information", "@skl_n:" .. professionText)
+--				break
+--			end
+--		end
+
+		HologrindJediManager:checkIfProgressedToJedi(pPlayer)
 			
 		end
 		
@@ -58,58 +60,58 @@ function ForceShrineMenuComponent:handleObjectMenuSelect(pObject, pPlayer, selec
 		self:recoverRobe(pPlayer)
 	end
 		
-	if (selectedID == 122) and VillageJediManagerHolocron.canUseHolocron(pPlayer) then 
-	--and VillageJediManagerHolocron.canUseHolocron(pPlayer)
-	
---	local encounter = 0;
---	local count = 1;
-
-		CreatureObject(pPlayer):addCooldown("used_holocron", 3 * 60 * 60 * 1000)
-
-		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_10") then
-			PVPDJKEncounter4:start(pPlayer)	
-			return
-		end
-		if CreatureObject(pPlayer):hasSkill("force_rank_dark_rank_10") then
-			PVPLJKEncounter4:start(pPlayer)	
-			return
-		end
-	
-		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_08") then
-			PVPDJKEncounter3:start(pPlayer)	
-			return
-		end
-		if CreatureObject(pPlayer):hasSkill("force_rank_dark_rank_08") then
-			PVPLJKEncounter3:start(pPlayer)	
-			return
-		end
-		
-		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_05") then
-			PVPDJKEncounter2:start(pPlayer)	
-			return
-		end
-		if CreatureObject(pPlayer):hasSkill("force_rank_dark_rank_05") then
-			PVPLJKEncounter2:start(pPlayer)	
-			return
-		end
-		
-		if CreatureObject(pPlayer):hasSkill("force_rank_light_novice") then
-			PVPDJKEncounter:start(pPlayer)	
-			return
-		end
-		if CreatureObject(pPlayer):hasSkill("force_rank_dark_novice") then
-			PVPLJKEncounter:start(pPlayer)
-			return
-		end
-		
---		if encounter == 1 then
---		
+--	if (selectedID == 122) and VillageJediManagerHolocron.canUseHolocron(pPlayer) then 
+--	--and VillageJediManagerHolocron.canUseHolocron(pPlayer)
+--	
+----	local encounter = 0;
+----	local count = 1;
+--
+--		CreatureObject(pPlayer):addCooldown("used_holocron", 3 * 60 * 60 * 1000)
+--
+--		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_10") then
+--			PVPDJKEncounter4:start(pPlayer)	
+--			return
 --		end
-
-	else
-	CreatureObject(pPlayer):sendSystemMessage("You can only spawn an encounter once every 3 hours.")
-		
-	end
+--		if CreatureObject(pPlayer):hasSkill("force_rank_dark_rank_10") then
+--			PVPLJKEncounter4:start(pPlayer)	
+--			return
+--		end
+--	
+--		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_08") then
+--			PVPDJKEncounter3:start(pPlayer)	
+--			return
+--		end
+--		if CreatureObject(pPlayer):hasSkill("force_rank_dark_rank_08") then
+--			PVPLJKEncounter3:start(pPlayer)	
+--			return
+--		end
+--		
+--		if CreatureObject(pPlayer):hasSkill("force_rank_light_rank_05") then
+--			PVPDJKEncounter2:start(pPlayer)	
+--			return
+--		end
+--		if CreatureObject(pPlayer):hasSkill("force_rank_dark_rank_05") then
+--			PVPLJKEncounter2:start(pPlayer)	
+--			return
+--		end
+--		
+--		if CreatureObject(pPlayer):hasSkill("force_rank_light_novice") then
+--			PVPDJKEncounter:start(pPlayer)	
+--			return
+--		end
+--		if CreatureObject(pPlayer):hasSkill("force_rank_dark_novice") then
+--			PVPLJKEncounter:start(pPlayer)
+--			return
+--		end
+--		
+----		if encounter == 1 then
+----		
+----		end
+--
+--	else
+--	--CreatureObject(pPlayer):sendSystemMessage("You can only spawn an encounter once every 3 hours.")
+--		
+--	end
 
 	return 0
 end

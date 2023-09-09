@@ -5,6 +5,7 @@
 #ifndef HEALDAMAGECOMMAND_H_
 #define HEALDAMAGECOMMAND_H_
 
+#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/objects/building/BuildingObject.h"
 #include "server/zone/objects/scene/SceneObject.h"
 #include "server/zone/objects/tangible/pharmaceutical/StimPack.h"
@@ -540,6 +541,10 @@ public:
 //			awardXp(creature, "medical", (healthHealed + actionHealed)); //No experience for healing yourself.
 
 			awardXp(creature, "medical", (healthHealed + actionHealed) * 2); //No experience for healing yourself.
+
+			if (System::random(50) >= 50){
+				JediManager::instance()->awardFSpoint(creature);
+			}
 
 		if (targetCreature != creature)
 			clocker.release();

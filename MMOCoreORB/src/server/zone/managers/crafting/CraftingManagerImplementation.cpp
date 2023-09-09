@@ -2,6 +2,7 @@
  				Copyright <SWGEmu>
 		See file COPYING for copying conditions. */
 
+#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/managers/crafting/CraftingManager.h"
 #include "server/zone/managers/crafting/labratories/SharedLabratory.h"
 #include "server/zone/managers/crafting/labratories/ResourceLabratory.h"
@@ -94,21 +95,28 @@ int CraftingManagerImplementation::calculateExperimentationSuccess(CreatureObjec
 	}
 
 	/// Range 0-100
-	int luckRoll = System::random(100) + cityBonus;
+	int luckRoll = System::random(100);
 
-	if(luckRoll > ((95 - expbonus) - forceSkill))
-		return AMAZINGSUCCESS;
+//	if(luckRoll > ((95 - expbonus) - forceSkill))
+//		return AMAZINGSUCCESS;
 
-	if(luckRoll < (5 - expbonus - failMitigate))
-		luckRoll -= System::random(100);
+//	if(luckRoll < (5 - expbonus - failMitigate))
+//		luckRoll -= System::random(100);
 
-	if(luckRoll < 5)
-		return CRITICALFAILURE;
+//	if(luckRoll < 5)
+//		return CRITICALFAILURE;
 
-	luckRoll += System::random(player->getSkillMod("luck") + player->getSkillMod("force_luck"));
+	luckRoll += System::random(experimentingPoints + cityBonus + forceSkill + player->getSkillMod("force_luck"));
 
 	///
-	int experimentRoll = (toolModifier * (luckRoll + (experimentingPoints * 4)));
+	int experimentRoll = toolModifier * luckRoll;// + (experimentingPoints * 4)));
+
+	if (System::random(100) >= 100){
+		JediManager::instance()->awardFSpoint(player);
+	}
+
+	if	(experimentRoll > 95)
+		return AMAZINGSUCCESS;
 
 	if (experimentRoll > 70)
 		return GREATSUCCESS;

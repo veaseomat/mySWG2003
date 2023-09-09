@@ -117,8 +117,10 @@ function VillageJediManagerCommon.isVillageEligible(pPlayer)
 	if (pPlayer == nil) then
 		return false
 	end
+	
+	return true
 
-	return VillageJediManagerCommon.hasJediProgressionScreenPlayState(pPlayer, VILLAGE_JEDI_PROGRESSION_HAS_VILLAGE_ACCESS) and QuestManager.hasCompletedQuest(pPlayer, QuestManager.quests.FS_VILLAGE_ELDER)
+--	return VillageJediManagerCommon.hasJediProgressionScreenPlayState(pPlayer, VILLAGE_JEDI_PROGRESSION_HAS_VILLAGE_ACCESS) and QuestManager.hasCompletedQuest(pPlayer, QuestManager.quests.FS_VILLAGE_ELDER)
 end
 
 -- Check if the player has the jedi progression screen play state.

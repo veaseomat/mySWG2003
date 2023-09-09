@@ -4,6 +4,7 @@ acklay = Creature:new {
 	socialGroup = "geonosian_creature",
 	faction = "",
 	level = 300,
+	elite = 3.0,
 	chanceHit = 92.5,
 	damageMin = 935,
 	damageMax = 1580,

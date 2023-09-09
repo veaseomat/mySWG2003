@@ -230,7 +230,7 @@ void CreatureImplementation::scheduleDespawn() {
 	Reference<DespawnCreatureTask*> despawn = new DespawnCreatureTask(_this.getReferenceUnsafeStaticCast());
 	//despawn->schedule(300000); /// 5 minutes
 	//addPendingTask("despawn", despawn, 45000); /// 45 second
-	addPendingTask("despawn", despawn, 300000);
+	addPendingTask("despawn", despawn, 600000);
 }
 
 bool CreatureImplementation::hasOrganics() {

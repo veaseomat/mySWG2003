@@ -5,6 +5,7 @@
  *      Author: victor
  */
 
+#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/managers/creature/CreatureManager.h"
 #include "server/zone/objects/creature/ai/CreatureTemplate.h"
 #include "CreatureTemplateManager.h"
@@ -615,7 +616,7 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 				}
 			}
 
-			if (System::random(100) >= 75){
+			if (System::random(100) >= 50){
 				if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
 					trx.commit(true);
 				} else {
@@ -987,6 +988,10 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 
 	if(playerManager != nullptr)
 		playerManager->awardExperience(player, "scout", xp, true);
+
+	if (System::random(200) == 200) {
+		JediManager::instance()->awardFSpoint(player);
+	}
 
 	creature->addAlreadyHarvested(player);
 

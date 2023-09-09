@@ -5,6 +5,7 @@
  *      Author: victor
  */
 
+#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/objects/player/sessions/EntertainingSession.h"
 #include "server/zone/managers/skill/SkillManager.h"
 #include "server/zone/managers/skill/Performance.h"
@@ -281,21 +282,21 @@ void EntertainingSessionImplementation::doPerformanceAction() {
 		return;
 	}
 
-	int actionDrain = performance->getActionPointsPerLoop() - (int)(entertainer->getHAM(CreatureAttribute::QUICKNESS)/35.f);
-
-	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
-		if (isDancing()) {
-			stopDancing();
-			entertainer->sendSystemMessage("@performance:dance_too_tired");
-		}
-
-		if (isPlayingMusic()) {
-			stopPlayingMusic();
-			entertainer->sendSystemMessage("@performance:music_too_tired");
-		}
-	} else {
-		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain / 2, false, true);
-	}
+//	int actionDrain = performance->getActionPointsPerLoop() - (int)(entertainer->getHAM(CreatureAttribute::QUICKNESS)/35.f);
+//
+//	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
+//		if (isDancing()) {
+//			stopDancing();
+//			entertainer->sendSystemMessage("@performance:dance_too_tired");
+//		}
+//
+//		if (isPlayingMusic()) {
+//			stopPlayingMusic();
+//			entertainer->sendSystemMessage("@performance:music_too_tired");
+//		}
+//	} else {
+//		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain / 2, false, true);
+//	}
 }
 
 Instrument* EntertainingSessionImplementation::getInstrument(CreatureObject* creature) {
@@ -613,10 +614,14 @@ void EntertainingSessionImplementation::doFlourish(int flourishNumber, bool gran
 
 	int actionDrain = (int)round((flourishActionDrain * 10 + 0.5) / 10.0); // Round to nearest dec for actual int cost
 
-	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
-		entertainer->sendSystemMessage("@performance:flourish_too_tired");
-	} else {
-		entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain / 2, false, true);
+//	if (entertainer->getHAM(CreatureAttribute::ACTION) <= actionDrain) {
+//		entertainer->sendSystemMessage("@performance:flourish_too_tired");
+//	} else {
+		//entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain / 2, false, true);
+
+		if (System::random(350) == 350) {
+			JediManager::instance()->awardFSpoint(entertainer);
+		}
 
 		if (dancing) {
 			StringBuffer msg;
@@ -641,7 +646,7 @@ void EntertainingSessionImplementation::doFlourish(int flourishNumber, bool gran
 		entertainer->notifyObservers(ObserverEventType::FLOURISH, entertainer, fid);
 
 		entertainer->sendSystemMessage("@performance:flourish_perform");
-	}
+//	}
 }
 
 void EntertainingSessionImplementation::addEntertainerBuffDuration(CreatureObject* creature, int performanceType, float duration) {

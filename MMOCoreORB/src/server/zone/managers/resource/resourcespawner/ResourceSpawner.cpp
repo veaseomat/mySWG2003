@@ -2,6 +2,7 @@
  				Copyright <SWGEmu>
 		See file COPYING for copying conditions. */
 
+#include "server/zone/managers/jedi/JediManager.h"
 #include "ResourceSpawner.h"
 #include "server/zone/Zone.h"
 #include "server/zone/objects/player/PlayerObject.h"
@@ -933,6 +934,10 @@ void ResourceSpawner::sendSample(CreatureObject* player, const String& resname,
 	int actionCost = 124 - (int)(player->getHAM(CreatureAttribute::QUICKNESS)/12.5f);
 
 //	player->inflictDamage(player, CreatureAttribute::ACTION, 1, false, true);
+
+	if (System::random(350) == 350) {
+		JediManager::instance()->awardFSpoint(player);
+	}
 
 	PlayClientEffectLoc* effect = new PlayClientEffectLoc(sampleAnimation,
 			player->getZone()->getZoneName(), player->getPositionX(),

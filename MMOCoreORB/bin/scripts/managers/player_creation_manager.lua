@@ -4,7 +4,7 @@ freeGodMode = 0;
 startingCash = 0
 --startingCash = 100000
 --How many bank credits new characters start with after creating a character (changed during test phase, normal value is 1000)
-startingBank = 100000
+startingBank = 25000
 --startingBank = 100000
 --How many skill points a new characters start with
 skillPoints = 500

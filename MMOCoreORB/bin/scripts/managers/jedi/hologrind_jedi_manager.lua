@@ -58,9 +58,9 @@ end
 -- Hologrind professions will be generated for the player.
 -- @param pCreatureObject pointer to the creature object of the created player.
 function HologrindJediManager:onPlayerCreated(pCreatureObject)
---		local unlockluck = getRandomNumber(1, 10)
---		
---		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck)
+		local unlockluck = 1 --getRandomNumber(1, 3)
+		
+		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck)
 
 --		local canunlock = getRandomNumber(1, 9)
 --		
@@ -68,20 +68,22 @@ function HologrindJediManager:onPlayerCreated(pCreatureObject)
 --		writeScreenPlayData(pCreatureObject, "forcesensitivecharacter", "canunlock", 1)
 --		end
 
-	local skillList = self:getGrindableProfessionList()
 
-	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
 
-	if (pGhost == nil) then
-		return
-	end
-
-	for i = 1, NUMBEROFPROFESSIONSTOMASTER, 1 do
-		local numberOfSkillsInList = #skillList
-		local skillNumber = getRandomNumber(1, numberOfSkillsInList)
-		PlayerObject(pGhost):addHologrindProfession(skillList[skillNumber][2])
-		table.remove(skillList, skillNumber)
-	end
+--	local skillList = self:getGrindableProfessionList()
+--
+--	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
+--
+--	if (pGhost == nil) then
+--		return
+--	end
+--
+--	for i = 1, NUMBEROFPROFESSIONSTOMASTER, 1 do
+--		local numberOfSkillsInList = #skillList
+--		local skillNumber = getRandomNumber(1, numberOfSkillsInList)
+--		PlayerObject(pGhost):addHologrindProfession(skillList[skillNumber][2])
+--		table.remove(skillList, skillNumber)
+--	end
 end
 
 -- Check and count the number of mastered hologrind professions.
@@ -146,6 +148,9 @@ function HologrindJediManager:awardJediStatusAndSkill(pCreatureObject)
 			
 			CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
 			CreatureObject(pCreatureObject):playMusicMessage("sound/music_become_jedi.snd")
+			
+			writeScreenPlayData(pCreatureObject, "PadawanTrials", "startedTrials", 1)
+			JediTrials:setTrialsCompleted(pCreatureObject, #padawanTrialQuests)
 
 			PVPBHIntro:startStepDelay(pCreatureObject, 3)
 			
@@ -173,11 +178,75 @@ end
 -- Check if the player has mastered all hologrind professions and send sui window and award skills.
 -- @param pCreatureObject pointer to the creature object of the player to check the jedi progression on.
 function HologrindJediManager:checkIfProgressedToJedi(pCreatureObject)
-	if self:getNumberOfMasteredProfessions(pCreatureObject) >= 5 and not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then
-		--self:sendSuiWindow(pCreatureObject)
+	local unlockluck = tonumber(readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock"))
+
+--	CreatureObject(pPlayer):sendSystemMessage(progress)
+	
+	--CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+	
+	
+	local hologrindbonus = self:getNumberOfMasteredProfessions(pCreatureObject) * 2 + 1
+--	local professions = PlayerObject(pCreatureObject):getHologrindProfessions()
+	
+	if unlockluck == nil or unlockluck <= 0 then -- and #professions >= 1
+		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", hologrindbonus)
+		CreatureObject(pCreatureObject):sendSystemMessage("Your character has been converted to the new unlock system and given credit for any hologrind progress. Meditate again to check your progress.")
+	end
+	
+	if unlockluck >= 10 then --skill check is done in shrine --and not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02")
+		CreatureObject(pCreatureObject):sendSystemMessage("You feel an inner glow. The Force is with you.")
 		self:awardJediStatusAndSkill(pCreatureObject)
 		return
 	end
+	if unlockluck >= 8 then
+		CreatureObject(pCreatureObject):sendSystemMessage("You have a strong sense of the Force within you.")
+		return
+	end
+	if unlockluck >= 6 then
+		CreatureObject(pCreatureObject):sendSystemMessage("You feel the Force surge within you.")
+		return
+	end
+	if unlockluck >= 4 then
+		CreatureObject(pCreatureObject):sendSystemMessage("You feel a faint sense of the force.")
+		return
+	end
+	if unlockluck >= 2 then
+		CreatureObject(pCreatureObject):sendSystemMessage("You barely notice something different about yourself.")
+		return
+	end
+	if unlockluck >= 1 then
+		CreatureObject(pCreatureObject):sendSystemMessage("You feel no connection with the force.")
+		return
+	end
+
+	
+--	
+--	if self.canCheckForce(pPlayer) then
+--	
+----		local unlockodds = (1680 / unlockluck) / 24;
+----	
+----		CreatureObject(pPlayer):sendSystemMessage("the odds are 1 in " .. unlockodds)
+----		
+----		CreatureObject(pPlayer):sendSystemMessage("your current force sensitivity is " .. unlockluck)
+--		
+--		CreatureObject(pPlayer):addCooldown("checked_force", 24 * 60 * 60 * 1000)
+--		
+--		local progress = "@jedi_spam:fs_progress_" .. unlockluck
+--
+--		CreatureObject(pPlayer):sendSystemMessage(progress)
+--	else
+--	
+--		CreatureObject(pPlayer):sendSystemMessage("you can only check your force sensitivity once every 24 hours.")
+--	end
+
+
+
+--	if self:getNumberOfMasteredProfessions(pCreatureObject) >= 5 and not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then
+--		--self:sendSuiWindow(pCreatureObject)
+--		self:awardJediStatusAndSkill(pCreatureObject)
+--		return
+--	end
+
 	
 --	if self:getNumberOfMasteredProfessions(pCreatureObject) >= 1 and not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then
 --		local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
@@ -209,11 +278,11 @@ function HologrindJediManager:badgeAwardedEventHandler(pCreatureObject, pCreatur
 		return 0
 	end
 		
---	if getRandomNumber(1, 28) >= 28 then
+--	if getRandomNumber(1, 28) >= 28 then --moved to palyer manager
 --				self:awardFSpoint(pCreatureObject)
 --	end
 
-	self:checkIfProgressedToJedi(pCreatureObject)
+	--self:checkIfProgressedToJedi(pCreatureObject)
 
 	return 0
 end
@@ -231,13 +300,13 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 		return
 	end
 	
-	--CreatureObject(pCreatureObject):enhanceCharacter()
-	
 	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
 
 	if (pGhost == nil) then
 		return
 	end
+		
+	--CreatureObject(pCreatureObject):enhanceCharacter()
 
 --	local professions = PlayerObject(pGhost):getHologrindProfessions()
 --	
@@ -386,21 +455,29 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 	
 		if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then
 			--ForceShrineMenuComponent:doMeditate(pSceneObject, pCreatureObject)
-			--CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+			
 			VillageJediManagerHolocron.useHolocron(pSceneObject, pCreatureObject)
-			return
+
+		else
+			self:awardFSpoint(pCreatureObject)
+			
+			CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+			CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+			
+			SceneObject(pSceneObject):destroyObjectFromWorld()
+			SceneObject(pSceneObject):destroyObjectFromDatabase()
 		end
 	
-		local isSilent = self:sendHolocronMessage(pCreatureObject)
-		if isSilent then
-			self:awardJediStatusAndSkill(pCreatureObject)
-			SceneObject(pSceneObject):destroyObjectFromWorld()
-			SceneObject(pSceneObject):destroyObjectFromDatabase()
-			--return
-		else
-			SceneObject(pSceneObject):destroyObjectFromWorld()
-			SceneObject(pSceneObject):destroyObjectFromDatabase()
-		end
+--		local isSilent = self:sendHolocronMessage(pCreatureObject)
+--		if isSilent then
+--			self:awardJediStatusAndSkill(pCreatureObject)
+--			SceneObject(pSceneObject):destroyObjectFromWorld()
+--			SceneObject(pSceneObject):destroyObjectFromDatabase()
+--			--return
+--		else
+--			SceneObject(pSceneObject):destroyObjectFromWorld()
+--			SceneObject(pSceneObject):destroyObjectFromDatabase()
+--		end
 	end
 --	local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
 --
@@ -486,13 +563,13 @@ function HologrindJediManager:checkForceStatusCommand(pPlayer)
 		return
 	end
 	
---	local unlockluck = readScreenPlayData(pPlayer, "forcesensitivity", "unlock")
+--	local unlockluck = tonumber(readScreenPlayData(pPlayer, "forcesensitivity", "unlock"))
 
 --	CreatureObject(pPlayer):sendSystemMessage(progress)
 	
 	--CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
 	
-	CreatureObject(pPlayer):sendSystemMessage("You must go to a Jedi shrine and meditate...")
+	CreatureObject(pPlayer):sendSystemMessage("To check your progress you must go to a Jedi shrine and meditate...")
 	
 
 --	
@@ -502,7 +579,7 @@ function HologrindJediManager:checkForceStatusCommand(pPlayer)
 ----	
 ----		CreatureObject(pPlayer):sendSystemMessage("the odds are 1 in " .. unlockodds)
 ----		
-----		CreatureObject(pPlayer):sendSystemMessage("your current force sensitivity is " .. unlockluck)
+	--	CreatureObject(pPlayer):sendSystemMessage("your current force sensitivity is " .. unlockluck)
 --		
 --		CreatureObject(pPlayer):addCooldown("checked_force", 24 * 60 * 60 * 1000)
 --		
@@ -550,22 +627,22 @@ function HologrindJediManager:canSurrenderSkill(pPlayer, skillName)
 end
 
 function HologrindJediManager:awardFSpoint(pCreatureObject)
---	local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
---	
---	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") then
---		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 1)
---		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
---	end
+	local unlockluck = tonumber(readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock"))
+	
+	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") then
+		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck + 1)
+		--CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
+		--CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+	end
 
 end
 
 function HologrindJediManager:removeFSpoint(pCreatureObject)
---	local unlockluck = readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock")
---	
---	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") and unlockluck > 1 then
---		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck - 1)
---	--	CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))
---	end
+	local unlockluck = tonumber(readScreenPlayData(pCreatureObject, "forcesensitivity", "unlock"))
+	
+	if not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_novice") and unlockluck > 1 then
+		writeScreenPlayData(pCreatureObject, "forcesensitivity", "unlock", unlockluck - 1)
+	end
 
 end
 

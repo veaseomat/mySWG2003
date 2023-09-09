@@ -44,7 +44,7 @@ class SpawnArea extends ActiveArea {
 
 	protected int tier;
 
-	public final static int MINSPAWNINTERVAL = 2000; //msec
+	public final static int MINSPAWNINTERVAL = 100; //msec //vanilla is 2000
 
 	public SpawnArea() {
 		totalWeighting = 0;

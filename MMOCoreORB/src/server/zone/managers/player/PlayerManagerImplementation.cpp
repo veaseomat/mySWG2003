@@ -1540,9 +1540,9 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 	player->subtractCashCredits(currentcredits);
 
-//	if (!player->hasSkill("force_title_jedi_novice") ) {
-//		JediManager::instance()->removeFSpoint(player);
-//	}
+	if (!player->hasSkill("force_title_jedi_novice") && System::random(100) < 50) {
+		JediManager::instance()->removeFSpoint(player);
+	}
 
 ////PERMADEATH!
 //	if (player->hasSkill("force_title_jedi_rank_01") ) {//&& !attacker->isPlayerCreature())  {
@@ -2032,13 +2032,13 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 		}
 
 		if (ai != nullptr)
-			baseXp = ai->getLevel() * ai->getLevel() * 2.5 + 500;//ai->getLevel() * 20;// * ai->getLevel() * .5;//ai->getBaseXp();
+			baseXp = ai->getLevel() * ai->getLevel() * 2.5 + 250;//ai->getLevel() * 20;// * ai->getLevel() * .5;//ai->getBaseXp();
 
 	} else {
 		ManagedReference<AiAgent*> ai = cast<AiAgent*>(destructedObject);
 
 		if (ai != nullptr)
-			baseXp = ai->getLevel() * ai->getLevel() * 2.5 + 500;//ai->getLevel() * 20;//ai->getLevel() * .5;//ai->getBaseXp();
+			baseXp = ai->getLevel() * ai->getLevel() * 2.5 + 250;//ai->getLevel() * 20;//ai->getLevel() * .5;//ai->getBaseXp();
 	}
 
 	for (int i = 0; i < threatMap->size(); ++i) {
@@ -2472,6 +2472,17 @@ void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, const Badge* b
 			break;
 		default:
 			break;
+		}
+	}
+
+	if (badge->getType() == Badge::MASTER) {
+		if (System::random(5) == 5) {
+			JediManager::instance()->awardFSpoint(player);
+		}
+	}
+	else {
+		if (System::random(10) == 10) {
+			JediManager::instance()->awardFSpoint(player);
 		}
 	}
 }

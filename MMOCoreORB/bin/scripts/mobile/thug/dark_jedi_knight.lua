@@ -5,6 +5,7 @@ dark_jedi_knight = Creature:new {
 	socialGroup = "dark_jedi",
 	faction = "",
 	level = 75,
+	elite = 2.0,
 	chanceHit = 23.5,
 	damageMin = 1645,
 	damageMax = 3000,

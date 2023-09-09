@@ -50,21 +50,21 @@ void PlanetManagerImplementation::initialize() {
 	loadTravelFares();
 
 	if (zone->getZoneName() == "dathomir") {
-//		Reference<ActiveArea*> area = zone->getZoneServer()->createObject(STRING_HASHCODE("object/fs_village_area.iff"), 0).castTo<ActiveArea*>();
-//
-//		Locker locker(area);
-//		area->setRadius(768.f);
-//		area->initializePosition(5306, 0, -4145);
-//		zone->transferObject(area, -1, true);
-//
-//		ManagedReference<SceneObject*> scenery = zone->getZoneServer()->createObject(STRING_HASHCODE("object/static/structure/general/fs_village_nobuild_768m.iff"), 0);
-//
-//		Locker slocker(scenery, area);
-//		scenery->initializePosition(5306, zone->getHeight(5306, -4145), -4145);
-//		area->attachScenery(scenery);
-//
-//		slocker.release();
-//		locker.release();
+		Reference<ActiveArea*> area = zone->getZoneServer()->createObject(STRING_HASHCODE("object/fs_village_area.iff"), 0).castTo<ActiveArea*>();
+
+		Locker locker(area);
+		area->setRadius(768.f);
+		area->initializePosition(5306, 0, -4145);
+		zone->transferObject(area, -1, true);
+
+		ManagedReference<SceneObject*> scenery = zone->getZoneServer()->createObject(STRING_HASHCODE("object/static/structure/general/fs_village_nobuild_768m.iff"), 0);
+
+		Locker slocker(scenery, area);
+		scenery->initializePosition(5306, zone->getHeight(5306, -4145), -4145);
+		area->attachScenery(scenery);
+
+		slocker.release();
+		locker.release();
 
 		Reference<ActiveArea*> sarlaccArea = zone->getZoneServer()->createObject(STRING_HASHCODE("object/sarlacc_area.iff"), 0).castTo<ActiveArea*>();
 
@@ -1020,7 +1020,7 @@ bool PlanetManagerImplementation::isSpawningPermittedAt(float x, float y, float 
 	targetPos.setZ(zone->getHeight(x, y));
 
 	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
-	zone->getInRangeActiveAreas(x, y, margin + 32.f, &activeAreas, true);//raw value of 0 instead of margin+ x is no area 64.f is vanilla
+	//zone->getInRangeActiveAreas(x, y, 16, &activeAreas, true);// margin + 32.f//raw value of 0 instead of margin+ x is no area 64.f is vanilla
 
 	for (int i = 0; i < activeAreas.size(); ++i) {
 		ActiveArea* area = activeAreas.get(i);
@@ -1038,11 +1038,11 @@ bool PlanetManagerImplementation::isSpawningPermittedAt(float x, float y, float 
 		return false;
 	}
 
-	if (isInRangeWithPoi(x, y, 150))
-		return false;
+//	if (isInRangeWithPoi(x, y, 150))
+//		return false;
 
-	if (terrainManager->getHighestHeightDifference(x - 10, y - 10, x + 10, y + 10) > 15.0)
-		return false;
+//	if (terrainManager->getHighestHeightDifference(x - 10, y - 10, x + 10, y + 10) > 15.0)
+//		return false;
 
 	return true;
 }
