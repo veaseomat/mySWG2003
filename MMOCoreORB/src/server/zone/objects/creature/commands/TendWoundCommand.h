@@ -14,7 +14,7 @@ public:
 		: TendCommand(name, server) {
 		effectName = "clienteffect/healing_healwound.cef";
 
-		mindCost = 400;
+		mindCost = 200;
 		mindWoundCost = 5;
 
 		woundPool = 1;

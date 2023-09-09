@@ -619,7 +619,7 @@ void EntertainingSessionImplementation::doFlourish(int flourishNumber, bool gran
 //	} else {
 		//entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain / 2, false, true);
 
-		if (System::random(350) == 350) {
+		if (System::random(10000) == 10000) { //14k is 7.2 days //20k is 10.4 days of flourishing every 5 seconds
 			JediManager::instance()->awardFSpoint(entertainer);
 		}
 

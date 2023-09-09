@@ -111,7 +111,7 @@ SceneObject* CreatureManagerImplementation::spawnLair(unsigned int lairTemplate,
  	building->setFaction(lairTmpl->getFaction());
  	building->setPvpStatusBitmask(CreatureFlag::ATTACKABLE);
  	building->setOptionsBitmask(0, false);
- 	building->setMaxCondition((difficultyLevel * 3) * 10 * 7);//diff level usually 50
+ 	building->setMaxCondition(difficultyLevel * (200 + System::random(50)));
  	building->setConditionDamage(0, false);
  	building->initializePosition(x, z, y);
  	building->setDespawnOnNoPlayersInRange(true);
@@ -989,7 +989,7 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 	if(playerManager != nullptr)
 		playerManager->awardExperience(player, "scout", xp, true);
 
-	if (System::random(200) == 200) {
+	if (System::random(500) == 500) {
 		JediManager::instance()->awardFSpoint(player);
 	}
 
