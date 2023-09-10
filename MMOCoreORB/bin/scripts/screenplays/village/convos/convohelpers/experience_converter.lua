@@ -11,6 +11,7 @@ require("screenplays.screenplay")
 ExperienceConverter = ScreenPlay:new {
 	xpConversion = {
 		combat = {
+			{ "jedi_general", 1 },
 			{ "bountyhunter", 5 },
 			{ "combat_general", 3 },
 			{ "combat_meleespecialize_onehand", 30 },
@@ -24,6 +25,7 @@ ExperienceConverter = ScreenPlay:new {
 			{ "squadleader", 90 }
 		},
 		senses = {
+			{ "jedi_general", 1 },
 			{ "bio_engineer_dna_harvesting", 3 },
 			{ "camp", 5 },
 			{ "creaturehandler", 9 },
@@ -40,6 +42,7 @@ ExperienceConverter = ScreenPlay:new {
 			{ "trapping", 25 },
 		},
 		reflex = {
+			{ "jedi_general", 1 },
 			{ "bountyhunter", 5 },
 			{ "combat_general", 3 },
 			{ "combat_meleespecialize_onehand", 30 },
@@ -53,6 +56,7 @@ ExperienceConverter = ScreenPlay:new {
 			{ "squadleader", 90 }
 		},
 		crafting = {
+			{ "jedi_general", 1 },
 			{ "crafting_bio_engineer_creature", 4 },
 			{ "crafting_clothing_armor", 5 },
 			{ "crafting_clothing_general", 5 },
@@ -73,7 +77,7 @@ function ExperienceConverter:getBranchLearnList(pPlayer)
 	end
 
 	local branchList = "\nNothing"
-	local hasBranch = false
+	local hasBranch = true--false
 	for i = 1, #VillageJediManagerCommon.forceSensitiveBranches, 1 do
 		local branchName = VillageJediManagerCommon.forceSensitiveBranches[i]
 

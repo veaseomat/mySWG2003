@@ -156,8 +156,10 @@ function VillageJediManagerCommon.hasUnlockedBranch(pPlayer, branch)
 	if (pPlayer == nil) then
 		return false
 	end
+	
+	return true
 
-	return CreatureObject(pPlayer):hasScreenPlayState(2, "VillageUnlockScreenPlay:" .. branch)
+	--return CreatureObject(pPlayer):hasScreenPlayState(2, "VillageUnlockScreenPlay:" .. branch)
 end
 
 function VillageJediManagerCommon.getUnlockedBranchCount(pPlayer)
