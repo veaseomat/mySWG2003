@@ -97,7 +97,7 @@ int SpawnAreaImplementation::notifyObserverEvent(unsigned int eventType, Observa
 
 			Locker locker(area);
 
-			area->setRadius(16);//set no spawn radius? margin
+			area->setRadius(64);//set no spawn radius? margin
 			area->setNoSpawnArea(true);
 			area->initializePosition(sceno->getPositionX(), sceno->getPositionZ(), sceno->getPositionY());
 
@@ -135,7 +135,7 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	for (int i = 0; i < possibleSpawns.size(); i++) {
 		LairSpawn* spawn = possibleSpawns.get(i);
 
-		counter += spawn->getWeighting() * 10;
+		counter += spawn->getWeighting();// * 10;//not sure what this did
 
 		if (choice < counter) {
 			finalSpawn = spawn;
@@ -167,7 +167,7 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	//	return;
 
 	// Check the spot to see if spawning is allowed
-	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), 16)) {//finalSpawn->getSize() + 32.f //this is spawn density, was set to 0 prior //margin
+	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), 64)) {//finalSpawn->getSize() + 32.f //this is spawn density, was set to 0 prior //margin
 		return;
 	}
 
