@@ -286,20 +286,20 @@ function ExperienceConverter:convertXpTransferCallback(pPlayer, pSui, eventIndex
 	local fsXpAmount = PlayerObject(pGhost):getExperience("fs_" .. conversionType)
 	local fsXpCap = PlayerObject(pGhost):getExperienceCap("fs_" .. conversionType)
 
-	if (fsXpCap > 0) then
-		if (fsXpCap <= fsXpAmount) then
-			CreatureObject(pPlayer):sendSystemMessage("@quest/force_sensitive/utils:convert_at_fs_skill_cap")
-			return
-		end
-
-		if (fsXpAmount + convertedXp > fsXpCap) then
-			convertedXp = fsXpCap - fsXpAmount;
-			xpToConvert = convertedXp * ratio;
-		end
-	else
-		CreatureObject(pPlayer):sendSystemMessage("@quest/force_sensitive/utils:convert_no_skill")
-		return
-	end
+--	if (fsXpCap > 0) then
+--		if (fsXpCap <= fsXpAmount) then
+--			CreatureObject(pPlayer):sendSystemMessage("@quest/force_sensitive/utils:convert_at_fs_skill_cap")
+--			return
+--		end
+--
+--		if (fsXpAmount + convertedXp > fsXpCap) then
+--			convertedXp = fsXpCap - fsXpAmount;
+--			xpToConvert = convertedXp * ratio;
+--		end
+--	else
+--		CreatureObject(pPlayer):sendSystemMessage("@quest/force_sensitive/utils:convert_no_skill")--this error
+--		return
+--	end
 
 	if (convertedXp < 1) then
 		CreatureObject(pPlayer):sendSystemMessage("@quest/force_sensitive/utils:convert_allocate_more_xp")
