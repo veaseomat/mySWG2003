@@ -539,11 +539,11 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 		awardSkill("force_title_jedi_rank_04", creature, true, true, true);
 
 	}
-	if (skill->getSkillName() == "force_rank_dark_rank_08" || creature->hasSkill("force_rank_dark_rank_08")) {
+	if (skill->getSkillName() == "force_rank_dark_rank_10" || creature->hasSkill("force_rank_dark_rank_10")) {
 		awardSkill("force_title_jedi_master", creature, true, true, true);
 
 	}
-	if (skill->getSkillName() == "force_rank_light_rank_08" || creature->hasSkill("force_rank_light_rank_08")) {
+	if (skill->getSkillName() == "force_rank_light_rank_10" || creature->hasSkill("force_rank_light_rank_10")) {
 		awardSkill("force_title_jedi_master", creature, true, true, true);
 
 	}

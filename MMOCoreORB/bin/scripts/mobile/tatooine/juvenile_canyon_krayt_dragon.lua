@@ -2,7 +2,7 @@ juvenile_canyon_krayt_dragon = Creature:new {
 	objectName = "@mob/creature_names:juvenile_canyon_krayt",
 	socialGroup = "krayt",
 	faction = "",
-	level = 122,
+	level = 80,
 	chanceHit = 4.0,
 	damageMin = 745,
 	damageMax = 1200,
@@ -32,12 +32,13 @@ juvenile_canyon_krayt_dragon = Creature:new {
 	lootGroups = {
 		{
 	        groups = {
-				{group = "krayt_tissue_common", chance = 2500000},
-				{group = "krayt_dragon_common", chance = 3500000},
+				{group = "krayt_tissue_rare", chance = 2000000},
+				{group = "krayt_dragon_common", chance = 2500000},
+				{group = "krayt_pearls", chance = 1500000},
 				{group = "armor_all", chance = 2000000},
 				{group = "weapons_all", chance = 2000000},
 			},
-			lootChance = 3440000
+			lootChance = 3000000
 		}
 	},
 	weapons = {},

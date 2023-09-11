@@ -986,7 +986,7 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 
 	debug() << "Target defense after state affects and cap is " << targetDefense;
 
-	targetDefense *= .75;
+//	targetDefense *= .75;
 
 	return targetDefense;
 }
@@ -1017,7 +1017,7 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 	if (defender->isKnockedDown())
 		targetDefense *= .5;
 
-	targetDefense *= .75;
+//	targetDefense *= .75;
 
 	return targetDefense;
 }
@@ -2029,9 +2029,9 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
 		damage *= .25;//vanilla .25
 
-// PVE
-	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1.0;//.25 + (playerLevel * .0075);
+//// PVE
+//	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
+//		damage *= 1.0;//.25 + (playerLevel * .0075);
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
@@ -2039,7 +2039,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 1.0;
+		damage *= .75;
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
@@ -2160,6 +2160,61 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	float attackerRoll = (float)System::random(249) + 1.f;
 	float defenderRoll = (float)System::random(150) + 25.f;
 
+
+	Zone* zone = targetCreature->getZone();
+
+	SortedVector<QuadTreeEntry*> closeObjects;
+	CloseObjectsVector* closeObjectsVector = (CloseObjectsVector*) targetCreature->getCloseObjects();
+	if (closeObjectsVector == nullptr) {
+		zone->getInRangeObjects(targetCreature->getWorldPositionX(), targetCreature->getWorldPositionY(), 64, &closeObjects, true);
+	} else {
+		closeObjectsVector->safeCopyReceiversTo(closeObjects, CloseObjectsVector::CREOTYPE);
+	}
+
+	int localenemies = 0;
+
+	for (int i = 0; i < closeObjects.size(); ++i) {
+		SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
+
+		if (obj == nullptr)
+			continue;
+
+		if (obj->getObjectID() == targetCreature->getObjectID())
+			continue;
+
+		CreatureObject* c = obj->asCreatureObject();
+
+		if (c == nullptr || c->isDead())
+			continue;
+
+		if (!targetCreature->isInRange(c, 64))//distance
+			continue;
+
+		Locker clockernew(c, targetCreature);
+
+		if (!c->hasDefender(targetCreature))
+			continue;
+
+		clockernew.release();
+
+		localenemies += 1;
+
+//		Creature* cr2 = cast<Creature*>( c);
+//		Locker clocker(cr2, player);
+//
+//		ManagedReference<CreatureManager*> manager2 = cr2->getZone()->getCreatureManager();
+//		manager2->harvest(cr2, player, type);
+
+	}
+
+	float multipleopponentreduction = pow(0.85, localenemies - 1);//1.0 - ((localenemies - 1) * .1);
+
+
+	targetDefense *= multipleopponentreduction;
+	postureDefense *= multipleopponentreduction;
+	defenderRoll *= multipleopponentreduction;
+
+
 	// TODO (dannuic): add the trapmods in here somewhere (defense down trapmods)
 	float accTotal = hitChanceEquation(attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy, attackerRoll, targetDefense + postureDefense, defenderRoll);
 
@@ -2212,6 +2267,8 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 			if (targetCreature->isKnockedDown())
 				forcedodge *= .5;
 
+			forcedodge *= multipleopponentreduction;
+
 			float dodgeroll = (float)System::random(10000) / 10000;
 			if (dodgeroll < forcedodge) {
 				if (!(attacker->isTurret() || weapon->isThrownWeapon()) && ((weapon->isHeavyWeapon() || weapon->isSpecialHeavyWeapon() || (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)) ))
@@ -2241,6 +2298,8 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 
 		targetDefense += cobMod;
 		debug() << "Final modified secondary defense is " << targetDefense;
+
+		targetDefense *= multipleopponentreduction;
 
 		if (targetDefense > 50 + attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy + attackerRoll) { // successful secondary defense, return type of defense
 

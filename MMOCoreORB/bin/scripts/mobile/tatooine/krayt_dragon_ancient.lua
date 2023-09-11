@@ -3,7 +3,7 @@ krayt_dragon_ancient = Creature:new {
 	socialGroup = "krayt",
 	faction = "",
 	level = 336,
-	elite = 3.0,
+	elite = 2.0,
 	chanceHit = 30.0,
 	damageMin = 2270,
 	damageMax = 4250,
@@ -38,7 +38,7 @@ krayt_dragon_ancient = Creature:new {
 				{group = "armor_all", chance = 2000000},
 				{group = "weapons_all", chance = 2000000},
 			},
-			lootChance = 7720000
+			lootChance = 9000000
 		}
 	},
 	weapons = {},

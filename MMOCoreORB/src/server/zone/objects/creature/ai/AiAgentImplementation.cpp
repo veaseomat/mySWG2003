@@ -176,14 +176,11 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float weapran = .3 + (System::random(20) * .01);
+	float weapran = .3 + (System::random(30) * .01);
 
 	if (isAiAgent() && !isCreature()){
-		weapran += System::random(50) * .01;
-		//weapran = .3 + (System::random(70) * .01);
+		weapran = .3 + (System::random(60) * .01);
 	}
-
-
 
 	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
 

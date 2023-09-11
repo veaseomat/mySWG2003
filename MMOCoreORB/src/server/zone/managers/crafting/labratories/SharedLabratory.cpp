@@ -23,28 +23,28 @@ float SharedLabratory::calculateExperimentationValueModifier(int experimentation
 	float results;
 	switch (experimentationResult) {
 	case CraftingManager::AMAZINGSUCCESS:
-		results = 0.20f;
+		results = 0.16f;
 		break;
 	case CraftingManager::GREATSUCCESS:
-		results = 0.15f;
+		results = 0.14f;
 		break;
 	case CraftingManager::GOODSUCCESS:
-		results = 0.10f;
+		results = 0.11f;
 		break;
 	case CraftingManager::MODERATESUCCESS:
-		results = 0.05f;
-		break;
-	case CraftingManager::SUCCESS:
 		results = 0.03f;
 		break;
-	case CraftingManager::MARGINALSUCCESS:
+	case CraftingManager::SUCCESS:
 		results = 0.02f;
 		break;
-	case CraftingManager::OK:
+	case CraftingManager::MARGINALSUCCESS:
 		results = 0.01f;
 		break;
-	case CraftingManager::BARELYSUCCESSFUL:
+	case CraftingManager::OK:
 		results = 0.00f;
+		break;
+	case CraftingManager::BARELYSUCCESSFUL:
+		results = -0.01f;
 		break;
 	case CraftingManager::CRITICALFAILURE:
 		results = 0.00f;

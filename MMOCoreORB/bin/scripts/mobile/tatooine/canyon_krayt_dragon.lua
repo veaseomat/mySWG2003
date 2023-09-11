@@ -3,7 +3,7 @@ canyon_krayt_dragon = Creature:new {
 	socialGroup = "krayt",
 	faction = "",
 	level = 275,
-	elite = 2.5,
+	elite = 1.5,
 	chanceHit = 27.25,
 	damageMin = 1520,
 	damageMax = 2750,
@@ -38,7 +38,7 @@ canyon_krayt_dragon = Creature:new {
 				{group = "armor_all", chance = 2000000},
 				{group = "weapons_all", chance = 2000000},
 			},
-			lootChance = 7000000
+			lootChance = 5000000
 		}
 	},
 	weapons = {},
