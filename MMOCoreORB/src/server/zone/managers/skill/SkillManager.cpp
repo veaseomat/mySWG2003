@@ -531,6 +531,23 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 //		skill = skillMap.get(skillName.hashCode());
 	}
 
+	if (skill->getSkillName() == "force_rank_dark_rank_05" || creature->hasSkill("force_rank_dark_rank_05")) {
+		awardSkill("force_title_jedi_rank_04", creature, true, true, true);
+
+	}
+	if (skill->getSkillName() == "force_rank_light_rank_05" || creature->hasSkill("force_rank_light_rank_05")) {
+		awardSkill("force_title_jedi_rank_04", creature, true, true, true);
+
+	}
+	if (skill->getSkillName() == "force_rank_dark_rank_08" || creature->hasSkill("force_rank_dark_rank_08")) {
+		awardSkill("force_title_jedi_master", creature, true, true, true);
+
+	}
+	if (skill->getSkillName() == "force_rank_light_rank_08" || creature->hasSkill("force_rank_light_rank_08")) {
+		awardSkill("force_title_jedi_master", creature, true, true, true);
+
+	}
+
 	return true;
 }
 
