@@ -976,6 +976,12 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	if (targetDefense > 150)
 		targetDefense = 150;
 
+//	float multipleopponentreduction = pow(0.9, localenemies - 1);
+//
+//	float nocapreductionmultiplier = pow(0.9, targetDefense);
+
+
+
 	// food bonus goes on top as well
 	targetDefense += defender->getSkillMod("dodge_attack");
 	targetDefense += defender->getSkillMod("private_dodge_attack");

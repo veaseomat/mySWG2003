@@ -65,7 +65,7 @@ public:
 			if (ghost != nullptr){
 				ghost->setForcePower(ghost->getForcePower() - getFrsModifiedForceCost(creature));
 				PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
-				playerManager->awardExperience(creature, "jedi_general", getFrsModifiedForceCost(creature) * 5, true, 1.0, false);
+				playerManager->awardExperience(creature, "jedi_general", getFrsModifiedForceCost(creature), true, 1.0, false);
 			}
 
 		} catch (Exception& e) {

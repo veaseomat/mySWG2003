@@ -680,15 +680,15 @@ void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
 	if (isInCombat()) return;
 
 	//removed in case of stability issue involving the getinrangeobjects issue w/ loot and harvest area
-//	if (pObject->isPlayerCreature() && thisAgent->isInRange(pObject, 32)){
-//		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
-//		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
-//		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
-//
-//		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
-//			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
-//		}
-//	}
+	if (pObject->isPlayerCreature() && thisAgent->isInRange(pObject, 32)){
+		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
+		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
+		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
+
+		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
+			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
+		}
+	}
 
 	float levelDiff = creoObject->getLevel() - getLevel();
 	float mod = Math::max(0.04f, Math::min((1.f - (levelDiff / 20.f)), 1.2f));
@@ -817,15 +817,15 @@ bool AiAgentImplementation::runAwarenessLogicCheck(SceneObject* pObject) {
 		getZoneUnsafe()->getGCWManager()->runCrackdownScan(thisAiAgent, creoObject);
 	}
 
-	if (pObject->isPlayerCreature()){
-		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
-		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
-		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
-
-		if (pweapon->isJediWeapon() || pghost->hasBhTef()){
-			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility to defender
-		}
-	}
+//	if (pObject->isPlayerCreature()){
+//		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
+//		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
+//		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
+//
+//		if (pweapon->isJediWeapon() || pghost->hasBhTef()){
+//			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility to defender
+//		}
+//	}
 
 	ManagedReference<SceneObject*> follow = getFollowObject().get();
 

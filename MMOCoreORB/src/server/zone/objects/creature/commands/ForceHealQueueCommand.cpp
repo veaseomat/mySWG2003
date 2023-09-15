@@ -351,7 +351,7 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 			playerObject->setForcePower(currentForce - totalCost);
 
 			PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
-			playerManager->awardExperience(creature, "jedi_general", totalCost * 5, true, 1.0, false);
+			playerManager->awardExperience(creature, "jedi_general", totalCost, true, 1.0, false);
 
 		}
 
