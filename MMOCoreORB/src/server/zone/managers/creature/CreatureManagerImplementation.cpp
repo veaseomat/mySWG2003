@@ -989,9 +989,9 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 	if(playerManager != nullptr)
 		playerManager->awardExperience(player, "scout", xp, true);
 
-	if (System::random(500) == 500) {
-		JediManager::instance()->awardFSpoint(player);
-	}
+//	if (System::random(500) == 500) {
+//		JediManager::instance()->awardFSpoint(player);
+//	}
 
 	creature->addAlreadyHarvested(player);
 

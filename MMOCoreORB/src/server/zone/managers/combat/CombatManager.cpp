@@ -2160,18 +2160,33 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	float attackerRoll = (float)System::random(249) + 1.f;
 	float defenderRoll = (float)System::random(150) + 25.f;
 
-
 //	Zone* zone = targetCreature->getZone();
 //
+//	CloseObjectsVector* vec =  (CloseObjectsVector*)targetCreature->getCloseObjects();
+//
+//	SortedVector<QuadTreeEntry*> closeObjects;
+//
+//	if (vec != nullptr) {
+//		closeObjects.removeAll(vec->size(), 10);
+//		vec->safeCopyTo(closeObjects);
+//	} else {
+//#ifdef COV_DEBUG
+//		attacker->info("Null closeobjects vector in CombatManager::getAreaTargets", true);
+//#endif
+//		zone->getInRangeObjects(targetCreature->getWorldPositionX(), targetCreature->getWorldPositionY(), 64, &closeObjects, true);
+//	}
+
+	int localenemies = 0;
+
+//	Zone* zone = targetCreature->getZone();
 //	SortedVector<QuadTreeEntry*> closeObjects;
 //	CloseObjectsVector* closeObjectsVector = (CloseObjectsVector*) targetCreature->getCloseObjects();
+//
 //	if (closeObjectsVector == nullptr) {
 //		zone->getInRangeObjects(targetCreature->getWorldPositionX(), targetCreature->getWorldPositionY(), 64, &closeObjects, true);
 //	} else {
 //		closeObjectsVector->safeCopyReceiversTo(closeObjects, CloseObjectsVector::CREOTYPE);
 //	}
-//
-//	int localenemies = 0;
 //
 //	for (int i = 0; i < closeObjects.size(); ++i) {
 //		SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
@@ -2187,10 +2202,15 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 //		if (c == nullptr || c->isDead())
 //			continue;
 //
+//		if (!c->isPlayerCreature() && !c->isAiAgent())
+//			continue;
+//
 //		if (!targetCreature->isInRange(c, 64))//distance
 //			continue;
 //
-//		Locker clockernew(c, targetCreature);
+//		TangibleObject* ctano = cast<TangibleObject*>( c);
+//
+//		Locker clockernew(ctano, targetCreature);
 //
 //		if (!c->hasDefender(targetCreature))
 //			continue;
@@ -2199,18 +2219,40 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 //
 //		localenemies += 1;
 //
-////		Creature* cr2 = cast<Creature*>( c);
-////		Locker clocker(cr2, player);
-////
-////		ManagedReference<CreatureManager*> manager2 = cr2->getZone()->getCreatureManager();
-////		manager2->harvest(cr2, player, type);
-//
 //	}
-//
-//	float multipleopponentreduction = pow(0.85, localenemies - 1);//1.0 - ((localenemies - 1) * .1);
-//
-//
-//	targetDefense *= multipleopponentreduction;
+
+	TangibleObject* tanotargetCreature = cast<TangibleObject*>(targetCreature);
+
+	fatal(tanotargetCreature->isLockedByCurrentThread(), "defender must be locked");
+
+	const DeltaVector<ManagedReference<SceneObject*> >* defenderList = tanotargetCreature->getDefenderList();
+
+	for (int i = 0; i < defenderList->size(); ++i) {
+		ManagedReference<SceneObject*> object = defenderList->getSafe(i);
+
+		if (object == nullptr || !object->isTangibleObject())
+			continue;
+
+		TangibleObject* targetattacker = cast<TangibleObject*>(object.get());
+
+		Locker clocker(tanotargetCreature, targetattacker);
+
+		if (!tanotargetCreature->hasDefender(targetattacker)) {
+			continue;
+		} else {
+			localenemies += 1;
+		}
+
+		//--i;
+
+		clocker.release();
+	}
+
+	float multipleopponentreduction = pow(0.9, localenemies - 1);//1.0 - ((localenemies - 1) * .1);
+
+	if (multipleopponentreduction < 0.0) multipleopponentreduction = 0.0;
+
+	targetDefense *= multipleopponentreduction;
 //	postureDefense *= multipleopponentreduction;
 //	defenderRoll *= multipleopponentreduction;
 
@@ -2267,7 +2309,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 			if (targetCreature->isKnockedDown())
 				forcedodge *= .5;
 
-//			forcedodge *= multipleopponentreduction;
+			forcedodge *= multipleopponentreduction;
 
 			float dodgeroll = (float)System::random(10000) / 10000;
 			if (dodgeroll < forcedodge) {
@@ -2299,7 +2341,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 		targetDefense += cobMod;
 		debug() << "Final modified secondary defense is " << targetDefense;
 
-//		targetDefense *= multipleopponentreduction;
+		targetDefense *= multipleopponentreduction;
 
 		if (targetDefense > 50 + attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy + attackerRoll) { // successful secondary defense, return type of defense
 

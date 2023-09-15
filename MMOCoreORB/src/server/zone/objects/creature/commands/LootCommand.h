@@ -76,26 +76,26 @@ public:
 					closeObjectsVector->safeCopyReceiversTo(closeObjects, CloseObjectsVector::CREOTYPE);
 				}
 
-//				for (int i = 0; i < closeObjects.size(); ++i) {
-//					SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
-//
-//					if (obj == nullptr)
-//						continue;
-//
-//					if (obj->getObjectID() == creature->getObjectID())
-//						continue;
-//
-//					CreatureObject* c = obj->asCreatureObject();
-//
-//					if (c == nullptr || c->isPlayerCreature() || !ai->isDead())
-//						continue;
-//
-//					if (!creature->isInRange(c, 32))//distance
-//						continue;
-//
-//					playerManager->lootAll(creature, c);
-//
-//				}
+				for (int i = 0; i < closeObjects.size(); ++i) {
+					SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
+
+					if (obj == nullptr)
+						continue;
+
+					if (obj->getObjectID() == creature->getObjectID())
+						continue;
+
+					CreatureObject* c = obj->asCreatureObject();
+
+					if (c == nullptr || c->isPlayerCreature() || !c->isDead())
+						continue;
+
+					if (!creature->isInRange(c, 32))//distance
+						continue;
+
+					playerManager->lootAll(creature, c);
+
+				}
 
 			} else {
 				//Check if the corpse's inventory contains any items.

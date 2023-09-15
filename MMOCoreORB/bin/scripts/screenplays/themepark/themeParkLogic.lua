@@ -1874,7 +1874,7 @@ function ThemeParkLogic:handleMissionReward(pConversingPlayer)
 	local ranlvl = getRandomNumber(1, 100)
 	createLoot(pInventory, "junk", ranlvl, false)
 	
-	if getRandomNumber(1, 10) >= 10 then --moved to palyer manager
+	if getRandomNumber(1, 20) >= 20 then --moved to palyer manager
 			HologrindJediManager.awardFSpoint(pConversingPlayer)
 	end
 	

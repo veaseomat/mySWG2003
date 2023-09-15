@@ -311,7 +311,7 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 
 	if (ghost != nullptr) {
 		//Withdraw skill points.
-		ghost->addSkillPoints(-skill->getSkillPointsRequired());
+//		ghost->addSkillPoints(-skill->getSkillPointsRequired());
 
 		//only remove non jedi sp
 //		if (!skill->getSkillName().contains("force_discipline")) {
@@ -611,7 +611,7 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 	if (ghost != nullptr) {
 		//Give the player the used skill points back.
-		ghost->addSkillPoints(skill->getSkillPointsRequired());
+//		ghost->addSkillPoints(skill->getSkillPointsRequired());
 
 		//only return non jedi sp
 //		if (!skill->getSkillName().contains("force_discipline")) {
@@ -621,17 +621,17 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 		//return xp from surender
 
-		if (skill->getXpCost() > 0) { //dead jedi dont get xp back
-			if (creature->isDead() && skillName.beginsWith("force_"))	{
-
-			}
-			if (skillName.beginsWith("force_rank"))	{
-
-			}
-			else	{
-			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
-			}
-		}
+//		if (skill->getXpCost() > 0) { //dead jedi dont get xp back
+//			if (creature->isDead() && skillName.beginsWith("force_"))	{
+//
+//			}
+//			if (skillName.beginsWith("force_rank"))	{
+//
+//			}
+//			else	{
+//			ghost->addExperience(skill->getXpType(), skill->getXpCost(), true);
+//			}
+//		}
 
 		//Remove abilities but only if the creature doesn't still have a skill that grants the
 		//ability.  Some abilities are granted by multiple skills. For example Dazzle for dancers
@@ -792,12 +792,12 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 				//Give the player the used skill points back.
 				ghost->addSkillPoints(skill->getSkillPointsRequired());
 
-				int xpcost = skill->getXpCost();
-				int curExp = ghost->getExperience(skill->getXpType());
-
-				if (xpcost > 0) {
-					ghost->addExperience(skill->getXpType(), curExp + xpcost, true);
-				}
+//				int xpcost = skill->getXpCost();
+//				int curExp = ghost->getExperience(skill->getXpType());
+//
+//				if (xpcost > 0) {
+//					ghost->addExperience(skill->getXpType(), curExp + xpcost, true);
+//				}
 
 				//Remove abilities
 				auto abilityNames = skill->getAbilities();
@@ -862,7 +862,7 @@ void SkillManager::awardDraftSchematics(Skill* skill, PlayerObject* ghost, bool 
 }
 
 void SkillManager::updateXpLimits(PlayerObject* ghost) {
-	return;//xp cap located in playerobjectimplementation under addexperience
+	//return;//xp cap located in playerobjectimplementation under addexperience
 
 	if (ghost == nullptr || !ghost->isPlayerObject()) {
 		return;
@@ -896,9 +896,9 @@ void SkillManager::updateXpLimits(PlayerObject* ghost) {
 		if (skillBox == nullptr)
 			continue;
 //remove this for no xp cap
-//		if (xpTypeCapList->contains(skillBox->getXpType()) && (xpTypeCapList->get(skillBox->getXpType()) < skillBox->getXpCap())) {
-//			xpTypeCapList->get(skillBox->getXpType()) = skillBox->getXpCap();
-//		}
+		if (xpTypeCapList->contains(skillBox->getXpType()) && (xpTypeCapList->get(skillBox->getXpType()) < skillBox->getXpCap())) {
+			xpTypeCapList->get(skillBox->getXpType()) = skillBox->getXpCap();
+		}
 	}
 
 	//Iterate over the player xp types and cap all xp types to the limits.
@@ -907,9 +907,9 @@ void SkillManager::updateXpLimits(PlayerObject* ghost) {
 	for (int i = 0; i < experienceList->size(); ++i) {
 		String xpType = experienceList->getKeyAt(i);
 //remove this for no xp cap
-//		if (experienceList->get(xpType) > xpTypeCapList->get(xpType)) {
-//			ghost->addExperience(xpType, xpTypeCapList->get(xpType) - experienceList->get(xpType), true);
-//		}
+		if (experienceList->get(xpType) > xpTypeCapList->get(xpType)) {
+			ghost->addExperience(xpType, xpTypeCapList->get(xpType) - experienceList->get(xpType), true);
+		}
 	}
 }
 
@@ -951,10 +951,10 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 			}
 		}
 //remove for inf sp
-		//Check if player has enough skill points to learn the skill.
-		if (ghost->getSkillPoints() < skill->getSkillPointsRequired()) {
-			return false;
-		}
+//		//Check if player has enough skill points to learn the skill.
+//		if (ghost->getSkillPoints() < skill->getSkillPointsRequired()) {
+//			return false;
+//		}
 	} else {
 		//Could not retrieve player object.
 		return false;

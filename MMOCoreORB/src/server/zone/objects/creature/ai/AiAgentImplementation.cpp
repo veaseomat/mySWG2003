@@ -176,19 +176,23 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float weapran = .3 + (System::random(30) * .01);
+	float weapran = .6 + (System::random(40) * .01);
 
-	if (isAiAgent() && !isCreature()){
-		weapran = .3 + (System::random(60) * .01);
-	}
+//	if (isAiAgent() && !isCreature()){
+//		weapran = .3 + (System::random(60) * .01);
+//	}
 
 	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
 
-	if (elite > 1.0) {
-		//legendarynpc = true;
-		//newlvl *= elite;
-		weapran *= elite;
-	}
+//	if (elite > 1.0) {
+//		//legendarynpc = true;
+//		//newlvl *= elite;
+//		weapran *= elite;
+//	}
+
+//		if (isCreature()){
+//			float newmindamage = .5;
+//		}
 
 	float minDmg = ((newlvl * 15) - 100) * weapran * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
 	float maxDmg = ((newlvl * 15) - 100) * weapran;//((pow(newlvl, 2)) / 20) * weapran + 5;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
@@ -267,7 +271,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 				finalColor = System::random(6) + 6;// 1/10 color crystals will be yellow,purp,orange
 				}
 
-				if (System::random(50) >= 50){
+				if (System::random(20) >= 20){
 				finalColor = System::random(18) + 12;// 1/100 color crystals will be special named colors
 				}
 
@@ -675,15 +679,16 @@ void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
 
 	if (isInCombat()) return;
 
-	if (pObject->isPlayerCreature() && thisAgent->isInRange(pObject, 32)){
-		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
-		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
-		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
-
-		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
-			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
-		}
-	}
+	//removed in case of stability issue involving the getinrangeobjects issue w/ loot and harvest area
+//	if (pObject->isPlayerCreature() && thisAgent->isInRange(pObject, 32)){
+//		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
+//		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
+//		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
+//
+//		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
+//			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
+//		}
+//	}
 
 	float levelDiff = creoObject->getLevel() - getLevel();
 	float mod = Math::max(0.04f, Math::min((1.f - (levelDiff / 20.f)), 1.2f));
@@ -812,15 +817,15 @@ bool AiAgentImplementation::runAwarenessLogicCheck(SceneObject* pObject) {
 		getZoneUnsafe()->getGCWManager()->runCrackdownScan(thisAiAgent, creoObject);
 	}
 
-//	if (pObject->isPlayerCreature()){
-//		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
-//		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
-//		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
-//
-//		if (pweapon->isJediWeapon() || pghost->hasBhTef()){
-//			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility to defender
-//		}
-//	}
+	if (pObject->isPlayerCreature()){
+		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
+		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
+		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
+
+		if (pweapon->isJediWeapon() || pghost->hasBhTef()){
+			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility to defender
+		}
+	}
 
 	ManagedReference<SceneObject*> follow = getFollowObject().get();
 

@@ -97,8 +97,12 @@ int CraftingManagerImplementation::calculateExperimentationSuccess(CreatureObjec
 	/// Range 0-100
 	int luckRoll = System::random(100) + cityBonus;
 
-	if(luckRoll > ((95 - expbonus) - forceSkill))
+	if(luckRoll > ((95 - expbonus) - forceSkill))	{
 		return AMAZINGSUCCESS;
+//		if (System::random(10) >= 10){
+//			JediManager::instance()->awardFSpoint(player);
+//		}
+	}
 
 	if(luckRoll < (5 - expbonus - failMitigate))
 		luckRoll -= System::random(100);
@@ -110,10 +114,6 @@ int CraftingManagerImplementation::calculateExperimentationSuccess(CreatureObjec
 
 	///
 	int experimentRoll = (toolModifier * (luckRoll + (experimentingPoints * 4)));
-
-	if (System::random(100) >= 100){
-		JediManager::instance()->awardFSpoint(player);
-	}
 
 	if (experimentRoll > 70)
 		return GREATSUCCESS;

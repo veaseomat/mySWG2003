@@ -2112,18 +2112,18 @@ void CreatureObjectImplementation::notifyLoadFromDatabase() {
 
 	const SkillList* playerSkillList = getSkillList();
 
-	int totalSkillPointsWasted = 500;
-
-	for (int i = 0; i < playerSkillList->size(); ++i) {
-		Skill* skill = playerSkillList->get(i);
-
-		if (skill == nullptr)
-			continue;
-
-		skillManager->awardDraftSchematics(skill, ghost, false);
-
-		totalSkillPointsWasted -= skill->getSkillPointsRequired();
-	}
+//	int totalSkillPointsWasted = 500;
+//
+//	for (int i = 0; i < playerSkillList->size(); ++i) {
+//		Skill* skill = playerSkillList->get(i);
+//
+//		if (skill == nullptr)
+//			continue;
+//
+//		skillManager->awardDraftSchematics(skill, ghost, false);
+//
+//		totalSkillPointsWasted -= skill->getSkillPointsRequired();
+//	}
 
 //	if (ghost->getSkillPoints() != totalSkillPointsWasted) {
 //		error() << "skill points on load mismatch calculated: " << totalSkillPointsWasted

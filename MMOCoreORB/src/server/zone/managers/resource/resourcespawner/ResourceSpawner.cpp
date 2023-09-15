@@ -935,9 +935,9 @@ void ResourceSpawner::sendSample(CreatureObject* player, const String& resname,
 
 //	player->inflictDamage(player, CreatureAttribute::ACTION, 1, false, true);
 
-	if (System::random(5000) == 5000) { //5k @ 10sec each = 5days
-		JediManager::instance()->awardFSpoint(player);
-	}
+//	if (System::random(5000) == 5000) { //5k @ 10sec each = 5days
+//		JediManager::instance()->awardFSpoint(player);
+//	}
 
 	PlayClientEffectLoc* effect = new PlayClientEffectLoc(sampleAnimation,
 			player->getZone()->getZoneName(), player->getPositionX(),

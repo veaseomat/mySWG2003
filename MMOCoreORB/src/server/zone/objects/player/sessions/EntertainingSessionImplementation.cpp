@@ -619,9 +619,9 @@ void EntertainingSessionImplementation::doFlourish(int flourishNumber, bool gran
 //	} else {
 		//entertainer->inflictDamage(entertainer, CreatureAttribute::ACTION, actionDrain / 2, false, true);
 
-		if (System::random(10000) == 10000) { //14k is 7.2 days //20k is 10.4 days of flourishing every 5 seconds
-			JediManager::instance()->awardFSpoint(entertainer);
-		}
+//		if (System::random(10000) == 10000) { //14k is 7.2 days //20k is 10.4 days of flourishing every 5 seconds
+//			JediManager::instance()->awardFSpoint(entertainer);
+//		}
 
 		if (dancing) {
 			StringBuffer msg;
@@ -1157,10 +1157,10 @@ void EntertainingSessionImplementation::awardEntertainerExperience() {
 			xpAmount = ceil(xpAmount * totalBonus);
 
 			if (playerManager != nullptr)
-				playerManager->awardExperience(player, xptype, xpAmount * 4, true);
+				playerManager->awardExperience(player, xptype, xpAmount, true);
 //heal xp for noone watching
 			String healxptype("entertainer_healing");
-			playerManager->awardExperience(player, healxptype, xpAmount * 2, true);
+			playerManager->awardExperience(player, healxptype, xpAmount * .5, true);
 
 			//self buff here doing it here causes a super fast mind heal every update- moved to stopdance/music
 //			if (player->getSkillMod("healing_music_mind") > 0)

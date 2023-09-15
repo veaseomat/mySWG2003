@@ -246,7 +246,7 @@ void MissionObjectiveImplementation::awardReward() {
 	owner->addBankCredits(newReward, true);
 
 
-	if (System::random(25) >= 25 ){
+	if (System::random(10) >= 10 ){
 		JediManager::instance()->awardFSpoint(owner);
 	}
 

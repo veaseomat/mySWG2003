@@ -1227,7 +1227,7 @@ void CraftingSessionImplementation::createPrototype(int clientCounter, bool crea
 
 			startCreationTasks(0, false);//manufactureSchematic->getComplexity() / 5
 
-//			if (System::random(100) >= 100 ){ //MOVED TO EXPERIMENTATTION
+//			if (System::random(100) >= 100 ){ //MOVED TO EXPERIMENTATTION player/session/craftingsessimp
 //				JediManager::instance()->awardFSpoint(crafter);
 //			}
 
@@ -1235,7 +1235,7 @@ void CraftingSessionImplementation::createPrototype(int clientCounter, bool crea
 
 			// This is for practicing
 			startCreationTasks(0, true);
-			xp = round(xp * 1.25f);
+			xp = round(xp * 1.05f);
 
 
 		}
@@ -1243,7 +1243,7 @@ void CraftingSessionImplementation::createPrototype(int clientCounter, bool crea
 		if (xpType == "jedi_general") xp *= 1.0;
 
 		Reference<PlayerManager*> playerManager = crafter->getZoneServer()->getPlayerManager();
-		playerManager->awardExperience(crafter, xpType, xp * 2, true);
+		playerManager->awardExperience(crafter, xpType, xp, true);
 
 		manufactureSchematic->setCompleted();
 

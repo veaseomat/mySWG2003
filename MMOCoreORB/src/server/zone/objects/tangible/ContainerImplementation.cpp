@@ -115,6 +115,7 @@ int ContainerImplementation::canAddObject(SceneObject* object, int containmentTy
 	}
 
 	if (containmentType == -1) {
+		//backpacks within backpacks remove this one
 		if ((gameObjectType == SceneObjectType::WEARABLECONTAINER && object->getGameObjectType() == SceneObjectType::WEARABLECONTAINER)) {
 			errorDescription = "@container_error_message:container12"; // This item is too bulky to fit inside this container.
 
@@ -130,6 +131,7 @@ int ContainerImplementation::canAddObject(SceneObject* object, int containmentTy
 		// Find out how much room we need
 		int objectSize;
 
+		//removing this did not work for backpacks within backpacks counting items
 		if (object->isContainerObject())
 			objectSize = object->getContainerObjectsSize() + 1;
 		else
