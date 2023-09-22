@@ -73,7 +73,7 @@ FlurryShot2Command = {
 
 	combatSpam = "flurry",
 	
-	weaponType = RIFLEWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

@@ -76,7 +76,7 @@ PolearmHit3Command = {
 
 	combatSpam = "bonebreaker",
 	
-	weaponType = POLEARMWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 }

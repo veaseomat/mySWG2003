@@ -56,7 +56,7 @@ Melee1hHit1Command = {
 
 	combatSpam = "chomai",
 	
-	weaponType = ONEHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 }

@@ -319,15 +319,15 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 //		}
 
 		//Witdraw experience.
-//		if (!noXpRequired) {
-//			if (skillName.beginsWith("force_rank"))	{
-//				//frs doesnt remove exp
-//			} else {
-//
-//			ghost->addExperience(skill->getXpType(), -skill->getXpCost(), true);
-//
-//			}
-//		}
+		if (!noXpRequired) {
+			if (skillName.beginsWith("force_rank"))	{
+				//frs doesnt remove exp
+			} else {
+
+			ghost->addExperience(skill->getXpType(), -skill->getXpCost(), true);
+
+			}
+		}
 
 		creature->addSkill(skill, notifyClient);
 
@@ -872,7 +872,7 @@ void SkillManager::awardDraftSchematics(Skill* skill, PlayerObject* ghost, bool 
 }
 
 void SkillManager::updateXpLimits(PlayerObject* ghost) {
-	//return;//xp cap located in playerobjectimplementation under addexperience
+	return;//xp cap located in playerobjectimplementation under addexperience
 
 	if (ghost == nullptr || !ghost->isPlayerObject()) {
 		return;
@@ -952,7 +952,7 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 //		return false;
 //	}
 
-	if (skillName.contains("novice")) return true;
+//	if (skillName.contains("novice")) return true;
 
 	ManagedReference<PlayerObject* > ghost = creature->getPlayerObject();
 	if (ghost != nullptr) {
@@ -987,7 +987,7 @@ bool SkillManager::fulfillsSkillPrerequisitesAndXp(const String& skillName, Crea
 		return false;
 	}
 
-	if (skillName.contains("novice")) return true;
+//	if (skillName.contains("novice")) return true;
 
 	ManagedReference<PlayerObject* > ghost = creature->getPlayerObject();
 	if (ghost != nullptr) {

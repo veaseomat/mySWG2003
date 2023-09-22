@@ -586,16 +586,16 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 	int xpCap = -1;
 
 	//remove this for xp caps
-	if (xpTypeCapList.contains(xpType))
-		xpCap = xpTypeCapList.get(xpType);
-
-	if (xpCap < 0)
-		xpCap = 2000;
-
-	if (xp > xpCap) {
-		valueToAdd = xpCap - (xp - valueToAdd);
-		xp = xpCap;
-	}
+//	if (xpTypeCapList.contains(xpType))
+//		xpCap = xpTypeCapList.get(xpType);
+//
+//	if (xpCap < 0)
+//		xpCap = 2000;
+//
+//	if (xp > xpCap) {
+//		valueToAdd = xpCap - (xp - valueToAdd);
+//		xp = xpCap;
+//	}
 
 	if (notifyClient) {
 		PlayerObjectDeltaMessage8* dplay8 = new PlayerObjectDeltaMessage8(this);

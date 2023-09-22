@@ -68,7 +68,7 @@ PolearmStun1Command = {
 	  )
 	},
 	
-	weaponType = POLEARMWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 

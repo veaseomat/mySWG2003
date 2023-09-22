@@ -264,6 +264,9 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level < 1)
 		level = 1;
 
+	if(level > 100)
+		level = 100;
+
 	level *= 2.0 + (System::random(300) * .01);
 
 	if(level > 500)
@@ -336,7 +339,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //
 //	}
 
-	if (System::random(100) == 100 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
+	if (System::random(250) == 250 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 

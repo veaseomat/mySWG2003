@@ -56,7 +56,7 @@ Melee1hScatterHit1Command = {
 
 	poolsToDamage = HEALTH_ATTRIBUTE + ACTION_ATTRIBUTE + MIND_ATTRIBUTE,
 	
-	weaponType = ONEHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	combatSpam = "scatterstab",
 

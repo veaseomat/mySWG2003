@@ -61,7 +61,7 @@ FanShotCommand = {
 
 	combatSpam = "fanshot",
 	
-	weaponType = PISTOLWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

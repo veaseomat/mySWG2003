@@ -55,7 +55,7 @@ RollShotCommand = {
 
 	combatSpam = "rollshot",
 	
-	weaponType = PISTOLWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1,
 	stateEffects = {

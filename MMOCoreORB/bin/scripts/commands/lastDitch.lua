@@ -72,7 +72,7 @@ LastDitchCommand = {
 
 	combatSpam = "lastditch",
 	
-	weaponType = PISTOLWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

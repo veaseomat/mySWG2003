@@ -393,7 +393,7 @@ int CombatManager::doTargetCombatAction(CreatureObject* attacker, WeaponObject* 
 		break;
 	case BLOCK:
 		doBlock(attacker, weapon, defender, damage);
-		damageMultiplier = 0.5f;
+		damageMultiplier = 0.0f;//0.5f;
 		break;
 	case DODGE:
 		doDodge(attacker, weapon, defender, damage);
@@ -401,8 +401,8 @@ int CombatManager::doTargetCombatAction(CreatureObject* attacker, WeaponObject* 
 		break;
 	case COUNTER: {
 		doCounterAttack(attacker, weapon, defender, damage);
-		if (!defender->hasState(CreatureState::PEACE))
-			defender->executeObjectControllerAction(STRING_HASHCODE("attack"), attacker->getObjectID(), "");
+//		if (!defender->hasState(CreatureState::PEACE))
+//			defender->executeObjectControllerAction(STRING_HASHCODE("attack"), attacker->getObjectID(), "");
 		damageMultiplier = 0.0f;
 		break;}
 	case RICOCHET:
@@ -498,7 +498,7 @@ int CombatManager::doTargetCombatAction(TangibleObject* attacker, WeaponObject* 
 		break;
 	case BLOCK:
 		doBlock(attacker, weapon, defenderObject, damage);
-		damageMultiplier = 0.5f;
+		damageMultiplier = 0.0f;//0.5f;
 		break;
 	case DODGE:
 		doDodge(attacker, weapon, defenderObject, damage);
@@ -506,8 +506,8 @@ int CombatManager::doTargetCombatAction(TangibleObject* attacker, WeaponObject* 
 		break;
 	case COUNTER:
 		doCounterAttack(attacker, weapon, defenderObject, damage);
-		if (!defenderObject->hasState(CreatureState::PEACE))
-			defenderObject->executeObjectControllerAction(STRING_HASHCODE("attack"), attacker->getObjectID(), "");
+//		if (!defenderObject->hasState(CreatureState::PEACE))
+//			defenderObject->executeObjectControllerAction(STRING_HASHCODE("attack"), attacker->getObjectID(), "");
 		damageMultiplier = 0.0f;
 		break;
 	case RICOCHET:
@@ -738,7 +738,7 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 	CreatureObject* creoAttacker = cast<CreatureObject*>(attacker);
 
 	if (!attacker->isPlayerCreature()) {
-		int npcacc = attacker->getLevel();// cast<AiAgent*>(attacker)->getChanceHit() * 100;
+		float npcacc = attacker->getLevel();// cast<AiAgent*>(attacker)->getChanceHit() * 100;
 
 		if (attacker->isAiAgent() && !attacker->isCreature()) {
 //			if (weapon->isPistolWeapon())
@@ -793,7 +793,11 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 
 		}
 
-		return npcacc;
+//		if (npcacc > 100) npcacc = 100;
+
+		float finalnpcacc = 100.0 - (100.0 / (npcacc * .05 + 1));
+
+		return finalnpcacc;
 
 	}
 
@@ -811,61 +815,59 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		}
 	}
 
-	float currentRange = attacker->getWorldPosition().distanceTo(defender->getWorldPosition()) - defender->getTemplateRadius() - attacker->getTemplateRadius();
-
-	if (attacker->isPlayerCreature()) {
-		if (weapon->isPistolWeapon()){
-			//attackerAccuracy *= .84;
-			if (currentRange > 32)	attackerAccuracy *= .8;
-			if (currentRange > 48)	attackerAccuracy *= .8;
-		}
-		if (weapon->isCarbineWeapon()){
-			//attackerAccuracy *= .65;
-			if (currentRange < 16 || currentRange > 48)	attackerAccuracy *= .8;
-		}
-		if (weapon->isRifleWeapon()){
-			//attackerAccuracy *= .55;
-			if (currentRange < 32)	attackerAccuracy *= .8;
-			if (currentRange < 16)	attackerAccuracy *= .8;
-		}
-
-//////		if (weapon->isRangedWeapon())
-//////		attackerAccuracy *= 1.03f;
-//		if (weapon->isUnarmedWeapon())
-//		attackerAccuracy *= .44;
-//		if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
-//		attackerAccuracy *= .58;
-//		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
-//		attackerAccuracy *= .65;
-//		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
-//		attackerAccuracy *= .58;
-//////		if (weapon->isMeleeWeapon())
-//////		attackerAccuracy *= 1.1f;
-//		if (weapon->isLightningRifle())
-//		attackerAccuracy *= 1.06;
-//		if (weapon->isFlameThrower())
-//		attackerAccuracy *= .75;
-//		if (weapon->isHeavyAcidRifle())
-//		attackerAccuracy *= .75;
-//////		if (weapon->isHeavyWeapon())
-//////		attackerAccuracy *= 1.0f;
-//		if (weapon->isThrownWeapon())
-//		attackerAccuracy *= .91;
-//		if (weapon->isSpecialHeavyWeapon()  &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
-//		attackerAccuracy *= .8;
-//////		if (weapon->isMineWeapon())
-//////		attackerAccuracy *= .5f;
-//		if (weapon->isJediOneHandedWeapon())
-//		attackerAccuracy *= 1.15f;
-//		if (weapon->isJediTwoHandedWeapon())
-//		attackerAccuracy *= 1.2f;
-//		if (weapon->isJediPolearmWeapon())
-//		attackerAccuracy *= 1.1f;
-////		if (weapon->isJediWeapon())
+//	float currentRange = attacker->getWorldPosition().distanceTo(defender->getWorldPosition()) - defender->getTemplateRadius() - attacker->getTemplateRadius();
+//
+//	if (attacker->isPlayerCreature()) {
+//		if (weapon->isPistolWeapon()){
+//			//attackerAccuracy *= .84;
+//			if (currentRange > 32)	attackerAccuracy *= .8;
+//			if (currentRange > 48)	attackerAccuracy *= .8;
+//		}
+//		if (weapon->isCarbineWeapon()){
+//			//attackerAccuracy *= .65;
+//			if (currentRange < 16 || currentRange > 48)	attackerAccuracy *= .8;
+//		}
+//		if (weapon->isRifleWeapon()){
+//			//attackerAccuracy *= .55;
+//			if (currentRange < 32)	attackerAccuracy *= .8;
+//			if (currentRange < 16)	attackerAccuracy *= .8;
+//		}
+//
+////////		if (weapon->isRangedWeapon())
+////////		attackerAccuracy *= 1.03f;
+////		if (weapon->isUnarmedWeapon())
+////		attackerAccuracy *= .44;
+////		if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
+////		attackerAccuracy *= .58;
+////		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
+////		attackerAccuracy *= .65;
+////		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
+////		attackerAccuracy *= .58;
+////////		if (weapon->isMeleeWeapon())
+////////		attackerAccuracy *= 1.1f;
+////		if (weapon->isLightningRifle())
+////		attackerAccuracy *= 1.06;
+////		if (weapon->isFlameThrower())
+////		attackerAccuracy *= .75;
+////		if (weapon->isHeavyAcidRifle())
+////		attackerAccuracy *= .75;
+////////		if (weapon->isHeavyWeapon())
+////////		attackerAccuracy *= 1.0f;
+////		if (weapon->isThrownWeapon())
+////		attackerAccuracy *= .91;
+////		if (weapon->isSpecialHeavyWeapon()  &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
 ////		attackerAccuracy *= .8;
-	}
-
-	if (attackerAccuracy == 0) attackerAccuracy = -15; // unskilled penalty, TODO: this might be -50 or -125, do research
+////////		if (weapon->isMineWeapon())
+////////		attackerAccuracy *= .5f;
+////		if (weapon->isJediOneHandedWeapon())
+////		attackerAccuracy *= 1.15f;
+////		if (weapon->isJediTwoHandedWeapon())
+////		attackerAccuracy *= 1.2f;
+////		if (weapon->isJediPolearmWeapon())
+////		attackerAccuracy *= 1.1f;
+//////		if (weapon->isJediWeapon())
+//////		attackerAccuracy *= .8;
+//	}
 
 	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy") + creoAttacker->getSkillMod("dead_eye");
 
@@ -875,24 +877,8 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 	else if (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)
 		attackerAccuracy += creoAttacker->getSkillMod("ranged_accuracy");
 
-	// now apply overall weapon defense mods
-//	if (weapon->isMeleeWeapon()) {
-//		switch (defender->getWeapon()->getGameObjectType()) {
-//		case SceneObjectType::PISTOL:
-//			attackerAccuracy += 20.f;
-//			/* no break */
-//		case SceneObjectType::CARBINE:
-//			attackerAccuracy += 55.f;
-//			/* no break */
-//		case SceneObjectType::RIFLE:
-//		case SceneObjectType::MINE:
-//		case SceneObjectType::SPECIALHEAVYWEAPON:
-//		case SceneObjectType::HEAVYWEAPON:
-//			attackerAccuracy += 25.f;
-//		}
-//	}
-
-	if (attackerAccuracy > 200) attackerAccuracy = 200;
+//	if (creoAttacker->isPlayerCreature())
+//		attackerAccuracy = pow(attackerAccuracy, .9);
 
 	if (creoAttacker->hasState(CreatureState::BLINDED)) {
 		attackerAccuracy *= .5;
@@ -918,7 +904,11 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 		attackerAccuracy *= .5;
 	}
 
-	return attackerAccuracy;
+	float finalattackerAccuracy = 100.0 - (100.0 / (attackerAccuracy * .05 + 1));
+
+	return finalattackerAccuracy;
+
+	//return attackerAccuracy;
 }
 
 int CombatManager::getAttackerAccuracyBonus(CreatureObject* attacker, WeaponObject* weapon) const {
@@ -941,13 +931,8 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 	ManagedReference<WeaponObject*> defweapon = defender->getWeapon();
 	Reference<PlayerObject*> ghostdef = defender->getPlayerObject();
 
-//	if (defweapon->isJediWeapon() || ghostdef->hasBhTef()){
-//		//VisibilityManager::instance()->increaseVisibility(defender, 25); // Give visibility to defender
-//		ghostdef->updateLastCombatActionTimestamp(false, false, true);
-//	}
-
-	if (attacker->isAiAgent())
-		targetDefense = defender->getLevel();
+	if (defender->isAiAgent())
+		targetDefense = defender->getLevel() * .5;
 
 
 	const auto defenseAccMods = weapon->getDefenderDefenseModifiers();
@@ -960,10 +945,6 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 
 	debug() << "Base target defense is " << targetDefense;
 
-	// defense hardcap
-//	if (targetDefense > 200)
-//		targetDefense = 200;
-
 	if (attacker->isPlayerCreature())
 		targetDefense += defender->getSkillMod("private_defense");
 
@@ -973,33 +954,43 @@ int CombatManager::getDefenderDefenseModifier(CreatureObject* defender, WeaponOb
 		targetDefense += defender->getSkillMod("private_group_" + mod);
 	}
 
-	if (targetDefense > 150)
-		targetDefense = 150;
+//	if (targetDefense > 150)
+//		targetDefense = 150;
 
-//	float multipleopponentreduction = pow(0.9, localenemies - 1);
-//
-//	float nocapreductionmultiplier = pow(0.9, targetDefense);
-
-
+//	if (defender->isPlayerCreature())
+//		targetDefense = pow(targetDefense, .76);
 
 	// food bonus goes on top as well
 	targetDefense += defender->getSkillMod("dodge_attack");
 	targetDefense += defender->getSkillMod("private_dodge_attack");
 
-	if (defender->hasState(CreatureState::INTIMIDATED)) {
+//	if (defender->hasState(CreatureState::INTIMIDATED)) {
+//		targetDefense *= .5;
+//	}
+
+	if (defender->isKneeling())
+		targetDefense *= .75;
+
+	if (defender->isKnockedDown())
 		targetDefense *= .5;
-	}
 
-	debug() << "Target defense after state affects and cap is " << targetDefense;
+//	targetDefense = targetDefense - (targetDefense/ 3);
 
-//	targetDefense *= .75;
+	float finaltargetDefense = 100.0 - (100.0 / (targetDefense * .01 + 1));
 
-	return targetDefense;
+	return finaltargetDefense;
 }
 
 int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender) const {
-	if (defender->isBerserked() || defender->isVehicleObject()) return 0; //defender->isIntimidated() ||
-	int targetDefense = defender->isPlayerCreature() ? 0 : defender->getLevel();
+	if (defender->isIntimidated() || defender->isBerserked() || defender->isVehicleObject()) return 0; //defender->isIntimidated() ||
+
+//	int targetDefense = defender->isPlayerCreature() ? 0 : defender->getLevel() * .25;
+
+	int targetDefense = 0;
+
+	if (defender->isAiAgent())
+		targetDefense = defender->getLevel() * .5;
+
 	ManagedReference<WeaponObject*> weapon = defender->getWeapon();
 
 	const auto defenseAccMods = weapon->getDefenderSecondaryDefenseModifiers();
@@ -1008,6 +999,9 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 		const String& mod = defenseAccMods->get(i);
 		targetDefense += defender->getSkillMod(mod);
 		targetDefense += defender->getSkillMod("private_" + mod);
+
+		if (defender->isPlayerCreature() && mod == "unarmed_passive_defense")
+			targetDefense *= 1.5;
 	}
 
 //	if (targetDefense > 200)
@@ -1017,15 +1011,19 @@ int CombatManager::getDefenderSecondaryDefenseModifier(CreatureObject* defender)
 //		targetDefense *= .5;
 //	}
 
-	if (targetDefense > 150)
-		targetDefense = 150;
+//	if (targetDefense > 150)
+//		targetDefense = 150;
 
-	if (defender->isKnockedDown())
-		targetDefense *= .5;
+//	if (defender->isPlayerCreature())
+//		targetDefense = pow(targetDefense, .86);
 
 //	targetDefense *= .75;
 
-	return targetDefense;
+	float finaltargetDefense = 100.0 - (100.0 / (targetDefense * .02 + 1));
+
+	return finaltargetDefense;
+
+	//return targetDefense;
 }
 
 float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int attackType, int damType, float damage) const {
@@ -1169,11 +1167,7 @@ float CombatManager::hitChanceEquation(float attackerAccuracy, float attackerRol
 int CombatManager::calculateDamageRange(TangibleObject* attacker, CreatureObject* defender, WeaponObject* weapon) const {
 	int attackType = weapon->getAttackType();
 	int damageMitigation = 0;
-	float minDamage = weapon->getMinDamage(), maxDamage = weapon->getMaxDamage();
-
-	if (attacker->isPlayerCreature() && weapon == nullptr && weapon->isUnarmedWeapon()){
-		minDamage = 10, maxDamage = 50;//this is to fix old players with 20-90 player unarmed
-	}
+	float minDamage = weapon->getMaxDamage() * .6, maxDamage = weapon->getMaxDamage();
 
 	// restrict damage if a player is not certified (don't worry about mobs)
 	if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(cast<CreatureObject*>(attacker))) {
@@ -1186,29 +1180,29 @@ int CombatManager::calculateDamageRange(TangibleObject* attacker, CreatureObject
 	PlayerObject* defenderGhost = defender->getPlayerObject();
 
 	// this is for damage mitigation
-	if (defenderGhost != nullptr) {
-		String mitString;
-		switch (attackType){
-		case SharedWeaponObjectTemplate::MELEEATTACK:
-			mitString = "melee_damage_mitigation_";
-			break;
-		case SharedWeaponObjectTemplate::RANGEDATTACK:
-			mitString = "ranged_damage_mitigation_";
-			break;
-		default:
-			break;
-		}
-
-		for (int i = 3; i > 0; i--) {
-			if (defenderGhost->hasAbility(mitString + i)) {
-				damageMitigation = i;
-				break;
-			}
-		}
-
-		if (damageMitigation > 0)
-			maxDamage = minDamage + (maxDamage - minDamage) * (1 - (0.2 * damageMitigation));
-	}
+//	if (defenderGhost != nullptr) {
+//		String mitString;
+//		switch (attackType){
+//		case SharedWeaponObjectTemplate::MELEEATTACK:
+//			mitString = "melee_damage_mitigation_";
+//			break;
+//		case SharedWeaponObjectTemplate::RANGEDATTACK:
+//			mitString = "ranged_damage_mitigation_";
+//			break;
+//		default:
+//			break;
+//		}
+//
+//		for (int i = 3; i > 0; i--) {
+//			if (defenderGhost->hasAbility(mitString + i)) {
+//				damageMitigation = i;
+//				break;
+//			}
+//		}
+//
+//		if (damageMitigation > 0)
+//			maxDamage = minDamage + (maxDamage - minDamage) * (1 - (0.2 * damageMitigation));
+//	}
 
 	float range = maxDamage - minDamage;
 
@@ -1269,7 +1263,7 @@ int CombatManager::getSpeedModifier(CreatureObject* attacker, WeaponObject* weap
 	PlayerManager* pManager = server->getPlayerManager();
 	float  playerLevel = pManager->calculatePlayerLevel(attacker);
 
-	speedMods += playerLevel;
+//	speedMods += playerLevel;
 
 	if (speedMods < 0) speedMods = 0;
 
@@ -1654,16 +1648,18 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		damage = minDmg * mod;
 		diff = (maxDmg * mod) - damage;
 	} else {
-		float minDamage = weapon->getMinDamage(), maxDamage = weapon->getMaxDamage();
+		float minDamage = weapon->getMaxDamage() * .6, maxDamage = weapon->getMaxDamage();
 
-		if (attacker->isPlayerCreature() && weapon == nullptr && weapon->isUnarmedWeapon()){
-			minDamage = 10, maxDamage = 50;//this is to fix old players with 20-90 player unarmed
-		}
+//		if (attacker->isPlayerCreature() && weapon == nullptr && weapon->isUnarmedWeapon()){
+//			minDamage = 1, maxDamage = 1;//this is to fix old players with 20-90 player unarmed
+//		}
 
 		if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(attacker)) {
 			minDamage = 5.f;
 			maxDamage = 10.f;
 		}
+
+		maxDamage += applyDamageModifiers(attacker, weapon, damage, data);
 
 		damage = minDamage;
 		diff = maxDamage - minDamage;
@@ -1672,7 +1668,6 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	if (diff > 0)
 		damage += System::random(diff);
 
-	damage = applyDamageModifiers(attacker, weapon, damage, data);
 
 //	if (attacker->isPlayerCreature())
 //		damage *= 1.5;
@@ -1691,11 +1686,14 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			break;
 	}
 
-		if (lairObserver)
-			damage *= .25;//reduct dmg to lairs
+	if (lairObserver && lairObserver->getSpawnNumber() > 1)
+		damage *= 1.5;
 
-//	if (lairObserver && lairObserver->getSpawnNumber() > 2)
-//		damage *= 3.5;
+	if (lairObserver && lairObserver->getSpawnNumber() > 2)
+		damage *= 1.5;
+
+	if (lairObserver)
+		damage *= .25;//reduce dmg to lairs
 
 	return damage;
 }
@@ -1842,15 +1840,17 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		damage = minDmg * mod;
 		diff = (maxDmg * mod) - damage;
 	} else {
-		diff = calculateDamageRange(attacker, defender, weapon);
-		float minDamage = weapon->getMinDamage();
 
-		if (attacker->isPlayerCreature() && weapon == nullptr && weapon->isUnarmedWeapon()){
-			minDamage = 10;//this is to fix old players with 20-90 player unarmed
+		float minDamage = weapon->getMaxDamage() * .6, maxDamage = weapon->getMaxDamage();
+
+		if (attacker->isPlayerCreature() && weapon->isUnarmedWeapon() && ( (minDamage == 10 && maxDamage == 50) || (minDamage == 20 && maxDamage == 90) )){//also need adjust attack speed
+			minDamage = 5, diff = 10;//this is to fix old players with 20-90 and 10-15 unarmed dmg
 		}
 
 		if (attacker->isPlayerCreature() && !weapon->isCertifiedFor(attacker))
-			minDamage = 5;
+			minDamage = 5, maxDamage = 10;
+
+		diff = maxDamage - minDamage;
 
 		damage = minDamage;
 	}
@@ -1904,29 +1904,29 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //// mySWG balancing the profs based on highest dmg weapon and special for that class
 		if (attacker->isPlayerCreature() && !data.isForceAttack()) {
 			if (weapon->isPistolWeapon())
-				damage *= 1.0 + (playerLevel * 1.6);
+				damage *= 1.0 + (playerLevel * 1.5);
 			if (weapon->isCarbineWeapon())
-				damage *= 1.0 + (playerLevel * 1.8);
+				damage *= 1.0 + (playerLevel * .9);
 			if (weapon->isRifleWeapon())
-				damage *= 1.0 + (playerLevel * 1.9);
+				damage *= 1.0;
 //			if (weapon->isRangedWeapon())
 //			damage *= 1.03f;
 //			if (weapon->isMeleeWeapon())
 //			damage *= 1.25;
 			if (weapon->isUnarmedWeapon())
-				damage *= .6;//needs nerf
+				damage *= .5 + (playerLevel * 1.0);
 			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
-				damage *= 1.0 + (playerLevel * .8);
-			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
 				damage *= 1.0 + (playerLevel * .7);
+			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
+				damage *= 0.5 + (playerLevel * .7);
 			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
-				damage *= 1.0 + (playerLevel * 1.0);
+				damage *= .9 + (playerLevel * .3);
 			if (weapon->isLightningRifle())
-				damage *= 1.0;
+				damage *= .8;
 			if (weapon->isFlameThrower())
-				damage *= .7;
+				damage *= .5;
 			if (weapon->isHeavyAcidRifle())
-				damage *= .9;
+				damage *= .7;
 //			if (weapon->isHeavyWeapon() &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
 //			damage *= .3;
 //			if (weapon->isThrownWeapon())// 4sec
@@ -1988,7 +1988,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //			if (weapon->isMineWeapon())
 //				speedMods *= .5f;
 			if (weapon->isJediWeapon())
-				damage *= 2;
+				damage *= 1.5;
 //			if (weapon->isJediOneHandedWeapon())
 //				damage *= .7;
 //			if (weapon->isJediTwoHandedWeapon())
@@ -2031,9 +2031,18 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= 1.f - (darkarmor / 100.f);
 		}
 
+	float  defplayerLevel = pManager->calculatePlayerLevel(defender) * 4;
+	if (defplayerLevel > 100) defplayerLevel = 100;
+	defplayerLevel /= 100;//max is now 1.0
+
+
 // PvP Damage Reduction
-	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= .25;//vanilla .25
+	if (attacker->isPlayerCreature() && defender->isPlayerCreature()){
+		damage *= 2.0 - (defplayerLevel * 1.5);//vanilla .25
+
+		if (weapon->isJediWeapon())
+			damage *= .5;
+	}
 
 //// PVE
 //	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
@@ -2041,11 +2050,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1.0 - (defender->getLevel() * .0075);//this nerfs pve dmg down to .25 at creature lvl 100 like pvp .25 mult
+		damage *= 2.0 - (defender->getLevel() * .015);//was 1.0 - .5
 
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= .75;
+		damage *= 1.5 - (attacker->getLevel() * .012);//was .5
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
@@ -2062,11 +2071,12 @@ float CombatManager::calculateDamage(TangibleObject* attacker, WeaponObject* wea
 	float damage = 0;
 
 	int diff = calculateDamageRange(attacker, defender, weapon);
-	float minDamage = weapon->getMinDamage();
+	float minDamage = weapon->getMaxDamage() * .6;
 
-	if (attacker->isPlayerCreature() && weapon == nullptr && weapon->isUnarmedWeapon()){
-		minDamage = 10;//this is to fix old players with 20-90 player unarmed
-	}
+//	if (attacker->isPlayerCreature() && weapon == nullptr && weapon->isUnarmedWeapon()){
+//		minDamage = 1;//this is to fix old players with 20-90 player unarmed
+//		maxDamage = 1;
+//	}
 
 	if (diff > 0)
 		damage = System::random(diff) + (int)minDamage;
@@ -2110,122 +2120,49 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	Reference<PlayerObject*> ghostdef = targetCreature->getPlayerObject();
 //	Reference<PlayerObject*> ghostatt = creoAttacker->getPlayerObject();
 
-//	if (defweapon->isJediWeapon() || ghostdef->hasBhTef()){
-////		VisibilityManager::instance()->increaseVisibility(targetCreature, 10); // Give visibility to defender
-//		ghostdef->updateLastCombatActionTimestamp(false, false, true);
-//	}
 
-//	if (weapon->isJediWeapon() || ghostatt->hasBhTef()){
-//		VisibilityManager::instance()->increaseVisibility(creoAttacker, 10); // Give visibility to attacker
-//	}
+//	debug() << "Calculating hit chance for " << attacker->getObjectID()
+//		<< " Attacker accuracy bonus is " << accuracyBonus;
 
-
-	debug() << "Calculating hit chance for " << attacker->getObjectID()
-		<< " Attacker accuracy bonus is " << accuracyBonus;
-	float weaponAccuracy = 0.0f;
-	// Get the weapon mods for range and add the mods for stance
-
-	weaponAccuracy = getWeaponRangeModifier(attacker->getWorldPosition().distanceTo(targetCreature->getWorldPosition()) - targetCreature->getTemplateRadius() - attacker->getTemplateRadius(), weapon);
-	// accounts for steadyaim, general aim, and specific weapon aim, these buffs will clear after a completed combat action
-
-	if (creoAttacker != nullptr && weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)
-		weaponAccuracy += creoAttacker->getSkillMod("private_aim");
-
-	debug() << "Attacker weapon accuracy is " << weaponAccuracy;
-
-	int attackerAccuracy = getAttackerAccuracyModifier(attacker, targetCreature, weapon);
-	debug() << "Base attacker accuracy is " << attackerAccuracy;
+//	float weaponAccuracy = 0.0f;
+//	// Get the weapon mods for range and add the mods for stance
+//
+//	weaponAccuracy = getWeaponRangeModifier(attacker->getWorldPosition().distanceTo(targetCreature->getWorldPosition()) - targetCreature->getTemplateRadius() - attacker->getTemplateRadius(), weapon);
+//	// accounts for steadyaim, general aim, and specific weapon aim, these buffs will clear after a completed combat action
+//
+//	if (creoAttacker != nullptr && weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)
+//		weaponAccuracy += creoAttacker->getSkillMod("private_aim");
+//
+//	debug() << "Attacker weapon accuracy is " << weaponAccuracy;
 
 	// need to also add in general attack accuracy (mostly gotten from posture and states)
 
-	int bonusAccuracy = 0;
-
-	if (creoAttacker != nullptr)
-		bonusAccuracy = getAttackerAccuracyBonus(creoAttacker, weapon);
-
-	// this is the scout/ranger creature hit bonus that only works against creatures (not NPCS)
-	if (targetCreature->isCreature() && creoAttacker != nullptr)
-		bonusAccuracy += creoAttacker->getSkillMod("creature_hit_bonus");
-
-	debug() << "Attacker total bonus is " << bonusAccuracy;
-
-	int postureAccuracy = 0;
-
-	if (creoAttacker != nullptr)
-		postureAccuracy = calculatePostureModifier(creoAttacker, weapon);
-
-	debug() << "Attacker posture accuracy is " << postureAccuracy;
-
-	int targetDefense = getDefenderDefenseModifier(targetCreature, weapon, attacker);
-	debug() << "Defender defense is " << targetDefense;
-
-	int postureDefense = calculateTargetPostureModifier(weapon, targetCreature);
-
-	debug() << "Defender posture defense is " << postureDefense;
-
-	float attackerRoll = (float)System::random(249) + 1.f;
-	float defenderRoll = (float)System::random(150) + 25.f;
-
-//	Zone* zone = targetCreature->getZone();
+//	int bonusAccuracy = 0;
 //
-//	CloseObjectsVector* vec =  (CloseObjectsVector*)targetCreature->getCloseObjects();
+//	if (creoAttacker != nullptr)
+//		bonusAccuracy = getAttackerAccuracyBonus(creoAttacker, weapon);
 //
-//	SortedVector<QuadTreeEntry*> closeObjects;
+//	// this is the scout/ranger creature hit bonus that only works against creatures (not NPCS)
+//	if (targetCreature->isCreature() && creoAttacker != nullptr)
+//		bonusAccuracy += creoAttacker->getSkillMod("creature_hit_bonus");
 //
-//	if (vec != nullptr) {
-//		closeObjects.removeAll(vec->size(), 10);
-//		vec->safeCopyTo(closeObjects);
-//	} else {
-//#ifdef COV_DEBUG
-//		attacker->info("Null closeobjects vector in CombatManager::getAreaTargets", true);
-//#endif
-//		zone->getInRangeObjects(targetCreature->getWorldPositionX(), targetCreature->getWorldPositionY(), 64, &closeObjects, true);
-//	}
+//	debug() << "Attacker total bonus is " << bonusAccuracy;
+
+//	int postureAccuracy = 0;
+//
+//	if (creoAttacker != nullptr)
+//		postureAccuracy = calculatePostureModifier(creoAttacker, weapon);
+//
+//	debug() << "Attacker posture accuracy is " << postureAccuracy;
+
+//	int postureDefense = 0;//calculateTargetPostureModifier(weapon, targetCreature);
+//
+//	debug() << "Defender posture defense is " << postureDefense;
+
+//	float attackerRoll = (float)System::random(249) + 1.f;
+//	float defenderRoll = (float)System::random(150) + 25.f;
 
 	int localenemies = 0;
-
-//	Zone* zone = targetCreature->getZone();
-//	SortedVector<QuadTreeEntry*> closeObjects;
-//	CloseObjectsVector* closeObjectsVector = (CloseObjectsVector*) targetCreature->getCloseObjects();
-//
-//	if (closeObjectsVector == nullptr) {
-//		zone->getInRangeObjects(targetCreature->getWorldPositionX(), targetCreature->getWorldPositionY(), 64, &closeObjects, true);
-//	} else {
-//		closeObjectsVector->safeCopyReceiversTo(closeObjects, CloseObjectsVector::CREOTYPE);
-//	}
-//
-//	for (int i = 0; i < closeObjects.size(); ++i) {
-//		SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
-//
-//		if (obj == nullptr)
-//			continue;
-//
-//		if (obj->getObjectID() == targetCreature->getObjectID())
-//			continue;
-//
-//		CreatureObject* c = obj->asCreatureObject();
-//
-//		if (c == nullptr || c->isDead())
-//			continue;
-//
-//		if (!c->isPlayerCreature() && !c->isAiAgent())
-//			continue;
-//
-//		if (!targetCreature->isInRange(c, 64))//distance
-//			continue;
-//
-//		TangibleObject* ctano = cast<TangibleObject*>( c);
-//
-//		Locker clockernew(ctano, targetCreature);
-//
-//		if (!c->hasDefender(targetCreature))
-//			continue;
-//
-//		clockernew.release();
-//
-//		localenemies += 1;
-//
-//	}
 
 	TangibleObject* tanotargetCreature = cast<TangibleObject*>(targetCreature);
 
@@ -2258,39 +2195,32 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 
 	if (multipleopponentreduction < 0.0) multipleopponentreduction = 0.0;
 
-	targetDefense *= multipleopponentreduction;
-//	postureDefense *= multipleopponentreduction;
-//	defenderRoll *= multipleopponentreduction;
-
-
 	// TODO (dannuic): add the trapmods in here somewhere (defense down trapmods)
-	float accTotal = hitChanceEquation(attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy, attackerRoll, targetDefense + postureDefense, defenderRoll);
+//	float accTotal = hitChanceEquation(attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy, attackerRoll, targetDefense + postureDefense, defenderRoll);
 
-	debug() << "Final hit chance is " << accTotal;
+//	if (System::random(100) > accTotal) // miss, just return MISS
+//		return MISS;
 
-	if (System::random(100) > accTotal) // miss, just return MISS
+
+	int attackerAccuracy = getAttackerAccuracyModifier(attacker, targetCreature, weapon) * 10000000;
+	int targetDefense = getDefenderDefenseModifier(targetCreature, weapon, attacker) * 10000000;
+	int SecondaryDefense = getDefenderSecondaryDefenseModifier(targetCreature) * 10000000;
+	int attackroll = System::random(attackerAccuracy);
+
+//		int totaldefense = targetDefense + SecondaryDefense;
+//		int totalattack = attackerAccuracy * 2;
+
+	targetDefense *= multipleopponentreduction;
+
+	if (System::random(targetDefense) > attackroll) // miss, just return MISS
 		return MISS;
-
-	debug() << "Attack hit successfully";
 
 	// now we have a successful hit, so calculate secondary defenses if there is a damage component
 	if (damage > 0) {
 
-
 		ManagedReference<WeaponObject*> targetWeapon = targetCreature->getWeapon();
 		const auto defenseAccMods = targetWeapon->getDefenderSecondaryDefenseModifiers();
 		const String& def = defenseAccMods->get(0); // FIXME: this is hacky, but a lot faster than using contains()
-
-		//FRS DODGE SYSTEM
-	//		float frsdodge = (targetCreature->getSkillMod("force_manipulation_light") + targetCreature->getSkillMod("force_manipulation_dark")) * .4;
-	//		if (targetWeapon->isJediWeapon() && targetCreature->isAiAgent()) frsdodge = targetCreature->getLevel() * .15;
-	//
-	//		if (frsdodge > 0) {
-	//			frsdodge += 10;
-	//			if (frsdodge > System::random(100))
-	//				return MISS;
-	//
-	//		}
 
 		// saber block is special because it's just a % chance to block based on the skillmod
 		if (targetWeapon->isJediWeapon()) {
@@ -2328,28 +2258,19 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 				return HIT;
 		}
 
-		targetDefense = getDefenderSecondaryDefenseModifier(targetCreature);
 
-		debug() << "Secondary defenses are " << targetDefense;
-
-		if (targetDefense <= 0)
+		if (SecondaryDefense <= 0)
 			return HIT; // no secondary defenses
 
-		// add in a random roll
-		targetDefense += System::random(199) + 1;
+//		int cobMod = targetCreature->getSkillMod("private_center_of_being");
+//		debug() << "Center of Being mod is " << cobMod;
+//
+//		targetDefense += cobMod;
+//		debug() << "Final modified secondary defense is " << targetDefense;
 
-		//TODO: posture defense (or a simplified version thereof: +10 standing, -20 prone, 0 crouching) might be added in to this calculation, research this
-		//TODO: dodge and counterattack might get a  +25 bonus (even when triggered via DA), research this
+		SecondaryDefense *= multipleopponentreduction;
 
-		int cobMod = targetCreature->getSkillMod("private_center_of_being");
-		debug() << "Center of Being mod is " << cobMod;
-
-		targetDefense += cobMod;
-		debug() << "Final modified secondary defense is " << targetDefense;
-
-		targetDefense *= multipleopponentreduction;
-
-		if (targetDefense > 50 + attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy + attackerRoll) { // successful secondary defense, return type of defense
+		if (System::random(SecondaryDefense) > attackroll) { // successful secondary defense, return type of defense
 
 			debug() << "Secondaries defenses prevailed";
 			// defense acuity returns random: case 0 BLOCK, case 1 DODGE or default COUNTER
@@ -2388,20 +2309,6 @@ float CombatManager::calculateWeaponAttackSpeed(CreatureObject* attacker, Weapon
 		return npcspeed;//weapon->getAttackSpeed();
 	}
 
-//	int speedMod = getSpeedModifier(attacker, weapon);
-//	float jediSpeed = attacker->getSkillMod("combat_haste") / 100.0f;
-//
-//	float attackSpeed = (1.0f - ((float) speedMod / 100.0f)) * skillSpeedRatio * weapon->getAttackSpeed();
-//
-//	if (jediSpeed > 0)
-//		attackSpeed = attackSpeed - (attackSpeed * jediSpeed);
-//
-//	if (attacker->hasState(CreatureState::STUNNED)) {
-//		attackSpeed *= 1.5;
-//	}
-//
-//	return Math::max(attackSpeed, 1.0f);
-
 	float speedMod = getSpeedModifier(attacker, weapon);
 
 	if (speedMod > 100) speedMod = 100;
@@ -2409,16 +2316,65 @@ float CombatManager::calculateWeaponAttackSpeed(CreatureObject* attacker, Weapon
 
 	float attackSpeed = weapon->getAttackSpeed();//(1.0f - ((float) speedMod / 100.0f)) * skillSpeedRatio * weapon->getAttackSpeed();
 
+	int minDamage = weapon->getMinDamage();
+	int maxDamage = weapon->getMaxDamage();
+	if (attacker->isPlayerCreature() && weapon->isUnarmedWeapon() && ((minDamage == 10 && maxDamage == 50) || (minDamage == 20 && maxDamage == 90)) && attackSpeed == 2) {
+		attackSpeed = 5;//this fixes player unarmed
+	}
+
 //	float jediSpeed = attacker->getSkillMod("combat_haste") / 100.0f;
 //	if (jediSpeed > 0)	attackSpeed = attackSpeed - (attackSpeed * jediSpeed);
 
 	float speedcap = 1.0;
 
+//				if (weapon->isPistolWeapon())//also in weapon obj
+//					speedcap = 2.0;
+//				if (weapon->isCarbineWeapon())
+//					speedcap = 2.5;
+//				if (weapon->isRifleWeapon())
+//					speedcap = 3.0;
+//	//			if (weapon->isRangedWeapon())
+//	//			speedcap = 1.03f;
+//	//			if (weapon->isMeleeWeapon())
+//	//			speedcap = 1.25;
+//				if (weapon->isUnarmedWeapon())
+//					speedcap = 1.5;
+//				if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
+//					speedcap = 2.0;
+//				if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
+//					speedcap = 2.5;
+//				if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
+//					speedcap = 3.0;
+//				if (weapon->isLightningRifle())
+//					speedcap = 4.0;
+//				if (weapon->isFlameThrower())
+//					speedcap = 4.0;
+//				if (weapon->isHeavyAcidRifle())
+//					speedcap = 4.0;
+//				if (weapon->isHeavyWeapon() &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
+//					speedcap = 4.0;
+//				if (weapon->isThrownWeapon())// 4sec
+//					speedcap = 4.0;
+//				if (weapon->isSpecialHeavyWeapon() &! weapon->isHeavyAcidRifle() &! weapon->isFlameThrower() &! weapon->isLightningRifle())// 4 sec rocket launcher
+//					speedcap = 4.0;
+//				if (weapon->isMineWeapon())
+//					speedcap = 4.0;
+//				if (weapon->isJediOneHandedWeapon())
+//					speedcap = 2.0;
+//				if (weapon->isJediTwoHandedWeapon())
+//					speedcap = 2.0;
+//				if (weapon->isJediPolearmWeapon())
+//					speedcap = 2.0;
+//	//			if (weapon->isJediWeapon())
+//	//			speedcap = .3;//
+
+
+
 	float diff = attackSpeed - speedcap;
 
 	attackSpeed -= (diff * speedMod);
 
-	if (attackSpeed < 1.0) attackSpeed = 1.0;
+	if (attackSpeed < speedcap) attackSpeed = speedcap;
 
 	if (attacker->hasState(CreatureState::STUNNED)) {
 		attackSpeed *= 1.5;
@@ -2615,6 +2571,8 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 				targetDefense += targetCreature->getSkillMod(defenseMods.get(j));
 
 			//targetDefense /= 1.5;
+
+			if (playerLevel > 25) playerLevel = 25;
 			targetDefense += playerLevel;
 
 			if (targetCreature->isAiAgent()) targetDefense = targetCreature->getLevel() * .75;
@@ -2623,12 +2581,20 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 //			if (targetCreature->isAiAgent() && targetWeapon->isJediWeapon())
 //				targetDefense *= 1.65;
 
-			if (targetDefense > 75)
-				targetDefense = 75.f;
+//			if (targetDefense > 75)
+//				targetDefense = 75.f;
+//
+//			targetDefense *= .75;
 
-			targetDefense *= .75;
+//			if (targetCreature->isPlayerCreature())
+//				targetDefense = pow(targetDefense, .84);
 
-			if (System::random(100) > accuracyMod - targetDefense)
+			float finaltargetDefense = 100.0 - (100.0 / (targetDefense * .05 + 1));
+
+//			if (System::random(100) > accuracyMod - targetDefense)
+//				failed = true;
+
+			if (System::random(accuracyMod * 10000000) < System::random(finaltargetDefense * 10000000))
 				failed = true;
 
 			// no reason to apply jedi defenses if primary defense was successful
@@ -2640,14 +2606,23 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 					targetDefense = targetCreature->getSkillMod(jediMods.get(j));
 
 					//targetDefense /= 1.5;
-					targetDefense += playerLevel;
+//					targetDefense += playerLevel;
+//
+//					if (targetDefense > 75)
+//						targetDefense = 75.f;
+//
+//					targetDefense *= .75;
 
-					if (targetDefense > 75)
-						targetDefense = 75.f;
+//					if (targetCreature->isPlayerCreature())
+//						targetDefense = pow(targetDefense, .84);
+//
+//					if (System::random(100) > accuracyMod - targetDefense) {
+//						failed = true;
+//						break;
 
-					targetDefense *= .75;
+					float finaltargetDefense = 100.0 - (100.0 / (targetDefense * .05 + 1));
 
-					if (System::random(100) > accuracyMod - targetDefense) {
+					if (System::random(accuracyMod * 10000000) < System::random(finaltargetDefense * 10000000)) {
 						failed = true;
 						break;
 					}
@@ -2697,15 +2672,15 @@ void CombatManager::applyStates(CreatureObject* creature, CreatureObject* target
 
 		// now check combat equilibrium
 		//TODO: This should eventually be moved to happen AFTER the CombatAction is broadcast to "fix" it's animation (Mantis #4832)
-		if (!failed && (effectType == CommandEffect::KNOCKDOWN || effectType == CommandEffect::POSTUREDOWN || effectType == CommandEffect::POSTUREUP)) {
-			int combatEquil = targetCreature->getSkillMod("combat_equillibrium");
-
-			if (combatEquil > 100)
-				combatEquil = 100;
-
-			if ((combatEquil >> 1) > (int) System::random(100) && !targetCreature->isDead() && !targetCreature->isIntimidated())
-				targetCreature->setPosture(CreaturePosture::UPRIGHT, false);
-		}
+//		if (!failed && (effectType == CommandEffect::KNOCKDOWN || effectType == CommandEffect::POSTUREDOWN || effectType == CommandEffect::POSTUREUP)) {
+//			int combatEquil = targetCreature->getSkillMod("combat_equillibrium");
+//
+//			if (combatEquil > 100)
+//				combatEquil = 100;
+//
+//			if ((combatEquil >> 1) > (int) System::random(100) && !targetCreature->isDead() && !targetCreature->isIntimidated())
+//				targetCreature->setPosture(CreaturePosture::UPRIGHT, false);
+//		}
 
 		//Send Combat Spam for state-only attacks.
 		if (data.isStateOnlyAttack()) {
@@ -2905,7 +2880,7 @@ if (!attacker->isTurret()) {
 
 	if (attacker->isAiAgent() && !attacker->isCreature()) {
 
-		if (aistrength > aiquick && !weapon->isJediWeapon() && (aihealth < (aihealthmax * .5) || aiaction < (aiactionmax * .5) || aimind < (aimindmax * .5)) && System::random(15) >= 15) {
+		if (aistrength > aiquick && !weapon->isJediWeapon() && (aihealth < (aihealthmax * .5) || aiaction < (aiactionmax * .5) || aimind < (aimindmax * .5)) && System::random(20) >= 20) {
 
 			int healammount = 100;
 
@@ -2936,7 +2911,7 @@ if (!attacker->isTurret()) {
 			return 0;
 		}
 
-		if (weapon->isJediWeapon() && System::random(10) == 10 && (aihealth < (aihealthmax * .5) || aiaction < (aiactionmax * .5) || aimind < (aimindmax * .5))) {
+		if (weapon->isJediWeapon() && System::random(15) == 15 && (aihealth < (aihealthmax * .5) || aiaction < (aiactionmax * .5) || aimind < (aimindmax * .5))) {
 
 			int jedhealammount = 500;
 

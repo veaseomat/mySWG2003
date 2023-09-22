@@ -71,7 +71,7 @@ MindShot1Command = {
 	  )
 	},
 
-	weaponType = RIFLEWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

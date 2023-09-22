@@ -5,6 +5,7 @@ nightsister_elder = Creature:new {
 	socialGroup = "nightsister",
 	faction = "nightsister",
 	level = 278,
+	elite = 1.5,
 	chanceHit = 27.25,
 	damageMin = 1520,
 	damageMax = 2750,

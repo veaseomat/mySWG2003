@@ -53,7 +53,7 @@ Melee2hHit2Command = {
 	animation = "combo_2a", 
 	animType = GENERATE_INTENSITY,
 	
-	weaponType = TWOHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	combatSpam = "violentstrike",
 

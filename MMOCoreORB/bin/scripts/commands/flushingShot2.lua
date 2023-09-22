@@ -82,7 +82,7 @@ FlushingShot2Command = {
 
 	combatSpam = "flushingvolley",
 	
-	weaponType = RIFLEWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

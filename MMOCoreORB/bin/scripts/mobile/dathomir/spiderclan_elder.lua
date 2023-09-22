@@ -5,6 +5,7 @@ spiderclan_elder = Creature:new {
 	socialGroup = "spider_nightsister",
 	faction = "spider_nightsister",
 	level = 277,
+	elite = 1.5,
 	chanceHit = 27.25,
 	damageMin = 1520,
 	damageMax = 2750,

@@ -55,7 +55,7 @@ KipUpShotCommand = {
 
 	combatSpam = "kipup",
 	
-	weaponType = PISTOLWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1,
 	

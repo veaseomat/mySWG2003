@@ -3,6 +3,7 @@ juvenile_canyon_krayt_dragon = Creature:new {
 	socialGroup = "krayt",
 	faction = "",
 	level = 80,
+	elite = 1.25,
 	chanceHit = 4.0,
 	damageMin = 745,
 	damageMax = 1200,

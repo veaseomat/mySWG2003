@@ -64,7 +64,7 @@ Melee1hBlindHit1Command = {
 	},
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
-	weaponType = ONEHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	animation = "combo_4b", 
 	animType = GENERATE_INTENSITY,

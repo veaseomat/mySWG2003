@@ -245,27 +245,27 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 			alm->insertAttribute(statname, value);
 	}
 
-	String ap;
-
-	switch (armorPiercing) {
-	case SharedWeaponObjectTemplate::NONE:
-		ap = "None";
-		break;
-	case SharedWeaponObjectTemplate::LIGHT:
-		ap = "Light";
-		break;
-	case SharedWeaponObjectTemplate::MEDIUM:
-		ap = "Medium";
-		break;
-	case SharedWeaponObjectTemplate::HEAVY:
-		ap = "Heavy";
-		break;
-	default:
-		ap = "Unknown";
-		break;
-	}
-
-	alm->insertAttribute("wpn_armor_pierce_rating", ap);
+//	String ap;
+//
+//	switch (armorPiercing) {
+//	case SharedWeaponObjectTemplate::NONE:
+//		ap = "None";
+//		break;
+//	case SharedWeaponObjectTemplate::LIGHT:
+//		ap = "Light";
+//		break;
+//	case SharedWeaponObjectTemplate::MEDIUM:
+//		ap = "Medium";
+//		break;
+//	case SharedWeaponObjectTemplate::HEAVY:
+//		ap = "Heavy";
+//		break;
+//	default:
+//		ap = "Unknown";
+//		break;
+//	}
+//
+//	alm->insertAttribute("wpn_armor_pierce_rating", ap);
 
 	alm->insertAttribute("wpn_attack_speed", Math::getPrecision(getAttackSpeed(), 1));
 
@@ -313,7 +313,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	float minDmg = round(getMinDamage());
 	float maxDmg = round(getMaxDamage());
 
-	alm->insertAttribute("damage.wpn_damage_min", minDmg);
+//	alm->insertAttribute("damage.wpn_damage_min", minDmg);
 
 	alm->insertAttribute("damage.wpn_damage_max", maxDmg);
 
@@ -328,35 +328,35 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	alm->insertAttribute("damage.wpn_wound_chance", woundsratio);
 
 	//Accuracy Modifiers
-	StringBuffer pblank;
-	if (getPointBlankAccuracy() >= 0)
-		pblank << "+";
-
-	pblank << getPointBlankAccuracy() << " @ " << getPointBlankRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_zero", pblank);
-
-	StringBuffer ideal;
-	if (getIdealAccuracy() >= 0)
-		ideal << "+";
-
-	ideal << getIdealAccuracy() << " @ " << getIdealRange() << "m";
-	alm->insertAttribute("cat_wpn_rangemods.wpn_range_mid", ideal);
+//	StringBuffer pblank;
+//	if (getPointBlankAccuracy() >= 0)
+//		pblank << "+";
+//
+//	pblank << getPointBlankAccuracy() << " @ " << getPointBlankRange() << "m";
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_zero", pblank);
+//
+//	StringBuffer ideal;
+//	if (getIdealAccuracy() >= 0)
+//		ideal << "+";
+//
+//	ideal << getIdealAccuracy() << " @ " << getIdealRange() << "m";
+//	alm->insertAttribute("cat_wpn_rangemods.wpn_range_mid", ideal);
 
 	StringBuffer maxrange;
-	if (getMaxRangeAccuracy() >= 0)
-		maxrange << "+";
+//	if (getMaxRangeAccuracy() >= 0)
+//		maxrange << "+";
 
-	maxrange << getMaxRangeAccuracy() << " @ " << getMaxRange() << "m";
+	maxrange << getMaxRange() << "m";
 	alm->insertAttribute("cat_wpn_rangemods.wpn_range_max", maxrange);
 
 	//Special Attack Costs
-	if (!isJediWeapon()) {
-	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost());
-
-	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost());
-
-	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost());
-	}
+//	if (!isJediWeapon()) {
+//	alm->insertAttribute("cat_wpn_attack_cost.health", getHealthAttackCost());
+//
+//	alm->insertAttribute("cat_wpn_attack_cost.action", getActionAttackCost());
+//
+//	alm->insertAttribute("cat_wpn_attack_cost.mind", getMindAttackCost());
+//	}
 
 	//Anti Decay Kit
 	if(hasAntiDecayKit()){
@@ -364,8 +364,8 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	}
 
 	// Force Cost
-	if (getForceCost() > 0)
-		alm->insertAttribute("forcecost", (int)getForceCost());
+//	if (getForceCost() > 0)
+//		alm->insertAttribute("forcecost", (int)getForceCost());
 
 	if (isJediWeapon()) {
 //		setForceCost(Math::getPrecision(values->getCurrentValue("forcecost"), 1));
@@ -477,46 +477,89 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 }
 
 int WeaponObjectImplementation::getPointBlankAccuracy(bool withPup) const {
-	if (powerupObject != nullptr && withPup)
-		return pointBlankAccuracy + (abs(pointBlankAccuracy) * powerupObject->getPowerupStat("pointBlankAccuracy"));
+//	if (powerupObject != nullptr && withPup)
+//		return pointBlankAccuracy + (abs(pointBlankAccuracy) * powerupObject->getPowerupStat("pointBlankAccuracy"));
 
-	return pointBlankAccuracy;
+	return 0; //pointBlankAccuracy;//1000
 }
 
 int WeaponObjectImplementation::getPointBlankRange(bool withPup) const {
-	if (powerupObject != nullptr && withPup)
-		return pointBlankRange + (abs(pointBlankRange) * powerupObject->getPowerupStat("pointBlankRange"));
+//	if (powerupObject != nullptr && withPup)
+//		return pointBlankRange + (abs(pointBlankRange) * powerupObject->getPowerupStat("pointBlankRange"));
 
 	return pointBlankRange;
 }
 
 int WeaponObjectImplementation::getIdealRange(bool withPup) const {
-	if (powerupObject != nullptr && withPup)
-		return idealRange + (abs(idealRange) * powerupObject->getPowerupStat("idealRange"));
+//	if (powerupObject != nullptr && withPup)
+//		return idealRange + (abs(idealRange) * powerupObject->getPowerupStat("idealRange"));
 
 	return idealRange;
 }
 
 int WeaponObjectImplementation::getMaxRange(bool withPup) const {
-	if (powerupObject != nullptr && withPup)
-		return maxRange + (abs(maxRange) * powerupObject->getPowerupStat("maxRange"));
+//	if (powerupObject != nullptr && withPup)
+//		return maxRange + (abs(maxRange) * powerupObject->getPowerupStat("maxRange"));
 
-	return maxRange;
+	int newmaxrange = maxRange;
+
+	if (isPistolWeapon())//also in combatq
+		newmaxrange = 64;
+	if (isCarbineWeapon())
+		newmaxrange = 64;
+	if (isRifleWeapon())
+		newmaxrange = 64;
+//			if (isRangedWeapon())
+//			newmaxrange = 1.03f;
+//			if (isMeleeWeapon())
+//			newmaxrange = 1.25;
+	if (isUnarmedWeapon())
+		newmaxrange = 7;
+	if (isOneHandMeleeWeapon() && !isJediWeapon())
+		newmaxrange = 7;
+	if (isTwoHandMeleeWeapon() && !isJediWeapon())
+		newmaxrange = 7;
+	if (isPolearmWeaponObject() && !isJediWeapon())
+		newmaxrange = 7;
+	if (isLightningRifle())
+		newmaxrange = 32;
+	if (isFlameThrower())
+		newmaxrange = 32;
+	if (isHeavyAcidRifle())
+		newmaxrange = 32;
+	if (isHeavyWeapon() &! (isHeavyAcidRifle() || isFlameThrower() || isLightningRifle() || isThrownWeapon()))
+		newmaxrange = 32;
+	if (isThrownWeapon())// 4sec
+		newmaxrange = 32;
+	if (isSpecialHeavyWeapon() &! isHeavyAcidRifle() &! isFlameThrower() &! isLightningRifle())// 4 sec rocket launcher
+		newmaxrange = 32;
+	if (isMineWeapon())
+		newmaxrange = 32;
+	if (isJediOneHandedWeapon())
+		newmaxrange = 7;
+	if (isJediTwoHandedWeapon())
+		newmaxrange = 7;
+	if (isJediPolearmWeapon())
+		newmaxrange = 7;
+//			if (isJediWeapon())
+//			newmaxrange = .3;//
+
+	return newmaxrange;//maxRange;
 }
 
 int WeaponObjectImplementation::getIdealAccuracy(bool withPup) const {
-	if (powerupObject != nullptr && withPup)
-		return idealAccuracy + (abs(idealAccuracy) * powerupObject->getPowerupStat("idealAccuracy"));
+//	if (powerupObject != nullptr && withPup)
+//		return idealAccuracy + (abs(idealAccuracy) * powerupObject->getPowerupStat("idealAccuracy"));
 
-	return idealAccuracy;
+	return 0; //idealAccuracy;
 }
 
 
 int WeaponObjectImplementation::getMaxRangeAccuracy(bool withPup) const {
-	if (powerupObject != nullptr && withPup)
-		return maxRangeAccuracy + (abs(maxRangeAccuracy) * powerupObject->getPowerupStat("maxRangeAccuracy"));
+//	if (powerupObject != nullptr && withPup)
+//		return maxRangeAccuracy + (abs(maxRangeAccuracy) * powerupObject->getPowerupStat("maxRangeAccuracy"));
 
-	return maxRangeAccuracy;
+	return 0; //maxRangeAccuracy;
 }
 
 float WeaponObjectImplementation::getAttackSpeed(bool withPup) const {
@@ -530,8 +573,8 @@ float WeaponObjectImplementation::getAttackSpeed(bool withPup) const {
 
 	float calcSpeed = speed + getConditionReduction(speed);
 
-	if (calcSpeed < 0.1f)
-		calcSpeed = 0.1f;
+	if (calcSpeed < 1.0f)
+		calcSpeed = 1.0f;
 
 	return calcSpeed;
 }

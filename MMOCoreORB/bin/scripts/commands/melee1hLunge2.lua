@@ -44,7 +44,7 @@
 Melee1hLunge2Command = {
 	name = "melee1hlunge2",
 
-	damageMultiplier = 3.0,
+	damageMultiplier = 1.0,
 	speedMultiplier = 2.5,
 	healthCostMultiplier = 0.625,
 	actionCostMultiplier = 0.625,
@@ -57,7 +57,7 @@ Melee1hLunge2Command = {
 
 	range = 20,
 
-	weaponType = ONEHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	stateEffects = {
 	  StateEffect(

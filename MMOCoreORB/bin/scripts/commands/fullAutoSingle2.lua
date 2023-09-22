@@ -88,7 +88,7 @@ FullAutoSingle2Command = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 	
-	weaponType = CARBINEWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = -1
 }

@@ -70,7 +70,7 @@ PistolMeleeDefense1Command = {
 
 	combatSpam = "pistolwhip",
 	
-	weaponType = PISTOLWEAPON,
+	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
 
 	range = 10
 }

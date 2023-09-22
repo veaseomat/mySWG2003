@@ -44,7 +44,7 @@
 Melee2hLunge2Command = {
 	name = "melee2hlunge2",
 
-	damageMultiplier = 3.0,
+	damageMultiplier = 1.0,
 	speedMultiplier = 2.5,
 	accuracyBonus = 10,
 
@@ -58,7 +58,7 @@ Melee2hLunge2Command = {
 
 	range = 20,
 
-	weaponType = TWOHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	stateEffects = {
 	  StateEffect(

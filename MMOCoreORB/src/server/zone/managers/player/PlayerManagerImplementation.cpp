@@ -1348,14 +1348,16 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 		//int skillboxes = SkillManager::instance()->getJediSkillCount(player, true);
 		//int jediXpCap = skillboxes * 50000;//calculatePlayerLevel(ghost->asCreatureObject()) * 50000;// 1 million ghost->getXpCap("jedi_general");
 		//int xpLoss = System::random(jediXpCap) * -1;//-0.05
-		int curExp = ghost->getExperience("jedi_general") * -1 / 2;
+
+		//int curExp = ghost->getExperience("jedi_general") * -1 / 2;
 
 		//int negXpCap = -10000000; // Cap on negative jedi experience
 
 //		if ((curExp + xpLoss) < negXpCap)
 //			xpLoss = negXpCap - curExp;
 
-		awardExperience(player, "jedi_general", curExp, true, 1.0, false);
+		//awardExperience(player, "jedi_general", curExp, true, 1.0, false);
+
 //		StringIdChatParameter message("base_player","prose_revoke_xp");
 //		message.setDI(curExp * -1);
 //		message.setTO("exp_n", "jedi_general");
@@ -1454,9 +1456,9 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 	// FRS skill loss.
 	if (player->hasSkill("force_title_jedi_rank_03")) {
 
-		int frscurExp = ghost->getExperience("force_rank_xp");
-		int frsxpLoss = (frscurExp) * -1 / 2; //divide by global xp multi
-		awardExperience(player, "force_rank_xp", frsxpLoss, false, 1, false);
+//		int frscurExp = ghost->getExperience("force_rank_xp");
+//		int frsxpLoss = (frscurExp) * -1 / 2; //divide by global xp multi
+//		awardExperience(player, "force_rank_xp", frsxpLoss, false, 1, false);
 
 //		StringIdChatParameter message("base_player","prose_revoke_xp");
 //		message.setDI(frsxpLoss * -1); //multiply by global xp mult
@@ -1464,85 +1466,85 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 //		player->sendSystemMessage(message);
 
 
-		if (player->hasSkill("force_rank_dark_rank_01")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_01", player, true, true);
-		}
-		if (player->hasSkill("force_rank_dark_rank_02")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_02", player, true, true);
-		}
-		if (player->hasSkill("force_rank_dark_rank_03")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_03", player, true, true);
-		}
-		if (player->hasSkill("force_rank_dark_rank_04")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_04", player, true, true);
-		}
-		if (player->hasSkill("force_rank_dark_rank_05")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_05", player, true, true);
-		}
-		if (player->hasSkill("force_rank_dark_rank_06")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_06", player, true, true);
-		}
-		if (player->hasSkill("force_rank_dark_rank_07")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_07", player, true, true);
-		}
-		if (player->hasSkill("force_rank_dark_rank_08")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_08", player, true, true);
-		}
-		if (player->hasSkill("force_rank_dark_rank_09")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_09", player, true, true);
-		}
-		if (player->hasSkill("force_rank_dark_rank_10")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_10", player, true, true);
-		}
-		if (player->hasSkill("force_rank_dark_master")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_master", player, true, true);
-		}
-
-		if (player->hasSkill("force_rank_light_rank_01")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_01", player, true, true);
-		}
-		if (player->hasSkill("force_rank_light_rank_02")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_02", player, true, true);
-		}
-		if (player->hasSkill("force_rank_light_rank_03")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_03", player, true, true);
-		}
-		if (player->hasSkill("force_rank_light_rank_04")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_04", player, true, true);
-		}
-		if (player->hasSkill("force_rank_light_rank_05")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_05", player, true, true);
-		}
-		if (player->hasSkill("force_rank_light_rank_06")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_06", player, true, true);
-		}
-		if (player->hasSkill("force_rank_light_rank_07")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_07", player, true, true);
-		}
-		if (player->hasSkill("force_rank_light_rank_08")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_08", player, true, true);
-		}
-		if (player->hasSkill("force_rank_light_rank_09")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_09", player, true, true);
-		}
-		if (player->hasSkill("force_rank_light_rank_10")) {
-			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_10", player, true, true);
-		}
-		if (player->hasSkill("force_rank_light_master")) {
-			SkillManager::instance()->surrenderSkill("force_rank_light_master", player, true, true);
-		}
+//		if (player->hasSkill("force_rank_dark_rank_01")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_01", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_dark_rank_02")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_02", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_dark_rank_03")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_03", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_dark_rank_04")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_04", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_dark_rank_05")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_05", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_dark_rank_06")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_06", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_dark_rank_07")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_07", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_dark_rank_08")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_08", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_dark_rank_09")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_09", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_dark_rank_10")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_10", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_dark_master")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_master", player, true, true);
+//		}
+//
+//		if (player->hasSkill("force_rank_light_rank_01")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_01", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_light_rank_02")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_02", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_light_rank_03")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_03", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_light_rank_04")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_04", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_light_rank_05")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_05", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_light_rank_06")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_06", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_light_rank_07")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_07", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_light_rank_08")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_08", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_light_rank_09")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_09", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_light_rank_10")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_dark_rank_10", player, true, true);
+//		}
+//		if (player->hasSkill("force_rank_light_master")) {
+//			SkillManager::instance()->surrenderSkill("force_rank_light_master", player, true, true);
+//		}
 
 	}
 
 	}// for !attackerisplayercreature
 
-	int currentcredits = player->getCashCredits() / 2;
+//	int currentcredits = player->getCashCredits() / 2;
+//
+//	player->subtractCashCredits(currentcredits);
 
-	player->subtractCashCredits(currentcredits);
-
-	if (!player->hasSkill("force_title_jedi_novice") && System::random(100) < 50) {
-		JediManager::instance()->removeFSpoint(player);
-	}
+//	if (!player->hasSkill("force_title_jedi_novice") && System::random(100) < 50) {
+//		JediManager::instance()->removeFSpoint(player);
+//	}
 
 ////PERMADEATH!
 //	if (player->hasSkill("force_title_jedi_rank_01") ) {//&& !attacker->isPlayerCreature())  {

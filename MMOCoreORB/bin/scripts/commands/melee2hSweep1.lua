@@ -68,7 +68,7 @@ Melee2hSweep1Command = {
 	  )
 	},
 	
-	weaponType = TWOHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 

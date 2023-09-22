@@ -79,7 +79,7 @@ Melee2hArea3Command = {
 
 	combatSpam = "domination",
 	
-	weaponType = TWOHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1
 }

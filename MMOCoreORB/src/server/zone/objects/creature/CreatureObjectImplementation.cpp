@@ -614,8 +614,8 @@ void CreatureObjectImplementation::addShockWounds(int shockToAdd, bool notifyCli
 
 	if (newShockWounds < 0) {
 		newShockWounds = 0;
-	} else if (newShockWounds > 1000) {
-		newShockWounds = 1000;
+	} else if (newShockWounds > 500) {
+		newShockWounds = 500;
 	}
 
 	if (sendSpam && shockToAdd > 0 && asCreatureObject()->isPlayerCreature())
@@ -1189,8 +1189,11 @@ void CreatureObjectImplementation::setWounds(int type, int value,
 	if (value < 0)
 		value = 0;
 
-	if (value >= baseHAM.get(type))
-		value = baseHAM.get(type) - 1;
+//	if (value >= baseHAM.get(type))
+//		value = baseHAM.get(type) - 1;
+
+	if (value >= baseHAM.get(type) / 2)
+		value = baseHAM.get(type) / 2;
 
 	if (wounds.get(type) == value)
 		return;
@@ -1239,7 +1242,7 @@ int CreatureObjectImplementation::addWounds(int type, int value, bool notifyClie
 
 	setWounds(type, newValue, notifyClient);
 
-	if (doShockWounds)
+	if (doShockWounds && System::random(100) >= 70)
 		addShockWounds(1, true);
 
 	return returnValue;
@@ -2791,10 +2794,10 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 //	if (!isPlayerCreature())
 //		return;
 
-	float modifier = 1.0;//(float)latency/1000.f;
+	float modifier = 2.0;//(float)latency/1000.f;
 
-//	if (isInCombat())
-//			modifier *= 0;
+	if (isInCombat())
+			modifier = .25;
 
 //	if (!isInCombat())
 //			modifier *= 2;
@@ -2807,12 +2810,16 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 //		modifier = 3.0;
 
 	// this formula gives the amount of regen per second
-	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::CONSTITUTION)) * 10.0f / 2000.0f * modifier);
-	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::STAMINA)) * 10.0f / 2000.0f * modifier);
-	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
-			CreatureAttribute::WILLPOWER)) * 10.0f / 2000.0f * modifier);
+//	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::CONSTITUTION)) * 10.0f / 2000.0f * modifier);
+//	uint32 actionTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::STAMINA)) * 10.0f / 2000.0f * modifier);
+//	uint32 mindTick = (uint32) ceil((float) Math::max(0, getHAM(
+//			CreatureAttribute::WILLPOWER)) * 10.0f / 2000.0f * modifier);
+
+	int healthTick = getHAM(CreatureAttribute::CONSTITUTION) / 250 * modifier;// /200 = ~12-17 tick at lvl 100
+	int actionTick = getHAM(CreatureAttribute::STAMINA) / 250 * modifier;
+	int mindTick = getHAM(CreatureAttribute::WILLPOWER) / 250 * modifier;
 
 	if (isSitting()){
 		mindTick += 50;

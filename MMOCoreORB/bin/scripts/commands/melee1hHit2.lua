@@ -56,7 +56,7 @@ Melee1hHit2Command = {
 
 	combatSpam = "chosun",
 	
-	weaponType = ONEHANDMELEEWEAPON,
+	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
 
 	range = -1,
 }

@@ -38,8 +38,8 @@ void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool
 //
 //		int mod = System::random(max - min) + min;
 
-		int max = (level / 7) * 1.3;
-		int min = (level / 7) / 2;
+		int max = (level / 10);
+		int min = (level / 10) / 2;
 
 		int mod = System::random(max - min) + min;
 
@@ -47,8 +47,8 @@ void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool
 
 		//int mod = System::random(nlvl) + nlvl;
 
-		if(mod > 50)
-			mod = 50;
+		if(mod > 25)
+			mod = 25;
 
 		if(mod <= 0)
 			mod = 1;

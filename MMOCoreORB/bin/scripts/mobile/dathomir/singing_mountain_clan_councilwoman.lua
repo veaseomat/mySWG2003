@@ -5,6 +5,7 @@ singing_mountain_clan_councilwoman = Creature:new {
 	socialGroup = "mtn_clan",
 	faction = "mtn_clan",
 	level = 253,
+	elite = 1.5,
 	chanceHit = 23.5,
 	damageMin = 1395,
 	damageMax = 2500,

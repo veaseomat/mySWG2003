@@ -178,24 +178,24 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	float weapran = .6 + (System::random(40) * .01);
 
-//	if (isAiAgent() && !isCreature()){
-//		weapran = .3 + (System::random(60) * .01);
-//	}
+	if (isAiAgent() && isCreature()){
+		weapran = .5 + (System::random(30) * .01);
+	}
 
 	float elite = npcTemplate->getElite();//sets a custom elite lvl multiplier
 
-//	if (elite > 1.0) {
-//		//legendarynpc = true;
-//		//newlvl *= elite;
-//		weapran *= elite;
-//	}
+	if (elite > 1.0) {
+		//legendarynpc = true;
+		//newlvl *= elite;
+		weapran *= elite;
+	}
 
 //		if (isCreature()){
 //			float newmindamage = .5;
 //		}
 
-	float minDmg = ((newlvl * 15) - 100) * weapran * .6;//((pow(newlvl, 2)) / 20) * .7 * weapran + 5;//sqrt(level) * 10 * weapran;//(level / 2) * weapran;
-	float maxDmg = ((newlvl * 15) - 100) * weapran;//((pow(newlvl, 2)) / 20) * weapran + 5;//sqrt(level) * 10 * 2 * weapran;//level * weapran;
+	float maxDmg = (newlvl * 15) * weapran;
+	float minDmg = maxDmg * .6;
 
 	if (minDmg < 30) minDmg = 30;
 	if (maxDmg < 50) maxDmg = 50;
@@ -306,7 +306,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	float lvlmult = ((float)newlvl / (float)100);
 
-	int lvlham = (3500 * lvlmult) + 50;//50 * (newlvl * .4) * 1.5;//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
+	int lvlham = (3000 * lvlmult) - 25;//50 * (newlvl * .4) * 1.5;//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
 
 	if (legendarynpc == true) {
 		lvlham *= 2.5;
@@ -816,16 +816,6 @@ bool AiAgentImplementation::runAwarenessLogicCheck(SceneObject* pObject) {
 	if (getCreatureBitmask() & CreatureFlag::SCANNING_FOR_CONTRABAND) {
 		getZoneUnsafe()->getGCWManager()->runCrackdownScan(thisAiAgent, creoObject);
 	}
-
-//	if (pObject->isPlayerCreature()){
-//		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
-//		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
-//		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
-//
-//		if (pweapon->isJediWeapon() || pghost->hasBhTef()){
-//			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility to defender
-//		}
-//	}
 
 	ManagedReference<SceneObject*> follow = getFollowObject().get();
 
@@ -1831,13 +1821,13 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
         return;
     }
 
-	float modifier = 1.5;//(float)latency/1000.f;
+	float modifier = .25;//(float)latency/1000.f;
 
 //	if (isInCombat())
 //			modifier *= 0;
 
 	if (!isInCombat())
-			modifier = 5.0;
+			modifier = 2.0;
 
 //	if (isKneeling())
 //		modifier *= 1.25f;
@@ -1856,9 +1846,9 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 //	int aistam = getMaxHAM(CreatureAttribute::STAMINA);//80
 //	int aiwill = getMaxHAM(CreatureAttribute::WILLPOWER);//70r30
 
-	int healthTick = getHAM(CreatureAttribute::CONSTITUTION) / 200 * modifier;// /200 = ~12-17 tick at lvl 100
-	int actionTick = getHAM(CreatureAttribute::STAMINA) / 200 * modifier;
-	int mindTick = getHAM(CreatureAttribute::WILLPOWER) / 200 * modifier;
+	int healthTick = getHAM(CreatureAttribute::CONSTITUTION) / 250 * modifier;// /200 = ~12-17 tick at lvl 100
+	int actionTick = getHAM(CreatureAttribute::STAMINA) / 250 * modifier;
+	int mindTick = getHAM(CreatureAttribute::WILLPOWER) / 250 * modifier;
 
 	if (getLevel() < 10)
 		return;
