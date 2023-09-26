@@ -801,7 +801,7 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 
 	}
 
-	int attackerAccuracy = 0;
+	int attackerAccuracy = 1;
 
 	const auto creatureAccMods = weapon->getCreatureAccuracyModifiers();
 
@@ -903,6 +903,9 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 	if (creoAttacker->isRunning()) {
 		attackerAccuracy *= .5;
 	}
+
+	if (attackerAccuracy < 1)
+		attackerAccuracy = 1;
 
 	float finalattackerAccuracy = 100.0 - (100.0 / (attackerAccuracy * .05 + 1));
 
@@ -3596,13 +3599,21 @@ Reference<SortedVector<ManagedReference<TangibleObject*> >* > CombatManager::get
 		}
 	}
 
-	if (range < 0) {
-		range = weapon->getMaxRange();
-	}
-
 	if (weapon->isMeleeWeapon()) {
 		range = weapon->getMaxRange();
 	}
+
+	if (range < 0) {
+		range = weapon->getMaxRange();//most attacks are -1
+	}
+
+//	if (weapon->isJediWeapon() && data.getCommand()->isConeAction() && data.getRange() == 32) {
+//		range = 32;//this is for saber throw
+//	}
+//
+//	if (weapon->isRangedWeapon() && data.getRange() < 64) { //out of range
+//		range = data.getRange();//this is for ranged attacks with limited range like pistol stuff
+//	}
 
 	if (data.isSplashDamage())
 		range += data.getRange();

@@ -54,6 +54,11 @@ public:
 				return GENERALERROR;
 			}
 
+//			if (player != creature) {
+//				creature->sendSystemMessage("You can only wipe yourself.");
+//				return GENERALERROR;
+//			}
+
 			Locker clocker(player, creature);
 
 			SceneObject* inventory = player->getSlottedObject("inventory");

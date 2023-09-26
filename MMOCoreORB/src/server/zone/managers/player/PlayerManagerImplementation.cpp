@@ -1311,7 +1311,7 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 
 					if (obj->getOptionsBitmask() & OptionBitmask::INSURED) {
 						//1% Decay for insured items
-						obj->inflictDamage(obj, 0, 0.0 * obj->getMaxCondition(), true, true);
+						//obj->inflictDamage(obj, 0, 0.0 * obj->getMaxCondition(), true, true);
 						//Set uninsured
 						uint32 bitmask = obj->getOptionsBitmask() - OptionBitmask::INSURED;
 						obj->setOptionsBitmask(bitmask);

@@ -399,15 +399,15 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 			}
 		}
 
-		if (skillName.contains("novice")) {
-		const Badge* badge = BadgeList::instance()->get(skillName.replaceAll("_novice", "_master"));
-
-		const unsigned int badgeId = badge->getIndex();
-
-		if (ghost->hasBadge(badgeId)) {
-			awardSkill(skillName.replaceAll("_novice", "_master"), creature, true, true, true);
-		}
-		}
+//		if (skillName.contains("novice")) {
+//		const Badge* badge = BadgeList::instance()->get(skillName.replaceAll("_novice", "_master"));
+//
+//		const unsigned int badgeId = badge->getIndex();
+//
+//		if (ghost->hasBadge(badgeId)) {
+//			awardSkill(skillName.replaceAll("_novice", "_master"), creature, true, true, true);
+//		}
+//		}
 
 //		const SkillList* list = creature->getSkillList();
 //

@@ -208,8 +208,8 @@ public:
 				rangeToCheck = 7;
 			if (weapon->isJediPolearmWeapon())
 				rangeToCheck = 7;
-//			if (weapon->isJediWeapon())
-//			rangeToCheck = .3;//
+			if (weapon->isJediWeapon() && range == 32)
+				rangeToCheck = 32;
 
 
 		if (creature->isDead() || (creature->isPet() && creature->isIncapacitated()))
