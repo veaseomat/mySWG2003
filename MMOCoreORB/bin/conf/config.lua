@@ -76,7 +76,7 @@ Core3 = {
 	MetricsPort = 8125,
 	MetricsPrefix = "",
 
-	AutoReg = 0,
+	AutoReg = 1,
 
 	ProgressMonitors = "true",
 

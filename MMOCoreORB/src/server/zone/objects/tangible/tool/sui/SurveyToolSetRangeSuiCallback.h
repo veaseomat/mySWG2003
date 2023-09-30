@@ -32,7 +32,7 @@ public:
 		if(surveyTool == nullptr)
 			return;
 
-		int range = 10 * Integer::valueOf(args->get(0).toString());// + 64;
+		int range = 64 * Integer::valueOf(args->get(0).toString()) + 64;
 
 		Locker _lock(surveyTool);
 		surveyTool->setRange(range);

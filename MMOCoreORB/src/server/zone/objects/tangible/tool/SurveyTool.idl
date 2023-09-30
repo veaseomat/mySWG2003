@@ -85,7 +85,7 @@ class SurveyTool extends ToolTangibleObject {
 
 	@dirty
 	public int getPoints() {
-		return 6;// points;
+		return points;
 	}
 
 	@dirty
