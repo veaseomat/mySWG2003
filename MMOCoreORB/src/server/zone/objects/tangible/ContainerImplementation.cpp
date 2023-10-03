@@ -13,6 +13,8 @@
 #include "templates/tangible/ContainerTemplate.h"
 #include "server/zone/objects/creature/ai/AiAgent.h"
 #include "server/zone/objects/player/PlayerObject.h"
+#include "server/zone/objects/player/sui/messagebox/SuiMessageBox.h"
+#include "server/zone/objects/player/sui/callbacks/wipeinventorySuiCallback.h"
 
 void ContainerImplementation::initializeTransientMembers() {
 	TangibleObjectImplementation::initializeTransientMembers();
@@ -61,6 +63,13 @@ void ContainerImplementation::fillObjectMenuResponse(ObjectMenuResponse* menuRes
 
 	if (isSliceable() && isContainerLocked() && player->hasSkill("combat_smuggler_novice"))
 		menuResponse->addRadialMenuItem(69, 3, "@slicing/slicing:slice"); // Slice
+
+	//ManagedReference<SceneObject*> parent = tano->getParent().get();
+	//parent != nullptr && parent->
+
+	if (getGameObjectType() == SceneObjectType::WEARABLECONTAINER) {
+		menuResponse->addRadialMenuItem(82, 3, "WIPE ALL NON-EQUIPPED ITEMS"); // wipe
+	}
 }
 
 int ContainerImplementation::handleObjectMenuSelect(CreatureObject* player, byte selectedID) {
@@ -97,6 +106,47 @@ int ContainerImplementation::handleObjectMenuSelect(CreatureObject* player, byte
 		session->initalizeSlicingMenu(player, _this.getReferenceUnsafeStaticCast());
 
 		return 0;
+
+	}
+
+	if (selectedID == 82) {
+
+		ZoneServer* server = player->getZoneServer();
+
+		if (server != nullptr) {
+
+		ManagedReference<SuiMessageBox*> sui = new SuiMessageBox(player, 0x00);
+		sui->setUsingObject(player);
+		sui->setPromptTitle("DELETE ITEMS"); //Delete All Items
+		sui->setPromptText("This command will delete every item that is not equipped in your inventory.  Are you ABSOLUTELY sure you want to destroy every unequipped item in your inventory?"); //This command will delete every object in your house.  Are you ABSOLUTELY sure you want to destroy every object in your house?
+		sui->setCancelButton(true, "@cancel");
+		sui->setCallback(new wipeinventoryConfirmSuiCallback(server));
+
+		ManagedReference<PlayerObject*> ghost = player->getPlayerObject();
+
+		if (ghost != nullptr) {
+			ghost->addSuiBox(sui);
+			player->sendMessage(sui->generateMessage());
+		}
+
+		}
+
+//		Locker clocker(player, player);
+//
+//		SceneObject* inventory = player->getSlottedObject("inventory");
+//
+//		if (inventory == nullptr)
+//			return 0;
+//
+//		while (inventory->getContainerObjectsSize() > 0)
+//		{
+//			ManagedReference<SceneObject*> object = inventory->getContainerObject(0);
+//			Locker sceneObjectLocker(object);
+//			object->destroyObjectFromWorld(true);
+//			object->destroyObjectFromDatabase(true);
+//		}
+//
+//		player->sendSystemMessage("Your inventory has been wiped.");
 
 	}
 

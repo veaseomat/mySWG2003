@@ -1148,15 +1148,15 @@ class SceneObject extends QuadTreeEntry implements Logger, Metrics {
 
 	@read
 	public unsigned int getContainerVolumeLimit() {
-//		int newcontainerVolumeLimit = containerVolumeLimit;
+		int newcontainerVolumeLimit = containerVolumeLimit;
 		
 //		if (containerVolumeLimit == 80)
 //			newcontainerVolumeLimit = 1000;
 		
-//		if (containerVolumeLimit == 50)
-//			newcontainerVolumeLimit = 100;
+		if (containerVolumeLimit == 50)
+			newcontainerVolumeLimit = 100;
 		
-		return containerVolumeLimit;
+		return newcontainerVolumeLimit;
 	}
 
 	@dirty

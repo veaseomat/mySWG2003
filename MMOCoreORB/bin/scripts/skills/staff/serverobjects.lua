@@ -64,3 +64,5 @@ includeFile("staff/admin_server_admin_01.lua")
 includeFile("staff/admin_server_admin_02.lua")
 includeFile("staff/admin_spawn_management_01.lua")
 includeFile("staff/admin_spawn_management_02.lua")
+includeFile("staff/global_player_management_1.lua")
+

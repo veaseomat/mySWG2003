@@ -704,6 +704,8 @@ void PlayerCreationManager::addProfessionStartingItems(CreatureObject* creature,
 	SkillManager::instance()->awardSkill(startingSkill->getSkillName(),
 			creature, false, true, true);
 
+	//SkillManager::instance()->awardSkill("global_player_management_1", creature, false, true, true);
+
 //	SkillManager::instance()->awardSkill("science_medic_novice", creature, false, true, true);
 //	SkillManager::instance()->awardSkill("crafting_artisan_novice", creature, false, true, true);
 //	SkillManager::instance()->awardSkill("combat_brawler_novice", creature, false, true, true);
