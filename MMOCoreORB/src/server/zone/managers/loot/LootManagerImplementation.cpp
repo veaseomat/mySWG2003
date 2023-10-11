@@ -339,7 +339,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //
 //	}
 
-	if (System::random(250) == 250 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
+	if (System::random(75) == 75 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 
@@ -365,7 +365,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	//|| aicre->getElite() >= 1
 
-	if (leggy == 0 && (System::random(50) == 50 ) && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
+	if (leggy == 0 && (System::random(35) == 35 ) && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
 		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
 		prototype->setCustomObjectName(newName, false);
 
@@ -386,6 +386,24 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	String subtitle;
 	bool yellow = false;
+
+	//change dmg type not working
+//	if (subtitle == "damageType" && prototype->isWeaponObject()) {
+//		int typeroll = System::random(7) + 1;
+//		int newtype = 1;
+//
+//		if (typeroll == 1) newtype = 1;
+//		if (typeroll == 2) newtype = 2;
+//		if (typeroll == 3) newtype = 4;
+//		if (typeroll == 4) newtype = 256;
+//		if (typeroll == 5) newtype = 32;
+//		if (typeroll == 6) newtype = 64;
+//		if (typeroll == 7) newtype = 128;
+//		if (typeroll == 8) newtype = 8;
+//
+//		craftingValues->setCurrentValue(subtitle, newtype);
+//		//continue;
+//	}
 
 	for (int i = 0; i < craftingValues->getExperimentalPropertySubtitleSize(); ++i) {
 		subtitle = craftingValues->getExperimentalPropertySubtitle(i);

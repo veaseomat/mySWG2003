@@ -209,7 +209,7 @@ Core3 = {
 	WebErrorLog = "../log/weberror.log",
 	WebSessionTimeout = 600, -- Length that inactive web sessions expire
 
-	DeleteCharacters = 20, -- How often in minutes to purge deleted characters
+	DeleteCharacters = 120, -- How often in minutes to purge deleted characters
 	MaxNavMeshJobs = 6,
 	MaxAuctionSearchJobs = 1,
 	DumpObjFiles = 1,

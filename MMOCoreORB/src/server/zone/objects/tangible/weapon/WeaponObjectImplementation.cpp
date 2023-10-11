@@ -310,6 +310,9 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 
 	alm->insertAttribute("damage.wpn_damage_type", dmgtxt);
 
+	//change weapon type not working
+//	alm->insertAttribute("damage.wpn_damage_type", damageType);
+
 	float minDmg = round(getMinDamage());
 	float maxDmg = round(getMaxDamage());
 

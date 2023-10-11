@@ -124,6 +124,54 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	if (totalSpawnCount >= maxSpawnLimit)
 		return;
 
+
+	//attempt tocreate a spawn limit, doesnt seem to work, i think this is for lair respawn checks only, in range check should probably be done in the world spawn area where i limit the radius of spawns and spawn density
+	//might be useful for limiting respawns if there is already a certain number in range say 32m
+	//scene object is probably the thing its trying to spawn not the player...
+
+//	ManagedReference<CreatureObject*> screo = object->asCreatureObject();
+////	ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
+////	Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
+////
+////		if (screo->isPlayerCreature() && thisAgent->isInRange(pObject, 32)) {
+////			if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
+////				VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
+////			}
+////		}
+//
+//		//Zone* zone = screo->getZone();
+//
+//		SortedVector<QuadTreeEntry*> closeObjects;
+//		CloseObjectsVector* closeObjectsVector = (CloseObjectsVector*) screo->getCloseObjects();
+//		if (closeObjectsVector == nullptr) {
+//			zone->getInRangeObjects(screo->getWorldPositionX(), screo->getWorldPositionY(), 32, &closeObjects, true);
+//		} else {
+//			closeObjectsVector->safeCopyReceiversTo(closeObjects, CloseObjectsVector::CREOTYPE);
+//		}
+//
+//		int closenpc = 0;
+//
+//		for (int i = 0; i < closeObjects.size(); ++i) {
+//			SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
+//
+//			if (obj == nullptr)
+//				continue;
+//
+//			if (obj->getObjectID() == screo->getObjectID())
+//				continue;
+//
+//			CreatureObject* c = obj->asCreatureObject();
+//
+//			if (c == nullptr || c->isPlayerCreature() || !c->isDead())
+//				continue;
+//
+//			if (screo->isInRange(c, 256))//distance
+//				closenpc += 1;
+//		}
+//
+//		if (closenpc > 1)
+//			return;
+
 //	if (lastSpawn.miliDifference() < MINSPAWNINTERVAL)
 //		return;
 

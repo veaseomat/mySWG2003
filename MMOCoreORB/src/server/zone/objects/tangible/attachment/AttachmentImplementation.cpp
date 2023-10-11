@@ -41,16 +41,18 @@ void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool
 		int max = (level / 10);
 		int min = (level / 10) / 2;
 
-		int mod = System::random(max - min) + min;
+		int mod = System::random(min) + max;
+
+		// mod += System::random(10);
 
 		//int nlvl = (level / 7) / 2;//max lvl 350 lootmanag
 
 		//int mod = System::random(nlvl) + nlvl;
 
-		if(mod > 25)
-			mod = 25;
+		if(mod > 50)
+			mod = 50;
 
-		if(mod <= 0)
+		if(mod < 1)
 			mod = 1;
 
 		String modName = server->getZoneServer()->getLootManager()->getRandomLootableMod(gameObjectType);

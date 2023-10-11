@@ -100,14 +100,14 @@ void AiAgentImplementation::loadTemplateData(SharedObjectTemplate* templateData)
 
 int AiAgentImplementation::calculateAttackMinDamage(int level) {
 	int minDmg = Math::max(getDamageMin(), 20 + (level * 5));
-	if (petDeed != nullptr) {
-		minDmg = petDeed->getMinDamage();
-		if (level < petDeed->getLevel()) {
-			// reduce by level range
-			float percent = (float)level/(float)petDeed->getLevel();
-			minDmg *= percent;
-		}
-	}
+//	if (petDeed != nullptr) {
+//		minDmg = petDeed->getMinDamage();
+//		if (level < petDeed->getLevel()) {
+//			// reduce by level range
+//			float percent = (float)level/(float)petDeed->getLevel();
+//			minDmg *= percent;
+//		}
+//	}
 	if (isDroidObject()) {
 		minDmg = getDamageMin();
 	}
@@ -116,13 +116,13 @@ int AiAgentImplementation::calculateAttackMinDamage(int level) {
 
 int AiAgentImplementation::calculateAttackMaxDamage(int level) {
 	int dmg = Math::max(getDamageMax(), calculateAttackMinDamage(level) * 2);
-	if (petDeed != nullptr) {
-		dmg = petDeed->getMaxDamage();
-		if (level < petDeed->getLevel()) {
-			float percent = (float)level/(float)petDeed->getLevel();
-			dmg *= percent;
-		}
-	}
+//	if (petDeed != nullptr) {
+//		dmg = petDeed->getMaxDamage();
+//		if (level < petDeed->getLevel()) {
+//			float percent = (float)level/(float)petDeed->getLevel();
+//			dmg *= percent;
+//		}
+//	}
 	if (isDroidObject()) {
 		dmg = getDamageMax();
 	}
@@ -204,11 +204,11 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	bool allowedWeapon = true;
 
 
-	if (petDeed != nullptr) {
-		minDmg = petDeed->getMinDamage();
-		maxDmg = petDeed->getMaxDamage();
-		allowedWeapon = petDeed->getRanged();
-	}
+//	if (petDeed != nullptr) {
+//		minDmg = petDeed->getMinDamage();
+//		maxDmg = petDeed->getMaxDamage();
+//		allowedWeapon = petDeed->getRanged();
+//	}
 
 	if (getHueValue() == -1 && npcTemplate->getTotalHues() > 0) {
 		int randHue = npcTemplate->getRandomHue();
@@ -247,9 +247,12 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 			SharedWeaponObjectTemplate* weaoTemp = cast<SharedWeaponObjectTemplate*>(weao->getObjectTemplate());
 			if (weaoTemp != nullptr && weaoTemp->getPlayerRaces()->size() > 0) {
 				weao->setAttackSpeed(speed);
-			} else if (petDeed != nullptr) {
-				weao->setAttackSpeed(petDeed->getAttackSpeed());
 			}
+
+//			else if (petDeed != nullptr) {
+//				weao->setAttackSpeed(petDeed->getAttackSpeed());
+//			}
+
 //npc random saber colors... YOURE WELCOME, VEASEOMAT IS THE BEST BOI. MOD THE GALAXY VIRGINS ETERNALLY BTFO, VEASEOMAT STILL THE JEDI KING
 			Locker locker(weao);
 			if (weao->isJediWeapon()) {
@@ -296,7 +299,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		defaultWeapon->setMaxDamage(maxDmg);
 
 		if (petDeed != nullptr) {
-			defaultWeapon->setAttackSpeed(petDeed->getAttackSpeed());
+			defaultWeapon->setAttackSpeed(speed);//petDeed->getAttackSpeed());
 		} else if (isPet()) {
 			defaultWeapon->setAttackSpeed(speed);
 		}
@@ -314,7 +317,9 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	int ham = 0;
 	baseHAM.removeAll();
-	if (petDeed == nullptr) {
+
+	//if (petDeed == nullptr) {
+
 		int health = (lvlham * .80) + System::random(lvlham * .20);// * .67 + (100 + r200)
 		int str = (lvlham * .70) + System::random(lvlham * .30);//
 		int con = (lvlham * .70) + System::random(lvlham * .30);
@@ -360,20 +365,20 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 //				baseHAM.add(ham/10);
 //		}
 
-	} else {
-		int health = petDeed->getHealth();
-		baseHAM.add(health);
-		baseHAM.add(health/10);
-		baseHAM.add(health/10);
-		int action = petDeed->getAction();
-		baseHAM.add(action);
-		baseHAM.add(action/10);
-		baseHAM.add(action/10);
-		int mind = petDeed->getMind();
-		baseHAM.add(mind);
-		baseHAM.add(mind/10);
-		baseHAM.add(mind/10);
-	}
+//	} else {
+//		int health = petDeed->getHealth();
+//		baseHAM.add(health);
+//		baseHAM.add(health/10);
+//		baseHAM.add(health/10);
+//		int action = petDeed->getAction();
+//		baseHAM.add(action);
+//		baseHAM.add(action/10);
+//		baseHAM.add(action/10);
+//		int mind = petDeed->getMind();
+//		baseHAM.add(mind);
+//		baseHAM.add(mind/10);
+//		baseHAM.add(mind/10);
+//	}
 
 	hamList.removeAll();
 	for (int i = 0; i < 9; ++i) {
@@ -509,9 +514,9 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 void AiAgentImplementation::setupAttackMaps() {
 	const CreatureAttackMap* fullAttackMap;
-	if (petDeed != nullptr)
-		fullAttackMap = petDeed->getAttacks();
-	else
+//	if (petDeed != nullptr)
+//		fullAttackMap = petDeed->getAttacks();
+//	else
 		fullAttackMap = npcTemplate->getAttacks();
 
 	ZoneServer* zoneServer;
@@ -586,7 +591,7 @@ void AiAgentImplementation::setLevel(int lvl, bool randomHam) {
 		if (weaoTemp != nullptr && weaoTemp->getPlayerRaces()->size() > 0) {
 			readyWeapon->setAttackSpeed(speed);
 		} else if (petDeed != nullptr) {
-			readyWeapon->setAttackSpeed(petDeed->getAttackSpeed());
+			readyWeapon->setAttackSpeed(speed);//petDeed->getAttackSpeed());
 		}
 	}
 
@@ -595,7 +600,7 @@ void AiAgentImplementation::setLevel(int lvl, bool randomHam) {
 		defaultWeapon->setMinDamage(minDmg);
 		defaultWeapon->setMaxDamage(maxDmg);
 		if(petDeed != nullptr)
-			defaultWeapon->setAttackSpeed(petDeed->getAttackSpeed());
+			defaultWeapon->setAttackSpeed(speed);//petDeed->getAttackSpeed());
 		else if(isPet())
 			defaultWeapon->setAttackSpeed(speed);
 	}
@@ -663,6 +668,7 @@ void AiAgentImplementation::notifyPositionUpdate(QuadTreeEntry* entry) {
 }
 
 void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
+
 	AiAgent* thisAgent = asAiAgent();
 
 	if (thisAgent == pObject) return;
@@ -679,16 +685,16 @@ void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
 
 	if (isInCombat()) return;
 
-	//removed in case of stability issue involving the getinrangeobjects issue w/ loot and harvest area
-	if (pObject->isPlayerCreature() && thisAgent->isInRange(pObject, 32)){
-		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
-		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
-		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
-
-		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
-			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
-		}
-	}
+	//removed in case of stability issue
+//	if (pObject->isPlayerCreature() && thisAgent->isInRange(pObject, 32)){
+//		ManagedReference<CreatureObject*> pcreo = pObject->asCreatureObject();
+//		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
+//		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
+//
+//		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
+//			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
+//		}
+//	}
 
 	float levelDiff = creoObject->getLevel() - getLevel();
 	float mod = Math::max(0.04f, Math::min((1.f - (levelDiff / 20.f)), 1.2f));

@@ -166,50 +166,49 @@ public:
 		if (!(getWeaponType() & weapon->getWeaponBitmask()))
 			return INVALIDWEAPON;
 
-//		if (rangeToCheck == -1)
-//			rangeToCheck = (float) Math::max(10, weapon->getMaxRange());
+		if (rangeToCheck == -1)
+			rangeToCheck = (float) Math::max(10, weapon->getMaxRange());
 
-
-			if (weapon->isPistolWeapon())//also in weapon obj
-				rangeToCheck = 64;
-			if (weapon->isCarbineWeapon())
-				rangeToCheck = 64;
-			if (weapon->isRifleWeapon())
-				rangeToCheck = 64;
+		if (weapon->isPistolWeapon())//also in weapon obj
+			rangeToCheck = 64;
+		if (weapon->isCarbineWeapon())
+			rangeToCheck = 64;
+		if (weapon->isRifleWeapon())
+			rangeToCheck = 64;
 //			if (weapon->isRangedWeapon())
 //			rangeToCheck = 1.03f;
 //			if (weapon->isMeleeWeapon())
 //			rangeToCheck = 1.25;
-			if (weapon->isUnarmedWeapon())
-				rangeToCheck = 7;
-			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
-				rangeToCheck = 7;
-			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
-				rangeToCheck = 7;
-			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
-				rangeToCheck = 7;
-			if (weapon->isLightningRifle())
-				rangeToCheck = 32;
-			if (weapon->isFlameThrower())
-				rangeToCheck = 32;
-			if (weapon->isHeavyAcidRifle())
-				rangeToCheck = 32;
-			if (weapon->isHeavyWeapon() &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
-				rangeToCheck = 32;
-			if (weapon->isThrownWeapon())// 4sec
-				rangeToCheck = 32;
-			if (weapon->isSpecialHeavyWeapon() &! weapon->isHeavyAcidRifle() &! weapon->isFlameThrower() &! weapon->isLightningRifle())// 4 sec rocket launcher
-				rangeToCheck = 32;
-			if (weapon->isMineWeapon())
-				rangeToCheck = 32;
-			if (weapon->isJediOneHandedWeapon())
-				rangeToCheck = 7;
-			if (weapon->isJediTwoHandedWeapon())
-				rangeToCheck = 7;
-			if (weapon->isJediPolearmWeapon())
-				rangeToCheck = 7;
-			if (weapon->isJediWeapon() && range == 32)
-				rangeToCheck = 32;
+		if (weapon->isUnarmedWeapon())
+			rangeToCheck = 7;
+		if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
+			rangeToCheck = 7;
+		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
+			rangeToCheck = 7;
+		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
+			rangeToCheck = 7;
+		if (weapon->isLightningRifle())
+			rangeToCheck = 32;
+		if (weapon->isFlameThrower())
+			rangeToCheck = 32;
+		if (weapon->isHeavyAcidRifle())
+			rangeToCheck = 32;
+		if (weapon->isHeavyWeapon() &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
+			rangeToCheck = 32;
+		if (weapon->isThrownWeapon())// 4sec
+			rangeToCheck = 32;
+		if (weapon->isSpecialHeavyWeapon() &! weapon->isHeavyAcidRifle() &! weapon->isFlameThrower() &! weapon->isLightningRifle())// 4 sec rocket launcher
+			rangeToCheck = 32;
+		if (weapon->isMineWeapon())
+			rangeToCheck = 32;
+		if (weapon->isJediOneHandedWeapon())
+			rangeToCheck = 7;
+		if (weapon->isJediTwoHandedWeapon())
+			rangeToCheck = 7;
+		if (weapon->isJediPolearmWeapon())
+			rangeToCheck = 7;
+		if (weapon->isJediWeapon() && range == 32)
+			rangeToCheck = 32;
 
 
 		if (creature->isDead() || (creature->isPet() && creature->isIncapacitated()))
