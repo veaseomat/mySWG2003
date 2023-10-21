@@ -7,6 +7,7 @@
 
 #include "server/zone/objects/creature/CreatureObject.h"
 #include "server/zone/objects/creature/ai/Creature.h"
+#include "server/zone/objects/creature/ai/AiAgent.h"
 #include "server/zone/packets/object/ObjectMenuResponse.h"
 #include "server/zone/objects/creature/events/DespawnCreatureTask.h"
 #include "server/zone/managers/creature/CreatureManager.h"
@@ -440,17 +441,40 @@ bool CreatureImplementation::canCollectDna(CreatureObject* player) {
 void CreatureImplementation::loadTemplateDataForBaby(CreatureTemplate* templateData) {
 	loadTemplateData(templateData);
 
-	setCustomObjectName(getDisplayedName() + "\\#F0FFFF" + " (baby)", false);
+	setCustomObjectName(getDisplayedName() + "\\#F0FFFF" + " (tame)", false);
 
-	setHeight(templateData->getScale() * 0.46, false);
+//	setHeight(templateData->getScale() * 0.46, false);
 
-	int newLevel = level / 10;
-	if (newLevel < 1)
-		newLevel = 1;
+	//int newlvl = level;
 
-	setLevel(newLevel, false);
+//	int newLevel = level / 10;
+//
+//	if (newLevel < 1)
+//		newLevel = 1;
+//
+//	setLevel(newLevel, false);
 
 	setBaby(true);
+
+
+//	int ham = 0;
+//
+//	for (int i = 0; i < 9; ++i) {
+//		if (i % 3 == 0) {
+//			ham = getBaseHAM(i) / 10;
+//			setBaseHAM(i, ham);
+//		} else
+//			setBaseHAM(i, ham);
+//	}
+//
+//	for (int i = 0; i < 9; ++i) {
+//		setHAM(i, baseHAM.get(i));
+//	}
+//
+//	for (int i = 0; i < 9; ++i) {
+//		setMaxHAM(i, baseHAM.get(i));
+//	}
+
 
 	clearPvpStatusBit(CreatureFlag::AGGRESSIVE, false);
 	clearPvpStatusBit(CreatureFlag::ENEMY, false);
@@ -461,7 +485,9 @@ void CreatureImplementation::setPetLevel(int newLevel) {
 	if (newLevel == 0)
 		return;
 
-	int oldLevel = level;
+	int oldLevel = getLevel(); //level;
+
+//	setCustomObjectName(getDisplayedName().replaceAll(" [" + oldLevel, " [" + newLevel), false);
 
 	CreatureObjectImplementation::setLevel(newLevel);
 
@@ -471,37 +497,39 @@ void CreatureImplementation::setPetLevel(int newLevel) {
 
 	clearBuffs(false, false);
 
-	int baseLevel = getTemplateLevel();
+//	int baseLevel = getTemplateLevel();
 
-	float minDmg = calculateAttackMinDamage(baseLevel);
-	float maxDmg = calculateAttackMaxDamage(baseLevel);
+//	float minDmg = calculateAttackMinDamage(baseLevel);
+//	float maxDmg = calculateAttackMaxDamage(baseLevel);
+
+	int newmaxdmg = (getDamageMax() / oldLevel) * newLevel;
 
 	Reference<WeaponObject*> defaultWeapon = getSlottedObject("default_weapon").castTo<WeaponObject*>();
 
-	float ratio = ((float)newLevel) / (float)baseLevel;
-	minDmg *= ratio;
-	maxDmg *= ratio;
+//	float ratio = ((float)newLevel) / (float)baseLevel;
+//	minDmg *= ratio;
+//	maxDmg *= ratio;
 
 	if (readyWeapon != nullptr) {
-		float mod = 1.f - 0.1f*float(readyWeapon->getArmorPiercing());
+		//float mod = 1.f - 0.1f*float(readyWeapon->getArmorPiercing());
 
-		readyWeapon->setMinDamage(minDmg * mod);
-		readyWeapon->setMaxDamage(maxDmg * mod);
+		readyWeapon->setMinDamage(newmaxdmg * .6);
+		readyWeapon->setMaxDamage(newmaxdmg);
 	}
 
 	if (defaultWeapon != nullptr) {
-		defaultWeapon->setMinDamage(minDmg);
-		defaultWeapon->setMaxDamage(maxDmg);
+		defaultWeapon->setMinDamage(newmaxdmg * .6);
+		defaultWeapon->setMaxDamage(newmaxdmg);
 	}
 
 	int ham = 0;
 
 	for (int i = 0; i < 9; ++i) {
-		if (i % 3 == 0) {
+//		if (i % 3 == 0) {
 			ham = (getBaseHAM(i) / oldLevel) * newLevel;
 			setBaseHAM(i, ham);
-		} else
-			setBaseHAM(i, ham / 100);
+//		} else
+//			setBaseHAM(i, ham / 100);
 	}
 
 	for (int i = 0; i < 9; ++i) {

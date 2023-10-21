@@ -315,6 +315,8 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		lvlham *= 2.5;
 	}
 
+//	if (isBaby) lvlham /= 10;
+
 	int ham = 0;
 	baseHAM.removeAll();
 
@@ -2540,8 +2542,10 @@ bool AiAgentImplementation::isScentMasked(CreatureObject* target) {
 
 	// Step 1. Check for break
 	bool success = false;
-	int camoSkill = effectiveTarget->getSkillMod("mask_scent");
+	int camoSkill = effectiveTarget->getSkillMod("mask_scent") * 2;
 	int creatureLevel = getLevel();
+
+	if (creatureLevel > 100) creatureLevel = 100;
 
 	int mod = 100;
 	if (effectiveTarget->isKneeling() || effectiveTarget->isSitting())

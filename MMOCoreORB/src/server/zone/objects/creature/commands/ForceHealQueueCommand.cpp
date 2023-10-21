@@ -12,7 +12,7 @@
 #include "server/zone/managers/player/PlayerManager.h"
 
 ForceHealQueueCommand::ForceHealQueueCommand(const String& name, ZoneProcessServer* server) : JediQueueCommand(name, server) {
-	speed = 2;//force heal timer here
+	speed = 3;//had it at 2 not sure if working//force heal timer here
 	allowedTarget = TARGET_AUTO;
 
 	forceCost = 0;

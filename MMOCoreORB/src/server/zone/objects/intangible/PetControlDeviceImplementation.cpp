@@ -26,6 +26,7 @@
 #include "server/chat/ChatManager.h"
 #include "server/zone/objects/player/FactionStatus.h"
 #include "server/zone/managers/frs/FrsManager.h"
+#include "server/zone/managers/name/NameManager.h"
 
 void PetControlDeviceImplementation::callObject(CreatureObject* player) {
 	if (player->isInCombat() || player->isDead() || player->isIncapacitated() || player->getPendingTask("tame_pet") != nullptr) {
@@ -521,11 +522,13 @@ void PetControlDeviceImplementation::storeObject(CreatureObject* player, bool fo
 }
 
 bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force, bool adult) {
+	//return true;
+
 	if (petType != PetManager::CREATUREPET)
 		return true;
 
-	if (growthStage <= 0 || growthStage >= 10)
-		return true;
+//	if (growthStage <= 0 || growthStage >= 10)
+//		return true;
 
 	ManagedReference<TangibleObject*> controlledObject = this->controlledObject.get();
 
@@ -544,27 +547,39 @@ bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force,
 
 	Time currentTime;
 	uint32 timeDelta = currentTime.getTime() - lastGrowth.getTime();
-	int stagesToGrow = timeDelta / 60;//sec
+	//int stagesToGrow = timeDelta / 60;//sec
 
-	if (adult)
-		stagesToGrow = 10;
+	int oldLevel = pet->getLevel();
 
-	if (stagesToGrow == 0 && !force)
+	if (oldLevel <= 0 || oldLevel >= 100)
 		return true;
 
-	int newStage = growthStage + stagesToGrow;
-	if (newStage > 10)
-		newStage = 10;
+//	if (adult)
+//		stagesToGrow = 10;
+//
+//	if (stagesToGrow == 0 && !force)
+//		return true;
+//
+//	int newStage = growthStage + stagesToGrow;
+//	if (newStage > 10)
+//		newStage = 10;
 
-	int newlvl = creatureTemplate->getLevel();
-	if (newlvl > 150) newlvl = 150;
-	newlvl *= 2;
+	int lvlsToGrow = timeDelta / (60 * 60 * 4);//in seconds
 
-	float newLevel = (newlvl / 10.0) * (float)newStage;
-	if (newLevel < 1)
-		newLevel = 1;
+	if (lvlsToGrow < 1)
+		return true;
 
-	float newHeight = creatureTemplate->getScale() * (0.46 + ((float)newStage * 0.06));
+	int newlvl = oldLevel + lvlsToGrow;
+
+	if (newlvl > 100) newlvl = 100;
+	if (newlvl < 1)	newlvl = 1;
+
+	//float newLevel = (newlvl / 10.0) * (float)newStage;
+
+//	if (newLevel < 1)
+//		newLevel = 1;
+
+	float newHeight = creatureTemplate->getScale();//* (0.46 + ((float)newStage * 0.06))
 
 	short preEligibility = petManager->checkMountEligibility(_this.getReferenceUnsafeStaticCast());
 	short postEligibility = petManager->checkMountEligibility(_this.getReferenceUnsafeStaticCast(), newHeight);
@@ -597,22 +612,67 @@ bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force,
 		return false;
 	}
 
-	if (adult)
-		pet->setHeight(newHeight, true);
-	else
-		pet->setHeight(newHeight, false);
+//	if (adult)
+//		pet->setHeight(newHeight, true);
+//	else
+//		pet->setHeight(newHeight, false);
 
-	pet->setPetLevel(newLevel);
+	pet->setPetLevel(newlvl);
 
-	growthStage = newStage;
+
+//
+//	Reference<const CreatureTemplate*> oldname = getDisplayedName();
+//
+//	Reference<const CreatureTemplate*> newname = oldname.replaceAll(oldLevel,newlvl);
+
+
+
+
+//	pet->setCustomObjectName(getDisplayedName().replaceAll(" [" + oldLevel, " [" + newlvl), false);
+
+
+
+//	NameManager* nm = server->getNameManager();
+//	int templSpecies = getSpecies();
+//	npcTemplate = templateData;
+//	Reference<const CreatureTemplate*> creatureTemplate = pet->getCreatureTemplate();
+//
+//	setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]", false);
+
+	//growthStage = newStage;
+
 	lastGrowth.updateToCurrentTime();
 
-	setVitality(getVitality());
+
+	//float newvitmult = (newlvl - oldLevel) / 100;
+
+//	int ham = 0;
+//
+//	for (int i = 0; i < 9; ++i) {
+//		ham = pet->getBaseHAM(i);
+//		ham *= newlvl;
+//		ham /= oldLevel;
+//
+//		pet->setBaseHAM(i, ham);
+//	}
+//
+//	for (int i = 0; i < 9; ++i) {
+//		pet->setHAM(i, pet->getBaseHAM(i));
+//	}
+//
+//	for (int i = 0; i < 9; ++i) {
+//		pet->setMaxHAM(i, pet->getBaseHAM(i));
+//	}
+
+
+	//setVitality(getVitality());
 
 	return true;
 }
 
 void PetControlDeviceImplementation::arrestGrowth() {
+	return;
+
 	if (petType != PetManager::CREATUREPET)
 		return;
 

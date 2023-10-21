@@ -151,25 +151,54 @@ public:
 
 	Vector<ManagedReference<ArmorObject*> > getArmorAtHitLocation(uint8 hl) const {
 
-//		if (hl == 0)
-//			return protectionArmorMap.get((uint8)ArmorObjectTemplate::NOLOCATION);
+		if (hl == 0)
+			return protectionArmorMap.get((uint8)ArmorObjectTemplate::NOLOCATION);
 
-		Vector<ManagedReference<ArmorObject*> > armArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::ARMS); // ARMS
 		Vector<ManagedReference<ArmorObject*> > chestArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::CHEST); //
+		Vector<ManagedReference<ArmorObject*> > armArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::ARMS); // ARMS
 		Vector<ManagedReference<ArmorObject*> > legArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::LEGS); //
 		Vector<ManagedReference<ArmorObject*> > headArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::HEAD); //
 
-		if(!chestArmor.isEmpty())
-			return chestArmor;
-
-		if(!armArmor.isEmpty())
-			return armArmor;
-
-		if(!legArmor.isEmpty())
-			return legArmor;
-
-		if(!headArmor.isEmpty())
-			return headArmor;
+		if (hl == 1) {//chest
+			if(!chestArmor.isEmpty())
+				return chestArmor;
+			if(!armArmor.isEmpty())
+				return armArmor;
+			if(!legArmor.isEmpty())
+				return legArmor;
+			if(!headArmor.isEmpty())
+				return headArmor;
+		}
+		if (hl == 2 || hl == 3) {//arms
+			if(!armArmor.isEmpty())
+				return armArmor;
+			if(!chestArmor.isEmpty())
+				return chestArmor;
+			if(!legArmor.isEmpty())
+				return legArmor;
+			if(!headArmor.isEmpty())
+				return headArmor;
+		}
+		if (hl == 4 || hl == 5) {//legs
+			if(!legArmor.isEmpty())
+				return legArmor;
+			if(!armArmor.isEmpty())
+				return armArmor;
+			if(!chestArmor.isEmpty())
+				return chestArmor;
+			if(!headArmor.isEmpty())
+				return headArmor;
+		}
+		if (hl == 6) {//head
+			if(!headArmor.isEmpty())
+				return headArmor;
+			if(!armArmor.isEmpty())
+				return armArmor;
+			if(!chestArmor.isEmpty())
+				return chestArmor;
+			if(!legArmor.isEmpty())
+				return legArmor;
+		}
 
 		return hl;
 
