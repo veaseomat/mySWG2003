@@ -41,7 +41,7 @@ void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool
 		int max = (level / 10);
 		int min = (level / 10) / 2;
 
-		int mod = System::random(min) + max;
+		int mod = System::random(max) + min;
 
 		// mod += System::random(10);
 

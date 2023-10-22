@@ -339,7 +339,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //
 //	}
 
-	if (System::random(50) >= 50 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
+	if (System::random(35) >= 35 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 
@@ -449,14 +449,14 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (percentage > 1.0) percentage = 1.0;
 
 
-//		if (subtitle == "useCount") {
-////			craftingValues->setMaxValue(subtitle, min * 2);
-////			craftingValues->setMaxValue(subtitle, max * 2);
-//
-//			int range = abs(max-min);
-//			int randomValue = System::random(range);
-//			percentage = (float)randomValue / (float)(range);
-//		}
+		if (subtitle == "useCount") {
+			craftingValues->setMaxValue(subtitle, min * 2);
+			craftingValues->setMaxValue(subtitle, max * 2);
+
+			int range = abs(max-min);
+			int randomValue = System::random(range);
+			percentage = (float)randomValue / (float)(range);
+		}
 
 		if (subtitle == "color") {
 			int ncolor = System::random(5);//color max set in loot color crystal lua file

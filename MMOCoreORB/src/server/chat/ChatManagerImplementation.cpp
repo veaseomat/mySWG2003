@@ -8,6 +8,7 @@
 #include "server/chat/ChatManager.h"
 #include "server/zone/ZoneServer.h"
 #include "server/zone/Zone.h"
+#include "server/zone/objects/player/sui/messagebox/SuiMessageBox.h"
 
 #include "server/zone/managers/player/PlayerManager.h"
 #include "server/zone/managers/name/NameManager.h"
@@ -970,7 +971,17 @@ void ChatManagerImplementation::broadcastGalaxy(CreatureObject* player, const St
 	while (playerMap->hasNext(false)) {
 		ManagedReference<CreatureObject*> playerObject = playerMap->getNextValue(false);
 
-		playerObject->sendSystemMessage(stringMessage);
+		//playerObject->sendSystemMessage(stringMessage);
+
+		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(playerObject, SuiWindowType::NONE);
+		box->setPromptTitle("mySWG ALERT!");
+		box->setPromptText(stringMessage);
+
+		PlayerObject* ghost = playerObject->getPlayerObject();
+
+		ghost->addSuiBox(box);
+		playerObject->sendMessage(box->generateMessage());
+
 	}
 }
 

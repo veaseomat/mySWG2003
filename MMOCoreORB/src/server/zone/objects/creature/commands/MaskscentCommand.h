@@ -36,7 +36,7 @@ public:
 		StringIdChatParameter endStringId("skl_use", "sys_scentmask_stop"); // Your masked scent has worn off.
 
 
-		int maskScentMod = creature->getSkillMod("mask_scent");
+		int maskScentMod = creature->getSkillMod("mask_scent") * 2;
 		int cdReduction = ((float)(maskScentMod / 100.0f)) * 45;
 		int duration = 60 + (((float)(maskScentMod / 100.0f)) * 200);
 

@@ -2547,20 +2547,22 @@ bool AiAgentImplementation::isScentMasked(CreatureObject* target) {
 
 	if (creatureLevel > 100) creatureLevel = 100;
 
-	int mod = 100;
-	if (effectiveTarget->isKneeling() || effectiveTarget->isSitting())
-		mod -= 10;
-	if (effectiveTarget->isStanding())
-		mod -= 15;
-	if (effectiveTarget->isRunning() || effectiveTarget->isRidingMount() )
-		mod -= 35;
+//	int mod = 100;
+//	if (effectiveTarget->isKneeling() || effectiveTarget->isSitting())
+//		mod -= 10;
+//	if (effectiveTarget->isStanding())
+//		mod -= 15;
+//	if (effectiveTarget->isRunning() || effectiveTarget->isRidingMount() )
+//		mod -= 35;
 
-	success = System::random(100) <= mod - (float)creatureLevel / ((float)camoSkill / 100.0f) / 20.f;
+	success = System::random(camoSkill) >= creatureLevel;
 
 	if (success)
-		camouflagedObjects.put(effectiveTargetID); // add to award
+		camouflagedObjects.put(effectiveTargetID);
 	else
-		camouflagedObjects.drop(effectiveTargetID);
+		camouflagedObjects.drop(effectiveTargetID); // add to award
+
+
 
 	Reference<Task*> ct = new CamoTask(effectiveTarget, asAiAgent(), true, success);
 	ct->execute();
