@@ -44,9 +44,20 @@ public:
 	}
 
 	PlanetTravelPointListResponse(const String& planet) : BaseMessage() {
+
 		insertShort(0x06);
 		insertInt(0x4D32541F);  //PlanetTravelPointListResponse
         insertAscii(planet);
+
+//		insertAscii("naboo");
+//		insertAscii("corellia");
+//		insertAscii("talus");
+//		insertAscii("dathomir");
+//		insertAscii("lok");
+//		insertAscii("rori");
+//		insertAscii("tatooine");
+//		insertAscii("yavin4");
+//		insertAscii("dantooine");
 
         setCompression(true);
 	}

@@ -49,7 +49,10 @@ function myswg_vendor:start()
     local pWeaponsmith4 = spawnMobile("yavin4", "myswg_vendor", 1, -6922, 73.0, -5730, 35, 0 )--labor
     
     local pWeaponsmith4 = spawnMobile("lok", "myswg_vendor", 1, 479, 8.0, 5512, 35, 0 )--lok
-     
+    
+    local pWeaponsmith4 = spawnMobile("endor", "myswg_vendor", 1, -4964, 9.0, 3620, 35, 0 )--pcity
+    local pWeaponsmith4 = spawnMobile("dantooine", "myswg_vendor", 1, -5731.72, 2.01,6574.19, 35, 0 )--pcity
+    
                 
 --    local pLarry = spawnMobile("naboo", "merch_crazy_larry", 1, -4881, 6.0, 4150, 35, 0 )
 end

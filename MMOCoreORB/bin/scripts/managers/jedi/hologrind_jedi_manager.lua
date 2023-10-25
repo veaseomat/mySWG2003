@@ -460,6 +460,7 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 
 		else
 			self:awardFSpoint(pCreatureObject)
+			self:awardFSpoint(pCreatureObject)
 			
 			CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
 			CreatureObject(pCreatureObject):sendSystemMessage("@jedi_trials:force_shrine_wisdom_" .. getRandomNumber(1, 15))

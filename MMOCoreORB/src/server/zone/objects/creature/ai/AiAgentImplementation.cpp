@@ -311,8 +311,12 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	int lvlham = (3000 * lvlmult) - 25;//50 * (newlvl * .4) * 1.5;//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
 
-	if (legendarynpc == true) {
-		lvlham *= 2.5;
+//	if (legendarynpc == true) {
+//		lvlham *= 2.5;
+//	}
+
+	if (elite > 1.0) {
+		lvlham *= elite;
 	}
 
 //	if (isBaby) lvlham /= 10;
@@ -693,8 +697,9 @@ void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
 //		ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
 //		Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
 //
-//		if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
-//			VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
+//		if (pghost->isJedi() && pweapon->isJediWeapon()) { // || pghost->hasBhTef()      !isCreature() //System::random(30) == 30 &&
+//			//VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
+//			pcreo->sendSystemMessage("vis timer test");
 //		}
 //	}
 
@@ -707,7 +712,7 @@ void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
 		radius = DEFAULTAGGRORADIUS;
 	}
 
-	radius = radius*mod;
+	//radius = radius*mod;
 
 	auto inRange = creoObject->isInRange3d(thisAgent, radius);
 
@@ -1796,7 +1801,7 @@ void AiAgentImplementation::activateAwarenessEvent(uint64 delay) {
 	}
 
 	if (!awarenessEvent->isScheduled()) {
-		awarenessEvent->schedule(delay);
+		awarenessEvent->schedule(3000);//delay);//slow down ai for efficiency
 
 #ifdef DEBUG
 		info("Scheduling awareness event", true);
@@ -2639,7 +2644,7 @@ void AiAgentImplementation::activateMovementEvent() {
 	if (getZoneUnsafe() == nullptr)
 		return;
 
-	const static uint64 minScheduleTime = 100;
+	const static uint64 minScheduleTime = 1000;
 
 	Locker locker(&movementEventMutex);
 

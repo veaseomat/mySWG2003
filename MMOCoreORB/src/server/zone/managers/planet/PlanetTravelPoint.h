@@ -145,14 +145,14 @@ public:
 	 * Returns true if this location allows interplanetary travel
 	 */
 	inline bool isInterplanetary() const {
-		return interplanetaryTravelAllowed;
+		return true;//interplanetaryTravelAllowed;
 	}
 
 	/**
 	 * Returns true if this location allows incoming travel
 	 */
 	inline bool isIncomingAllowed() const {
-		return incomingTravelAllowed;
+		return true;//incomingTravelAllowed;
 	}
 
 	/**

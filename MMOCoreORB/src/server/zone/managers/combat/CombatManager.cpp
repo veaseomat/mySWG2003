@@ -613,15 +613,15 @@ void CombatManager::applyWeaponDots(CreatureObject* attacker, CreatureObject* de
 		switch (weapon->getDotType(i)) {
 		case 1: //POISON
 			type = CreatureState::POISONED;
-			//resist = defender->getSkillMod("resistance_poison");
+			resist = defender->getSkillMod("resistance_poison");
 			break;
 		case 2: //DISEASE
 			type = CreatureState::DISEASED;
-			//resist = defender->getSkillMod("resistance_disease");
+			resist = defender->getSkillMod("resistance_disease");
 			break;
 		case 3: //FIRE
 			type = CreatureState::ONFIRE;
-			//resist = defender->getSkillMod("resistance_fire");
+			resist = defender->getSkillMod("resistance_fire");
 			break;
 		case 4: //BLEED
 			type = CreatureState::BLEEDING;

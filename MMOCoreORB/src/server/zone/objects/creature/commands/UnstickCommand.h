@@ -49,16 +49,16 @@ public:
 			}
 
 		if (!player->checkCooldownRecovery("used_unstick")) {
-			StringIdChatParameter stringId;
-
-			Time* cdTime = player->getCooldownTime("used_unstick");
-
-
-			int timeLeft = floor((float)cdTime->miliDifference() / 1000) *-1;
-
-			stringId.setStringId("You must waiting....");
-			stringId.setDI(timeLeft);
-			player->sendSystemMessage("Unstick is on a 1 minute cooldown.");
+//			StringIdChatParameter stringId;
+//
+//			Time* cdTime = player->getCooldownTime("used_unstick");
+//
+//
+//			int timeLeft = floor((float)cdTime->miliDifference() / 1000) *-1;
+//
+//			stringId.setStringId("You must waiting....");
+//			stringId.setDI(timeLeft);
+			player->sendSystemMessage("Unstick is on a 5 minute cooldown.");
 			return 0;
 		}
 
@@ -67,7 +67,7 @@ public:
 		zone->transferObject(player, 1, true);
 
 		player->setPosture(CreaturePosture::UPRIGHT);
-		player->addCooldown("used_unstick", 60000);
+		player->addCooldown("used_unstick", 5 * 60 * 1000);
 		player->sendSystemMessage("You have been teleported to a safe spot. Wait 15 seconds for recalibration.");
 
 	return SUCCESS;

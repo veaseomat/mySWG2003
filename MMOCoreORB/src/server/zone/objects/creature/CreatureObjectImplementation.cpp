@@ -3669,6 +3669,10 @@ float CreatureObjectImplementation::getTemplateRadius() {
 }
 
 bool CreatureObjectImplementation::hasEffectImmunity(uint8 effectType) const {
+
+	if (hasState(effectType))
+		return true;
+
 	switch (effectType) {
 	case CommandEffect::BLIND:
 	case CommandEffect::DIZZY:
@@ -3692,6 +3696,10 @@ bool CreatureObjectImplementation::hasEffectImmunity(uint8 effectType) const {
 }
 
 bool CreatureObjectImplementation::hasDotImmunity(uint32 dotType) const {
+
+	if (hasState(dotType))
+		return true;
+
 	switch (dotType) {
 	case CreatureState::POISONED:
 	case CreatureState::BLEEDING:

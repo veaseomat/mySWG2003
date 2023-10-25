@@ -2479,12 +2479,12 @@ void PlayerManagerImplementation::awardBadge(PlayerObject* ghost, const Badge* b
 	}
 
 	if (badge->getType() == Badge::MASTER) {
-		if (System::random(5) == 5) {
+		if (System::random(100) <= 75) {//75% chance
 			JediManager::instance()->awardFSpoint(player);
 		}
 	}
 	else {
-		if (System::random(10) == 10) {
+		if (System::random(100) >= 90) {//10% chance
 			JediManager::instance()->awardFSpoint(player);
 		}
 	}

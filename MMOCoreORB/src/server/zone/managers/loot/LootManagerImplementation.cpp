@@ -339,7 +339,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //
 //	}
 
-	if (System::random(35) >= 35 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
+	if (System::random(24) >= 24 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
 		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 		prototype->setCustomObjectName(newName, false);
 
@@ -764,7 +764,7 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 		int lootChance = entry->getLootChance() * 1.5; //using a multiplier gives less empty corpses 1.5x is helpful, 2x significant
 
 		//random holocron creation (only drops on mobs that have loot lists)
-		int holochance = 1000;
+		int holochance = 350;
 		if (System::random(holochance) >= holochance){
 			createLoot(trx, container, "holocron_3", level);
 		}
@@ -1049,8 +1049,10 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 	if (dotChance < 0)
 		return;
 
+//	float modSqr = excMod * excMod;
+
 	// Apply the Dot if the chance roll equals the number or is zero.
-	if (System::random(50) == 50) { // Defined in loot item script.//not anymore
+	if (System::random(10) == 10) { // Defined in loot item script.//not anymore
 		shouldGenerateDots = true;
 	}
 
@@ -1090,12 +1092,16 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				str = strMax;
 
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				str *= yellowModifier;
+//			}
+
 			if (dotType == 1)
 				str = str * 2;
 			else if (dotType == 3)
 				str = str * 1.5;
 
-			weapon->addDotStrength(str);
+			weapon->addDotStrength(str * excMod);
 
 			int durMin = randomDotDuration.elementAt(0);
 			int durMax = randomDotDuration.elementAt(1);
@@ -1106,12 +1112,16 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				dur = durMax;
 
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				dur *= yellowModifier;
+//			}
+
 			if (dotType == 2)
 				dur = dur * 5;
 			else if (dotType == 3)
 				dur = dur * 1.5;
 
-			weapon->addDotDuration(dur);
+			weapon->addDotDuration(dur * excMod);
 
 			int potMin = randomDotPotency.elementAt(0);
 			int potMax = randomDotPotency.elementAt(1);
@@ -1122,7 +1132,11 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				pot = potMax;
 
-			weapon->addDotPotency(pot);
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				pot *= yellowModifier;
+//			}
+
+			weapon->addDotPotency(pot * excMod);
 
 			int useMin = randomDotUses.elementAt(0);
 			int useMax = randomDotUses.elementAt(1);
@@ -1133,7 +1147,11 @@ void LootManagerImplementation::addRandomDots(TangibleObject* object, const Loot
 			else
 				use = useMax;
 
-			weapon->addDotUses(use);
+//			if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
+//				use *= yellowModifier;
+//			}
+
+			weapon->addDotUses(use * excMod);
 		}
 
 		weapon->addMagicBit(false);
