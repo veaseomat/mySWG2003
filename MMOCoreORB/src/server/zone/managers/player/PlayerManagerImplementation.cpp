@@ -9,6 +9,7 @@
 #include "server/zone/managers/player/PlayerManager.h"
 #include <utility>
 #include <mutex>
+#include "server/login/account/AccountManager.h"
 
 #include "server/zone/packets/charcreation/ClientCreateCharacterCallback.h"
 #include "server/zone/packets/charcreation/ClientCreateCharacterFailed.h"
@@ -5909,6 +5910,24 @@ bool PlayerManagerImplementation::increaseOnlineCharCountIfPossible(ZoneClientSe
 	if (onlineCount >= onlineCharactersPerAccount)
 		return false;
 
+	//moved to accountmanager.cpp
+//	String loggedInIp = client->getIPAddress();
+//	int ipconnections = 0;
+//
+//	//ZoneServer* server = ServerCore::getZoneServer();
+//
+//	//if (!loggedInIp.isEmpty()) {
+//		SortedVector<uint32> loggedInAccounts = server->getPlayerManager()->getOnlineZoneClientMap()->getAccountsLoggedIn(loggedInIp);
+//
+//		for (int i = 0; i < loggedInAccounts.size(); ++i) {
+//			ipconnections += 1;
+//		}
+//	//}
+//
+//	if (ipconnections > 1)
+//		return false;
+
+
 	clients.add(client);
 
 	onlineZoneClientMap.put(accountId, clients);
@@ -6011,7 +6030,7 @@ void PlayerManagerImplementation::rescheduleCorpseDestruction(CreatureObject* pl
 		Reference<DespawnCreatureTask*> despawn = ai->getPendingTask("despawn").castTo<DespawnCreatureTask*>();
 		if (despawn != nullptr) {
 			despawn->cancel();
-			despawn->reschedule(1000);
+			despawn->reschedule(10000);
 		}
 
 	}

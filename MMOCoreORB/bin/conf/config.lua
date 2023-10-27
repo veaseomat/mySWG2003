@@ -200,7 +200,7 @@ Core3 = {
 
 	-- Status Server Config
 	StatusPort = 44455,
-	StatusAllowedConnections = 200,
+	StatusAllowedConnections = 500,
 	StatusInterval = 30, -- interval to check if zone is locked up (in seconds)
 
 	-- Web Server Config
@@ -209,7 +209,7 @@ Core3 = {
 	WebErrorLog = "../log/weberror.log",
 	WebSessionTimeout = 600, -- Length that inactive web sessions expire
 
-	DeleteCharacters = 120, -- How often in minutes to purge deleted characters
+	DeleteCharacters = 10, -- How often in minutes to purge deleted characters
 	MaxNavMeshJobs = 6,
 	MaxAuctionSearchJobs = 1,
 	DumpObjFiles = 1,

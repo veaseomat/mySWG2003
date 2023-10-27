@@ -5,6 +5,7 @@
  *      Author: crush
  */
 
+#include "server/zone/managers/player/PlayerManager.h"
 #include "server/login/account/Account.h"
 #include "AccountManager.h"
 #include "server/login/LoginClient.h"
@@ -18,6 +19,7 @@
 #include "server/login/packets/LoginClusterStatus.h"
 #include "server/login/packets/LoginEnumCluster.h"
 #include "server/ServerCore.h"
+#include "server/zone/ZoneServer.h"
 
 #include "server/zone/managers/object/ObjectManager.h"
 
@@ -172,6 +174,29 @@ Reference<Account*> AccountManager::validateAccountCredentials(LoginClient* clie
 
 		return nullptr;
 	}
+
+	String loggedInIp = client->getIPAddress();
+	int ipconnections = 0;
+
+	ZoneServer* server = ServerCore::getZoneServer();
+
+	//if (!loggedInIp.isEmpty()) {
+	SortedVector<uint32> loggedInAccounts = server->getPlayerManager()->getOnlineZoneClientMap()->getAccountsLoggedIn(loggedInIp);
+
+		for (int i = 0; i < loggedInAccounts.size(); ++i) {
+			ipconnections += 1;
+		}
+	//}
+
+	if (ipconnections > 1) {//>1 allows 2 accounts from 1 ip
+		if (client != nullptr) {
+
+			client->sendErrorMessage("Connections","mySWG only allows 2 online accounts per household.");
+
+		}
+		return nullptr;
+	}
+
 
 	//Check hash version
 	String passwordHashed;
