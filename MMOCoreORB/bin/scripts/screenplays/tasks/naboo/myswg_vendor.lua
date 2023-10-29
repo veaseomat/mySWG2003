@@ -968,14 +968,14 @@ function myswg_vendor_convo_handler:getNextConversationScreen(conversationTempla
 
 
 
-                elseif (optionLink == "option46" and credits < 100000) then
+                elseif (optionLink == "option46" and credits < 200000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "option46" and credits >= 100000) then
+                elseif (optionLink == "option46" and credits >= 200000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    creature:subtractCashCredits(100000)
+                    creature:subtractCashCredits(200000)
                     local pItem = 
                     giveItem(pInventory, "object/tangible/veteran_reward/resource.iff", -1)
                     --createLoot(pInventory, "junk", 300, false)
