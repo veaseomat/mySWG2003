@@ -686,6 +686,8 @@ class AiAgent extends CreatureObject {
 		synchronized (targetMutex) {
 			if (this.isRetreating())
 				return;
+			//if (this.isPlayerCreature())
+			//	return;
 
 			setFollowState(FOLLOWING);
 

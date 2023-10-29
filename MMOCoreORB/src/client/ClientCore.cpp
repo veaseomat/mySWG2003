@@ -122,7 +122,7 @@ void ClientCore::handleCommands() {
 				String name;
 				tokenizer.finalToken(name);
 
-				for (int i = 0; i < zones.size(); ++i)
+				for (int i = 0; i < zones.size(); ++i)//
 					zones.get(i)->follow(name);
 
 			} else if (firstToken == "stopFollow") {

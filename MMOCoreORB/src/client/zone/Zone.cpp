@@ -119,7 +119,13 @@ void Zone::sceneStarted() {
 	client->getClient()->info("zone started in " + String::valueOf(startTime.miliDifference()) + "ms", true);
 }
 
-void Zone::follow(const String& name) {
+void Zone::follow(const String& name) {//
+
+//	client->getClient()->error("follow is disabled in mySWG");
+//
+//	return;
+
+
 	SceneObject* object = objectManager->getObject(name);
 
 	if (object == nullptr) {

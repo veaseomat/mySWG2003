@@ -52,7 +52,7 @@ public:
 
 	void sceneStarted();
 
-	void follow(const String& name);
+	void follow(const String& name);//
 	void stopFollow();
 
 	void lurk();

@@ -32,7 +32,7 @@ looted_container = {
 --		{itemTemplate = "worklight", weight = 87719},
 
 		-- Weapons (25% chance)
-		{groupTemplate = "oldjunk", weight = 2000000},
+		{groupTemplate = "oldjunk", weight = 1000000},
 		{groupTemplate = "weapons_all", weight = 1000000},
 		{groupTemplate = "armor_all", weight = 1000000},
 		{groupTemplate = "weapon_component", weight = 1000000},
@@ -44,7 +44,7 @@ looted_container = {
 		
 		{itemTemplate = "locked_container", weight = 1000000},	
 		
-		--{itemTemplate = "resourcedeed", weight = 1000000},	
+		{itemTemplate = "resourcedeed", weight = 1000000},	
 		
 		--{groupTemplate = "holocron_nd", weight = 50000},
 	}

@@ -349,6 +349,13 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 		prototype->addMagicBit(false);
 
+
+
+		//craftingValues->setCurrentValue("noTrade", 1);
+		//craftingValues->addExperimentalProperty("notrade", "notrade", 1, 1, 0, false, ValuesMap::LINEARCOMBINE);
+
+
+
 		//legendaryLooted.increment();
 	}
 
@@ -424,11 +431,11 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //			max *= 4;
 //		}
 
-		float percentage = System::random(10000) / 10000.f;//.7 + ((level / 350) * .2) + (System::random(200) * .001);//((level / 350) * .90) + (System::random(2000) * .0001);//System::random(10000) / 10000.f;;//System::random(1500) * .001;//(level * .01) * (System::random(150) * .01);//System::random(10000) / 10000.f;//this is where the variance happens
-		//percentage *= 1.3;
+		float percentage = level / 500;//System::random(10000) / 10000.f;//.7 + ((level / 350) * .2) + (System::random(200) * .001);//((level / 350) * .90) + (System::random(2000) * .0001);//System::random(10000) / 10000.f;;//System::random(1500) * .001;//(level * .01) * (System::random(150) * .01);//System::random(10000) / 10000.f;//this is where the variance happens
+		percentage *= .7 + (System::random(300) / 1000);
 
-//		if (percentage > 1.0) percentage = 1.0;
-//		if (percentage < 0.01) percentage = 0.01;
+		if (percentage > 1.0) percentage = 1.0;
+		if (percentage < 0.01) percentage = 0.01;
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll
@@ -450,8 +457,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 
 		if (subtitle == "useCount") {
-			craftingValues->setMaxValue(subtitle, min * 2);
-			craftingValues->setMaxValue(subtitle, max * 2);
+			//craftingValues->setMaxValue(subtitle, min * 2);
+			//craftingValues->setMaxValue(subtitle, max * 2);
 
 			int range = abs(max-min);
 			int randomValue = System::random(range);
@@ -472,12 +479,15 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			continue;
 		}
 
+
 //		if (subtitle == "forcecost") {
 //			int nfc = (level / 3.5) / 100 * 10;
 //
 //			craftingValues->setCurrentValue(subtitle, nfc);
 //			continue;
 //		}
+
+		//percentage = level / 100;//this will be good for the next interation
 
 		craftingValues->setCurrentPercentage(subtitle, percentage);
 
@@ -495,6 +505,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			continue;
 		}
 
+		//remove all this crap next iteration
 		float minMod = (max > min) ? 2000.f : -2000.f;
 		float maxMod = (max > min) ? 500.f : -500.f;
 

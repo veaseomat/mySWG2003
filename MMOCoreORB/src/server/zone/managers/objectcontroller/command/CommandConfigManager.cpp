@@ -300,6 +300,11 @@ void CommandConfigManager::loadCommandData(const String& filename) {
 }
 
 QueueCommand* CommandConfigManager::createCommand(const String& name) {
+
+//	if (name == "follow")
+//		name = nullptr;
+		//return nullptr;
+
 	QueueCommand* command = nullptr;
 
 	command = commandFactory.createCommand(name, name, server);
@@ -816,6 +821,9 @@ int CommandConfigManager::addCommand(lua_State* L) {
 	QueueCommand* command = slashCommands->getSlashCommand(name);
 	if (command == nullptr)
 		return 0;
+
+//	if (name == "follow")
+//		return 0;
 
 	parseOptions(slashcommand, command);
 

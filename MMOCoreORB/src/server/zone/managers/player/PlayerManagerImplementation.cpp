@@ -5910,6 +5910,58 @@ bool PlayerManagerImplementation::increaseOnlineCharCountIfPossible(ZoneClientSe
 	if (onlineCount >= onlineCharactersPerAccount)
 		return false;
 
+
+
+	String loggedInIp = client->getIPAddress();
+	int ipcharacters = 0;
+	int ipaccounts = 0;
+	//ZoneServer* server = ServerCore::getZoneServer();
+	//Reference<CharacterList*> characterList = account->getCharacterList();
+
+	SortedVector<uint32> loggedInAccounts = server->getPlayerManager()->getOnlineZoneClientMap()->getAccountsLoggedIn(loggedInIp);
+
+	for (int i = 0; i < loggedInAccounts.size(); ++i) {
+		ipaccounts += 1;
+
+		uint32 otherAccountID = loggedInAccounts.get(i);
+		Reference<Account*> otherAccount = AccountManager::getAccount(otherAccountID);
+		Reference<CharacterList*> characterList = otherAccount->getCharacterList();
+		Reference<CreatureObject*> targetCreature;
+		auto playerManager = server->getPlayerManager();
+
+		for(int i = 0; i < characterList->size(); ++i) {
+			CharacterListEntry* entry = &characterList->get(i);
+
+			Reference<PlayerObject*> ghost;
+			Reference<ZoneClientSession*> charClient;
+
+			if(entry->getGalaxyID() == server->getGalaxyID()) {
+				targetCreature = playerManager->getPlayer(entry->getFirstName());
+
+				if(targetCreature != nullptr && targetCreature->isPlayerCreature()) {
+					ghost = targetCreature->getPlayerObject();
+
+					if (ghost != nullptr) {
+						if(ghost->isOnline())
+							ipcharacters += 1;
+					}
+				}
+			}
+
+		}
+	}
+
+	if (ipaccounts >= 2) {//1 is 2 here lol
+		return false;
+	}
+
+	if (ipcharacters >= 4) {//2 means 2 here
+		return false;
+	}
+
+
+
+
 	//moved to accountmanager.cpp
 //	String loggedInIp = client->getIPAddress();
 //	int ipconnections = 0;

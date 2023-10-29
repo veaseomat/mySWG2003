@@ -842,7 +842,7 @@ void CreatureManagerImplementation::droidHarvest(Creature* creature, CreatureObj
 		if (despawn != nullptr) {
 			despawn->cancel();
 
-			despawn->reschedule(10000);
+			despawn->reschedule(1000);
 		}
 	}
 }
@@ -1001,7 +1001,7 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 		if (despawn != nullptr) {
 			despawn->cancel();
 
-			despawn->reschedule(10000);
+			despawn->reschedule(1000);
 		}
 	}
 }

@@ -5,6 +5,7 @@
  *      Author: crush
  */
 
+#include "server/zone/objects/player/PlayerObject.h"
 #include "server/zone/managers/player/PlayerManager.h"
 #include "server/login/account/Account.h"
 #include "AccountManager.h"
@@ -176,27 +177,57 @@ Reference<Account*> AccountManager::validateAccountCredentials(LoginClient* clie
 	}
 
 	String loggedInIp = client->getIPAddress();
-	int ipconnections = 0;
-
+	int ipcharacters = 0;
+	int ipaccounts = 0;
 	ZoneServer* server = ServerCore::getZoneServer();
+	//Reference<CharacterList*> characterList = account->getCharacterList();
 
-	//if (!loggedInIp.isEmpty()) {
 	SortedVector<uint32> loggedInAccounts = server->getPlayerManager()->getOnlineZoneClientMap()->getAccountsLoggedIn(loggedInIp);
 
-		for (int i = 0; i < loggedInAccounts.size(); ++i) {
-			ipconnections += 1;
+	for (int i = 0; i < loggedInAccounts.size(); ++i) {
+		ipaccounts += 1;
+
+		uint32 otherAccountID = loggedInAccounts.get(i);
+		Reference<Account*> otherAccount = AccountManager::getAccount(otherAccountID);
+		Reference<CharacterList*> characterList = otherAccount->getCharacterList();
+		Reference<CreatureObject*> targetCreature;
+		auto playerManager = server->getPlayerManager();
+
+		for(int i = 0; i < characterList->size(); ++i) {
+			CharacterListEntry* entry = &characterList->get(i);
+
+			Reference<PlayerObject*> ghost;
+			Reference<ZoneClientSession*> charClient;
+
+			if(entry->getGalaxyID() == server->getGalaxyID()) {
+				targetCreature = playerManager->getPlayer(entry->getFirstName());
+
+				if(targetCreature != nullptr && targetCreature->isPlayerCreature()) {
+					ghost = targetCreature->getPlayerObject();
+
+					if (ghost != nullptr) {
+						if(ghost->isOnline())
+							ipcharacters += 1;
+					}
+				}
+			}
+
 		}
-	//}
+	}
 
-	if (ipconnections > 1) {//>1 allows 2 accounts from 1 ip
+	if (ipaccounts >= 2) {//1 is 2 here lol
 		if (client != nullptr) {
-
-			client->sendErrorMessage("Connections","mySWG only allows 2 online accounts per household.");
-
+			client->sendErrorMessage("mySWG","You are only allowed 2 online accounts per household.");
 		}
 		return nullptr;
 	}
 
+	if (ipcharacters >= 4) {//2 means 2 here
+		if (client != nullptr) {
+			client->sendErrorMessage("mySWG","You are only allowed 4 online characters per household.");
+		}
+		return nullptr;
+	}
 
 	//Check hash version
 	String passwordHashed;
