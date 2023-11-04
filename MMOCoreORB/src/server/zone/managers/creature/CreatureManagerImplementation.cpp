@@ -586,6 +586,8 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 
 		SceneObject* creatureInventory = destructedObject->getSlottedObject("inventory");
 
+		//this might be where i need to add holocron loot to creatures
+
 		if (creatureInventory != nullptr && player != nullptr && player->isPlayerCreature()) {
 			LootManager* lootManager = zoneServer->getLootManager();
 
@@ -608,21 +610,27 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 				trx.abort() << "createLoot failed for ai object.";
 			}
 
-			if (System::random(100) >= 50){
-				if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-					trx.commit(true);
-				} else {
-					trx.abort() << "createLoot failed for ai object.";
-				}
+
+			if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
+				trx.commit(true);
+			} else {
+				trx.abort() << "createLoot failed for ai object.";
 			}
 
-			if (System::random(100) >= 50){
-				if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-					trx.commit(true);
-				} else {
-					trx.abort() << "createLoot failed for ai object.";
-				}
-			}
+
+//			if (System::random(100) >= 50){
+//				if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
+//					trx.commit(true);
+//				} else {
+//					trx.abort() << "createLoot failed for ai object.";
+//				}
+//			}
+
+
+//			int holochance = 350;
+//			if (System::random(holochance) >= holochance){
+//				lootManager->createLoot(trx, creatureInventory, "holocron_3", destructedObject);
+//			}
 
 //			ManagedReference<ZoneClientSession*> client = player->getClient();
 //

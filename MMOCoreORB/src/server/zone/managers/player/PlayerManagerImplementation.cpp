@@ -5910,13 +5910,12 @@ bool PlayerManagerImplementation::increaseOnlineCharCountIfPossible(ZoneClientSe
 	if (onlineCount >= onlineCharactersPerAccount)
 		return false;
 
-
-
 	String loggedInIp = client->getIPAddress();
 	int ipcharacters = 0;
 	int ipaccounts = 0;
 	//ZoneServer* server = ServerCore::getZoneServer();
 	//Reference<CharacterList*> characterList = account->getCharacterList();
+	//uint32 accountID = account->getAccountID();
 
 	SortedVector<uint32> loggedInAccounts = server->getPlayerManager()->getOnlineZoneClientMap()->getAccountsLoggedIn(loggedInIp);
 
@@ -5947,16 +5946,21 @@ bool PlayerManagerImplementation::increaseOnlineCharCountIfPossible(ZoneClientSe
 					}
 				}
 			}
-
 		}
-	}
 
-	if (ipaccounts >= 2) {//1 is 2 here lol
-		return false;
-	}
+//		if (ipaccounts >= 2 &! accountID == otherAccountID) {//1 is 2 here lol
+//			if (client != nullptr) {
+//				client->sendErrorMessage("mySWG","You are only allowed 2 online accounts per household.");
+//			}
+//			return nullptr;
+//		}
 
-	if (ipcharacters >= 4) {//2 means 2 here
-		return false;
+		if (ipcharacters >= 4) {//2 means 2 here
+//			if (client != nullptr) {
+//				client->sendErrorMessage("mySWG","You are only allowed 4 online characters per household.");
+//			}
+			return false;
+		}
 	}
 
 

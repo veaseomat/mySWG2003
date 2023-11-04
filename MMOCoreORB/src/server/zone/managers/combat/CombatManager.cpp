@@ -2038,7 +2038,6 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	if (defplayerLevel > 100) defplayerLevel = 100;
 	defplayerLevel /= 100;//max is now 1.0
 
-
 // PvP Damage Reduction
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature()){
 		damage *= 2.0 - (defplayerLevel * 1.5);//vanilla .25
@@ -2053,11 +2052,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 2.0 - (defender->getLevel() * .015);//was 1.0 - .5
+		damage *= 2.0 - (defender->getLevel() * .017);//was 1.0 - .5
 
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 1.5 - (attacker->getLevel() * .012);//was .5
+		damage *= 1.5 - (attacker->getLevel() * .01);//was .5
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
