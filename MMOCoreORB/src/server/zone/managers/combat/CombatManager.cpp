@@ -2052,11 +2052,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 2.0 - (defender->getLevel() * .017);//was 1.0 - .5
+		damage *= 2.0 - (defender->getLevel() * .018);//old was 2.0-1.7=.3 @lvl100
 
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 1.5 - (attacker->getLevel() * .01);//was .5
+		damage *= 1.5 - (attacker->getLevel() * .008);//.008 = .8 @ lvl100
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
