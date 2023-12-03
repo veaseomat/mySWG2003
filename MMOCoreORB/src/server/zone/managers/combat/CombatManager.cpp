@@ -2062,6 +2062,12 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
 		damage *= 1.0;
 
+//	int defAverageHAM = (defender->getMaxHAM(CreatureAttribute::HEALTH)
+//			+ defender->getMaxHAM(CreatureAttribute::ACTION)
+//			+ defender->getMaxHAM(CreatureAttribute::MIND)) / 3;
+//
+//	if (damage > defAverageHAM / 2) damage = defAverageHAM / 2;
+
 	if (damage < 1) damage = 1;
 
 	debug() << "damage to be dealt is " << damage;
@@ -3122,6 +3128,8 @@ int CombatManager::applyDamage(CreatureObject* attacker, WeaponObject* weapon, T
 
 		damage *= (1.f - (armorReduction / 100.f));
 	}
+
+	//putting max ddmg cap here did not do anything
 
 	defender->inflictDamage(attacker, 0, damage, true, xpType, true, true);
 

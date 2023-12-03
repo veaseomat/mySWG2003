@@ -214,19 +214,19 @@ Reference<Account*> AccountManager::validateAccountCredentials(LoginClient* clie
 			}
 		}
 
-		if (ipaccounts >= 2 && !(accountID == otherAccountID)) {//1 is 2 here lol
-			if (client != nullptr) {
-				client->sendErrorMessage("mySWG","You are only allowed 2 online accounts per household.");
-			}
-			return nullptr;
-		}
-
-//		if (ipcharacters >= 4) {//2 means 2 here
+//		if (ipaccounts >= 2 && !(accountID == otherAccountID)) {//1 is 2 here lol
 //			if (client != nullptr) {
-//				client->sendErrorMessage("mySWG","You are only allowed 4 online characters per household.");
+//				client->sendErrorMessage("mySWG","You are only allowed 2 online accounts per household.");
 //			}
 //			return nullptr;
 //		}
+
+		if (ipcharacters >= 4) {//2 means 2 here
+			if (client != nullptr) {
+				client->sendErrorMessage("mySWG","You are only allowed 4 online characters per household.");
+			}
+			return nullptr;
+		}
 	}
 
 
