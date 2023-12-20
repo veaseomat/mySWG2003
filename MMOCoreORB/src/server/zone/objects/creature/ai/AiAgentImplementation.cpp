@@ -149,6 +149,8 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	int newlvl = getTemplateLevel();
 
+	newlvl *= 1.5;
+
 	if (newlvl > 100) newlvl = 100;
 
 //	if (System::random(50) == 50) {//(elite)
@@ -309,7 +311,10 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	float lvlmult = ((float)newlvl / (float)100);
 
-	int lvlham = (3000 * lvlmult) - 25;//50 * (newlvl * .4) * 1.5;//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
+	int lvlham = (6000 * lvlmult) - 200;//50 * (newlvl * .4) * 1.5;//newlvl * (newlvl * .15) + 250; // newlvl * (5 + (newlvl / 5));
+
+	if (lvlham < 100)
+		lvlham = 100;
 
 //	if (legendarynpc == true) {
 //		lvlham *= 2.5;
@@ -1834,13 +1839,13 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
         return;
     }
 
-	float modifier = .25;//(float)latency/1000.f;
+	//float modifier = .25;//(float)latency/1000.f;
 
 //	if (isInCombat())
 //			modifier *= 0;
 
-	if (!isInCombat())
-			modifier = 2.0;
+//	if (!isInCombat())
+//			modifier = 2.0;
 
 //	if (isKneeling())
 //		modifier *= 1.25f;
@@ -1859,18 +1864,36 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 //	int aistam = getMaxHAM(CreatureAttribute::STAMINA);//80
 //	int aiwill = getMaxHAM(CreatureAttribute::WILLPOWER);//70r30
 
-	int healthTick = getHAM(CreatureAttribute::CONSTITUTION) / 250 * modifier;// /200 = ~12-17 tick at lvl 100
-	int actionTick = getHAM(CreatureAttribute::STAMINA) / 250 * modifier;
-	int mindTick = getHAM(CreatureAttribute::WILLPOWER) / 250 * modifier;
+//	int healthTick = getHAM(CreatureAttribute::CONSTITUTION) / 250 * modifier;// /200 = ~12-17 tick at lvl 100
+//	int actionTick = getHAM(CreatureAttribute::STAMINA) / 250 * modifier;
+//	int mindTick = getHAM(CreatureAttribute::WILLPOWER) / 250 * modifier;
+
+//	if (getLevel() < 10)
+//		return;
+//	if (healthTick < 1)
+//		return;
+//	if (actionTick < 1)
+//		return;
+//	if (mindTick < 1)
+//		return;
+
+	int healthTick = 1;
+	int actionTick = 1;
+	int mindTick = 1;
 
 	if (getLevel() < 10)
 		return;
-	if (healthTick < 1)
-		return;
-	if (actionTick < 1)
-		return;
-	if (mindTick < 1)
-		return;
+
+//	if (getLevel() >= 50) {
+//		healthTick = 2;
+//		actionTick = 2;
+//		mindTick = 2;
+//	}
+
+
+//	if (!isInCombat())
+//			modifier = 2.0;
+
 
 	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
 	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);

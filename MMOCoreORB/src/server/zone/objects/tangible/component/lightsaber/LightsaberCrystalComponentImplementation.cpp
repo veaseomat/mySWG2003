@@ -56,27 +56,56 @@ void LightsaberCrystalComponentImplementation::notifyLoadFromDatabase() {
 //		generateCrystalStats();
 //	}
 
+	if (color != 31 ) {
+		if (quality == POOR)
+			itemLevel = 1 + System::random(38); // 1-39
+		else if (quality == FAIR)
+			itemLevel = 40 + System::random(29); // 40-69
+		else if (quality == GOOD)
+			itemLevel = 70 + System::random(29); // 70-99
+		else if (quality == QUALITY)
+			itemLevel = 100 + System::random(39); // 100-139
+		else if (quality == SELECT)
+			itemLevel = 140 + System::random(79); // 140-219
+		else if (quality == PREMIUM)
+			itemLevel = 220 + System::random(109); // 220-329
+		else
+			itemLevel = 330 + System::random(20);
+
+		attackSpeed = 0.0;
+		minimumDamage = 0;
+		maximumDamage = 0;
+		sacHealth = 0;
+		sacAction = 0;
+		sacMind = 0;
+		woundChance = 0;
+		forceCost = 0;
+		floatForceCost = 0;
+
+		//generateCrystalStats();
+	}
+
 	TangibleObjectImplementation::notifyLoadFromDatabase();
 }
 
 void LightsaberCrystalComponentImplementation::generateCrystalStats() {
-//	ManagedReference<LootManager*> lootManager = getZoneServer()->getLootManager();
-//
-//	if (lootManager == nullptr)
-//		return;
-//
-//	const CrystalData* crystalData = lootManager->getCrystalData(getObjectTemplate()->getTemplateFileName());
-//
-//	if (crystalData == nullptr) {
-//		error("Unable to find crystal stats for " + getObjectTemplate()->getTemplateFileName());
-//		return;
-//	}
-//
-//	int minStat = crystalData->getMinHitpoints();
-//	int maxStat = crystalData->getMaxHitpoints();
-//
-//	setMaxCondition(getRandomizedStat(minStat, maxStat, itemLevel));
-//
+	ManagedReference<LootManager*> lootManager = getZoneServer()->getLootManager();
+
+	if (lootManager == nullptr)
+		return;
+
+	const CrystalData* crystalData = lootManager->getCrystalData(getObjectTemplate()->getTemplateFileName());
+
+	if (crystalData == nullptr) {
+		error("Unable to find crystal stats for " + getObjectTemplate()->getTemplateFileName());
+		return;
+	}
+
+	int minStat = crystalData->getMinHitpoints();
+	int maxStat = crystalData->getMaxHitpoints();
+
+	setMaxCondition(getRandomizedStat(minStat, maxStat, itemLevel));
+
 ////	if (color == 31) {
 //		minStat = crystalData->getMinDamage();
 //		maxStat = crystalData->getMaxDamage();
@@ -118,29 +147,29 @@ void LightsaberCrystalComponentImplementation::generateCrystalStats() {
 //
 //		attackSpeed = Math::getPrecision(getRandomizedStat(minFloatStat, maxFloatStat, itemLevel), 2);
 ////	}
-//
-//	quality = getCrystalQuality();
+
+	quality = getCrystalQuality();
 }
 
 void LightsaberCrystalComponentImplementation::validateCrystalStats() {//this one happens when tuning only
-//	ManagedReference<LootManager*> lootManager = getZoneServer()->getLootManager();
-//
-//	if (lootManager == nullptr)
-//		return;
-//
-//	const CrystalData* crystalData = lootManager->getCrystalData(getObjectTemplate()->getTemplateFileName());
-//
-//	if (crystalData == nullptr) {
-//		error("Unable to find crystal stats for " + getObjectTemplate()->getTemplateFileName());
-//		return;
-//	}
-//
-//	int minStat = crystalData->getMinHitpoints();
-//	int maxStat = crystalData->getMaxHitpoints();
-//
-//	if (getMaxCondition() > maxStat || getMaxCondition() < minStat)
-//		setMaxCondition(getRandomizedStat(minStat, maxStat, itemLevel));
-//
+	ManagedReference<LootManager*> lootManager = getZoneServer()->getLootManager();
+
+	if (lootManager == nullptr)
+		return;
+
+	const CrystalData* crystalData = lootManager->getCrystalData(getObjectTemplate()->getTemplateFileName());
+
+	if (crystalData == nullptr) {
+		error("Unable to find crystal stats for " + getObjectTemplate()->getTemplateFileName());
+		return;
+	}
+
+	int minStat = crystalData->getMinHitpoints();
+	int maxStat = crystalData->getMaxHitpoints();
+
+	if (getMaxCondition() > maxStat || getMaxCondition() < minStat)
+		setMaxCondition(getRandomizedStat(minStat, maxStat, itemLevel));
+
 ////	if (color == 31) {
 //		minStat = crystalData->getMinDamage();
 //		maxStat = crystalData->getMaxDamage();
@@ -292,14 +321,15 @@ void LightsaberCrystalComponentImplementation::fillAttributeList(AttributeListMe
 		StringBuffer str3;
 		str3 << "@jedi_spam:saber_color_" << getColor();
 		alm->insertAttribute("color", str3);
-		alm->insertAttribute("mindamage", minimumDamage);
-		alm->insertAttribute("maxdamage", maximumDamage);
-		alm->insertAttribute("wpn_attack_speed", Math::getPrecision(attackSpeed, 2));
+//		alm->insertAttribute("mindamage", minimumDamage);
+//		alm->insertAttribute("maxdamage", maximumDamage);
+//		alm->insertAttribute("wpn_attack_speed", Math::getPrecision(attackSpeed, 2));
 //		alm->insertAttribute("wpn_wound_chance", woundChance);
 //		alm->insertAttribute("wpn_attack_cost_health", sacHealth);
 //		alm->insertAttribute("wpn_attack_cost_action", sacAction);
 //		alm->insertAttribute("wpn_attack_cost_mind", sacMind);
-		alm->insertAttribute("forcecost", forceCost);
+
+		//alm->insertAttribute("forcecost", forceCost);
 
 //		if (ownerID == 0) {
 //			StringBuffer str;

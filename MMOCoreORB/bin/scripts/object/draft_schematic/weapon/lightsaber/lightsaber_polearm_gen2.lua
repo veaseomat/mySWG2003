@@ -52,7 +52,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_polearm_gen2 = object_draft_
    size = 1, 
 
    xpType = "jedi_general", 
-   xp = 20, 
+   xp = 0, 
 
    assemblySkill = "jedi_saber_assembly", 
    experimentingSkill = "jedi_saber_experimentation", 
@@ -63,12 +63,12 @@ object_draft_schematic_weapon_lightsaber_lightsaber_polearm_gen2 = object_draft_
    customizationStringNames = {},
    customizationDefaults = {},
 
-   ingredientTemplateNames = {"craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
-   ingredientTitleNames = {"emitter_shroud", "primary_crystal", "activator", "handgrip", "power_field_insulator", "energizers"},
-   ingredientSlotType = {0, 1, 0, 0, 0, 0},
-   resourceTypes = {"metal", "object/tangible/component/weapon/lightsaber/shared_lightsaber_module_force_crystal.iff", "metal_nonferrous", "petrochem_inert", "gas_inert_known", "metal_nonferrous"},
-   resourceQuantities = {55, 1, 66, 60, 82, 82},
-   contribution = {100, 100, 100, 100, 100, 100},
+   ingredientTemplateNames = {"craft_weapon_ingredients_n","craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n", "craft_weapon_ingredients_n"},
+   ingredientTitleNames = {"emitter_shroud", "primary_crystal", "activator", "handgrip", "focusing_crystals", "focusing_crystals_2", "power_field_insulator", "energizers"},
+   ingredientSlotType = {0, 1, 0, 0, 1, 1, 0, 0},
+   resourceTypes = {"metal", "object/tangible/component/weapon/lightsaber/shared_lightsaber_module_force_crystal.iff", "metal_nonferrous", "petrochem_inert","object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "object/tangible/component/weapon/lightsaber/shared_lightsaber_refined_crystal_pack.iff", "gas_inert_known", "metal_nonferrous"},
+   resourceQuantities = {30, 1, 42, 20, 1, 1, 42, 42},
+   contribution = {100, 100, 100, 100, 100, 100, 100, 100},
 
 
    targetTemplate = "object/weapon/melee/polearm/crafted_saber/sword_lightsaber_polearm_gen2.iff",

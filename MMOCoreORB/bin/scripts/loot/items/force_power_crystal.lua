@@ -4,15 +4,16 @@ force_power_crystal = {
 
 	minimumLevel = 0,
 	maximumLevel = -1,
-	customObjectName = "",
-	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_module_force_crystal.iff",
+	customObjectName = "Crystal",
+	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack.iff",
 	craftingValues = {
-		{"color",0,30,0},--actual color now managed in lootmanagerimp.cpp
-		{"mindamage", 5,150,0},
-		{"maxdamage", 10,225,0},
-		{"attackspeed",0.0,-0.6,1},
-		{"woundchance",0,0,0},
-		{"forcecost",0,-10,0},
+--		{"color",31,31,0},--actual color now managed in lootmanagerimp.cpp
+		{"mindamage", 2,40,0},
+		{"maxdamage", 4,60,0},
+--		{"attackspeed",0.0,-0.6,1},
+--		{"woundchance",0,0,0},
+--		{"forcecost",-4,-10,0},
+
 		--{"hitpoints",20,100,0},forcecost
 		--{"midrangemod",4,20,0},
 --		{"attackhealthcost",0,-9,0},
@@ -38,6 +39,6 @@ force_power_crystal = {
 --	},
 --	customizationStringNames = {},
 --	customizationValues = {}
-}
+--}
 
 addLootItemTemplate("force_power_crystal", force_power_crystal)

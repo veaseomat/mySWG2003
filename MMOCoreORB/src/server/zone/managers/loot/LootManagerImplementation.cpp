@@ -281,12 +281,14 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //	}
 
 	// this thing exponentially ruins the variance
-	float excMod = .70 + (System::random(30000) * .00001);
+//	float excMod = .70 + (System::random(30000) * .00001);
+//
+//	excMod *= System::random(level * 10000) * .000001;//random up to 5.0 for legendary
+//
+//	if(excMod < 1.0)
+//		excMod = 1.0;
 
-	excMod *= System::random(level * 10000) * .000001;//random up to 5.0 for legendary
-
-	if(excMod < 1.0)
-		excMod = 1.0;
+	float excMod = .7 + (System::random(3000) * .0001) + (System::random(level * .8) * .01) + (level * .2 * .01); //exc now 6.0max
 
 	const String& directTemplateObject = templateObject->getDirectObjectTemplate();
 
@@ -324,16 +326,6 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	setCustomObjectName(prototype, templateObject);
 
-//	if (prototype->isWeaponObject()) excMod = 1.1;
-//	if (prototype->isArmorObject()) excMod = 1.5;
-//	if (prototype->isComponent()) excMod = 2;
-//	if (prototype->isLightsaberCrystalObject()) excMod = 2.0 + (System::random(200) * .01);
-
-//	if (prototype->isWeaponObject()) level *= .1 + (System::random(40) * .1);//System::random(level);//(System::random(33) * .1);
-//	if (prototype->isArmorObject()) level *= 1.5;// + (System::random(20) * .1);//4;
-//	if (prototype->isComponent()) level *= 2;
-//	if (prototype->isLightsaberCrystalObject()) level *= 2;
-
 	int leggy = 0;
 
 //	ManagedReference<ZoneClientSession*> client = getClient();
@@ -344,26 +336,29 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //
 //	}
 
-//	if (System::random(25) >= 25 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// && prototype->isArmorObject() || prototype->isWeaponObject() || !prototype->isLightsaberCrystalObject()) {//probably needs to be an elseif to avoid double exceptional/legendary
-//		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
-//		prototype->setCustomObjectName(newName, false);
-//
+	if (excMod >= 5.4 && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {// System::random(25) >= 25
+
+		UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
+		prototype->setCustomObjectName(newName, false);
+
 //		if (prototype->isWeaponObject()) {
 //			excMod *= 4;
 //		}
 //		else {
 //			excMod *= 5;
 //		}
-//
-//		leggy = 1;
-//
-//		prototype->addMagicBit(false);
-//
-//		//craftingValues->setCurrentValue("noTrade", 1);
-//		//craftingValues->addExperimentalProperty("notrade", "notrade", 1, 1, 0, false, ValuesMap::LINEARCOMBINE);
-//
-//		//legendaryLooted.increment();
-//	}
+
+		leggy = 1;
+
+		prototype->addMagicBit(false);
+
+
+
+		//craftingValues->setCurrentValue("noTrade", 1);
+		//craftingValues->addExperimentalProperty("notrade", "notrade", 1, 1, 0, false, ValuesMap::LINEARCOMBINE);
+
+		//legendaryLooted.increment();
+	}
 
 //	CreatureTemplate* creoTempl = creatureTemplateManager->getTemplate(templateCRC);
 //
@@ -378,28 +373,38 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	//|| aicre->getElite() >= 1
 
-//	if (leggy == 0 && (System::random(15) >= 15) && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
-//		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
-//		prototype->setCustomObjectName(newName, false);
-//
+	if (leggy == 0 && (excMod >= 4.8) && (prototype->isComponent() || prototype->isLightsaberCrystalObject() || prototype->isArmorObject() || prototype->isWeaponObject())) {//})  && !prototype->isLightsaberCrystalObject()) {
+		UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
+		prototype->setCustomObjectName(newName, false);
+
 //		if (prototype->isWeaponObject()) {
 //			excMod *= 2;
 //		}
 //		else {
 //			excMod *= 2.5;
 //		}
-//
-//		prototype->addMagicBit(false);
-//
-//		//exceptionalLooted.increment();
-//	}
 
-//	if (prototype->isLightsaberCrystalObject()) {
-//		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
-//
-//		if (crystal != nullptr)
-//			crystal->setItemLevel(uncappedLevel);
-//	}
+		prototype->addMagicBit(false);
+
+		//exceptionalLooted.increment();
+	}
+
+	if (prototype->isWeaponObject()) excMod /= 1.2;//
+	if (prototype->isArmorObject()) excMod /= 1.5;//
+	if (prototype->isComponent()) excMod *= 1.1;
+//	if (prototype->isLightsaberCrystalObject()) excMod = 2.0 + (System::random(200) * .01);
+
+//	if (prototype->isWeaponObject()) level *= .1 + (System::random(40) * .1);//System::random(level);//(System::random(33) * .1);
+//	if (prototype->isArmorObject()) level *= 1.5;// + (System::random(20) * .1);//4;
+//	if (prototype->isComponent()) level *= 2;
+//	if (prototype->isLightsaberCrystalObject()) level *= 2;
+
+	if (prototype->isLightsaberCrystalObject()) {
+		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
+
+		if (crystal != nullptr)
+			crystal->setItemLevel(level);//uncappedLevel);
+	}
 
 	String subtitle;
 	bool yellow = false;

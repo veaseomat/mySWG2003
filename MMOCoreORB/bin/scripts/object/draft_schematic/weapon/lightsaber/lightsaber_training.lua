@@ -52,7 +52,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_training = object_draft_sche
    size = 1, 
 
    xpType = "jedi_general", 
-   xp = 10, 
+   xp = 0, 
 
    assemblySkill = "jedi_saber_assembly", 
    experimentingSkill = "jedi_saber_experimentation", 

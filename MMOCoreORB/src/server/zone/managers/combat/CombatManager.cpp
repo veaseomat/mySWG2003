@@ -1898,6 +1898,8 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= 1.f / (1.f + ((float)forceDefense / 100.f));
 	}
 
+	int damagetype = weapon->getDamageType();
+
 	ZoneServer* server = attacker->getZoneServer();
 	PlayerManager* pManager = server->getPlayerManager();
 	float  playerLevel = pManager->calculatePlayerLevel(attacker) * 4;
@@ -1917,7 +1919,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //			if (weapon->isMeleeWeapon())
 //			damage *= 1.25;
 			if (weapon->isUnarmedWeapon())
-				damage *= .5 + (playerLevel * 1.0);
+				damage *= .5 + (playerLevel * .5);
 			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
 				damage *= 1.0 + (playerLevel * .7);
 			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
@@ -1946,13 +1948,14 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 //			damage *= .9;
 //			if (weapon->isJediWeapon())
 //			damage *= .3;//
+
+			if (weapon->isPistolWeapon() && damagetype == 8)
+				damage *= .5;//this to nerf geo blaster
 		}
 
 		if (data.isForceAttack()) {
 			damage *= 5;
 		}
-
-		int damagetype = weapon->getDamageType();
 
 		//using this to unbalance the NPCs
 		if (attacker->isAiAgent() && !attacker->isCreature()) {
@@ -2036,10 +2039,11 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	float  defplayerLevel = pManager->calculatePlayerLevel(defender) * 4;
 	if (defplayerLevel > 100) defplayerLevel = 100;
-	defplayerLevel /= 100;//max is now 1.0
+
 
 // PvP Damage Reduction
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature()){
+		defplayerLevel /= 100;//max is now 1.0
 		damage *= 2.0 - (defplayerLevel * 1.5);//vanilla .25
 
 		if (weapon->isJediWeapon())
@@ -2052,15 +2056,15 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 // PVE
 	if (attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 2.0 - (defender->getLevel() * .018);//old was 2.0-1.7=.3 @lvl100
+		damage *= 2.0 - (defender->getLevel() * .015);//old was 2.0-1.7=.3 @lvl100
 
 // EVP
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())
-		damage *= 1.5 - (attacker->getLevel() * .008);//.008 = .8 @ lvl100
+		damage *= 1.3 - (defplayerLevel * .008);//.008 = .8 @ lvl100
 
 // EVE
 	if (!attacker->isPlayerCreature() && !defender->isPlayerCreature())
-		damage *= 1.0;
+		damage *= 1.0 - (defender->getLevel() * .005);
 
 //	int defAverageHAM = (defender->getMaxHAM(CreatureAttribute::HEALTH)
 //			+ defender->getMaxHAM(CreatureAttribute::ACTION)
