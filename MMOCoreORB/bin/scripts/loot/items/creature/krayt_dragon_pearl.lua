@@ -4,16 +4,15 @@ krayt_dragon_pearl = {
 
 	minimumLevel = 0,
 	maximumLevel = -1,
-	customObjectName = "Krayt Dragon Pearl",
-	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack.iff",
+	customObjectName = "A Krayt Dragon Pearl",
+	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_module_force_crystal.iff",
 	craftingValues = {
---		{"color",31,31,0},--actual color now managed in lootmanagerimp.cpp
-		{"mindamage", 4,40,0},
-		{"maxdamage", 8,60,0},
---		{"attackspeed",0.0,-0.6,1},
---		{"woundchance",0,0,0},
---		{"forcecost",-4,-10,0},
-
+		{"color",0,30,0},--actual color now managed in lootmanagerimp.cpp
+		{"mindamage", 20,150,0},
+		{"maxdamage", 40,225,0},
+		{"attackspeed",0.0,-0.6,1},
+		{"woundchance",0,0,0},
+		{"forcecost",-4,-10,0},
 		--{"hitpoints",20,100,0},forcecost
 		--{"midrangemod",4,20,0},
 --		{"attackhealthcost",0,-9,0},

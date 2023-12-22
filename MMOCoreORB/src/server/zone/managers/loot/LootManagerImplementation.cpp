@@ -399,12 +399,12 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //	if (prototype->isComponent()) level *= 2;
 //	if (prototype->isLightsaberCrystalObject()) level *= 2;
 
-	if (prototype->isLightsaberCrystalObject()) {
-		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
-
-		if (crystal != nullptr)
-			crystal->setItemLevel(level);//uncappedLevel);
-	}
+//	if (prototype->isLightsaberCrystalObject()) {
+//		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
+//
+//		if (crystal != nullptr)
+//			crystal->setItemLevel(level);//uncappedLevel);
+//	}
 
 	String subtitle;
 	bool yellow = false;

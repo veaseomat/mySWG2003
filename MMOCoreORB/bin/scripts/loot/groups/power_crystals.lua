@@ -5,8 +5,8 @@ power_crystals = {
 	lootItems = {
 --		{groupTemplate = "junk", weight = 5000000},
 --		{itemTemplate = "saber_rcp", weight = 50000},
---		{itemTemplate = "force_color_crystal", weight = 10000000},
-		{itemTemplate = "force_power_crystal", weight = 10000000}
+		{itemTemplate = "force_color_crystal", weight = 10000000},
+--		{itemTemplate = "force_power_crystal", weight = 10000000}
 	}
 }
 

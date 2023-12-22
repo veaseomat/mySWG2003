@@ -45,7 +45,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_refined_crystal_pack = objec
 
    templateType = DRAFTSCHEMATIC,
 
-   customObjectName = "A Refined Crystal Pack",
+   customObjectName = "A Forged Lightsaber Crystal",
 
    craftingToolTab = 2048, -- (See DraftSchematicObjectTemplate.h)
    complexity = 18, 
@@ -71,7 +71,7 @@ object_draft_schematic_weapon_lightsaber_lightsaber_refined_crystal_pack = objec
    contribution = {100, 100, 100},
 
 
-   targetTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack.iff",
+   targetTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_module_force_crystal.iff",
 
    additionalTemplates = {
              }
