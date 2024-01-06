@@ -6,7 +6,8 @@ krayt_tissue_uncommon = {
 	maximumLevel = 0,
 	lootItems = {
 		{itemTemplate = "krayt_dragon_tissue_common", weight = 2500000},
-		{itemTemplate = "krayt_dragon_tissue_uncommon", weight = 7500000}
+		{itemTemplate = "krayt_dragon_tissue_uncommon", weight = 5000000},
+		{itemTemplate = "krayt_dragon_tissue_rare", weight = 2500000},
 	}
 }
 

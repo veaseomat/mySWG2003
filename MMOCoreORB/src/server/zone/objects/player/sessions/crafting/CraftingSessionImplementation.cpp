@@ -1235,17 +1235,18 @@ void CraftingSessionImplementation::createPrototype(int clientCounter, bool crea
 
 			// This is for practicing
 			startCreationTasks(0, true);
-			xp = round(xp * 1.05f);
-
+			xp = round(xp * 1.25f);
 
 		}
+
+		xp *= 1.5;
 
 		if (xpType == "jedi_general") {
 			xp *= .2;
 		}
-		if (xpType != "jedi_general") {
-			xp *= 1.5;
-		}
+//		if (xpType != "jedi_general") {
+//			xp *= 1.5;
+//		}
 
 		Reference<PlayerManager*> playerManager = crafter->getZoneServer()->getPlayerManager();
 		playerManager->awardExperience(crafter, xpType, xp, true);
