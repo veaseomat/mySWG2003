@@ -1496,6 +1496,8 @@ class CreatureObject extends TangibleObject {
 
 	@read
 	public int getBaseHAM(int idx) {
+		int oldbase = baseHAM.get(idx);
+		int newbase = oldbase * 2; //works but shows as buff and stat migrate breaks it
 		return baseHAM.get(idx);
 	}
 
@@ -1523,6 +1525,9 @@ class CreatureObject extends TangibleObject {
 
 	@read
 	public int getMaxHAM(int idx) {
+		int oldmax = maxHamList.get(idx);
+		int newmax = oldmax * 2; //
+
 		return maxHamList.get(idx);
 	}
 

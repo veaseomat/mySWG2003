@@ -6,7 +6,10 @@ death_watch_bunker_lieutenants = {
 	maximumLevel = 0,
 	lootItems = {
 		{itemTemplate = "de10_pistol_barrel", weight = 5000000},
-		{itemTemplate = "mandalorian_wine_schematic", weight = 5000000}
+		{itemTemplate = "mandalorian_wine_schematic", weight = 4500000},
+		{groupTemplate = "jetpack_parts", weight = 500000}
+		
+		
 	}
 }
 
