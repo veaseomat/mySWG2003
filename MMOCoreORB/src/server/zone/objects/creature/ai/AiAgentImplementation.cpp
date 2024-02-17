@@ -1835,7 +1835,7 @@ void AiAgentImplementation::activateHAMRegeneration(int latency) {
 //	if (getLevel() < 10)
 //		return;
 
-    if (isIncapacitated() || isDead()) {
+    if (isIncapacitated() || isDead() || isInCombat()) {
         return;
     }
 

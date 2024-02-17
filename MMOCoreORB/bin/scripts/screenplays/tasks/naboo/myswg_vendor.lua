@@ -55,7 +55,7 @@ function myswg_vendor:start()
     local pWeaponsmith2 = spawnMobile("corellia", "myswg_vendor", 1, -1453.02,10.00,-3211.87, 35, 0 )--pc  
     local pWeaponsmith5 = spawnMobile("tatooine", "myswg_vendor", 1, 5767.33,20.00,4408.53, 35, 0 )--pc
     local pWeaponsmith2 = spawnMobile("corellia", "myswg_vendor", 1, 3184.02,10.00,-6778.87, 35, 0 )--pc  
-    
+    local pWeaponsmith4 = spawnMobile("dathomir", "junk_dealer", 1, -4337, 0.0, 54, 35, 0 )--pc
     
     --junk dealers
     local pWeaponsmith4 = spawnMobile("endor", "junk_dealer", 1, -4679, 12.0, 4334, 35, 0 )--dwb
@@ -1028,56 +1028,64 @@ function myswg_vendor_convo_handler:getNextConversationScreen(conversationTempla
                     createLoot(pInventory, "wearables_all", 300, false)
                     
 --DOCTOR
-
---                elseif (optionLink == "buff1" and credits < 5000) then
---                    -- Bail if the player doesn’t have enough cash on hand.  
---                    -- Plays a chat box message from the NPC as well as a system message.
---                      nextConversationScreen = conversation:getScreen("insufficient_funds")
---                      creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "buff1") then
+                    
+                elseif (optionLink == "buff1" and credits < 10000) then
+                    -- Bail if the player doesn’t have enough cash on hand.  
+                    -- Plays a chat box message from the NPC as well as a system message.
+                      nextConversationScreen = conversation:getScreen("insufficient_funds")
+                      creature:sendSystemMessage("You have insufficient funds") 
+                elseif (optionLink == "buff1" and credits >= 10000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    --creature:subtractCashCredits(5000)
+                    creature:subtractCashCredits(10000)
                    
 										CreatureObject(conversingPlayer):enhanceCharacter()
 										--buffTerminalMenuComponent:logUsage(conversingPlayer, "enhanceCharacter")
                     --giveItem(pInventory, "object/tangible/deed/vehicle_deed/speederbike_deed.iff", -1)
                     --createLoot(pInventory, "junk", 1, false)
                     
-                elseif (optionLink == "buff2" and credits < 5000) then
+                elseif (optionLink == "buff2" and credits < 20000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "buff2" and credits >= 5000) then
+                elseif (optionLink == "buff2" and credits >= 20000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    creature:subtractCashCredits(5000)
+                    creature:subtractCashCredits(20000)
 
 										CreatureObject(conversingPlayer):enhanceCharacterDocBuff()
 
-                elseif (optionLink == "buff3" and credits < 10000) then
+                elseif (optionLink == "buff3" and credits < 30000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "buff3" and credits >= 10000) then
+                elseif (optionLink == "buff3" and credits >= 30000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    creature:subtractCashCredits(10000)
+                    creature:subtractCashCredits(30000)
 
 										CreatureObject(conversingPlayer):enhanceCharacterDocBuffTHREE()
 
-                elseif (optionLink == "buff4") then
-                    -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-										CreatureObject(conversingPlayer):enhanceCharacterEntBuffONE()
-
-                elseif (optionLink == "buff5" and credits < 5000) then
+                elseif (optionLink == "buff4" and credits < 10000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "buff5" and credits >= 5000) then
+                elseif (optionLink == "buff4" and credits >= 10000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
                     
-	                  creature:subtractCashCredits(5000)
+	                  creature:subtractCashCredits(10000)
+	                  
+										CreatureObject(conversingPlayer):enhanceCharacterEntBuffONE()
+
+                elseif (optionLink == "buff5" and credits < 20000) then
+                    -- Bail if the player doesn’t have enough cash on hand.  
+                    -- Plays a chat box message from the NPC as well as a system message.
+                      nextConversationScreen = conversation:getScreen("insufficient_funds")
+                      creature:sendSystemMessage("You have insufficient funds") 
+                elseif (optionLink == "buff5" and credits >= 20000) then
+                    -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
+                    
+	                  creature:subtractCashCredits(20000)
 
 										CreatureObject(conversingPlayer):enhanceCharacterEntBuffTWO()
 

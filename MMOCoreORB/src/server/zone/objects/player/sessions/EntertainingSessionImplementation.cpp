@@ -938,10 +938,16 @@ void EntertainingSessionImplementation::activateEntertainerBuff(CreatureObject* 
 //			buffStrength /= 1000;
 //		}
 
+		if (buffStrength > 5.0) {
+			float bonus = buffStrength - 5.0;
+			bonus *= .1;
+			buffStrength = 5.0 + bonus;//everything over 100 only counts as 10%
+		}
+
 		if(buffStrength == 0)
 			return;
 
-		int buffDuration = 8 * 60 * 60;//getEntertainerBuffDuration(creature, performanceType);
+		int buffDuration = buffStrength * 2 * 60 * 60;//getEntertainerBuffDuration(creature, performanceType);
 
 		ManagedReference<PerformanceBuff*> oldBuff = nullptr;
 //		switch (performanceType){

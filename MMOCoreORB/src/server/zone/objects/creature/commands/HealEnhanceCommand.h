@@ -435,7 +435,31 @@ public:
 
 		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
 
-		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, enhancePack->getDuration(), enhancePack->getAbsorption());
+		uint32 amountEnhanced = 0; //playerManager->healEnhance(enhancer, patient, attribute, buffPower, enhancePack->getDuration(), enhancePack->getAbsorption());
+
+		if (attribute < 6 ) {
+			float effmult = enhancePack->getEffectiveness() / 1000;
+			float modSkill = (enhancer->getSkillMod("healing_wound_treatment") / 100) * .1;// doing /1000 wasnt working here
+
+			float newpower = effmult + modSkill;
+
+			int buffPowerhealth = patient->getBaseHAM(CreatureAttribute::HEALTH) * newpower;
+			int buffPowerstr = patient->getBaseHAM(CreatureAttribute::STRENGTH) * newpower;
+			int buffPowercon = patient->getBaseHAM(CreatureAttribute::CONSTITUTION) * newpower;
+			int buffPoweraction = patient->getBaseHAM(CreatureAttribute::ACTION) * newpower;
+			int buffPowerquick = patient->getBaseHAM(CreatureAttribute::QUICKNESS) * newpower;
+			int buffPowerstam = patient->getBaseHAM(CreatureAttribute::STAMINA) * newpower;
+
+			playerManager->healEnhance(enhancer, patient, BuffAttribute::HEALTH, buffPowerhealth, enhancePack->getDuration(), enhancePack->getAbsorption());
+			playerManager->healEnhance(enhancer, patient, BuffAttribute::STRENGTH, buffPowerstr, enhancePack->getDuration(), enhancePack->getAbsorption());
+			playerManager->healEnhance(enhancer, patient, BuffAttribute::CONSTITUTION, buffPowercon, enhancePack->getDuration(), enhancePack->getAbsorption());
+			playerManager->healEnhance(enhancer, patient, BuffAttribute::ACTION, buffPoweraction, enhancePack->getDuration(), enhancePack->getAbsorption());
+			playerManager->healEnhance(enhancer, patient, BuffAttribute::QUICKNESS, buffPowerquick, enhancePack->getDuration(), enhancePack->getAbsorption());
+			playerManager->healEnhance(enhancer, patient, BuffAttribute::STAMINA, buffPowerstam, enhancePack->getDuration(), enhancePack->getAbsorption());
+		}
+		else {
+			amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, enhancePack->getDuration(), enhancePack->getAbsorption());
+		}
 
 		if (creature->isPlayerCreature() && targetCreature->isPlayerCreature()) {
 			playerManager->sendBattleFatigueMessage(creature, targetCreature);

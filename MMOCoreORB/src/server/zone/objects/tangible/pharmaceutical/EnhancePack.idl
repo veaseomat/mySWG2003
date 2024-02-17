@@ -48,21 +48,8 @@ class EnhancePack extends PharmaceuticalObject {
 	 */
 	@local
 	@dirty
-	public void fillAttributeList(AttributeListMessage msg, CreatureObject object) {
-		super.fillAttributeList(msg, object);
+	public native void fillAttributeList(AttributeListMessage msg, CreatureObject object);
 
-		string attributeName = BuffAttribute.getName(attribute);
-		string enhace = "examine_enhance_" + attributeName;
-		string durationStr = "examine_duration_" + attributeName;
-
-		msg.insertAttribute(enhace, Math.getPrecision(effectiveness, 0));
-		msg.insertAttribute(durationStr, Math.getPrecision(duration, 0));
-
-		msg.insertAttribute("healing_ability", super.medicineUseRequired);
-
-		if (absorption > 0)
-			msg.insertAttribute("absorption", Math.getPrecision(absorption, 0));
-	}
 
 	/**
 	 * Reads and sets the template data from a SharedTangibleObjectTemplate LuaObject

@@ -1038,6 +1038,7 @@ void PlayerCreationManager::addRacialMods(CreatureObject* creature,
 		creature->setBaseHAM(i, mod, false);
 		creature->setHAM(i, mod, false);
 		creature->setMaxHAM(i, mod, false);
+		//change also in migratestatssession.idl && playerojectimplementation.cpp
 	}
 
 	if (startingSkills != nullptr) {

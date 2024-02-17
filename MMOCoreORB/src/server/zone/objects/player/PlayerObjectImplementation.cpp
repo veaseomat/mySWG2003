@@ -1388,6 +1388,14 @@ void PlayerObjectImplementation::notifyOnline() {
 	if (getForcePowerMax() > 0 && getForcePower() < getForcePowerMax())
 		activateForcePowerRegen();
 
+//	for (int i = 0; i < 9; ++i) {
+//		int mod = playerCreature->getBaseHAM(i);
+//		//creature->setBaseHAM(i, mod, false);
+//		//playerCreature->setHAM(i, mod * 5, false);
+//		playerCreature->setMaxHAM(i, mod * 5, false);
+//		//change also in migratestatssession.idl && playercreationmanager.cpp
+//	}
+
 	schedulePvpTefRemovalTask();
 
 	MissionManager* missionManager = zoneServer->getMissionManager();
@@ -2043,6 +2051,9 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 
 	if (creature == nullptr)
 		return;
+
+//	if (creature->isInCombat()) //wasnt working here
+//		return;
 
 	float regen = (float)creature->getSkillMod("jedi_force_power_regen");//reduce by half inf skill points
 

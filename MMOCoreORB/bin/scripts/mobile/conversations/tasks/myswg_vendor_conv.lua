@@ -226,11 +226,12 @@ newbuff1 = ConvoScreen:new {
     customDialogText = "I sell buffs!",
     stopConversation = "false",
     options = { 
-        {"100%/8hr Mind Buffs - FREE", "buff4"},
-        {"200%/8hr Mind Buffs - 5k", "buff5"},
-        {"1000/8hr Health/Action Buffs - FREE", "buff1"},
-        {"1500/8hr Health/Action Buffs - 5k", "buff2"},
-        {"2000/8hr Health/Action Buffs - 10k", "buff3"},
+
+        {"100% Doctor Buffs 4hr - 10k", "buff1"},
+        {"200% Doctor Buffs 5hr - 20k", "buff2"},
+        {"300% Doctor Buffs 6hr - 30k", "buff3"},
+        {"200% Entertainer Buffs 4hr - 10k", "buff4"},
+        {"300% Entertainer Buffs 6hr - 20k", "buff5"},
  
 --        {"125%/3hr Mind Buffs - 5k", "buff5"},
 --        {"StimPack A - 500", "option50"},

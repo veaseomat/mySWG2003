@@ -1013,6 +1013,8 @@ void CreatureObjectImplementation::setHAM(int type, int value,
 
 	debug() << "setting ham type " << type << " to " << value;
 
+	//value *= 2;
+
 	if (notifyClient) {
 		CreatureObjectDeltaMessage6* msg = new CreatureObjectDeltaMessage6(
 				asCreatureObject());
@@ -1170,6 +1172,8 @@ void CreatureObjectImplementation::setBaseHAM(int type, int value,
 		return;
 
 	debug() << "setting baseham type " << type << " to " << value;
+
+//	value *= 5;  //affects stat mgration, cant assign all the points
 
 	if (notifyClient) {
 		CreatureObjectDeltaMessage1* msg =
@@ -2781,7 +2785,7 @@ void CreatureObjectImplementation::notifySelfPositionUpdate() {
 void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 //	return;
 
-	if (isIncapacitated() || isDead())
+	if (isIncapacitated() || isDead() || isInCombat())
 		return;
 
 	ManagedReference<WeaponObject*> pweapon = asCreatureObject()->getWeapon();
@@ -2796,8 +2800,8 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 
 	float modifier = 2.0;//(float)latency/1000.f;
 
-	if (isInCombat())
-			modifier = .25;
+//	if (isInCombat())
+//			modifier = .25;
 
 //	if (!isInCombat())
 //			modifier *= 2;
