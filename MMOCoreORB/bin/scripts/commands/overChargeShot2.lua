@@ -44,7 +44,7 @@
 OverChargeShot2Command = {
 	name = "overchargeshot2",
 
-	damageMultiplier = 3.0,
+	damageMultiplier = 3.75,
 	speedMultiplier = 2,
 	healthCostMultiplier = 1,
 	actionCostMultiplier = 1,
@@ -56,7 +56,7 @@ OverChargeShot2Command = {
 
 	combatSpam = "overchargeshot",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = RANGEDWEAPON,
 
 	range = -1
 

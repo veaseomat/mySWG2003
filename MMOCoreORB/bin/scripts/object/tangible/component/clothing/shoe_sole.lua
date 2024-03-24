@@ -42,7 +42,7 @@
 
 
 object_tangible_component_clothing_shoe_sole = object_tangible_component_clothing_shared_shoe_sole:new {
-	useCount = 25,
+
 
 	numberExperimentalProperties = {1, 1, 1},
 	experimentalProperties = {"XX", "XX", "XX"},

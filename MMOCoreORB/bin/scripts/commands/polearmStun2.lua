@@ -44,7 +44,7 @@
 PolearmStun2Command = {
         name = "polearmstun2",
 
-	damageMultiplier = 2.5,
+	damageMultiplier = 2.0,
 	speedMultiplier = 2,
 	healthCostMultiplier = 1.5,
 	actionCostMultiplier = 1.0,
@@ -70,7 +70,7 @@ PolearmStun2Command = {
 
 	combatSpam = "breathstealer",
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = POLEARMWEAPON,
 
 	range = -1
 }

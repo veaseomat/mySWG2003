@@ -64,14 +64,14 @@ Saber2hSweep2Command = {
 	  )
 	},
 
-	animation = "lower_posture_2hmelee_3",
+	animation = "combo_4b", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber2hsweep2",
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = TWOHANDJEDIWEAPON,
 
 	range = -1
 }

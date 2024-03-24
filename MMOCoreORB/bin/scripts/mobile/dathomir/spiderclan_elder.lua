@@ -5,7 +5,6 @@ spiderclan_elder = Creature:new {
 	socialGroup = "spider_nightsister",
 	faction = "spider_nightsister",
 	level = 277,
-	elite = 1.5,
 	chanceHit = 27.25,
 	damageMin = 1520,
 	damageMax = 2750,
@@ -32,7 +31,7 @@ spiderclan_elder = Creature:new {
 	lootGroups = {
 		{
 			groups = {
-				{group = "junk", chance = 500000},
+				{group = "junk", chance = 1500000},
 				{group = "power_crystals", chance = 500000},
 				{group = "color_crystals", chance = 500000},
 				{group = "armor_attachments", chance = 600000},
@@ -41,8 +40,7 @@ spiderclan_elder = Creature:new {
 				{group = "pistols", chance = 1000000},
 				{group = "rifles", chance = 1000000},
 				{group = "carbines", chance = 1000000},
-				{group = "wearables_scarce", chance = 500000},
-				{group = "holocron_3", chance = 1000000}
+				{group = "wearables_scarce", chance = 500000}
 			}
 		}
 	},

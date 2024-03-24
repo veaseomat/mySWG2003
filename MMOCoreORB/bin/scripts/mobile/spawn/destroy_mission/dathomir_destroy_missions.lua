@@ -157,19 +157,7 @@ dathomir_destroy_missions = {
 			minDifficulty = 87,
 			maxDifficulty = 91,
 			size = 35,
-		},
-		{
-			lairTemplateName = "dathomir_nightsister_elder_enclave_neutral_large_theater2",
-			minDifficulty = 95,
-			maxDifficulty = 99,
-			size = 35,
-		},
-		{
-			lairTemplateName = "dathomir_nightsister_elder_enclave_neutral_large_theater2",
-			minDifficulty = 95,
-			maxDifficulty = 99,
-			size = 35,
-		},
+		}
 	}
 }
 

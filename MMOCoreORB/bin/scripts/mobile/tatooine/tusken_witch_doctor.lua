@@ -1,16 +1,16 @@
 tusken_witch_doctor = Creature:new {
-	objectName = "@mob/creature_names:tusken_chief",
+	objectName = "@mob/creature_names:tusken_witch_doctor",
 	socialGroup = "tusken_raider",
 	faction = "tusken_raider",
-	level = 43,
-	chanceHit = 0.46,
-	damageMin = 365,
-	damageMax = 440,
-	baseXp = 4279,
-	baseHAM = 9600,
-	baseHAMmax = 11800,
-	armor = 0,
-	resists = {45,30,30,60,-1,40,-1,-1,-1},
+	level = 202,
+	chanceHit = 16,
+	damageMin = 1145,
+	damageMax = 2000,
+	baseXp = 19201,
+	baseHAM = 160000,
+	baseHAMmax = 195000,
+	armor = 3,
+	resists = {65,95,35,100,0,30,45,80,-1},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -21,7 +21,7 @@ tusken_witch_doctor = Creature:new {
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
-	creatureBitmask = PACK + KILLER + STALKER,
+	creatureBitmask = PACK + KILLER + HEALER,
 	optionsBitmask = AIENABLED,
 	diet = HERBIVORE,
 
@@ -30,9 +30,8 @@ tusken_witch_doctor = Creature:new {
 		{
 			groups = {
 				{group = "junk", chance = 1500000},
-				{group = "tusken_common", chance = 3500000},
-				{group = "wearables_common", chance = 1000000},
-				{group = "wearables_uncommon", chance = 500000},
+				{group = "tusken_common", chance = 3000000},
+				{group = "wearables_scarce", chance = 2000000},
 				{group = "bone_armor", chance = 750000},
 				{group = "chitin_armor", chance = 750000},
 				{group = "armor_attachments", chance = 500000},
@@ -44,7 +43,7 @@ tusken_witch_doctor = Creature:new {
 	},
 	weapons = {"tusken_weapons"},
 	conversationTemplate = "",
-	attacks = merge(marksmanmaster,brawlermaster,fencermaster,riflemanmaster)
+	attacks = merge(brawlernovice,marksmannovice,fencermaster,riflemanmaster)
 }
 
 CreatureTemplates:addCreatureTemplate(tusken_witch_doctor, "tusken_witch_doctor")

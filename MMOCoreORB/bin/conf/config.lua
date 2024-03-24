@@ -58,7 +58,7 @@ Core3 = {
 	DBUser = "swgemu",
 	DBPass = "123456",
 	DBInstances = 2,
-	DBSecret = "1h4t3th3FUCK!N^NG3", -- Change this! This value should be unique and of reasonable length.
+	DBSecret = "swgemus3cr37!", -- Change this! This value should be unique and of reasonable length.
 
 	LoginPort = 44453,
 	LoginProcessingThreads = 1,
@@ -144,7 +144,6 @@ Core3 = {
 
 	-- Each tre file (order is important!)
 	TreFiles = {
-	--	"pre9.tre",
 		"default_patch.tre",
 		"patch_sku1_14_00.tre",
 		"patch_14_00.tre",

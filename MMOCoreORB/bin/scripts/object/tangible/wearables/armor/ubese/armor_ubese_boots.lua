@@ -84,9 +84,7 @@ object_tangible_wearables_armor_ubese_armor_ubese_boots = object_tangible_wearab
 				"object/mobile/vendor/zabrak_male.iff" },
 
 	-- Damage types in WeaponObject
-	vulnerability = STUN + LIGHTSABER,
-		
-	specialResists = KINETIC,
+	vulnerability = HEAT + COLD + STUN + LIGHTSABER,
 
 	-- These are default Blue Frog stats
 	healthEncumbrance = 1,
@@ -96,14 +94,14 @@ object_tangible_wearables_armor_ubese_armor_ubese_boots = object_tangible_wearab
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
 
-	kinetic = 80,
-	energy = 35,
-	electricity = 35,
-	stun = 0,
-	blast = 35,
-	heat = 0,
-	cold = 0,
-	acid = 35,
+	kinetic = 15,
+	energy = 15,
+	electricity = 15,
+	stun = 15,
+	blast = 15,
+	heat = 15,
+	cold = 15,
+	acid = 15,
 	lightSaber = 0,
 
 	numberExperimentalProperties = {1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 2, 1},

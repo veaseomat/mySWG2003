@@ -19,7 +19,7 @@ class FactionManager : public Singleton<FactionManager>, public Logger, public O
 public:
 	FactionManager();
 
-	static const int TEFTIMER = 1 * 60 * 1000;//300000;//tef timers 1000 = 1 sec
+	static const int TEFTIMER = 300000;
 
 	/**
 	 * Loads faction configuration information from the faction manager lua file: managers/faction_manager.lua
@@ -61,7 +61,7 @@ public:
 	int getFactionPointsCap(int rank);
 
 	bool isHighestRank(int rank) {
-		return rank >= factionRanks.getCount() - 1 || rank >= 21;
+		return rank >= factionRanks.getCount() - 1 || rank >= 15;
 	}
 
 	bool isFaction(const String& faction);

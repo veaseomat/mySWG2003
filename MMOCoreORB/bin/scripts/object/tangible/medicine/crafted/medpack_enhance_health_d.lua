@@ -48,7 +48,7 @@ object_tangible_medicine_crafted_medpack_enhance_health_d = object_tangible_medi
 	medicineUse = 30,
 	effectiveness = 600,
 	duration = 1800,
-	attribute = 0,--attributes = {0, 1, 2, 3, 4, 5}, --
+	attribute = 0,
 
 	numberExperimentalProperties = {1, 1, 2, 2, 2, 2, 1},
 	experimentalProperties = {"XX", "XX", "OQ", "PE", "OQ", "UT", "DR", "OQ", "OQ", "PE", "XX"},

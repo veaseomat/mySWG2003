@@ -11,8 +11,8 @@
 #include "server/zone/packets/scene/AttributeListMessage.h"
 #include "server/zone/objects/tangible/weapon/WeaponObject.h"
 
-float PowerupObjectImplementation::MAXPRIMARY = 35.0; //33.16f;
-float PowerupObjectImplementation::MAXSECONDARY = 20.0; //16.33f;
+float PowerupObjectImplementation::MAXPRIMARY = 33.16f;
+float PowerupObjectImplementation::MAXSECONDARY = 16.33f;
 
 void PowerupObjectImplementation::fillAttributeList(AttributeListMessage* alm, CreatureObject* object) {
 
@@ -133,10 +133,6 @@ void PowerupObjectImplementation::updateCraftingValues(CraftingValues* values, b
 				modifiers.add(stat);
 			}
 		}
-
-		float eff = values->getCurrentValue("effect");
-
-		uses = 100 + (eff * 4); //100; // Powerups are always 100 uses
 	}
 
 	float val = values->getCurrentValue("effect");

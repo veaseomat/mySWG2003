@@ -17,10 +17,9 @@ public:
 	HealMindCommand(const String& name, ZoneProcessServer* server)
 		: QueueCommand(name, server) {
 		
-		mindCost = 0;
+		mindCost = 250;
 		mindWoundCost = 250;
 		range = 5;
-		defaultTime = 5.0;
 	}
 
 	void doAnimations(CreatureObject* creature, CreatureObject* creatureTarget) const {
@@ -98,10 +97,10 @@ public:
 
 		CreatureObject* player = cast<CreatureObject*>(creature);
 
-//		if (creatureTarget == creature) {
-//			creature->sendSystemMessage("@healing:no_heal_mind_self"); //You can not heal your own mind.
-//			return GENERALERROR;
-//		}
+		if (creatureTarget == creature) {
+			creature->sendSystemMessage("@healing:no_heal_mind_self"); //You can not heal your own mind.
+			return GENERALERROR;
+		}		
 
 		if (creatureTarget->isDead() || (creatureTarget->isAiAgent() && !creatureTarget->isPet()) || creatureTarget->isDroidObject()) {
 			creature->sendSystemMessage("@healing:heal_mind_invalid_target"); // Target must be a player or a creature pet in order to heal mind.
@@ -147,7 +146,7 @@ public:
 		}
 
 		float modSkill = (float) creature->getSkillMod("combat_medic_effectiveness");
-		int healPower = (int) 250 + (250 * (modSkill / 100));//(System::random(500)+800) * modSkill / 100;
+		int healPower = (int) (System::random(500)+800) * modSkill / 100;
 
 		// Check BF
 		healPower = (int) (healPower * creature->calculateBFRatio());
@@ -159,7 +158,7 @@ public:
 		}
 
 		sendHealMessage(creature, creatureTarget, healedMind);
-		int mindWound = 25;//(int) healedMind * .05; // 5% of mind healed in wounds
+		int mindWound = (int) healedMind * .05; // 5% of mind healed in wounds
 
 		creature->addWounds(CreatureAttribute::MIND, mindWound, true, false);
 		creature->addWounds(CreatureAttribute::FOCUS, mindWound, true, false);

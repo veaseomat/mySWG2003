@@ -259,8 +259,6 @@ public:
 			int healedAction = creatureTarget->healDamage(creature, CreatureAttribute::ACTION, healPower, true, false);
 
 			sendHealMessage(creature, creatureTarget, healedHealth, healedAction);
-
-			awardXp(creature, "medical", (healedHealth + healedAction));
 		} else if (tendWound) {
 			uint8 attribute = CreatureAttribute::UNKNOWN;
 
@@ -296,8 +294,8 @@ public:
 
 			sendWoundMessage(creature, creatureTarget, attribute, healedWounds);
 
-
-			awardXp(creature, "medical", round(healedWounds * 2.5f) * 1);
+			if (creatureTarget != creature && healedWounds > 0)
+				awardXp(creature, "medical", round(healedWounds * 2.5f));
 
 		} else {
 			return GENERALERROR;

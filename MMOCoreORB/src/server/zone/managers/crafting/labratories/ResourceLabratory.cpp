@@ -84,14 +84,8 @@ void ResourceLabratory::setInitialCraftingValues(TangibleObject* prototype, Manu
 
 			// Based on the weighted sum, we can get the initial %
 			currentPercentage = getAssemblyPercentage(weightedSum) * modifier;
-			craftingValues->setMaxPercentage(property, maxPercentage);//only experimentable when set to 1.0
+			craftingValues->setMaxPercentage(property, maxPercentage);
 			craftingValues->setCurrentPercentage(property, currentPercentage);
-
-//			if (System::random(1) <= 1) {//works but some stats may bug ex. SAC went into negatives
-//				craftingValues->setMaxPercentage(property, 1.0);//only experimentable when set to 1.0
-//				craftingValues->setCurrentPercentage(property, 1.0);
-//			}
-
 			subtitleCounter++;
 		}
 	}
@@ -118,27 +112,13 @@ void ResourceLabratory::experimentRow(CraftingValues* craftingValues,int rowEffe
 		if (subtitlesTitle == title) {
 			subtitle = craftingValues->getExperimentalPropertySubtitle(i);
 			modifier = calculateExperimentationValueModifier(experimentationResult,pointsAttempted);
-
 			newValue = craftingValues->getCurrentPercentage(subtitle) + modifier;
 
-//			if (newValue > craftingValues->getMaxPercentage(subtitle))
-//				newValue = craftingValues->getMaxPercentage(subtitle);
-
-			//possibly set new percentage here greater than max by adding a legendary multiplier and then maybe adding legendary to custom name
-
-//			if(isYellow) {//use this stuff possibly in the name area in craftingsessionimplementation customization section
-//				prototype->setIsCraftedEnhancedItem(true);
-//				prototype->addMagicBit(false);
-//			}
+			if (newValue > craftingValues->getMaxPercentage(subtitle))
+				newValue = craftingValues->getMaxPercentage(subtitle);
 
 			if (newValue < 0)
 				newValue = 0;
-
-//			if(System::random(1) <= 1) {//use this stuff possibly in the name area in craftingsessionimplementation customization section
-//				newValue *= 5;
-//			}
-
-//			newValue = 250;
 
 			craftingValues->setCurrentPercentage(subtitle, newValue);
 		}

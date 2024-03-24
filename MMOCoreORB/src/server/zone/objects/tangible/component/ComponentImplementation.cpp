@@ -51,9 +51,6 @@ void ComponentImplementation::fillAttributeList(AttributeListMessage* alm,
 
 			displayvalue << footer;
 
-			if (attribute == "mindamage")
-			return;
-
 			alm->insertAttribute(attribute, displayvalue.toString());
 		}
 	}

@@ -23,7 +23,7 @@ class WearableObject extends TangibleObject {
 
 	protected int modsNotInSockets;
 
-	public static final int MAXSOCKETS = 8;//change sockets
+	public static final int MAXSOCKETS = 4;
 
 	@dereferenced
 	protected VectorMap<string, int> wearableSkillMods;

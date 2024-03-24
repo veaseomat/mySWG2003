@@ -3,7 +3,6 @@ Creature = {
 	socialGroup = "",
 	faction = "",
 	level = 0,
-	elite = 1.0,
 	chanceHit = 0.000000,
 	damageMin = 0,
 	damageMax = 0,
@@ -25,7 +24,7 @@ Creature = {
 	creatureBitmask = NONE,
 	diet = 0,
 	scale = 1.0,
-	
+
 	templates = {},
 	lootGroups = {},
 	weapons = {},

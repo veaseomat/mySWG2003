@@ -43,8 +43,8 @@
 
 object_tangible_jedi_no_drop_jedi_holocron_dark = object_tangible_jedi_shared_no_drop_jedi_holocron_dark:new {
 	objectMenuComponent = "HolocronMenuComponent",
-	
-	noTrade = 1,
+
+	noTrade = 1
 }
 
 ObjectTemplates:addTemplate(object_tangible_jedi_no_drop_jedi_holocron_dark, "object/tangible/jedi/no_drop_jedi_holocron_dark.iff")

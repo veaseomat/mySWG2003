@@ -26,7 +26,6 @@
 #include "server/chat/ChatManager.h"
 #include "server/zone/objects/player/FactionStatus.h"
 #include "server/zone/managers/frs/FrsManager.h"
-#include "server/zone/managers/name/NameManager.h"
 
 void PetControlDeviceImplementation::callObject(CreatureObject* player) {
 	if (player->isInCombat() || player->isDead() || player->isIncapacitated() || player->getPendingTask("tame_pet") != nullptr) {
@@ -154,7 +153,7 @@ void PetControlDeviceImplementation::callObject(CreatureObject* player) {
 		bool ch = player->hasSkill("outdoors_creaturehandler_novice");
 
 		if (ch) {
-			maxPets = player->getSkillMod("keep_creature");//max ch
+			maxPets = player->getSkillMod("keep_creature");
 			maxLevelofPets = player->getSkillMod("tame_level");
 		}
 
@@ -169,7 +168,7 @@ void PetControlDeviceImplementation::callObject(CreatureObject* player) {
 		}
 
 	} else if (petType == PetManager::FACTIONPET){
-		maxPets = 3;//max fp
+		maxPets = 3;
 	}
 
 	for (int i = 0; i < ghost->getActivePetsSize(); ++i) {
@@ -230,10 +229,10 @@ void PetControlDeviceImplementation::callObject(CreatureObject* player) {
 		Reference<CallPetTask*> callPet = new CallPetTask(_this.getReferenceUnsafeStaticCast(), player, "call_pet");
 
 		StringIdChatParameter message("pet/pet_menu", "call_pet_delay"); // Calling pet in %DI seconds. Combat will terminate pet call.
-		message.setDI(5);
+		message.setDI(15);
 		player->sendSystemMessage(message);
 
-		player->addPendingTask("call_pet", callPet, 5 * 1000);
+		player->addPendingTask("call_pet", callPet, 15 * 1000);
 
 		if (petControlObserver == nullptr) {
 			petControlObserver = new PetControlObserver(_this.getReferenceUnsafeStaticCast());
@@ -504,8 +503,8 @@ void PetControlDeviceImplementation::storeObject(CreatureObject* player, bool fo
 	}
 	else {
 		if (pet->getPendingTask("store_pet") == nullptr) {
-			player->sendSystemMessage( "Storing pet in 5 seconds");
-			pet->addPendingTask("store_pet", task, 5 * 1000);
+			player->sendSystemMessage( "Storing pet in 60 seconds");
+			pet->addPendingTask("store_pet", task, 60 * 1000);
 		}
 		else {
 			AtomicTime nextExecution;
@@ -522,13 +521,11 @@ void PetControlDeviceImplementation::storeObject(CreatureObject* player, bool fo
 }
 
 bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force, bool adult) {
-	//return true;
-
 	if (petType != PetManager::CREATUREPET)
 		return true;
 
-//	if (growthStage <= 0 || growthStage >= 10)
-//		return true;
+	if (growthStage <= 0 || growthStage >= 10)
+		return true;
 
 	ManagedReference<TangibleObject*> controlledObject = this->controlledObject.get();
 
@@ -547,39 +544,23 @@ bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force,
 
 	Time currentTime;
 	uint32 timeDelta = currentTime.getTime() - lastGrowth.getTime();
-	//int stagesToGrow = timeDelta / 60;//sec
+	int stagesToGrow = timeDelta / 43200; // 12 hour
 
-	int oldLevel = pet->getLevel();
+	if (adult)
+		stagesToGrow = 10;
 
-	if (oldLevel <= 0 || oldLevel >= 100)
+	if (stagesToGrow == 0 && !force)
 		return true;
 
-//	if (adult)
-//		stagesToGrow = 10;
-//
-//	if (stagesToGrow == 0 && !force)
-//		return true;
-//
-//	int newStage = growthStage + stagesToGrow;
-//	if (newStage > 10)
-//		newStage = 10;
+	int newStage = growthStage + stagesToGrow;
+	if (newStage > 10)
+		newStage = 10;
 
-	int lvlsToGrow = timeDelta / (60 * 60 * 4);//in seconds
+	float newLevel = ((float)pet->getAdultLevel() / 10.0) * (float)newStage;
+	if (newLevel < 1)
+		newLevel = 1;
 
-	if (lvlsToGrow < 1)
-		return true;
-
-	int newlvl = oldLevel + lvlsToGrow;
-
-	if (newlvl > 100) newlvl = 100;
-	if (newlvl < 1)	newlvl = 1;
-
-	//float newLevel = (newlvl / 10.0) * (float)newStage;
-
-//	if (newLevel < 1)
-//		newLevel = 1;
-
-	float newHeight = creatureTemplate->getScale();//* (0.46 + ((float)newStage * 0.06))
+	float newHeight = creatureTemplate->getScale() * (0.46 + ((float)newStage * 0.06));
 
 	short preEligibility = petManager->checkMountEligibility(_this.getReferenceUnsafeStaticCast());
 	short postEligibility = petManager->checkMountEligibility(_this.getReferenceUnsafeStaticCast(), newHeight);
@@ -612,67 +593,22 @@ bool PetControlDeviceImplementation::growPet(CreatureObject* player, bool force,
 		return false;
 	}
 
-//	if (adult)
-//		pet->setHeight(newHeight, true);
-//	else
-//		pet->setHeight(newHeight, false);
+	if (adult)
+		pet->setHeight(newHeight, true);
+	else
+		pet->setHeight(newHeight, false);
 
-	pet->setPetLevel(newlvl);
+	pet->setPetLevel(newLevel);
 
-
-//
-//	Reference<const CreatureTemplate*> oldname = getDisplayedName();
-//
-//	Reference<const CreatureTemplate*> newname = oldname.replaceAll(oldLevel,newlvl);
-
-
-
-
-//	pet->setCustomObjectName(getDisplayedName().replaceAll(" [" + oldLevel, " [" + newlvl), false);
-
-
-
-//	NameManager* nm = server->getNameManager();
-//	int templSpecies = getSpecies();
-//	npcTemplate = templateData;
-//	Reference<const CreatureTemplate*> creatureTemplate = pet->getCreatureTemplate();
-//
-//	setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]", false);
-
-	//growthStage = newStage;
-
+	growthStage = newStage;
 	lastGrowth.updateToCurrentTime();
 
-
-	//float newvitmult = (newlvl - oldLevel) / 100;
-
-//	int ham = 0;
-//
-//	for (int i = 0; i < 9; ++i) {
-//		ham = pet->getBaseHAM(i);
-//		ham *= newlvl;
-//		ham /= oldLevel;
-//
-//		pet->setBaseHAM(i, ham);
-//	}
-//
-//	for (int i = 0; i < 9; ++i) {
-//		pet->setHAM(i, pet->getBaseHAM(i));
-//	}
-//
-//	for (int i = 0; i < 9; ++i) {
-//		pet->setMaxHAM(i, pet->getBaseHAM(i));
-//	}
-
-
-	//setVitality(getVitality());
+	setVitality(getVitality());
 
 	return true;
 }
 
 void PetControlDeviceImplementation::arrestGrowth() {
-	return;
-
 	if (petType != PetManager::CREATUREPET)
 		return;
 
@@ -954,10 +890,10 @@ void PetControlDeviceImplementation::fillAttributeList(AttributeListMessage* alm
 			else
 				alm->insertAttribute("dna_comp_armor_stun", pet->getStun());
 
-//			if (pet->getLightSaber() < 0)
-//				alm->insertAttribute("dna_comp_armor_saber", "Vulnerable");
-//			else
-//				alm->insertAttribute("dna_comp_armor_saber", pet->getLightSaber());
+			if (pet->getLightSaber() < 0)
+				alm->insertAttribute("dna_comp_armor_saber", "Vulnerable");
+			else
+				alm->insertAttribute("dna_comp_armor_saber", pet->getLightSaber());
 
 			ManagedReference<WeaponObject*> weapon = pet->getWeapon();
 			if (weapon != nullptr){
@@ -1225,9 +1161,6 @@ void PetControlDeviceImplementation::setTrainingCommand(unsigned int commandID) 
 }
 
 void PetControlDeviceImplementation::trainAsMount(CreatureObject* player) {
-//	player->sendSystemMessage("All Vehicles and Mounts are Disabled on mySWG.");
-//	return;
-
 	if (isTrainedAsMount() || !player->hasSkill("outdoors_creaturehandler_support_04"))
 		return;
 

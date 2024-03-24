@@ -30,7 +30,7 @@ junk_sheani = Creature:new {
 	templates = {"object/mobile/junk_sheani.iff"},
 	lootGroups = {},
 	weapons = {},
-	conversationTemplate = "junkDealerGenericConvoTemplate",
+	conversationTemplate = "junkDealerSheaniConvoTemplate",
 	attacks = {}
 }
 

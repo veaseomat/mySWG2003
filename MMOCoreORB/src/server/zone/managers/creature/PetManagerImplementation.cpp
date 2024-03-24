@@ -154,10 +154,8 @@ float PetManagerImplementation::getMountedRunSpeed(CreatureObject* mount) {
 				return mountSpeedData->getRunSpeed();
 		}
 	}
-//change pet mount speed
-//	int newspeed = mount->getRunSpeed();
 
-	return mount->getRunSpeed();//newspeed;
+	return mount->getRunSpeed();
 }
 
 void PetManagerImplementation::handleChat(CreatureObject* speaker, AiAgent* pet, const String& message){
@@ -547,10 +545,10 @@ uint32 PetManagerImplementation::calculateIncapacitationTimer(AiAgent* pet, int 
 	if (value < 0)
 		return 120; // 2 minute minimum recovery
 
-	uint32 recoveryTime = 30;//(value / 5); // In seconds
+	uint32 recoveryTime = (value / 5); // In seconds
 
-//	if (recoveryTime < 120)
-//		recoveryTime = 120; // 2 minute minimum recovery
+	if (recoveryTime < 120)
+		recoveryTime = 120; // 2 minute minimum recovery
 
 	return recoveryTime;
 }

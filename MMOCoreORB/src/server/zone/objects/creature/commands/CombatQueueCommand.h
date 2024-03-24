@@ -169,48 +169,6 @@ public:
 		if (rangeToCheck == -1)
 			rangeToCheck = (float) Math::max(10, weapon->getMaxRange());
 
-		if (weapon->isPistolWeapon())//also in weapon obj
-			rangeToCheck = 64;
-		if (weapon->isCarbineWeapon())
-			rangeToCheck = 64;
-		if (weapon->isRifleWeapon())
-			rangeToCheck = 64;
-//			if (weapon->isRangedWeapon())
-//			rangeToCheck = 1.03f;
-//			if (weapon->isMeleeWeapon())
-//			rangeToCheck = 1.25;
-		if (weapon->isUnarmedWeapon())
-			rangeToCheck = 7;
-		if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon())
-			rangeToCheck = 7;
-		if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon())
-			rangeToCheck = 7;
-		if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon())
-			rangeToCheck = 7;
-		if (weapon->isLightningRifle())
-			rangeToCheck = 32;
-		if (weapon->isFlameThrower())
-			rangeToCheck = 32;
-		if (weapon->isHeavyAcidRifle())
-			rangeToCheck = 32;
-		if (weapon->isHeavyWeapon() &! (weapon->isHeavyAcidRifle() || weapon->isFlameThrower() || weapon->isLightningRifle() || weapon->isThrownWeapon()))
-			rangeToCheck = 32;
-		if (weapon->isThrownWeapon())// 4sec
-			rangeToCheck = 32;
-		if (weapon->isSpecialHeavyWeapon() &! weapon->isHeavyAcidRifle() &! weapon->isFlameThrower() &! weapon->isLightningRifle())// 4 sec rocket launcher
-			rangeToCheck = 32;
-		if (weapon->isMineWeapon())
-			rangeToCheck = 32;
-		if (weapon->isJediOneHandedWeapon())
-			rangeToCheck = 7;
-		if (weapon->isJediTwoHandedWeapon())
-			rangeToCheck = 7;
-		if (weapon->isJediPolearmWeapon())
-			rangeToCheck = 7;
-		if (weapon->isJediWeapon() && range == 32)
-			rangeToCheck = 32;
-
-
 		if (creature->isDead() || (creature->isPet() && creature->isIncapacitated()))
 			return INVALIDLOCOMOTION;
 
@@ -255,8 +213,8 @@ public:
 			}
 		}
 
-//		if (creature->isKneeling() && weapon->isMeleeWeapon() && !(poolsToDamage == 0) && !weapon->isJediWeapon())
-//			return NOKNEELING;
+		if (creature->isKneeling() && weapon->isMeleeWeapon() && !(poolsToDamage == 0) && !weapon->isJediWeapon())
+			return NOKNEELING;
 
 		if (creature->isProne() && (weapon->isMeleeWeapon() || poolsToDamage == 0))
 			return NOPRONE;
@@ -489,150 +447,6 @@ public:
 		String intensity = getIntensity(((uint32)weapon->getMaxDamage()) >> 2, damage);
 		StringBuffer buffer;
 
-
-
-
-		int aiquick = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::QUICKNESS);//70+r30
-		int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80 (10 of 30= 1/3)
-		int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);
-
-		if (attacker->isAiAgent() && !attacker->isCreature() && attacker->getLevel() > 10 && aifocus > aiquick) {// 1/3 on npc get this
-			if (weapon->isPistolWeapon()){
-				return "fire_1_special_single" + intensity;//single pool
-			}
-			if (weapon->isCarbineWeapon()){
-				return "fire_1_special_single" + intensity;//single pool
-			}
-			if (weapon->isRifleWeapon()){
-				return "fire_1_special_single" + intensity;//single pool
-			}
-	//		if (weapon->isRangedWeapon())
-			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon()){
-				return "combo_3a" + intensity;//single pool
-			}
-			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon()){
-				return "combo_2d" + intensity;//single pool
-			}
-			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon()){
-				return "combo_3b" + intensity;//single pool
-			}
-			if (weapon->isUnarmedWeapon() && attacker->getLevel() > 20){
-				return "attack_high_center_light_1"; //+ intensity;//headhit anim
-			}
-			if (weapon->isLightningRifle() && attacker->getLevel() > 20){
-				 if (attacker->getLevel() > 100)	return "fire_1_special_single" + intensity;
-				return "fire_1_special_single" + intensity;
-			}
-			if (weapon->isFlameThrower() && attacker->getLevel() > 20){
-				 if (attacker->getLevel() > 100)	return "fire_flame_thrower_single_2" + intensity;
-				return "fire_flame_thrower_single_1" + intensity;
-			}
-			if (weapon->isHeavyAcidRifle() && attacker->getLevel() > 20){
-				 if (attacker->getLevel() > 100)	return "fire_acid_rifle_single_2" + intensity;
-				return "fire_acid_rifle_single_1" + intensity;
-			}
-//			if (weapon->isMeleeWeapon())
-
-//			if (weapon->isHeavyWeapon())
-
-//			if (weapon->isThrownWeapon())
-
-//			if (weapon->isSpecialHeavyWeapon())
-
-//			if (weapon->isMineWeapon())
-
-			if (weapon->isJediOneHandedWeapon()){
-				return "combo_5a" + intensity;//headhit
-			}
-			if (weapon->isJediTwoHandedWeapon()){
-				return "combo_4a" + intensity;//leghit
-			}
-			if (weapon->isJediPolearmWeapon()){
-				return "combo_3d" + intensity;//bodyhit
-			}
-//			if (weapon->isJediWeapon())
-		}
-
-		if (attacker->isAiAgent() && !attacker->isCreature() && attacker->getLevel() > 10 && aiquick > aifocus) {// 2/3 on npc get this
-			if (weapon->isPistolWeapon()){
-				return "fire_area" + intensity;//regular
-			}
-			if (weapon->isCarbineWeapon()){
-				return "fire_area" + intensity;//regular
-			}
-			if (weapon->isRifleWeapon()){
-				return "fire_area" + intensity;//regular
-			}
-//			if (weapon->isRangedWeapon())
-
-			if (weapon->isOneHandMeleeWeapon() && !weapon->isJediWeapon() && attacker->getLevel() > 10){
-				 if (attacker->getLevel() > 50)	return "combo_5a" + intensity;
-				 if (attacker->getLevel() > 20)	return "combo_4a" + intensity;
-				 return "counter_high_center" + intensity;//regular hits
-			}
-			if (weapon->isTwoHandMeleeWeapon() && !weapon->isJediWeapon() && attacker->getLevel() > 10){
-				 if (attacker->getLevel() > 50)	return "combo_4a" + intensity;
-				 if (attacker->getLevel() > 20)	return "combo_2a" + intensity;
-				 return "combo_2c" + intensity;//regular hits
-			}
-			if (weapon->isPolearmWeaponObject() && !weapon->isJediWeapon() && attacker->getLevel() > 10){
-				 if (attacker->getLevel() > 50)	return "combo_5a" + intensity;
-				 if (attacker->getLevel() > 20)	return "combo_3a" + intensity;
-				 return "combo_2b" + intensity;//regular hits
-			}
-			if (weapon->isUnarmedWeapon()){
-				 if (attacker->getLevel() > 50)	return "combo_5a" + intensity;
-				 if (attacker->getLevel() > 20)	return "combo_3a" + intensity;
-				 return "combo_2d" + intensity;
-			}
-			if (weapon->isLightningRifle() && attacker->getLevel() > 10){
-				 if (attacker->getLevel() > 20)	return "fire_area_no_trails" + intensity;
-				return "fire_area_no_trails" + intensity;
-			}
-			if (weapon->isFlameThrower() && attacker->getLevel() > 10){
-				 if (attacker->getLevel() > 20)	return "fire_flame_thrower_cone_2" + intensity;
-				return "fire_flame_thrower_cone_1" + intensity;
-			}
-			if (weapon->isHeavyAcidRifle() && attacker->getLevel() > 10){
-				 if (attacker->getLevel() > 20)	return "fire_acid_rifle_single_2" + intensity;
-				return "fire_acid_rifle_single_1" + intensity;
-			}
-//			if (weapon->isMeleeWeapon())
-
-//			if (weapon->isHeavyWeapon())
-
-//			if (weapon->isThrownWeapon())
-
-//			if (weapon->isSpecialHeavyWeapon())
-
-//			if (weapon->isMineWeapon())
-
-			if (weapon->isJediOneHandedWeapon()){
-				return "combo_jedi_4" + intensity;//flurry2
-			}
-			if (weapon->isJediTwoHandedWeapon()){
-				return "combo_jedi_2" + intensity;//phant
-			}
-			if (weapon->isJediPolearmWeapon()){
-				return "combo_jedi_2" + intensity;//derv
-			}
-//			if (weapon->isJediWeapon())
-
-		}
-
-//		if (attacker->isAiAgent()) {
-//		if (weapon->isJediOneHandedWeapon()){
-//			return "combo_jedi_4" + intensity;
-//		}
-//		if (weapon->isJediTwoHandedWeapon()){
-//			return "combo_jedi_2" + intensity;
-//		}
-//		if (weapon->isJediPolearmWeapon()){
-//			return "combo_jedi_2" + intensity;
-//		}
-//		}
-
-
 		if (attacker->isDroidObject()) {
 			return "droid_attack" + intensity;
 		} else if (!attacker->isCreature()) {
@@ -692,23 +506,6 @@ public:
 	inline String generateAnimation(uint8 hitLocation, int weaponThreshold, int damage) const {
 		String anim = animation;
 
-//
-//		int aiquick = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::QUICKNESS);//70+r30
-//		int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80 (10 of 30= 1/3)
-//		int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);
-//
-//		if (attacker->isAiAgent()) {
-//		if (weapon->isJediOneHandedWeapon()){
-//			anim = "combo_jedi_4";
-//		}
-//		if (weapon->isJediTwoHandedWeapon()){
-//			anim = "combo_jedi_2";
-//		}
-//		if (weapon->isJediPolearmWeapon()){
-//			anim = "combo_jedi_2";
-//		}
-//		}
-
 		switch(animType) {
 		case GENERATE_NONE:
 			break;
@@ -731,31 +528,10 @@ public:
 	}
 
 	virtual String getAnimation(TangibleObject* attacker, TangibleObject* defender, WeaponObject* weapon, uint8 hitLocation, int damage) const {
-		String anim = animation;
-
-//		int aiquick = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::QUICKNESS);//70+r30
-//		int aifocus = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::FOCUS);//80 (10 of 30= 1/3)
-//		int aistrength = attacker->asCreatureObject()->getMaxHAM(CreatureAttribute::STRENGTH);
-//
-//		if (attacker->isAiAgent()) {
-//		if (weapon->isJediOneHandedWeapon()){
-//			//anim = "combo_jedi_4";
-//			setAnimationString("combo_jedi_4");
-//		}
-//		if (weapon->isJediTwoHandedWeapon()){
-//			//anim = "combo_jedi_2";
-//			setAnimationString("combo_jedi_2");
-//		}
-//		if (weapon->isJediPolearmWeapon()){
-//			//anim = "combo_jedi_2";
-//			setAnimationString("combo_jedi_2");
-//		}
-//		}
-
-		if (anim.isEmpty())//remove this for no animations
+		if (animation.isEmpty())
 			return getDefaultAttackAnimation(attacker, weapon, hitLocation, damage);
 
-		return generateAnimation(hitLocation, ((uint32)weapon->getMaxDamage()) >> 2, damage);//remove this for no animations
+		return generateAnimation(hitLocation, ((uint32)weapon->getMaxDamage()) >> 2, damage);
 	}
 
 	inline const String& getEffectString() const {
@@ -886,10 +662,10 @@ public:
 		case CommandEffect::STUN:
 			defender->setStunnedState(duration);
 			break;
-		case CommandEffect::KNOCKDOWN://creatureobject.idl has knodown recovery timer
+		case CommandEffect::KNOCKDOWN:
 			if (!defender->checkKnockdownRecovery()) {
-//				if (defender->getPosture() != CreaturePosture::UPRIGHT)
-//					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
+				if (defender->getPosture() != CreaturePosture::UPRIGHT)
+					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
 				break;
 			}
 
@@ -902,7 +678,7 @@ public:
 				defender->setPosture(CreaturePosture::KNOCKEDDOWN, false, false);
 
 			defender->updateKnockdownRecovery();
-			defender->updatePostureChangeDelay(5000);//works here added checkkdrecovery to stand command
+			defender->updatePostureChangeDelay(5000);
 			defender->removeBuff(STRING_HASHCODE("burstrun"));
 			defender->removeBuff(STRING_HASHCODE("retreat"));
 			defender->sendSystemMessage("@cbt_spam:posture_knocked_down");
@@ -910,8 +686,8 @@ public:
 			break;
 		case CommandEffect::POSTUREUP:
 			if (!defender->checkPostureUpRecovery()) {
-//				if (defender->getPosture() != CreaturePosture::UPRIGHT)
-//					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
+				if (defender->getPosture() != CreaturePosture::UPRIGHT)
+					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
 				break;
 			}
 
@@ -937,8 +713,8 @@ public:
 			break;
 		case CommandEffect::POSTUREDOWN:
 			if (!defender->checkPostureDownRecovery()) {
-//				if (defender->getPosture() != CreaturePosture::UPRIGHT)
-//					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
+				if (defender->getPosture() != CreaturePosture::UPRIGHT)
+					defender->setPosture(CreaturePosture::UPRIGHT, false, false);
 				break;
 			}
 

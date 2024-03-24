@@ -211,17 +211,12 @@ class Creature extends AiAgent {
 	}
 
 	public int getBaseXp() {
-		//int newexp = super.npcTemplate.getLevel();
-		
 		if (!super.npcTemplate)
 			return 0;
 
 		if (isBaby() || isEventMob())
-			//return newexp;
 			return 0;
 		else
-			//return newexp * 35;
-			
 			return super.npcTemplate.getBaseXp();
 	}
 

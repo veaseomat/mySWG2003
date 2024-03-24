@@ -129,11 +129,6 @@ Luna<LuaCreatureObject>::RegType LuaCreatureObject::Register[] = {
 		{ "healDamage", &LuaCreatureObject::healDamage },
 		{ "getGroupID", &LuaCreatureObject::getGroupID },
 		{ "enhanceCharacter", &LuaCreatureObject::enhanceCharacter },
-		{ "enhanceCharacterDocBuff", &LuaCreatureObject::enhanceCharacterDocBuff },
-		{ "enhanceCharacterDocBuffTHREE", &LuaCreatureObject::enhanceCharacterDocBuffTHREE },
-		{ "enhanceCharacterEntBuffONE", &LuaCreatureObject::enhanceCharacterEntBuffONE },
-		{ "enhanceCharacterEntBuffTWO", &LuaCreatureObject::enhanceCharacterEntBuffTWO },
-//		{ "isjediovert", &LuaCreatureObject::isjediovert },
 		{ "setWounds", &LuaCreatureObject::setWounds },
 		{ "setShockWounds", &LuaCreatureObject::setShockWounds },
 		{ "getForceSensitiveSkillCount", &LuaCreatureObject::getForceSensitiveSkillCount },
@@ -148,7 +143,6 @@ Luna<LuaCreatureObject>::RegType LuaCreatureObject::Register[] = {
 		{ "getGender", &LuaCreatureObject::getGender },
 		{ "isRidingMount", &LuaCreatureObject::isRidingMount },
 		{ "dismount", &LuaCreatureObject::dismount },
-		{ "getPvpStatusBitmask", &LuaTangibleObject::getPvpStatusBitmask },
 		{ 0, 0 }
 };
 
@@ -1023,44 +1017,6 @@ int LuaCreatureObject::enhanceCharacter(lua_State* L) {
 
 	return 0;
 }
-
-int LuaCreatureObject::enhanceCharacterDocBuff(lua_State* L) {
-	PlayerManager* playerManager = realObject->getZoneServer()->getPlayerManager();
-	playerManager->enhanceCharacterDocBuff(realObject);
-
-	return 0;
-}
-
-int LuaCreatureObject::enhanceCharacterDocBuffTHREE(lua_State* L) {
-	PlayerManager* playerManager = realObject->getZoneServer()->getPlayerManager();
-	playerManager->enhanceCharacterDocBuffTHREE(realObject);
-
-	return 0;
-}
-
-int LuaCreatureObject::enhanceCharacterEntBuffONE(lua_State* L) {
-	PlayerManager* playerManager = realObject->getZoneServer()->getPlayerManager();
-	playerManager->enhanceCharacterEntBuffONE(realObject);
-
-	return 0;
-}
-
-int LuaCreatureObject::enhanceCharacterEntBuffTWO(lua_State* L) {
-	PlayerManager* playerManager = realObject->getZoneServer()->getPlayerManager();
-	playerManager->enhanceCharacterEntBuffTWO(realObject);
-
-	return 0;
-}
-
-//int LuaCreatureObject::isjediovert(lua_State* L) {
-//	PlayerManager* playerManager = realObject->getZoneServer()->getPlayerManager();
-//
-//	bool retVal = playerManager->isjediovert(realObject);
-//
-//	lua_pushboolean(L, retVal);
-//
-//	return 1;
-//}
 
 int LuaCreatureObject::setWounds(lua_State* L) {
 	int amount = lua_tointeger(L, -1);

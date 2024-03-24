@@ -28,7 +28,7 @@ fbase_elite_dark_trooper_extreme = Creature:new {
 	diet = HERBIVORE,
 	scale = 1.5,
 
-	templates = {"object/mobile/dressed_stormtrooper_black_black.iff"},
+	templates = {"object/mobile/dark_trooper.iff"},
 	lootGroups = {
 		{
 			groups = {

@@ -35,17 +35,3 @@ includeFile("trainer/trainer_squadleader.lua")
 includeFile("trainer/trainer_tailor.lua")
 includeFile("trainer/trainer_unarmed.lua")
 includeFile("trainer/trainer_weaponsmith.lua")
-
-includeFile("trainer/master_doctor.lua")
-includeFile("trainer/master_merchant.lua")
-includeFile("trainer/master_armorsmith.lua")
-includeFile("trainer/master_weaponsmith.lua")
-includeFile("trainer/master_architect.lua")
-includeFile("trainer/master_chef.lua")
-includeFile("trainer/master_artisan.lua")
-
-includeFile("trainer/trainer_myswg.lua")
-includeFile("trainer/myswg_vendor.lua")
-includeFile("trainer/trainer_dark_sentinel.lua")
-includeFile("trainer/trainer_light_sentinel.lua")
-

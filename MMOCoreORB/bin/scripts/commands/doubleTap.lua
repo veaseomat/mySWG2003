@@ -44,8 +44,8 @@
 DoubleTapCommand = {
         name = "doubletap",
 
-	damageMultiplier = 3.0,
-	speedMultiplier = 2.0,
+	damageMultiplier = 2.8,
+	speedMultiplier = 2.1,
 	healthCostMultiplier = 0.5,
 	actionCostMultiplier = 0.75,
 	mindCostMultiplier = 0.5,
@@ -58,7 +58,7 @@ DoubleTapCommand = {
 
 	combatSpam = "doubletap",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = PISTOLWEAPON,
 
 	range = -1
 }

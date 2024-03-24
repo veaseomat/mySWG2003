@@ -8,7 +8,7 @@
 #ifndef COMMANDSNEW_H_
 #define COMMANDSNEW_H_
 
-#include "ActionShot1Command.h"//EZ DISABLE COMMANDS HERE!?!?!?!??!?!
+#include "ActionShot1Command.h"
 #include "ActionShot2Command.h"
 #include "ActivateCloneCommand.h"
 #include "ActivateQuestCommand.h"

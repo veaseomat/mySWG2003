@@ -1,5 +1,5 @@
 lok_hacker = Creature:new {
-       objectName = "",
+       objectName = "@npc_name:human_base_female",
        customName = "Hacker",
        socialGroup = "nym",
        faction = "nym",

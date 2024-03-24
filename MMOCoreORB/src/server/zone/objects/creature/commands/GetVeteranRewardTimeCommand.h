@@ -15,62 +15,60 @@ public:
 
 	int doQueueCommand(CreatureObject* player, const uint64& target, const UnicodeString& arguments) const {
 
-//		if (!checkStateMask(player))
-//			return INVALIDSTATE;
-//
-//		if (!checkInvalidLocomotions(player))
-//			return INVALIDLOCOMOTION;
-//
-//		if(!player->isPlayerCreature())
-//			return GENERALERROR;
-//
-//		PlayerObject* playerGhost = player->getPlayerObject();
-//		if( playerGhost == nullptr )
-//			return GENERALERROR;
-//
-//		PlayerManager* playerManager = player->getZoneServer()->getPlayerManager();
-//		if( playerManager == nullptr )
-//			return GENERALERROR;
-//
-//		// Get account
-//		ManagedReference<Account*> account = playerGhost->getAccount();
-//		if( account == nullptr )
-//			return GENERALERROR;
-//
-//		Locker alocker(account);
-//
-//		// Send message with current account age
-//		StringIdChatParameter timeActiveMsg;
-//		timeActiveMsg.setStringId("veteran", "self_time_active"); // You have %DI days logged for veteran rewards.
-//		timeActiveMsg.setDI( account->getAgeInDays() );
-//		player->sendSystemMessage( timeActiveMsg );
-//
-//		StringBuffer buff;
-//
-//		// Check if player is eligible for a reward
-//		int eligibleMilestone = playerManager->getEligibleMilestone( playerGhost, account );
-//		if( eligibleMilestone > -1 ){
-//			buff << "You are eligible for the " << String::valueOf(eligibleMilestone) << "-day reward!";
-//			player->sendSystemMessage( buff.toString() );
-//			player->sendSystemMessage( "Use /claimVeteranReward to choose your reward!" );
-//		} else {
-//			player->sendSystemMessage( "@veteran:not_eligible"); // You are not currently eligible for a veteran reward.
-//
-//			// Check next milestone
-//			int nextMilestone = playerManager->getFirstIneligibleMilestone( playerGhost, account );
-//			buff << "You will be eligible for the " << String::valueOf(nextMilestone) << "-day reward in ";
-//			buff << String::valueOf(nextMilestone - account->getAgeInDays() ) << " days";
-//			player->sendSystemMessage( buff.toString() );
-//		}
-//
-//		// Send character played time
-//		player->sendSystemMessage(playerGhost->getPlayedTimeString(true));
-//
-//		return SUCCESS;
-//	}
-		player->sendSystemMessage("This ability is disabled.");
-		return GENERALERROR;
+		if (!checkStateMask(player))
+			return INVALIDSTATE;
+
+		if (!checkInvalidLocomotions(player))
+			return INVALIDLOCOMOTION;
+
+		if(!player->isPlayerCreature())
+			return GENERALERROR;
+
+		PlayerObject* playerGhost = player->getPlayerObject();
+		if( playerGhost == nullptr )
+			return GENERALERROR;
+
+		PlayerManager* playerManager = player->getZoneServer()->getPlayerManager();
+		if( playerManager == nullptr )
+			return GENERALERROR;
+
+		// Get account
+		ManagedReference<Account*> account = playerGhost->getAccount();
+		if( account == nullptr )
+			return GENERALERROR;
+
+		Locker alocker(account);
+
+		// Send message with current account age
+		StringIdChatParameter timeActiveMsg;
+		timeActiveMsg.setStringId("veteran", "self_time_active"); // You have %DI days logged for veteran rewards.
+		timeActiveMsg.setDI( account->getAgeInDays() );
+		player->sendSystemMessage( timeActiveMsg );
+
+		StringBuffer buff;
+
+		// Check if player is eligible for a reward
+		int eligibleMilestone = playerManager->getEligibleMilestone( playerGhost, account );
+		if( eligibleMilestone > -1 ){
+			buff << "You are eligible for the " << String::valueOf(eligibleMilestone) << "-day reward!";
+			player->sendSystemMessage( buff.toString() );
+			player->sendSystemMessage( "Use /claimVeteranReward to choose your reward!" );
+		} else {
+			player->sendSystemMessage( "@veteran:not_eligible"); // You are not currently eligible for a veteran reward.
+
+			// Check next milestone
+			int nextMilestone = playerManager->getFirstIneligibleMilestone( playerGhost, account );
+			buff << "You will be eligible for the " << String::valueOf(nextMilestone) << "-day reward in ";
+			buff << String::valueOf(nextMilestone - account->getAgeInDays() ) << " days";
+			player->sendSystemMessage( buff.toString() );
+		}
+
+		// Send character played time
+		player->sendSystemMessage(playerGhost->getPlayedTimeString(true));
+
+		return SUCCESS;
 	}
+
 };
 
 #endif //GETVETERANREWARDTIMECOMMAND_H_

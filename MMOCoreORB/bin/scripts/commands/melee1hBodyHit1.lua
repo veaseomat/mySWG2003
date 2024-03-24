@@ -44,7 +44,7 @@
 Melee1hBodyHit1Command = {
 	name = "melee1hbodyhit1",
 
-	damageMultiplier = 2.0,
+	damageMultiplier = 1.5,
 	speedMultiplier = 1.5,
 	healthCostMultiplier = 0.5,
 	actionCostMultiplier = 0.5,
@@ -52,7 +52,7 @@ Melee1hBodyHit1Command = {
         accuracyBonus = 25,
 
 	poolsToDamage = HEALTH_ATTRIBUTE,
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = ONEHANDMELEEWEAPON,
 
 	animation = "counter_high_right", 
 	animType = GENERATE_INTENSITY,

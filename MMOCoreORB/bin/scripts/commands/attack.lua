@@ -43,7 +43,7 @@
 
 AttackCommand = {
         name = "attack",
-	damageMultiplier = 1.0,
+	damageMultiplier = 1,
 	speedMultiplier = 1,
 
 	combatSpam = "attack",
@@ -57,7 +57,7 @@ AttackCommand = {
 
 	range = -1,
 	
-	--trails = NOTRAIL,
+	trails = NOTRAIL,
 
 	poolsToDamage = RANDOM_ATTRIBUTE
 }

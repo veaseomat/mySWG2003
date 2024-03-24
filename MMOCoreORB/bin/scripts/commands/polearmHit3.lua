@@ -43,7 +43,7 @@
 
 PolearmHit3Command = {
         name = "polearmhit3",
-	damageMultiplier = 3.0,
+	damageMultiplier = 4.0,
 	speedMultiplier = 2.5,
 	healthCostMultiplier = 2.0,
 	actionCostMultiplier = 1.5,
@@ -76,7 +76,7 @@ PolearmHit3Command = {
 
 	combatSpam = "bonebreaker",
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = POLEARMWEAPON,
 
 	range = -1
 }

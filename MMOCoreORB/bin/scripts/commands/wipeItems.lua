@@ -43,7 +43,6 @@
 
 WipeItemsCommand = {
         name = "wipeitems",
-        --admin = false,
 }
 
 AddCommand(WipeItemsCommand)

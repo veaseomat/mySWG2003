@@ -5,7 +5,6 @@ singing_mountain_clan_councilwoman = Creature:new {
 	socialGroup = "mtn_clan",
 	faction = "mtn_clan",
 	level = 253,
-	elite = 1.5,
 	chanceHit = 23.5,
 	damageMin = 1395,
 	damageMax = 2500,
@@ -32,7 +31,7 @@ singing_mountain_clan_councilwoman = Creature:new {
 	lootGroups = {
 		{
 			groups = {
-				{group = "junk", chance = 500000},
+				{group = "junk", chance = 1500000},
 				{group = "power_crystals", chance = 500000},
 				{group = "color_crystals", chance = 500000},
 				{group = "armor_attachments", chance = 600000},
@@ -41,8 +40,7 @@ singing_mountain_clan_councilwoman = Creature:new {
 				{group = "rifles", chance = 1000000},
 				{group = "pistols", chance = 1000000},
 				{group = "carbines", chance = 1000000},
-				{group = "wearables_rare", chance = 500000},
-				{group = "holocron_3", chance = 1000000}
+				{group = "wearables_rare", chance = 500000}
 			}
 		}
 	},

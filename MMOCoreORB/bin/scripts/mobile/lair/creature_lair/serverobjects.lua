@@ -131,7 +131,6 @@ includeFile("lair/creature_lair/dathomir_rhoa_kwi_pack_leader_lair_neutral_mediu
 includeFile("lair/creature_lair/dathomir_shear_mite_queen_lair_neutral_large.lua")
 includeFile("lair/creature_lair/dathomir_stallion_bolma_lair_neutral_medium.lua")
 includeFile("lair/creature_lair/dathomir_verne_bull_lair_neutral_large.lua")
-includeFile("lair/creature_lair/dathomir_nightsister_elder_enclave_neutral_large_theater2.lua")
 
 includeFile("lair/creature_lair/endor_arachne_drone_lair_neutral_small.lua")
 includeFile("lair/creature_lair/endor_arachne_drone_lair_neutral_small_01.lua")
@@ -495,7 +494,6 @@ includeFile("lair/creature_lair/tatooine_eopie_eopie_neutral_medium_boss_01.lua"
 includeFile("lair/creature_lair/tatooine_eopie_lair_neutral_small.lua")
 includeFile("lair/creature_lair/tatooine_feral_bantha_lair_neutral_large.lua")
 includeFile("lair/creature_lair/tatooine_giant_canyon_krayt_dragon_lair_neutral_large.lua")
-includeFile("lair/creature_lair/tatooine_giant_canyon_krayt_dragon_lair_neutral_large2.lua")
 includeFile("lair/creature_lair/tatooine_giant_sand_beetle_click_neutral_large.lua")
 includeFile("lair/creature_lair/tatooine_giant_worrt_lair_neutral_medium.lua")
 includeFile("lair/creature_lair/tatooine_gorg_lair_neutral_small.lua")
@@ -531,7 +529,6 @@ includeFile("lair/creature_lair/tatooine_worrt_lair_neutral_small.lua")
 includeFile("lair/creature_lair/tatooine_zucca_boar_lair_neutral_medium.lua")
 includeFile("lair/creature_lair/tatooine_zucca_boar_zucca_neutral_medium_boss_01.lua")
 
-includeFile("lair/creature_lair/yavin4_acklay_pack_neutral_lair.lua")
 includeFile("lair/creature_lair/yavin4_angler_giant_neutral_medium_boss_01.lua")
 includeFile("lair/creature_lair/yavin4_angler_lair_neutral_medium.lua")
 includeFile("lair/creature_lair/yavin4_choku_frenzied_neutral_medium_boss_01.lua")

@@ -81,7 +81,7 @@ class Container extends TangibleObject {
 
 	@read
 	public long getLockTime() {
-		return 60*10*1000;
+		return 60*30*1000;
 	}
 
 	@read

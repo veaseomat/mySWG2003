@@ -44,7 +44,7 @@
 ChargeShot1Command = {
 	name = "chargeshot1",
 
-	damageMultiplier = 1.0,
+	damageMultiplier = 2.0,
 	speedMultiplier = 2.0,
 	healthCostMultiplier = 0.5,
 	actionCostMultiplier = 2.0,
@@ -69,7 +69,7 @@ ChargeShot1Command = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = CARBINEWEAPON,
 
 	range = -1
 }

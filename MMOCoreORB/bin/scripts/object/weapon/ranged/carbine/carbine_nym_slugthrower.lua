@@ -100,26 +100,26 @@ object_weapon_ranged_carbine_carbine_nym_slugthrower = object_weapon_ranged_carb
 	
 
 	-- The values below are the default values.  To be used for blue frog objects primarily
-	healthAttackCost = 25,
-	actionAttackCost = 40,
-	mindAttackCost = 19,
+	healthAttackCost = 36,
+	actionAttackCost = 62,
+	mindAttackCost = 32,
 	forceCost = 0,
 
+	pointBlankAccuracy = -10,
 	pointBlankRange = 0,
-	pointBlankAccuracy = -20,
 
-	idealRange = 22,
+	idealRange = 28,
 	idealAccuracy = 0,
 
 	maxRange = 64,
-	maxRangeAccuracy = -80,
+	maxRangeAccuracy = -60,
 
-	minDamage = 90,
-	maxDamage = 150,
+	minDamage = 103,
+	maxDamage = 207,
+	
+	woundsRatio = 16,
 
-	attackSpeed = 4.4,
-
-	woundsRatio = 15,
+	attackSpeed = 4.0
 }
 
 ObjectTemplates:addTemplate(object_weapon_ranged_carbine_carbine_nym_slugthrower, "object/weapon/ranged/carbine/carbine_nym_slugthrower.iff")

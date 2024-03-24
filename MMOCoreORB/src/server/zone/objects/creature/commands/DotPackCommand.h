@@ -238,8 +238,6 @@ public:
 	}
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
-//		creature->sendSystemMessage("CM DOTs are currently disabled on mySWG.");
-//		return GENERALERROR;
 
 		int result = doCommonMedicalCommandChecks(creature);
 

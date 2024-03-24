@@ -31,7 +31,7 @@ public:
 			creature->clearDizzyEvent();
 			return;
 		}
-//removes the flopping effect, still seems like cant stand up for a couple seconds without this
+
 		if (creature->isDizzied()) {
 			if (creature->isRidingMount()) {
 				creature->updateCooldownTimer("mount_dismount", 0);

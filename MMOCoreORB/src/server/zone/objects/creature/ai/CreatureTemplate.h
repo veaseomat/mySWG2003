@@ -66,7 +66,6 @@ protected:
 	int range;
 
 	float scale;
-	float elite;
 
 	int baseXp;
 	int baseHAM;
@@ -266,7 +265,7 @@ public:
 	}
 
 	inline uint32 getOptionsBitmask() const {
-		return optionsBitmask; // also this
+		return optionsBitmask;
 	}
 
 	inline const String& getFaction() const {
@@ -283,14 +282,6 @@ public:
 
 	inline float getScale() const {
 		return scale;
-	}
-	
-	inline float getElite() const {
-		return elite;
-	}
-	
-	void setElite(float e) {
-		elite = e;
 	}
 
 	inline int getDamageMin() const {
@@ -339,9 +330,7 @@ public:
 	}
 
 	inline uint32 getPvpBitmask() const {
-//	uint32 newpvpBitmask = pvpBitmask;
-//	if (newpvpBitmask == 0) newpvpBitmask = 1;
-		return pvpBitmask;//changing this works
+		return pvpBitmask;
 	}
 
 	inline uint32 getCreatureBitmask() const {

@@ -27,14 +27,7 @@ public:
 		if (play == nullptr)
 			return;
 
-		//ManagedReference<CreatureObject*> creature = dynamic_cast<CreatureObject*>(parent.get().get());
-
 		ManagedReference<SceneObject*> strongParent = play->getParent().get();
-
-//		CreatureObject* player = strongParent->asCreatureObject();
-//
-//		if (player->isInCombat()) //works, but wint turn back on after combat
-//			return;
 
 		if (strongParent == nullptr)
 			return;

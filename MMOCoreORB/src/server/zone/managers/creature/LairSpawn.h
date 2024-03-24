@@ -74,7 +74,7 @@ namespace creature {
 		}
 
 		int getSpawnLimit() const {
-			return -1;
+			return spawnLimit;
 		}
 
 		int getMinDifficulty() const {
@@ -90,7 +90,7 @@ namespace creature {
 		}
 
 		int getWeighting() const {
-			return 1;
+			return weighting;
 		}
 
 		float getSize() const {

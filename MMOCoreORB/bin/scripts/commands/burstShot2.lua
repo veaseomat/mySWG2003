@@ -44,7 +44,7 @@
 BurstShot2Command = {
         name = "burstshot2",
 
-	damageMultiplier = 3.0,
+	damageMultiplier = 4.0,
 	speedMultiplier = 2.0,
 	healthCostMultiplier = 2.0,
 	actionCostMultiplier = 1.25,
@@ -60,7 +60,7 @@ BurstShot2Command = {
 
 	combatSpam = "burstblast",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = CARBINEWEAPON,
 
 	range = -1
 }

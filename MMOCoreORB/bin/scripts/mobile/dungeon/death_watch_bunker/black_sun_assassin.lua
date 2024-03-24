@@ -41,9 +41,7 @@ black_sun_assassin = Creature:new {
 				{group = "wearables_common", chance = 500000},
 				{group = "wearables_uncommon", chance = 500000}
 			}
-		},
-
-		
+		}
 	},
 	weapons = {"pirate_weapons_heavy"},
 	conversationTemplate = "",

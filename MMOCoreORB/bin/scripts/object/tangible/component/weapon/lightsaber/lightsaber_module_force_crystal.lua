@@ -42,49 +42,7 @@
 
 
 object_tangible_component_weapon_lightsaber_lightsaber_module_force_crystal = object_tangible_component_weapon_lightsaber_shared_lightsaber_module_force_crystal:new {
-		gameObjectType = 262156,
---		noTrade = 1,
-		
---	numberExperimentalProperties = {1, 1, 1},
---	experimentalProperties = {"XX", "XX", "XX"},
---	experimentalWeights = {1, 1, 1},
---	experimentalGroupTitles = {"null", "null", "null"},
---	experimentalSubGroupTitles = {"null", "null", "color"},
---	experimentalMin = {0, 0, 1},
---	experimentalMax = {0, 0, 1},
---	experimentalPrecision = {0, 0, 0},
---	experimentalCombineType = {0, 0, 0},
-	
-	numberExperimentalProperties = {1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1},
-	experimentalProperties = {"XX", "XX", "CD", "OQ", "CD", "OQ", "CD", "OQ", "SR", "UT", "CD", "OQ", "OQ", "OQ", "OQ", "XX"},
-	experimentalWeights = {1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1},
-	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "expEffeciency", "expEffeciency", "expEffeciency", "expEffeciency", "null"},
-	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "forcecost", "attackhealthcost", "attackactioncost", "attackmindcost", "color"},
-	experimentalMin = {0, 0, 1, 1, -0.1, 0, 0, 0, 0, 0, 1},
-	experimentalMax = {0, 0, 50, 50, -0.5, 0, -9, 0, 0, 0, 1},
-	experimentalPrecision = {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		
---	numberExperimentalProperties = {1, 1, 1, 2, 2, 2, 2},
---	experimentalProperties = {"XX", "XX", "XX", "CD", "OQ", "CD", "OQ", "CD", "OQ", "CD", "OQ"},
---	experimentalWeights = {1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2},
---	experimentalGroupTitles = {"null", "null", "exp_durability", "expDamage", "expDamage", "expDamage", "expDamage"},
---	experimentalSubGroupTitles = {"null", "null", "hitpoints", "mindamage", "maxdamage", "color", "woundchance"},
---	experimentalMin = {0, 0, 700, 1, 1, 0, 0},
---	experimentalMax = {0, 0, 1400, 50, 50, 11, 10},
---	experimentalPrecision = {0, 0, 0, 0, 0, 1, 1},
---	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1},
-
---	numberExperimentalProperties = {1, 1, 1, 2, 2, 2, 2},
---	experimentalProperties = {"XX", "XX", "XX", "CD", "OQ", "CD", "OQ", "CD", "OQ", "CD", "OQ"},
---	experimentalWeights = {1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2},
---	experimentalGroupTitles = {"null", "null", "exp_durability", "expDamage", "expDamage", "expDamage", "expDamage"},
---	experimentalSubGroupTitles = {"null", "null", "hitpoints", "mindamage", "maxdamage", "color", "woundchance"},
---	experimentalMin = {0, 0, 700, 1, 1, 0, 0},
---	experimentalMax = {0, 0, 1400, 50, 50, 5, 10},
---	experimentalPrecision = {0, 0, 0, 0, 0, 1, 1},
---	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1},
-
+		gameObjectType = 262156
 }
 
 ObjectTemplates:addTemplate(object_tangible_component_weapon_lightsaber_lightsaber_module_force_crystal, "object/tangible/component/weapon/lightsaber/lightsaber_module_force_crystal.iff")

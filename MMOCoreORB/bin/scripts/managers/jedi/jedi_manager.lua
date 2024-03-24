@@ -11,7 +11,7 @@ if _TEST then
 	ITEMTHEATERDATAPAD = 2
 end
 
-jediProgressionType = HOLOGRINDJEDIPROGRESSION
+jediProgressionType = VILLAGEJEDIPROGRESSION
 
 jediManagerName = "JediManager"
 
@@ -82,14 +82,6 @@ function JediManager:canSurrenderSkill(pPlayer, skillName)
 end
 
 function JediManager:onFSTreeCompleted(pCreatureObject, branch)
-	-- Default behaviour for the onFSTreesCompleted event, do nothing.
-end
-
-function JediManager:awardFSpoint(pCreatureObject)
-	-- Default behaviour for the onFSTreesCompleted event, do nothing.
-end
-
-function JediManager:removeFSpoint(pCreatureObject)
 	-- Default behaviour for the onFSTreesCompleted event, do nothing.
 end
 

@@ -44,7 +44,7 @@
 PolearmLegHit3Command = {
         name = "polearmleghit3",
 
-	damageMultiplier = 3.0,
+	damageMultiplier = 2.5,
 	speedMultiplier = 2.25,
 	healthCostMultiplier = 2.0,
 	actionCostMultiplier = 1.5,
@@ -58,7 +58,7 @@ PolearmLegHit3Command = {
 
 	poolsToDamage = ACTION_ATTRIBUTE,
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = POLEARMWEAPON,
 
 	range = -1
 }

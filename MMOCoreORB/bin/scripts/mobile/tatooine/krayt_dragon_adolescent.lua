@@ -2,8 +2,7 @@ krayt_dragon_adolescent = Creature:new {
 	objectName = "@mob/creature_names:krayt_dragon_adolescent",
 	socialGroup = "krayt",
 	faction = "",
-	level = 90,
-	elite = 1.25,
+	level = 336,
 	chanceHit = 30,
 	damageMin = 2270,
 	damageMax = 4250,
@@ -38,7 +37,7 @@ krayt_dragon_adolescent = Creature:new {
 				{group = "armor_all", chance = 2000000},
 				{group = "weapons_all", chance = 2000000},
 			},
-			lootChance = 4000000
+			lootChance = 7720000
 		}
 	},
 	weapons = {},

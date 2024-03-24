@@ -7,7 +7,6 @@
 
 #include "server/zone/objects/creature/CreatureObject.h"
 #include "server/zone/objects/creature/ai/Creature.h"
-#include "server/zone/objects/creature/ai/AiAgent.h"
 #include "server/zone/packets/object/ObjectMenuResponse.h"
 #include "server/zone/objects/creature/events/DespawnCreatureTask.h"
 #include "server/zone/managers/creature/CreatureManager.h"
@@ -63,45 +62,6 @@ int CreatureImplementation::handleObjectMenuSelect(CreatureObject* player, byte 
 	} else {
 		if ((selectedID == 112 || selectedID == 234 || selectedID == 235 || selectedID == 236)) {
 			zone->getCreatureManager()->harvest(_this.getReferenceUnsafeStaticCast(), player, selectedID);
-
-//			CreatureObject* creature = _this.getReferenceUnsafeStaticCast();
-//
-//			//Zone* zone = creature->getZone();
-//
-//			SortedVector<QuadTreeEntry*> closeObjects;
-//			CloseObjectsVector* closeObjectsVector = (CloseObjectsVector*) creature->getCloseObjects();
-//			if (closeObjectsVector == nullptr) {
-//				zone->getInRangeObjects(creature->getWorldPositionX(), creature->getWorldPositionY(), 32, &closeObjects, true);
-//			} else {
-//				closeObjectsVector->safeCopyReceiversTo(closeObjects, CloseObjectsVector::CREOTYPE);
-//			}
-//
-//			for (int i = 0; i < closeObjects.size(); ++i) {
-//				SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
-//
-//				if (obj == nullptr)
-//					continue;
-//
-//				if (obj->getObjectID() == creature->getObjectID())
-//					continue;
-//
-//				CreatureObject* c = obj->asCreatureObject();
-//
-//				if (c == nullptr || c->isPlayerCreature() || !c->isDead())
-//					continue;
-//
-//				if (!creature->isInRange(c, 32))//distance
-//					continue;
-//
-//				Creature* cr2 = cast<Creature*>( c);
-//				Locker clocker(cr2, player);
-//
-////				ManagedReference<CreatureManager*> manager2 = cr2->getZone()->getCreatureManager();
-////				manager2->harvest(cr2, player, type);
-//
-//				zone->getCreatureManager()->harvest(cr2, player, selectedID);
-//
-//			}
 
 			return 0;
 		}
@@ -163,19 +123,19 @@ void CreatureImplementation::fillAttributeList(AttributeListMessage* alm, Creatu
 			alm->insertAttribute("res_meat", "---");
 	}
 
-//	if (creaKnowledge >= 30) {
-//		if (isKiller())
-//			alm->insertAttribute("killer", "yes");
-//		else
-//			alm->insertAttribute("killer", "no");
-//	}
+	if (creaKnowledge >= 30) {
+		if (isKiller())
+			alm->insertAttribute("killer", "yes");
+		else
+			alm->insertAttribute("killer", "no");
+	}
 
 	if (creaKnowledge >= 40) {
 		alm->insertAttribute("ferocity", (int) getFerocity());
 	}
 
-//	if (creaKnowledge >= 45)
-//		alm->insertAttribute("challenge_level", getAdultLevel());
+	if (creaKnowledge >= 45)
+		alm->insertAttribute("challenge_level", getAdultLevel());
 
 	//int skillNum = skillCommands.size();
 	const CreatureAttackMap* attackMap = getAttackMap();
@@ -214,14 +174,14 @@ void CreatureImplementation::fillAttributeList(AttributeListMessage* alm, Creatu
 		alm->insertAttribute("pet_command_19", skillMsg.toString());
 	}
 
-//	if (creaKnowledge >= 90)
-//		alm->insertAttribute("basetohit", getChanceHit());
+	if (creaKnowledge >= 90)
+		alm->insertAttribute("basetohit", getChanceHit());
 
-//	if (creaKnowledge >= 100) {
-//		StringBuffer damageMsg;
-//		damageMsg << getDamageMin() << "-" << getDamageMax();
-//		alm->insertAttribute("cat_wpn_damage", damageMsg.toString());
-//	}
+	if (creaKnowledge >= 100) {
+		StringBuffer damageMsg;
+		damageMsg << getDamageMin() << "-" << getDamageMax();
+		alm->insertAttribute("cat_wpn_damage", damageMsg.toString());
+	}
 }
 
 void CreatureImplementation::scheduleDespawn() {
@@ -231,7 +191,7 @@ void CreatureImplementation::scheduleDespawn() {
 	Reference<DespawnCreatureTask*> despawn = new DespawnCreatureTask(_this.getReferenceUnsafeStaticCast());
 	//despawn->schedule(300000); /// 5 minutes
 	//addPendingTask("despawn", despawn, 45000); /// 45 second
-	addPendingTask("despawn", despawn, 600000);
+	addPendingTask("despawn", despawn, 300000);
 }
 
 bool CreatureImplementation::hasOrganics() {
@@ -281,7 +241,7 @@ void CreatureImplementation::notifyDespawn(Zone* zone) {
 
 bool CreatureImplementation::canHarvestMe(CreatureObject* player) {
 
-	if(!player->isInRange(_this.getReferenceUnsafeStaticCast(), 10.0f)
+	if(!player->isInRange(_this.getReferenceUnsafeStaticCast(), 10.0f) || player->isInCombat() || !player->hasSkill("outdoors_scout_novice")
 			|| player->isDead() || player->isIncapacitated() || isPet())
 		return false;
 
@@ -441,40 +401,17 @@ bool CreatureImplementation::canCollectDna(CreatureObject* player) {
 void CreatureImplementation::loadTemplateDataForBaby(CreatureTemplate* templateData) {
 	loadTemplateData(templateData);
 
-	setCustomObjectName(getDisplayedName() + "\\#F0FFFF" + " (tame)", false);
+	setCustomObjectName(getDisplayedName() + " (baby)", false);
 
-//	setHeight(templateData->getScale() * 0.46, false);
+	setHeight(templateData->getScale() * 0.46, false);
 
-	//int newlvl = level;
+	int newLevel = level / 10;
+	if (newLevel < 1)
+		newLevel = 1;
 
-//	int newLevel = level / 10;
-//
-//	if (newLevel < 1)
-//		newLevel = 1;
-//
-//	setLevel(newLevel, false);
+	setLevel(newLevel, false);
 
 	setBaby(true);
-
-
-//	int ham = 0;
-//
-//	for (int i = 0; i < 9; ++i) {
-//		if (i % 3 == 0) {
-//			ham = getBaseHAM(i) / 10;
-//			setBaseHAM(i, ham);
-//		} else
-//			setBaseHAM(i, ham);
-//	}
-//
-//	for (int i = 0; i < 9; ++i) {
-//		setHAM(i, baseHAM.get(i));
-//	}
-//
-//	for (int i = 0; i < 9; ++i) {
-//		setMaxHAM(i, baseHAM.get(i));
-//	}
-
 
 	clearPvpStatusBit(CreatureFlag::AGGRESSIVE, false);
 	clearPvpStatusBit(CreatureFlag::ENEMY, false);
@@ -485,9 +422,7 @@ void CreatureImplementation::setPetLevel(int newLevel) {
 	if (newLevel == 0)
 		return;
 
-	int oldLevel = getLevel(); //level;
-
-//	setCustomObjectName(getDisplayedName().replaceAll(" [" + oldLevel, " [" + newLevel), false);
+	int oldLevel = level;
 
 	CreatureObjectImplementation::setLevel(newLevel);
 
@@ -497,39 +432,37 @@ void CreatureImplementation::setPetLevel(int newLevel) {
 
 	clearBuffs(false, false);
 
-//	int baseLevel = getTemplateLevel();
+	int baseLevel = getTemplateLevel();
 
-//	float minDmg = calculateAttackMinDamage(baseLevel);
-//	float maxDmg = calculateAttackMaxDamage(baseLevel);
-
-	int newmaxdmg = (getDamageMax() / oldLevel) * newLevel;
+	float minDmg = calculateAttackMinDamage(baseLevel);
+	float maxDmg = calculateAttackMaxDamage(baseLevel);
 
 	Reference<WeaponObject*> defaultWeapon = getSlottedObject("default_weapon").castTo<WeaponObject*>();
 
-//	float ratio = ((float)newLevel) / (float)baseLevel;
-//	minDmg *= ratio;
-//	maxDmg *= ratio;
+	float ratio = ((float)newLevel) / (float)baseLevel;
+	minDmg *= ratio;
+	maxDmg *= ratio;
 
 	if (readyWeapon != nullptr) {
-		//float mod = 1.f - 0.1f*float(readyWeapon->getArmorPiercing());
+		float mod = 1.f - 0.1f*float(readyWeapon->getArmorPiercing());
 
-		readyWeapon->setMinDamage(newmaxdmg * .6);
-		readyWeapon->setMaxDamage(newmaxdmg);
+		readyWeapon->setMinDamage(minDmg * mod);
+		readyWeapon->setMaxDamage(maxDmg * mod);
 	}
 
 	if (defaultWeapon != nullptr) {
-		defaultWeapon->setMinDamage(newmaxdmg * .6);
-		defaultWeapon->setMaxDamage(newmaxdmg);
+		defaultWeapon->setMinDamage(minDmg);
+		defaultWeapon->setMaxDamage(maxDmg);
 	}
 
 	int ham = 0;
 
 	for (int i = 0; i < 9; ++i) {
-//		if (i % 3 == 0) {
+		if (i % 3 == 0) {
 			ham = (getBaseHAM(i) / oldLevel) * newLevel;
 			setBaseHAM(i, ham);
-//		} else
-//			setBaseHAM(i, ham / 100);
+		} else
+			setBaseHAM(i, ham / 100);
 	}
 
 	for (int i = 0; i < 9; ++i) {

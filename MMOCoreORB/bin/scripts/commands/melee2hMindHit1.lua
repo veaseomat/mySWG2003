@@ -43,7 +43,7 @@
 
 Melee2hMindHit1Command = {
         name = "melee2hmindhit1",
-	damageMultiplier = 1.5,
+	damageMultiplier = 1.0,
 	speedMultiplier = 1.25,
 	healthCostMultiplier = 0.5,
 	actionCostMultiplier = 1.0,
@@ -65,7 +65,7 @@ Melee2hMindHit1Command = {
 	  )
 	},
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = TWOHANDMELEEWEAPON,
 
 	animation = "combo_2b", 
 	animType = GENERATE_INTENSITY,

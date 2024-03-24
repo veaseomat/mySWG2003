@@ -401,9 +401,9 @@ bool BuildingObjectImplementation::isAllowedEntry(CreatureObject* player) {
 	if (!isClientObject()) {
 		PlayerObject* ghost = player->getPlayerObject().get();
 
-//		if (ghost != nullptr && ghost->hasPvpTef()) {
-//			return false;
-//		}
+		if (ghost != nullptr && ghost->hasPvpTef()) {
+			return false;
+		}
 	}
 
 	if (getOwnerObjectID() == player->getObjectID())
@@ -915,11 +915,11 @@ uint32 BuildingObjectImplementation::getMaximumNumberOfPlayerItems() {
 
 	//Buildings that don't cost lots have MAXPLAYERITEMS storage space.
 	if (lots == 0)
-		return 1000;
+		return MAXPLAYERITEMS;
 
-	int maxItems = (lots * 1000);
+	auto maxItems = MAXPLAYERITEMS;
 
-	return maxItems;
+	return Math::min(maxItems, lots * 100);
 }
 
 int BuildingObjectImplementation::notifyObjectInsertedToChild(SceneObject* object, SceneObject* child, SceneObject* oldParent) {

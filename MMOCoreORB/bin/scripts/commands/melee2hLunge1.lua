@@ -58,7 +58,7 @@ Melee2hLunge1Command = {
 
 	range = 20,
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = TWOHANDMELEEWEAPON,
 
 	stateEffects = {
 	  StateEffect( 

@@ -351,7 +351,7 @@ void SuiManager::handleCharacterBuilderSelectItem(CreatureObject* player, SuiBox
 		String templatePath = node->getTemplatePath();
 
 		if (templatePath.indexOf(".iff") < 0) { // Non-item selections
-//frog commands
+
 			if (templatePath == "unlearn_all_skills") {
 
 				SkillManager::instance()->surrenderAllSkills(player, true, false);
@@ -490,25 +490,12 @@ void SuiManager::handleCharacterBuilderSelectItem(CreatureObject* player, SuiBox
 			} else if (templatePath == "enhance_character") {
 				bluefrog->enhanceCharacter(player);
 
-			} else if (templatePath == "enhance_character2") {
-				bluefrog->enhanceCharacterDocBuff(player);
-
-			}
-			else if (templatePath == "enhance_character3") {
-				bluefrog->enhanceCharacterDocBuffTHREE(player);
-
-			} else if (templatePath == "enhance_character4") {
-				bluefrog->enhanceCharacterEntBuffONE(player);
-
-			} else if (templatePath == "enhance_character5") {
-				bluefrog->enhanceCharacterEntBuffTWO(player);
-
 			} else if (templatePath == "credits") {
 				{
-					TransactionLog trx(TrxCode::CHARACTERBUILDER, player, 1000000, true);
-					player->addCashCredits(1000000, true);
+					TransactionLog trx(TrxCode::CHARACTERBUILDER, player, 50000, true);
+					player->addCashCredits(50000, true);
 				}
-				player->sendSystemMessage("You have received 1mil Credits");
+				player->sendSystemMessage("You have received 50.000 Credits");
 
 			} else if (templatePath == "faction_rebel") {
 				ghost->increaseFactionStanding("rebel", 100000);

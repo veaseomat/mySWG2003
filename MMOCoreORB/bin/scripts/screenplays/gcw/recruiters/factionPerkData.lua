@@ -82,7 +82,6 @@ rebelRewardData = {
 	},
 
 	hirelings = {
---		pvpreb = { type=factionRewardType.hireling, display="lvl 100 Rebel Player Companion", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="pvpreb", cost=1000},
 		rebel_trooper = { type=factionRewardType.hireling, display="@mob/creature_names:rebel_trooper", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="rebel_trooper", cost=150},
 		senior_specforce_heavy_weapons_specialist = { type=factionRewardType.hireling, display="@mob/creature_names:senior_specforce_heavy_weapons_specialist", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="senior_specforce_heavy_weapons_specialist", cost=450},
 		senior_specforce_infiltrator = { type=factionRewardType.hireling, display="@mob/creature_names:senior_specforce_infiltrator", item="object/intangible/pet/pet_control.iff", controlledObjectTemplate="senior_specforce_infiltrator", cost=450},

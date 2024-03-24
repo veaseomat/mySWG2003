@@ -5,7 +5,6 @@
 #ifndef HEALDAMAGECOMMAND_H_
 #define HEALDAMAGECOMMAND_H_
 
-#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/objects/building/BuildingObject.h"
 #include "server/zone/objects/scene/SceneObject.h"
 #include "server/zone/objects/tangible/pharmaceutical/StimPack.h"
@@ -50,7 +49,7 @@ public:
 		}
 
 		//Force the delay to be at least 4 seconds.
-		delay = (delay < 3) ? 3 : delay;//reduce heal delay here
+		delay = (delay < 4) ? 4 : delay;
 
 		StringIdChatParameter message("healing_response", "healing_response_58"); //You are now ready to heal more damage.
 		Reference<InjuryTreatmentTask*> task = new InjuryTreatmentTask(creature, message, "injuryTreatment");
@@ -302,8 +301,8 @@ public:
 
 			sendHealMessage(creature, targetCreature, healthHealed, actionHealed, mindHealed);
 
-//			if (targetCreature != creature && !targetCreature->isPet())
-				awardXp(creature, "medical", (healthHealed + actionHealed + mindHealed)); //No experience for healing yourself or pets.
+			if (targetCreature != creature && !targetCreature->isPet())
+				awardXp(creature, "medical", (healthHealed + actionHealed)); //No experience for healing yourself or pets.
 
 			checkForTef(creature, targetCreature);
 		}
@@ -537,14 +536,8 @@ public:
 		Locker locker(stimPack);
 		stimPack->decreaseUseCount();
 
-//		if (targetCreature != creature && !targetCreature->isPet())
-//			awardXp(creature, "medical", (healthHealed + actionHealed)); //No experience for healing yourself.
-
-			awardXp(creature, "medical", (healthHealed + actionHealed + mindHealed)); //No experience for healing yourself.
-
-//			if (System::random(50) >= 50){
-//				JediManager::instance()->awardFSpoint(creature);
-//			}
+		if (targetCreature != creature && !targetCreature->isPet())
+			awardXp(creature, "medical", (healthHealed + actionHealed)); //No experience for healing yourself.
 
 		if (targetCreature != creature)
 			clocker.release();

@@ -156,7 +156,6 @@ void LairObserverImplementation::checkForHeal(TangibleObject* lair, TangibleObje
 }
 
 void LairObserverImplementation::healLair(TangibleObject* lair, TangibleObject* attacker){
-	return;
 	Locker locker(lair);
 
 	if (lair->getZone() == nullptr)
@@ -206,7 +205,7 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 	if (forceSpawn) {
 		spawnNumber.increment();
 	} else if (getMobType() == LairTemplate::NPC) {
-		return false;//this lets npc spawn multiple when disabled
+		return false;
 	} else {
 		int conditionDamage = lair->getConditionDamage();
 		int maxCondition = lair->getMaxCondition();
@@ -264,10 +263,9 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 			amountToSpawn = System::random(lairTemplate->getSpawnLimit() / 2) + (lairTemplate->getSpawnLimit() / 2);
 		}
 
-	//	amountToSpawn *= 1.3;
+		if (amountToSpawn < 1)
+			amountToSpawn = 1;
 
-		if (amountToSpawn < 1)	amountToSpawn = 1;
-		
 		for (int i = 0; i < amountToSpawn; i++) {
 			int num = System::random(mobiles->size() - 1);
 			const String& mob = mobiles->get(num);

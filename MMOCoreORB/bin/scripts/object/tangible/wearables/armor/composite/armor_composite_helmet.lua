@@ -86,7 +86,7 @@ object_tangible_wearables_armor_composite_armor_composite_helmet = object_tangib
 	-- Damage types in WeaponObject
 	vulnerability = STUN + LIGHTSABER,
 
-	specialResists = ELECTRICITY + KINETIC,
+	specialResists = ELECTRICITY,
 
 	-- These are default Blue Frog stats
 	healthEncumbrance = 80,
@@ -98,10 +98,10 @@ object_tangible_wearables_armor_composite_armor_composite_helmet = object_tangib
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
 
-	kinetic = 80,
+	kinetic = 65,
 	energy = 65,
 	electricity = 80,
-	stun = 0,
+	stun = 25,
 	blast = 65,
 	heat = 65,
 	cold = 65,

@@ -30,7 +30,7 @@ junk_dender = Creature:new {
 	templates = {"object/creature/npc/base/whiphid_base_male.iff"}, -- object/mobile/junk_dender.iff has a typo in it's appearanceFilename
 	lootGroups = {},
 	weapons = {},
-	conversationTemplate = "junkDealerGenericConvoTemplate",
+	conversationTemplate = "junkDealerDenderConvoTemplate",
 	attacks = {}
 }
 

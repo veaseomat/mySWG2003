@@ -71,7 +71,6 @@ object_tangible_crafting_station_weapon_station = object_tangible_crafting_stati
 
 	stationType = 7,
 	complexityLevel = 100,
-	usemodifier = 45,
 
 	numberExperimentalProperties = {1, 1, 1, 1},
 	experimentalProperties = {"XX", "XX", "XX", "CD"},

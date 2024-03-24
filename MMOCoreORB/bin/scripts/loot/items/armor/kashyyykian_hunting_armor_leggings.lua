@@ -5,7 +5,6 @@ kashyyykian_hunting_armor_leggings = {
 	directObjectTemplate = "object/tangible/wearables/armor/kashyyykian_hunting/armor_kashyyykian_hunting_leggings.iff",
 	craftingValues = {
 		{"armor_rating",1,1,0},
-		{"kineticeffectiveness",10,40,10},
 		{"armor_effectiveness",8,39,10},
 		{"armor_integrity",30000, 55000,0},
 		{"armor_health_encumbrance",70,40,0},

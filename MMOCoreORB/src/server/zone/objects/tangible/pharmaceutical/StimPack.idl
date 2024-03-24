@@ -71,9 +71,9 @@ class StimPack extends PharmaceuticalObject {
 		if (isPetStimPack() || isDroidRepairKit()) {
 			return power;
 		} else {
-			float modSkill = healer.getSkillMod("healing_injury_treatment") / 1000;
+			float modSkill = (float) healer.getSkillMod("healing_injury_treatment");
 
-			return power + (power * modSkill); //(100 + modSkill) / 100 * power;
+			return (100 + modSkill) / 100 * power;
 		}
 	}
 

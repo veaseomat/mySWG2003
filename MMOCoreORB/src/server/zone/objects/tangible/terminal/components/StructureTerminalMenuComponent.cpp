@@ -101,7 +101,7 @@ void StructureTerminalMenuComponent::fillObjectMenuResponse(SceneObject* sceneOb
 					menuResponse->addRadialMenuItemToRadialID(118, 68, 3, "@player_structure:management_remove_turnstile"); //Remove Access Fee
 
 			}
-//remove vendors here
+
 			if (creature->hasSkill("crafting_artisan_business_03"))
 				menuResponse->addRadialMenuItemToRadialID(118, 130, 3, "@player_structure:create_vendor"); //Create Vendor
 
@@ -122,7 +122,6 @@ void StructureTerminalMenuComponent::fillObjectMenuResponse(SceneObject* sceneOb
 	} else if(structureObject->isOnPermissionList("VENDOR", creature)) {
 		if (creature->hasSkill("crafting_artisan_business_03")) {
 			menuResponse->addRadialMenuItem(118, 3, "@player_structure:management"); //Structure Management
-			//remove vendor here
 			menuResponse->addRadialMenuItemToRadialID(118, 130, 3, "@player_structure:create_vendor"); //Create Vendor
 		}
 	}

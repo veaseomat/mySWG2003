@@ -93,7 +93,7 @@ Vector3 DestroyMissionObjectiveImplementation::findValidSpawnPosition(Zone* zone
 	if (zone == nullptr)
 		return position;
 
-	float newX = spawnActiveArea->getPositionX() + (256.0f - (float) System::random(512));//mission distances here
+	float newX = spawnActiveArea->getPositionX() + (256.0f - (float) System::random(512));
 	float newY = spawnActiveArea->getPositionY() + (256.0f - (float) System::random(512));
 
 	float height = zone->isWithinBoundaries(Vector3(newX, newY, 0)) ? zone->getHeight(newX, newY) : 0;
@@ -213,7 +213,7 @@ void DestroyMissionObjectiveImplementation::spawnLair() {
 	 	lairObject->setFaction(lair->getFaction());
 	 	lairObject->setPvpStatusBitmask(CreatureFlag::ATTACKABLE);
 	 	lairObject->setOptionsBitmask(0, false);
-	 	lairObject->setMaxCondition(difficultyLevel * 100);
+	 	lairObject->setMaxCondition(difficultyLevel * (900 + System::random(200)));
 	 	lairObject->setConditionDamage(0, false);
 	 	lairObject->initializePosition(pos.getX(), pos.getZ(), pos.getY());
 	 	lairObject->setDespawnOnNoPlayersInRange(false);

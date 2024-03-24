@@ -44,7 +44,7 @@
 StartleShot2Command = {
         name = "startleshot2",
 
-	damageMultiplier = 1.25,
+	damageMultiplier = 4.0,
 	speedMultiplier = 2.0,
 	healthCostMultiplier = 0.5,
 	actionCostMultiplier = 0.5,
@@ -72,7 +72,7 @@ StartleShot2Command = {
 
 	combatSpam = "startleshot",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = RIFLEWEAPON,
 
 	range = -1
 }

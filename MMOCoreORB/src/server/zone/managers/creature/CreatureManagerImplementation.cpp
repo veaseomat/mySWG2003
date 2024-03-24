@@ -5,7 +5,6 @@
  *      Author: victor
  */
 
-#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/managers/creature/CreatureManager.h"
 #include "server/zone/objects/creature/ai/CreatureTemplate.h"
 #include "CreatureTemplateManager.h"
@@ -104,14 +103,12 @@ SceneObject* CreatureManagerImplementation::spawnLair(unsigned int lairTemplate,
  		return nullptr;
  	}
 
- 	if (difficultyLevel > 100) difficultyLevel = 100;
-
  	Locker blocker(building);
 
  	building->setFaction(lairTmpl->getFaction());
  	building->setPvpStatusBitmask(CreatureFlag::ATTACKABLE);
  	building->setOptionsBitmask(0, false);
- 	building->setMaxCondition(difficultyLevel * (900 + System::random(200)));//lair condition here
+ 	building->setMaxCondition(difficultyLevel * (900 + System::random(200)));
  	building->setConditionDamage(0, false);
  	building->initializePosition(x, z, y);
  	building->setDespawnOnNoPlayersInRange(true);
@@ -536,7 +533,7 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 	try {
 		ManagedReference<CreatureObject*> player = copyThreatMap.getHighestDamageGroupLeader();
 
-		uint64 ownerID = 0;//loot owner changed in loot command
+		uint64 ownerID = 0;
 
 		if (player != nullptr) {
 
@@ -586,8 +583,6 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 
 		SceneObject* creatureInventory = destructedObject->getSlottedObject("inventory");
 
-		//this might be where i need to add holocron loot to creatures
-
 		if (creatureInventory != nullptr && player != nullptr && player->isPlayerCreature()) {
 			LootManager* lootManager = zoneServer->getLootManager();
 
@@ -609,60 +604,6 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 			} else {
 				trx.abort() << "createLoot failed for ai object.";
 			}
-
-			if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-				trx.commit(true);
-			} else {
-				trx.abort() << "createLoot failed for ai object.";
-			}
-
-			if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-				trx.commit(true);
-			} else {
-				trx.abort() << "createLoot failed for ai object.";
-			}
-
-
-//			if (System::random(100) >= 50){
-//				if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-//					trx.commit(true);
-//				} else {
-//					trx.abort() << "createLoot failed for ai object.";
-//				}
-//			}
-
-
-//			int holochance = 350;
-//			if (System::random(holochance) >= holochance){
-//				lootManager->createLoot(trx, creatureInventory, "holocron_3", destructedObject);
-//			}
-
-//			ManagedReference<ZoneClientSession*> client = player->getClient();
-//
-//			if (client != nullptr) {
-//				int accID = client->getAccountID();
-//				//$50
-//
-//
-//				if (accID == 1 || accID == 83 || accID == 122 || accID == 4490 || accID == 696969)	{
-//					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-//						trx.commit(true);
-//						player->sendSystemMessage("you double loot, ty for donating!");
-//					} else {
-//						trx.abort() << "createLoot failed for ai object.";
-//					}
-//				}
-//				//$125
-//				if (accID == 1 || accID == 696969)	{
-//					if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-//						trx.commit(true);
-//						player->sendSystemMessage("you receive triple loot, ty for donating!");
-//					} else {
-//						trx.abort() << "createLoot failed for ai object.";
-//					}
-//				}
-//			}
-
 		}
 
 		Reference<AiAgent*> strongReferenceDestructedObject = destructedObject;
@@ -795,8 +736,6 @@ void CreatureManagerImplementation::droidHarvest(Creature* creature, CreatureObj
 		return;
 	}
 
-	//quantityExtracted *= 10;
-
 	TransactionLog trx(TrxCode::HARVESTED, owner, resourceSpawn);
 
 	if (pet->hasStorage()) {
@@ -869,7 +808,7 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 	if (!creature->canHarvestMe(player))
 		return;
 
-	if (!player->isInRange(creature, 32))
+	if (!player->isInRange(creature, 7))
 		return;
 
 	ManagedReference<ResourceManager*> resourceManager = zone->getZoneServer()->getResourceManager();
@@ -931,22 +870,19 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 
 	String creatureHealth = "";
 
-	quantityExtracted = int(quantityExtracted * 1.25f);
-	creatureHealth = "creature_quality_fat";
-
-//	if (density > 0.75f) {
-//		quantityExtracted = int(quantityExtracted * 1.25f);
-//		creatureHealth = "creature_quality_fat";
-//	} else if (density > 0.50f) {
-//		quantityExtracted = int(quantityExtracted * 1.00f);
-//		creatureHealth = "creature_quality_medium";
-//	} else if (density > 0.25f) {
-//		quantityExtracted = int(quantityExtracted * 0.75f);
-//		creatureHealth = "creature_quality_scrawny";
-//	} else {
-//		quantityExtracted = int(quantityExtracted * 0.50f);
-//		creatureHealth = "creature_quality_skinny";
-//	}
+	if (density > 0.75f) {
+		quantityExtracted = int(quantityExtracted * 1.25f);
+		creatureHealth = "creature_quality_fat";
+	} else if (density > 0.50f) {
+		quantityExtracted = int(quantityExtracted * 1.00f);
+		creatureHealth = "creature_quality_medium";
+	} else if (density > 0.25f) {
+		quantityExtracted = int(quantityExtracted * 0.75f);
+		creatureHealth = "creature_quality_scrawny";
+	} else {
+		quantityExtracted = int(quantityExtracted * 0.50f);
+		creatureHealth = "creature_quality_skinny";
+	}
 
 	float modifier = 1;
 	int baseAmount = quantityExtracted;
@@ -959,8 +895,6 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 
 	if (creature->getParent().get() != nullptr)
 		quantityExtracted = 1;
-
-	quantityExtracted *= 5;
 
 	TransactionLog trx(TrxCode::HARVESTED, player, resourceSpawn);
 	resourceManager->harvestResourceToPlayer(trx, player, resourceSpawn, quantityExtracted);
@@ -1001,10 +935,6 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 
 	if(playerManager != nullptr)
 		playerManager->awardExperience(player, "scout", xp, true);
-
-//	if (System::random(500) == 500) {
-//		JediManager::instance()->awardFSpoint(player);
-//	}
 
 	creature->addAlreadyHarvested(player);
 

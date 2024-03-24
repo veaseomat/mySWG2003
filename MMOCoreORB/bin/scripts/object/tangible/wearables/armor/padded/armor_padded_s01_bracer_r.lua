@@ -88,7 +88,7 @@ object_tangible_wearables_armor_padded_armor_padded_s01_bracer_r = object_tangib
 				"object/mobile/vendor/zabrak_male.iff" },
 
 	-- Damage types in WeaponObject
-	vulnerability = STUN + LIGHTSABER,
+	vulnerability = HEAT + ACID + STUN + LIGHTSABER,
 
 	-- These are default Blue Frog stats
 	healthEncumbrance = 1,
@@ -97,8 +97,6 @@ object_tangible_wearables_armor_padded_armor_padded_s01_bracer_r = object_tangib
 
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
-	
-	specialResists = BLAST,
 
 	kinetic = 15,
 	energy = 15,

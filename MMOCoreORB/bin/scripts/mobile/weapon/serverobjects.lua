@@ -49,8 +49,7 @@ includeFile("weapon/groups/unarmed_weapons.lua")
 includeFile("weapon/groups/novice_weapons.lua")
 includeFile("weapon/groups/corsec_police_weapons.lua")
 includeFile("weapon/groups/geonosian_mercenary_weapons.lua")
-includeFile("weapon/groups/bh_weapons.lua")
-includeFile("weapon/groups/pvpweaps.lua")
+
 
 -- Groups gotten from swgemu
 includeFile("weapon/groups/battle_droid_weapons.lua")

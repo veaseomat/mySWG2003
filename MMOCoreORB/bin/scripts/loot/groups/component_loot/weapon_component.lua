@@ -5,22 +5,16 @@ weapon_component = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "blaster_pistol_barrel", weight = 300000},
-		{itemTemplate = "blaster_power_handler", weight = 300000},
-		{itemTemplate = "blaster_rifle_barrel", weight = 300000},
-		{itemTemplate = "scope_weapon", weight = 300000},
-		{itemTemplate = "stock", weight = 300000},
-		{itemTemplate = "projectile_feed_mechanism", weight = 300000},
-		{itemTemplate = "projectile_pistol_barrel", weight = 300000},
-		{itemTemplate = "projectile_rifle_barrel", weight = 300000},
-		{itemTemplate = "reinforcement_core", weight = 300000},
-		{itemTemplate = "sword_core", weight = 300000},
-		{itemTemplate = "vibro_unit", weight = 300000},
-		
-		{groupTemplate = "weapon_component_advanced", weight = 3300000},
-		--{itemTemplate = "saber_rcp", weight = 500000},
-		
-		{groupTemplate = "armor_component", weight = 3400000},
+		{itemTemplate = "blaster_pistol_barrel", weight = 1000000},
+		{itemTemplate = "blaster_power_handler", weight = 1000000},
+		{itemTemplate = "blaster_rifle_barrel", weight = 1000000},
+		{itemTemplate = "scope_weapon", weight = 1000000},
+		{itemTemplate = "stock", weight = 1000000},
+		{itemTemplate = "projectile_feed_mechanism", weight = 1000000},
+		{itemTemplate = "projectile_pistol_barrel", weight = 1000000},
+		{itemTemplate = "projectile_rifle_barrel", weight = 1000000},
+		{itemTemplate = "reinforcement_core", weight = 1000000},
+		{itemTemplate = "sword_core", weight = 1000000}
 	},
 }
 

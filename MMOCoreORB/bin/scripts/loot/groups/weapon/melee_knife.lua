@@ -5,14 +5,9 @@ melee_knife = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "knife_dagger", weight = 2000000},
-		{itemTemplate = "knife_survival", weight = 2000000},
-		{itemTemplate = "one_handed_ryyk_blade", weight = 2000000},
-		{itemTemplate = "knife_vibroblade", weight = 1000000},
-		{itemTemplate = "one_handed_sword", weight = 1000000},
-		{itemTemplate = "one_handed_curved_sword", weight = 1000000},
-		{itemTemplate = "baton_gaderiffi", weight = 500000},
-		{itemTemplate = "baton_stun", weight = 500000},
+		{itemTemplate = "knife_dagger", weight = 3333333},
+		{itemTemplate = "knife_stone", weight = 3333333},
+		{itemTemplate = "knife_survival", weight = 3333334}
 	}
 }
 

@@ -30,7 +30,7 @@ junk_nado = Creature:new {
 	templates = {"object/mobile/junk_nado.iff"},
 	lootGroups = {},
 	weapons = {},
-	conversationTemplate = "junkDealerGenericConvoTemplate",
+	conversationTemplate = "junkDealerNadoConvoTemplate",
 	attacks = {}
 }
 

@@ -79,7 +79,6 @@ includeFile("lair/creature_dynamic/dantooine_voritor_jungle_lizard_neutral_none.
 includeFile("lair/creature_dynamic/dantooine_voritor_lizard_neutral_none.lua")
 includeFile("lair/creature_dynamic/dantooine_voritor_tracker_neutral_none.lua")
 includeFile("lair/creature_dynamic/dantooine_voritor_vexed_neutral_none.lua")
-includeFile("lair/creature_dynamic/dantooine_graul_marauder.lua")
 
 includeFile("lair/creature_dynamic/dathomir_baz_nitch_herd_neutral_none.lua")
 includeFile("lair/creature_dynamic/dathomir_baz_nitch_kinad_neutral_none.lua")
@@ -395,7 +394,6 @@ includeFile("lair/creature_dynamic/tatooine_womprat_slum_rat_neutral_none.lua")
 includeFile("lair/creature_dynamic/tatooine_worrt_herd_neutral_none.lua")
 includeFile("lair/creature_dynamic/tatooine_zucca_boar_pack_neutral_none.lua")
 
-includeFile("lair/creature_dynamic/yavin4_acklay_pack_neutral_none.lua")
 includeFile("lair/creature_dynamic/yavin4_angler_herd_neutral_none.lua")
 includeFile("lair/creature_dynamic/yavin4_angler_pack_neutral_none.lua")
 includeFile("lair/creature_dynamic/yavin4_choku_herd_neutral_none.lua")

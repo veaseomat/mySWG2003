@@ -161,19 +161,3 @@ void JediManager::onFSTreeCompleted(CreatureObject* creature, const String& bran
 
 	luaStartTask->callFunction();
 }
-
-void JediManager::awardFSpoint(CreatureObject* creature) {
-	Lua* lua = DirectorManager::instance()->getLuaInstance();
-	Reference<LuaFunction*> luaStartTask = lua->createFunction(getJediManagerName(), "awardFSpoint", 0);
-	*luaStartTask << creature;
-
-	luaStartTask->callFunction();
-}
-
-void JediManager::removeFSpoint(CreatureObject* creature) {
-	Lua* lua = DirectorManager::instance()->getLuaInstance();
-	Reference<LuaFunction*> luaStartTask = lua->createFunction(getJediManagerName(), "removeFSpoint", 0);
-	*luaStartTask << creature;
-
-	luaStartTask->callFunction();
-}

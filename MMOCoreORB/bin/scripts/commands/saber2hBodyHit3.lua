@@ -59,7 +59,7 @@ Saber2hBodyHit3Command = {
 	
 	poolsToDamage = HEALTH_ATTRIBUTE,
 	
-	weaponType = JEDIWEAPON,
+	weaponType = TWOHANDJEDIWEAPON,
 
 	range = -1
 }

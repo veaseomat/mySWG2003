@@ -11,7 +11,6 @@ require("screenplays.screenplay")
 ExperienceConverter = ScreenPlay:new {
 	xpConversion = {
 		combat = {
-			{ "jedi_general", 1 },
 			{ "bountyhunter", 5 },
 			{ "combat_general", 3 },
 			{ "combat_meleespecialize_onehand", 30 },
@@ -25,7 +24,6 @@ ExperienceConverter = ScreenPlay:new {
 			{ "squadleader", 90 }
 		},
 		senses = {
-			{ "jedi_general", 1 },
 			{ "bio_engineer_dna_harvesting", 3 },
 			{ "camp", 5 },
 			{ "creaturehandler", 9 },
@@ -42,7 +40,6 @@ ExperienceConverter = ScreenPlay:new {
 			{ "trapping", 25 },
 		},
 		reflex = {
-			{ "jedi_general", 1 },
 			{ "bountyhunter", 5 },
 			{ "combat_general", 3 },
 			{ "combat_meleespecialize_onehand", 30 },
@@ -56,7 +53,6 @@ ExperienceConverter = ScreenPlay:new {
 			{ "squadleader", 90 }
 		},
 		crafting = {
-			{ "jedi_general", 1 },
 			{ "crafting_bio_engineer_creature", 4 },
 			{ "crafting_clothing_armor", 5 },
 			{ "crafting_clothing_general", 5 },
@@ -77,7 +73,7 @@ function ExperienceConverter:getBranchLearnList(pPlayer)
 	end
 
 	local branchList = "\nNothing"
-	local hasBranch = true--false
+	local hasBranch = false
 	for i = 1, #VillageJediManagerCommon.forceSensitiveBranches, 1 do
 		local branchName = VillageJediManagerCommon.forceSensitiveBranches[i]
 
@@ -286,20 +282,20 @@ function ExperienceConverter:convertXpTransferCallback(pPlayer, pSui, eventIndex
 	local fsXpAmount = PlayerObject(pGhost):getExperience("fs_" .. conversionType)
 	local fsXpCap = PlayerObject(pGhost):getExperienceCap("fs_" .. conversionType)
 
---	if (fsXpCap > 0) then
---		if (fsXpCap <= fsXpAmount) then
---			CreatureObject(pPlayer):sendSystemMessage("@quest/force_sensitive/utils:convert_at_fs_skill_cap")
---			return
---		end
---
---		if (fsXpAmount + convertedXp > fsXpCap) then
---			convertedXp = fsXpCap - fsXpAmount;
---			xpToConvert = convertedXp * ratio;
---		end
---	else
---		CreatureObject(pPlayer):sendSystemMessage("@quest/force_sensitive/utils:convert_no_skill")--this error
---		return
---	end
+	if (fsXpCap > 0) then
+		if (fsXpCap <= fsXpAmount) then
+			CreatureObject(pPlayer):sendSystemMessage("@quest/force_sensitive/utils:convert_at_fs_skill_cap")
+			return
+		end
+
+		if (fsXpAmount + convertedXp > fsXpCap) then
+			convertedXp = fsXpCap - fsXpAmount;
+			xpToConvert = convertedXp * ratio;
+		end
+	else
+		CreatureObject(pPlayer):sendSystemMessage("@quest/force_sensitive/utils:convert_no_skill")
+		return
+	end
 
 	if (convertedXp < 1) then
 		CreatureObject(pPlayer):sendSystemMessage("@quest/force_sensitive/utils:convert_allocate_more_xp")

@@ -145,10 +145,6 @@ public:
 	 * @param branch String of the branch name.
 	 */
 	void onFSTreeCompleted(CreatureObject* creature, const String& branch);
-
-	void awardFSpoint(CreatureObject* creature);
-
-	void removeFSpoint(CreatureObject* creature);
 };
 
 }

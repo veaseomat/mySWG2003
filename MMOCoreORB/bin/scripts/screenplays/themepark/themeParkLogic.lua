@@ -13,7 +13,7 @@ ThemeParkLogic = ScreenPlay:new {
 	genericGiver = false,
 	className = "ThemeParkLogic",
 	screenPlayState = "theme_park_general",
-	distance = 1000,--distance to generic npc deliver?
+	distance = 1000,
 	missionDescriptionStf = "",
 	missionCompletionMessageStf = "",
 	planetName = "",
@@ -1620,7 +1620,7 @@ function ThemeParkLogic:hasEliteCombatProfession(pPlayer)
 		return false
 	end
 
-	return CreatureObject(pPlayer):getLevel() > 6    --VERY IMPORTANT calculateplayerlevel or npc getlevel?
+	return CreatureObject(pPlayer):getLevel() > 6
 end
 
 function ThemeParkLogic:requiresEliteCombatProfession()
@@ -1866,49 +1866,6 @@ function ThemeParkLogic:handleMissionReward(pConversingPlayer)
 			self:giveItemReward(pConversingPlayer, reward.itemTemplate)
 		end
 	end
-	
-	local morecredits = getRandomNumber(100, 10000)
-	self:giveCredits(pConversingPlayer, morecredits)
-	
-	local pInventory = CreatureObject(pConversingPlayer):getSlottedObject("inventory")
-	local ranlvl = getRandomNumber(1, 100)
-	createLoot(pInventory, "junk", ranlvl, false)
-	
-	if getRandomNumber(1, 20) >= 20 then --moved to palyer manager
-			HologrindJediManager.awardFSpoint(pConversingPlayer)
-	end
-	
---	if getRandomNumber(1, 100) >= 100 then --moved to palyer manager
---			createLoot(pInventory, "holocron_light", 100, false)
---	end
-	
---	self:giveLoot(pConversingPlayer, "junk")
-	
---	local unlockluck = readScreenPlayData(pConversingPlayer, "forcesensitivity", "unlock")
---		
---	if getRandomNumber(1, 100) >= 100 then
-----			self:giveItemReward(pConversingPlayer, "object/tangible/jedi/no_drop_jedi_holocron_light.iff")
-----			CreatureObject(pConversingPlayer):sendSystemMessage("The questgiver hands you a mysterious item...")
---	local pGhost = CreatureObject(pConversingPlayer):getPlayerObject()
-----	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pConversingPlayer)
---		
---		if not CreatureObject(pConversingPlayer):hasSkill("force_title_jedi_rank_01") then-- and learnedBranches >= 3 then
---
---				writeScreenPlayData(pConversingPlayer, "forcesensitivity", "unlock", unlockluck + 1)
---				
-----			PlayerObject(pGhost):setJediState(2)
-----					
-----			awardSkill(pConversingPlayer, "force_title_jedi_rank_01")
-----		
-----			writeScreenPlayData(pConversingPlayer, "PadawanTrials", "startedTrials", 1)		
-----			
-----			CreatureObject(pConversingPlayer):playEffect("clienteffect/trap_electric_01.cef", "")
-----			CreatureObject(pConversingPlayer):playMusicMessage("sound/music_become_jedi.snd")
-----
-----			PVPBHIntro:startStepDelay(pConversingPlayer, 3)
---		end
---		
---	end
 end
 
 function ThemeParkLogic:givePermission(pConversingPlayer, permissionGroup)
@@ -1941,10 +1898,8 @@ function ThemeParkLogic:giveLoot(pConversingPlayer, lootGroup)
 	if pInventory == nil then
 		return
 	end
-	
---	local ranlvl = getRandomNumber(1, 300)
 
---	createLoot(pInventory, lootGroup, ranlvl, true)
+	createLoot(pInventory, lootGroup, 0, true)
 	CreatureObject(pConversingPlayer):sendSystemMessage("@theme_park/messages:theme_park_reward")
 end
 
@@ -1958,10 +1913,8 @@ function ThemeParkLogic:giveLootSet(pConversingPlayer, lootGroup, setSize)
 	if pInventory == nil then
 		return
 	end
-	
---	local ranlvl = getRandomNumber(1, 300)
 
---	createLootSet(pInventory, lootGroup, ranlvl, true, setSize)
+	createLootSet(pInventory, lootGroup, 0, true, setSize)
 	CreatureObject(pConversingPlayer):sendSystemMessage("@theme_park/messages:theme_park_reward")
 end
 
@@ -2182,7 +2135,7 @@ function ThemeParkLogic:escortedNpcCloseEnough(pConversingPlayer)
 	local objectID = readData(CreatureObject(pConversingPlayer):getObjectID() .. ":missionSpawn:no1")
 	local pNpc = getSceneObject(objectID)
 
-	return pNpc ~= nil --and SceneObject(pConversingPlayer):getDistanceTo(pNpc) < 64
+	return pNpc ~= nil and SceneObject(pConversingPlayer):getDistanceTo(pNpc) < 64
 end
 
 function ThemeParkLogic:resetThemePark(pConversingPlayer)

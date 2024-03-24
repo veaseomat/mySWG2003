@@ -99,7 +99,7 @@ object_weapon_ranged_rifle_rifle_acid_beam = object_weapon_ranged_rifle_shared_r
 
 
 	-- The values below are the default values.  To be used for blue frog objects primarily
-	healthAttackCost = 62,
+	healthAttackCost = 35,
 	actionAttackCost = 35,
 	mindAttackCost = 15,
 	forceCost = 0,
@@ -107,16 +107,16 @@ object_weapon_ranged_rifle_rifle_acid_beam = object_weapon_ranged_rifle_shared_r
 	pointBlankRange = 0,
 	pointBlankAccuracy = -10,
 
-	idealRange = 35,
-	idealAccuracy = 20,
+	idealRange = 16,
+	idealAccuracy = -40,
 
-	maxRange = 64,
-	maxRangeAccuracy = -35,
+	maxRange = 48,
+	maxRangeAccuracy = -120,
 
-	minDamage = 330,
-	maxDamage = 770,
+	minDamage = 60,
+	maxDamage = 160,
 
-	attackSpeed = 5.5,
+	attackSpeed = 5.2,
 
 	woundsRatio = 27,
 
@@ -125,8 +125,8 @@ object_weapon_ranged_rifle_rifle_acid_beam = object_weapon_ranged_rifle_shared_r
 	experimentalWeights = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "exp_durability", "expRange", "null", "expRange", "expRange", "expEffeciency", "expEffeciency", "expEffeciency"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "hitpoints", "zerorangemod", "midrange", "midrangemod", "maxrangemod", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 200, 470, 7.7, 19, 750, -21, 35, 15, -65, 103, 65, 20},
-	experimentalMax = {0, 0, 330, 770, 5.5, 35, 1500, 5, 35, 25, -35, 62, 35, 15},
+	experimentalMin = {0, 0, 200, 470, 7.7, 19, 750, 15, 35, -21, -121, 103, 65, 20},
+	experimentalMax = {0, 0, 330, 770, 5.5, 35, 1500, 25, 35, -5, -90, 62, 35, 15},
 	experimentalPrecision = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 }

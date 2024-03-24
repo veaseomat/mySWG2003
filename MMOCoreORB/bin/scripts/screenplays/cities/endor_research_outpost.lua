@@ -19,7 +19,6 @@ function EndorResearchOutpostScreenPlay:spawnMobiles()
 	self:setMoodString(pNpc, "npc_imperial")
 
 	--outside
-	spawnMobile("endor", "boba_fett", 60, -4683, 13, 4331, 156.98, 0)
 	spawnMobile("endor", "businessman", 60, 3175.37, 24, -3490.78, 156.98, 0)
 	spawnMobile("endor", "businessman", 60, 3190.35, 24, -3434.93, 256.64, 0)
 	spawnMobile("endor", "businessman", 60, 3239.41, 24, -3432.75, 321.916, 0)

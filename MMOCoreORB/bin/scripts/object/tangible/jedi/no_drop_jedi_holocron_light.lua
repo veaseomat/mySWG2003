@@ -44,7 +44,7 @@
 object_tangible_jedi_no_drop_jedi_holocron_light = object_tangible_jedi_shared_no_drop_jedi_holocron_light:new {
 	objectMenuComponent = "HolocronMenuComponent",
 
-	noTrade = 1,
+	noTrade = 1
 
 }
 

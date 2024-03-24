@@ -3,7 +3,6 @@ axkva_min = Creature:new {
 	socialGroup = "nightsister",
 	faction = "nightsister",
 	level = 302,
-	elite = 2.0,
 	chanceHit = 30,
 	damageMin = 1645,
 	damageMax = 3000,

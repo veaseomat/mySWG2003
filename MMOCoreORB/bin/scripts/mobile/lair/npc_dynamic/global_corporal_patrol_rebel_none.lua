@@ -1,9 +1,8 @@
 global_corporal_patrol_rebel_none = Lair:new {
 	mobiles = {
-		{"rebel_corporal",1},
-		{"imperial_corporal",1}
+		{"rebel_corporal",1}
 	},
-	spawnLimit = 20,
+	spawnLimit = 9,
 	buildingsVeryEasy = {},
 	buildingsEasy = {},
 	buildingsMedium = {},

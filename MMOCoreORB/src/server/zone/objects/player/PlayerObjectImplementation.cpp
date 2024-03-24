@@ -325,7 +325,7 @@ int PlayerObjectImplementation::calculateBhReward() {
 
 	if (getJediState() >= 4) // Minimum if player is knight
 		minReward = 50000;
-//had everything below disabled 
+
 	int skillPoints = getSpentJediSkillPoints();
 	int reward = skillPoints * 1000;
 
@@ -585,17 +585,16 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 
 	int xpCap = -1;
 
-	//remove this for xp caps
-//	if (xpTypeCapList.contains(xpType))
-//		xpCap = xpTypeCapList.get(xpType);
-//
-//	if (xpCap < 0)
-//		xpCap = 2000;
-//
-//	if (xp > xpCap) {
-//		valueToAdd = xpCap - (xp - valueToAdd);
-//		xp = xpCap;
-//	}
+	if (xpTypeCapList.contains(xpType))
+		xpCap = xpTypeCapList.get(xpType);
+
+	if (xpCap < 0)
+		xpCap = 2000;
+
+	if (xp > xpCap) {
+		valueToAdd = xpCap - (xp - valueToAdd);
+		xp = xpCap;
+	}
 
 	if (notifyClient) {
 		PlayerObjectDeltaMessage8* dplay8 = new PlayerObjectDeltaMessage8(this);
@@ -628,7 +627,6 @@ void PlayerObjectImplementation::removeExperience(const String& xpType, bool not
 }
 
 bool PlayerObjectImplementation::hasCappedExperience(const String& xpType) const {
-	//remove for no cap?
 	if (experienceList.contains(xpType) && xpTypeCapList.contains(xpType)) {
 		return experienceList.get(xpType) == xpTypeCapList.get(xpType);
 	}
@@ -983,8 +981,6 @@ void PlayerObjectImplementation::doDigest(int fillingReduction) {
 	if (drinkFilling > drinkFillingMax)
 		drinkFilling = drinkFillingMax;
 
-	fillingReduction *= 2; //speeds up digeston
-
 	if (foodFilling > 0) {
 		setFoodFilling(foodFilling - fillingReduction);
 		if (foodFilling < 0)
@@ -1280,11 +1276,6 @@ void PlayerObjectImplementation::setTitle(const String& characterTitle, bool not
 		if(targetSkill == nullptr || !targetSkill->isTitle()) {
 			return;
 		}
-
-		//if(targetSkill == "force_title_jedi_rank_03" || targetSkill == "force_title_jedi_rank_02" || targetSkill == "force_title_jedi_rank_01" || targetSkill == "force_title_jedi_novice") {
-//		if	(targetSkill->getJediStateRequired() > 0)	{
-//			return;
-//		}
 	}
 
 	title = characterTitle;
@@ -1381,20 +1372,12 @@ void PlayerObjectImplementation::notifyOnline() {
 		if (playerTemplate != nullptr) {
 			auto speedTempl = playerTemplate->getSpeed();
 
-			playerCreature->setRunSpeed(speedTempl.get(0));//changing here only affects login, after vehicle speed returns to normal
+			playerCreature->setRunSpeed(speedTempl.get(0));
 		}
 	}
 
 	if (getForcePowerMax() > 0 && getForcePower() < getForcePowerMax())
 		activateForcePowerRegen();
-
-//	for (int i = 0; i < 9; ++i) {
-//		int mod = playerCreature->getBaseHAM(i);
-//		//creature->setBaseHAM(i, mod, false);
-//		//playerCreature->setHAM(i, mod * 5, false);
-//		playerCreature->setMaxHAM(i, mod * 5, false);
-//		//change also in migratestatssession.idl && playercreationmanager.cpp
-//	}
 
 	schedulePvpTefRemovalTask();
 
@@ -2052,10 +2035,7 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	if (creature == nullptr)
 		return;
 
-//	if (creature->isInCombat()) //wasnt working here
-//		return;
-
-	float regen = (float)creature->getSkillMod("jedi_force_power_regen");//reduce by half inf skill points
+	float regen = (float)creature->getSkillMod("jedi_force_power_regen");
 
 	if(regen == 0.0f)
 		return;
@@ -2065,97 +2045,32 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	}
 
 	if (!forceRegenerationEvent->isScheduled()) {
-//		int forceControlMod = 0, forceManipulationMod = 0;
-//
-//		if (creature->hasSkill("force_rank_light_novice")) {
-//			forceControlMod = creature->getSkillMod("force_control_light");
-//			forceManipulationMod = creature->getSkillMod("force_manipulation_light");
-//		} else if (creature->hasSkill("force_rank_dark_novice")) {
-//			forceControlMod = creature->getSkillMod("force_power_dark");
-//			forceManipulationMod = creature->getSkillMod("force_manipulation_dark");
-//		}
-//
-//		regen += (forceControlMod + forceManipulationMod) / 10.f;
+		int forceControlMod = 0, forceManipulationMod = 0;
 
-
-		float frsregen = (creature->getSkillMod("force_manipulation_light") + creature->getSkillMod("force_manipulation_dark")) / 2;
-
-//		if (frsregen > 0) {
-//			regen *= 1.f + (frsregen / 100.f);
-//		}
-
-		if (regen > 0) {
-		regen += 10;
-		regen += frsregen;
+		if (creature->hasSkill("force_rank_light_novice")) {
+			forceControlMod = creature->getSkillMod("force_control_light");
+			forceManipulationMod = creature->getSkillMod("force_manipulation_light");
+		} else if (creature->hasSkill("force_rank_dark_novice")) {
+			forceControlMod = creature->getSkillMod("force_power_dark");
+			forceManipulationMod = creature->getSkillMod("force_manipulation_dark");
 		}
 
-//		if (regen > 100) {
-//		regen = 100;
-//		}
+		regen += (forceControlMod + forceManipulationMod) / 10.f;
 
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_2)) {
-//			regen *= .9;
-//		}
-//
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
-//			regen *= .8;
-//		}
-//
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_1)) {
-//			regen *= .9;
-//		}
-//
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_2)) {
-//			regen *= .8;
-//		}
-//
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_1)) {
-//			regen *= .9;
-//		}
-//
-//		if (creature->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_2)) {
-//			regen *= .8;
-//		}
+		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
+		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
 
-//		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
-//		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
-//
-//		if (regenMultiplier != 0)
-//			regen *= regenMultiplier;
-//
-//		if (regenDivisor != 0)
-//			regen /= regenDivisor;
+		if (regenMultiplier != 0)
+			regen *= regenMultiplier;
 
-		//put wearing armor force cost increase here?
-		for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
-			SceneObject* item = creature->getSlottedObject(i);
-			if (item != nullptr && item->isArmorObject()){
-				regen *= .85;
-			}
-		}
-
-//		bool jarmor = false;
-//		for (int i = 0; i < creature->getSlottedObjectsSize(); ++i) {
-//			SceneObject* item = creature->getSlottedObject(i);
-//			if (item != nullptr && item->isArmorObject()){
-//				jarmor = true;
-//			}
-//		}
-//		if (jarmor == true) regen *= .5;
+		if (regenDivisor != 0)
+			regen /= regenDivisor;
 
 		float timer = regen / 5.f;
 
 		float scheduledTime = 10 / timer;
 		uint64 miliTime = static_cast<uint64>(scheduledTime * 1000.f);
 		forceRegenerationEvent->schedule(miliTime);
-
-//			ManagedReference<WeaponObject*> pweapon = creature->getWeapon();
-//			Reference<PlayerObject*> pghost = creature->getPlayerObject();
-//
-//			if (System::random(10) == 10 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()
-//				VisibilityManager::instance()->increaseVisibility(creature, 10); // Give visibility
-//			}
-
 	}
 }
 
@@ -2381,16 +2296,11 @@ void PlayerObjectImplementation::doForceRegen() {
 
 	uint32 modifier = 1;
 
-	if (creature->isSitting()) {
-
-			modifier = 2;
-	}
-
 	if (creature->isMeditating()) {
 		Reference<ForceMeditateTask*> medTask = creature->getPendingTask("forcemeditate").castTo<ForceMeditateTask*>();
 
 		if (medTask != nullptr)
-			modifier = 6;
+			modifier = 3;
 	}
 
 	uint32 forceTick = tick * modifier;
@@ -2531,7 +2441,7 @@ void PlayerObjectImplementation::schedulePvpTefRemovalTask(bool removeCrackdownG
 			auto gcwCrackdownTefMs = getLastGcwCrackdownCombatActionTimestamp().miliDifference();
 			auto gcwTefMs = getLastGcwPvpCombatActionTimestamp().miliDifference();
 			auto bhTefMs = getLastBhPvpCombatActionTimestamp().miliDifference();
-			auto scheduleTime = gcwTefMs < bhTefMs ? gcwTefMs : bhTefMs;//strange way to do timers here
+			auto scheduleTime = gcwTefMs < bhTefMs ? gcwTefMs : bhTefMs;
 			scheduleTime = gcwCrackdownTefMs < scheduleTime ? gcwCrackdownTefMs : scheduleTime;
 			pvpTefTask->schedule(llabs(scheduleTime));
 		} else {
@@ -3046,7 +2956,7 @@ void PlayerObjectImplementation::recalculateForcePower() {
 	if (player == nullptr)
 		return;
 
-	int maxForce = player->getSkillMod("jedi_force_power_max");//reduce for inf skill points
+	int maxForce = player->getSkillMod("jedi_force_power_max");
 
 	int forcePowerMod = 0, forceControlMod = 0;
 
@@ -3059,13 +2969,7 @@ void PlayerObjectImplementation::recalculateForcePower() {
 	}
 
 	maxForce += (forcePowerMod + forceControlMod) * 10;
-	
-	if (maxForce > 0)
-		maxForce += 250;
 
-//	if (maxForce > 10000)
-//		maxForce = 10000;
-		
 	setForcePowerMax(maxForce, true);
 }
 

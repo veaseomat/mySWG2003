@@ -53,8 +53,8 @@ object_tangible_deed_harvester_deed_harvester_ore_heavy_deed = object_tangible_d
 	experimentalWeights = {1, 1, 1, 1, 2, 1, 2, 1},
 	experimentalGroupTitles = {"null", "null", "expEffeciency", "expStorage", "null"},
 	experimentalSubGroupTitles = {"null", "null", "extractrate", "hoppersize", "hitpoints"},
-	experimentalMin = {0, 0, 100, 1000000, 1000},
-	experimentalMax = {0, 0, 1000, 10000000, 1000},
+	experimentalMin = {0, 0, 3, 100000, 1000},
+	experimentalMax = {0, 0, 7, 150000, 1000},
 	experimentalPrecision = {0, 0, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 4},
 }

@@ -470,7 +470,7 @@ void PlanetManagerImplementation::loadTravelFares() {
 
 int PlanetManagerImplementation::getTravelFare(const String& departurePlanet, const String& arrivalPlanet) {
 	int fare = travelFares.get(departurePlanet).get(arrivalPlanet);
-	return fare; //messing with fares here and above change cost but doesnt show adjusted cost, might need tre edit
+	return fare;
 }
 
 Reference<SceneObject*> PlanetManagerImplementation::loadSnapshotObject(WorldSnapshotNode* node, WorldSnapshotIff* wsiff, int& totalObjects) {
@@ -599,8 +599,6 @@ void PlanetManagerImplementation::loadSnapshotObjects() {
 }
 
 bool PlanetManagerImplementation::isTravelToLocationPermitted(const String& departurePoint, const String& arrivalPlanet, const String& arrivalPoint) {
-	//edit travel locations here
-
 	//Check to see that the departure point exists.
 	if (!isExistingPlanetTravelPoint(departurePoint))
 		return false;
@@ -618,16 +616,16 @@ bool PlanetManagerImplementation::isTravelToLocationPermitted(const String& depa
 		return false;
 
 	//Check to see if incoming Travel is allowed
-//	if (!arrivalPlanetManager->isIncomingTravelAllowed(arrivalPoint))
-//		return false;
+	if (!arrivalPlanetManager->isIncomingTravelAllowed(arrivalPoint))
+		return false;
 
 	//If both zones are the same, then intraplanetary travel is allowed.
 	if (arrivalZone == zone)
 		return true;
 
 	//Check to see if interplanetary travel is allowed between both points.
-//	if (!isInterplanetaryTravelAllowed(departurePoint) || !arrivalPlanetManager->isInterplanetaryTravelAllowed(arrivalPoint))
-//		return false;
+	if (!isInterplanetaryTravelAllowed(departurePoint) || !arrivalPlanetManager->isInterplanetaryTravelAllowed(arrivalPoint))
+		return false;
 
 	return true;
 }
@@ -782,8 +780,6 @@ void PlanetManagerImplementation::loadClientRegions(LuaObject* outposts) {
 	dtiff.readObject(iffStream);
 
 	String zoneName = zone->getZoneName();
-
-	//removing this allows building in cities but also allows spawns
 	for (int i = 0; i < dtiff.getTotalRows(); ++i) {
 		String regionName;
 		float x, y, radius;
@@ -860,10 +856,10 @@ void PlanetManagerImplementation::loadClientRegions(LuaObject* outposts) {
 
 		Locker shapeLocker(areaShape);
 
-		areaShape->setRadius(radius * 1);//setting radius to 1x allows building after "has left city"
+		areaShape->setRadius(radius * 2);
 		areaShape->setAreaCenter(x, y);
 		noBuild->setAreaShape(areaShape);
-		noBuild->setRadius(radius * 1);
+		noBuild->setRadius(radius * 2);
 		noBuild->setNoBuildArea(true);
 		// Cities already have "Municipal" protection so the structure no-build should not apply to camps
 		noBuild->setCampingPermitted(true);
@@ -883,29 +879,29 @@ bool PlanetManagerImplementation::validateClientCityInRange(CreatureObject* crea
 
 	Locker locker(_this.getReferenceUnsafeStaticCast());
 
-//	for (int i = 0; i < regionMap.getTotalRegions(); ++i) {
-//		CityRegion* region = regionMap.getRegion(i);
-//
-//		for (int j = 0; j < region->getRegionsCount(); ++j) {
-//			Region* activeRegion = region->getRegion(j);
-//			float radius = activeRegion->getRadius();
-//
-//			if (radius < 512)//this is setting no build zone 512m outside of the "has left coronet" municipal zone
-//				radius = 512;
-//
-//			float range = radius * 2;
-//
-//			Vector3 position(activeRegion->getPositionX(), activeRegion->getPositionY(), 0);
-//
-//			if (position.squaredDistanceTo(testPosition) <= range * range) {
-//				StringIdChatParameter msg("player_structure", "city_too_close");
-//				msg.setTO(region->getRegionName());
-//
-//				creature->sendSystemMessage(msg);
-//				return false;
-//			}
-//		}
-//	}
+	for (int i = 0; i < regionMap.getTotalRegions(); ++i) {
+		CityRegion* region = regionMap.getRegion(i);
+
+		for (int j = 0; j < region->getRegionsCount(); ++j) {
+			Region* activeRegion = region->getRegion(j);
+			float radius = activeRegion->getRadius();
+
+			if (radius < 512)
+				radius = 512;
+
+			float range = radius * 2;
+
+			Vector3 position(activeRegion->getPositionX(), activeRegion->getPositionY(), 0);
+
+			if (position.squaredDistanceTo(testPosition) <= range * range) {
+				StringIdChatParameter msg("player_structure", "city_too_close");
+				msg.setTO(region->getRegionName());
+
+				creature->sendSystemMessage(msg);
+				return false;
+			}
+		}
+	}
 
 	return true;
 }
@@ -1020,7 +1016,7 @@ bool PlanetManagerImplementation::isSpawningPermittedAt(float x, float y, float 
 	targetPos.setZ(zone->getHeight(x, y));
 
 	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
-	//zone->getInRangeActiveAreas(x, y, 16, &activeAreas, true);// margin + 32.f//raw value of 0 instead of margin+ x is no area 64.f is vanilla
+	zone->getInRangeActiveAreas(x, y, margin + 64.f, &activeAreas, true);
 
 	for (int i = 0; i < activeAreas.size(); ++i) {
 		ActiveArea* area = activeAreas.get(i);
@@ -1038,11 +1034,11 @@ bool PlanetManagerImplementation::isSpawningPermittedAt(float x, float y, float 
 		return false;
 	}
 
-//	if (isInRangeWithPoi(x, y, 150))
-//		return false;
+	if (isInRangeWithPoi(x, y, 150))
+		return false;
 
-//	if (terrainManager->getHighestHeightDifference(x - 10, y - 10, x + 10, y + 10) > 15.0)
-//		return false;
+	if (terrainManager->getHighestHeightDifference(x - 10, y - 10, x + 10, y + 10) > 15.0)
+		return false;
 
 	return true;
 }
@@ -1059,8 +1055,6 @@ bool PlanetManagerImplementation::isBuildingPermittedAt(float x, float y, SceneO
 
 	zone->getInRangeActiveAreas(x, y, &activeAreas, true);
 
-
-	//removing these 2 ignore the regions no build lua file
 	for (int i = 0; i < activeAreas.size(); ++i) {
 		ActiveArea* area = activeAreas.get(i);
 
@@ -1068,27 +1062,6 @@ bool PlanetManagerImplementation::isBuildingPermittedAt(float x, float y, SceneO
 			return false;
 		}
 	}
-
-	//attempt to prevent building gcw bases close together, cases massive frame drops
-//	if (object->isGCWBase()){
-//		//borrowed thsi from isInObjectsNoBuildZone
-//		SortedVector<QuadTreeEntry*> closeObjects;
-//
-//		Vector3 targetPos(x, y, zone->getHeight(x, y));
-//
-//		zone->getInRangeObjects(x, y, 512, &closeObjects, true, false);
-//
-//		for (int i = 0; i < closeObjects.size(); ++i) {
-//			SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
-//
-//			if (obj->isGCWBase())
-//				//sendsysmsghere
-//				return false;
-//
-//		}
-//
-//
-//	}
 
 	if (isInObjectsNoBuildZone(x, y, margin, checkFootprint)) {
 		return false;

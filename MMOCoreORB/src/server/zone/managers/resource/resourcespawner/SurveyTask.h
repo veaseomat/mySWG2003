@@ -44,9 +44,6 @@ public:
 
 			//Notify any survey mission observers.
 			playerCreature->notifyObservers(ObserverEventType::SURVEY, resourceSpawn, density);
-		} else {
-			// Send System Message that you can still sample
-			playerCreature->sendSystemMessage("mySWG: you can sample any resource even if survey says not located.");
 		}
 
 		playerCreature->removePendingTask("survey");

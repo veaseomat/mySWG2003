@@ -2,7 +2,6 @@
  				Copyright <SWGEmu>
 		See file COPYING for copying conditions. */
 
-#include "server/zone/managers/jedi/JediManager.h"
 #include "ResourceSpawner.h"
 #include "server/zone/Zone.h"
 #include "server/zone/objects/player/PlayerObject.h"
@@ -620,18 +619,6 @@ int ResourceSpawner::randomizeValue(int min, int max) {
 		}
 	}
 
-	randomStat = System::random(max) + System::random(1000);
-
-	if (randomStat > 1000) {
-		randomStat = 1000;
-	}
-
-	if (randomStat < 500) {
-		randomStat = 500;
-	}
-
-//	randomStat = 1000;
-	
 	return randomStat;
 }
 
@@ -821,7 +808,7 @@ void ResourceSpawner::sendSurvey(CreatureObject* player, const String& resname) 
 	//Adjust cost based upon player's focus
 	int mindCost = 100 - (int)(player->getHAM(CreatureAttribute::FOCUS)/15.f);
 
-//	player->inflictDamage(player, CreatureAttribute::MIND, 1, false, true);
+	player->inflictDamage(player, CreatureAttribute::MIND, mindCost, false, true);
 
 	ManagedReference<SurveySession*> session = player->getActiveSession(SessionFacadeType::SURVEY).castTo<SurveySession*>();
 	if(session == nullptr) {
@@ -865,12 +852,6 @@ void ResourceSpawner::sendSurvey(CreatureObject* player, const String& resname) 
 				maxX = posX;
 				maxY = posY;
 			}
-
-//			if (density < maxDensity) {
-//				maxDensity = maxDensity / 2;
-//				maxX = posX;
-//				maxY = posY;
-//			}
 
 			surveyMessage->add(posX, posY, density);
 
@@ -933,11 +914,7 @@ void ResourceSpawner::sendSample(CreatureObject* player, const String& resname,
 	//Adjust cost based upon player's quickness
 	int actionCost = 124 - (int)(player->getHAM(CreatureAttribute::QUICKNESS)/12.5f);
 
-//	player->inflictDamage(player, CreatureAttribute::ACTION, 1, false, true);
-
-//	if (System::random(5000) == 5000) { //5k @ 10sec each = 5days
-//		JediManager::instance()->awardFSpoint(player);
-//	}
+	player->inflictDamage(player, CreatureAttribute::ACTION, actionCost, false, true);
 
 	PlayClientEffectLoc* effect = new PlayClientEffectLoc(sampleAnimation,
 			player->getZone()->getZoneName(), player->getPositionX(),
@@ -979,25 +956,24 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 	String zoneName = zne->getZoneName();
 
 	// If density is too low, we can't obtain a sample
-//	if (density < .10f) {
-//		density = .10f;
-//		StringIdChatParameter message("survey", "efficiency_too_low");
-//		message.setTO(resname);
-//		player->sendSystemMessage(message);
-//		player->setPosture(CreaturePosture::UPRIGHT, true);
-//		return;
-//	}
+	if (density < .10f) {
+		StringIdChatParameter message("survey", "efficiency_too_low");
+		message.setTO(resname);
+		player->sendSystemMessage(message);
+		player->setPosture(CreaturePosture::UPRIGHT, true);
+		return;
+	}
 
 	// Lower skill levels mean you can't sample lower concetrations
 	int surveySkill = player->getSkillMod("surveying");
 
-//	if ((density * 100) < (32 - ((surveySkill / 20) * 6)) || density < .10) {
-//		StringIdChatParameter message("survey", "density_below_threshold");
-//		message.setTO(resname);
-//		player->sendSystemMessage(message);
-//		player->setPosture(CreaturePosture::UPRIGHT, true);
-//		return;
-//	}
+	if ((density * 100) < (32 - ((surveySkill / 20) * 6)) || density < .10) {
+		StringIdChatParameter message("survey", "density_below_threshold");
+		message.setTO(resname);
+		player->sendSystemMessage(message);
+		player->setPosture(CreaturePosture::UPRIGHT, true);
+		return;
+	}
 
 	Coordinate* richSampleLocation = session->getRichSampleLocation();
 
@@ -1016,46 +992,45 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 
 	float cityMultiplier = 1.f + player->getSkillMod("private_spec_samplesize") / 100.f;
 
-	int unitsExtracted = surveySkill * density * 2;//maxUnitsExtracted * (float(surveySkill) / 100.0f) * samplingMultiplier * cityMultiplier * 3;
-//	unitsExtracted *= 5;
-	int xpcap = 2;
+	int unitsExtracted = maxUnitsExtracted * (float(surveySkill) / 100.0f) * samplingMultiplier * cityMultiplier;
+	int xpcap = 40;
 
-//	if (session->tryGamble()) {
-//		if (System::random(2) == 1) {
-//			player->sendSystemMessage("@survey:gamble_success");
-//			unitsExtracted *= 5;
-//		} else {
-//			player->sendSystemMessage("@survey:gamble_fail");
-//		}
-//		session->clearGamble();
-//		xpcap = 50;
-//	}
-//
-//	if (richSampleLocation != nullptr && richSampleLocation->getPosition() != Vector3(0, 0, 0)) {
-//
-//		if (player->getDistanceTo(richSampleLocation) < 10) {
-//
-//			player->sendSystemMessage("@survey:node_recovery");
-//			unitsExtracted *= 5;
-//
-//		} else {
-//
-//			player->sendSystemMessage("@survey:node_not_close");
-//		}
-//
-//		session->clearRichSampleLocation();
-//		xpcap = 50;
-//	}
+	if (session->tryGamble()) {
+		if (System::random(2) == 1) {
+			player->sendSystemMessage("@survey:gamble_success");
+			unitsExtracted *= 5;
+		} else {
+			player->sendSystemMessage("@survey:gamble_fail");
+		}
+		session->clearGamble();
+		xpcap = 50;
+	}
 
-	if (unitsExtracted < 5) {
+	if (richSampleLocation != nullptr && richSampleLocation->getPosition() != Vector3(0, 0, 0)) {
+
+		if (player->getDistanceTo(richSampleLocation) < 10) {
+
+			player->sendSystemMessage("@survey:node_recovery");
+			unitsExtracted *= 5;
+
+		} else {
+
+			player->sendSystemMessage("@survey:node_not_close");
+		}
+
+		session->clearRichSampleLocation();
+		xpcap = 50;
+	}
+
+	if (unitsExtracted < 2) {
 
 		// Send message to player about trace amounts
-//		StringIdChatParameter message("survey", "trace_amount");
-//		message.setTO(resname);
-//		message.setDI(unitsExtracted);
-//		player->sendSystemMessage(message);
+		StringIdChatParameter message("survey", "trace_amount");
+		message.setTO(resname);
+		message.setDI(unitsExtracted);
+		player->sendSystemMessage(message);
 
-		unitsExtracted = 5;
+		return;
 	}
 
 	// Send message to player about unit extraction
@@ -1071,7 +1046,8 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 
 	resourceSpawn->extractResource(zoneName, unitsExtracted);
 
-	int xp = (int) ((float) unitsExtracted * 2);
+	int xp = (int) (((float) unitsExtracted / (float) maxUnitsExtracted)
+			* xpcap);
 	ManagedReference<PlayerManager*> playerManager = server->getPlayerManager();
 
 	if (playerManager != nullptr)
@@ -1080,15 +1056,15 @@ void ResourceSpawner::sendSampleResults(TransactionLog& trx, CreatureObject* pla
 	addResourceToPlayerInventory(trx, player, resourceSpawn, unitsExtracted);
 	player->notifyObservers(ObserverEventType::SAMPLE, resourceSpawn, density * 100);
 
-//	if (resourceSpawn->isType("radioactive")) {
-//		int wound = int((sampleRate / 30) - System::random(7));
-//
-//		if (wound > 0) {
-//			player->addWounds(CreatureAttribute::HEALTH, wound, true);
-//			player->addWounds(CreatureAttribute::ACTION, wound, true);
-//			player->addWounds(CreatureAttribute::MIND, wound, true);
-//		}
-//	}
+	if (resourceSpawn->isType("radioactive")) {
+		int wound = int((sampleRate / 30) - System::random(7));
+
+		if (wound > 0) {
+			player->addWounds(CreatureAttribute::HEALTH, wound, true);
+			player->addWounds(CreatureAttribute::ACTION, wound, true);
+			player->addWounds(CreatureAttribute::MIND, wound, true);
+		}
+	}
 }
 
 bool ResourceSpawner::addResourceToPlayerInventory(TransactionLog& trx, CreatureObject* player, ResourceSpawn* resourceSpawn, int unitsExtracted) const {

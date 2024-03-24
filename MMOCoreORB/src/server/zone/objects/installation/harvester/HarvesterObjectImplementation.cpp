@@ -12,8 +12,6 @@
 #include "server/zone/packets/harvester/ResourceHarvesterActivatePageMessage.h"
 
 void HarvesterObjectImplementation::fillObjectMenuResponse(ObjectMenuResponse* menuResponse, CreatureObject* player) {
-//	return;//disable harvestor //added to installationobjectimplementation
-
 	if (!isOnAdminList(player))
 		return;
 

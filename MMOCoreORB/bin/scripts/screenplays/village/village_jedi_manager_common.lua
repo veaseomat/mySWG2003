@@ -3,76 +3,22 @@ local QuestManager = require("managers.quest.quest_manager")
 
 VillageJediManagerCommon = ScreenPlay:new {
 	forceSensitiveBranches = {
-		"combat_1hsword_master",
-		"combat_2hsword_master",
-		"crafting_architect_master",
-		"crafting_armorsmith_master",
-		"outdoors_bio_engineer_master",
-		"combat_bountyhunter_master",
-		"combat_carbine_master",
-		"crafting_chef_master",
-		"science_combatmedic_master",
-		"combat_commando_master",
-		"outdoors_creaturehandler_master",
-		"social_dancer_master",
-		"science_doctor_master",
-		"crafting_droidengineer_master",
-		"social_imagedesigner_master",
-		"crafting_merchant_master",
-		"social_musician_master",
-		"combat_pistol_master",
-		"combat_polearm_master",
-		"social_politician_master",
-		"outdoors_ranger_master",
-		"combat_rifleman_master",
-		"combat_smuggler_master",
-		"outdoors_squadleader_master",
-		"crafting_tailor_master",
-		"combat_unarmed_master",
-		"crafting_weaponsmith_master",
-			
-			
---		 "social_entertainer_hairstyle_04",
---		 "social_entertainer_music_04",
---		 "social_entertainer_music_04",
---		 "social_entertainer_healing_04",
---		 "outdoors_scout_movement_04",
---		 "outdoors_scout_tools_04",
---		 "outdoors_scout_harvest_04",
---		 "outdoors_scout_camp_04",
---		 "science_medic_injury_04",
---		 "science_medic_injury_speed_04",
---		 "science_medic_ability_04",
---		 "science_medic_crafting_04",
---		 "crafting_artisan_engineering_04",
---		 "crafting_artisan_domestic_04",
---		 "crafting_artisan_business_04",
---		 "crafting_artisan_survey_04",
---		 "combat_brawler_unarmed_04",
---		 "combat_brawler_1handmelee_04",
---		 "combat_brawler_2handmelee_04",
---		 "combat_brawler_polearm_04",
---		 "combat_marksman_rifle_04",
---		 "combat_marksman_pistol_04",
---		 "combat_marksman_carbine_04",
---		 "combat_marksman_support_04",
-		 
---		"force_sensitive_combat_prowess_ranged_accuracy",
---		"force_sensitive_combat_prowess_ranged_speed",
---		"force_sensitive_combat_prowess_melee_accuracy",
---		"force_sensitive_combat_prowess_melee_speed",
---		"force_sensitive_enhanced_reflexes_ranged_defense",
---		"force_sensitive_enhanced_reflexes_melee_defense",
---		"force_sensitive_enhanced_reflexes_vehicle_control",
---		"force_sensitive_enhanced_reflexes_survival",
---		"force_sensitive_crafting_mastery_experimentation",
---		"force_sensitive_crafting_mastery_assembly",
---		"force_sensitive_crafting_mastery_repair",
---		"force_sensitive_crafting_mastery_technique",
---		"force_sensitive_heightened_senses_healing",
---		"force_sensitive_heightened_senses_surveying",
---		"force_sensitive_heightened_senses_persuasion",
---		"force_sensitive_heightened_senses_luck"
+		"force_sensitive_combat_prowess_ranged_accuracy",
+		"force_sensitive_combat_prowess_ranged_speed",
+		"force_sensitive_combat_prowess_melee_accuracy",
+		"force_sensitive_combat_prowess_melee_speed",
+		"force_sensitive_enhanced_reflexes_ranged_defense",
+		"force_sensitive_enhanced_reflexes_melee_defense",
+		"force_sensitive_enhanced_reflexes_vehicle_control",
+		"force_sensitive_enhanced_reflexes_survival",
+		"force_sensitive_crafting_mastery_experimentation",
+		"force_sensitive_crafting_mastery_assembly",
+		"force_sensitive_crafting_mastery_repair",
+		"force_sensitive_crafting_mastery_technique",
+		"force_sensitive_heightened_senses_healing",
+		"force_sensitive_heightened_senses_surveying",
+		"force_sensitive_heightened_senses_persuasion",
+		"force_sensitive_heightened_senses_luck"
 	}
 }
 
@@ -117,10 +63,8 @@ function VillageJediManagerCommon.isVillageEligible(pPlayer)
 	if (pPlayer == nil) then
 		return false
 	end
-	
-	return true
 
---	return VillageJediManagerCommon.hasJediProgressionScreenPlayState(pPlayer, VILLAGE_JEDI_PROGRESSION_HAS_VILLAGE_ACCESS) and QuestManager.hasCompletedQuest(pPlayer, QuestManager.quests.FS_VILLAGE_ELDER)
+	return VillageJediManagerCommon.hasJediProgressionScreenPlayState(pPlayer, VILLAGE_JEDI_PROGRESSION_HAS_VILLAGE_ACCESS) and QuestManager.hasCompletedQuest(pPlayer, QuestManager.quests.FS_VILLAGE_ELDER)
 end
 
 -- Check if the player has the jedi progression screen play state.
@@ -156,10 +100,8 @@ function VillageJediManagerCommon.hasUnlockedBranch(pPlayer, branch)
 	if (pPlayer == nil) then
 		return false
 	end
-	
-	return true
 
-	--return CreatureObject(pPlayer):hasScreenPlayState(2, "VillageUnlockScreenPlay:" .. branch)
+	return CreatureObject(pPlayer):hasScreenPlayState(2, "VillageUnlockScreenPlay:" .. branch)
 end
 
 function VillageJediManagerCommon.getUnlockedBranchCount(pPlayer)
@@ -309,7 +251,7 @@ function VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer)
 	local branchesLearned = 0
 
 	for i = 1, #VillageJediManagerCommon.forceSensitiveBranches, 1 do
-		if (CreatureObject(pPlayer):hasSkill(VillageJediManagerCommon.forceSensitiveBranches[i])) then
+		if (CreatureObject(pPlayer):hasSkill(VillageJediManagerCommon.forceSensitiveBranches[i] .. "_04")) then
 			branchesLearned = branchesLearned + 1
 		end
 	end

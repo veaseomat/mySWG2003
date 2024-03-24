@@ -5,15 +5,13 @@ chemistry_component = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "biologic_effect_controller", weight = 714285},
-		{itemTemplate = "dispersal_mechanism", weight = 714285},
-		{itemTemplate = "infection_amplifier", weight = 714285},
-		{itemTemplate = "liquid_delivery_suspension", weight = 714285},
-		{itemTemplate = "release_mechanism_duration", weight = 714285},
-		{itemTemplate = "resilience_compound", weight = 714285},
-		{itemTemplate = "solid_delivery_shell", weight = 714285},
-
-		{groupTemplate = "chemistry_component_advanced", weight = 5000000}
+		{itemTemplate = "biologic_effect_controller", weight = 1428572},
+		{itemTemplate = "dispersal_mechanism", weight = 1428571},
+		{itemTemplate = "infection_amplifier", weight = 1428571},
+		{itemTemplate = "liquid_delivery_suspension", weight = 1428572},
+		{itemTemplate = "release_mechanism_duration", weight = 1428571},
+		{itemTemplate = "resilience_compound", weight = 1428571},
+		{itemTemplate = "solid_delivery_shell", weight = 1428572}
 	},
 }
 

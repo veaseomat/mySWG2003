@@ -227,7 +227,7 @@ void SharedWeaponObjectTemplate::readObject(LuaObject* templateData) {
 	maxRange = templateData->getIntField("maxRange");
 	maxRangeAccuracy = templateData->getIntField("maxRangeAccuracy");
 
-	minDamage = templateData->getIntField("minDamage");//changing here requires a wipe
+	minDamage = templateData->getIntField("minDamage");
 	maxDamage = templateData->getIntField("maxDamage");
 
 	woundsRatio = templateData->getFloatField("woundsRatio");

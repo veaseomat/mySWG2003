@@ -1,16 +1,16 @@
 tusken_observer = Creature:new {
-	objectName = "@mob/creature_names:tusken_warlord",
+	objectName = "@mob/creature_names:tusken_observer",
 	socialGroup = "tusken_raider",
 	faction = "tusken_raider",
-	level = 62,
-	chanceHit = 0.62,
-	damageMin = 455,
-	damageMax = 620,
-	baseXp = 6013,
-	baseHAM = 11000,
-	baseHAMmax = 14000,
-	armor = 1,
-	resists = {45,25,15,80,-1,40,-1,15,-1},
+	level = 227,
+	chanceHit = 19.75,
+	damageMin = 1270,
+	damageMax = 2250,
+	baseXp = 21630,
+	baseHAM = 208000,
+	baseHAMmax = 254000,
+	armor = 3,
+	resists = {185,185,135,200,10,130,145,180,-1},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -20,8 +20,8 @@ tusken_observer = Creature:new {
 	milk = 0,
 	tamingChance = 0,
 	ferocity = 0,
-	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
-	creatureBitmask = PACK + KILLER + STALKER,
+	pvpBitmask = AGGRESSIVE + ENEMY + ATTACKABLE,
+	creatureBitmask = PACK + KILLER,
 	optionsBitmask = AIENABLED,
 	diet = HERBIVORE,
 
@@ -30,9 +30,8 @@ tusken_observer = Creature:new {
 		{
 			groups = {
 				{group = "junk", chance = 1500000},
-				{group = "tusken_common", chance = 3500000},
-				{group = "wearables_common", chance = 1000000},
-				{group = "wearables_uncommon", chance = 500000},
+				{group = "tusken_common", chance = 3000000},
+				{group = "wearables_scarce", chance = 2000000},
 				{group = "bone_armor", chance = 750000},
 				{group = "chitin_armor", chance = 750000},
 				{group = "armor_attachments", chance = 500000},
@@ -44,7 +43,7 @@ tusken_observer = Creature:new {
 	},
 	weapons = {"tusken_weapons"},
 	conversationTemplate = "",
-	attacks = merge(brawlernovice,marksmannovice,fencermaster,riflemanmaster)
+	attacks = merge(marksmanmaster,brawlermaster,fencermaster,riflemanmaster)
 }
 
 CreatureTemplates:addCreatureTemplate(tusken_observer, "tusken_observer")

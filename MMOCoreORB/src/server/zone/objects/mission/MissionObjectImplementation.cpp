@@ -153,7 +153,7 @@ void MissionObjectImplementation::setRewardCredits(int creds, bool notifyClient)
 	if (rewardCredits == creds)
 		return;
 
-	rewardCredits = creds;//changing this works but doesnt show on terminal
+	rewardCredits = creds;
 
 	if (!notifyClient)
 		return;

@@ -99,19 +99,19 @@ object_weapon_ranged_rifle_rifle_flame_thrower = object_weapon_ranged_rifle_shar
 
 
 	-- The values below are the default values.  To be used for blue frog objects primarily
-	healthAttackCost = 45,
-	actionAttackCost = 10,
-	mindAttackCost = 10,
+	healthAttackCost = 84,
+	actionAttackCost = 20,
+	mindAttackCost = 20,
 	forceCost = 0,
 
 	pointBlankAccuracy = 15,
 	pointBlankRange = 0,
 
 	idealRange = 50,
-	idealAccuracy = 15,
+	idealAccuracy = -50,
 
 	maxRange = 64,
-	maxRangeAccuracy = -35,
+	maxRangeAccuracy = 0,
 
 	minDamage = 480,
 	maxDamage = 830,

@@ -329,7 +329,7 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 	auto client = callback->getClient();
 
 	if (client->getCharacterCount(zoneServer.get()->getGalaxyID()) >= 10) {
-		ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are limited to 10 characters on mySWG.", 0x0);
+		ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are limited to 10 characters per galaxy.", 0x0);
 		client->sendMessage(errMsg);
 
 		return false;
@@ -483,13 +483,13 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 
 							Time timeVal(sec);
 
-//							if (timeVal.miliDifference() < 10 * 60 * 1000) {
-//								ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per 10min. Repeat attempts prior to 10min elapsing will reset the timer.", 0x0);
-//								client->sendMessage(errMsg);
-//
-//								playerCreature->destroyPlayerCreatureFromDatabase(true);
-//								return false;
-//							}
+							if (timeVal.miliDifference() < 3600000) {
+								ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per hour. Repeat attempts prior to 1 hour elapsing will reset the timer.", 0x0);
+								client->sendMessage(errMsg);
+
+								playerCreature->destroyPlayerCreatureFromDatabase(true);
+								return false;
+							}
 						}
 					} catch (const DatabaseException& e) {
 						error(e.getMessage());
@@ -500,17 +500,17 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 					if (lastCreatedCharacter.containsKey(accID)) {
 						Time lastCreatedTime = lastCreatedCharacter.get(accID);
 
-//						if (lastCreatedTime.miliDifference() < 10 * 60 * 1000) {
-//							ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per 10min. Repeat attempts prior to 10min elapsing will reset the timer.", 0x0);
-//							client->sendMessage(errMsg);
-//
-//							playerCreature->destroyPlayerCreatureFromDatabase(true);
-//							return false;
-//						} else {
+						if (lastCreatedTime.miliDifference() < 3600000) {
+							ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are only permitted to create one character per hour. Repeat attempts prior to 1 hour elapsing will reset the timer.", 0x0);
+							client->sendMessage(errMsg);
+
+							playerCreature->destroyPlayerCreatureFromDatabase(true);
+							return false;
+						} else {
 							lastCreatedTime.updateToCurrentTime();
 
 							lastCreatedCharacter.put(accID, lastCreatedTime);
-//						}
+						}
 					} else {
 						lastCreatedCharacter.put(accID, Time());
 					}
@@ -569,14 +569,14 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 
 	JediManager::instance()->onPlayerCreated(playerCreature);
 
-	chatManager->sendMail("mySWG", "Welcome", "Welcome to mySWG, This is a single player focused fun server with lots of quality of life improvements.\n	For a list of the changes please visit the SWGEmu forum post for mySWG in SWGEmu based server listing section. If you have any questions/comments/concerns/suggestions please join the discord or send an email to mySWGdev@gmail.com.\nThanks,\nVeaseomat", playerCreature->getFirstName());
+	chatManager->sendMail("system", "@newbie_tutorial/newbie_mail:welcome_subject", "@newbie_tutorial/newbie_mail:welcome_body", playerCreature->getFirstName());
 
 	//Join auction chat room
 	ghost->addChatRoom(chatManager->getAuctionRoom()->getRoomID());
 
 	ManagedReference<SuiMessageBox*> box = new SuiMessageBox(playerCreature, SuiWindowType::NONE);
-	box->setPromptTitle("WELCOME");
-	box->setPromptText("Welcome to mySWG! \nDon't forget to migrate your stats! Stats can also be migrated in Image Designer tents. Have fun!");
+	box->setPromptTitle("PLEASE NOTE");
+	box->setPromptText("You are limited to creating one character per hour. Attempting to create another character or deleting your character before the 1 hour timer expires will reset the timer.");
 
 	ghost->addSuiBox(box);
 	playerCreature->sendMessage(box->generateMessage());
@@ -703,15 +703,6 @@ void PlayerCreationManager::addProfessionStartingItems(CreatureObject* creature,
 	//Starting skill.
 	SkillManager::instance()->awardSkill(startingSkill->getSkillName(),
 			creature, false, true, true);
-
-	//SkillManager::instance()->awardSkill("global_player_management_1", creature, false, true, true);
-
-//	SkillManager::instance()->awardSkill("science_medic_novice", creature, false, true, true);
-//	SkillManager::instance()->awardSkill("crafting_artisan_novice", creature, false, true, true);
-//	SkillManager::instance()->awardSkill("combat_brawler_novice", creature, false, true, true);
-//	SkillManager::instance()->awardSkill("combat_marksman_novice", creature, false, true, true);
-//	SkillManager::instance()->awardSkill("outdoors_scout_novice", creature, false, true, true);
-//	SkillManager::instance()->awardSkill("social_entertainer_novice", creature, false, true, true);
 
 	//Set the hams.
 	for (int i = 0; i < 9; ++i) {
@@ -1038,7 +1029,6 @@ void PlayerCreationManager::addRacialMods(CreatureObject* creature,
 		creature->setBaseHAM(i, mod, false);
 		creature->setHAM(i, mod, false);
 		creature->setMaxHAM(i, mod, false);
-		//change also in migratestatssession.idl && playerojectimplementation.cpp
 	}
 
 	if (startingSkills != nullptr) {

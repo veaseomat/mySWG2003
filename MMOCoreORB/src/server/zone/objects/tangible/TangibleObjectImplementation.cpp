@@ -178,7 +178,7 @@ void TangibleObjectImplementation::setFactionStatus(int status) {
 				pvpStatusBitmask -= CreatureFlag::OVERT;
 		} else if (factionStatus == FactionStatus::OVERT) {
 			if(!(pvpStatusBitmask & CreatureFlag::OVERT)) {
-				int cooldown = 60;
+				int cooldown = 300;
 
 				Zone* creoZone = creature->getZone();
 
@@ -262,10 +262,6 @@ void TangibleObjectImplementation::sendPvpStatusTo(CreatureObject* player) {
 
 	if (getFactionStatus() == FactionStatus::OVERT && getFutureFactionStatus() == FactionStatus::COVERT)
 		newPvpStatusBitmask |= CreatureFlag::WASDECLARED;
-
-//	if (player->getWeapon()->isJediWeapon()){//this makes everything red to player with equipped saber on login
-//		newPvpStatusBitmask |= CreatureFlag::ENEMY;
-//	}
 
 	BaseMessage* pvp = new UpdatePVPStatusMessage(asTangibleObject(), player, newPvpStatusBitmask);
 	player->sendMessage(pvp);
@@ -544,25 +540,20 @@ void TangibleObjectImplementation::fillAttributeList(AttributeListMessage* alm, 
 	SceneObjectImplementation::fillAttributeList(alm, object);
 
 	if (maxCondition > 0) {
-		StringBuffer newcond;
-		newcond << ", " << (maxCondition-(int)conditionDamage) * 100 / maxCondition << "%";// << maxCondition;
-
 		StringBuffer cond;
-		cond << (maxCondition-(int)conditionDamage) << "/" << maxCondition << newcond;
+		cond << (maxCondition-(int)conditionDamage) << "/" << maxCondition;
 
-//		auto config = ConfigManager::instance();
-//
-//		if (isForceNoTrade()) {
-//			cond << config->getForceNoTradeMessage();
-//		} else if (antiDecayKitObject != nullptr && antiDecayKitObject->isForceNoTrade()) {
-//			cond << config->getForceNoTradeADKMessage();
-//		} else if (isNoTrade() || containsNoTradeObjectRecursive()) {
-//			cond << config->getNoTradeMessage();
-//		}
+		auto config = ConfigManager::instance();
 
-		//int newcond = (maxCondition-(int)conditionDamage) * 100 / maxCondition;
+		if (isForceNoTrade()) {
+			cond << config->getForceNoTradeMessage();
+		} else if (antiDecayKitObject != nullptr && antiDecayKitObject->isForceNoTrade()) {
+			cond << config->getForceNoTradeADKMessage();
+		} else if (isNoTrade() || containsNoTradeObjectRecursive()) {
+			cond << config->getNoTradeMessage();
+		}
 
-		alm->insertAttribute("condition", cond);//cond
+		alm->insertAttribute("condition", cond);
 	}
 
 	alm->insertAttribute("volume", volume);
@@ -716,8 +707,8 @@ int TangibleObjectImplementation::inflictDamage(TangibleObject* attacker, int da
 }
 
 int TangibleObjectImplementation::inflictDamage(TangibleObject* attacker, int damageType, float damage, bool destroy, const String& xp, bool notifyClient, bool isCombatAction) {
-//	if (hasAntiDecayKit())
-//		return 0;
+	if (hasAntiDecayKit())
+		return 0;
 
 	float newConditionDamage = conditionDamage + damage;
 
@@ -1074,9 +1065,11 @@ void TangibleObjectImplementation::repair(CreatureObject* player) {
 	/// Subtract complexity
 	repairChance -= (getComplexity() / 3);
 
-	if (getMaxCondition() < 5)
+	/// 5% random failure
+	if (getMaxCondition() < 20 || roll < 5)
 		repairChance = 0;
-	else
+
+	if (roll > 95)
 		repairChance = 100;
 
 	String result = repairAttempt(repairChance);
@@ -1119,13 +1112,6 @@ bool TangibleObjectImplementation::isAttackableBy(CreatureObject* object) {
 		if (isRebel() && (!object->isImperial() || object->getFactionStatus() == 0)) {
 			return false;
 		}
-
-
-//		if (object->getWeapon()->isJediWeapon()){//did nothing? player is in creature obj
-//			return true;
-//		}
-
-
 	} else if (isImperial() && !(object->isRebel())) {
 		return false;
 	} else if (isRebel() && !(object->isImperial())) {

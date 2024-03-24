@@ -84,14 +84,14 @@ Saber1hFlurry2Command = {
 	  )
 	},
 
-	animation = "showoff_2", 
+	animation = "combo_jedi_4", 
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "saber1hflurry2",
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	weaponType = JEDIWEAPON,
+	weaponType = ONEHANDJEDIWEAPON,
 
 	range = -1
 }

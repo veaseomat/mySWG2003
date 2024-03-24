@@ -83,10 +83,6 @@ void InstallationObjectImplementation::fillAttributeList(AttributeListMessage* a
 void InstallationObjectImplementation::setOperating(bool value, bool notifyClient) {
 	//updateInstallationWork();
 
-//disable harvesters here
-//	broadcastToOperators(new ChatSystemMessage("mySWG: Harvesters are disabled!"));
-//	return;
-
 	if (operating == value)
 		return;
 
@@ -372,7 +368,7 @@ void InstallationObjectImplementation::updateHopper(Time& workingTime, bool shut
 
 	int elapsedTime = (harvestUntil - lastHopperUpdate);
 
-	float harvestAmount = (elapsedTime / 60.0) * (spawnDensity * getExtractionRate()) * 10;//increase harvest ammount? had it at * 3
+	float harvestAmount = (elapsedTime / 60.0) * (spawnDensity * getExtractionRate());
 
 	int availableCapacity = (int)(getHopperSizeMax() - getHopperSize());
 	harvestAmount = harvestAmount > availableCapacity ? availableCapacity : harvestAmount;
@@ -643,7 +639,7 @@ float InstallationObjectImplementation::getActualRate() {
 	if (resourceHopper.size() == 0)
 		return 0;
 
-	return extractionRate * spawnDensity;//adding a multiplier here might have broke harvs?
+	return extractionRate * spawnDensity;
 }
 
 void InstallationObjectImplementation::setExtractionRate(float rate){

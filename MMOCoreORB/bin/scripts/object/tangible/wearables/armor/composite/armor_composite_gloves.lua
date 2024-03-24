@@ -89,7 +89,7 @@ object_tangible_wearables_armor_composite_armor_composite_gloves = object_tangib
 	-- Damage types in WeaponObject
 	vulnerability = STUN + LIGHTSABER,
 
-	specialResists = ELECTRICITY + KINETIC,
+	specialResists = ELECTRICITY,
 
 	-- These are default Blue Frog stats
 	healthEncumbrance = 80,
@@ -101,14 +101,14 @@ object_tangible_wearables_armor_composite_armor_composite_gloves = object_tangib
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
 
-	kinetic = 80,
-	energy = 50,
+	kinetic = 65,
+	energy = 65,
 	electricity = 80,
-	stun = 0,
-	blast = 50,
-	heat = 50,
-	cold = 50,
-	acid = 50,
+	stun = 25,
+	blast = 65,
+	heat = 65,
+	cold = 65,
+	acid = 65,
 	lightSaber = 0,
 
 	numberExperimentalProperties = {1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 2, 1},

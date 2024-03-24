@@ -44,7 +44,7 @@
 ConcealShotCommand = {
         name = "concealshot",
 
-	damageMultiplier = .75,
+	damageMultiplier = 2.5,
 	speedMultiplier = 2.0,
 	healthCostMultiplier = 0.5,
 	actionCostMultiplier = 0.5,
@@ -58,7 +58,7 @@ ConcealShotCommand = {
 
 	combatSpam = "concealedshot",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = RIFLEWEAPON,
 
 	range = -1
 }

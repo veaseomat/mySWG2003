@@ -3,7 +3,6 @@ giant_canyon_krayt_dragon = Creature:new {
 	socialGroup = "krayt",
 	faction = "",
 	level = 300,
-	elite = 1.75,
 	chanceHit = 30.0,
 	damageMin = 1645,
 	damageMax = 3000,

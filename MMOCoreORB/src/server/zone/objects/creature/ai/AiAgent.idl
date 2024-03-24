@@ -611,12 +611,7 @@ class AiAgent extends CreatureObject {
 
 	@preLocked
 	public void setRespawnTimer(float resp) {
-		if (resp > 1) {
-			respawnTimer = 5 * 60;//resp;//this affects static spawn timers in seconds
-		}
-		else {
-			respawnTimer = resp;
-		}
+		respawnTimer = resp;
 	}
 
 	@preLocked
@@ -686,8 +681,6 @@ class AiAgent extends CreatureObject {
 		synchronized (targetMutex) {
 			if (this.isRetreating())
 				return;
-			//if (this.isPlayerCreature())
-			//	return;
 
 			setFollowState(FOLLOWING);
 
@@ -1047,10 +1040,6 @@ class AiAgent extends CreatureObject {
 		if (npcTemplate.get() == null || isEventMob())
 			return 0;
 
-		//int newexp = npcTemplate.get().getLevel() * 50;
-
-		//return newexp;
-		
 		return npcTemplate.get().getBaseXp();
 	}
 
@@ -1070,10 +1059,6 @@ class AiAgent extends CreatureObject {
 
 		if (npcTemplate.get() == null)
 			return 1;
-			
-		int newlvl = npcTemplate.get().getLevel();
-		
-		if (newlvl > 100) newlvl = 100;
 
 		return npcTemplate.get().getLevel();
 	}

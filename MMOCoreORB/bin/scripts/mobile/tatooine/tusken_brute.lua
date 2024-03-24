@@ -1,16 +1,16 @@
 tusken_brute = Creature:new {
-	objectName = "@mob/creature_names:tusken_raider",
+	objectName = "@mob/creature_names:tusken_brute",
 	socialGroup = "tusken_raider",
 	faction = "tusken_raider",
-	level = 19,
-	chanceHit = 0.33,
-	damageMin = 180,
-	damageMax = 190,
-	baseXp = 1609,
-	baseHAM = 4500,
-	baseHAMmax = 5500,
+	level = 34,
+	chanceHit = 0.41,
+	damageMin = 315,
+	damageMax = 340,
+	baseXp = 3460,
+	baseHAM = 8700,
+	baseHAMmax = 10700,
 	armor = 0,
-	resists = {5,5,5,30,-1,30,-1,-1,-1},
+	resists = {40,0,0,30,-1,30,-1,-1,-1},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -30,8 +30,9 @@ tusken_brute = Creature:new {
 		{
 			groups = {
 				{group = "junk", chance = 1500000},
-				{group = "tusken_common", chance = 3000000},
-				{group = "wearables_common", chance = 2000000},
+				{group = "tusken_common", chance = 3500000},
+				{group = "wearables_common", chance = 1000000},
+				{group = "wearables_uncommon", chance = 500000},
 				{group = "bone_armor", chance = 750000},
 				{group = "chitin_armor", chance = 750000},
 				{group = "armor_attachments", chance = 500000},
@@ -43,7 +44,7 @@ tusken_brute = Creature:new {
 	},
 	weapons = {"tusken_weapons"},
 	conversationTemplate = "",
-	attacks = merge(marksmanmaster,brawlermaster)
+	attacks = merge(marksmanmaster,brawlermaster,fencermaster,riflemanmaster)
 }
 
 CreatureTemplates:addCreatureTemplate(tusken_brute, "tusken_brute")

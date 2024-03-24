@@ -42,7 +42,6 @@
 
 
 object_building_general_mun_all_hospital_s01 = object_building_general_shared_mun_all_hospital_s01:new {
-gameObjectType = 518,
 	skillMods = {
 		{"private_medical_rating", 100},
 		{"private_med_wound_health", 100},

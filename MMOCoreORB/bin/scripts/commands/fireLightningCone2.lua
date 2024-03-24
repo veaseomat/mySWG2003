@@ -44,16 +44,13 @@
 FireLightningCone2Command = {
         name = "firelightningcone2",
 
-	damageMultiplier = 3.0,
+	damageMultiplier = 4.0,
 	speedMultiplier = 2.0,
 	healthCostMultiplier = 1,
 	actionCostMultiplier = 1,
 	mindCostMultiplier = 1,
 
---	animation = "fire_lightning_rifle_single_2",
---	animType = GENERATE_INTENSITY,
-
-	animation = "fire_area_no_trails", 
+	animation = "fire_lightning_rifle_single_2",
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "firelightningcone2",

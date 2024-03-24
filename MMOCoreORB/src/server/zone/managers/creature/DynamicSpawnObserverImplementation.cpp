@@ -28,7 +28,7 @@ int DynamicSpawnObserverImplementation::notifyObserverEvent(unsigned int eventTy
 		ai->resetRespawnCounter();
 
 		if (spawnedCreatures.isEmpty()) {
-//timer also applies to empty and unharvested
+
 			Reference<Task*> task = new DespawnDynamicSpawnTask(spawn);
 			task->schedule(60000);
 
@@ -49,9 +49,9 @@ int DynamicSpawnObserverImplementation::notifyObserverEvent(unsigned int eventTy
 		Creature* creature = ai.castTo<Creature*>();
 		level = creature->getAdultLevel();
 	}
-//npc creature respawn timer after killed
+
 	Reference<Task*> task = new RespawnCreatureTask(ai.get(), zone, level);
-	task->schedule(60 * 1000);//this controls wild spawn respawn timer
+	task->schedule((60 + (level * 2)) * 1000);
 
 	return 0;
 }
@@ -66,8 +66,6 @@ void DynamicSpawnObserverImplementation::spawnInitialMobiles(SceneObject* buildi
 	VectorMap<String, int> objectsToSpawn; // String mobileTemplate, int number to spawn
 	const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
 	uint32 lairTemplateCRC = getLairTemplateName().hashCode();
-
-	//totalNumberToSpawn *= 1.3;
 
 	if (totalNumberToSpawn < 1)
 		totalNumberToSpawn = 1;

@@ -42,8 +42,7 @@
 
 
 object_tangible_component_weapon_lightsaber_lightsaber_module_krayt_dragon_pearl = object_tangible_component_weapon_lightsaber_shared_lightsaber_module_krayt_dragon_pearl:new {
-		gameObjectType = 262156,
-		noTrade = 1,
+		gameObjectType = 262156
 }
 
 ObjectTemplates:addTemplate(object_tangible_component_weapon_lightsaber_lightsaber_module_krayt_dragon_pearl, "object/tangible/component/weapon/lightsaber/lightsaber_module_krayt_dragon_pearl.iff")

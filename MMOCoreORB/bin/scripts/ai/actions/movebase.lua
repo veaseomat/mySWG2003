@@ -8,7 +8,7 @@ function MoveBase:checkConditions(pAgent)
 		local agent = AiAgent(pAgent)
 		local creature = CreatureObject(pAgent)
 		if (creature:getPosture() == UPRIGHT and agent:setDestination() > 0) then
-			if agent:shouldRetreat(512) then	--leash range here?
+			if agent:shouldRetreat(256) then
 				agent:leash()
 				return false
 			end

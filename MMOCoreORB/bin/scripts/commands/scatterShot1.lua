@@ -44,7 +44,7 @@
 ScatterShot1Command = {
         name = "scattershot1",
 
-	damageMultiplier = 2,
+	damageMultiplier = 3.25,
 	speedMultiplier = 2,
 	healthCostMultiplier = 1.75,
 	actionCostMultiplier = 1.25,
@@ -58,7 +58,7 @@ ScatterShot1Command = {
 
 	poolsToDamage = HEALTH_ATTRIBUTE + ACTION_ATTRIBUTE + MIND_ATTRIBUTE,
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = CARBINEWEAPON,
 
 	range = -1
 }

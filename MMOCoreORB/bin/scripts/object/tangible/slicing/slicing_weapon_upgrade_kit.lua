@@ -44,7 +44,7 @@
 object_tangible_slicing_slicing_weapon_upgrade_kit = object_tangible_slicing_shared_slicing_weapon_upgrade_kit:new {
 	templateType = SLICINGTOOL,
 	gameObjectType = 32778,
-	effectiveness = 15,
+	effectiveness = -15,
 
 
 	numberExperimentalProperties = {1, 1, 1, 1},

@@ -118,18 +118,18 @@ public:
 
 		float density = resourceSpawn->getDensityAt(player->getZone()->getZoneName(), player->getPositionX(), player->getPositionY());
 
-//		if (density > 0.80f) {
-//			quantityExtracted = int(quantityExtracted * 1.25f);
-//		} else if (density > 0.60f) {
-//			quantityExtracted = int(quantityExtracted * 1.00f);
-//		} else if (density > 0.40f) {
-//			quantityExtracted = int(quantityExtracted * 0.75f);
-//		} else {
-//			quantityExtracted = int(quantityExtracted * 0.50f);
-//		}
+		if (density > 0.80f) {
+			quantityExtracted = int(quantityExtracted * 1.25f);
+		} else if (density > 0.60f) {
+			quantityExtracted = int(quantityExtracted * 1.00f);
+		} else if (density > 0.40f) {
+			quantityExtracted = int(quantityExtracted * 0.75f);
+		} else {
+			quantityExtracted = int(quantityExtracted * 0.50f);
+		}
 
 		TransactionLog trx(TrxCode::HARVESTED, player, resourceSpawn);
-		resourceManager->harvestResourceToPlayer(trx, player, resourceSpawn, quantityExtracted * 5);
+		resourceManager->harvestResourceToPlayer(trx, player, resourceSpawn, quantityExtracted);
 
 		updateMilkState(CreatureManager::ALREADYMILKED);
 	}

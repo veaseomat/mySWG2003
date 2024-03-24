@@ -44,7 +44,7 @@
 PolearmArea2Command = {
         name = "polearmarea2",
 
-	damageMultiplier = 2.0,
+	damageMultiplier = 2.75,
 	speedMultiplier = 2.5,
 	healthCostMultiplier = 2.0,
 	actionCostMultiplier = 1.5,
@@ -81,7 +81,7 @@ PolearmArea2Command = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 	
-	weaponType = TWOHANDMELEEWEAPON + ONEHANDMELEEWEAPON + POLEARMWEAPON,
+	weaponType = POLEARMWEAPON,
 
 	range = -1
 }

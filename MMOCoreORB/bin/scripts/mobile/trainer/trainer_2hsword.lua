@@ -2,7 +2,6 @@ trainer_2hsword = Creature:new {
 	objectName = "@mob/creature_names:trainer_2hsword",
 	randomNameType = NAME_GENERIC,
 	randomNameTag = true,
-	--planetMapCategory = "trainer_brawler",
 	faction = "",
 	level = 100,
 	chanceHit = 0.390000,

@@ -233,7 +233,7 @@ void SlicingSessionImplementation::endSlicing() {
 	}
 
 	if (tangibleObject->isMissionTerminal())
-		player->addCooldown("slicing.terminal", (1 * (60 * 1000))); // 1min Cooldown
+		player->addCooldown("slicing.terminal", (2 * (60 * 1000))); // 2min Cooldown
 
 	cancelSession();
 
@@ -470,20 +470,20 @@ void SlicingSessionImplementation::handleSlice(SuiListBox* suiBox) {
 
 	if (tangibleObject->isContainerObject() || tangibleObject->getGameObjectType() == SceneObjectType::PLAYERLOOTCRATE) {
 		handleContainerSlice();
-		playerManager->awardExperience(player, "slicing", 500, true); // Container Slice XP
+		playerManager->awardExperience(player, "slicing", 250, true); // Container Slice XP
 	} else if (tangibleObject->isMissionTerminal()) {
 		MissionTerminal* term = cast<MissionTerminal*>( tangibleObject.get());
-		playerManager->awardExperience(player, "slicing", 200, true); // Terminal Slice XP
+		playerManager->awardExperience(player, "slicing", 100, true); // Terminal Slice XP
 		term->addSlicer(player);
 		player->sendSystemMessage("@slicing/slicing:terminal_success");
 	} else if (tangibleObject->isWeaponObject()) {
 		handleWeaponSlice();
-		playerManager->awardExperience(player, "slicing", 500, true); // Weapon Slice XP
+		playerManager->awardExperience(player, "slicing", 250, true); // Weapon Slice XP
 	} else if (tangibleObject->isArmorObject()) {
 		handleArmorSlice();
-		playerManager->awardExperience(player, "slicing", 500, true); // Armor Slice XP
+		playerManager->awardExperience(player, "slicing", 250, true); // Armor Slice XP
 	} else if ( isBaseSlice()){
-		playerManager->awardExperience(player,"slicing", 2000, true); // Base slicing
+		playerManager->awardExperience(player,"slicing", 1000, true); // Base slicing
 
 		Zone* zone = player->getZone();
 
@@ -531,10 +531,10 @@ void SlicingSessionImplementation::handleWeaponSlice() {
 		return;
 
 	}
-//edit slicechance here
+
 	uint8 percentage = System::random(max - min) + min;
 
-	switch(0) {//System::random(1)) {
+	switch(System::random(1)) {
 	case 0:
 		handleSliceDamage(percentage);
 		break;
@@ -618,7 +618,7 @@ void SlicingSessionImplementation::handleArmorSlice() {
 	if (tangibleObject == nullptr || player == nullptr)
 		return;
 
-	uint8 sliceType = 0;//System::random(1);
+	uint8 sliceType = System::random(1);
 	int sliceSkill = getSlicingSkill(player);
 	uint8 min = 0;
 	uint8 max = 0;

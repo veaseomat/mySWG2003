@@ -48,25 +48,19 @@ bh_targets_at_mission_level = {
 		"bh_tusken_death_hunter" --level 50
 	},
 	level3 = { --level 51 - 200 (current highest is 120, probe droids will only have a 5% chance to find targets over level 190)
-----		"bh_tusken_warlord", --level 62
---		"bh_untrained_wielder_of_the_dark_side", --level 65
-----		"bh_mercenary_sentry", --level 66
-----		"bh_nightsister_outcast", --level 81
---		"bh_force_trained_archaist", --level 90
---		"bh_force_sensitive_crypt_crawler", --level 95
-----		"bh_nightsister_spell_weaver", --level 107
-----		"bh_singing_mountain_clan_arch_witch", --level 107
-----		"bh_spiderclan_auspex", --level 107
---		"bh_feral_force_wielder", --level 115
---		"bh_force_crystal_hunter", --level 115
-----		"bh_tusken_carnage_champion", --level 116
---		"bh_dark_adept", --level 120
-		"pvpljk", --
-		"pvpdjk", --
-		"pvpljk", --
-		"pvpdjk", --
-		"pvpljk", --
-		"pvpdjk", --
+		"bh_tusken_warlord", --level 62
+		"bh_untrained_wielder_of_the_dark_side", --level 65
+		"bh_mercenary_sentry", --level 66
+		"bh_nightsister_outcast", --level 81
+		"bh_force_trained_archaist", --level 90
+		"bh_force_sensitive_crypt_crawler", --level 95
+		"bh_nightsister_spell_weaver", --level 107
+		"bh_singing_mountain_clan_arch_witch", --level 107
+		"bh_spiderclan_auspex", --level 107
+		"bh_feral_force_wielder", --level 115
+		"bh_force_crystal_hunter", --level 115
+		"bh_tusken_carnage_champion", --level 116
+		"bh_dark_adept" --level 120
 	}
 }
 
@@ -78,9 +72,9 @@ enable_factional_entertainer_missions = "true"
 
 enable_same_account_bounty_missions = "false"
 
-playerBountyKillBuffer = 3 * 60 * 60 * 1000 -- Buffer before player bounty can be put back on terminal after target is killed, set 0 to disable
+playerBountyKillBuffer = 30 * 60 * 1000 -- Buffer before player bounty can be put back on terminal after target is killed, set 0 to disable
 
-playerBountyDebuffLength = 24 * 60 * 60 * 1000 -- Time before their bounty resets from the minimum amount
+playerBountyDebuffLength = 3 * 24 * 60 * 60 * 1000 -- Time before their bounty resets from the minimum amount
 
 -- Destroy Mission Configuration
 -- Distance calculated as: 

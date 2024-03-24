@@ -7,8 +7,7 @@ bh_armor_chest_plate = {
 	directObjectTemplate = "object/tangible/wearables/armor/bounty_hunter/armor_bounty_hunter_chest_plate.iff",
 	craftingValues = {
 		{"armor_rating",1,1,0},
-		{"armor_special_type",8,8,0},
-		{"armor_special_effectiveness",1,20,10},
+		{"armor_special_type",0,0,0},
 		{"armor_effectiveness",10,50,10},
 		{"armor_integrity",20000,70000,0},
 		{"armor_health_encumbrance",250,150,0},

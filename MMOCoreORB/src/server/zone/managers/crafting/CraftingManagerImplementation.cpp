@@ -2,7 +2,6 @@
  				Copyright <SWGEmu>
 		See file COPYING for copying conditions. */
 
-#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/managers/crafting/CraftingManager.h"
 #include "server/zone/managers/crafting/labratories/SharedLabratory.h"
 #include "server/zone/managers/crafting/labratories/ResourceLabratory.h"
@@ -97,12 +96,8 @@ int CraftingManagerImplementation::calculateExperimentationSuccess(CreatureObjec
 	/// Range 0-100
 	int luckRoll = System::random(100) + cityBonus;
 
-	if(luckRoll > ((95 - expbonus) - forceSkill))	{
+	if(luckRoll > ((95 - expbonus) - forceSkill))
 		return AMAZINGSUCCESS;
-//		if (System::random(10) >= 10){
-//			JediManager::instance()->awardFSpoint(player);
-//		}
-	}
 
 	if(luckRoll < (5 - expbonus - failMitigate))
 		luckRoll -= System::random(100);
@@ -141,7 +136,7 @@ String CraftingManagerImplementation::generateSerial() {
 	StringBuffer ss;
 
 	char a;
-//remove SN here
+
 	ss << "(";
 
 	for (int i = 0; i < 8; ++i) {

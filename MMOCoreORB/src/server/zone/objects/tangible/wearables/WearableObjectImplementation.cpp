@@ -112,7 +112,7 @@ void WearableObjectImplementation::generateSockets(CraftingValues* craftingValue
 
 			if (player != nullptr && draftSchematic != nullptr) {
 				String assemblySkill = draftSchematic->getAssemblySkill();
-				skill = player->getSkillMod(assemblySkill) ; // * 2.5 //0 to 250 max
+				skill = player->getSkillMod(assemblySkill) * 2.5; // 0 to 250 max
 				luck = System::random(player->getSkillMod("luck")
 						+ player->getSkillMod("force_luck"));
 			}
@@ -123,9 +123,7 @@ void WearableObjectImplementation::generateSockets(CraftingValues* craftingValue
 
 	float roll = System::random(skill + luck + random);
 
-	//int generatedCount = int(float(MAXSOCKETS * roll) / float(MAXSOCKETS * 100));
-
-	int generatedCount = (skill / 100) * MAXSOCKETS;
+	int generatedCount = int(float(MAXSOCKETS * roll) / float(MAXSOCKETS * 100));
 
 	if (generatedCount > MAXSOCKETS)
 		generatedCount = MAXSOCKETS;
@@ -159,12 +157,10 @@ void WearableObjectImplementation::applyAttachment(CreatureObject* player,
 		Locker locker(player);
 
 		if (isEquipped()) {
-			player->sendSystemMessage("*** You can not add a Skill Enhancing Attachment to an item while it is equipped ***");
-			return;
-			//removeSkillModsFrom(player);
+			removeSkillModsFrom(player);
 		}
 
-		if (wearableSkillMods.size() < 10) {
+		if (wearableSkillMods.size() < 6) {
 			HashTable<String, int>* mods = attachment->getSkillMods();
 			HashTableIterator<String, int> iterator = mods->iterator();
 
@@ -258,18 +254,18 @@ String WearableObjectImplementation::repairAttempt(int repairChance) {
 
 	if(repairChance < 25) {
 		message += "sys_repair_failed";
-		setMaxCondition(getMaxCondition() * .5f, true);
+		setMaxCondition(1, true);
 		setConditionDamage(0, true);
 	} else if(repairChance < 50) {
 		message += "sys_repair_imperfect";
-		setMaxCondition(getMaxCondition() * .75f, true);
+		setMaxCondition(getMaxCondition() * .65f, true);
 		setConditionDamage(0, true);
 	} else if(repairChance < 75) {
-		setMaxCondition(getMaxCondition() * .90f, true);
+		setMaxCondition(getMaxCondition() * .80f, true);
 		setConditionDamage(0, true);
 		message += "sys_repair_slight";
 	} else {
-		//setMaxCondition(getMaxCondition() * .95f, true);
+		setMaxCondition(getMaxCondition() * .95f, true);
 		setConditionDamage(0, true);
 		message += "sys_repair_perfect";
 	}

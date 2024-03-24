@@ -306,11 +306,9 @@ void PetDeedImplementation::updateCraftingValues(CraftingValues* values, bool fi
 void PetDeedImplementation::fillObjectMenuResponse(ObjectMenuResponse* menuResponse, CreatureObject* player) {
 	DeedImplementation::fillObjectMenuResponse(menuResponse, player);
 
-//	if(isASubChildOf(player))
-//		menuResponse->addRadialMenuItem(20, 3, "@pet/pet_menu:menu_tame");
-
+	if(isASubChildOf(player))
+		menuResponse->addRadialMenuItem(20, 3, "@pet/pet_menu:menu_tame");
 	// Bio engineers can sample a deed
-
 	if(player->hasSkill("outdoors_bio_engineer_novice") && isASubChildOf(player))
 		menuResponse->addRadialMenuItem(21, 3, "@sui:harvest_dna");
 }

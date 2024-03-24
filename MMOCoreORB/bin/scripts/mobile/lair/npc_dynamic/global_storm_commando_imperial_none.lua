@@ -1,6 +1,6 @@
 global_storm_commando_imperial_none = Lair:new {
-	mobiles = {{"storm_commando",1}, {"rebel_commando",1}},
-	spawnLimit = 20,
+	mobiles = {{"storm_commando",1}},
+	spawnLimit = 6,
 	buildingsVeryEasy = {},
 	buildingsEasy = {},
 	buildingsMedium = {},

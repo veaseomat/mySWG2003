@@ -10,7 +10,6 @@
 #include "server/zone/objects/tangible/weapon/WeaponObject.h"
 #include "LightsaberObjectMenuComponent.h"
 #include "server/zone/packets/object/ObjectMenuResponse.h"
-#include "server/zone/managers/visibility/VisibilityManager.h"
 
 void LightsaberObjectMenuComponent::fillObjectMenuResponse(SceneObject* sceneObject, ObjectMenuResponse* menuResponse, CreatureObject* player) const {
 
@@ -22,16 +21,10 @@ void LightsaberObjectMenuComponent::fillObjectMenuResponse(SceneObject* sceneObj
 	if(weapon == nullptr)
 		return;
 
-//	Reference<PlayerObject*> ghostdef = player->getPlayerObject();//moved to weaponobject instead
-//
-//	if (player->getWeapon()->isJediWeapon() || ghostdef->hasBhTef()) {
-//		VisibilityManager::instance()->increaseVisibility(player, 25);
-//	}
-
 	TangibleObjectMenuComponent::fillObjectMenuResponse(sceneObject, menuResponse, player);
 
-//	String text = "@jedi_spam:open_saber";
-//	menuResponse->addRadialMenuItem(89, 3, text);
+	String text = "@jedi_spam:open_saber";
+	menuResponse->addRadialMenuItem(89, 3, text);
 
 }
 

@@ -49,10 +49,10 @@ which carries forward this exception.
 	--------------------
 --]]
 --The amount of time in minutes before the city specialization may be changed again.
-CitySpecializationCooldown = 60 * 24
+CitySpecializationCooldown = 604800000
 
 --The amount of time in minutes before another withdrawal from the city treasury may be made.
-TreasuryWithdrawalCooldown = 60 * 24 * 7
+TreasuryWithdrawalCooldown = 86400000
 
 --The number of city update cycles that must pass before mayoral voting process is complete.
 CityVotingCycles = 3
@@ -61,31 +61,31 @@ CityVotingCycles = 3
 CityVotingCyclesUntilLocked = 2
 
 --The amount of time in minutes before the city performs an update.
-CityUpdateInterval = 60 * 24
+CityUpdateInterval = 10080
 
 --The amount of time in minutes a new city has to gain enough citizens to remain a city.
-NewCityGracePeriod = 60 * 24
+NewCityGracePeriod = 1440
 
 --The amount of time in minutes an old city has to regain enough citizens to remain a city.
-OldCityGracePeriod = 60 * 24 * 2
+OldCityGracePeriod = 4320
 
 --Whether or not to allow the use of the command, /cityWarn to give players a TEF while in the city limits.
 EnableCityWarn = false
 
 --The number of citizens required to achieve each city rank. (Outpost, Village, Township, City, Metropolis)
-CitizensPerRank = {1, 2, 3, 4, 5}
+CitizensPerRank = {2, 4, 6, 8, 10}
 --CitizensPerRank = {10, 20, 35, 55, 85}
 
 --The radius in meters of the city at each city rank. (Outpost, Village, Township, City, Metropolis)
-RadiusPerRank = {150, 200, 250, 300, 350}
+RadiusPerRank = {150, 200, 300, 400, 450}
 
 -- Maximum for each rank.  ex. rank 1 = DecorationsPerRank * 1, rank 5 = DecorationsPerRank * 5
 DecorationsPerRank = 10
-TrainersPerRank = 5
+TrainersPerRank = 3
 MissionTerminalsPerRank = 3
 
 -- Amount to discount city maintenance  float.  1 = 100%, .75 =75%, .5=50% etc
-maintenanceDiscount = .05
+maintenanceDiscount = 1.0
 
 --[[
 	CITIES ALLOWED PER PLANET
@@ -95,16 +95,16 @@ maintenanceDiscount = .05
 	The maximum amount of cities per rank is 255.
 --]]
 CitiesAllowed = {
-	{"corellia", {9, 9, 9, 9, 9}},
-	{"dantooine", {9, 9, 9, 9, 9}},
-	{"dathomir", {9, 9, 9, 9, 9}},
-	{"endor", {9, 9, 9, 9, 9}},
-	{"lok", {9, 9, 9, 9, 9}},
-	{"naboo", {9, 9, 9, 9, 9}},
-	{"rori", {9, 9, 9, 9, 9}},
-	{"talus", {9, 9, 9, 9, 9}},
-	{"tatooine", {9, 9, 9, 9, 9}},
-	{"yavin4", {9, 9, 9, 9, 9}},
+	{"corellia", {20, 20, 15, 10, 10}},
+	{"dantooine", {50, 50, 30, 20, 20}},
+	{"dathomir", {0, 0, 0, 0, 0}},
+	{"endor", {0, 0, 0, 0, 0}},
+	{"lok", {50, 50, 30, 20, 20}},
+	{"naboo", {20, 20, 15, 10, 10}},
+	{"rori", {50, 50, 30, 20, 20}},
+	{"talus", {50, 50, 30, 20, 20}},
+	{"tatooine", {20, 20, 15, 10, 10}},
+	{"yavin4", {0, 0, 0, 0, 0}}
 }
 
 
@@ -186,113 +186,58 @@ CityTaxes = {
 CitySpecializations = {
 	{--Sample Rich
 		name = "@city/city:city_spec_sample_rich",
-		cost = 1000,
+		cost = 70000,
 		skillMods = {
 			{"private_spec_samplesize", 20},
-			{"private_spec_samplerate", 10},
-			{"private_medical_rating", 10},
-			{"private_spec_cloning", 20},
-			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
-			{"private_spec_entertainer", 10},
-			{"private_defense", 90}
+			{"private_spec_samplerate", 10}
 		}
 	},
 	{--Manufacturing Center
 		name = "@city/city:city_spec_industry",
-		cost = 1000,
+		cost = 50000,
 		skillMods = {
-			{"private_spec_samplesize", 20},
-			{"private_spec_samplerate", 10},
-			{"private_medical_rating", 10},
-			{"private_spec_cloning", 20},
-			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
-			{"private_spec_entertainer", 10},
-			{"private_defense", 90}
+			{"private_spec_assembly", 10}
 		}
 	},
 	{--Medical Center
 		name = "@city/city:city_spec_doctor",
-		cost = 1000,
+		cost = 80000,
 		skillMods = {
-			{"private_spec_samplesize", 20},
-			{"private_spec_samplerate", 10},
-			{"private_medical_rating", 10},
-			{"private_spec_cloning", 20},
-			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
-			{"private_spec_entertainer", 10},
-			{"private_defense", 90}
+			{"private_medical_rating", 10}
 		}
 	},
 	{--Clone Lab
 		name = "@city/city:city_spec_cloning",
-		cost = 1000,
+		cost = 80000,
 		skillMods = {
-			{"private_spec_samplesize", 20},
-			{"private_spec_samplerate", 10},
-			{"private_medical_rating", 10},
-			{"private_spec_cloning", 20},
-			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
-			{"private_spec_entertainer", 10},
-			{"private_defense", 90}
+			{"private_spec_cloning", 20}
 		}
 	},
 	{--Research Center
 		name = "@city/city:city_spec_research",
-		cost = 1000,
+		cost = 125000,
 		skillMods = {
-			{"private_spec_samplesize", 20},
-			{"private_spec_samplerate", 10},
-			{"private_medical_rating", 10},
-			{"private_spec_cloning", 20},
-			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
-			{"private_spec_entertainer", 10},
-			{"private_defense", 90}
+			{"private_spec_experimentation", 15}
 		}
 	},
 	{--Improved Job Market
 		name = "@city/city:city_spec_missions",
-		cost = 1000,
+		cost = 80000,
 		skillMods = {
-			{"private_spec_samplesize", 20},
-			{"private_spec_samplerate", 10},
-			{"private_medical_rating", 10},
-			{"private_spec_cloning", 20},
-			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
-			{"private_spec_entertainer", 10},
-			{"private_defense", 90}
+			{"private_spec_missions", 15}
 		}
 	},
 	{--Entertainment District
 		name = "@city/city:city_spec_entertainer",
-		cost = 1000,
+		cost = 80000,
 		skillMods = {
-			{"private_spec_samplesize", 20},
-			{"private_spec_samplerate", 10},
-			{"private_medical_rating", 10},
-			{"private_spec_cloning", 20},
-			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
-			{"private_spec_entertainer", 10},
-			{"private_defense", 90}
+			{"private_spec_entertainer", 10}
 		}
 	},
 	{--Stronghold
 		name = "@city/city:city_spec_stronghold",
-		cost = 1000,
+		cost = 150000,
 		skillMods = {
-			{"private_spec_samplesize", 20},
-			{"private_spec_samplerate", 10},
-			{"private_medical_rating", 10},
-			{"private_spec_cloning", 20},
-			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
-			{"private_spec_entertainer", 10},
 			{"private_defense", 90}
 		}
 	},

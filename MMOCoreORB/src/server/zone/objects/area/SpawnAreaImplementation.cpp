@@ -38,16 +38,15 @@ void SpawnAreaImplementation::buildSpawnList(Vector<uint32>* groupCRCs) {
 Vector3 SpawnAreaImplementation::getRandomPosition(SceneObject* player) {
 	Vector3 position;
 	bool positionFound = false;
-	int retries = 1;//10 is vanilla, seems to affect spawn SPEED, setting 0 nothing spawns
+	int retries = 10;
 
 	const auto worldPosition = player->getWorldPosition();
 
 	while (!positionFound && retries-- > 0) {
-		position = areaShape->getRandomPosition(worldPosition, 160.0f, 320.0f);//this is how close to the player stuff can spawn min max //margin
+		position = areaShape->getRandomPosition(worldPosition, 64.0f, 256.0f);
 
 		positionFound = true;
 
-		//spawns on top of spawns without this lol
 		for (int i = 0; i < noSpawnAreas.size(); ++i) {
 			auto noSpawnArea = noSpawnAreas.get(i).get();
 
@@ -97,14 +96,14 @@ int SpawnAreaImplementation::notifyObserverEvent(unsigned int eventType, Observa
 
 			Locker locker(area);
 
-			area->setRadius(64);//set no spawn radius? margin
+			area->setRadius(64);
 			area->setNoSpawnArea(true);
 			area->initializePosition(sceno->getPositionX(), sceno->getPositionZ(), sceno->getPositionY());
 
 			thisZone->transferObject(area, -1, true);
 
 			Reference<Task*> task = new RemoveNoSpawnAreaTask(area);
-			task->schedule(600000);//timer for despawn? 60,000 = 1min, vanilla 300000
+			task->schedule(300000);
 		}
 	}
 
@@ -124,56 +123,8 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	if (totalSpawnCount >= maxSpawnLimit)
 		return;
 
-
-	//attempt tocreate a spawn limit, doesnt seem to work, i think this is for lair respawn checks only, in range check should probably be done in the world spawn area where i limit the radius of spawns and spawn density
-	//might be useful for limiting respawns if there is already a certain number in range say 32m
-	//scene object is probably the thing its trying to spawn not the player...
-
-//	ManagedReference<CreatureObject*> screo = object->asCreatureObject();
-////	ManagedReference<WeaponObject*> pweapon = pcreo->getWeapon();
-////	Reference<PlayerObject*> pghost = pcreo->getPlayerObject();
-////
-////		if (screo->isPlayerCreature() && thisAgent->isInRange(pObject, 32)) {
-////			if (System::random(30) == 30 && pghost->isJedi() && (pweapon->isJediWeapon())) { // || pghost->hasBhTef()      !isCreature()
-////				VisibilityManager::instance()->increaseVisibility(pcreo, 10); // Give visibility
-////			}
-////		}
-//
-//		//Zone* zone = screo->getZone();
-//
-//		SortedVector<QuadTreeEntry*> closeObjects;
-//		CloseObjectsVector* closeObjectsVector = (CloseObjectsVector*) screo->getCloseObjects();
-//		if (closeObjectsVector == nullptr) {
-//			zone->getInRangeObjects(screo->getWorldPositionX(), screo->getWorldPositionY(), 32, &closeObjects, true);
-//		} else {
-//			closeObjectsVector->safeCopyReceiversTo(closeObjects, CloseObjectsVector::CREOTYPE);
-//		}
-//
-//		int closenpc = 0;
-//
-//		for (int i = 0; i < closeObjects.size(); ++i) {
-//			SceneObject* obj = static_cast<SceneObject*>(closeObjects.get(i));
-//
-//			if (obj == nullptr)
-//				continue;
-//
-//			if (obj->getObjectID() == screo->getObjectID())
-//				continue;
-//
-//			CreatureObject* c = obj->asCreatureObject();
-//
-//			if (c == nullptr || c->isPlayerCreature() || !c->isDead())
-//				continue;
-//
-//			if (screo->isInRange(c, 256))//distance
-//				closenpc += 1;
-//		}
-//
-//		if (closenpc > 1)
-//			return;
-
-//	if (lastSpawn.miliDifference() < MINSPAWNINTERVAL)
-//		return;
+	if (lastSpawn.miliDifference() < MINSPAWNINTERVAL)
+		return;
 
 	int choice = System::random(totalWeighting - 1);
 	int counter = 0;
@@ -183,7 +134,7 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	for (int i = 0; i < possibleSpawns.size(); i++) {
 		LairSpawn* spawn = possibleSpawns.get(i);
 
-		counter += spawn->getWeighting();// * 10;//not sure what this did
+		counter += spawn->getWeighting();
 
 		if (choice < counter) {
 			finalSpawn = spawn;
@@ -215,11 +166,11 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	//	return;
 
 	// Check the spot to see if spawning is allowed
-	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), 64)) {//finalSpawn->getSize() + 32.f //this is spawn density, was set to 0 prior //margin
+	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), finalSpawn->getSize() + 64.f)) {
 		return;
 	}
 
-	int spawnLimit = -1;//finalSpawn->getSpawnLimit();//untested
+	int spawnLimit = finalSpawn->getSpawnLimit();
 
 	String lairTemplate = finalSpawn->getLairTemplateName();
 	uint32 lairHashCode = lairTemplate.hashCode();

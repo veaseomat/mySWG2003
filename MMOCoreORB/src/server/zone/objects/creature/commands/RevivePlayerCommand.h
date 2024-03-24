@@ -72,17 +72,6 @@ public:
 			return false;
 		}
 
-		CreatureObject* player = cast<CreatureObject*>(creature);
-		CreatureObject* consentOwner = cast<CreatureObject*>( creatureTarget);
-
-		PlayerObject* ghost = consentOwner->getPlayerObject();
-
-
-		if (consentOwner->hasSkill("force_title_jedi_rank_02")) {
-			creature->sendSystemMessage("JEDI CAN NOT BE REVIVED!"); // You must have consent from a jedi resuscitation target!
-			return false;
-		}
-
 		return true;
 	}
 

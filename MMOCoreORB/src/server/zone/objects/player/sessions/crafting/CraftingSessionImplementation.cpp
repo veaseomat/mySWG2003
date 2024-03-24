@@ -5,7 +5,6 @@
  *      Author: Kyle
  */
 
-#include "server/zone/managers/jedi/JediManager.h"
 #include "server/zone/objects/scene/variables/StringId.h"
 #include "server/zone/objects/player/sessions/crafting/CraftingSession.h"
 #include "server/zone/managers/player/PlayerManager.h"
@@ -738,9 +737,6 @@ void CraftingSessionImplementation::initialAssembly(int clientCounter) {
 	// Update the prototype with new values
 	prototype->updateCraftingValues(craftingValues, true);
 
-	prototype->setJunkDealerNeeded(1);
-	prototype->setJunkValue((manufactureSchematic->getComplexity() * manufactureSchematic->getComplexity()) / 2);
-
 	addSkillMods();
 
 	addWeaponDots();
@@ -957,12 +953,6 @@ void CraftingSessionImplementation::experiment(int rowsAttempted, const String& 
 
 	}
 
-//	if(System::random(1) <= 1 && ) {//use this stuff possibly in the name area in craftingsessionimplementation customization section
-//		prototype->setIsCraftedEnhancedItem(true);
-//		prototype->addMagicBit(false);//makes it yellow
-//
-//	}
-
 	manufactureSchematic->setExperimentingCounter(
 			manufactureSchematic->getExperimentingCounter() + rowsAttempted);
 
@@ -971,8 +961,6 @@ void CraftingSessionImplementation::experiment(int rowsAttempted, const String& 
 
 	// Update the Tano with new values
 	prototype->updateCraftingValues(manufactureSchematic->getCraftingValues(), false);
-
-//	prototype->setJunkValue((manufactureSchematic->getComplexity() * 10) + );
 
 	// Sets the result for display
 	experimentationResult = lowestExpSuccess;
@@ -1034,7 +1022,7 @@ void CraftingSessionImplementation::customization(const String& name, byte templ
 	ManagedReference<ManufactureSchematic*> manufactureSchematic = this->manufactureSchematic.get();
 	ManagedReference<TangibleObject*> prototype = this->prototype.get();
 
-	if (manufactureSchematic == nullptr) {//add ifyellow here to prevent mfg schem legendary
+	if (manufactureSchematic == nullptr) {
 		sendSlotMessage(0, IngredientSlot::NOSCHEMATIC);
 		return;
 	}
@@ -1104,11 +1092,6 @@ void CraftingSessionImplementation::customization(const String& name, byte templ
 
 	/// Set Name
 	manufactureSchematic->setObjectName(newObjectName, false);
-
-//	if(prototype->getIsCraftedEnhancedItem()) {//use this stuff possibly in the name area in craftingsessionimplementation customization section
-//
-//
-//	}
 
 	/// Set Manufacture Schematic Custom name
 	if (!newName.isEmpty())
@@ -1222,31 +1205,17 @@ void CraftingSessionImplementation::createPrototype(int clientCounter, bool crea
 
 		String xpType = manufactureSchematic->getDraftSchematic()->getXpType();
 		int xp = manufactureSchematic->getDraftSchematic()->getXpAmount();
-//crafting timers
+
 		if (createItem) {
 
-			startCreationTasks(0, false);//manufactureSchematic->getComplexity() / 5
-
-//			if (System::random(100) >= 100 ){ //MOVED TO EXPERIMENTATTION player/session/craftingsessimp
-//				JediManager::instance()->awardFSpoint(crafter);
-//			}
+			startCreationTasks(manufactureSchematic->getComplexity() * 2, false);
 
 		} else {
 
 			// This is for practicing
-			startCreationTasks(0, true);
-			xp = round(xp * 1.25f);
-
+			startCreationTasks(manufactureSchematic->getComplexity() * 2, true);
+			xp = round(xp * 1.05f);
 		}
-
-		xp *= 1.5;
-
-		if (xpType == "jedi_general") {
-			xp *= .2;
-		}
-//		if (xpType != "jedi_general") {
-//			xp *= 1.5;
-//		}
 
 		Reference<PlayerManager*> playerManager = crafter->getZoneServer()->getPlayerManager();
 		playerManager->awardExperience(crafter, xpType, xp, true);

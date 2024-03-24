@@ -147,14 +147,6 @@ bool ContainerComponent::transferObject(SceneObject* sceneObject, SceneObject* o
 	ManagedReference<Zone*> objZone = object->getLocalZone();
 	ManagedReference<Zone*> oldRootZone = object->getZone();
 
-//		if (containmentType == 4 && object->isLightsaberCrystalObject()) {
-//			object->error("Crystals can not be removed from lightsabers.");
-//			//objParent->sendSystemMessage("Crystals can not be removed from lightsabers.");
-//			//errorDescription = "@jedi_spam:saber_not_while_equpped";
-//			//return TransferErrorCode::INVALIDTYPE;
-//			return false;
-//		}
-
 	if (object->containsActiveSession(SessionFacadeType::SLICING)) {
 		ManagedReference<Facade*> facade = object->getActiveSession(SessionFacadeType::SLICING);
 		ManagedReference<SlicingSession*> session = dynamic_cast<SlicingSession*>(facade.get());

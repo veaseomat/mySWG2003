@@ -28,17 +28,10 @@ public:
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
 		int res = creature->hasBuff(buffCRC) ? NOSTACKJEDIBUFF : doJediSelfBuffCommand(creature);
 
-//		if (res == NOSTACKJEDIBUFF) {
-//			creature->sendSystemMessage("@jedi_spam:already_force_running"); // You are already force running.
-//			return GENERALERROR;
-//		}
-
-		// Toggle On/Off
 		if (res == NOSTACKJEDIBUFF) {
-			creature->sendSystemMessage("You feel the Force leave your body, and you return to normal movement speed."); // Toggle Force Run off.
-			creature->removeBuff(BuffCRC::JEDI_FORCE_RUN_1);
+			creature->sendSystemMessage("@jedi_spam:already_force_running"); // You are already force running.
+			return GENERALERROR;
 		}
-
 		// Return if something is in error.
 		if (res != SUCCESS) {
 			return res;
@@ -50,8 +43,7 @@ public:
 			creature->removeBuff(STRING_HASHCODE("retreat"));
 		}
 
-
-
+		// Return.
 		return SUCCESS;
 	}
 

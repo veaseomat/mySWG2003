@@ -20,8 +20,6 @@
 #include "server/zone/managers/planet/PlanetManager.h"
 #include "server/zone/managers/planet/PlanetTravelPoint.h"
 #include "server/zone/objects/group/GroupObject.h"
-#include "server/zone/managers/visibility/VisibilityManager.h"
-#include "server/zone/objects/tangible/weapon/WeaponObject.h"
 
 //#define ENABLE_CITY_TRAVEL_LIMIT
 
@@ -47,13 +45,6 @@ public:
 		if (zone == nullptr)
 			return GENERALERROR;
 
-////		ManagedReference<WeaponObject*> weapon = creature->getWeapon();
-//		Reference<PlayerObject*> ghostdef = creature->getPlayerObject();
-//
-//		if (creature->getWeapon()->isJediWeapon() || ghostdef->hasBhTef()) {
-//			VisibilityManager::instance()->increaseVisibility(creature, 25);
-//		}
-
 		ManagedReference<PlanetManager*> planetManager = zone->getPlanetManager();
 
 		Reference<PlanetTravelPoint*> closestPoint = planetManager->getNearestPlanetTravelPoint(creature, 128.f);
@@ -76,7 +67,7 @@ public:
 			return GENERALERROR;
 		}
 
-		if (!shuttle->isInRange(creature, 64.f)) {
+		if (!shuttle->isInRange(creature, 25.f)) {
 			creature->sendSystemMessage("@player_structure:boarding_too_far"); //You are too far from the shuttle to board.
 			return GENERALERROR;
 		}
@@ -137,10 +128,10 @@ public:
 
 		Reference<PlanetTravelPoint*> arrivalPoint = arrivalZone->getPlanetManager()->getPlanetTravelPoint(arrivalPointName);
 
-//		if (arrivalPoint == nullptr || !closestPoint->canTravelTo(arrivalPoint)) {
-//			creature->sendSystemMessage("@travel:wrong_shuttle"); //The ticket is not valid for the given shuttle.
-//			return GENERALERROR;
-//		}
+		if (arrivalPoint == nullptr || !closestPoint->canTravelTo(arrivalPoint)) {
+			creature->sendSystemMessage("@travel:wrong_shuttle"); //The ticket is not valid for the given shuttle.
+			return GENERALERROR;
+		}
 
 		ManagedReference<CreatureObject*> targetShuttleObject = arrivalPoint->getShuttle();
 

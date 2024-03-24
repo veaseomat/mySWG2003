@@ -86,9 +86,7 @@ object_tangible_wearables_armor_stormtrooper_armor_stormtrooper_gloves = object_
 				"object/mobile/vendor/zabrak_male.iff" },
 
 	-- Damage types in WeaponObject
-	vulnerability = LIGHTSABER,
-	
-	specialResists = STUN,
+	vulnerability = ACID + HEAT + STUN + LIGHTSABER,
 
 	-- These are default Blue Frog stats
 	healthEncumbrance = 15,
@@ -100,14 +98,14 @@ object_tangible_wearables_armor_stormtrooper_armor_stormtrooper_gloves = object_
 
 	maxCondition = 45000,
 
-    kinetic = 65,
-	energy = 65,
-	electricity = 65,
-	stun = 25,
-	blast = 65,
-	heat = 65,
-	cold = 65,
-	acid = 65,
+	kinetic = 30,
+	energy = 30,
+	electricity = 30,
+	stun = 0,
+	blast = 30,
+	heat = 0,
+	cold = 30,
+	acid = 0,
 	lightSaber = 0
 }
 

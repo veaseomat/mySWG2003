@@ -10,8 +10,6 @@
 #include "server/zone/objects/player/variables/FrsData.h"
 
 void EnclaveTerminalMenuComponent::fillObjectMenuResponse(SceneObject* sceneObject, ObjectMenuResponse* menuResponse, CreatureObject* player) const {
-	return;//disable enclaves
-
 	ManagedReference<BuildingObject*> building = sceneObject->getParentRecursively(SceneObjectType::BUILDING).castTo<BuildingObject*>();
 
 	if (building == nullptr || player->isDead() || player->isIncapacitated())
@@ -65,7 +63,7 @@ void EnclaveTerminalMenuComponent::fillObjectMenuResponse(SceneObject* sceneObje
 		if (playerRank > 7 && enclaveType == FrsManager::COUNCIL_LIGHT)
 			menuResponse->addRadialMenuItem(75, 3, "@force_rank:demote_member"); // Demote Lower Tier Member
 
-//		menuResponse->addRadialMenuItem(74, 3, "@force_rank:recover_jedi_items"); // Recover Jedi Items
+		menuResponse->addRadialMenuItem(74, 3, "@force_rank:recover_jedi_items"); // Recover Jedi Items
 #if FRS_TESTING
 		if (ghost->isPrivileged())
 			menuResponse->addRadialMenuItem(76, 3, "Force Phase Change");

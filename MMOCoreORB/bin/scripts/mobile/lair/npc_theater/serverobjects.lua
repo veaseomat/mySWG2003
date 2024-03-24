@@ -45,7 +45,6 @@ includeFile("lair/npc_theater/dathomir_mtn_clan_outcast_camp_neutral_small_theat
 includeFile("lair/npc_theater/dathomir_mtn_clan_outpost_neutral_large_theater.lua")
 includeFile("lair/npc_theater/dathomir_mtn_clan_rancor_tamer_neutral_large_theater.lua")
 includeFile("lair/npc_theater/dathomir_nightsister_elder_enclave_neutral_large_theater.lua")
-includeFile("lair/npc_theater/dathomir_nightsister_elder_enclave_neutral_large_theater2.lua")
 includeFile("lair/npc_theater/dathomir_nightsister_outcast_camp_neutral_small_theater.lua")
 includeFile("lair/npc_theater/dathomir_nightsister_slaver_camp_neutral_small_theater.lua")
 includeFile("lair/npc_theater/dathomir_nightsister_spell_weaver_camp_neutral_large_theater.lua")

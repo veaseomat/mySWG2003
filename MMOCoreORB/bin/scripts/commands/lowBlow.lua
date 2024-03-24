@@ -44,7 +44,7 @@
 LowBlowCommand = {
         name = "lowblow",
 
-	damageMultiplier = 1.5,
+	damageMultiplier = 2.0,
 	speedMultiplier = 2.5,
 	healthCostMultiplier = 0.5,
 	actionCostMultiplier = 1.0,
@@ -68,7 +68,7 @@ LowBlowCommand = {
 
 	combatSpam = "lowblow",
 	
-	weaponType = RIFLEWEAPON + PISTOLWEAPON + CARBINEWEAPON,
+	weaponType = PISTOLWEAPON,
 
 	range = -1
 }

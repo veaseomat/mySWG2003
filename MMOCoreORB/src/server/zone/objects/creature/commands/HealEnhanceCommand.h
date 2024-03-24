@@ -240,7 +240,7 @@ public:
 			buffPower = enhancePack->getEffectiveness();
 			buffPower = buffPower * patient->calculateBFRatio();
 		} else
-			buffPower = enhancePack->calculatePower(enhancer, patient);//possibly change here
+			buffPower = enhancePack->calculatePower(enhancer, patient);
 
 		return buffPower;
 	}
@@ -424,42 +424,18 @@ public:
 		//Applies battle fatigue
 		uint32 buffPower = getEnhancePackStrength(enhancePack, enhancer, patient);
 
-//		if (buffPower < currentBuff) {
-//			if (patient == enhancer)
-//				enhancer->sendSystemMessage("Your current enhancements are of greater power and cannot be re-applied.");
-//			else
-//				enhancer->sendSystemMessage("Your target's current enhancements are of greater power and cannot be re-applied.");
-//
-//			return 0;
-//		}
+		if (buffPower < currentBuff) {
+			if (patient == enhancer)
+				enhancer->sendSystemMessage("Your current enhancements are of greater power and cannot be re-applied.");
+			else
+				enhancer->sendSystemMessage("Your target's current enhancements are of greater power and cannot be re-applied.");
+
+			return 0;
+		}
 
 		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
 
-		uint32 amountEnhanced = 0; //playerManager->healEnhance(enhancer, patient, attribute, buffPower, enhancePack->getDuration(), enhancePack->getAbsorption());
-
-		if (attribute < 6 ) {
-			float effmult = enhancePack->getEffectiveness() / 1000;
-			float modSkill = (enhancer->getSkillMod("healing_wound_treatment") / 100) * .1;// doing /1000 wasnt working here
-
-			float newpower = effmult + modSkill;
-
-			int buffPowerhealth = patient->getBaseHAM(CreatureAttribute::HEALTH) * newpower;
-			int buffPowerstr = patient->getBaseHAM(CreatureAttribute::STRENGTH) * newpower;
-			int buffPowercon = patient->getBaseHAM(CreatureAttribute::CONSTITUTION) * newpower;
-			int buffPoweraction = patient->getBaseHAM(CreatureAttribute::ACTION) * newpower;
-			int buffPowerquick = patient->getBaseHAM(CreatureAttribute::QUICKNESS) * newpower;
-			int buffPowerstam = patient->getBaseHAM(CreatureAttribute::STAMINA) * newpower;
-
-			playerManager->healEnhance(enhancer, patient, BuffAttribute::HEALTH, buffPowerhealth, enhancePack->getDuration(), enhancePack->getAbsorption());
-			playerManager->healEnhance(enhancer, patient, BuffAttribute::STRENGTH, buffPowerstr, enhancePack->getDuration(), enhancePack->getAbsorption());
-			playerManager->healEnhance(enhancer, patient, BuffAttribute::CONSTITUTION, buffPowercon, enhancePack->getDuration(), enhancePack->getAbsorption());
-			playerManager->healEnhance(enhancer, patient, BuffAttribute::ACTION, buffPoweraction, enhancePack->getDuration(), enhancePack->getAbsorption());
-			playerManager->healEnhance(enhancer, patient, BuffAttribute::QUICKNESS, buffPowerquick, enhancePack->getDuration(), enhancePack->getAbsorption());
-			playerManager->healEnhance(enhancer, patient, BuffAttribute::STAMINA, buffPowerstam, enhancePack->getDuration(), enhancePack->getAbsorption());
-		}
-		else {
-			amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, enhancePack->getDuration(), enhancePack->getAbsorption());
-		}
+		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, enhancePack->getDuration(), enhancePack->getAbsorption());
 
 		if (creature->isPlayerCreature() && targetCreature->isPlayerCreature()) {
 			playerManager->sendBattleFatigueMessage(creature, targetCreature);
@@ -476,7 +452,7 @@ public:
 			enhancePack->decreaseUseCount();
 		}
 
-//		if (patient != enhancer)
+		if (patient != enhancer)
 			awardXp(enhancer, "medical", amountEnhanced); //No experience for healing yourself.
 
 		doAnimations(enhancer, patient);

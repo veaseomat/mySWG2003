@@ -44,16 +44,14 @@
 FireLightningSingle1Command = {
         name = "firelightningsingle1",
 
-	damageMultiplier = 2.5,
+	damageMultiplier = 3.0,
 	speedMultiplier = 2.0,
 	healthCostMultiplier = 1,
 	actionCostMultiplier = 1,
 	mindCostMultiplier = 1,
 
---	animation = "fire_lightning_rifle_single_1",
---	animType = GENERATE_INTENSITY,
-	animation = "fire_1_special_single", 
-	animType = GENERATE_RANGED,
+	animation = "fire_lightning_rifle_single_1",
+	animType = GENERATE_INTENSITY,
 
 	combatSpam = "firelightningsingle1",
 	

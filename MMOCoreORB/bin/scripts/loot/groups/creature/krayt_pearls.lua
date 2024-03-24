@@ -5,7 +5,6 @@ krayt_pearls = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-	--	{groupTemplate = "junk", weight = 9000000},
 		{itemTemplate = "krayt_dragon_pearl", weight = 10000000}
 	}
 }

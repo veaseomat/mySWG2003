@@ -73,9 +73,8 @@ class MigrateStatsSession extends Facade {
 			int originalAmount = creo.getBaseHAM(i);
 			
 			creo.setBaseHAM(i, newValue);
-			creo.setHAM(i, newValue); //creo.getHAM(i) + (newValue - originalAmount));
-			creo.setMaxHAM(i, newValue ); // creo.getMaxHAM(i) + (newValue - originalAmount));
-			//change also in playercreationmanager.cpp && playerojectimplementation.cpp
+			creo.setHAM(i, creo.getHAM(i) + (newValue - originalAmount));
+			creo.setMaxHAM(i, creo.getMaxHAM(i) + (newValue - originalAmount));
 			
 			//setAttributeBar(attribute, getAttribute(attribute) + (value - originalAmount));
 			//setMaxAttributeBar(attribute, getAttributeMax(attribute) + (value - originalAmount), updateClient);

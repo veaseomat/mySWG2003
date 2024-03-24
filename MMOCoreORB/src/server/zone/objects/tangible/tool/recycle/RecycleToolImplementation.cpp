@@ -29,8 +29,6 @@ void RecycleToolImplementation::loadTemplateData(SharedObjectTemplate* templateD
 void RecycleToolImplementation::fillObjectMenuResponse(ObjectMenuResponse* menuResponse, CreatureObject* player) {
 	ContainerImplementation::fillObjectMenuResponse(menuResponse, player);
 
-	return;//disable recycler
-
 	menuResponse->addRadialMenuItem(245, 3, "@recycler_messages:choose_type");
 
 	String stub = "@recycler_messages:";

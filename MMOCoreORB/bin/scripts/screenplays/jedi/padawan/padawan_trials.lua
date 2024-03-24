@@ -3,18 +3,18 @@ local ObjectManager = require("managers.object.object_manager")
 PadawanTrials = ScreenPlay:new {}
 
 function PadawanTrials:doPadawanTrialsSetup(pPlayer)
---	local sui = SuiMessageBox.new("JediTrials", "emptyCallback")
---
---	if (not JediTrials:isEligibleForPadawanTrials(pPlayer)) then
---		sui.setTitle("@jedi_trials:padawan_trials_title")
---		sui.setPrompt("@jedi_trials:padawan_trials_started_not_eligible")
---	else
+	local sui = SuiMessageBox.new("JediTrials", "emptyCallback")
+
+	if (not JediTrials:isEligibleForPadawanTrials(pPlayer)) then
+		sui.setTitle("@jedi_trials:padawan_trials_title")
+		sui.setPrompt("@jedi_trials:padawan_trials_started_not_eligible")
+	else
 		JediTrials:createClosestShrineWaypoint(pPlayer)
---		sui.setTitle("Padawan Trials")
---		sui.setPrompt("@jedi_trials:padawan_trials_intro_msg")
---	end
---
---	sui.sendTo(pPlayer)
+		sui.setTitle("@jedi_trials:force_shrine_title")
+		sui.setPrompt("@jedi_trials:padawan_trials_intro_msg")
+	end
+
+	sui.sendTo(pPlayer)
 end
 
 function PadawanTrials:startPadawanTrials(pObject, pPlayer)
