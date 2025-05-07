@@ -1626,7 +1626,7 @@ class CreatureObject extends TangibleObject {
 
 	@read
 	public float getSpeedMultiplierMod() {
-		return speedMultiplierMod * 3.0;//SPEED AFFECTS RUN SPEED AND VEHICLES
+		return speedMultiplierMod * 2.0;//SPEED AFFECTS RUN SPEED AND VEHICLES
 	}
 
 	@read
@@ -1674,7 +1674,7 @@ class CreatureObject extends TangibleObject {
 
 	@read
 	public float getRunSpeed() {
-		return (runSpeed / 3.0) * 2.0;//divide by vehicle/run multipler, then apply a run multiplier
+		return (runSpeed / 2.0);//divide by vehicle/run multipler, then apply a run multiplier
 	}
 
 	@read

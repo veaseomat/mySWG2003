@@ -41,16 +41,16 @@
 --which carries forward this exception.
 
 --Time, in seconds, that a shuttle is away for
-shuttleportAwayTime = 1
-starportAwayTime = 1
+shuttleportAwayTime = 5
+starportAwayTime = 5
 
 --Time, in seconds, that a shuttle takes to land
-shuttleportLandingTime = 1
-starportLandingTime = 1
+shuttleportLandingTime = 10
+starportLandingTime = 10
 
 --Time, in seconds, that a shuttle is landed for
-shuttleportLandedTime = 24 * 60 * 60
-starportLandedTime = 24 * 60 * 60
+shuttleportLandedTime = 60
+starportLandedTime = 60
 
 
 corellia = {

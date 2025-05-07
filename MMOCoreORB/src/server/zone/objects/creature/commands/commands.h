@@ -782,7 +782,6 @@
 #include "WatchCommand.h"
 #include "WildShot1Command.h"
 #include "WildShot2Command.h"
-#include "WipeItemsCommand.h"
 #include "WookieeRoarCommand.h"
 #include "CityInfoCommand.h"
 #include "EjectCommand.h"

@@ -73,7 +73,7 @@ OldCityGracePeriod = 60 * 24 * 2
 EnableCityWarn = false
 
 --The number of citizens required to achieve each city rank. (Outpost, Village, Township, City, Metropolis)
-CitizensPerRank = {1, 2, 3, 4, 5}
+CitizensPerRank = {2, 4, 6, 8, 10}
 --CitizensPerRank = {10, 20, 35, 55, 85}
 
 --The radius in meters of the city at each city rank. (Outpost, Village, Township, City, Metropolis)
@@ -263,7 +263,7 @@ CitySpecializations = {
 			{"private_medical_rating", 10},
 			{"private_spec_cloning", 20},
 			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
+			{"private_spec_missions", 30},
 			{"private_spec_entertainer", 10},
 			{"private_defense", 90}
 		}
@@ -277,7 +277,7 @@ CitySpecializations = {
 			{"private_medical_rating", 10},
 			{"private_spec_cloning", 20},
 			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
+			{"private_spec_missions", 30},
 			{"private_spec_entertainer", 10},
 			{"private_defense", 90}
 		}

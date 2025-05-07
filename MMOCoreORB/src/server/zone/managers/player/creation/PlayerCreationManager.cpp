@@ -329,7 +329,7 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 	auto client = callback->getClient();
 
 	if (client->getCharacterCount(zoneServer.get()->getGalaxyID()) >= 10) {
-		ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are limited to 10 characters on mySWG.", 0x0);
+		ErrorMessage* errMsg = new ErrorMessage("Create Error", "You are limited to 10 characters on The Hunted.", 0x0);
 		client->sendMessage(errMsg);
 
 		return false;
@@ -569,14 +569,18 @@ bool PlayerCreationManager::createCharacter(ClientCreateCharacterCallback* callb
 
 	JediManager::instance()->onPlayerCreated(playerCreature);
 
-	chatManager->sendMail("mySWG", "Welcome", "Welcome to mySWG, This is a single player focused fun server with lots of quality of life improvements.\n	For a list of the changes please visit the SWGEmu forum post for mySWG in SWGEmu based server listing section. If you have any questions/comments/concerns/suggestions please join the discord or send an email to mySWGdev@gmail.com.\nThanks,\nVeaseomat", playerCreature->getFirstName());
+	chatManager->sendMail("The Hunted", "Welcome", "Welcome to The Hunted, This is a single player focused fun server with lots of quality of life improvements.\n	For a list of the changes please visit the SWGEmu forum post for The Hunted in SWGEmu based server listing section. If you have any questions/comments/concerns/suggestions please join the discord or send an email to linuxstormosv@gmail.com.\nThanks,\nBennji", playerCreature->getFirstName());
 
 	//Join auction chat room
 	ghost->addChatRoom(chatManager->getAuctionRoom()->getRoomID());
 
 	ManagedReference<SuiMessageBox*> box = new SuiMessageBox(playerCreature, SuiWindowType::NONE);
 	box->setPromptTitle("WELCOME");
-	box->setPromptText("Welcome to mySWG! \nDon't forget to migrate your stats! Stats can also be migrated in Image Designer tents. Have fun!");
+	box->setPromptText("Welcome to The Hunted! \nDon't forget to migrate your stats! Stats can also be migrated in Image Designer tents. Have fun!");
+	String playerName = playerCreature->getFirstName();
+	StringBuffer zBroadcast;
+	zBroadcast << "\\#00ace6" << playerName << " \\#ffb90f Has Joined The Hunted!";
+	playerCreature->getZoneServer()->getChatManager()->broadcastGalaxy(NULL, zBroadcast.toString());
 
 	ghost->addSuiBox(box);
 	playerCreature->sendMessage(box->generateMessage());

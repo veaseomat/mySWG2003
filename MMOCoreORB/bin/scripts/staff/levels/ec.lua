@@ -1,7 +1,7 @@
 ec = {
 	level = 11,
 	name = "ec",
-	tag = "SWGEmu-EC",
+	tag = "Hunted-EC",
 	skills = {
 		"admin_base",
 		"admin_debug_01",

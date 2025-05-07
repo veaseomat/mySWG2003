@@ -8,7 +8,6 @@
 #include "server/chat/ChatManager.h"
 #include "server/zone/ZoneServer.h"
 #include "server/zone/Zone.h"
-#include "server/zone/objects/player/sui/messagebox/SuiMessageBox.h"
 
 #include "server/zone/managers/player/PlayerManager.h"
 #include "server/zone/managers/name/NameManager.h"
@@ -49,6 +48,9 @@
 #include "server/chat/room/ChatRoom.h"
 #include "server/chat/room/ChatRoomMap.h"
 #include "templates/string/StringFile.h"
+
+Reference<ChatRoom*> generalRoom;
+Reference<ChatRoom*> pvpRoom;
 
 ChatManagerImplementation::ChatManagerImplementation(ZoneServer* serv, int initsize) : ManagedServiceImplementation() {
 	server = serv;
@@ -307,12 +309,17 @@ void ChatManagerImplementation::initiateRooms() {
 	guildRoom = createRoom("guild", systemRoom);
 	guildRoom->setPrivate();
 
-	Reference<ChatRoom*> generalRoom = createRoom("Chat", galaxyRoom);
+	generalRoom = createRoom("General", galaxyRoom);
 	generalRoom->setCanEnter(true);
 	generalRoom->setAllowSubrooms(true);
 	generalRoom->setTitle("public chat for this server, can create rooms here");
 
-	auctionRoom = createRoom("Galaxy Chat", galaxyRoom);
+	pvpRoom = createRoom("PvP", galaxyRoom);
+	pvpRoom->setCanEnter(true);
+	pvpRoom->setAllowSubrooms(true);
+	pvpRoom->setTitle("PvP-based chat room");
+
+	auctionRoom = createRoom("Auction", galaxyRoom);
 	auctionRoom->setCanEnter(true);
 	auctionRoom->setChatRoomType(ChatRoom::AUCTION);
 
@@ -740,6 +747,10 @@ void ChatManagerImplementation::handleChatRoomMessage(CreatureObject* sender, co
 		channel->broadcastMessageCheckIgnore(msg, name);
 	} else if (planetRoom != nullptr && planetRoom->getRoomID() == roomID) {
 		channel->broadcastMessageCheckIgnore(msg, name);
+	} else if (generalRoom != nullptr && generalRoom->getRoomID() == roomID) {
+		channel->broadcastMessageCheckIgnore(msg, name); 
+	} else if (pvpRoom != nullptr && pvpRoom->getRoomID() == roomID) {
+		channel->broadcastMessageCheckIgnore(msg, name);
 	} else {
 		channel->broadcastMessage(msg);
 	}
@@ -874,6 +885,7 @@ void ChatManagerImplementation::handleSocialInternalMessage(CreatureObject* send
 			}
 		}
 	}
+	
 }
 
 void ChatManagerImplementation::sendRoomList(CreatureObject* player) {
@@ -971,17 +983,7 @@ void ChatManagerImplementation::broadcastGalaxy(CreatureObject* player, const St
 	while (playerMap->hasNext(false)) {
 		ManagedReference<CreatureObject*> playerObject = playerMap->getNextValue(false);
 
-		//playerObject->sendSystemMessage(stringMessage);
-
-		ManagedReference<SuiMessageBox*> box = new SuiMessageBox(playerObject, SuiWindowType::NONE);
-		box->setPromptTitle("mySWG ALERT!");
-		box->setPromptText(stringMessage);
-
-		PlayerObject* ghost = playerObject->getPlayerObject();
-
-		ghost->addSuiBox(box);
-		playerObject->sendMessage(box->generateMessage());
-
+		playerObject->sendSystemMessage(stringMessage);
 	}
 }
 

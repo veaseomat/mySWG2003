@@ -401,45 +401,25 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 			}
 		}
 
-//		if (skillName.contains("novice")) {
-//		const Badge* badge = BadgeList::instance()->get(skillName.replaceAll("_novice", "_master"));
-//
-//		const unsigned int badgeId = badge->getIndex();
-//
-//		if (ghost->hasBadge(badgeId)) {
-//			awardSkill(skillName.replaceAll("_novice", "_master"), creature, true, true, true);
-//		}
-//		}
+		const SkillList* list = creature->getSkillList();
+		
+		int totalSkillPointsWasted = 250;
 
-//		const SkillList* list = creature->getSkillList();
-//
-//		int totalSkillPointsWasted = 250;
-//
-//		for (int i = 0; i < list->size(); ++i) {
-//			Skill* skill = list->get(i);
-//
-//			totalSkillPointsWasted -= skill->getSkillPointsRequired();
-//		}
-//
-//		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
-//			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
-//			ghost->setSkillPoints(totalSkillPointsWasted);
-//			SkillManager::surrenderAllSkills(creature, true, false);
-//
-//			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(creature, SuiWindowType::NONE);
-//			box->setPromptTitle("SKILLPOINT OVERLOAD");
-//			box->setPromptText("Skill points now cap at 250. All of your skills have been removed, skill points reset and exp returned.");
-//			ghost->addSuiBox(box);
-//			creature->sendMessage(box->generateMessage());
-//		}
+		for (int i = 0; i < list->size(); ++i) {
+			Skill* skill = list->get(i);
+
+			totalSkillPointsWasted -= skill->getSkillPointsRequired();
+		}
+
+		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
+			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
+			ghost->setSkillPoints(totalSkillPointsWasted);
+		}
 
 		if (playerManager != nullptr) {
 			creature->setLevel(playerManager->calculatePlayerLevel(creature));
-
-			//playerManager->enhanceCharacter(creature);//LEVEL BUFFS IN 3 PLACES
-
 		}
-//this could be useful for quests
+
 		if (skill->getSkillName().contains("force_sensitive") && skill->getSkillName().contains("_04"))
 			JediManager::instance()->onFSTreeCompleted(creature, skill->getSkillName());
 
@@ -680,41 +660,38 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 
 		FrsManager* frsManager = creature->getZoneServer()->getFrsManager();
 
-//		if (checkFrs && frsManager->isFrsEnabled()) {
-//			frsManager->handleSkillRevoked(creature, skillName);
-//		}
+		if (checkFrs && frsManager->isFrsEnabled()) {
+			frsManager->handleSkillRevoked(creature, skillName);
+		}
 
 		/// Update Force Power Max
 		ghost->recalculateForcePower();
 
-//		const SkillList* list = creature->getSkillList();
-//
-//		int totalSkillPointsWasted = 250;
-//
-//		for (int i = 0; i < list->size(); ++i) {
-//			Skill* skill = list->get(i);
-//
-//			totalSkillPointsWasted -= skill->getSkillPointsRequired();
-//		}
-//
-//		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
-//			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
-//			ghost->setSkillPoints(totalSkillPointsWasted);
-//			SkillManager::surrenderAllSkills(creature, true, false);
-//
-//			ManagedReference<SuiMessageBox*> box = new SuiMessageBox(creature, SuiWindowType::NONE);
-//			box->setPromptTitle("SKILLPOINT OVERLOAD");
-//			box->setPromptText("Skill points now cap at 250. All of your skills have been removed, skill points reset and exp returned.");
-//			ghost->addSuiBox(box);
-//			creature->sendMessage(box->generateMessage());
-//		}
+		const SkillList* list = creature->getSkillList();
+
+		/		int totalSkillPointsWasted = 250;
+
+		for (int i = 0; i < list->size(); ++i) {
+			Skill* skill = list->get(i);
+
+			totalSkillPointsWasted -= skill->getSkillPointsRequired();
+		}
+		int totalSkillPointsWasted = 250;
+
+		for (int i = 0; i < list->size(); ++i) {
+			Skill* skill = list->get(i);
+
+			totalSkillPointsWasted -= skill->getSkillPointsRequired();
+		}
+
+		if (ghost->getSkillPoints() != totalSkillPointsWasted) {
+			creature->error("skill points mismatch calculated: " + String::valueOf(totalSkillPointsWasted) + " found: " + String::valueOf(ghost->getSkillPoints()));
+			ghost->setSkillPoints(totalSkillPointsWasted);
+		}
 
 		ManagedReference<PlayerManager*> playerManager = creature->getZoneServer()->getPlayerManager();
 		if (playerManager != nullptr) {
 			creature->setLevel(playerManager->calculatePlayerLevel(creature));
-
-			//playerManager->enhanceCharacter(creature);//LEVEL BUFFS IN 3 PLACES
-
 		}
 
 		MissionManager* missionManager = creature->getZoneServer()->getMissionManager();
@@ -772,9 +749,9 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 	for (int i = 0; i < copyOfList.size(); i++) {
 		Skill* skill = copyOfList.get(i);
 
-		if (skill->getSkillPointsRequired() > 0) {
+//		if (skill->getSkillPointsRequired() > 0) {
 //			if (!removeForceProgression and skill->getSkillName().contains("force_"))
-//				continue;
+//			continue;
 
 //		if (skill->getSkillName().contains("force_")){
 //			if (!removeForceProgression and skill->getSkillName().contains("force_"))
@@ -804,12 +781,12 @@ void SkillManager::surrenderAllSkills(CreatureObject* creature, bool notifyClien
 				//Give the player the used skill points back.
 				ghost->addSkillPoints(skill->getSkillPointsRequired());
 
-//				int xpcost = skill->getXpCost();
-//				int curExp = ghost->getExperience(skill->getXpType());
-//
-//				if (xpcost > 0) {
-//					ghost->addExperience(skill->getXpType(), curExp + xpcost, true);
-//				}
+				int xpcost = skill->getXpCost();
+				int curExp = ghost->getExperience(skill->getXpType());
+
+				if (xpcost > 0) {
+					ghost->addExperience(skill->getXpType(), curExp + xpcost, true);
+				}
 
 				//Remove abilities
 				auto abilityNames = skill->getAbilities();
@@ -862,11 +839,11 @@ void SkillManager::awardDraftSchematics(Skill* skill, PlayerObject* ghost, bool 
 		auto schematicsGranted = skill->getSchematicsGranted();
 		SchematicMap::instance()->addSchematics(ghost, *schematicsGranted, notifyClient);
 
-//	if (skill->getSkillName().contains("force_discipline")) {
-//		return;
-//	}
+	if (skill->getSkillName().contains("force_discipline")) {
+		return;
+	}
 
-//	if ((ghost != nullptr)){
+	if ((ghost != nullptr)){
 
 	}
 
@@ -948,13 +925,13 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 		return false;
 	}
 
-	//jedi can not have other combat skills
-//	if (creature->hasSkill("force_title_jedi_rank_02") && !skillName.beginsWith("force_")) {// && skillName.beginsWith("combat_")) {
-//		creature->sendSystemMessage("Jedi can not learn non Jedi skills.");
-//		return false;
-//	}
+	jedi can not have other combat skills
+	if (creature->hasSkill("force_title_jedi_rank_02") && !skillName.beginsWith("force_")) {// && skillName.beginsWith("combat_")) {
+		creature->sendSystemMessage("Jedi can not learn non Jedi skills.");
+		return false;
+	}
 
-//	if (skillName.contains("novice")) return true;
+	if (skillName.contains("novice")) return true;
 
 	ManagedReference<PlayerObject* > ghost = creature->getPlayerObject();
 	if (ghost != nullptr) {
@@ -964,11 +941,11 @@ bool SkillManager::canLearnSkill(const String& skillName, CreatureObject* creatu
 				return false;
 			}
 		}
-//remove for inf sp
-//		//Check if player has enough skill points to learn the skill.
-//		if (ghost->getSkillPoints() < skill->getSkillPointsRequired()) {
-//			return false;
-//		}
+remove for inf sp
+		Check if player has enough skill points to learn the skill.
+		if (ghost->getSkillPoints() < skill->getSkillPointsRequired()) {
+			return false;
+		}
 	} else {
 		//Could not retrieve player object.
 		return false;

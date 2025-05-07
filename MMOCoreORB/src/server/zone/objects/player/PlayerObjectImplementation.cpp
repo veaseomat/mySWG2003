@@ -1398,6 +1398,8 @@ void PlayerObjectImplementation::notifyOnline() {
 
 	schedulePvpTefRemovalTask();
 
+	playerCreature->sendExecuteConsoleCommand("/chatRoom join SWG.thehunted.General");
+
 	MissionManager* missionManager = zoneServer->getMissionManager();
 
 	if (missionManager != nullptr && playerCreature->hasSkill("force_title_jedi_rank_02")) {

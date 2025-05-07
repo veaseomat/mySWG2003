@@ -56,4 +56,4 @@ RequiredMembers = 2
 --RequiredMembers = 5
 
 --The maximum number of members allowed
-MaximumMembers = 500
+MaximumMembers = 5000
