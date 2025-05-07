@@ -20,6 +20,36 @@ At SWGEmu, Emulator refers to the software the SWGEmu team is building. This Emu
   * g++ 5.4+ or compatible
   * engine3
   * java jre 1.7+
+### Docker Setup
+
+* Before you build the container, be sure to set the branch name you want to run locally ()
+
+      Change line 141 - 143 in /docker/Dockerfile 
+
+      REPOS='mySWG2003' \
+      REPO_PUBLIC_URL=https://github.com/veaseomat/ \
+      REPO_PUBLIC_BRANCH='5.20.23_500sp_PVPnpc'    <-- your branch here
+
+* Make sure docker desktop is running
+
+### Docker Build
+
+* Navigate to where you pulled the repo and start the build script
+
+      ./build.sh
+
+* Next start the run script
+
+      ./run.sh
+
+* Now build the server in the container
+
+      build
+
+* Finally, run the server
+
+      run 
+
 
 ### Build
 
