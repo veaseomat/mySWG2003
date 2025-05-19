@@ -48,19 +48,19 @@ bh_targets_at_mission_level = {
 		"bh_tusken_death_hunter" --level 50
 	},
 	level3 = { --level 51 - 200 (current highest is 120, probe droids will only have a 5% chance to find targets over level 190)
-----		"bh_tusken_warlord", --level 62
---		"bh_untrained_wielder_of_the_dark_side", --level 65
-----		"bh_mercenary_sentry", --level 66
-----		"bh_nightsister_outcast", --level 81
---		"bh_force_trained_archaist", --level 90
---		"bh_force_sensitive_crypt_crawler", --level 95
-----		"bh_nightsister_spell_weaver", --level 107
-----		"bh_singing_mountain_clan_arch_witch", --level 107
-----		"bh_spiderclan_auspex", --level 107
---		"bh_feral_force_wielder", --level 115
---		"bh_force_crystal_hunter", --level 115
-----		"bh_tusken_carnage_champion", --level 116
---		"bh_dark_adept", --level 120
+		"bh_tusken_warlord", --level 62
+		"bh_untrained_wielder_of_the_dark_side", --level 65
+		"bh_mercenary_sentry", --level 66
+		"bh_nightsister_outcast", --level 81
+		"bh_force_trained_archaist", --level 90
+		"bh_force_sensitive_crypt_crawler", --level 95
+		"bh_nightsister_spell_weaver", --level 107
+		"bh_singing_mountain_clan_arch_witch", --level 107
+		"bh_spiderclan_auspex", --level 107
+		"bh_feral_force_wielder", --level 115
+		"bh_force_crystal_hunter", --level 115
+		"bh_tusken_carnage_champion", --level 116
+		"bh_dark_adept", --level 120
 		"pvpljk", --
 		"pvpdjk", --
 		"pvpljk", --
@@ -94,7 +94,7 @@ destroyMissionDifficultyRandomDistance = 0
 -- Mission payout calculated as: 
 --    <BaseReward> + <DifficultyRewardFactor> * <difficultyLevel> + 
 --    rand(<RandomReward>) + rand(<DifficutlyRandomReward * <difficultyLevel>)
-destroyMissionBaseReward = 0
+destroyMissionBaseReward = 15000
 destroyMissionDifficultyRewardFactor = 375
-destroyMissionRandomReward = 0
-destroyMissionDifficultyRandomReward = 15
+destroyMissionRandomReward = 15000
+destroyMissionDifficultyRandomReward = 375

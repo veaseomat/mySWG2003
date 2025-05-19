@@ -61,7 +61,7 @@ CityVotingCycles = 3
 CityVotingCyclesUntilLocked = 2
 
 --The amount of time in minutes before the city performs an update.
-CityUpdateInterval = 60 * 24
+CityUpdateInterval = 60 * 24 * 7
 
 --The amount of time in minutes a new city has to gain enough citizens to remain a city.
 NewCityGracePeriod = 60 * 24
@@ -81,8 +81,8 @@ RadiusPerRank = {150, 200, 250, 300, 350}
 
 -- Maximum for each rank.  ex. rank 1 = DecorationsPerRank * 1, rank 5 = DecorationsPerRank * 5
 DecorationsPerRank = 10
-TrainersPerRank = 5
-MissionTerminalsPerRank = 3
+TrainersPerRank = 10
+MissionTerminalsPerRank = 10
 
 -- Amount to discount city maintenance  float.  1 = 100%, .75 =75%, .5=50% etc
 maintenanceDiscount = .05
@@ -193,7 +193,7 @@ CitySpecializations = {
 			{"private_medical_rating", 10},
 			{"private_spec_cloning", 20},
 			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
+			{"private_spec_missions", 30},
 			{"private_spec_entertainer", 10},
 			{"private_defense", 90}
 		}
@@ -207,7 +207,7 @@ CitySpecializations = {
 			{"private_medical_rating", 10},
 			{"private_spec_cloning", 20},
 			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
+			{"private_spec_missions", 30},
 			{"private_spec_entertainer", 10},
 			{"private_defense", 90}
 		}
@@ -221,7 +221,7 @@ CitySpecializations = {
 			{"private_medical_rating", 10},
 			{"private_spec_cloning", 20},
 			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
+			{"private_spec_missions", 30},
 			{"private_spec_entertainer", 10},
 			{"private_defense", 90}
 		}
@@ -235,7 +235,7 @@ CitySpecializations = {
 			{"private_medical_rating", 10},
 			{"private_spec_cloning", 20},
 			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
+			{"private_spec_missions", 30},
 			{"private_spec_entertainer", 10},
 			{"private_defense", 90}
 		}
@@ -249,7 +249,7 @@ CitySpecializations = {
 			{"private_medical_rating", 10},
 			{"private_spec_cloning", 20},
 			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
+			{"private_spec_missions", 30},
 			{"private_spec_entertainer", 10},
 			{"private_defense", 90}
 		}
@@ -291,7 +291,7 @@ CitySpecializations = {
 			{"private_medical_rating", 10},
 			{"private_spec_cloning", 20},
 			{"private_spec_experimentation", 15},
-			{"private_spec_missions", 15},
+			{"private_spec_missions", 30},
 			{"private_spec_entertainer", 10},
 			{"private_defense", 90}
 		}
