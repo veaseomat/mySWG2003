@@ -2073,24 +2073,14 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 		int forceControlMod = 0, forceManipulationMod = 0;
 
 		if (creature->hasSkill("force_rank_light_novice")) {
-			//forceControlMod = creature->getSkillMod("force_control_light");
+			forceControlMod = creature->getSkillMod("force_control_light");
 			forceManipulationMod = creature->getSkillMod("force_manipulation_light");
 		} else if (creature->hasSkill("force_rank_dark_novice")) {
-			//forceControlMod = creature->getSkillMod("force_power_dark");
+			forceControlMod = creature->getSkillMod("force_power_dark");
 			forceManipulationMod = creature->getSkillMod("force_manipulation_dark");
 		}
 
-		regen += (forceControlMod + forceManipulationMod);// / 5.f;
-
-		if (regen > 150)
-			regen = ((regen - 150) / 2) + 150;
-//		if (regen > 125)
-//			regen = ((regen - 125) / 2) + 125;
-
-		if (creature->isInCombat())//combat regen reduced
-			regen /= 2;
-//		else
-//			regen *= 2;//out of combat regen buff
+		regen += (forceControlMod + forceManipulationMod) / 10.f;
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
 		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
@@ -2102,7 +2092,6 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 			regen /= regenDivisor;
 
 		float timer = regen / 5.f;
-
 
 		float scheduledTime = 10 / timer;
 		uint64 miliTime = static_cast<uint64>(scheduledTime * 1000.f);
@@ -3005,11 +2994,6 @@ void PlayerObjectImplementation::recalculateForcePower() {
 	}
 
 	maxForce += (forcePowerMod + forceControlMod) * 10;
-
-	if (maxForce > 10000)
-		maxForce = ((maxForce - 10000) / 2) + 10000;
-	if (maxForce > 7500)
-		maxForce = ((maxForce - 7500) / 2) + 7500;
 
 	setForcePowerMax(maxForce, true);
 }

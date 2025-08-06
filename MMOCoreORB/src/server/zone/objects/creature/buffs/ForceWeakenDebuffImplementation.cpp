@@ -72,21 +72,11 @@ void ForceWeakenDebuffImplementation::doHealthActionMindTick(bool weaken) {
 	if (!creature.get()->isIncapacitated() && !creature.get()->isDead()) {
 		int tickDebuffAmount = 0;
 
-		//float frsbuff = 1.0 + ((getSkillModifierValue("force_power_dark") + getSkillModifierValue("force_power_light")) * .01);
-
-//		int frsbuff = creature.get()->getSkillMod("force_power_dark") + creature.get()->getSkillMod("force_power_light");
-//
-//		int newhammax = (creature.get()->getMaxHAM(CreatureAttribute::HEALTH) + creature.get()->getMaxHAM(CreatureAttribute::ACTION) + creature.get()->getMaxHAM(CreatureAttribute::MIND)) / 3;//avg max hams together
-//
-//		newhammax *= .3;//percent dbuff of average ham
-//
-//		newhammax /= 5;//number of ticks
-
 		//Determine random weakening (or restoring) amount for this tick based on range
 		if (creature.get()->isKnockedDown() || creature.get()->isProne()) {
-			tickDebuffAmount = fwStdMaxAmount;// + frsbuff;//((fwKdMaxAmount - FORCE_WEAKEN_RAND_SCALE) + System::random(FORCE_WEAKEN_RAND_SCALE)) / FORCE_WEAKEN_TICK_COUNT;
+			tickDebuffAmount = ((fwKdMaxAmount - FORCE_WEAKEN_RAND_SCALE) + System::random(FORCE_WEAKEN_RAND_SCALE)) / FORCE_WEAKEN_TICK_COUNT;
 		} else {
-			tickDebuffAmount = fwStdMaxAmount;// + frsbuff;//((fwStdMaxAmount - FORCE_WEAKEN_RAND_SCALE) + System::random(FORCE_WEAKEN_RAND_SCALE)) / FORCE_WEAKEN_TICK_COUNT;
+			tickDebuffAmount = ((fwStdMaxAmount - FORCE_WEAKEN_RAND_SCALE) + System::random(FORCE_WEAKEN_RAND_SCALE)) / FORCE_WEAKEN_TICK_COUNT;
 		}
 
 		for (int i = 0; i < hamDebuffAmount.size(); ++i) {

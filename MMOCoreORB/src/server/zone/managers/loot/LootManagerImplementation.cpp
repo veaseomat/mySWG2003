@@ -258,12 +258,17 @@ int LootManagerImplementation::calculateLootCredits(int level) {
 
 TangibleObject* LootManagerImplementation::createLootObject(const LootItemTemplate* templateObject, int level, bool maxCondition) {
 
-	//int uncappedLevel = level;
+//	int uncappedLevel = level;
 
-//	if(level < 1)
-//		level = 1;
 //
-	if(level <= 350)	//vanilla 300
+//	if(level <= 350)	//vanilla 300
+//		level = 350;
+//
+
+	level = level + System::random(350);
+
+
+	if(level > 350)
 		level = 350;
 
 
@@ -321,7 +326,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	setCustomObjectName(prototype, templateObject);
 
-	float excMod = 1.0 + (System::random(15) / 10);
+	float excMod = 1.0 + (System::random(50) / 100);//was 15/10
 
 	//float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);
 

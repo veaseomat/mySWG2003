@@ -157,14 +157,18 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float minDmg = npcTemplate->getDamageMin();
-	float maxDmg = npcTemplate->getDamageMax();
+	float minDmg = npcTemplate->getDamageMin(); //level * 6; //
+	float maxDmg = npcTemplate->getDamageMax(); //level * 10; //
 	float speed = calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
 	if (petDeed != nullptr) {
-		minDmg = petDeed->getMinDamage() * 2;
-		maxDmg = petDeed->getMaxDamage() * 2;
+		minDmg = petDeed->getMinDamage();
+		maxDmg = petDeed->getMaxDamage() * 1.25;
+		if (maxDmg > 820) maxDmg = 820;
+		minDmg *= 3;
+		maxDmg *= 3;
+
 		allowedWeapon = petDeed->getRanged();
 	}
 
@@ -286,7 +290,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 				if (isDroidObject() && isPet())
 					ham = getHamMaximum();
 
-				if (ham > 50000) ham = 50000;//ham cap
+				if (ham > 100000) ham = 100000;//ham cap
 
 				//ham /= 4;//reduce ham
 
@@ -2727,11 +2731,11 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("cat_armor_special_protection.armor_eff_elemental_acid", txt.toString());
 	}
 
-//	if (isSpecialProtection(SharedWeaponObjectTemplate::LIGHTSABER)) {
-//		StringBuffer txt;
-//		txt << Math::getPrecision(getLightSaber(), 1) << "%";
-//		alm->insertAttribute("cat_armor_special_protection.armor_eff_restraint", txt.toString());
-//	}
+	if (isSpecialProtection(SharedWeaponObjectTemplate::LIGHTSABER)) {
+		StringBuffer txt;
+		txt << Math::getPrecision(getLightSaber(), 1) << "%";
+		alm->insertAttribute("cat_armor_special_protection.armor_eff_restraint", txt.toString());
+	}
 
 	if (getKinetic() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::KINETIC)) {
 		StringBuffer txt;
@@ -2781,11 +2785,11 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		alm->insertAttribute("cat_armor_effectiveness.armor_eff_elemental_acid", txt.toString());
 	}
 
-//	if (getLightSaber() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::LIGHTSABER)) {
-//		StringBuffer txt;
-//		txt << Math::getPrecision(getLightSaber(), 1) << "%";
-//		alm->insertAttribute("cat_armor_effectiveness.armor_eff_restraint", txt.toString());
-//	}
+	if (getLightSaber() > 0 && !isSpecialProtection(SharedWeaponObjectTemplate::LIGHTSABER)) {
+		StringBuffer txt;
+		txt << Math::getPrecision(getLightSaber(), 1) << "%";
+		alm->insertAttribute("cat_armor_effectiveness.armor_eff_restraint", txt.toString());
+	}
 
 	if (getKinetic() < 0)
 		alm->insertAttribute("cat_armor_vulnerability.armor_eff_kinetic", "-");
@@ -2811,8 +2815,8 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 	if (getAcid() < 0)
 		alm->insertAttribute("cat_armor_vulnerability.armor_eff_elemental_acid", "-");
 
-//	if (getLightSaber() < 0)
-//		alm->insertAttribute("cat_armor_vulnerability.armor_eff_restraint", "-");
+	if (getLightSaber() < 0)
+		alm->insertAttribute("cat_armor_vulnerability.armor_eff_restraint", "-");
 
 	if (isPet())
 	{

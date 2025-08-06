@@ -905,7 +905,13 @@ void PetControlDeviceImplementation::fillAttributeList(AttributeListMessage* alm
 			displayValue << Math::getPrecision(pet->getChanceHit(), 2);
 			alm->insertAttribute("creature_tohit", displayValue);
 
-			alm->insertAttribute("creature_damage", String::valueOf(pet->getDamageMin()) + " - " + String::valueOf(pet->getDamageMax()));
+			int minDmg = pet->getDamageMin();
+			int maxDmg = pet->getDamageMax() * 1.25; //1.25x raises 670 to 820
+			if (maxDmg > 820) maxDmg = 820;
+			minDmg *= 3;
+			maxDmg *= 3;
+
+			alm->insertAttribute("creature_damage", String::valueOf(minDmg) + " - " + String::valueOf(maxDmg));
 
 			if (petType == PetManager::CREATUREPET) {
 				const CreatureAttackMap* attMap = pet->getAttackMap();

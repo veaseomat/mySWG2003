@@ -1604,6 +1604,15 @@ endor_world = {
 			size = 35
 		},
 		{
+			lairTemplateName = "endor_gorax_neutral_none2",
+			spawnLimit = -1,
+			minDifficulty = 131,
+			maxDifficulty = 300,
+			numberToSpawn = 0,
+			weighting = 15,
+			size = 35
+		},
+		{
 			lairTemplateName = "endor_hanadak_stoneskin_neutral_none",
 			spawnLimit = -1,
 			minDifficulty = 139,

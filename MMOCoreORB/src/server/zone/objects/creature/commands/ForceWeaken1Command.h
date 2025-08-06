@@ -46,33 +46,7 @@ public:
 		if (res == SUCCESS) {
 			Locker clocker(creatureTarget, creature);
 
-			int newhammax = creatureTarget->getMaxHAM(CreatureAttribute::HEALTH);
-
-			if (creatureTarget->getMaxHAM(CreatureAttribute::ACTION) < newhammax)
-				newhammax = creatureTarget->getMaxHAM(CreatureAttribute::ACTION);
-
-			if (creatureTarget->getMaxHAM(CreatureAttribute::MIND) < newhammax)
-				newhammax = creatureTarget->getMaxHAM(CreatureAttribute::MIND);
-
-			ManagedReference<PlayerObject*> ghost = creature->getPlayerObject();
-			FrsData* playerData = ghost->getFrsData();
-			int councilType = playerData->getCouncilType();
-
-			int powerMod = 0;
-
-			if (councilType == FrsManager::COUNCIL_LIGHT) {
-				powerMod = creature->getSkillMod("force_power_light");
-			} else if (councilType == FrsManager::COUNCIL_DARK) {
-				powerMod = creature->getSkillMod("force_power_dark");
-			}
-
-			float powerpercent = powerMod / 1000; //170/100=.17
-
-			newhammax *= (.25 + powerpercent);//percent dbuff of average ham
-
-			newhammax /= 5;//number of ticks
-
-			ManagedReference<Buff*> buff = new ForceWeakenDebuff(creatureTarget, getNameCRC(), newhammax, 500, 60);
+			ManagedReference<Buff*> buff = new ForceWeakenDebuff(creatureTarget, getNameCRC(), 300, 500, 90);
 
 			Locker locker(buff);
 

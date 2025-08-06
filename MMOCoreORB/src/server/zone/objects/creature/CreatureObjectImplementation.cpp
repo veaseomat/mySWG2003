@@ -2763,8 +2763,7 @@ void CreatureObjectImplementation::notifySelfPositionUpdate() {
 }
 
 void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
-	if (isIncapacitated() || isDead() || isInCombat())//combat regen disabled
-
+	if (isIncapacitated() || isDead())//|| isInCombat())//combat regen disabled
 		return;
 
 	if (!isPlayerCreature() && isInCombat())
@@ -2777,7 +2776,8 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 	else if (isSitting())
 		modifier *= 1.75f;
 
-	modifier *= 5;
+	if (isPlayerCreature() && !isInCombat())
+		modifier *= 5;
 
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
@@ -3547,6 +3547,10 @@ bool CreatureObjectImplementation::hasEffectImmunity(uint8 effectType) const {
 }
 
 bool CreatureObjectImplementation::hasDotImmunity(uint32 dotType) const {
+
+	//if (hasState(dotType))//dots disabled in dot file
+	//	return true;
+
 	switch (dotType) {
 	case CreatureState::POISONED:
 	case CreatureState::BLEEDING:

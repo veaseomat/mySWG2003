@@ -107,6 +107,13 @@ void PetDeedImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 	hitdisplayValue << Math::getPrecision(chanceHit, 2);
 	alm->insertAttribute("creature_attack", attdisplayValue);
 	alm->insertAttribute("creature_tohit", hitdisplayValue);
+
+//	int minDmg = damageMin;
+//	int maxDmg = damageMax;
+//	if (maxDmg > 670) maxDmg = 670;
+//	minDmg *= 3;
+//	maxDmg *= 3;
+
 	alm->insertAttribute("creature_damage", String::valueOf(damageMin) + " - " + String::valueOf(damageMax));
 
 	if (special1 != "none" && special1 != "defaultattack"){
