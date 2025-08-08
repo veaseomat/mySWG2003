@@ -39,7 +39,7 @@ void LightsaberCrystalComponentImplementation::notifyLoadFromDatabase() {
 		else if (quality == SELECT)
 			itemLevel = 140 + System::random(79); // 140-219
 		else if (quality == PREMIUM)
-			itemLevel = 330 + System::random(20);
+			itemLevel = 220 + System::random(80);
 		else
 			itemLevel = 330 + System::random(20);
 
@@ -197,7 +197,7 @@ int LightsaberCrystalComponentImplementation::getCrystalQuality() {
 		return QUALITY;
 	else if (itemLevel < 220)
 		return SELECT;
-	else if (itemLevel < 450)
+	else if (itemLevel < 330)
 		return PREMIUM;
 	else
 		return FLAWLESS;

@@ -2019,8 +2019,8 @@ bool MissionManagerImplementation::isBountyValidForPlayer(CreatureObject* player
 		return false;
 
 
-	if (creature->getFactionStatus() != FactionStatus::OVERT)//if jedi not overt then dont add to terminal
-		return false;
+//	if (creature->getFactionStatus() != FactionStatus::OVERT)//if jedi not overt then dont add to terminal
+//		return false;
 
 	auto targetGhost = creature->getPlayerObject();
 	float terminalVisibilityThreshold = VisibilityManager::instance()->getTerminalVisThreshold();

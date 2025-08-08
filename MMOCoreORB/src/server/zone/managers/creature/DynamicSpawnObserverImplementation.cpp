@@ -70,7 +70,7 @@ void DynamicSpawnObserverImplementation::spawnInitialMobiles(SceneObject* buildi
 	if (totalNumberToSpawn < 1)
 		totalNumberToSpawn = 1;
 
-	totalNumberToSpawn += System::random(totalNumberToSpawn);
+//	totalNumberToSpawn += System::random(totalNumberToSpawn);
 
 	for (int i = 0; i < totalNumberToSpawn; i++) {
 		int num = System::random(mobiles->size() - 1);

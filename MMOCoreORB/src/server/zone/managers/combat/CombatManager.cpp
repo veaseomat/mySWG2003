@@ -66,9 +66,9 @@ bool CombatManager::startCombat(CreatureObject* attacker, TangibleObject* defend
 		return false;
 	}
 	
-	//DISABLE PVP ... also disable deathblow command ... also line 3361 for area attacks ... also //TangibleObjectImplementation::isAttackableBy
-	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
-		return false;
+	//DISABLE PVP ... also disable deathblow command ... also line 3361? for area attacks (search DISABLE PVP)
+//	if (attacker->isPlayerCreature() && defender->isPlayerCreature())
+//		return false;
 		
 	attacker->clearState(CreatureState::PEACE);
 
@@ -844,7 +844,7 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 	if (attackType == weapon->getAttackType()) {
 		for (int i = 0; i < defenseToughMods->size(); ++i) {
 			int toughMod = defender->getSkillMod(defenseToughMods->get(i));
-			if (toughMod > 100) toughMod = 100;
+			if (toughMod > 90) toughMod = 90;
 
 			if (defender->isPlayerCreature()) {
 				String toughStats = "toughMod:" + String::valueOf(toughMod) + " ";
@@ -856,7 +856,7 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 	}
 
 	int jediToughness = defender->getSkillMod("jedi_toughness");
-	if (jediToughness > 100) jediToughness = 100;
+	if (jediToughness > 90) jediToughness = 90;
 	if (weapon->isJediWeapon() && damType != SharedWeaponObjectTemplate::LIGHTSABER && jediToughness > 0) {
 		if (defender->isPlayerCreature()) {
 			String JtoughStats = "jediToughness:" + String::valueOf(jediToughness) + " ";
@@ -1820,7 +1820,7 @@ void CombatManager::doDodge(TangibleObject* attacker, WeaponObject* weapon, Crea
 }
 
 bool CombatManager::applySpecialAttackCost(CreatureObject* attacker, WeaponObject* weapon, const CreatureAttackData& data) const {
-	return true;//disabed
+	//return true;//disabed
 
 	if (attacker->isAiAgent() || data.isForceAttack())
 		return true;
@@ -2733,10 +2733,10 @@ Reference<SortedVector<ManagedReference<TangibleObject*> >* > CombatManager::get
 				continue;
 			}
 
-			if (attacker->isPlayerCreature() && tano->isPlayerCreature()) {
-				//DISABLE PVP
-				continue;
-			}
+//			if (attacker->isPlayerCreature() && tano->isPlayerCreature()) {
+//				//DISABLE PVP
+//				continue;
+//			}
 
 			if (attacker->isPlayerCreature() && object->getParentID() != 0 && attacker->getParentID() != object->getParentID()) {
 				Reference<CellObject*> targetCell = object->getParent().get().castTo<CellObject*>();

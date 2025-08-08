@@ -748,10 +748,10 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 	}
 
 	int roll = System::random(100);
-	int chance = 1; //5
+	int chance = 5; //5
 
 	if (hasPowerup())
-		chance += 2; //10
+		chance += 10; //10
 
 	if (roll < chance) {
 		Locker locker(_this.getReferenceUnsafeStaticCast());
@@ -770,14 +770,15 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 					crystal->inflictDamage(crystal, 0, 1, true, true);
 				}
 			}
-		} else {
+		}
+		//else {
 			inflictDamage(_this.getReferenceUnsafeStaticCast(), 0, 1, true, true);
 
 			if (((float)conditionDamage - 1 / (float)maxCondition < 0.75) && ((float)conditionDamage / (float)maxCondition > 0.75))
 				user->sendSystemMessage("@combat_effects:weapon_quarter");
 			if (((float)conditionDamage - 1 / (float)maxCondition < 0.50) && ((float)conditionDamage / (float)maxCondition > 0.50))
 				user->sendSystemMessage("@combat_effects:weapon_half");
-		}
+		//}
 	}
 }
 

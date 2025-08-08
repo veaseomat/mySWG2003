@@ -34,9 +34,9 @@ public:
 		if (creature == targetObject || targetObject == nullptr)
 			return GENERALERROR;
 
-		//DISABLE PVP
-		if (targetObject->isPlayerCreature())
-			return GENERALERROR;
+//		//DISABLE PVP
+//		if (targetObject->isPlayerCreature())
+//			return GENERALERROR;
 
 		//TODO: play coup_de_grace combat animations - ranged_coup_de_grace, melee_coup_de_grace, unarmed_coup_de_grace
 

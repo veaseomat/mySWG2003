@@ -57,7 +57,7 @@ medicalDuration = 10800 -- in seconds
 groupExpMultiplier = 1.2
 
 --Sets a global experience multiplier
-globalExpMultiplier = 20
+globalExpMultiplier = 7
 
 --Sets the base number of control devices of each type that a player can have in their datapad at once
 --For creature pets, A Creature Handler will have the base number + their stored pets skill mod as limit
@@ -72,7 +72,7 @@ baseStoredShips = 3
 -----------------------------------
 veteranRewardMilestones = {7, 14, 21, 28, 30, 60, 90, 120, 150, 180, 210, 240} --days, must be sorted low to high
 
-veteranRewardAdditionalMilestones = 360 --frequency, in days, of additional milestones (beyond the established ones)
+veteranRewardAdditionalMilestones = 30 --frequency, in days, of additional milestones (beyond the established ones)
 
 veteranRewards = {
 

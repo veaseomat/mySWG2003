@@ -1784,7 +1784,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				if (xpType != "jedi_general")
 					combatXp += xpAmount;
 				else {
-					xpAmount *= 0.5f;
+					xpAmount *= 0.2f;
 
 					if (attacker->hasSkill("force_title_jedi_rank_03"))
 						awardExperience(attacker, "force_rank_xp", xpAmount, true, .01, true);

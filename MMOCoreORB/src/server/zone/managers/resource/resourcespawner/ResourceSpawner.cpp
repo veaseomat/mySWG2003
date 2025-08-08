@@ -174,7 +174,7 @@ void ResourceSpawner::loadResourceSpawns() {
 
 		resourceMap->add(resourceSpawn->getName(), resourceSpawn);
 
-		if (!resourceSpawn->inShift()) { //bingo bango, remove the if to force despawn of all mats? // works
+		if (!resourceSpawn->inShift()) { //bingo bango, remove the if to force despawn of all mats
 			despawn(resourceSpawn);
 			continue;
 		}
@@ -619,7 +619,9 @@ int ResourceSpawner::randomizeValue(int min, int max) {
 //		}
 //	}
 	
-	int newranstat = System::random(250) + 750;
+	int newranstat = System::random(1000) + 500;
+	
+	if (newranstat > 1000) newranstat = 1000;
 	
 	return newranstat; //randomStat;
 }

@@ -146,14 +146,18 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	bool legendarynpc = false;//adds (elite) name tag
 
-	level = getTemplateLevel();
+	int newlvl1 = getTemplateLevel();
+
+	if (newlvl1 > 100) newlvl1 = 100;
+
+	newlvl1 *= 3;
+
+	level = newlvl1;
 	
-	//if (level > 350) level = 350;
-	
-	if (System::random(25) == 25 && level < 500) {// and elite <= 1.0) {
-		legendarynpc = true;
-		level = 500;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
-	}
+//	if (System::random(25) == 25 && level < 500) {// and elite <= 1.0) {
+//		legendarynpc = true;
+//		level = 500;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
+//	}
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
@@ -164,8 +168,8 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	if (petDeed != nullptr) {
 		minDmg = petDeed->getMinDamage();
-		maxDmg = petDeed->getMaxDamage() * 1.25;
-		if (maxDmg > 820) maxDmg = 820;
+		maxDmg = petDeed->getMaxDamage() * 1.5;
+		if (maxDmg > 1000) maxDmg = 1000;
 		minDmg *= 3;
 		maxDmg *= 3;
 
@@ -214,21 +218,21 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 				int finalColor = System::random(5);// red,green,blue
 
-				if (System::random(4) >= 4){
+				if (System::random(3) >= 3){
 					finalColor = System::random(6) + 5;// 1/10 color crystals will be yellow,purp,orange
 				}
 
-				if (System::random(9) >= 9){
+				if (System::random(6) >= 6){
 					finalColor = System::random(19) + 11;// 1/100 color crystals will be special named colors
 				}
 
 				String factionString = npcTemplate->getFaction();
 
-				if (System::random(9) <= 6 && factionString == "imperial") {// imp jedi red
+				if (System::random(9) <= 5 && factionString == "imperial") {// imp jedi red
 					finalColor = System::random(1);
 				}
 
-				if (System::random(9) <= 6 && factionString == "rebel") {// reb jedi blue/green
+				if (System::random(9) <= 5 && factionString == "rebel") {// reb jedi blue/green
 					finalColor = System::random(4) + 1;
 				}
 
@@ -1328,7 +1332,7 @@ void AiAgentImplementation::setDespawnOnNoPlayerInRange(bool val) {
 		}
 
 		if (!despawnEvent->isScheduled())
-			despawnEvent->schedule(1000 * 60 * 15);//15min?	//30000 vanilla
+			despawnEvent->schedule(1000 * 60 * 10);//15min?	//30000 vanilla
 	}
 }
 
@@ -1743,7 +1747,7 @@ void AiAgentImplementation::activateAwarenessEvent(uint64 delay) {
 	}
 
 	if (!awarenessEvent->isScheduled()) {
-		awarenessEvent->schedule(delay);//awarenessEvent->schedule(3000);//delay);//slow down ai for efficiency
+		awarenessEvent->schedule(2000);//delay);//awarenessEvent->schedule(3000);//delay);//slow down ai for efficiency
 
 #ifdef DEBUG
 		info("Scheduling awareness event", true);
@@ -2527,7 +2531,7 @@ void AiAgentImplementation::activateMovementEvent() {
 	if (getZoneUnsafe() == nullptr)
 		return;
 
-	const static uint64 minScheduleTime = 100;//1000
+	const static uint64 minScheduleTime = 1000;//1000
 
 	Locker locker(&movementEventMutex);
 
