@@ -148,9 +148,9 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	int newlvl1 = getTemplateLevel();
 
-	if (newlvl1 > 100) newlvl1 = 100;
+	if (newlvl1 > 150) newlvl1 = 150;
 
-	newlvl1 *= 3;
+	newlvl1 *= 2;
 
 	level = newlvl1;
 	

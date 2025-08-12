@@ -121,7 +121,7 @@ class ArmorObject extends WearableObject {
 
 	@read
 	public boolean isSpecial(int type) {
-		return false;//specialResists & type;
+		return specialResists & type;
 	}
 
 	@read
@@ -244,14 +244,14 @@ class ArmorObject extends WearableObject {
 	}
 
 	public void setEffectivenessSlice(float value) {
-	//	if (value > 0.5f || value < 0)
-	//		return;
+		if (value > 0.5f || value < 0)
+			return;
 		effectivenessSlice = 1 + value;
 	}
 
 	public void setEncumbranceSlice(float value) {
-	//	if (value > 0.5f || value < 0)
-	//		return;
+		if (value > 0.5f || value < 0)
+			return;
 		encumbranceSlice = 1 - value;
 	}
 

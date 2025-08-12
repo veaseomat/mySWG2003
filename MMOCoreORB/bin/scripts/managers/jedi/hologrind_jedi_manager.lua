@@ -4,8 +4,9 @@ local PlayerManager = require("managers.player_manager")
 
 jediManagerName = "HologrindJediManager"
 
-NUMBEROFPROFESSIONSTOMASTER = 1 --this is now how many profs are selected
-MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 3
+NUMBEROFPROFESSIONSTOMASTER = 3 --this is now how many profs to unlock
+NEWNUMBEROFPROFESSIONSTOMASTER = 6 --this is how many profs are selected
+MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 2
 
 HologrindJediManager = JediManager:new {
 	screenplayName = jediManagerName,
@@ -77,8 +78,6 @@ function HologrindJediManager:onPlayerCreated(pCreatureObject)
 	if (pGhost == nil) then
 		return
 	end
-	
-	NEWNUMBEROFPROFESSIONSTOMASTER = 7
 
 	for i = 1, NEWNUMBEROFPROFESSIONSTOMASTER, 1 do
 		local numberOfSkillsInList = #skillList

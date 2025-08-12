@@ -5,7 +5,9 @@ rcp2 = {
 	minimumLevel = 0,
 	maximumLevel = 0,
 	lootItems = {
-		{itemTemplate = "saber_rcp2", weight = 10000000}
+	--	{itemTemplate = "saber_rcp2", weight = 10000000}
+				{itemTemplate = "force_power_crystal", weight = 5000000},
+			{itemTemplate = "force_color_crystal", weight = 5000000}
 	},
 }
 
