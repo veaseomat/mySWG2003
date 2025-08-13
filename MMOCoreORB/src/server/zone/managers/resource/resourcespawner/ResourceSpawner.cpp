@@ -174,10 +174,10 @@ void ResourceSpawner::loadResourceSpawns() {
 
 		resourceMap->add(resourceSpawn->getName(), resourceSpawn);
 
-		//if (!resourceSpawn->inShift()) { //bingo bango, remove the if to force despawn of all mats
+		if (!resourceSpawn->inShift()) { //bingo bango, remove the if to force despawn of all mats
 			despawn(resourceSpawn);
 			continue;
-		//}
+		}
 
 		if (resourceSpawn->getSpawnPool() != 0) {
 			Locker locker(resourceSpawn);

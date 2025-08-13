@@ -1530,6 +1530,9 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage *= 1.25f;
 	}
 
+	if (attacker->isPlayerCreature())
+		damage *= 2.0;
+
 	// Toughness reduction
 	if (data.isForceAttack())
 		damage = getDefenderToughnessModifier(defender, SharedWeaponObjectTemplate::FORCEATTACK, data.getDamageType(), damage);

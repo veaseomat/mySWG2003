@@ -65,7 +65,7 @@ function PVPBHIntro:startStepDelay(pPlayer, step)
 --		return
 --	else
 	--player lost bh or first time
-		stepDelay = (getRandomNumber(30, 120) * 60 * 1000) --mins 15, 240
+		stepDelay = (getRandomNumber(30, 240) * 60 * 1000) --mins 15, 240
 --	end
 
 	writeScreenPlayData(pPlayer, "VillageJediProgression", "PVPBHIntroDelay", stepDelay + os.time())
@@ -91,7 +91,7 @@ function PVPBHIntro:doDelayedStep(pPlayer)
 --	end
 	
 	--delay for dead incap or not in good area
-	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer) or not (CreatureObject(pPlayer):isOvert())) then
+	if (CreatureObject(pPlayer):isDead() or CreatureObject(pPlayer):isIncapacitated() or not Encounter:isPlayerInPositionForEncounter(pPlayer) ) then --or not (CreatureObject(pPlayer):isOvert())
 		createEvent(getRandomNumber(5, 15) * 60 * 1000, "PVPBHIntro", "doDelayedStep", pPlayer, "")
 		return
 	end

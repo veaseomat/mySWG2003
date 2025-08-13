@@ -248,41 +248,6 @@ endor_destroy_missions = {
 			maxDifficulty = 58,
 			size = 25,
 		},
-		{
-			lairTemplateName = "global_black_sun_neutral_none",
-			minDifficulty = 95,
-			maxDifficulty = 99,
-			size = 25,
-		},
-		{
-			lairTemplateName = "global_death_watch_neutral_none",
-			minDifficulty = 95,
-			maxDifficulty = 99,
-			size = 25,
-		},
---		{
---			lairTemplateName = "endor_blurrg_crimson_neutral_small",
---			minDifficulty = 95,
---			maxDifficulty = 99,
---			size = 25,
---		},
-		{
-			lairTemplateName = "endor_blurrg_crimson_neutral_small2",
-			minDifficulty = 95,
-			maxDifficulty = 99,
-			size = 25,
-		},
-		{
-			lairTemplateName = "endor_gorax_neutral_none2",
-			spawnLimit = -1,
-			minDifficulty = 131,
-			maxDifficulty = 300,
-			numberToSpawn = 0,
-			size = 35
-		},
-		
-		
-		
 	}
 }
 

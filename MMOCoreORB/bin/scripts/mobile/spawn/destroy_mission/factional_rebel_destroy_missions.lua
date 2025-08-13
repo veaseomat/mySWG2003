@@ -194,12 +194,6 @@ factional_rebel_destroy_missions = {
 			maxDifficulty = 32,
 			size = 25,
 		},
-		{
-			lairTemplateName = "global_darth_vader",
-			minDifficulty = 350,
-			maxDifficulty = 500,
-			size = 25,
-		},
 	}
 }
 

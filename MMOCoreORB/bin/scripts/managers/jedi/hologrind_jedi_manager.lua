@@ -6,7 +6,7 @@ jediManagerName = "HologrindJediManager"
 
 NUMBEROFPROFESSIONSTOMASTER = 3 --this is now how many profs to unlock
 NEWNUMBEROFPROFESSIONSTOMASTER = 6 --this is how many profs are selected
-MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 2
+MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 1 --iirc this number needs to be 1 less than the actual so 1 = show 2
 
 HologrindJediManager = JediManager:new {
 	screenplayName = jediManagerName,
