@@ -1026,28 +1026,28 @@ function myswg_vendor_convo_handler:getNextConversationScreen(conversationTempla
                     
 --DOCTOR
                     
-                elseif (optionLink == "buff1" and credits < -1) then
+                elseif (optionLink == "buff1" and credits < 5000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "buff1" and credits >= -1) then
+                elseif (optionLink == "buff1" and credits >= 5000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    --creature:subtractCashCredits(15000)
+                    creature:subtractCashCredits(5000)
                    
 										CreatureObject(conversingPlayer):enhanceCharacter()
 										--buffTerminalMenuComponent:logUsage(conversingPlayer, "enhanceCharacter")
                     --giveItem(pInventory, "object/tangible/deed/vehicle_deed/speederbike_deed.iff", -1)
                     --createLoot(pInventory, "junk", 1, false)
                     
-                elseif (optionLink == "buff2" and credits < 25000) then
+                elseif (optionLink == "buff2" and credits < 20000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.
                       nextConversationScreen = conversation:getScreen("insufficient_funds")
                       creature:sendSystemMessage("You have insufficient funds") 
-                elseif (optionLink == "buff2" and credits >= 25000) then
+                elseif (optionLink == "buff2" and credits >= 20000) then
                     -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
-                    creature:subtractCashCredits(25000)
+                    creature:subtractCashCredits(20000)
 
 										CreatureObject(conversingPlayer):enhanceCharacterDocBuff()
 

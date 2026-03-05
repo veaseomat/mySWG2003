@@ -619,20 +619,22 @@ int ResourceSpawner::randomizeValue(int min, int max) {
 //		}
 //	}
 	
-	int newranstat = System::random(250) + 750;
+	int newranstat = 750 + System::random(500);
+
+	if (newranstat > 1000) newranstat = 1000;
 	
 	return newranstat; //randomStat;
 }
 
 long ResourceSpawner::getRandomExpirationTime(const ResourceTreeEntry* resourceEntry) {
-//	if (resourceEntry->isOrganic())
-//		return getRandomUnixTimestamp(6, 22);
-//
-//	else if (resourceEntry->isJTL())
-//		return getRandomUnixTimestamp(13, 22);
-//
-//	else
-		return getRandomUnixTimestamp(24 * 3, 24 * 6);// this is the timer multiplier currently in HOURS, vanilla is days 6, 11//just so everything has the same rotate timer
+	if (resourceEntry->isOrganic())
+		return getRandomUnixTimestamp(6, 22);
+
+	else if (resourceEntry->isJTL())
+		return getRandomUnixTimestamp(13, 22);
+
+	else
+		return getRandomUnixTimestamp(6, 11);
 }
 
 long ResourceSpawner::getRandomUnixTimestamp(int min, int max) const {

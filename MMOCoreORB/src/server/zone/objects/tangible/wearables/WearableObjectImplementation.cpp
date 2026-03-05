@@ -119,9 +119,9 @@ void WearableObjectImplementation::generateSockets(CraftingValues* craftingValue
 		}
 	}
 
-	int random = (System::random(750)) - 250; // -250 to 500
+	//int random = (System::random(750)) - 250; // -250 to 500
 
-	float roll = System::random(skill / 10);// + luck + random);
+	float roll = System::random(8);//
 
 	int generatedCount = 4 + roll;//int(float(MAXSOCKETS * roll) / float(MAXSOCKETS * 100));
 

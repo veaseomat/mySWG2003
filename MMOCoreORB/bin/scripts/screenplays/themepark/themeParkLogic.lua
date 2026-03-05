@@ -1867,12 +1867,12 @@ function ThemeParkLogic:handleMissionReward(pConversingPlayer)
 		end
 	end
 	
-	local morecredits = getRandomNumber(5000, 25000)
+	local morecredits = getRandomNumber(1000, 5000)
 	self:giveCredits(pConversingPlayer, morecredits)
 
 	self:giveLoot(pConversingPlayer, "junk")
 	
-	self:giveLoot(pConversingPlayer, "junk")
+	--self:giveLoot(pConversingPlayer, "junk")
 	
 end
 

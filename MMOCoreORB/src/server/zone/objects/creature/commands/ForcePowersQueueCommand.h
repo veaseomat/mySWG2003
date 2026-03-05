@@ -82,11 +82,12 @@ public:
 
 		int newforcecost = forceCost;
 
-		if (newforcecost > 100)
-			newforcecost = 100;
+		//if (newforcecost > 100) newforcecost = 100;
+
+		newforcecost /= 2;
 
 		if (ghost == nullptr)
-			return forceCost;
+			return newforcecost;//forceCost;
 
 		Locker locker(creature);
 

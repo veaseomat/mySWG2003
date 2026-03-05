@@ -1185,9 +1185,10 @@ void CreatureObjectImplementation::setWounds(int type, int value,
 		bool notifyClient) {
 	if (value < 0)
 		value = 0;
-
-//	if (value >= baseHAM.get(type))
-//		value = baseHAM.get(type) - 1;
+	
+	//this one was disabled
+	if (value >= baseHAM.get(type))
+		value = baseHAM.get(type) - 1;
 
 	if (wounds.get(type) == value)
 		return;
@@ -2777,7 +2778,7 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 		modifier *= 1.75f;
 
 	if (isPlayerCreature() && !isInCombat())
-		modifier *= 5;
+		modifier *= 2;
 
 	// this formula gives the amount of regen per second
 	uint32 healthTick = (uint32) ceil((float) Math::max(0, getHAM(
@@ -2808,7 +2809,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int healthRegen = getSkillMod("private_med_wound_health");
 
 	if(healthRegen > 0) {
-		healthWoundHeal = 5;//+= (int)(healthRegen * 0.1);
+		healthWoundHeal = 2;//+= (int)(healthRegen * 0.1);
 	//	if(healthWoundHeal >= 100) {
 			healWound(asCreatureObject(), CreatureAttribute::HEALTH, healthWoundHeal, true, false);
 			healWound(asCreatureObject(), CreatureAttribute::STRENGTH, healthWoundHeal, true, false);
@@ -2821,7 +2822,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int actionRegen = getSkillMod("private_med_wound_action");
 
 	if(actionRegen > 0) {
-		actionWoundHeal = 5;//+= (int)(actionRegen * 0.1);
+		actionWoundHeal = 2;//+= (int)(actionRegen * 0.1);
 		//if(actionWoundHeal >= 100) {
 			healWound(asCreatureObject(), CreatureAttribute::ACTION, actionWoundHeal, true, false);
 			healWound(asCreatureObject(), CreatureAttribute::QUICKNESS, actionWoundHeal, true, false);
@@ -2834,7 +2835,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int mindRegen = getSkillMod("private_med_wound_mind");
 
 	if(mindRegen > 0) {
-		mindWoundHeal = 5;//+= (int)(mindRegen * 0.1);
+		mindWoundHeal = 2;//+= (int)(mindRegen * 0.1);
 		//if(mindWoundHeal >= 100) {
 			healWound(asCreatureObject(), CreatureAttribute::MIND, mindWoundHeal, true, false);
 			healWound(asCreatureObject(), CreatureAttribute::FOCUS, mindWoundHeal, true, false);

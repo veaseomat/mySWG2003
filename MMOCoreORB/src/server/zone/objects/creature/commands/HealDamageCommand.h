@@ -301,8 +301,8 @@ public:
 
 			sendHealMessage(creature, targetCreature, healthHealed, actionHealed, mindHealed);
 
-//			if (targetCreature != creature && !targetCreature->isPet())
-				awardXp(creature, "medical", (healthHealed + actionHealed + mindHealed)); //No experience for healing yourself or pets.
+			if (targetCreature != creature && !targetCreature->isPet())
+				awardXp(creature, "medical", (healthHealed + actionHealed)); //No experience for healing yourself or pets.
 
 			checkForTef(creature, targetCreature);
 		}
@@ -539,7 +539,7 @@ public:
 //		if (targetCreature != creature && !targetCreature->isPet())
 //			awardXp(creature, "medical", (healthHealed + actionHealed)); //No experience for healing yourself.
 
-			awardXp(creature, "medical", (healthHealed + actionHealed + mindHealed)); //No experience for healing yourself.
+			awardXp(creature, "medical", (healthHealed + actionHealed)); //No experience for healing yourself.
 
 //			if (System::random(50) >= 50){
 //				JediManager::instance()->awardFSpoint(creature);

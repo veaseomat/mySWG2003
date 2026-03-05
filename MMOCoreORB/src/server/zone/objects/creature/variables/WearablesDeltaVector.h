@@ -151,113 +151,49 @@ public:
 
 	Vector<ManagedReference<ArmorObject*> > getArmorAtHitLocation(uint8 hl) const {
 
-		if (hl == 0)
-			return protectionArmorMap.get((uint8)ArmorObjectTemplate::NOLOCATION);
+		// TODO: Migrate and remove this when the object versioning and migration system is in place
 
-		Vector<ManagedReference<ArmorObject*> > chestArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::CHEST); //
-		Vector<ManagedReference<ArmorObject*> > armArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::ARMS); // ARMS
-		Vector<ManagedReference<ArmorObject*> > legArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::LEGS); //
-		Vector<ManagedReference<ArmorObject*> > headArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::HEAD); //
+		// HIT_LOCATION has a circular dependency nightmare with CombatManager and CreatureObject
+		switch(hl) {
+		case 1: // HIT_BODY
+			return protectionArmorMap.get((uint8)ArmorObjectTemplate::CHEST); // CHEST
+		case 2: // HIT_LARM
+		case 3: // HIT_RARM
+		{
+			Vector<ManagedReference<ArmorObject*> > armArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::ARMS); // ARMS
+			Vector<ManagedReference<ArmorObject*> > armorAtLocation;
 
-		if (hl == 1) {//chest
-			if(!chestArmor.isEmpty())
-				return chestArmor;
-			if(!armArmor.isEmpty())
+			if(armArmor.isEmpty())
 				return armArmor;
-			if(!legArmor.isEmpty())
-				return legArmor;
-			if(!headArmor.isEmpty())
-				return headArmor;
+
+			if(hl == 2) {
+				for(int i=armArmor.size()-1; i>=0; i--) {
+					ArmorObject *obj = armArmor.get(i);
+					if(obj->hasArrangementDescriptor("bicep_l") || obj->hasArrangementDescriptor("bracer_upper_l") || obj->hasArrangementDescriptor("gloves"))
+						armorAtLocation.add(obj);
+				}
+			} else {
+				for(int i=armArmor.size()-1; i>=0; i--) {
+					ArmorObject *obj = armArmor.get(i);
+
+					if(obj->hasArrangementDescriptor("bicep_r") || obj->hasArrangementDescriptor("bracer_upper_r") || obj->hasArrangementDescriptor("gloves"))
+						armorAtLocation.add(obj);
+				}
+			}
+
+			if(armorAtLocation.isEmpty())
+				return armArmor;
+			else
+				return armorAtLocation;
 		}
-		if (hl == 2 || hl == 3) {//arms
-			if(!armArmor.isEmpty())
-				return armArmor;
-			if(!chestArmor.isEmpty())
-				return chestArmor;
-			if(!legArmor.isEmpty())
-				return legArmor;
-			if(!headArmor.isEmpty())
-				return headArmor;
-		}
-		if (hl == 4 || hl == 5) {//legs
-			if(!legArmor.isEmpty())
-				return legArmor;
-			if(!armArmor.isEmpty())
-				return armArmor;
-			if(!chestArmor.isEmpty())
-				return chestArmor;
-			if(!headArmor.isEmpty())
-				return headArmor;
-		}
-		if (hl == 6) {//head
-			if(!headArmor.isEmpty())
-				return headArmor;
-			if(!armArmor.isEmpty())
-				return armArmor;
-			if(!chestArmor.isEmpty())
-				return chestArmor;
-			if(!legArmor.isEmpty())
-				return legArmor;
+		case 4: // HIT_LLEG
+		case 5: // HIT_RLEG
+			return protectionArmorMap.get((uint8)ArmorObjectTemplate::LEGS); // LEGS
+		case 6: // HIT_HEAD
+			return protectionArmorMap.get((uint8)ArmorObjectTemplate::HEAD); // HEAD
 		}
 
-		return hl;
-
-//		// TODO: Migrate and remove this when the object versioning and migration system is in place
-//
-//		// HIT_LOCATION has a circular dependency nightmare with CombatManager and CreatureObject
-//		switch(hl) {
-//		case 1: // HIT_BODY
-//			return protectionArmorMap.get((uint8)ArmorObjectTemplate::CHEST) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::ARMS) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::LEGS) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::HEAD); // CHEST
-//		case 2: // HIT_LARM
-//		case 3: // HIT_RARM
-//			return protectionArmorMap.get((uint8)ArmorObjectTemplate::CHEST) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::ARMS) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::LEGS) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::HEAD); // ARMS
-//		{
-//			Vector<ManagedReference<ArmorObject*> > armArmor = protectionArmorMap.get((uint8)ArmorObjectTemplate::ARMS); // ARMS
-//			Vector<ManagedReference<ArmorObject*> > armorAtLocation;
-//
-//			if(armArmor.isEmpty())
-//				return armArmor;
-//
-//			if(hl == 2) {
-//				for(int i=armArmor.size()-1; i>=0; i--) {
-//					ArmorObject *obj = armArmor.get(i);
-//					if(obj->hasArrangementDescriptor("bicep_l") || obj->hasArrangementDescriptor("bracer_upper_l") || obj->hasArrangementDescriptor("gloves"))
-//						armorAtLocation.add(obj);
-//				}
-//			} else {
-//				for(int i=armArmor.size()-1; i>=0; i--) {
-//					ArmorObject *obj = armArmor.get(i);
-//
-//					if(obj->hasArrangementDescriptor("bicep_r") || obj->hasArrangementDescriptor("bracer_upper_r") || obj->hasArrangementDescriptor("gloves"))
-//						armorAtLocation.add(obj);
-//				}
-//			}
-//
-//			if(armorAtLocation.isEmpty())
-//				return armArmor;
-//			else
-//				return armorAtLocation;
-//		}
-//		case 4: // HIT_LLEG
-//		case 5: // HIT_RLEG
-//			return protectionArmorMap.get((uint8)ArmorObjectTemplate::CHEST) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::ARMS) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::LEGS) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::HEAD); // LEGS
-//		case 6: // HIT_HEAD
-//			return protectionArmorMap.get((uint8)ArmorObjectTemplate::CHEST) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::ARMS) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::LEGS) ||
-//					protectionArmorMap.get((uint8)ArmorObjectTemplate::HEAD); // HEAD
-//		}
-//
-//		return protectionArmorMap.get((uint8)ArmorObjectTemplate::NOLOCATION);
+		return protectionArmorMap.get((uint8)ArmorObjectTemplate::NOLOCATION);
 	}
 
 	void addArmor(uint8 hitLocation, ManagedReference<ArmorObject*> armor) {

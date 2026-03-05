@@ -4,14 +4,14 @@ saber_rcp = {
 	minimumLevel = 0,
 	maximumLevel = -1,
 --	newmaximumLevel = 1,
---	customObjectName = "A Focusing Crystal",
+	customObjectName = "Master crystal pack",
 	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack.iff",
 	craftingValues = {
-		{"mindamage", 1,19,0},
-		{"maxdamage", 5,38,0},
-		{"attackspeed",-0.1,-0.3,1},
-		{"woundchance",2,10,1},
-		{"forcecost",-0.1,-2.5,1},
+		{"mindamage", 10,20,0},
+		{"maxdamage", 20,40,0},
+		{"attackspeed",-0.2,-1.0,1},
+		{"woundchance",10,25,1},
+		{"forcecost",-0.1,-5,1},
 --		{"color",1,30,0},
 --		{"attackactioncost",0,-1,0},
 --		{"attackmindcost",0,-1,0},
@@ -19,6 +19,25 @@ saber_rcp = {
 	},
 	customizationStringName = {},
 	customizationValues = {}
+
+--	minimumLevel = 0,
+--	maximumLevel = -1,
+----	newmaximumLevel = 1,
+----	customObjectName = "A Focusing Crystal",
+--	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack.iff",
+--	craftingValues = {
+--		{"mindamage", 1,5,0},
+--		{"maxdamage", 5,10,0},
+--		{"attackspeed",-0.1,-0.3,1},
+--		{"woundchance",2,10,1},
+--		{"forcecost",-0.1,-2.5,1},
+----		{"color",1,30,0},
+----		{"attackactioncost",0,-1,0},
+----		{"attackmindcost",0,-1,0},
+--		{"useCount",2,4,0}
+--	},
+--	customizationStringName = {},
+--	customizationValues = {}
 }
 
 

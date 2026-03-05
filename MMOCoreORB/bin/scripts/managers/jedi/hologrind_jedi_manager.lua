@@ -4,7 +4,8 @@ local PlayerManager = require("managers.player_manager")
 
 jediManagerName = "HologrindJediManager"
 
-NUMBEROFPROFESSIONSTOMASTER = 1 --this is now how many profs are selected
+NEWNUMBEROFPROFESSIONSTOMASTER = 4 --this is how many are selected
+NUMBEROFPROFESSIONSTOMASTER = 2 --this is now how many to unlock
 MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON = 3
 
 HologrindJediManager = JediManager:new {
@@ -77,8 +78,6 @@ function HologrindJediManager:onPlayerCreated(pCreatureObject)
 	if (pGhost == nil) then
 		return
 	end
-	
-	NEWNUMBEROFPROFESSIONSTOMASTER = 7
 
 	for i = 1, NEWNUMBEROFPROFESSIONSTOMASTER, 1 do
 		local numberOfSkillsInList = #skillList
@@ -192,38 +191,19 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 	self:checkIfProgressedToJedi(pCreatureObject)
 	self:registerObservers(pCreatureObject)
 	
-	PVPFactionIntro:startStepDelay(pCreatureObject, 3)--faction encoutners
-	
-	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
-		PVPBHIntro:startStepDelay(pCreatureObject, 3)
-	end
-		--	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_01") then	
---		PlayerObject(pCreatureObject):findmytrainer()
+--	PVPFactionIntro:startStepDelay(pCreatureObject, 3)--faction encoutners
+--	
+--	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then	
+--		PVPBHIntro:startStepDelay(pCreatureObject, 3)
 --	end
 	
-	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_03") then	
-		PVPFRSIntro:startStepDelay(pCreatureObject, 3)
-	end
+--	if CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_03") then	
+--		PVPFRSIntro:startStepDelay(pCreatureObject, 3)
+--	end
 	
 	if JediTrials:isOnKnightTrials(pCreatureObject) then	
-		--KnightTrials:showCurrentTrial(pCreatureObject) --DOES NOT FIX
-		
 		KnightTrials:startNextKnightTrial(pCreatureObject)--this FIXES KNIGHT TRIAL!!!! well sort of its a workaround that resets current trial every logout or server rest.
-
-		--100% fix for knight trial progress
---			local trialNumber = JediTrials:getCurrentTrial(pCreatureObject)
---			local trialData = knightTrialQuests[trialNumber]
---
---			if (trialData.trialType == TRIAL_HUNT or trialData.trialType == TRIAL_HUNT_FACTION) then
---				createObserver(KILLEDCREATURE, "KnightTrials", "notifyKilledHuntTarget", pCreatureObject)
---			end
-		
 	end
-	
-	
-	
---		suiManager:sendMessageBox(pCreatureObject, pCreatureObject, "WARNING", "all SLICED lightsabers will be destroyed if used in combat! you can still remove the crystals. This will be your only warning.", "@ok", "HologrindJediManager", "notifyOkPressed")
---	didnt work
 	
 end
 

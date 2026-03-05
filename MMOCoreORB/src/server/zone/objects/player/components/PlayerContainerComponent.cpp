@@ -27,16 +27,16 @@ int PlayerContainerComponent::canAddObject(SceneObject* sceneObject, SceneObject
 
 		SharedTangibleObjectTemplate* tanoData = dynamic_cast<SharedTangibleObjectTemplate*>(wearable->getObjectTemplate());
 
-		if (tanoData != nullptr) {
-			const auto races = tanoData->getPlayerRaces();
-			String race = creo->getObjectTemplate()->getFullTemplateString();
-
-			if (!races->contains(race.hashCode())) {
-				errorDescription = "You lack the necessary requirements to wear this object";
-
-				return TransferErrorCode::PLAYERUSEMASKERROR;
-			}
-		}
+//		if (tanoData != nullptr) {
+//			const auto races = tanoData->getPlayerRaces();
+//			String race = creo->getObjectTemplate()->getFullTemplateString();
+//
+//			if (!races->contains(race.hashCode())) {
+//				errorDescription = "You lack the necessary requirements to wear this object";
+//
+//				return TransferErrorCode::PLAYERUSEMASKERROR;
+//			}
+//		}
 
 //		if (creo->isPlayerCreature()) {
 //			if (!wearable->isNeutral()) {
@@ -80,11 +80,11 @@ int PlayerContainerComponent::canAddObject(SceneObject* sceneObject, SceneObject
 						}
 					}
 
-					if (!hasSkill) {
-						errorDescription = "@error_message:insufficient_skill"; // You lack the skill to use this item.
-
-						return TransferErrorCode::PLAYERUSEMASKERROR;
-					}
+//					if (!hasSkill) {
+//						errorDescription = "@error_message:insufficient_skill"; // You lack the skill to use this item.
+//
+//						return TransferErrorCode::PLAYERUSEMASKERROR;
+//					}
 				}
 			}
 		}
@@ -100,10 +100,10 @@ int PlayerContainerComponent::canAddObject(SceneObject* sceneObject, SceneObject
 					return TransferErrorCode::PLAYERUSEMASKERROR;
 				}
 
-//				if (weapon->getCraftersName() != creo->getFirstName() && !ghost->isPrivileged()) {
-//					errorDescription = "@jedi_spam:not_your_lightsaber";
-//					return TransferErrorCode::PLAYERUSEMASKERROR;
-//				}
+				if (weapon->getCraftersName() != creo->getFirstName() && !ghost->isPrivileged()) {
+					errorDescription = "@jedi_spam:not_your_lightsaber";
+					return TransferErrorCode::PLAYERUSEMASKERROR;
+				}
 			}
 		}
 	}

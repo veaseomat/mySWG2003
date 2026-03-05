@@ -168,13 +168,6 @@ public:
 
 		//sendDotMessage(creature, creatureTarget, dotPower);
 
-		if (dotPower > 125)
-			dotPower = ((dotPower - 125) / 2) + 125;
-		if (dotPower > 250)
-			dotPower = ((dotPower - 250) / 5) + 250;
-		if (dotPower > 350)
-			dotPower = ((dotPower - 350) / 10) + 350;
-
 		int dotDMG = 0;
 		if (dotPack->isPoisonDeliveryUnit()) {
 			StringIdChatParameter stringId("healing", "apply_poison_self");
@@ -208,10 +201,6 @@ public:
 			creatureTarget->addDefender(creature);
 			creatureTarget->getThreatMap()->addDamage(creature, dotDMG, "");
 			creature->addDefender(creatureTarget);
-
-//			creatureTarget->setDefender(creature);
-//			creature->setDefender(creatureTarget);
-			//creature->addDefender(creatureTarget);
 		} else {
 			StringIdChatParameter stringId("dot_message", "dot_resisted");
 			stringId.setTT(creatureTarget->getObjectID());
@@ -349,49 +338,13 @@ public:
 
 		Locker clocker(creatureTarget, creature);
 
-
-		int wrange = creature->getWeapon()->getMaxRange();
-
-		if(!checkDistance(creature, creatureTarget, wrange))
-					return TOOFAR;
-
-//		if (creature->getWorldPosition().distanceTo(object->getWorldPosition()) - attacker->getTemplateRadius() - object->getTemplateRadius() > range) {
-//
-//
-//		if (creature->getWorldPosition().distanceTo(creatureTarget->getWorldPosition()) > wrange) {
-//
-//		}
-
-		creature->executeObjectControllerAction(STRING_HASHCODE("attack"), creatureTarget->getObjectID(), "");
-
 		if (!combatManager->startCombat(creature, creatureTarget))
 			return INVALIDTARGET;
-
-
-//		combatManager->startCombat(creature, creatureTarget);
-
-		//if (!combatManager->startCombat(creature, creatureTarget)) {
-
-//		creatureTarget->addDefender(creature);
-//		creature->addDefender(creatureTarget);
-//
-//		creatureTarget->setDefender(creature);
-//		creature->setDefender(creatureTarget);
-//
-//		creatureTarget->inflictDamage(creature, CreatureAttribute::HEALTH, 1, true, "medical", true, true);
-
 
 		applyCost(creature, cost);
 
 		int dotPower = dotPack->calculatePower(creature);
 		int dotDMG = 0;
-
-		if (dotPower > 125)
-			dotPower = ((dotPower - 125) / 2) + 125;
-		if (dotPower > 250)
-			dotPower = ((dotPower - 250) / 5) + 250;
-		if (dotPower > 350)
-			dotPower = ((dotPower - 350) / 10) + 350;
 
 		if (dotPack->isPoisonDeliveryUnit()) {
 			if (!creatureTarget->hasDotImmunity(dotPack->getDotType())) {

@@ -224,9 +224,9 @@ newbuff1 = ConvoScreen:new {
       -- 	{"Remove all buffs - FREE", "buff7"},--not working yet
         {"Heal all wounds - 5k", "buff6"},
 
-        {"1500 doctor buffs 8hr - FREE", "buff1"},
-        {"2500 Doctor Buffs 8hr - 25k", "buff2"},
-        {"3500 Doctor Buffs 8hr - 50k", "buff3"},
+        {"1000 doctor buffs 8hr - 5k", "buff1"},
+        {"1500 Doctor Buffs 8hr - 20k", "buff2"},
+        {"2000 Doctor Buffs 8hr - 50k", "buff3"},
         
         {"125% Entertainer Buffs 8hr - FREE", "buff4"},
         {"250% Entertainer Buffs 8hr - 20k", "buff5"},

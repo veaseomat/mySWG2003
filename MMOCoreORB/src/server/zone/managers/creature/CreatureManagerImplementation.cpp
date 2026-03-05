@@ -610,21 +610,13 @@ int CreatureManagerImplementation::notifyDestruction(TangibleObject* destructor,
 			} else {
 				trx.abort() << "createLoot failed for ai object.";
 			}
+			//triple loot
 			if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
 				trx.commit(true);
 			} else {
 				trx.abort() << "createLoot failed for ai object.";
 			}
-			if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-				trx.commit(true);
-			} else {
-				trx.abort() << "createLoot failed for ai object.";
-			}
-			if (lootManager->createLoot(trx, creatureInventory, destructedObject)) {
-				trx.commit(true);
-			} else {
-				trx.abort() << "createLoot failed for ai object.";
-			}
+
 		}
 
 		Reference<AiAgent*> strongReferenceDestructedObject = destructedObject;
@@ -829,7 +821,7 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 	if (!creature->canHarvestMe(player))
 		return;
 
-	if (!player->isInRange(creature, 32))
+	if (!player->isInRange(creature, 16))
 		return;
 
 	ManagedReference<ResourceManager*> resourceManager = zone->getZoneServer()->getResourceManager();

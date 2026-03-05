@@ -44,7 +44,7 @@
 object_tangible_wearables_armor_marine_armor_marine_backpack = object_tangible_wearables_armor_marine_shared_armor_marine_backpack:new {
 	templateType = ARMOROBJECT,
 
---	faction = "Rebel",
+	faction = "Rebel",
 
 	playerRaces = { "object/creature/player/bothan_male.iff",
 				"object/creature/player/bothan_female.iff",

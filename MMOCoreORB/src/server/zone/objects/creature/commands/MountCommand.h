@@ -164,7 +164,7 @@ public:
 //			newSpeed *= vehicle->getSpeedMultiplierMod();
 
 		if(vehicle->getSpeedMultiplierMod() != 0)
-			newSpeed *= vehicle->getSpeedMultiplierMod() * 1.5;
+			newSpeed *= vehicle->getSpeedMultiplierMod();// * 1.5;//this works for pet mounts
 
 		// Add our change to the buffer history
 		changeBuffer->add(SpeedModChange(newSpeed / creature->getRunSpeed()));

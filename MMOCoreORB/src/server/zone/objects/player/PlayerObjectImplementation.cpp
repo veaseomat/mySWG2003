@@ -1888,11 +1888,6 @@ void PlayerObjectImplementation::doRecovery(int latency) {
 		cooldownTimerMap->updateToCurrentAndAddMili("digestEvent", 18000);
 	}
 
-	checkForNewSpawns();
-
-//	checkForNewSpawns();
-
-//	checkForNewSpawns();
 
 	if (isOnline()) {
 		const CommandQueueActionVector* commandQueue = creature->getCommandQueue();
@@ -1940,11 +1935,6 @@ void PlayerObjectImplementation::doRecovery(int latency) {
 //	}
 
 	checkForNewSpawns();
-
-//	checkForNewSpawns();
-
-//	checkForNewSpawns();
-
 
 	activateRecovery();
 }

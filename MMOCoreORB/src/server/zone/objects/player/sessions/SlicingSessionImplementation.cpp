@@ -57,8 +57,8 @@ void SlicingSessionImplementation::initalizeSlicingMenu(CreatureObject* pl, Tang
 	if (player == nullptr || tangibleObject == nullptr)
 		return;
 
-//	if ( !isBaseSlice() && !isKeypadSlice())//!tangibleObject->isSliceable() && //disabling this helped sabers//all of it needs to be gone lol
-//		return;
+	if (!tangibleObject->isSliceable() && !isBaseSlice() && !isKeypadSlice())
+		return;
 
 	if (tangibleObject->containsActiveSession(SessionFacadeType::SLICING)) {
 		player->sendSystemMessage("@slicing/slicing:slicing_underway");
@@ -533,26 +533,17 @@ void SlicingSessionImplementation::handleWeaponSlice() {
 	}
 
 	uint8 percentage = System::random(max - min) + min;
-
+	
 	percentage *= 2;
 
-	handleSliceDamage(percentage);
-
-//	if (System::random(99) > 49) {
-//		handleSliceDamage(percentage);
-//	} else {
-//		handleSliceSpeed(percentage);
-//	}
-
-
-//	switch(System::random(1)) {
-//	case 0:
-//		handleSliceDamage(percentage);
-//		break;
-//	case 1:
-//		handleSliceSpeed(percentage);
-//		break;
-//	}
+	switch(System::random(1)) {
+	case 0:
+		handleSliceDamage(percentage);
+		break;
+	case 1:
+		handleSliceSpeed(percentage);
+		break;
+	}
 }
 
 void SlicingSessionImplementation::detachPowerUp(CreatureObject* player, WeaponObject* weap) {
@@ -650,25 +641,17 @@ void SlicingSessionImplementation::handleArmorSlice() {
 	}
 
 	uint8 percent = System::random(max - min) + min;
-
+	
 	percent *= 2;
 
-	handleSliceEffectiveness(percent);
-
-//	if (System::random(99) > 49) {
-//		handleSliceEffectiveness(percent);
-//	} else {
-//		handleSliceEncumbrance(percent);
-//	}
-
-//	switch (sliceType) {
-//	case 0:
-//		handleSliceEffectiveness(percent);
-//		break;
-//	case 1:
-//		handleSliceEncumbrance(percent);
-//		break;
-//	}
+	switch (sliceType) {
+	case 0:
+		handleSliceEffectiveness(percent);
+		break;
+	case 1:
+		handleSliceEncumbrance(percent);
+		break;
+	}
 }
 
 void SlicingSessionImplementation::handleSliceEncumbrance(uint8 percent) {

@@ -21,30 +21,22 @@ void AttachmentImplementation::initializeTransientMembers() {
 
 void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool firstUpdate) {
 	int level = values->getMaxValue("creatureLevel");
-	int roll = System::random(350);
+	int roll = System::random(100);
 	int modCount = 1;
-
-//	if(roll > 99)
-//		modCount += 2;
-
-//	if(roll < 5)
-//		modCount += 1;
-
-		if(level > 100)
-			level = 100;
 
 	for(int i = 0; i < modCount; ++i) {
 		//Mods can't be lower than -1 or greater than 25
-//		int max = (int) Math::max(-1.f, Math::min(25.f, (float) round(0.1f * level + 3)));
-//		int min = (int) Math::max(-1.f, Math::min(25.f, (float) round(0.075f * level - 1)));
+		int max = (int) Math::max(-1.f, Math::min(50.f, (float) round(0.1f * level + 3)));
+		int min = (int) Math::max(-1.f, Math::min(50.f, (float) round(0.075f * level - 1)));
 
-		int mod = 5 + (level / 6) + System::random(level / 5);//(roll + (level / 2)) / 14;//System::random(max - min) + min;
+		int mod = System::random(max - min) + min;
 
-		if(mod < 1)
+		mod *= 2;
+
+		if (mod > 50) mod = 50;
+
+		if(mod == 0)
 			mod = 1;
-
-		if(mod > 25)
-			mod = 25;
 
 		String modName = server->getZoneServer()->getLootManager()->getRandomLootableMod(gameObjectType);
 

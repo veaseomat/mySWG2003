@@ -69,10 +69,6 @@ object_tangible_wearables_robe_robe_jedi_padawan = object_tangible_wearables_rob
 				},
 
 				noTrade = 1,
-								
---				childObjects = {
---					{templateFile = "object/tangible/inventory/shared_creature_inventory_1.iff", x = 0, z = 0, y = 0, ox = 0, oy = 0, oz = 0, ow = 0, cellid = -1, containmentType = 4}
---				},
 
 				objectMenuComponent = "RobeObjectMenuComponent",
 				certificationsRequired = {"force_title_jedi_rank_02"},

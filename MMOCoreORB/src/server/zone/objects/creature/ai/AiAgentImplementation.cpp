@@ -144,31 +144,18 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	convoTemplateCRC = npcTemplate->getConversationTemplate();
 
-	bool legendarynpc = false;//adds (elite) name tag
-
 	level = getTemplateLevel();
-	
-	//if (level > 350) level = 350;
-	
-	if (System::random(25) == 25 && level < 500) {// and elite <= 1.0) {
-		legendarynpc = true;
-		level = 500;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
-	}
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float minDmg = npcTemplate->getDamageMin(); //level * 6; //
-	float maxDmg = npcTemplate->getDamageMax(); //level * 10; //
+	float minDmg = npcTemplate->getDamageMin();
+	float maxDmg = npcTemplate->getDamageMax();
 	float speed = calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
 	if (petDeed != nullptr) {
-		minDmg = petDeed->getMinDamage();
-		maxDmg = petDeed->getMaxDamage() * 1.25;
-		if (maxDmg > 820) maxDmg = 820;
-		minDmg *= 3;
-		maxDmg *= 3;
-
+		minDmg = petDeed->getMinDamage() * 2;
+		maxDmg = petDeed->getMaxDamage() * 2;
 		allowedWeapon = petDeed->getRanged();
 	}
 
@@ -289,30 +276,23 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 				ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
 				if (isDroidObject() && isPet())
 					ham = getHamMaximum();
-
-				if (ham > 100000) ham = 100000;//ham cap
-
-				//ham /= 4;//reduce ham
-
-				//ham += System::random(100) + 100;//increase base ham for low lvl
-
 				baseHAM.add(ham);
 			} else
 				baseHAM.add(ham/10);
 		}
 	} else {
 		int health = petDeed->getHealth();
-		baseHAM.add(health * 3);
-		baseHAM.add(health/10 * 3);
-		baseHAM.add(health/10 * 3);
+		baseHAM.add(health);
+		baseHAM.add(health/10);
+		baseHAM.add(health/10);
 		int action = petDeed->getAction();
-		baseHAM.add(action * 3);
-		baseHAM.add(action/10 * 3);
-		baseHAM.add(action/10 * 3);
+		baseHAM.add(action);
+		baseHAM.add(action/10);
+		baseHAM.add(action/10);
 		int mind = petDeed->getMind();
-		baseHAM.add(mind * 3);
-		baseHAM.add(mind/10 * 3);
-		baseHAM.add(mind/10 * 3);
+		baseHAM.add(mind);
+		baseHAM.add(mind/10);
+		baseHAM.add(mind/10);
 	}
 
 	hamList.removeAll();
@@ -333,14 +313,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 		int templSpecies = getSpecies();
 
 		if (!npcTemplate->getRandomNameTag()) {
-			//setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies), false);
-			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]", false);
-			
-			if (legendarynpc == true) {
-				//objectName = npcTemplate->getObjectName() + "(Legendary)";
-				//setCustomObjectName("(Legendary)", false);
-				setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies) + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false); // + "\\#FF00FF" + " (Legendary)"
-			}
+			setCustomObjectName(nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies), false);
 		} else {
 			String newName = nm->makeCreatureName(npcTemplate->getRandomNameType(), templSpecies);
 			newName += " (";
@@ -351,20 +324,10 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 				newName += StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString();
 
 			newName += ")";
-			//setCustomObjectName(newName, false);
-			setCustomObjectName(newName + "\\#C0C0C0" + " [" + level + "]", false);
-			
-			if (legendarynpc == true) {
-				setCustomObjectName(newName + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false);
-			}
+			setCustomObjectName(newName, false);
 		}
 	} else {
-		//setCustomObjectName(templateData->getCustomName(), false);
-		
-		setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#C0C0C0" + " [" + level + "]", false);
-		if (legendarynpc == true) {
-			setCustomObjectName(templateData->getCustomName() + StringIdManager::instance()->getStringId(objectName.getFullPath().hashCode()).toString() + "\\#C0C0C0" + " [" + level + "]" + "\\#FF00FF" + " (Elite)", false);
-		}
+		setCustomObjectName(templateData->getCustomName(), false);
 	}
 
 	setHeight(templateData->getScale(), false);
@@ -607,43 +570,6 @@ void AiAgentImplementation::runStartAwarenessInterrupt(SceneObject* pObject) {
 	if (creoObject->isDead() || creoObject->isIncapacitated()) return;
 
 	if (isInCombat()) return;
-
-//	PlayerObjectImplementation::checkForNewSpawns(); //cant call member function without object
-//
-//	PlayerObject* checkForNewSpawns = asPlayerObject()->checkForNewSpawns();
-//
-//	ManagedReference<AiAgent*> ai = pObject->asPlayerObject();
-//
-//	PlayerObject* ghost = getPlayerObject();
-//
-//
-//
-//	PlayerObject* pGhost = creoObject->getPlayerObject();
-
-//	Reference<PlayerObject*> ghost = thisCreO->getPlayerObject();
-//
-//	ghost->checkForNewSpawns(); //r: 'class server::zone::objects::player::PlayerObject' has no member named 'checkForNewSpawns'
-
-//	if (cooldownTimerMap->isPast("spawnCheckTimer")) {
-//
-//		//ChatManager* chatManager = zoneServer->getChatManager();
-//		//ManagedReference<AiAgent*> ai = pObject->asPlayerObject();
-//		//PlayerObject* defenderGhost = pObject->getPlayerObject();
-//
-////		PlayerObject* checkForNewSpawns = getPlayerObject()->checkForNewSpawns();
-////
-////		PlayerObject* PlayerObject = thisAgent->getZoneServer()->getPlayerManager();
-////		PlayerObject->checkForNewSpawns();
-//
-////		PlayerObject* ghost = getPlayerObject();
-////		ghost->checkForNewSpawns();
-//
-//		PlayerObjectImplementation::checkForNewSpawns();
-//
-//		//zoneServer->getPlayerObject()->checkForNewSpawns();//more spawns with this?
-//		//cooldownTimerMap->updateToCurrentAndAddMili("spawnCheckTimer", 3000);
-//
-//	}
 
 	float levelDiff = creoObject->getLevel() - getLevel();
 	float mod = Math::max(0.04f, Math::min((1.f - (levelDiff / 20.f)), 1.2f));
@@ -1529,7 +1455,7 @@ void AiAgentImplementation::respawn(Zone* zone, int level) {
 			}
 		}
 	} else {
-		setLevel(level);
+//		setLevel(level);
 	}
 
 	resetBehaviorList();
@@ -1596,8 +1522,8 @@ void AiAgentImplementation::notifyDespawn(Zone* zone) {
 	loadTemplateData(templateObject);
 	loadTemplateData(npcTemplate);
 
-	if (oldLevel != level)
-		setLevel(level);
+//	if (oldLevel != level)
+//		setLevel(level);
 
 	stateBitmask = 0;
 
@@ -2674,14 +2600,14 @@ void AiAgentImplementation::fillAttributeList(AttributeListMessage* alm, Creatur
 		return;
 	}
 
-	if (getArmor() == 0)
-		alm->insertAttribute("armorrating", "None");
-	else if (getArmor() == 1)
-		alm->insertAttribute("armorrating", "Light");
-	else if (getArmor() == 2)
-		alm->insertAttribute("armorrating", "Medium");
-	else if (getArmor() == 3)
-		alm->insertAttribute("armorrating", "Heavy");
+//	if (getArmor() == 0)
+//		alm->insertAttribute("armorrating", "None");
+//	else if (getArmor() == 1)
+//		alm->insertAttribute("armorrating", "Light");
+//	else if (getArmor() == 2)
+//		alm->insertAttribute("armorrating", "Medium");
+//	else if (getArmor() == 3)
+//		alm->insertAttribute("armorrating", "Heavy");
 
 	if (isSpecialProtection(SharedWeaponObjectTemplate::KINETIC)) {
 		StringBuffer txt;

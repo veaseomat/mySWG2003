@@ -1784,7 +1784,7 @@ void PlayerManagerImplementation::disseminateExperience(TangibleObject* destruct
 				if (xpType != "jedi_general")
 					combatXp += xpAmount;
 				else {
-					xpAmount *= 0.5f;
+					xpAmount *= 0.4f;
 
 					if (attacker->hasSkill("force_title_jedi_rank_03"))
 						awardExperience(attacker, "force_rank_xp", xpAmount, true, .01, true);
@@ -5641,7 +5641,7 @@ void PlayerManagerImplementation::enhanceCharacter(CreatureObject* player) {
 //			player->sendSystemMessage("\\#FF00FFYou receive DOC/ENT buffs according to your player level, calculated with your currently equipped weapon.");
 
 		//selfbuff
-	int selfMedBuff = 1500;//
+	int selfMedBuff = 1000;//
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;//25% is half of vanilla 50%
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;//.625 is half of 125
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;//1.0== 100%
@@ -5668,7 +5668,7 @@ void PlayerManagerImplementation::enhanceCharacterDocBuff(CreatureObject* player
 
 	bool message = true;
 //selfbuff
-	int selfMedBuff = 2500;//
+	int selfMedBuff = 1500;//
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;//25% is half of vanilla 50%
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;//.625 is half of 125
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;
@@ -5695,7 +5695,7 @@ void PlayerManagerImplementation::enhanceCharacterDocBuffTHREE(CreatureObject* p
 
 	bool message = true;
 //selfbuff
-	int selfMedBuff = 3500;//
+	int selfMedBuff = 2000;//
 	int selfStrengthMind = player->getBaseHAM(CreatureAttribute::MIND) * 1.25;//25% is half of vanilla 50%
 	int selfStrengthFocus = player->getBaseHAM(CreatureAttribute::FOCUS) * 1.25;//.625 is half of 125
 	int selfStrengthWill = player->getBaseHAM(CreatureAttribute::WILLPOWER) * 1.25;

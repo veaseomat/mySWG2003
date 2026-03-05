@@ -372,7 +372,7 @@ includeFile("groups/weapon/mines.lua")
 includeFile("groups/weapon/pistols.lua")
 includeFile("groups/weapon/rifles.lua")
 includeFile("groups/weapon/weapons_all.lua")
-includeFile("groups/weapon/sabers.lua")
+--includeFile("groups/weapon/sabers.lua")
 includeFile("groups/weapon/test_weaps.lua")
 includeFile("groups/weapon/test_weaps2.lua")
 

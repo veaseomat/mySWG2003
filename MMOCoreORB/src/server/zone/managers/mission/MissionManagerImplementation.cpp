@@ -1036,17 +1036,20 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			mission->setTargetOptionalTemplate("");
 
 			ManagedReference<CreatureObject*> creature = server->getObject(target->getTargetPlayerID()).castTo<CreatureObject*>();
-			String name = "unknown";	//String name = "";
+			String name = "";
 
-			if (creature != nullptr) {
-//				name = creature->getFirstName() + " " + creature->getLastName();
-//				name = name.trim();
-				name = "unknown";
-			}
+			ManagedReference<PlayerManager*> playerManager = creature->getZoneServer()->getPlayerManager();
 
-			mission->setMissionTargetName(name);
-			mission->setMissionDifficulty(75);
-			mission->setRewardCredits(getRealBountyReward(creature, target));
+			int jedilvl = playerManager->calculatePlayerLevel(creature) * 3;
+			//int skillboxes = SkillManager::instance()->getJediSkillCount(player, true);
+
+			int jedireward = 1337;//skillboxes * 1000;//jedilvl * 1000;
+
+			if (creature->getFaction() == Factions::FACTIONIMPERIAL)	mission->setMissionTargetName("imperial player jedi");
+			if (creature->getFaction() == Factions::FACTIONREBEL)	mission->setMissionTargetName("rebel player jedi");
+			if (creature->getFaction() == Factions::FACTIONNEUTRAL)		mission->setMissionTargetName("neutral player jedi");
+			mission->setMissionDifficulty(jedilvl);
+			mission->setRewardCredits(jedireward);
 
 			// Set the Title, Creator, and Description of the mission.
 

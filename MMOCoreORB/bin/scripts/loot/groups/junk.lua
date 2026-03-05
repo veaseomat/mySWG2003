@@ -9,17 +9,19 @@ junk = {
 		{groupTemplate = "wearables_all", weight = 1000000},
 		{groupTemplate = "tailor_components", weight = 500000},
 		{groupTemplate = "chemistry_component", weight = 1000000},	
-		{groupTemplate = "rcp", weight = 1000000},	
+
 		{groupTemplate = "weapon_component", weight = 1000000},
 		{groupTemplate = "armor_component", weight = 1000000},
+		{groupTemplate = "clothing_attachments", weight = 1000000},
 		
-		{itemTemplate = "locked_container", weight = 1000000},
-		--{itemTemplate = "resourcedeed", weight = 500000},	
+		{itemTemplate = "locked_container", weight = 500000},
+	
 		{groupTemplate = "paintings", weight = 500000},
-		--{groupTemplate = "skill_buffs", weight = 250000},
+
 		{groupTemplate = "armor_all", weight = 1000000},
 		{groupTemplate = "weapons_all", weight = 1000000},
-		--{itemTemplate = "saber_rcp", weight = 100000}
+		{groupTemplate = "dark_jedi_common", weight = 500000},
+
 		{itemTemplate = "resourcedeed", weight = 500000},	
 	}
 }

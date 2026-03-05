@@ -49,8 +49,8 @@ object_tangible_component_weapon_blaster_power_handler_advanced = object_tangibl
 	experimentalWeights = {1, 1, 2, 1, 2, 1, 2, 1, 2, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "exp_durability"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "hitpoints"},
-	experimentalMin = {0, 0, 1, 1, 0, 10},
-	experimentalMax = {0, 0, 25, 50, -0.5, 100},
+	experimentalMin = {0, 0, 5, 5, 0, 10},
+	experimentalMax = {0, 0, 125, 250, -0.5, 100},
 	experimentalPrecision = {0, 0, 0, 0, 1, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1},
 }

@@ -71,7 +71,8 @@ bh_targets_at_mission_level = {
 		"death_watch_ghost",
 		"death_watch_bloodguard",
 		"death_watch_wraith",
-		
+		"darth_vader2",
+		"luke_skywalker2",
 		},
 --		level4 = { --this could be jedi on trials mission options
 --				--frs trials npc

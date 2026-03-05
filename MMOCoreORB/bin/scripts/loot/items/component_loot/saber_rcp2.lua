@@ -7,15 +7,15 @@ saber_rcp2 = {
 	customObjectName = "Master crystal pack",
 	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack.iff",
 	craftingValues = {
-		{"mindamage", 25,125,0},
-		{"maxdamage", 50,250,0},
+		{"mindamage", 10,20,0},
+		{"maxdamage", 20,40,0},
 		{"attackspeed",-0.2,-1.0,1},
 		{"woundchance",10,25,1},
 		{"forcecost",-0.1,-5,1},
 --		{"color",1,30,0},
 --		{"attackactioncost",0,-1,0},
 --		{"attackmindcost",0,-1,0},
-		{"useCount",4,8,0}
+		{"useCount",2,4,0}
 	},
 	customizationStringName = {},
 	customizationValues = {}

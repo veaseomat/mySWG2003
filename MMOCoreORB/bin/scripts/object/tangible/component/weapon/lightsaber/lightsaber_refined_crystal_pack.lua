@@ -44,25 +44,15 @@
 object_tangible_component_weapon_lightsaber_lightsaber_refined_crystal_pack = object_tangible_component_weapon_lightsaber_shared_lightsaber_refined_crystal_pack:new {
 
 
---	numberExperimentalProperties = {1, 1},
---	experimentalProperties = {"XX", "XX"},
---	experimentalWeights = {1, 1},
---	experimentalGroupTitles = {"null", "null"},
---	experimentalSubGroupTitles = {"null", "null"},
---	experimentalMin = {0, 0},
---	experimentalMax = {0, 0},
---	experimentalPrecision = {0, 0},
---	experimentalCombineType = {0, 0},
-	
-	numberExperimentalProperties = {1, 1, 2, 2, 2, 2, 2, 1, 1, 1},
-	experimentalProperties = {"XX", "XX", "CD", "OQ", "CD", "OQ", "CD", "OQ", "SR", "UT", "CD", "OQ", "OQ", "OQ", "OQ"},
-	experimentalWeights = {1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1},
-	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "expEffeciency", "expEffeciency", "expEffeciency", "expEffeciency"},
-	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "forcecost", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 1, 1, -0.1, 1, -0.1, 0, 0, 0},
-	experimentalMax = {0, 0, 125, 250, -0.6, 4, -2.0, 0, 0, 0},
-	experimentalPrecision = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0},
-	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+	numberExperimentalProperties = {1, 1},
+	experimentalProperties = {"XX", "XX"},
+	experimentalWeights = {1, 1},
+	experimentalGroupTitles = {"null", "null"},
+	experimentalSubGroupTitles = {"null", "null"},
+	experimentalMin = {0, 0},
+	experimentalMax = {0, 0},
+	experimentalPrecision = {0, 0},
+	experimentalCombineType = {0, 0},
 }
 
 ObjectTemplates:addTemplate(object_tangible_component_weapon_lightsaber_lightsaber_refined_crystal_pack, "object/tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack.iff")

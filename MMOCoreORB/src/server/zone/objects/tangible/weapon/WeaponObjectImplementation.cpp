@@ -27,13 +27,13 @@ void WeaponObjectImplementation::initializeTransientMembers() {
 
 	setLoggingName("WeaponObject");
 
-//	if(damageSlice > 1.5 || damageSlice < 1) {
-//		damageSlice = 1;
-//	}
-//
-//	if(speedSlice > 1.0 || speedSlice < .5) {
-//		speedSlice = 1;
-//	}
+	if(damageSlice > 1.5 || damageSlice < 1) {
+		damageSlice = 1;
+	}
+
+	if(speedSlice > 1.0 || speedSlice < .5) {
+		speedSlice = 1;
+	}
 }
 
 void WeaponObjectImplementation::notifyLoadFromDatabase() {
@@ -90,13 +90,11 @@ void WeaponObjectImplementation::loadTemplateData(SharedObjectTemplate* template
 	if (templateAttackSpeed > 1)
 		attackSpeed = templateAttackSpeed;
 
-	setSliceable(true);
-
-//	if (!isJediWeapon()) {
-//		setSliceable(true);
-//	} else if (isJediWeapon()) {
-//		setSliceable(false);
-//	}
+	if (!isJediWeapon()) {
+		setSliceable(true);
+	} else if (isJediWeapon()) {
+		setSliceable(false);
+	}
 }
 
 void WeaponObjectImplementation::sendContainerTo(CreatureObject* player) {
@@ -113,19 +111,6 @@ void WeaponObjectImplementation::sendContainerTo(CreatureObject* player) {
 		}
 
 	}
-//	else if (!isJediWeapon()) {
-//
-//		ManagedReference<SceneObject*> saberInv = getSlottedObject("saber_inv");
-//
-//		if (saberInv != nullptr) {
-//			saberInv->sendDestroyTo(player);
-//			//saberInv->closeContainerTo(player, true);
-//
-//			saberInv->sendWithoutContainerObjectsTo(player);
-//			saberInv->openContainerTo(player);
-//		}
-//
-//	}
 }
 
 void WeaponObjectImplementation::createChildObjects() {
@@ -229,8 +214,6 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	TangibleObjectImplementation::fillAttributeList(alm, object);
 
 	bool res = isCertifiedFor(object);
-
-	//alm->insertAttribute("challenge_level", itemLevel);
 
 	if (res) {
 		alm->insertAttribute("weapon_cert_status", "Yes");
@@ -459,17 +442,6 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 
 	if (sliced == 1)
 		alm->insertAttribute("wpn_attr", "@obj_attr_n:hacked1");
-
-//	if (isJediWeapon()) { //sliced == 1 &&
-//		if (minDamage > 3000 ||	minDamage < 1 || maxDamage > 6000 || maxDamage < 1)	{
-//			setMinDamage(1);//these work but introduce new problems
-//			setMaxDamage(1);
-//			inflictDamage(_this.getReferenceUnsafeStaticCast(), 0, 1000000, true, true);
-//		}
-//
-//	}
-
-
 
 }
 
@@ -748,10 +720,10 @@ void WeaponObjectImplementation::decay(CreatureObject* user) {
 	}
 
 	int roll = System::random(100);
-	int chance = 1; //5
+	int chance = 1;
 
 	if (hasPowerup())
-		chance += 2; //10
+		chance += 4;
 
 	if (roll < chance) {
 		Locker locker(_this.getReferenceUnsafeStaticCast());

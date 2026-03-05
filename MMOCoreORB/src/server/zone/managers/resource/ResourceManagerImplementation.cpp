@@ -210,7 +210,7 @@ ResourceContainer* ResourceManagerImplementation::harvestResource(CreatureObject
 	return resourceSpawner->harvestResource(player, type, quantity);
 }
 bool ResourceManagerImplementation::harvestResourceToPlayer(TransactionLog& trx, CreatureObject* player, ResourceSpawn* resourceSpawn, const int quantity) {
-	int newquantity = quantity * 10;
+	int newquantity = quantity * 5;
 
 	trx.addState("resourceType", resourceSpawn->getType());
 	trx.addState("resourceName", resourceSpawn->getName());

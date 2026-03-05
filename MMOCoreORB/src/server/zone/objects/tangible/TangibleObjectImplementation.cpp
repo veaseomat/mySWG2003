@@ -539,7 +539,7 @@ void TangibleObjectImplementation::removeDefender(SceneObject* defender) {
 void TangibleObjectImplementation::fillAttributeList(AttributeListMessage* alm, CreatureObject* object) {
 	SceneObjectImplementation::fillAttributeList(alm, object);
 
-	if (level > 1) {
+	if (level >= 1) {
 		alm->insertAttribute("challenge_level", level);
 	}
 
@@ -880,6 +880,8 @@ Reference<FactoryCrate*> TangibleObjectImplementation::createFactoryCrate(int ma
 
 	Locker locker(crate);
 
+	maxSize = 10000;
+
 	crate->setMaxCapacity(maxSize);
 
 
@@ -1104,9 +1106,6 @@ bool TangibleObjectImplementation::isAttackableBy(TangibleObject* object) {
 }
 
 bool TangibleObjectImplementation::isAttackableBy(CreatureObject* object) {
-//	if (object->isPlayerCreature()) //causes segmentation fault crash? DERP
-//		return false; //DISABLE PVP
-
 	if (object->isPlayerCreature()) {
 		Reference<PlayerObject*> ghost = object->getPlayerObject();
 		if (ghost != nullptr && ghost->hasCrackdownTefTowards(getFaction())) {

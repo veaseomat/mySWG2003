@@ -197,21 +197,6 @@ uint32 DamageOverTime::doBleedingTick(CreatureObject* victim, CreatureObject* at
 		damage = attr - 1;
 	}
 
-	if (victim->isPlayerCreature()) {
-		if (damage > 450)
-			damage = ((damage - 450) / 4) + 450;
-		if (damage > 350)
-			damage = ((damage - 350) / 2) + 350;
-	}
-	else {
-		if (damage > 4500)
-			damage = ((damage - 4500) / 4) + 4500;
-		if (damage > 3500)
-			damage = ((damage - 3500) / 2) + 3500;
-	}
-
-
-
 	Reference<CreatureObject*> attackerRef = attacker;
 	Reference<CreatureObject*> victimRef = victim;
 	auto attribute = this->attribute;
@@ -248,22 +233,9 @@ uint32 DamageOverTime::doFireTick(CreatureObject* victim, CreatureObject* attack
 	}
 
 	int woundsToApply = (int)(secondaryStrength * (1.f + victim->getShockWounds() / 100.0f));
-	int maxWoundsToApply = victim->getMaxHAM(attribute) - 1 - victim->getWounds(attribute);
+	int maxWoundsToApply = victim->getBaseHAM(attribute) - 1 - victim->getWounds(attribute);
 
 	woundsToApply = Math::min(woundsToApply, maxWoundsToApply);
-
-//	if (victim->isPlayerCreature()) {
-//		if (woundsToApply > 350)
-//			woundsToApply = ((woundsToApply - 350) / 4) + 350;
-//		if (woundsToApply > 250)
-//			woundsToApply = ((woundsToApply - 250) / 2) + 250;
-//	}
-//	else {
-//		if (woundsToApply > 3500)
-//			woundsToApply = ((woundsToApply - 3500) / 4) + 3500;
-//		if (woundsToApply > 2500)
-//			woundsToApply = ((woundsToApply - 2500) / 2) + 2500;
-//	}
 
 	Reference<CreatureObject*> attackerRef = attacker;
 	Reference<CreatureObject*> victimRef = victim;
@@ -311,20 +283,6 @@ uint32 DamageOverTime::doPoisonTick(CreatureObject* victim, CreatureObject* atta
 		damage = attr - 1;
 	}
 
-//	if (victim->isPlayerCreature()) {
-//		if (damage > 450)
-//			damage = ((damage - 450) / 4) + 450;
-//		if (damage > 350)
-//			damage = ((damage - 350) / 2) + 350;
-//	}
-//	else {
-//		if (damage > 4500)
-//			damage = ((damage - 4500) / 4) + 4500;
-//		if (damage > 3500)
-//			damage = ((damage - 350) / 2) + 3500;
-//	}
-
-
 	Reference<CreatureObject*> attackerRef = attacker;
 	Reference<CreatureObject*> victimRef = victim;
 	auto attribute = this->attribute;
@@ -354,22 +312,9 @@ uint32 DamageOverTime::doDiseaseTick(CreatureObject* victim, CreatureObject* att
 	// absorption reduces the strength of a dot by the given %.
 	// make sure that the CM dots modify the strength
 	int damage = (int)(strength * (1.f - absorptionMod / 100.f) * (1.f + victim->getShockWounds() / 100.0f));
-	int maxDamage = victim->getMaxHAM(attribute) - 1 - victim->getWounds(attribute);
+	int maxDamage = victim->getBaseHAM(attribute) - 1 - victim->getWounds(attribute);
 
 	damage = Math::min(damage, maxDamage);
-
-//	if (victim->isPlayerCreature()) {
-//		if (damage > 350)
-//			damage = ((damage - 350) / 4) + 350;
-//		if (damage > 250)
-//			damage = ((damage - 250) / 2) + 250;
-//	}
-//	else {
-//		if (damage > 3500)
-//			damage = ((damage - 3500) / 4) + 3500;
-//		if (damage > 2500)
-//			damage = ((damage - 2500) / 2) + 2500;
-//	}
 
 	Reference<CreatureObject*> attackerRef = attacker;
 	Reference<CreatureObject*> victimRef = victim;
@@ -437,19 +382,6 @@ uint32 DamageOverTime::doForceChokeTick(CreatureObject* victim, CreatureObject* 
 			chokeDam *= 1.f - (armorReduction / 100.f);
 
 		}
-
-//		if (victimRef->isPlayerCreature()) {
-//			if (chokeDam > 350)
-//				chokeDam = ((chokeDam - 350) / 4) + 350;
-//			if (chokeDam > 250)
-//				chokeDam = ((chokeDam - 250) / 2) + 250;
-//		}
-//		else {
-//			if (chokeDam > 3500)
-//				chokeDam = ((chokeDam - 3500) / 4) + 3500;
-//			if (chokeDam > 2500)
-//				chokeDam = ((chokeDam - 2500) / 2) + 2500;
-//		}
 
 		CombatManager::instance()->broadcastCombatSpam(attackerRef, victimRef, nullptr, chokeDam, "cbt_spam", "forcechoke_hit", 1);
 		victimRef->inflictDamage(attackerRef, attribute, chokeDam, true);
