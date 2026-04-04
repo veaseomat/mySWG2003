@@ -259,8 +259,8 @@ function HologrindJediManager:sendHolocronMessage(pCreatureObject)
 			if not PlayerObject(pGhost):hasBadge(professions[i]) then
 				local professionText = self:getProfessionStringIdFromBadgeNumber(professions[i])
 				CreatureObject(pCreatureObject):sendSystemMessageWithTO("@jedi_spam:holocron_light_information", "@skl_n:" .. professionText)
-				--CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
-				break
+				CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+				--break
 			end
 		end
 

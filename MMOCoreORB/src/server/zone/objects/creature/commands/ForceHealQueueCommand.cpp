@@ -52,7 +52,14 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 		return GENERALERROR;
 
 	int currentForce = playerObject->getForcePower();
-	int totalCost = forceCost;
+
+	int newforcecost = forceCost;
+
+	//if (newforcecost > 100) newforcecost = 100;
+
+	newforcecost /= 2;
+
+	int totalCost = newforcecost;//forceCost;
 	bool healPerformed = false;
 
 	// Attribute Wound Healing

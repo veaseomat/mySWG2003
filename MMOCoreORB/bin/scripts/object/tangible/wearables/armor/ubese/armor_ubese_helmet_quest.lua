@@ -82,8 +82,10 @@ object_tangible_wearables_armor_ubese_armor_ubese_helmet_quest = object_tangible
 	
 	-- Damage types in WeaponObject
 	vulnerability = STUN + LIGHTSABER,
-		
-	--specialResists = KINETIC,
+	
+	specialResists = KINETIC,
+
+
 	-- These are default Blue Frog stats
 	healthEncumbrance = 9,
 	actionEncumbrance = 11,

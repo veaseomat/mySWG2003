@@ -57,8 +57,8 @@ void SlicingSessionImplementation::initalizeSlicingMenu(CreatureObject* pl, Tang
 	if (player == nullptr || tangibleObject == nullptr)
 		return;
 
-//	if ( !isBaseSlice() && !isKeypadSlice())//!tangibleObject->isSliceable() && //disabling this helped sabers//all of it needs to be gone lol
-//		return;
+	if (!tangibleObject->isSliceable() && !isBaseSlice() && !isKeypadSlice())
+		return;
 
 	if (tangibleObject->containsActiveSession(SessionFacadeType::SLICING)) {
 		player->sendSystemMessage("@slicing/slicing:slicing_underway");

@@ -42,24 +42,24 @@ public:
 			return res;
 		}
 
-		// need to apply the damage reduction in a separate buff so that the multiplication and division applies right
-		Buff* buff = creature->getBuff(BuffCRC::JEDI_FORCE_RUN_2);
-		if (buff == nullptr)
-			return GENERALERROR;
-
-		ManagedReference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(creature, name.hashCode(), duration, BuffType::JEDI);
-
-		Locker locker(multBuff);
-
-		multBuff->setSkillModifier("private_damage_divisor", 20);
-
-		creature->addBuff(multBuff);
-
-		locker.release();
-
-		Locker blocker(buff);
-
-		buff->addSecondaryBuffCRC(multBuff->getBuffCRC());
+//		// need to apply the damage reduction in a separate buff so that the multiplication and division applies right
+//		Buff* buff = creature->getBuff(BuffCRC::JEDI_FORCE_RUN_2);
+//		if (buff == nullptr)
+//			return GENERALERROR;
+//
+//		ManagedReference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(creature, name.hashCode(), duration, BuffType::JEDI);
+//
+//		Locker locker(multBuff);
+//
+//		multBuff->setSkillModifier("private_damage_divisor", 20);
+//
+//		creature->addBuff(multBuff);
+//
+//		locker.release();
+//
+//		Locker blocker(buff);
+//
+//		buff->addSecondaryBuffCRC(multBuff->getBuffCRC());
 
 		if (creature->hasBuff(STRING_HASHCODE("burstrun")) || creature->hasBuff(STRING_HASHCODE("retreat"))) {
 			creature->removeBuff(STRING_HASHCODE("burstrun"));

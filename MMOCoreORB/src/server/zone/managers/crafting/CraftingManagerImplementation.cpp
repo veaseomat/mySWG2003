@@ -125,7 +125,7 @@ int CraftingManagerImplementation::calculateExperimentationSuccess(CreatureObjec
 	if (experimentRoll > 30)
 		return MARGINALSUCCESS;
 
-	if (experimentRoll > 20)
+	if (experimentRoll < 20)
 		return OK;
 
 	return BARELYSUCCESSFUL;

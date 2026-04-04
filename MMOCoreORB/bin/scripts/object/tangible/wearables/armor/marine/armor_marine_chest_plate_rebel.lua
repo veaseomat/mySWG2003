@@ -44,7 +44,7 @@
 object_tangible_wearables_armor_marine_armor_marine_chest_plate_rebel = object_tangible_wearables_armor_marine_shared_armor_marine_chest_plate_rebel:new {
 	templateType = ARMOROBJECT,
 
---	faction = "Rebel",
+	faction = "Rebel",
 
 	playerRaces = { "object/creature/player/bothan_male.iff",
 				"object/creature/player/bothan_female.iff",
@@ -90,29 +90,28 @@ object_tangible_wearables_armor_marine_armor_marine_chest_plate_rebel = object_t
 				"object/mobile/vendor/zabrak_male.iff" },
 
 	-- Damage types in WeaponObject
-	vulnerability = LIGHTSABER,
+	vulnerability = STUN + LIGHTSABER,
 
-	--specialResists = ELECTRICITY,
 
 	-- These are default Blue Frog stats
-	healthEncumbrance = 300,
-	actionEncumbrance = 120,
-	mindEncumbrance = 85,
-
-	maxCondition = 30000,
+	healthEncumbrance = 150,
+	actionEncumbrance = 49,
+	mindEncumbrance = 19,
 
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
 
-	kinetic = 65,
+	maxCondition = 450000,
+
+    kinetic = 65,
 	energy = 65,
 	electricity = 65,
-	stun = 65,
+	stun = 30,
 	blast = 65,
 	heat = 65,
 	cold = 65,
 	acid = 65,
-	lightSaber = 0,
+	lightSaber = 0
 }
 
 ObjectTemplates:addTemplate(object_tangible_wearables_armor_marine_armor_marine_chest_plate_rebel, "object/tangible/wearables/armor/marine/armor_marine_chest_plate_rebel.iff")

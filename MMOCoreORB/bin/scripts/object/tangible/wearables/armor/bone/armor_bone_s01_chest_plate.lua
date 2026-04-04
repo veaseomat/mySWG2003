@@ -89,8 +89,9 @@ object_tangible_wearables_armor_bone_armor_bone_s01_chest_plate = object_tangibl
 
 	-- kineticeffectiveness, energyeffectiveness, electricaleffectiveness, stuneffectiveness, blasteffectiveness, heateffectiveness, coldeffectiveness, acideffectiveness, restraineffectiveness
 	vulnerability = STUN + LIGHTSABER,
-
-	--specialResists = ENERGY,
+	
+	specialResists = ENERGY,
+	
 	-- These are default Blue Frog stats
 	healthEncumbrance = 56,
 	actionEncumbrance = 22,

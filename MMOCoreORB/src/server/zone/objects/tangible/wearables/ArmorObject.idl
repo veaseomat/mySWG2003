@@ -121,7 +121,7 @@ class ArmorObject extends WearableObject {
 
 	@read
 	public boolean isSpecial(int type) {
-		return false;//specialResists & type;
+		return specialResists & type;
 	}
 
 	@read

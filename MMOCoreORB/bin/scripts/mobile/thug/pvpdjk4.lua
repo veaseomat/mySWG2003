@@ -37,9 +37,9 @@ pvpdjk4 = Creature:new {
 		{
 			groups = {
 				{group = "junk", chance = 9000000},
-				{group = "holocron_dark", chance = 300000},
+--				{group = "holocron_dark", chance = 300000},
 				{group = "color_crystals", chance = 1000000},
-				{group = "sabers", chance = 1000000}
+--				{group = "sabers", chance = 1000000}
 			}
 		},
 	},

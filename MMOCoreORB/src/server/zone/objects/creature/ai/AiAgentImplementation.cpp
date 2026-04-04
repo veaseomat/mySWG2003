@@ -150,25 +150,21 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	
 	//if (level > 350) level = 350;
 	
-	if (System::random(25) == 25 && level < 500) {// and elite <= 1.0) {
-		legendarynpc = true;
-		level = 500;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
-	}
+//	if (System::random(25) == 25 && level < 500) {// and elite <= 1.0) {
+//		legendarynpc = true;
+//		level = 500;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
+//	}
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float minDmg = npcTemplate->getDamageMin(); //level * 6; //
-	float maxDmg = npcTemplate->getDamageMax(); //level * 10; //
+	float minDmg = npcTemplate->getDamageMin();
+	float maxDmg = npcTemplate->getDamageMax();
 	float speed = calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
 	if (petDeed != nullptr) {
-		minDmg = petDeed->getMinDamage();
-		maxDmg = petDeed->getMaxDamage() * 1.25;
-		if (maxDmg > 820) maxDmg = 820;
-		minDmg *= 3;
-		maxDmg *= 3;
-
+		minDmg = petDeed->getMinDamage() * 2;
+		maxDmg = petDeed->getMaxDamage() * 2;
 		allowedWeapon = petDeed->getRanged();
 	}
 
@@ -290,7 +286,7 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 				if (isDroidObject() && isPet())
 					ham = getHamMaximum();
 
-				if (ham > 100000) ham = 100000;//ham cap
+				if (ham > 50000) ham = 50000;//ham cap
 
 				//ham /= 4;//reduce ham
 
@@ -1529,7 +1525,7 @@ void AiAgentImplementation::respawn(Zone* zone, int level) {
 			}
 		}
 	} else {
-		setLevel(level);
+//		setLevel(level);
 	}
 
 	resetBehaviorList();
@@ -1596,8 +1592,8 @@ void AiAgentImplementation::notifyDespawn(Zone* zone) {
 	loadTemplateData(templateObject);
 	loadTemplateData(npcTemplate);
 
-	if (oldLevel != level)
-		setLevel(level);
+//	if (oldLevel != level)
+//		setLevel(level);
 
 	stateBitmask = 0;
 

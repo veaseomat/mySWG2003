@@ -37,6 +37,7 @@ death_watch_ghost = Creature:new {
 				{group = "death_watch_bunker_ingredient_protective",  chance = 100000},
 				{group = "death_watch_bunker_ingredient_binary",  chance = 100000}
 			},
+			lootChance = 1500000
 		},
 		{
 			groups = {

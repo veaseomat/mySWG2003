@@ -258,19 +258,14 @@ int LootManagerImplementation::calculateLootCredits(int level) {
 
 TangibleObject* LootManagerImplementation::createLootObject(const LootItemTemplate* templateObject, int level, bool maxCondition) {
 
-//	int uncappedLevel = level;
+	//int uncappedLevel = level;
 
+//	if(level < 1)
+//		level = 1;
 //
-//	if(level <= 350)	//vanilla 300
-//		level = 350;
-//
+	//if(level <= 350)	//vanilla 300
 
-	level = level + System::random(350);
-
-
-	if(level > 350)
-		level = 350;
-
+	level = 350;
 
 
 	//level += System::random(350 - level);
@@ -326,7 +321,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	setCustomObjectName(prototype, templateObject);
 
-	float excMod = 1.0 + (System::random(50) / 100);//was 15/10
+	float excMod = 2.5;//1.0 + (System::random(15) / 10);
 
 	//float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);
 
@@ -343,7 +338,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 			prototype->setCustomObjectName(newName, false);
 
-			excMod = legendaryModifier; //5.0?
+			excMod = 5.0;//legendaryModifier; //5.0?
 
 //			level += System::random(350);
 //
@@ -627,8 +622,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	//setSkillMods(prototype, templateObject, level, excMod);
 
-	if (System::random(2) == 2)// || prototype->isRobeObject())
-		setSockets(prototype, craftingValues);
+	//if (System::random(2) == 2)// || prototype->isRobeObject())
+	setSockets(prototype, craftingValues);
 
 	// Update the Tano with new values
 	prototype->updateCraftingValues(craftingValues, true);
@@ -804,6 +799,12 @@ bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, Sc
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
 		int lootChance = entry->getLootChance() * 2.0;
+		
+				//random holocron creation (only drops on mobs that have loot lists)
+		int holochance = 1000;
+		if (System::random(holochance) >= holochance) {
+			createLoot(trx, container, "holocron_3", level);
+		}
 
 		if (lootChance <= 0)
 			continue;

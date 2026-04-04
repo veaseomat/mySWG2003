@@ -80,7 +80,7 @@ public:
 
 	IngredientSlot(const IngredientSlot& slot) : Object(), Serializable(), Logger() {
 		slotName = slot.slotName;
-		requiredQuantity = 1;//slot.requiredQuantity;
+		requiredQuantity = slot.requiredQuantity;//1
 		identical = slot.identical;
 		optional = slot.optional;
 		contentType = slot.contentType;

@@ -6,183 +6,183 @@ TRIAL_HUNT_FACTION = 5
 TRIAL_COUNCIL = 6
 
 padawanTrialQuests = {
-	{
-		trialName = "architect",
-		trialType = TRIAL_TALK,
-		trialNpc = "devaronian_male",
-		trialNpcName = "Kant Graf (an architect)",
-		targetNpc = "trials_gungan_captain",
-		targetKillable = true
-	},
-	{
-		trialName = "artist",
-		trialType = TRIAL_TALK,
-		trialNpc = "bestine_rumor12",
-		trialNpcName = "Sathme Forr (an artist)",
-		targetNpc = "commoner",
-		targetKillable = false
-	},
-	{
-		trialName = "bad_cat",
-		trialType = TRIAL_KILL,
-		trialNpc = "bestine_capitol02",
-		trialNpcName = "Yvana Bailer (an actor)",
-		targetNpc = "bloodstained_prowler",
-		targetKillable = true
-	},
-	{
-		trialName = "chef",
-		trialType = TRIAL_TALK,
-		trialNpc = "dannik_malaan",
-		trialNpcName = "Seevi Nyed (a chef)",
-		targetNpc = "neo_cobral_overlord",
-		targetKillable = true
-	},
+--	{
+--		trialName = "architect",
+--		trialType = TRIAL_TALK,
+--		trialNpc = "devaronian_male",
+--		trialNpcName = "Kant Graf (an architect)",
+--		targetNpc = "trials_gungan_captain",
+--		targetKillable = true
+--	},
+--	{
+--		trialName = "artist",
+--		trialType = TRIAL_TALK,
+--		trialNpc = "bestine_rumor12",
+--		trialNpcName = "Sathme Forr (an artist)",
+--		targetNpc = "commoner",
+--		targetKillable = false
+--	},
+--	{
+--		trialName = "bad_cat",
+--		trialType = TRIAL_KILL,
+--		trialNpc = "bestine_capitol02",
+--		trialNpcName = "Yvana Bailer (an actor)",
+--		targetNpc = "bloodstained_prowler",
+--		targetKillable = true
+--	},
+--	{
+--		trialName = "chef",
+--		trialType = TRIAL_TALK,
+--		trialNpc = "dannik_malaan",
+--		trialNpcName = "Seevi Nyed (a chef)",
+--		targetNpc = "neo_cobral_overlord",
+--		targetKillable = true
+--	},
 	{
 		trialName = "craft_lightsaber",
 		trialType = TRIAL_LIGHTSABER,
 	},
-	{
-		trialName = "kill_baz_nitch",
-		trialType = TRIAL_HUNT,
-		trialNpc = "sullustan_male",
-		trialNpcName = "Menchi (an environmentalist)",
-		huntTarget = "baz_nitch",
-		huntGoal = 20
-	},
-	{
-		trialName = "kill_falumpaset",
-		trialType = TRIAL_HUNT,
-		trialNpc = "irenez",
-		trialNpcName = "Braganta (a naturalist)",
-		huntTarget = "falumpaset",
-		huntGoal = 20
-	},
-	{
-		trialName = "kill_sludge_panther",
-		trialType = TRIAL_HUNT,
-		trialNpc = "kima_nazith",
-		trialNpcName = "Luha Kellaro (an ecologist)",
-		huntTarget = "sludge_panther",
-		huntGoal = 20
-	},
-	{
-		trialName = "old_musician",
-		trialType = TRIAL_TALK,
-		trialNpc = "grobber",
-		trialNpcName = "Grizzlo (a retired musician)",
-		targetNpc = nil,
-		targetLoc = { 3468, 5, -4852, "tatooine" },
-		thirdTargetNpc = nil,
-		thirdTargetLoc = { 469, 12, 5021, "lok" }
-	},
-	{
-		trialName = "pannaqa",
-		trialType = TRIAL_TALK,
-		trialNpc = nil,
-		trialLoc = { 5291.3, 78.5, -4037.8, "dathomir", "Aurilia" },
-		targetNpc = "commoner",
-		targetKillable = false,
-		thirdTargetNpc = "commoner_male",
-		thirdTargetName = "Shendo",
-		thirdTargetKillable = false
-	},
-	{
-		trialName = "peoples_soldier",
-		trialType = TRIAL_KILL,
-		trialNpc = "marco_vahn",
-		trialNpcName = "Torin Gundo (an old soldier)",
-		targetNpc = "brigand_leader",
-		targetKillable = true
-	},
-	{
-		trialName = "politician",
-		trialType = TRIAL_KILL,
-		trialNpc = "dorn_gestros",
-		trialNpcName = "Kaul Dysen (a politician)",
-		targetNpc = "bloodseeker_mite",
-		targetKillable = true
-	},
-	{
-		trialName = "sob_story",
-		trialType = TRIAL_TALK,
-		trialNpc = "karena_keer",
-		trialNpcName = "Erim Thelcar",
-		targetNpc = "object/tangible/jedi/padawan_trials_skeleton.iff",
-		targetNpcName = "The remains of Josef Thelcar",
-		targetKillable = false
-	},
-	{
-		trialName = "spice_mom",
-		trialType = TRIAL_TALK,
-		trialNpc = "bestine_rumor10",
-		trialNpcName = "Sola Nosconda",
-		targetNpc = "devaronian_male",
-		targetNpcName = "Evif Sulp",
-		targetKillable = false
-	},
-	{
-		trialName = "surveyor",
-		trialType = TRIAL_KILL,
-		trialNpc = "bestine_rumor08",
-		trialNpcName = "Par Doiae (a surveyor)",
-		targetNpc = "sharnaff_bull",
-		targetKillable = true
-	},
-	{
-		trialName = "the_ring",
-		trialType = TRIAL_TALK,
-		trialNpc = "giaal_itotr",
-		trialNpcName = "Keicho",
-		targetNpc = "dread_pirate",
-		killMessage = "@jedi_trials:padawan_trials_received_the_ring",
-		targetKillable = true
-	},
+--	{
+--		trialName = "kill_baz_nitch",
+--		trialType = TRIAL_HUNT,
+--		trialNpc = "sullustan_male",
+--		trialNpcName = "Menchi (an environmentalist)",
+--		huntTarget = "baz_nitch",
+--		huntGoal = 20
+--	},
+--	{
+--		trialName = "kill_falumpaset",
+--		trialType = TRIAL_HUNT,
+--		trialNpc = "irenez",
+--		trialNpcName = "Braganta (a naturalist)",
+--		huntTarget = "falumpaset",
+--		huntGoal = 20
+--	},
+--	{
+--		trialName = "kill_sludge_panther",
+--		trialType = TRIAL_HUNT,
+--		trialNpc = "kima_nazith",
+--		trialNpcName = "Luha Kellaro (an ecologist)",
+--		huntTarget = "sludge_panther",
+--		huntGoal = 20
+--	},
+--	{
+--		trialName = "old_musician",
+--		trialType = TRIAL_TALK,
+--		trialNpc = "grobber",
+--		trialNpcName = "Grizzlo (a retired musician)",
+--		targetNpc = nil,
+--		targetLoc = { 3468, 5, -4852, "tatooine" },
+--		thirdTargetNpc = nil,
+--		thirdTargetLoc = { 469, 12, 5021, "lok" }
+--	},
+--	{
+--		trialName = "pannaqa",
+--		trialType = TRIAL_TALK,
+--		trialNpc = nil,
+--		trialLoc = { 5291.3, 78.5, -4037.8, "dathomir", "Aurilia" },
+--		targetNpc = "commoner",
+--		targetKillable = false,
+--		thirdTargetNpc = "commoner_male",
+--		thirdTargetName = "Shendo",
+--		thirdTargetKillable = false
+--	},
+--	{
+--		trialName = "peoples_soldier",
+--		trialType = TRIAL_KILL,
+--		trialNpc = "marco_vahn",
+--		trialNpcName = "Torin Gundo (an old soldier)",
+--		targetNpc = "brigand_leader",
+--		targetKillable = true
+--	},
+--	{
+--		trialName = "politician",
+--		trialType = TRIAL_KILL,
+--		trialNpc = "dorn_gestros",
+--		trialNpcName = "Kaul Dysen (a politician)",
+--		targetNpc = "bloodseeker_mite",
+--		targetKillable = true
+--	},
+--	{
+--		trialName = "sob_story",
+--		trialType = TRIAL_TALK,
+--		trialNpc = "karena_keer",
+--		trialNpcName = "Erim Thelcar",
+--		targetNpc = "object/tangible/jedi/padawan_trials_skeleton.iff",
+--		targetNpcName = "The remains of Josef Thelcar",
+--		targetKillable = false
+--	},
+--	{
+--		trialName = "spice_mom",
+--		trialType = TRIAL_TALK,
+--		trialNpc = "bestine_rumor10",
+--		trialNpcName = "Sola Nosconda",
+--		targetNpc = "devaronian_male",
+--		targetNpcName = "Evif Sulp",
+--		targetKillable = false
+--	},
+--	{
+--		trialName = "surveyor",
+--		trialType = TRIAL_KILL,
+--		trialNpc = "bestine_rumor08",
+--		trialNpcName = "Par Doiae (a surveyor)",
+--		targetNpc = "sharnaff_bull",
+--		targetKillable = true
+--	},
+--	{
+--		trialName = "the_ring",
+--		trialType = TRIAL_TALK,
+--		trialNpc = "giaal_itotr",
+--		trialNpcName = "Keicho",
+--		targetNpc = "dread_pirate",
+--		killMessage = "@jedi_trials:padawan_trials_received_the_ring",
+--		targetKillable = true
+--	},
 }
 
 knightTrialQuests = {
-	{
-		trialName = "tusken_raider",
-		trialType = TRIAL_HUNT,
-		huntTarget = "tusken_raider",
-		huntGoal = 1
-	},
-	{
-		trialName = "ancient_bull_rancor",
-		trialType = TRIAL_HUNT,
-		huntTarget = "ancient_bull_rancor",
-		huntGoal = 1
-	},
-	{
-		trialName = "stintaril_prowler",
-		trialType = TRIAL_HUNT,
-		huntTarget = "stintaril_prowler",
-		huntGoal = 1
-	},
-	{
-		trialName = "blurrg_raptor",
-		trialType = TRIAL_HUNT,
-		huntTarget = "blurrg_raptor",
-		huntGoal = 1
-	},
-	{
-		trialName = "enraged_kimogila",
-		trialType = TRIAL_HUNT,
-		huntTarget = "enraged_kimogila",
-		huntGoal = 1
-	},
-	{
-		trialName = "peko_peko_albatross",
-		trialType = TRIAL_HUNT,
-		huntTarget = "peko_peko_albatross",
-		huntGoal = 1
-	},
-	{
-		trialName = "graul_marauder",
-		trialType = TRIAL_HUNT,
-		huntTarget = "graul_marauder",
-		huntGoal = 1
-	},
+--	{
+--		trialName = "tusken_raider",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "tusken_raider",
+--		huntGoal = 1
+--	},
+--	{
+--		trialName = "ancient_bull_rancor",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "ancient_bull_rancor",
+--		huntGoal = 1
+--	},
+--	{
+--		trialName = "stintaril_prowler",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "stintaril_prowler",
+--		huntGoal = 1
+--	},
+--	{
+--		trialName = "blurrg_raptor",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "blurrg_raptor",
+--		huntGoal = 1
+--	},
+--	{
+--		trialName = "enraged_kimogila",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "enraged_kimogila",
+--		huntGoal = 1
+--	},
+--	{
+--		trialName = "peko_peko_albatross",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "peko_peko_albatross",
+--		huntGoal = 1
+--	},
+--	{
+--		trialName = "graul_marauder",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "graul_marauder",
+--		huntGoal = 1
+--	},
 	{
 		trialName = "light_or_dark",
 		trialType = TRIAL_COUNCIL
@@ -208,30 +208,30 @@ knightTrialQuests = {
 --		imperialTarget = "corvette_rebel_rear_admiral",
 --		huntGoal = 1
 --	},
-	{
-		trialName = "geonosian_bunker_acklay",
-		trialType = TRIAL_HUNT,
-		huntTarget = "geonosian_acklay_bunker_boss",
-		huntGoal = 1
-	},
-	{
-		trialName = "nightsister_elder",
-		trialType = TRIAL_HUNT,
-		huntTarget = "nightsister_elder",
-		huntGoal = 1
-	},
-	{
-		trialName = "kiin_dray",
-		trialType = TRIAL_HUNT,
-		huntTarget = "gaping_spider_recluse_giant_kiin_dray",
-		huntGoal = 1
-	},
-	{
-		trialName = "giant_canyon_krayt",
-		trialType = TRIAL_HUNT,
-		huntTarget = "giant_canyon_krayt_dragon",
-		huntGoal = 1
-	},
+--	{
+--		trialName = "geonosian_bunker_acklay",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "geonosian_acklay_bunker_boss",
+--		huntGoal = 1
+--	},
+--	{
+--		trialName = "nightsister_elder",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "nightsister_elder",
+--		huntGoal = 1
+--	},
+--	{
+--		trialName = "kiin_dray",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "gaping_spider_recluse_giant_kiin_dray",
+--		huntGoal = 1
+--	},
+--	{
+--		trialName = "giant_canyon_krayt",
+--		trialType = TRIAL_HUNT,
+--		huntTarget = "giant_canyon_krayt_dragon",
+--		huntGoal = 1
+--	},
 }
 
 trialsCivilizedPlanets = { "corellia", "naboo", "rori", "talus", "tatooine" }

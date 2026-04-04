@@ -49,8 +49,8 @@ object_tangible_component_weapon_stock = object_tangible_component_weapon_shared
 	experimentalWeights = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "exp_durability", "expRange", "expEffeciency", "expEffeciency", "expEffeciency"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "hitpoints", "midrangemod", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 1, 1, 1, 0, 10, 0, 25, 25, 25},
-	experimentalMax = {0, 0, 20, 20, 0, 5, 100, 20, 0, 0, 0},
+	experimentalMin = {0, 0, 5, 5, 1, 0, 10, 0, 25, 25, 25},
+	experimentalMax = {0, 0, 100, 100, 0, 5, 100, 20, 0, 0, 0},
 	experimentalPrecision = {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 }

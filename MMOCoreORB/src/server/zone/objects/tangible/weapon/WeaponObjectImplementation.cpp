@@ -90,13 +90,11 @@ void WeaponObjectImplementation::loadTemplateData(SharedObjectTemplate* template
 	if (templateAttackSpeed > 1)
 		attackSpeed = templateAttackSpeed;
 
-	setSliceable(true);
-
-//	if (!isJediWeapon()) {
-//		setSliceable(true);
-//	} else if (isJediWeapon()) {
-//		setSliceable(false);
-//	}
+	if (!isJediWeapon()) {
+		setSliceable(true);
+	} else if (isJediWeapon()) {
+		setSliceable(false);
+	}
 }
 
 void WeaponObjectImplementation::sendContainerTo(CreatureObject* player) {
