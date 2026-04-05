@@ -281,20 +281,23 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
 		for (int i = 0; i < 9; ++i) {
-			if (i % 3 == 0) {
+			//if (i % 3 == 0) {
 				ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
 				if (isDroidObject() && isPet())
 					ham = getHamMaximum();
 
-				if (ham > 50000) ham = 50000;//ham cap
+				if (ham > 30000) ham = 30000;//ham cap
 
 				//ham /= 4;//reduce ham
 
 				//ham += System::random(100) + 100;//increase base ham for low lvl
 
+				ham = System::random(ham * .3) + (ham * .7);
+
 				baseHAM.add(ham);
-			} else
-				baseHAM.add(ham/10);
+			//} else
+//				ham = System::random(ham * .3) + (ham * .7);
+//				baseHAM.add(ham/10);
 		}
 	} else {
 		int health = petDeed->getHealth();

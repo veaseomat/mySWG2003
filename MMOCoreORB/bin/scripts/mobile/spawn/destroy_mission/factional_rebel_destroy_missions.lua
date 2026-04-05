@@ -200,12 +200,12 @@ factional_rebel_destroy_missions = {
 --			maxDifficulty = 500,
 --			size = 25,
 --		},
-		{
-			lairTemplateName = "global_dark_jedi_sentinel",
-			minDifficulty = 350,
-			maxDifficulty = 500,
-			size = 25,
-		},
+--		{
+--			lairTemplateName = "global_dark_jedi_sentinel",
+--			minDifficulty = 350,
+--			maxDifficulty = 500,
+--			size = 25,
+--		},
 	}
 }
 

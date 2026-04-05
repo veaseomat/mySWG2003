@@ -29,8 +29,8 @@ public:
 
 		player->removePendingTask("call_mount");
 
-		if(player->isInCombat())
-			return;
+//		if(player->isInCombat())
+//			return;
 
 		ManagedReference<TangibleObject*> vehicle = device->getControlledObject();
 

@@ -71,6 +71,8 @@ bh_targets_at_mission_level = {
 		"death_watch_ghost",
 		"death_watch_bloodguard",
 		"death_watch_wraith",
+		"dark_jedi_sentinel",
+		"light_jedi_sentinel",
 		
 		},
 --		level4 = { --this could be jedi on trials mission options

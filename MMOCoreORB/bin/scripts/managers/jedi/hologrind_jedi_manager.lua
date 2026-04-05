@@ -208,6 +208,8 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 	if JediTrials:isOnKnightTrials(pCreatureObject) then	
 		--KnightTrials:showCurrentTrial(pCreatureObject) --DOES NOT FIX
 		
+		KnightTrials:resetCompletedTrialsToStart(pCreatureObject)--reset trials for borked half trial jedi
+		
 		KnightTrials:startNextKnightTrial(pCreatureObject)--this FIXES KNIGHT TRIAL!!!! well sort of its a workaround that resets current trial every logout or server rest.
 
 		--100% fix for knight trial progress

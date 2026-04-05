@@ -32,16 +32,9 @@ weaps1 = ConvoScreen:new {
     customDialogText = "Selling weapons.",
     stopConversation = "false",
     options = { 
---        {"Proton Grenades (150damage, 4.4speed) - 100k", "option11"},
---        {"Heavy Rocket Launcher (150damage, 4.4speed) - 100k", "option55"},
---        {"Random lvl 20 Pistol - 15k", "option56"},
---        {"Random lvl 20 Carbine Loot - 15k", "option57"},
---        {"Random lvl 20 Rifle Loot - 15k", "option58"},
---        {"Random lvl 20 1h sword Loot - 15k", "option59"},
---        {"Random lvl 20 2h sword Loot - 15k", "option60"},
---        {"Random lvl 20 Polearm Loot - 15k", "option61"},
---				{"Random lvl 20 Unarmed Loot - 15k", "option62"},        
---				{"Random lvl 20 Hvy Weapons (flame/acid/LLC) - 15k", "option63"}, 
+       -- {"Proton Grenades (150damage, 4.4speed) - 100k", "option11"},
+      --  {"Heavy Rocket Launcher (150damage, 4.4speed) - 100k", "option55"},
+
         {"FWG5 Pistol (130damage, 3.2speed) - 25k", "option3"},
         {"DXR6 Carbine (143damage, 4.1speed) - 25k", "option1"},
         {"T21 Rifle	(360damage, 6.5speed) - 25k", "option2"},
@@ -52,6 +45,7 @@ weaps1 = ConvoScreen:new {
         {"Light Lightning Cannon (730damage, 4.7speed) - 25k", "option8"},
         {"Flame Thrower (830damage, 6.0speed) - 25k", "option9"},
         {"Heavy Acid Rifle (770damage, 5.5speed) - 25k", "option10"},
+        
         {"Main menu.", "first_screen"},
     }
 }
@@ -74,11 +68,12 @@ armor1 = ConvoScreen:new {
         {"Ithorian sentinel leggings - 100k", "option20"},
         {"Ithorian sentinel chest plate - 100k", "option21"},
         {"Ithorian sentinel helmet - 100k", "option22"},
-        {"Ithorian sentinel right bicep - 100k", "option23"},                               
+        {"Ithorian sentinel right bicep - 100k", "option23"},                                
         {"Main menu.", "first_screen"},
     }
 }
 myswg_vendor_conv:addScreen(armor1);
+
 
 art1 = ConvoScreen:new {
     id = "art1",
@@ -151,18 +146,22 @@ loot1 = ConvoScreen:new {
     stopConversation = "false",
     options = { 
         {"free Resource Deed - 200k", "option46"},
---        {"Random lvl 50 Pistol Loot - 15k", "option56"},
---        {"Random lvl 50 Carbine Loot - 15k", "option57"},
---        {"Random lvl 50 Rifle Loot - 15k", "option58"},
---        {"Random lvl 50 1h sword Loot - 15k", "option59"},
---        {"Random lvl 50 2h sword Loot - 15k", "option60"},
---        {"Random lvl 50 Polearm Loot - 15k", "option61"},
---				{"Random lvl 50 Unarmed Loot - 15k", "option62"},        
---				{"Random lvl 50 Hvy Weapons (flame/acid/LLC) - 15k", "option63"},  
+
+        {"Random max lvl Pistol - 100k", "option56"},
+        {"Random max lvl Carbine - 100k", "option57"},
+        {"Random max lvl Rifle - 100k", "option58"},
+        {"Random max lvl 1h sword - 100k", "option59"},
+        {"Random max lvl 2h sword - 100k", "option60"},
+        {"Random max lvl Polearm - 100k", "option61"},
+				{"Random max lvl Unarmed - 100k", "option62"},        
+				{"Random max lvl Hvy Weapon (flame/acid/LLC) - 100k", "option63"},
 				              
-  --      {"Random lvl 300 Clothing Loot - 100k", "option47"},
+        {"Random max lvl Clothing Loot - 25k", "option47"},
         {"Random max lvl Armor Loot - 100k", "option48"},
         {"Random max lvl Weapon Loot - 100k", "option49"},
+        {"Random max lvl Krayt Tissue - 100k", "option77"},
+        {"Random max lvl Krayt Pearl - 100k", "option78"},
+        {"Holocron - 100k", "option79"},
        	--{"Jedi Holocron - 10mil", "option5"},--was never added?
         {"Main menu.", "first_screen"},
     }

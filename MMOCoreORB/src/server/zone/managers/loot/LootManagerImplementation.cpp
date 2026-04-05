@@ -263,8 +263,9 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //	if(level < 1)
 //		level = 1;
 //
-	//if(level <= 350)	//vanilla 300
+	level += System::random(100);
 
+	if(level >= 350)//vanilla 300
 	level = 350;
 
 
@@ -327,7 +328,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	bool yellow = false;
 
-	int newlegendaryChance = 4;//was 9
+	int newlegendaryChance = 5;//was 9
 	int newexceptionalChance = 4;
 	int newyellowChance = 1;
 
@@ -339,6 +340,10 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			prototype->setCustomObjectName(newName, false);
 
 			excMod = 5.0;//legendaryModifier; //5.0?
+
+			if (prototype->isLightsaberCrystalObject()) {
+				level += 150;
+			}
 
 //			level += System::random(350);
 //
@@ -410,7 +415,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
-		float percentage = 9000 + System::random(1000) / 10000.f; //System::random(level * 1000) / 20000.f; //System::random(10000) / 10000.f;
+		float percentage = System::random(10000) / 10000.f;//9000 + System::random(1000) / 10000.f; //System::random(10000) / 10000.f;
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll
@@ -471,7 +476,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		}
 
 		if (prototype->isComponent()) {
-			min *= 1.25;
+		//	min *= 1.25;
 			max *= 1.75;
 		}
 
@@ -488,13 +493,16 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //				craftingValues->setMaxValue(subtitle, max * 1.5);
 //			}
 
-			min *= 1.75;
+			//min *= 1.75;
 			max *= 1.25;
 
 		}
 
 		//using the exc mod as the randomizer so it doesnt affect the legendary tiers overlap
-		excMod *= 1.25 + (System::random(25000) * .00001);
+		//excMod *= 1.25 + (System::random(25000) * .00001);
+
+		//using this exc mod to multiply by item level to make item level more important
+		//excMod *= 1.0 + ((level * 2) / 100);//level max is 350
 
 //		float randomizer = .75 + (System::random(2500) * .0001);
 //
@@ -502,56 +510,56 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 //		max *= randomizer;
 
 
-//		float minMod = (max > min) ? 300.f : -300.f;
-//		float maxMod = (max > min) ? 300.f : -300.f;
+		float minMod = (max > min) ? 350.f : -350.f;//vanilla 300
+		float maxMod = (max > min) ? 350.f : -350.f;
 
 		if (max > min && min >= 0) { // Both max and min non-negative, max is higher
-			//min = ((min * level / minMod) + min) * excMod;
-			//max = ((max * level / maxMod) + max) * excMod;
+			min = ((min * level / minMod) + min) * excMod;
+			max = ((max * level / maxMod) + max) * excMod;
 
-			min *= excMod;
-			max *= excMod;
+//			min *= excMod;
+//			max *= excMod;
 
 		} else if (max > min && max <= 0) { // Both max and min are non-positive, max is higher
-//			minMod *= -1;
-//			maxMod *= -1;
-//			min = ((min * level / minMod) + min) / excMod;
-//			max = ((max * level / maxMod) + max) / excMod;
+			minMod *= -1;
+			maxMod *= -1;
+			min = ((min * level / minMod) + min) / excMod;
+			max = ((max * level / maxMod) + max) / excMod;
 
-			min /= excMod;
-			max /= excMod;
+//			min /= excMod;
+//			max /= excMod;
 
 		} else if (max > min) { // max is positive, min is negative
-//			minMod *= -1;
-//			min = ((min * level / minMod) + min) / excMod;
-//			max = ((max * level / maxMod) + max) * excMod;
+			minMod *= -1;
+			min = ((min * level / minMod) + min) / excMod;
+			max = ((max * level / maxMod) + max) * excMod;
 
-			min /= excMod;
-			max *= excMod;
+//			min /= excMod;
+//			max *= excMod;
 
 		} else if (max < min && max >= 0) { // Both max and min are non-negative, min is higher
-//			min = ((min * level / minMod) + min) / excMod;
-//			max = ((max * level / maxMod) + max) / excMod;
+			min = ((min * level / minMod) + min) / excMod;
+			max = ((max * level / maxMod) + max) / excMod;
 
-			min /= excMod;
-			max /= excMod;
+//			min /= excMod;
+//			max /= excMod;
 
 		} else if (max < min && min <= 0) { // Both max and min are non-positive, min is higher
-//			minMod *= -1;
-//			maxMod *= -1;
-//			min = ((min * level / minMod) + min) * excMod;
-//			max = ((max * level / maxMod) + max) * excMod;
-
-			min *= excMod;
-			max *= excMod;
+			minMod *= -1;
+			maxMod *= -1;
+			min = ((min * level / minMod) + min) * excMod;
+			max = ((max * level / maxMod) + max) * excMod;
+//
+//			min *= excMod;
+//			max *= excMod;
 
 		} else { // max is negative, min is positive
-//			maxMod *= -1;
-//			min = ((min * level / minMod) + min) / excMod;
-//			max = ((max * level / maxMod) + max) * excMod;
+			maxMod *= -1;
+			min = ((min * level / minMod) + min) / excMod;
+			max = ((max * level / maxMod) + max) * excMod;
 
-			min /= excMod;
-			max *= excMod;
+//			min /= excMod;
+//			max *= excMod;
 		}
 
 //		if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
