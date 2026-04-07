@@ -1057,7 +1057,28 @@ function myswg_vendor_convo_handler:getNextConversationScreen(conversationTempla
                     local pItem = 
                     --giveItem(pInventory, "object/tangible/veteran_reward/resource.iff", -1)
                     createLoot(pInventory, "holocron_light", 350, false)
-                    
+                elseif (optionLink == "option80" and credits < 50000) then
+                    -- Bail if the player doesn’t have enough cash on hand.  
+                    -- Plays a chat box message from the NPC as well as a system message.
+                      nextConversationScreen = conversation:getScreen("insufficient_funds")
+                      creature:sendSystemMessage("You have insufficient funds") 
+                elseif (optionLink == "option80" and credits >= 50000) then
+                    -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
+                    creature:subtractCashCredits(50000)
+                    local pItem = 
+                    --giveItem(pInventory, "object/tangible/veteran_reward/resource.iff", -1)
+                    createLoot(pInventory, "clothing_attachments", 350, false)
+                elseif (optionLink == "option81" and credits < 50000) then
+                    -- Bail if the player doesn’t have enough cash on hand.  
+                    -- Plays a chat box message from the NPC as well as a system message.
+                      nextConversationScreen = conversation:getScreen("insufficient_funds")
+                      creature:sendSystemMessage("You have insufficient funds") 
+                elseif (optionLink == "option81" and credits >= 50000) then
+                    -- Take 10,000 credits from the player’s cash on hand and give player a speederbike.
+                    creature:subtractCashCredits(50000)
+                    local pItem = 
+                    --giveItem(pInventory, "object/tangible/veteran_reward/resource.iff", -1)
+                    createLoot(pInventory, "armor_attachments", 350, false)      
                     
                     
                     

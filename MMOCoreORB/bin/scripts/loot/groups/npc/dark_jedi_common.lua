@@ -17,10 +17,11 @@ dark_jedi_common = {
 --		{itemTemplate = "skill_buff_thrown_speed", weight = 500000},
 --		{itemTemplate = "foraged_stimpack", weight = 500000}
 
-		{groupTemplate = "color_crystals", weight = 1000000},
-		{groupTemplate = "rcp", weight = 1000000},
-		{groupTemplate = "power_crystals", weight = 1000000},
-		{groupTemplate = "holocron_dark", weight = 1000000},
+		{groupTemplate = "color_crystals", weight = 2000000},
+		{groupTemplate = "rcp", weight = 2000000},
+		{groupTemplate = "power_crystals", weight = 2000000},
+		{groupTemplate = "holocron_dark", weight = 2000000},
+		{groupTemplate = "holocron_light", weight = 2000000},
 
 	}
 }

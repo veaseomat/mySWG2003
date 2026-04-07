@@ -33,15 +33,15 @@ public:
 			return false;
 		}
 
-		if (!creatureTarget->isResuscitable()) {
-			creature->sendSystemMessage("@healing_response:too_dead_to_resuscitate"); //Your target has been dead too long. There is no hope of resuscitation.
-			return false;
-		}
+//		if (!creatureTarget->isResuscitable()) {
+//			creature->sendSystemMessage("@healing_response:too_dead_to_resuscitate"); //Your target has been dead too long. There is no hope of resuscitation.
+//			return false;
+//		}
 
-		if (!creatureTarget->isHealableBy(creature)) {
-			creature->sendSystemMessage("@healing:pvp_no_help");  //It would be unwise to help such a patient.
-			return false;
-		}
+//		if (!creatureTarget->isHealableBy(creature)) {
+//			creature->sendSystemMessage("@healing:pvp_no_help");  //It would be unwise to help such a patient.
+//			return false;
+//		}
 
 		ManagedReference<GroupObject*> group = creature->getGroup();
 

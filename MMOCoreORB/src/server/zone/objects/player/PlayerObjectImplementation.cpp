@@ -2070,22 +2070,22 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	}
 
 	if (!forceRegenerationEvent->isScheduled()) {
-		int forceControlMod = 0, forceManipulationMod = 0;
+		int forcePowerMod = 0, forceControlMod = 0, forceManipulationMod = 0;
 
 		if (creature->hasSkill("force_rank_light_novice")) {
-			//forceControlMod = creature->getSkillMod("force_control_light");
+			forcePowerMod = creature->getSkillMod("force_power_light");
+			forceControlMod = creature->getSkillMod("force_control_light");
 			forceManipulationMod = creature->getSkillMod("force_manipulation_light");
 		} else if (creature->hasSkill("force_rank_dark_novice")) {
-			//forceControlMod = creature->getSkillMod("force_power_dark");
+			forcePowerMod = creature->getSkillMod("force_power_dark");
+			forceControlMod = creature->getSkillMod("force_power_dark");
 			forceManipulationMod = creature->getSkillMod("force_manipulation_dark");
 		}
 
-		regen += (forceControlMod + forceManipulationMod);// / 5.f;
+		regen += forceManipulationMod / 2;// / 5.f;
 
 		if (regen > 150)
-			regen = ((regen - 150) / 2) + 150;
-//		if (regen > 125)
-//			regen = ((regen - 125) / 2) + 125;
+			regen = ((regen - 125) / 5) + 125;
 
 		if (creature->isInCombat())//combat regen reduced
 			regen /= 2;
@@ -2994,22 +2994,22 @@ void PlayerObjectImplementation::recalculateForcePower() {
 
 	int maxForce = player->getSkillMod("jedi_force_power_max");
 
-	int forcePowerMod = 0, forceControlMod = 0;
+	int forcePowerMod = 0, forceControlMod = 0, forceManipulationMod = 0;
 
 	if (player->hasSkill("force_rank_light_novice")) {
 		forcePowerMod = player->getSkillMod("force_power_light");
 		forceControlMod = player->getSkillMod("force_control_light");
+		forceManipulationMod = player->getSkillMod("force_manipulation_light");
 	} else if (player->hasSkill("force_rank_dark_novice")) {
 		forcePowerMod = player->getSkillMod("force_power_dark");
 		forceControlMod = player->getSkillMod("force_control_dark");
+		forceManipulationMod = player->getSkillMod("force_manipulation_dark");
 	}
 
-	maxForce += (forcePowerMod + forceControlMod) * 10;
+	maxForce += (forcePowerMod + forceControlMod + forceManipulationMod) * 10;
 
-	if (maxForce > 10000)
-		maxForce = ((maxForce - 10000) / 2) + 10000;
-	if (maxForce > 7500)
-		maxForce = ((maxForce - 7500) / 2) + 7500;
+	if (maxForce > 5000)
+		maxForce = ((maxForce - 5000) / 5) + 5000;
 
 	setForcePowerMax(maxForce, true);
 }

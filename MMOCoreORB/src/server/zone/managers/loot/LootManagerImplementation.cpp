@@ -266,8 +266,10 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	level += System::random(100);
 
 	if(level >= 350)//vanilla 300
-	level = 350;
+		level = 350;
 
+	if (System::random(24) == 24)//1/25 items will be max lvl
+		level = 350;
 
 	//level += System::random(350 - level);
 
@@ -328,7 +330,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	bool yellow = false;
 
-	int newlegendaryChance = 5;//was 9
+	int newlegendaryChance = 6;//was 9
 	int newexceptionalChance = 4;
 	int newyellowChance = 1;
 
@@ -499,7 +501,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		}
 
 		//using the exc mod as the randomizer so it doesnt affect the legendary tiers overlap
-		//excMod *= 1.25 + (System::random(25000) * .00001);
+		excMod *= 1.0 + (System::random(50000) * .00001); //pernerf was 1.25 + r(.25)
 
 		//using this exc mod to multiply by item level to make item level more important
 		//excMod *= 1.0 + ((level * 2) / 100);//level max is 350

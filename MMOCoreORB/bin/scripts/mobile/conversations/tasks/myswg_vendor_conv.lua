@@ -162,7 +162,9 @@ loot1 = ConvoScreen:new {
         {"Random max lvl Krayt Tissue - 100k", "option77"},
         {"Random max lvl Krayt Pearl - 100k", "option78"},
         {"Holocron - 100k", "option79"},
-       	--{"Jedi Holocron - 10mil", "option5"},--was never added?
+        {"Random max lvl Clothing Attachment - 50k", "option80"},
+        {"Random max lvl Armor Attachment - 50k", "option81"},
+ 
         {"Main menu.", "first_screen"},
     }
 }
@@ -832,6 +834,20 @@ myswg_vendor_accept_quest = ConvoScreen:new {
 }
 myswg_vendor_accept_quest = ConvoScreen:new {    
     id = "option79",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option80",
+    leftDialog = "",
+    customDialogText = "Enjoy!",
+    stopConversation = "true",
+    options = { }
+}
+myswg_vendor_accept_quest = ConvoScreen:new {    
+    id = "option81",
     leftDialog = "",
     customDialogText = "Enjoy!",
     stopConversation = "true",

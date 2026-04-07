@@ -210,21 +210,21 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 				int finalColor = System::random(5);// red,green,blue
 
-				if (System::random(4) >= 4){
+				if (System::random(4) == 4){
 					finalColor = System::random(6) + 5;// 1/10 color crystals will be yellow,purp,orange
 				}
 
-				if (System::random(9) >= 9){
+				if (System::random(9) == 9){
 					finalColor = System::random(19) + 11;// 1/100 color crystals will be special named colors
 				}
 
 				String factionString = npcTemplate->getFaction();
 
-				if (System::random(9) <= 6 && factionString == "imperial") {// imp jedi red
+				if (System::random(1) == 1 && factionString == "imperial") {// imp jedi red
 					finalColor = System::random(1);
 				}
 
-				if (System::random(9) <= 6 && factionString == "rebel") {// reb jedi blue/green
+				if (System::random(1) == 1 && factionString == "rebel") {// reb jedi blue/green
 					finalColor = System::random(4) + 1;
 				}
 

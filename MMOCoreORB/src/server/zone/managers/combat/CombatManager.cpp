@@ -576,7 +576,7 @@ void CombatManager::applyDots(CreatureObject* attacker, CreatureObject* defender
 		int resist = 0;
 
 		if (defender->isAiAgent())
-			resist = defender->getLevel() / 3;
+			resist = defender->getLevel() / 4;
 
 //		for (int j = 0; j < defenseMods.size(); j++)
 //			resist += defender->getSkillMod(defenseMods.get(j));
@@ -1015,10 +1015,10 @@ float CombatManager::getDefenderToughnessModifier(CreatureObject* defender, int 
 			if (damType == SharedWeaponObjectTemplate::LIGHTSABER)// && (!weapon->isJediWeapon()))
 				toughMod = 0;
 
-			toughMod /= 2;
+			toughMod /= 3;
 
-			if (toughMod > 75)
-				toughMod = 75;
+			if (toughMod > 50)
+				toughMod = 50;
 
 			if (toughMod > 0) damage *= 1.f - (toughMod / 100.f);
 		}
@@ -1278,8 +1278,8 @@ int CombatManager::getArmorObjectReduction(ArmorObject* armor, int damageType) c
 		break;
 	case SharedWeaponObjectTemplate::STUN:
 		resist = armor->getStun();
-		if (resist > 35)
-			resist = 35;
+		if (resist > 45)
+			resist = 45;
 		break;
 	case SharedWeaponObjectTemplate::BLAST:
 		resist = armor->getBlast();
@@ -1295,13 +1295,15 @@ int CombatManager::getArmorObjectReduction(ArmorObject* armor, int damageType) c
 		break;
 	case SharedWeaponObjectTemplate::LIGHTSABER:
 		resist = armor->getLightSaber();
-		if (resist > 25)
-			resist = 25;
+		if (resist > 35)
+			resist = 35;
 		break;
 	}
 
-	if (resist > 75)
-		resist = 75;
+	if (resist > 90)
+		resist = 90;
+
+	resist /= 2;
 
 	return Math::max(0, (int)resist);
 }
@@ -1339,8 +1341,8 @@ int CombatManager::getArmorNpcReduction(AiAgent* defender, int damageType) const
 		break;
 	case SharedWeaponObjectTemplate::STUN:
 		resist = defender->getStun();
-		if (resist > 35)
-			resist = 35;
+		if (resist > 45)
+			resist = 45;
 		break;
 	case SharedWeaponObjectTemplate::BLAST:
 		resist = defender->getBlast();
@@ -1356,12 +1358,14 @@ int CombatManager::getArmorNpcReduction(AiAgent* defender, int damageType) const
 		break;
 	case SharedWeaponObjectTemplate::LIGHTSABER:
 		resist = defender->getLightSaber();
-		if (resist > 25)
-			resist = 25;
+		if (resist > 35)
+			resist = 35;
 		break;
 	}
-	if (resist > 75)
-		resist = 75;
+	if (resist > 90)
+		resist = 90;
+
+	resist /= 2;
 
 	return (int)resist;
 }
@@ -1381,8 +1385,8 @@ int CombatManager::getArmorVehicleReduction(VehicleObject* defender, int damageT
 		break;
 	case SharedWeaponObjectTemplate::STUN:
 		resist = defender->getStun();
-		if (resist > 35)
-			resist = 35;
+		if (resist > 45)
+			resist = 45;
 		break;
 	case SharedWeaponObjectTemplate::BLAST:
 		resist = defender->getBlast();
@@ -1398,12 +1402,14 @@ int CombatManager::getArmorVehicleReduction(VehicleObject* defender, int damageT
 		break;
 	case SharedWeaponObjectTemplate::LIGHTSABER:
 		resist = defender->getLightSaber();
-		if (resist > 25)
-			resist = 25;
+		if (resist > 35)
+			resist = 35;
 		break;
 	}
-	if (resist > 75)
-		resist = 75;
+	if (resist > 90)
+		resist = 90;
+
+	resist /= 2;
 
 	return (int)resist;
 }
@@ -1445,9 +1451,9 @@ int CombatManager::getArmorReduction(TangibleObject* attacker, WeaponObject* wea
 		// Force Armor
 		float rawDamage = damage;
 
-		int forceArmor = defender->getSkillMod("force_armor");
-		if (forceArmor > 75)
-			forceArmor = 75;
+		int forceArmor = defender->getSkillMod("force_armor") / 2;
+		if (forceArmor > 50)
+			forceArmor = 50;
 		if (forceArmor > 0 && (defender->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_1) || defender->hasBuff(BuffCRC::JEDI_FORCE_ARMOR_2)) ) {
 			float dmgAbsorbed = rawDamage - (damage *= 1.f - (forceArmor / 100.f));
 			defender->notifyObservers(ObserverEventType::FORCEARMOR, attacker, dmgAbsorbed);
@@ -1458,9 +1464,9 @@ int CombatManager::getArmorReduction(TangibleObject* attacker, WeaponObject* wea
 		float rawDamage = damage;
 
 		// Force Shield
-		int forceShield = defender->getSkillMod("force_shield");
-		if (forceShield > 75)
-			forceShield = 75;
+		int forceShield = defender->getSkillMod("force_shield") / 2;
+		if (forceShield > 50)
+			forceShield = 50;
 		if (forceShield > 0 && (defender->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_1) || defender->hasBuff(BuffCRC::JEDI_FORCE_SHIELD_2)) ) {
 			jediBuffDamage = rawDamage - (damage *= 1.f - (forceShield / 100.f));
 			defender->notifyObservers(ObserverEventType::FORCESHIELD, attacker, jediBuffDamage);
@@ -1468,14 +1474,14 @@ int CombatManager::getArmorReduction(TangibleObject* attacker, WeaponObject* wea
 		}
 
 		// Force Feedback
-		int forceFeedback = defender->getSkillMod("force_feedback");
+		int forceFeedback = defender->getSkillMod("force_feedback") / 2;
 
 		if (forceFeedback > 0 && (defender->hasBuff(BuffCRC::JEDI_FORCE_FEEDBACK_1) || defender->hasBuff(BuffCRC::JEDI_FORCE_FEEDBACK_2))) {
 			float feedbackDmg = rawDamage * (forceFeedback / 100.f);
 
 			int forceDefense = defender->getSkillMod("force_defense");
-			if (forceDefense > 75)
-				forceDefense = 75;
+			if (forceDefense > 50)
+				forceDefense = 50;
 
 			if (forceDefense > 0)
 				feedbackDmg *= 1.f / (1.f + ((float)forceDefense / 100.f));
@@ -1944,16 +1950,16 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 		FrsData* playerData = ghost->getFrsData();
 		int councilType = playerData->getCouncilType();
 
-		float darkDamage = attacker->getSkillMod("force_power_dark");
-		float lightDamage = attacker->getSkillMod("force_power_light") / 2;
+		float darkDamage = attacker->getSkillMod("force_power_dark") / 2;
+		float lightDamage = attacker->getSkillMod("force_power_light") / 3;
 
-		if (councilType == FrsManager::COUNCIL_LIGHT) {
+		if (attacker->hasSkill("force_rank_light_novice")) {
 			if (darkDamage > 0 && data.isForceAttack()) {
-				darkDamage += 25;
+				darkDamage += 10;
 //				damage *= 1.f + (darkDamage / 100.f);
 				powersmult += (darkDamage / 100.f);
 			}
-		} else if (councilType == FrsManager::COUNCIL_DARK) {
+		} else if (attacker->hasSkill("force_rank_dark_novice")) {
 			if (lightDamage > 0 && data.isForceAttack()) {
 				lightDamage += 5;
 //				damage *= 1.f + (lightDamage / 100.f);
@@ -1965,7 +1971,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	}
 
 	if (!attacker->isPlayerCreature() && data.isForceAttack()) {	//cap npc max force pwoer dmg.
-		damage /= 2;					//this prevents npc from doing 3k dmg force lightning
+		damage /= 2; //this prevents npc from doing 3k dmg force lightning
 	}
 
 	damage = applyDamageModifiers(attacker, weapon, damage, data);
@@ -2001,79 +2007,57 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	if (data.isForceAttack()) {
 		int forceDefense = defender->getSkillMod("force_defense");
 
+		forceDefense /= 3;
+
+		if (forceDefense > 50) forceDefense = 50;
+
 		if (forceDefense > 0)
 			damage *= 1.f / (1.f + ((float)forceDefense / 100.f));
 	}
 
+	float lightDamage = attacker->getSkillMod("force_power_light") / 3;
 
-	//	ZoneServer* server = attacker->getZoneServer();
-	//
-	//
-	//	int attackerLvl = 0;
-	//	int defenderLvl = 0;
-	//
-	//	if (attacker->isPlayerCreature()){
-	//		PlayerManager* pManagera = server->getPlayerManager();
-	//		attackerLvl = pManagera->calculatePlayerLevel(attacker) * 14;//25x14=350
-	//	} else {
-	//		attackerLvl = attacker->getLevel();
-	//	}
-	//
-	//	if (defender->isPlayerCreature()){
-	//		PlayerManager* pManagerd = server->getPlayerManager();
-	//		defenderLvl = pManagerd->calculatePlayerLevel(defender) * 14;
-	//	} else {
-	//		defenderLvl = defender->getLevel();
-	//	}
-	//
-	//	if (attackerLvl > 350)
-	//		attackerLvl = 350;
-	//	if (defenderLvl > 350)
-	//		defenderLvl = 350;
-	//
-	//	float leveledmulti = 0.0f;
-	//
-	//	leveledmulti = attackerLvl / defenderLvl;
-
-	//nonplayer "armor"
-//	if (!defender->isPlayerCreature()){
-//		int defenderLvl = defender->getLevel() ;
-//			if (defenderLvl > 350)
-//				defenderLvl = 350;
-//			damage *= (defenderLvl / 500);
-//	}
-
-	ManagedReference<WeaponObject*> defweapon = defender->getWeapon();
-	//int DefAvgDmg = (defweapon->getMinDamage() + defweapon->getMaxDamage()) / 2;
-
-	//frsdamage
-	float lightDamage = attacker->getSkillMod("force_manipulation_light") * 0.3;
-
-	if (lightDamage > 0) {
+	if (attacker->getWeapon()->isJediWeapon() && lightDamage > 0 && defender->hasSkill("force_rank_light_novice") && !data.isForceAttack()) {
 		lightDamage += 5;
 		damage *= 1.f + (lightDamage / 100.f);
 	}
 
-	float darkDamage = attacker->getSkillMod("force_power_dark");
+	float darkDamage = attacker->getSkillMod("force_power_dark") / 2;
 
-	if (darkDamage > 0 && (data.isForceAttack())) { //weapon->isJediWeapon() ||
-		darkDamage += 25;
+	if (attacker->getWeapon()->isJediWeapon() && darkDamage > 0 && defender->hasSkill("force_rank_dark_novice") && !data.isForceAttack()) { //weapon->isJediWeapon() ||
+		darkDamage += 10;
 		damage *= 1.f + (darkDamage / 100.f);
 	}
 
+	//npc armor
+	float npcarmor = defender->getLevel() / 5;
+
+	if (defender->isAiAgent()) {
+			damage *= 1.f - (npcarmor / 100.f);
+
+	}
+
+	//npc jedi armor
+	float npcjediarmor = defender->getLevel() / 5;
+
+	if (defender->getWeapon()->isJediWeapon() && defender->isAiAgent()) {
+			npcjediarmor += 10;
+			damage *= 1.f - (npcjediarmor / 100.f);
+
+	}
+
 	//frsarmor
-	float lightarmor = defender->getSkillMod("force_manipulation_light") * 0.4;
-	if (defender->getWeapon()->isJediWeapon() && defender->isAiAgent()) lightarmor = defender->getLevel() * .3;
+	float lightarmor = defender->getSkillMod("force_manipulation_light") / 2;
 
 	if (lightarmor > 0) {
 		lightarmor += 10;
 		damage *= 1.f - (lightarmor / 100.f);
 	}
 
-	float darkarmor = defender->getSkillMod("force_manipulation_dark") * 0.3;
+	float darkarmor = defender->getSkillMod("force_manipulation_dark") / 3;
 
 	if (darkarmor > 0) {
-		darkarmor += 10;
+		darkarmor += 5;
 		damage *= 1.f - (darkarmor / 100.f);
 	}
 
@@ -2096,10 +2080,10 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 	//EvP dmg
 	if (!attacker->isPlayerCreature() && defender->isPlayerCreature())	{
 		//damage += DefAvgDmg;//this adds player avg dmg to npc attack
-		damage *= .25;
+		damage *= .3;
 
-		if (damage > 50) {
-			damage = ((damage - 50) / 2) + 50;
+		if (damage > 100) {
+			damage = ((damage - 100) / 2) + 100;
 		}
 
 		damage = (damage / 2) +  System::random(damage / 2);//keeps damage feeling random
@@ -2231,7 +2215,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	float defenderRoll = (float)System::random(30) + 1.f;
 
 	// TODO (dannuic): add the trapmods in here somewhere (defense down trapmods)
-	float accTotal = hitChanceEquation(attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy, attackerRoll, targetDefense + postureDefense, defenderRoll);
+	float accTotal = hitChanceEquation(25 + attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy, attackerRoll, targetDefense + postureDefense, defenderRoll);
 
 	debug() << "Final hit chance is " << accTotal;
 
@@ -2288,7 +2272,7 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 
 		debug() << "Final modified secondary defense is " << targetDefense;
 
-		if (targetDefense > attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy + attackerRoll) { // successful secondary defense, return type of defense
+		if (targetDefense > 25 + attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy + attackerRoll) { // successful secondary defense, return type of defense
 
 			debug() << "Secondaries defenses prevailed";
 			// defense acuity returns random: case 0 BLOCK, case 1 DODGE or default COUNTER
@@ -3220,7 +3204,7 @@ int CombatManager::applyDamage(CreatureObject* attacker, WeaponObject* weapon, T
 //specialmult here
 	if (damageMultiplier != 0) {
 //		if (damageMultiplier < 1.0) damageMultiplier = 1.0;
-//
+
 //		damageMultiplier *= .5;
 //		damageMultiplier += .5;
 

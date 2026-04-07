@@ -5,15 +5,15 @@ pvpljk2 = Creature:new {
 	randomNameTag = true,
 	socialGroup = "",
 	faction = "",
-	level = 350,
+	level = 300,
 	elite = 1.5,
 	chanceHit = 23.5,
-	damageMin = 1645,
-	damageMax = 3000,
+	damageMin = 1200,
+	damageMax = 2300,
 	baseXp = 25266,
 	baseHAM = 90000,
 	baseHAMmax = 101000,
-	armor = 1,
+	armor = 2,
 	resists = {80,80,80,80,80,80,80,30,-1},
 	meatType = "",
 	meatAmount = 0,
@@ -42,11 +42,21 @@ pvpljk2 = Creature:new {
 		{
 			groups = {
 				{group = "junk", chance = 9000000},
---				{group = "holocron_dark", chance = 300000},
-				{group = "color_crystals", chance = 1000000},
---				{group = "sabers", chance = 1000000}
-			}
+				{group = "dark_jedi_common", chance = 9000000},
+			},
 		},
+		{
+			groups = {
+				{group = "junk", chance = 9000000},
+				{group = "dark_jedi_common", chance = 9000000},
+			},
+		},
+--		{
+--			groups = {
+--				{group = "junk", chance = 9000000},
+--				{group = "dark_jedi_common", chance = 9000000},		
+--			},
+--		},
 	},
 	weapons = {"dark_jedi_weapons_gen2"},
 	conversationTemplate = "",

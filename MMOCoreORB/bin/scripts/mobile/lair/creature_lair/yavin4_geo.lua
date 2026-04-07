@@ -1,5 +1,5 @@
 yavin4_geo = Lair:new {
-	mobiles = {{"crazed_geonosian_guard",1}},
+	mobiles = {{"crazed_geonosian_guard",3}, {"mercenary_sentry",1}},
 	spawnLimit = 15,
 	buildingsVeryEasy = {"object/tangible/lair/base/poi_all_lair_garbage_large_fog_gray.iff"},
 	buildingsEasy = {"object/tangible/lair/base/poi_all_lair_garbage_large_fog_gray.iff"},

@@ -384,8 +384,8 @@ trainerSkills = {
     "force_rank_dark_rank_02",
     "force_rank_light_rank_01", 
     "force_rank_dark_rank_01",
-    "force_rank_light_master", 
-    "force_rank_dark_master"
+--    "force_rank_light_master", 
+--    "force_rank_dark_master"
 	},
 
 	trainer_entertainer = {
@@ -1682,8 +1682,8 @@ trainerSkills = {
     "force_rank_dark_rank_02",
     "force_rank_light_rank_01", 
     "force_rank_dark_rank_01",
-    "force_rank_light_master", 
-    "force_rank_dark_master"
+--    "force_rank_light_master", 
+--    "force_rank_dark_master"
 	},
 	
 	trainer_frs_dark = {
@@ -1698,7 +1698,7 @@ trainerSkills = {
 		"force_rank_dark_rank_08",
 		"force_rank_dark_rank_09",
 		"force_rank_dark_rank_10",
-    "force_rank_dark_master", 
+--    "force_rank_dark_master", 
 	},
 	
 		trainer_frs_light = {
@@ -1713,7 +1713,7 @@ trainerSkills = {
 		"force_rank_light_rank_08",
 		"force_rank_light_rank_09",
 		"force_rank_light_rank_10",
-    "force_rank_light_master", 
+--    "force_rank_light_master", 
 	},
 	
 	trainer_myswg = {

@@ -4,7 +4,7 @@ global_darth_vader = Lair:new {
 --	{"dark_jedi_knight",2},
 --	{"dark_jedi_master",1}
 	},
-	spawnLimit = 12,
+	spawnLimit = 3,
 	buildingsVeryEasy = {"object/building/poi/anywhere_misc_camp_small_1.iff"},
 	buildingsEasy = {"object/building/poi/anywhere_misc_camp_small_1.iff"},
 	buildingsMedium = {"object/building/poi/anywhere_misc_camp_small_1.iff"},

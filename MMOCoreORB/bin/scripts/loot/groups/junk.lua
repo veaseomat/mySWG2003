@@ -12,7 +12,8 @@ junk = {
 
 		{groupTemplate = "weapon_component", weight = 1000000},
 		{groupTemplate = "armor_component", weight = 1000000},
-		{groupTemplate = "clothing_attachments", weight = 1000000},
+		{groupTemplate = "clothing_attachments", weight = 500000},
+		{groupTemplate = "armor_attachments", weight = 500000},
 		
 		{itemTemplate = "locked_container", weight = 500000},
 	
