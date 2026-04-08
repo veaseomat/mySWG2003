@@ -55,9 +55,8 @@ int ForceHealQueueCommand::runCommand(CreatureObject* creature, CreatureObject* 
 
 	int newforcecost = forceCost;
 
-	//if (newforcecost > 100) newforcecost = 100;
-
-	newforcecost /= 2;
+	if (newforcecost > 100)
+		newforcecost = ((newforcecost - 100) / 2) + 100;
 
 	int totalCost = newforcecost;//forceCost;
 	bool healPerformed = false;

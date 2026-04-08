@@ -1045,7 +1045,7 @@ function myswg_vendor_convo_handler:getNextConversationScreen(conversationTempla
                     creature:subtractCashCredits(100000)
                     local pItem = 
                     --giveItem(pInventory, "object/tangible/veteran_reward/resource.iff", -1)
-                    createLoot(pInventory, "krayt_pearls", 350, false)
+                    createLoot(pInventory, "power_crystals", 300, false)
                 elseif (optionLink == "option79" and credits < 100000) then
                     -- Bail if the player doesn’t have enough cash on hand.  
                     -- Plays a chat box message from the NPC as well as a system message.

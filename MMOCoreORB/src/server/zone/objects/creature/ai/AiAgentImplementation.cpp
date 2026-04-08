@@ -1768,16 +1768,46 @@ void AiAgentImplementation::activatePostureRecovery() {
 }
 
 void AiAgentImplementation::activateHAMRegeneration(int latency) {
-    if (isIncapacitated() || isDead() || isInCombat())
+    if (isIncapacitated() || isDead()) {// || isInCombat())
         return;
+    }
 
-    uint32 healthTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::HEALTH) / 300000.f * latency));
-    uint32 actionTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::ACTION) / 300000.f * latency));
-    uint32 mindTick   = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::MIND) / 300000.f * latency));
+	//int creatureLevel = getLevel();
+	float modifier = 1.0;
 
-    healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
-    healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
-    healDamage(asCreatureObject(), CreatureAttribute::MIND,   mindTick,   true, false);
+//    uint32 healthTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::HEALTH) / 300000.f * latency));
+//    uint32 actionTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::ACTION) / 300000.f * latency));
+//    uint32 mindTick   = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::MIND) / 300000.f * latency));
+
+    int healthTick = getMaxHAM(CreatureAttribute::HEALTH) / 3000;
+    int actionTick = getMaxHAM(CreatureAttribute::ACTION) / 3000;
+    int mindTick = getMaxHAM(CreatureAttribute::MIND) / 3000;
+
+
+	if (healthTick < 1)
+		healthTick = 1;
+
+	if (actionTick < 1)
+		actionTick = 1;
+
+	if (mindTick < 1)
+		mindTick = 1;
+
+	if (healthTick > 10)
+		healthTick = ((healthTick - 10) / 2) + 10;
+
+	if (actionTick > 10)
+		actionTick = ((actionTick - 10) / 2) + 10;
+
+	if (mindTick > 10)
+		mindTick = ((mindTick - 10) / 2) + 10;
+
+	if (!isInCombat())
+		modifier = 5.0;
+
+    healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick * modifier, true, false);
+    healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick * modifier, true, false);
+    healDamage(asCreatureObject(), CreatureAttribute::MIND,   mindTick * modifier,   true, false);
 
     activatePassiveWoundRegeneration();
 }

@@ -41,20 +41,20 @@ pvpljk4 = Creature:new {
 	lootGroups = {
 		{
 			groups = {
-				{group = "rcp2", chance = 9000000},
-				{group = "dark_jedi_common", chance = 9000000},
+				{group = "rcp2", chance = 7000000},
+				{group = "dark_jedi_common", chance = 3000000},
 			},
 		},
 		{
 			groups = {
-				{group = "junk", chance = 9000000},
-				{group = "dark_jedi_common", chance = 9000000},
+				{group = "junk", chance = 3000000},
+				{group = "dark_jedi_common", chance = 7000000},
 			},
 		},
 		{
 			groups = {
-				{group = "junk", chance = 9000000},
-				{group = "dark_jedi_common", chance = 9000000},		
+				{group = "junk", chance = 5000000},
+				{group = "dark_jedi_common", chance = 5000000},		
 			},
 		},
 	},

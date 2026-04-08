@@ -330,14 +330,14 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	bool yellow = false;
 
-	int newlegendaryChance = 6;//was 9
+	int newlegendaryChance = 9;//was 9
 	int newexceptionalChance = 4;
 	int newyellowChance = 1;
 
 
 	if (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject()) {//&&!issaber?
 
-		if (System::random(newlegendaryChance) >= newlegendaryChance) { // - adjustment) { //legendaryChance
+		if (System::random(2) == 2) { // - adjustment) { //legendaryChance
 			UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 			prototype->setCustomObjectName(newName, false);
 
@@ -347,10 +347,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 				level += 150;
 			}
 
-//			level += System::random(350);
-//
-//			if(level > 350)	//vanilla 300
-				//level = 350;
+			if(System::random(100) > 50)
+				excMod *= 1.0 + (System::random(50000) * .00001);
 
 			prototype->addMagicBit(false);
 
@@ -500,8 +498,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 		}
 
-		//using the exc mod as the randomizer so it doesnt affect the legendary tiers overlap
-		excMod *= 1.0 + (System::random(50000) * .00001); //pernerf was 1.25 + r(.25)
+//		//using the exc mod as the randomizer, for some reason saw overlap here
+//		excMod *= 1.0 + (System::random(50000) * .00001); //pernerf was 1.25 + r(.25)
 
 		//using this exc mod to multiply by item level to make item level more important
 		//excMod *= 1.0 + ((level * 2) / 100);//level max is 350
@@ -808,7 +806,7 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = entry->getLootChance() * 2.0;
+		int lootChance = entry->getLootChance() * 1.75;
 		
 				//random holocron creation (only drops on mobs that have loot lists)
 		int holochance = 1000;

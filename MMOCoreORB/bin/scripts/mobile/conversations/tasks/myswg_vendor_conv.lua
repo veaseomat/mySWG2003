@@ -160,7 +160,7 @@ loot1 = ConvoScreen:new {
         {"Random max lvl Armor Loot - 100k", "option48"},
         {"Random max lvl Weapon Loot - 100k", "option49"},
         {"Random max lvl Krayt Tissue - 100k", "option77"},
-        {"Random max lvl Krayt Pearl - 100k", "option78"},
+        {"Random lvl 300 Power Crystal - 100k", "option78"},
         {"Holocron - 100k", "option79"},
         {"Random max lvl Clothing Attachment - 50k", "option80"},
         {"Random max lvl Armor Attachment - 50k", "option81"},

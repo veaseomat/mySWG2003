@@ -85,7 +85,7 @@ TrainersPerRank = 3
 MissionTerminalsPerRank = 3
 
 -- Amount to discount city maintenance  float.  1 = 100%, .75 =75%, .5=50% etc
-maintenanceDiscount = .05
+maintenanceDiscount = .01
 
 --[[
 	CITIES ALLOWED PER PLANET

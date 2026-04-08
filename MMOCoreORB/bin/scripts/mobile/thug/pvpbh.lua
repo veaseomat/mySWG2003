@@ -62,12 +62,12 @@ pvpbh = Creature:new {
 	lootGroups = {
 		{
 			groups = {
-				{group = "junk", chance = 9000000},
+				{group = "junk", chance = 10000000},
 			},
 		},
 		{
 			groups = {
-				{group = "junk", chance = 9000000},
+				{group = "junk", chance = 10000000},
 			},
 		},
 --		{

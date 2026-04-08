@@ -188,9 +188,7 @@ function CorelliaCoronetScreenPlay:spawnMobiles()
 	self:setMoodString(pNpc, "calm")
 	spawnMobile(self.planet, "businessman",60,0.978477,-0.894992,21.4841,311.517,8105500)
 	spawnMobile(self.planet, "rebel_recruiter",60,-28.3633,-0.894984,0.335875,171.796,8105504)
-	
---	spawnMobile(self.planet, "rebel_recruiter",60,-163.3633,-0.894984,-4727.335875,171.796,8105504)
---	spawnMobile(self.planet, "imperial_recruiter",60,-163.3633,-0.894984,-4720.335875,171.796,8105504)
+
 
 	--Guild Hall -243 -4389
 	spawnMobile(self.planet, "trainer_brawler",0,-11,1.13306,-14,0,1855508)
@@ -348,6 +346,9 @@ function CorelliaCoronetScreenPlay:spawnMobiles()
 	self:setCustomName(pNpc, "Hunter Javeezo")
 
 	--More Misc
+	spawnMobile(self.planet, "rebel_recruiter",60,-163,28,-4727,171,0)
+	spawnMobile(self.planet, "imperial_recruiter",60,-163,28,-4720,171,0)
+	
 	spawnMobile(self.planet, "gadget_specialist",60,19.7425,28,-4775.49,27.4957,0)
 	spawnMobile(self.planet, "informant_npc_lvl_1",0,-33,28,-4825,45,0)
 	spawnMobile(self.planet, "informant_npc_lvl_1",0,-86,28,-4829,0,0)

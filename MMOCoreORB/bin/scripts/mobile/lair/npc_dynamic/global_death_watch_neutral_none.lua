@@ -1,7 +1,7 @@
 global_death_watch_neutral_none = Lair:new {
 	mobiles = {
-		{"death_watch_bloodguard",2},
-		{"death_watch_ghost",2},
+		{"death_watch_bloodguard",1},
+		{"death_watch_ghost",1},
 		{"death_watch_wraith",1},
 	},
 	spawnLimit = 3,

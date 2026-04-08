@@ -435,6 +435,9 @@ public:
 
 		PlayerManager* playerManager = server->getZoneServer()->getPlayerManager();
 
+		if (buffPower > 3500)
+			buffPower = ((buffPower - 3500) / 10) + 3500;
+
 		uint32 amountEnhanced = playerManager->healEnhance(enhancer, patient, attribute, buffPower, enhancePack->getDuration(), enhancePack->getAbsorption());
 
 		if (creature->isPlayerCreature() && targetCreature->isPlayerCreature()) {

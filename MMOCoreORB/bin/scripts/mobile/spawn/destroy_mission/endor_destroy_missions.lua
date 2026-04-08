@@ -274,10 +274,10 @@ endor_destroy_missions = {
 		},
 		{
 			lairTemplateName = "endor_gorax_neutral_none2",
-			spawnLimit = -1,
-			minDifficulty = 131,
-			maxDifficulty = 300,
-			numberToSpawn = 0,
+--			spawnLimit = -1,
+			minDifficulty = 95,
+			maxDifficulty = 99,
+--			numberToSpawn = 0,
 			size = 35
 		},
 		

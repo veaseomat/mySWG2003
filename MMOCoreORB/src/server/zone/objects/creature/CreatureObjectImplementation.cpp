@@ -2797,14 +2797,14 @@ void CreatureObjectImplementation::activateHAMRegeneration(int latency) {
 	if (mindTick < 1)
 		mindTick = 1;
 
-	if (healthTick > 25)
-		healthTick = ((healthTick - 25) / 3) + 25;
+	if (healthTick > 10)
+		healthTick = ((healthTick - 10) / 3) + 10;
 
-	if (actionTick > 25)
-		actionTick = ((actionTick - 25) / 3) + 25;
+	if (actionTick > 10)
+		actionTick = ((actionTick - 10) / 3) + 10;
 
-	if (mindTick > 25)
-		mindTick = ((mindTick - 25) / 3) + 25;
+	if (mindTick > 10)
+		mindTick = ((mindTick - 10) / 3) + 10;
 
 	healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
 	healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);

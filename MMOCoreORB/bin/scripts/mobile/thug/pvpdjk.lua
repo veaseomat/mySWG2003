@@ -36,22 +36,10 @@ pvpdjk = Creature:new {
 	lootGroups = {
 		{
 			groups = {
-				{group = "junk", chance = 9000000},
-				{group = "dark_jedi_common", chance = 9000000},
+				{group = "junk", chance = 3000000},
+				{group = "dark_jedi_common", chance = 7000000},
 			},
 		},
---		{
---			groups = {
---				{group = "junk", chance = 9000000},
---				{group = "dark_jedi_common", chance = 9000000},
---			},
---		},
---		{
---			groups = {
---				{group = "junk", chance = 9000000},
---				{group = "dark_jedi_common", chance = 9000000},		
---			},
---		},
 	},
 	weapons = {"dark_jedi_weapons_gen2"},
 	conversationTemplate = "",

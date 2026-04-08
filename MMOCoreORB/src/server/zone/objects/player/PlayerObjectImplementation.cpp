@@ -2084,7 +2084,7 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 
 		regen += forceManipulationMod / 2;// / 5.f;
 
-		if (regen > 150)
+		if (regen > 125)
 			regen = ((regen - 125) / 5) + 125;
 
 		if (creature->isInCombat())//combat regen reduced
