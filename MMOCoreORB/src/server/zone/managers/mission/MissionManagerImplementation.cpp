@@ -19,6 +19,7 @@
 #include "server/zone/objects/mission/HuntingMissionObjective.h"
 #include "server/zone/objects/mission/ReconMissionObjective.h"
 #include "server/zone/objects/mission/BountyMissionObjective.h"
+#include "server/zone/objects/mission/PlayerBounty.h"
 #include "server/zone/objects/area/SpawnArea.h"
 #include "server/zone/managers/resource/ResourceManager.h"
 #include "templates/manager/TemplateManager.h"
@@ -892,7 +893,10 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
  	if (mobiles->size() > 0) {
  		mobileName = mobiles->elementAt(0).getKey();
  	}
-//creolevel
+
+//	int mobileLevel = creoTemplate->getLevel();
+//
+//	mission->setMissionTitle("", "[" + mobileLevel + "] " + mobileName);//String::valueOf(diffDisplay));
 	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + groupSuffix);//String::valueOf(diffDisplay));
 	mission->setMissionDescription("mission/mission_destroy_neutral" +  messageDifficulty + missionType, "m" + String::valueOf(randTexts) + "d");
 
@@ -1167,6 +1171,7 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 		}
 
 		String mobileName = creoTemplate->getObjectName();
+		int mobileLevel = creoTemplate->getLevel();
 
 		if (mobileName == "")
 			mobileName = creoTemplate->getCustomName();
@@ -1181,10 +1186,8 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 		else
 			messageDifficulty = "_hard";
 
-		// String::valueOf(minDiff) +
-
 	//creolevel
-		mission->setMissionTitle("", mobileName.replaceAll("_", " "));//String::valueOf(diffDisplay));
+		mission->setMissionTitle("", mobileName);//String::valueOf(diffDisplay));//string value for number i think, so int level value would work
 		mission->setMissionDescription("mission/mission_destroy_neutral" +  messageDifficulty, "m" + String::valueOf(randTexts) + "d");
 
 		mission->setCreatorName(creatorName);

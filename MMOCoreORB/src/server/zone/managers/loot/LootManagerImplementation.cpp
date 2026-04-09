@@ -260,32 +260,14 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	//int uncappedLevel = level;
 
-//	if(level < 1)
-//		level = 1;
-//
-	level += System::random(100);
+	level += System::random(50);
 
 	if(level >= 350)//vanilla 300
 		level = 350;
 
-	if (System::random(24) == 24)//1/25 items will be max lvl
+	if (System::random(19) == 19)//1/20 items will be max lvl
 		level = 350;
 
-	//level += System::random(350 - level);
-
-//	int diff = 350 - level;
-//
-//	if (System::random(1) >= 1)	{
-//		level += System::random(diff);
-//	}
-
-//	int randombonus = System::random(350);
-//	int randomcreature = System::random(level);
-//
-//	level = (randombonus + randomcreature) / 2;
-//
-//	if (level < level / 2)	//min lvl is half the creature lvl
-//		level = level / 2;
 
 	const String& directTemplateObject = templateObject->getDirectObjectTemplate();
 
@@ -337,19 +319,37 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	if (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject()) {//&&!issaber?
 
-		if (System::random(99) < 45) { // 45% chance
+		if (System::random(2) == 2) { // 1/3 chance
 			UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 
-			excMod = 5.0;//legendaryModifier; //5.0?
+			excMod = 5.0;//leggy modifier
 
-			if (prototype->isLightsaberCrystalObject()) {
-				level += 150;
-			}
+			level += System::random(75);
 
-			if(System::random(100) > 50) {
-				excMod *= 1.0 + (System::random(50000) * .00001);
+			if(level >= 400)//1/3 of 350 will cap to 400
+				level = 400;
 
-				//newName = prototype->getDisplayedName() + " (Mythic)";
+			if(System::random(19) == 19) {//1/20 of leggy will be mythic, so 1/60
+
+				excMod *= 1.5 + (System::random(50000) * .00001);//7.5x-10x
+
+				level += System::random(75);
+
+				if(level >= 450)//1/3 of 400 will cap to 450
+					level = 450;
+
+				newName = prototype->getDisplayedName() + "\\#5218fa" + " (Mythic)";// divine next? Vivid Sky Blue #00ccff
+
+				if(System::random(99) == 99) {//1/100 so 1/600 overall
+					excMod *= 2.0 + (System::random(20000) * .00001);//15x-22x topps
+
+					level += System::random(75);
+
+					if(level >= 500)//1/3 of 450 will cap to 500
+						level = 500;
+
+					newName = prototype->getDisplayedName() + "\\#00ccff" + " (Divine)";//
+				}
 			}
 
 			prototype->setCustomObjectName(newName, false);
@@ -359,32 +359,6 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			legendaryLooted.increment();
 		}
 
-//		else if (System::random(newexceptionalChance) >= newexceptionalChance) { // - adjustment) { //exceptionalChance
-//			UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
-//			prototype->setCustomObjectName(newName, false);
-//
-//			excMod = exceptionalModifier;
-//
-//			level += System::random(350);
-//
-//			if(level > 350)	//vanilla 300
-//				level = 350;
-//
-//			prototype->addMagicBit(false);
-//
-//			exceptionalLooted.increment();
-//		} else if (System::random(newyellowChance) >= newyellowChance) {
-//				excMod = yellowModifier;
-//
-//				prototype->addMagicBit(false);
-//
-//				level += System::random(350);
-//
-//				if(level > 350)	//vanilla 300
-//					level = 350;
-//
-//				yellowLooted.increment();
-//		}
 
 	}
 
@@ -479,39 +453,17 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			continue;
 		}
 
-		if (prototype->isComponent()) {
-		//	min *= 1.25;
-			max *= 1.75;
-		}
-
-		if (prototype->isArmorObject()) {
-
-			if (subtitle == "armor_health_encumbrance" || subtitle == "armor_action_encumbrance" || subtitle == "armor_mind_encumbrance") {
-//				craftingValues->setMinValue(subtitle, min * 2);
-//				craftingValues->setMaxValue(subtitle, max * 2);
-				continue;
-			}
-
-//			if (subtitle == "armor_effectiveness") {
-//				craftingValues->setMinValue(subtitle, min * 1.5);
-//				craftingValues->setMaxValue(subtitle, max * 1.5);
-//			}
-
-			//min *= 1.75;
-			max *= 1.25;
-
-		}
-
-//		//using the exc mod as the randomizer, for some reason saw overlap here
-//		excMod *= 1.0 + (System::random(50000) * .00001); //pernerf was 1.25 + r(.25)
-
-		//using this exc mod to multiply by item level to make item level more important
-		//excMod *= 1.0 + ((level * 2) / 100);//level max is 350
-
-//		float randomizer = .75 + (System::random(2500) * .0001);
+//		if (prototype->isComponent()) {
+//			max *= 1.75;
+//		}
 //
-//		min *= randomizer;
-//		max *= randomizer;
+//		if (prototype->isArmorObject()) {
+//			if (subtitle == "armor_health_encumbrance" || subtitle == "armor_action_encumbrance" || subtitle == "armor_mind_encumbrance") {
+//
+//				continue;
+//			}
+//			max *= 1.25;
+//		}
 
 
 		float minMod = (max > min) ? 350.f : -350.f;//vanilla 300

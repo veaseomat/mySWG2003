@@ -74,8 +74,8 @@ bh_targets_at_mission_level = {
 --		"death_watch_wraith",
 
 		"pvpbh", --250
-		"pvpimp", --250
-		"pvpreb", --250
+--		"pvpimp", --250
+--		"pvpreb", --250
 		"pvpdjk", -- 275
 		"pvpdjk2", --300
 		"pvpdjk3", --325
