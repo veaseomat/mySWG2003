@@ -42,9 +42,12 @@
 --true = 1, false = 0
 
 IntimidationAttackCommand = {
-        name = "intimidationattack",
-        combatSpam = "attack",
-        animation = "",--"creature_attack_special_1", 
+  name = "intimidationattack",
+  combatSpam = "attack",
+  --animation = "",--"creature_attack_special_1", 
+  combatSpam = "intim",
+	animation = "intimidate",
+	effectString = "clienteffect/combat_special_attacker_intimidate.cef",
 	animType = GENERATE_INTENSITY,
 	stateEffects = {
 	  StateEffect( 
@@ -52,9 +55,9 @@ IntimidationAttackCommand = {
 		{}, 
 		{}, 
 		{}, 
-		85, 
+		100, 
 		0, 
-		10 
+		30 
 	  )
 	}
 }

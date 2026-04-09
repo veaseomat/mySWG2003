@@ -54,7 +54,7 @@ DizzyAttackCommand = {
 		{ "jedi_state_defense", "resistance_states" },
 		85, 
 		0, 
-		10 
+		35 
 	  )
 	}
 }

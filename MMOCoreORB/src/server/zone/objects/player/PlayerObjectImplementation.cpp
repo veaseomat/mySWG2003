@@ -584,7 +584,7 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 //		}
 	}
 
-//	int xpCap = -1;
+	int xpCap = 1000000000;
 //
 //	if (xpTypeCapList.contains(xpType))
 //		xpCap = xpTypeCapList.get(xpType);
@@ -592,10 +592,10 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 //	if (xpCap < 0)
 //		xpCap = 2000;
 //
-//	if (xp > xpCap) {
-//		valueToAdd = xpCap - (xp - valueToAdd);
-//		xp = xpCap;
-//	}
+	if (xp > xpCap) {
+		valueToAdd = xpCap - (xp - valueToAdd);
+		xp = xpCap;
+	}
 
 	if (notifyClient) {
 		PlayerObjectDeltaMessage8* dplay8 = new PlayerObjectDeltaMessage8(this);

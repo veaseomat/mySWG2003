@@ -1878,6 +1878,9 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 			damage = ((damage - 100) / 2) + 100;
 		}
 
+		if (weapon->getDamageType() == 8)
+			damage *= .5;//npc stun dmg reduce
+
 		damage = (damage / 2) +  System::random(damage / 2);//keeps damage feeling random
 	}
 
@@ -2630,7 +2633,17 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 				return 0;
 			}
 		}
-	
+
+		//fake ai aroce armor animation for immersion
+		if (defender->isAiAgent() && defender->getWeapon()->isJediWeapon() && aifocus > aistrength) {
+			defender->playEffect("clienteffect/pl_force_armor_hit.cef", "");
+		}
+
+//		//fake ai aroce armor animation for immersion
+//		if (defender->isAiAgent() && defender->getWeapon()->isJediWeapon() && aistam > aistrength) {
+//			defender->playEffect("clienteffect/pl_force_armor_hit.cef", "");
+//		}
+//
 	}
 
 	String xpType;

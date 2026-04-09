@@ -52,9 +52,9 @@ StunAttackCommand = {
 		{}, 
 		{ "stun_defense" }, 
 		{ "jedi_state_defense", "resistance_states" },
-		85, 
+		75, 
 		0, 
-		10 
+		60 
 	  )
 	}
 }

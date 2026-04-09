@@ -876,12 +876,24 @@ void MissionManagerImplementation::randomizeGenericDestroyMission(CreatureObject
 	else
 		messageDifficulty = "_hard";
 
-	if (lairTemplateObject->getMobType() == LairTemplate::NPC)
-		missionType = "_npc";
-	else
-		missionType = "_creature";
+	String groupSuffix;
 
-	mission->setMissionTitle("mission/mission_destroy_neutral" + messageDifficulty + missionType, "m" + String::valueOf(randTexts) + "t");
+ 	if (lairTemplateObject->getMobType() == LairTemplate::NPC){
+		missionType = "_npc";
+		groupSuffix = " camp.";
+ 	} else {
+  		missionType = "_creature";
+ 		groupSuffix = " lair.";
+ 	}
+
+ 	const VectorMap<String, int>* mobiles = lairTemplateObject->getMobiles();
+ 	String mobileName = "unknown";
+
+ 	if (mobiles->size() > 0) {
+ 		mobileName = mobiles->elementAt(0).getKey();
+ 	}
+//creolevel
+	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + groupSuffix);//String::valueOf(diffDisplay));
 	mission->setMissionDescription("mission/mission_destroy_neutral" +  messageDifficulty + missionType, "m" + String::valueOf(randTexts) + "d");
 
 	switch (faction) {
@@ -1008,13 +1020,13 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 	bool playerTarget = false;
 	int size = potentialTargets->size();
 
-//	if (level == 3 && size > 0) {
-//		int compareValue = size > 25 ? 25 : size < 5 ? 5 : size;
-//		if (System::random(100) < compareValue) {
-//			playerTarget = true;
-//			randomTexts = 6;
-//		}
-//	}
+	if (level == 3 && size > 0) { //this was disabled, is it causing bounty terminal error about player?
+		int compareValue = size > 25 ? 25 : size < 5 ? 5 : size;
+		if (System::random(100) < compareValue) {
+			playerTarget = true;
+			randomTexts = 6;
+		}
+	}
 
 	mission->setStartPosition(player->getPositionX(), player->getPositionY(), playerZone->getZoneName());
 
@@ -1065,7 +1077,7 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			mission->setMissionNumber(randTexts);
 
 			UnicodeString possibleCreatorName = StringIdManager::instance()->getStringId(String::hashCode("@" + stfFile + "m" + String::valueOf(randTexts) + "o"));
-			String creatorName = "a Concerned Citizen";//"";
+			String creatorName = "anonymous";//"";
 
 
 //			if (!possibleCreatorName.isEmpty()) {
@@ -1084,19 +1096,6 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			mission->setMissionDescription(stfFile, "m" + String::valueOf(randTexts) + "d");
 		}
 	} else {
-
-//		LairSpawn* randomLairSpawn = getRandomLairSpawn(player, faction, MissionTypes::BOUNTY);//using destroy causes bugs, using bounty causes crash when opening term
-//		String lairTemplate = randomLairSpawn->getLairTemplateName();
-//		LairTemplate* lairTemplateObject = CreatureTemplateManager::instance()->getLairTemplate(lairTemplate.hashCode());
-//
-//	 	const VectorMap<String, int>* mobiles = lairTemplateObject->getMobiles();
-//	 	String mobileName = "unknown";
-//
-//	 	if (mobiles->size() > 0) {
-//	 		mobileName = mobiles->elementAt(0).getKey();
-//	 	}
-//
-//	 	mission->setMissionTargetName(mobileName.replaceAll("_", " "));
 
 		mission->setMissionTargetName(nm->makeCreatureName());
 
@@ -1167,9 +1166,31 @@ void MissionManagerImplementation::randomizeGenericBountyMission(CreatureObject*
 			creatorName = nm->makeCreatureName();
 		}
 
+		String mobileName = creoTemplate->getObjectName();
+
+		if (mobileName == "")
+			mobileName = creoTemplate->getCustomName();
+
+		String messageDifficulty;
+		String missionType;
+
+		if (level < 2)
+			messageDifficulty = "_easy";
+		else if (level == 2)
+			messageDifficulty = "_medium";
+		else
+			messageDifficulty = "_hard";
+
+		// String::valueOf(minDiff) +
+
+	//creolevel
+		mission->setMissionTitle("", mobileName.replaceAll("_", " "));//String::valueOf(diffDisplay));
+		mission->setMissionDescription("mission/mission_destroy_neutral" +  messageDifficulty, "m" + String::valueOf(randTexts) + "d");
+
 		mission->setCreatorName(creatorName);
-		mission->setMissionTitle(stfFile + diffString, "m" + String::valueOf(randTexts) + "t");
-		mission->setMissionDescription(stfFile + diffString, "m" + String::valueOf(randTexts) + "d");
+
+//		mission->setMissionTitle(stfFile + diffString, "m" + String::valueOf(randTexts) + "t");
+//		mission->setMissionDescription(stfFile + diffString, "m" + String::valueOf(randTexts) + "d");
 	}
 
 	mission->setTypeCRC(MissionTypes::BOUNTY);
@@ -1676,7 +1697,30 @@ void MissionManagerImplementation::generateRandomFactionalDestroyMissionDescript
 
 	int randomNumber = System::random(randomMax) + 1;
 
-	mission->setMissionTitle("mission/mission_destroy_" + difficultyString, "m" + String::valueOf(randomNumber) + "t");
+	int faction2 = Factions::FACTIONNEUTRAL;
+
+	if (player->getFaction() == Factions::FACTIONIMPERIAL) {
+		faction2 = Factions::FACTIONIMPERIAL;
+	}
+	if (player->getFaction() == Factions::FACTIONREBEL) {
+		faction2 = Factions::FACTIONREBEL;
+	}
+
+	LairSpawn* randomLairSpawn = getRandomLairSpawn(player, faction2, MissionTypes::DESTROY);
+	String lairTemplate = randomLairSpawn->getLairTemplateName();
+	LairTemplate* lairTemplateObject = CreatureTemplateManager::instance()->getLairTemplate(lairTemplate.hashCode());
+
+ 	const VectorMap<String, int>* mobiles = lairTemplateObject->getMobiles();
+ 	String mobileName = "unknown";
+
+ 	if (mobiles->size() > 0) {
+ 		mobileName = mobiles->elementAt(0).getKey();
+ 	}
+
+	int minDiff = randomLairSpawn->getMinDifficulty();
+
+	mission->setMissionTitle("", mobileName.replaceAll("_", " ") + " mission");
+//	mission->setMissionTitle("mission/mission_destroy_" + difficultyString, "m" + String::valueOf(randomNumber) + "t");
 	mission->setMissionDescription("mission/mission_destroy_" +  difficultyString, "m" + String::valueOf(randomNumber) + "d");
 }
 

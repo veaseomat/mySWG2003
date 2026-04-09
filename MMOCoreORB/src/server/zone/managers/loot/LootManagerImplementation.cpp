@@ -337,9 +337,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	if (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject()) {//&&!issaber?
 
-		if (System::random(2) == 2) { // - adjustment) { //legendaryChance
+		if (System::random(99) < 45) { // 45% chance
 			UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
-			prototype->setCustomObjectName(newName, false);
 
 			excMod = 5.0;//legendaryModifier; //5.0?
 
@@ -347,8 +346,13 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 				level += 150;
 			}
 
-			if(System::random(100) > 50)
+			if(System::random(100) > 50) {
 				excMod *= 1.0 + (System::random(50000) * .00001);
+
+				//newName = prototype->getDisplayedName() + " (Mythic)";
+			}
+
+			prototype->setCustomObjectName(newName, false);
 
 			prototype->addMagicBit(false);
 

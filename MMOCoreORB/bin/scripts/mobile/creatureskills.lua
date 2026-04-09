@@ -49,9 +49,10 @@ pikemanmaster = { {"intimidationattack",""}, {"posturedownattack",""}, {"stunatt
 tkamaster = { {"intimidationattack",""}, {"posturedownattack",""}, {"stunattack",""}, {"dizzyattack",""}, {"blindattack",""}, {"knockdownattack",""} }
 
 --npc jedi skills
-lightsabermaster = { {"intimidationattack",""}, {"posturedownattack",""}, {"stunattack",""}, {"dizzyattack",""}, {"blindattack",""}, {"knockdownattack",""} }--{"intimidationattack",""}, {"posturedownattack",""}, {"stunattack",""}, {"blindattack",""}, {"dizzyattack",""} }
+lightsabermaster = { {"forceknockdown2",""}, {"forceintimidate2",""}, {"drainforce",""}, {"intimidationattack",""}, {"posturedownattack",""}, {"stunattack",""}, {"dizzyattack",""}, {"blindattack",""}, {"knockdownattack",""} }--{"intimidationattack",""}, {"posturedownattack",""}, {"stunattack",""}, {"blindattack",""}, {"dizzyattack",""} }
+
 forcepowermaster = { {"intimidationattack",""}, {"posturedownattack",""}, {"stunattack",""}, {"dizzyattack",""}, {"blindattack",""}, {"knockdownattack",""} }--{"forcelightningsingle2",""},{"mindblast2",""},{"forceknockdown2",""}, {"forcethrow2",""} }
 
 -- npc force wielders use standard profession mastery with the addition of this command
-forcewielder ={ {"intimidationattack",""}, {"posturedownattack",""}, {"stunattack",""}, {"dizzyattack",""}, {"blindattack",""}, {"knockdownattack",""} }--{"forcelightningsingle1",""},{"mindblast1",""},{"forceknockdown1",""},  {"forcethrow1",""} }
+forcewielder ={  {"forceknockdown2",""}, {"forceintimidate2",""}, {"intimidationattack",""}, {"posturedownattack",""}, {"stunattack",""}, {"dizzyattack",""}, {"blindattack",""}, {"knockdownattack",""} }--{"forcelightningsingle1",""},{"mindblast1",""},{"forceknockdown1",""},  {"forcethrow1",""} }
 --Server Administrator NPC skill trees place below

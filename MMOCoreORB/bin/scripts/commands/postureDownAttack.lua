@@ -42,9 +42,9 @@
 --true = 1, false = 0
 
 PostureDownAttackCommand = {
-        name = "posturedownattack",
-        combatSpam = "attack",
-        animation = "",--animation = "creature_attack_special_1", 
+  name = "posturedownattack",
+  combatSpam = "attack",
+  animation = "",--animation = "creature_attack_special_1", 
 	animType = GENERATE_INTENSITY,
 	stateEffects = {
 	  StateEffect( 
@@ -52,7 +52,7 @@ PostureDownAttackCommand = {
 		{ "postureDownRecovery" }, 
 		{ "posture_change_down_defense" }, 
 		{},
-		85, 
+		100, 
 		0, 
 		0 
 	  )

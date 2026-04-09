@@ -120,7 +120,7 @@ void BountyMissionObjectiveImplementation::complete() {
 		owner->getZoneServer()->getPlayerManager()->awardExperience(owner, "bountyhunter", mission->getRewardCredits() / 50, true, 1);
 	}
 	if (owner->hasSkill("force_title_jedi_rank_03"))	{
-		owner->getZoneServer()->getPlayerManager()->awardExperience(owner, "force_rank_xp", mission->getDifficultyDisplay() * 10, true, 1, false);
+		owner->getZoneServer()->getPlayerManager()->awardExperience(owner, "force_rank_xp", mission->getRewardCredits() / 100, true, 1, false);
 	}
 
 	owner->getZoneServer()->getMissionManager()->completePlayerBounty(mission->getTargetObjectId(), owner->getObjectID());
