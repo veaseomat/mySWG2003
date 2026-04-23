@@ -197,20 +197,8 @@ uint32 DamageOverTime::doBleedingTick(CreatureObject* victim, CreatureObject* at
 		damage = attr - 1;
 	}
 
-	if (victim->isPlayerCreature()) {
-		if (damage > 450)
-			damage = ((damage - 450) / 4) + 450;
-		if (damage > 350)
-			damage = ((damage - 350) / 2) + 350;
-	}
-	else {
-		if (damage > 4500)
-			damage = ((damage - 4500) / 4) + 4500;
-		if (damage > 3500)
-			damage = ((damage - 3500) / 2) + 3500;
-	}
-
-
+	if (damage > 5000)
+		damage = ((damage - 5000) / 2) + 5000;
 
 	Reference<CreatureObject*> attackerRef = attacker;
 	Reference<CreatureObject*> victimRef = victim;
@@ -252,18 +240,8 @@ uint32 DamageOverTime::doFireTick(CreatureObject* victim, CreatureObject* attack
 
 	woundsToApply = Math::min(woundsToApply, maxWoundsToApply);
 
-	if (victim->isPlayerCreature()) {
-		if (woundsToApply > 350)
-			woundsToApply = ((woundsToApply - 350) / 4) + 350;
-		if (woundsToApply > 250)
-			woundsToApply = ((woundsToApply - 250) / 2) + 250;
-	}
-	else {
-		if (woundsToApply > 3500)
-			woundsToApply = ((woundsToApply - 3500) / 4) + 3500;
-		if (woundsToApply > 2500)
-			woundsToApply = ((woundsToApply - 2500) / 2) + 2500;
-	}
+	if (damage > 5000)
+		damage = ((damage - 5000) / 2) + 5000;
 
 	Reference<CreatureObject*> attackerRef = attacker;
 	Reference<CreatureObject*> victimRef = victim;
@@ -311,19 +289,8 @@ uint32 DamageOverTime::doPoisonTick(CreatureObject* victim, CreatureObject* atta
 		damage = attr - 1;
 	}
 
-	if (victim->isPlayerCreature()) {
-		if (damage > 450)
-			damage = ((damage - 450) / 4) + 450;
-		if (damage > 350)
-			damage = ((damage - 350) / 2) + 350;
-	}
-	else {
-		if (damage > 4500)
-			damage = ((damage - 4500) / 4) + 4500;
-		if (damage > 3500)
-			damage = ((damage - 350) / 2) + 3500;
-	}
-
+	if (damage > 5000)
+		damage = ((damage - 5000) / 2) + 5000;
 
 	Reference<CreatureObject*> attackerRef = attacker;
 	Reference<CreatureObject*> victimRef = victim;
@@ -358,18 +325,9 @@ uint32 DamageOverTime::doDiseaseTick(CreatureObject* victim, CreatureObject* att
 
 	damage = Math::min(damage, maxDamage);
 
-	if (victim->isPlayerCreature()) {
-		if (damage > 350)
-			damage = ((damage - 350) / 4) + 350;
-		if (damage > 250)
-			damage = ((damage - 250) / 2) + 250;
-	}
-	else {
-		if (damage > 3500)
-			damage = ((damage - 3500) / 4) + 3500;
-		if (damage > 2500)
-			damage = ((damage - 2500) / 2) + 2500;
-	}
+
+	if (damage > 5000)
+		damage = ((damage - 5000) / 2) + 5000;
 
 	Reference<CreatureObject*> attackerRef = attacker;
 	Reference<CreatureObject*> victimRef = victim;
@@ -438,18 +396,8 @@ uint32 DamageOverTime::doForceChokeTick(CreatureObject* victim, CreatureObject* 
 
 		}
 
-		if (victimRef->isPlayerCreature()) {
-			if (chokeDam > 350)
-				chokeDam = ((chokeDam - 350) / 4) + 350;
-			if (chokeDam > 250)
-				chokeDam = ((chokeDam - 250) / 2) + 250;
-		}
-		else {
-			if (chokeDam > 3500)
-				chokeDam = ((chokeDam - 3500) / 4) + 3500;
-			if (chokeDam > 2500)
-				chokeDam = ((chokeDam - 2500) / 2) + 2500;
-		}
+		if (chokeDam > 5000)
+			chokeDam = ((chokeDam - 5000) / 2) + 5000;
 
 		CombatManager::instance()->broadcastCombatSpam(attackerRef, victimRef, nullptr, chokeDam, "cbt_spam", "forcechoke_hit", 1);
 		victimRef->inflictDamage(attackerRef, attribute, chokeDam, true);

@@ -368,7 +368,7 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	if (isJediWeapon() && newfc < 2.0)
 		newfc = 2.0;
 
-	if (getForceCost() > 0)
+	if (newfc > 0)
 		alm->insertAttribute("forcecost", newfc);//(float)getForceCost());
 
 	for (int i = 0; i < getNumberOfDots(); i++) {

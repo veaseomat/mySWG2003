@@ -861,41 +861,41 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 
 	float currentRange = attacker->getWorldPosition().distanceTo(defender->getWorldPosition()) - defender->getTemplateRadius() - attacker->getTemplateRadius();
 
-	if (attacker->isPlayerCreature()) {
-		if (weapon->isPistolWeapon()){
-			//attackerAccuracy *= .84;
-			if (currentRange > 32)	attackerAccuracy *= .7;
-			if (currentRange > 48)	attackerAccuracy *= .7;
-		}
-		if (weapon->isCarbineWeapon()){
-			//attackerAccuracy *= .65;
-			if (currentRange < 16 || currentRange > 48)	attackerAccuracy *= .7;
-		}
-		if (weapon->isRifleWeapon()){
-			//attackerAccuracy *= .55;
-			if (currentRange < 32)	attackerAccuracy *= .7;
-			if (currentRange < 16)	attackerAccuracy *= .7;
-		}
-	}
+//	if (attacker->isPlayerCreature()) {
+//		if (weapon->isPistolWeapon()){
+//			//attackerAccuracy *= .84;
+//			if (currentRange > 32)	attackerAccuracy *= .7;
+//			if (currentRange > 48)	attackerAccuracy *= .7;
+//		}
+//		if (weapon->isCarbineWeapon()){
+//			//attackerAccuracy *= .65;
+//			if (currentRange < 16 || currentRange > 48)	attackerAccuracy *= .7;
+//		}
+//		if (weapon->isRifleWeapon()){
+//			//attackerAccuracy *= .55;
+//			if (currentRange < 32)	attackerAccuracy *= .7;
+//			if (currentRange < 16)	attackerAccuracy *= .7;
+//		}
+//	}
 
 	//if (attackerAccuracy == 0) attackerAccuracy = -15; // unskilled penalty, TODO: this might be -50 or -125, do research
 
 	if (attacker->isPlayerCreature()) {//boost player accuracy
 		//attackerAccuracy *= 2.0;
-		attackerAccuracy += 25;
+		attackerAccuracy += 10;
 	}
 
 	if (weapon->isJediWeapon())
-		attackerAccuracy += 25;
+		attackerAccuracy += 10;
 
 
 	attackerAccuracy += creoAttacker->getSkillMod("attack_accuracy") + creoAttacker->getSkillMod("dead_eye");
 
 	// FS skill mods
 	if (weapon->getAttackType() == SharedWeaponObjectTemplate::MELEEATTACK)
-		attackerAccuracy += creoAttacker->getSkillMod("melee_accuracy");
+		attackerAccuracy += creoAttacker->getSkillMod("melee_accuracy") / 2;
 	else if (weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)
-		attackerAccuracy += creoAttacker->getSkillMod("ranged_accuracy");
+		attackerAccuracy += creoAttacker->getSkillMod("ranged_accuracy") / 2;
 
 	// now apply overall weapon defense mods
 //	if (weapon->isMeleeWeapon()) {
@@ -914,11 +914,11 @@ int CombatManager::getAttackerAccuracyModifier(TangibleObject* attacker, Creatur
 //		}
 //	}
 
-	if (attackerAccuracy > 250)
-		attackerAccuracy = System::random(attackerAccuracy - 250) + 250;
+//	if (attackerAccuracy > 250)
+//		attackerAccuracy = System::random(attackerAccuracy - 250) + 250;
 
 	if (creoAttacker->isPlayerCreature() && defender->isPlayerCreature()) {
-		attackerAccuracy *= 1.5;//pvp
+		attackerAccuracy *= 1.25;//pvp
 	}
 
 	return attackerAccuracy;
@@ -1948,43 +1948,43 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	float weaponAccuracy = 0.0f;
 	// Get the weapon mods for range and add the mods for stance
 
-	weaponAccuracy = getWeaponRangeModifier(attacker->getWorldPosition().distanceTo(targetCreature->getWorldPosition()) - targetCreature->getTemplateRadius() - attacker->getTemplateRadius(), weapon);
+	//weaponAccuracy = getWeaponRangeModifier(attacker->getWorldPosition().distanceTo(targetCreature->getWorldPosition()) - targetCreature->getTemplateRadius() - attacker->getTemplateRadius(), weapon);
 	// accounts for steadyaim, general aim, and specific weapon aim, these buffs will clear after a completed combat action
 
-	if (creoAttacker != nullptr && weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)
-		weaponAccuracy += creoAttacker->getSkillMod("private_aim");
-
-	debug() << "Attacker weapon accuracy is " << weaponAccuracy;
-
-	if (weaponAccuracy > 50) weaponAccuracy = 50;
-	if (weaponAccuracy < -25) weaponAccuracy = -25;
+//	if (creoAttacker != nullptr && weapon->getAttackType() == SharedWeaponObjectTemplate::RANGEDATTACK)
+//		weaponAccuracy += creoAttacker->getSkillMod("private_aim");
+//
+//	debug() << "Attacker weapon accuracy is " << weaponAccuracy;
+//
+//	if (weaponAccuracy > 50) weaponAccuracy = 50;
+//	if (weaponAccuracy < -25) weaponAccuracy = -25;
 
 	int attackerAccuracy = getAttackerAccuracyModifier(attacker, targetCreature, weapon);
 	debug() << "Base attacker accuracy is " << attackerAccuracy;
 
-	if (attackerAccuracy > 50)
-		attackerAccuracy = ((attackerAccuracy - 50) / 5 ) + 50;
+	if (attackerAccuracy > 65)
+		attackerAccuracy = ((attackerAccuracy - 65) / 5 ) + 65;
 
 	if (!attacker->isPlayerCreature())
 		attackerAccuracy += 25;
 
 	int bonusAccuracy = 0;
 
-	if (creoAttacker != nullptr)
-		bonusAccuracy = getAttackerAccuracyBonus(creoAttacker, weapon);
-
-	// this is the scout/ranger creature hit bonus that only works against creatures (not NPCS)
-	if (targetCreature->isCreature() && creoAttacker != nullptr)
-		bonusAccuracy += creoAttacker->getSkillMod("creature_hit_bonus");
-
-	debug() << "Attacker total bonus is " << bonusAccuracy;
+//	if (creoAttacker != nullptr)
+//		bonusAccuracy = getAttackerAccuracyBonus(creoAttacker, weapon);
+//
+//	// this is the scout/ranger creature hit bonus that only works against creatures (not NPCS)
+//	if (targetCreature->isCreature() && creoAttacker != nullptr)
+//		bonusAccuracy += creoAttacker->getSkillMod("creature_hit_bonus");
+//
+//	debug() << "Attacker total bonus is " << bonusAccuracy;
 
 	int postureAccuracy = 0;
 
-	if (creoAttacker != nullptr)
-		postureAccuracy = calculatePostureModifier(creoAttacker, weapon);
-
-	debug() << "Attacker posture accuracy is " << postureAccuracy;
+//	if (creoAttacker != nullptr)
+//		postureAccuracy = calculatePostureModifier(creoAttacker, weapon);
+//
+//	debug() << "Attacker posture accuracy is " << postureAccuracy;
 
 	int targetDefense = getDefenderDefenseModifier(targetCreature, weapon, attacker);
 	debug() << "Defender defense is " << targetDefense;
@@ -2005,14 +2005,14 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	float defenderRoll = (float)System::random(30) + 1.f;
 
 	// TODO (dannuic): add the trapmods in here somewhere (defense down trapmods)
-	float accTotal = hitChanceEquation(attackerAccuracy + weaponAccuracy + accuracyBonus + postureAccuracy + bonusAccuracy, attackerRoll, targetDefense + postureDefense, defenderRoll);
+	float accTotal = hitChanceEquation(attackerAccuracy + accuracyBonus, attackerRoll, targetDefense + postureDefense, defenderRoll);
 
 	debug() << "Final hit chance is " << accTotal;
 
 	if (System::random(100) > accTotal) // miss, just return MISS
 		return MISS;
 
-	if (attacker->isPlayerCreature() && System::random(99) < 25) //25% chance to miss no matter what
+	if (attacker->isPlayerCreature() && System::random(99) < 10) //10% chance to miss no matter what
 		return MISS;
 
 	debug() << "Attack hit successfully";

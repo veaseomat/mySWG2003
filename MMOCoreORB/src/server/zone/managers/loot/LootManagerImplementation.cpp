@@ -265,7 +265,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	if(level >= 350)//vanilla 300
 		level = 350;
 
-	if (System::random(19) == 19)//1/20 items will be max lvl
+	if (System::random(9) == 9)//1/10 items will be max lvl
 		level = 350;
 
 
@@ -290,12 +290,14 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	prototype->setJunkDealerNeeded(1);//templateObject->getJunkDealerTypeNeeded());
 	float junkMinValue = templateObject->getJunkMinValue() * junkValueModifier;
+	if (junkMinValue < 20) junkMinValue = 20;
 	float junkMaxValue = templateObject->getJunkMaxValue() * junkValueModifier;
+	if (junkMaxValue < 40) junkMaxValue = 40;
 	float fJunkValue = junkMinValue+System::random(junkMaxValue-junkMinValue) * 2;
 
-	if (level>0 && templateObject->getJunkDealerTypeNeeded()>1){
-		fJunkValue = fJunkValue + (fJunkValue * ((float)level / 100)) * 2; // This is the loot value calculation if the item has a level
-	}
+	//if (level>0 && templateObject->getJunkDealerTypeNeeded()>1){
+	fJunkValue = fJunkValue + (fJunkValue * ((float)level / 100)) * 2; // This is the loot value calculation if the item has a level
+	//}
 
 	prototype->setJunkValue((int)(fJunkValue));
 
@@ -316,39 +318,74 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 	int newexceptionalChance = 4;
 	int newyellowChance = 1;
 
+//	if (prototype->isLightsaberCrystalObject()) {
+//		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
+//
+//		if (crystal->getColor() != 31)
+//			continue;
+//	}
+
 
 	if (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject()) {//&&!issaber?
 
-		if (System::random(2) == 2) { // 1/3 chance
+		if (System::random(1) == 1) { // 1/2 chance
 			UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
 
 			excMod = 5.0;//leggy modifier
+			fJunkValue *= 2;
 
 			level += System::random(75);
 
 			if(level >= 400)//1/3 of 350 will cap to 400
 				level = 400;
 
-			if(System::random(19) == 19) {//1/20 of leggy will be mythic, so 1/60
+			if(System::random(3) == 3) {//1/10
 
-				excMod *= 1.5 + (System::random(50000) * .00001);//7.5x-10x
+				excMod = 10.0;
+				fJunkValue *= 2;
 
 				level += System::random(75);
-
 				if(level >= 450)//1/3 of 400 will cap to 450
 					level = 450;
 
-				newName = prototype->getDisplayedName() + "\\#5218fa" + " (Mythic)";// divine next? Vivid Sky Blue #00ccff
+				newName = "\\#5218fa" + prototype->getDisplayedName() + " (Mythic)";// divine next? Vivid Sky Blue #00ccff
 
-				if(System::random(99) == 99) {//1/100 so 1/600 overall
-					excMod *= 2.0 + (System::random(20000) * .00001);//15x-22x topps
+				if(System::random(5) == 5) {//1/100
+					excMod = 20.0;
+					fJunkValue *= 2;
 
 					level += System::random(75);
-
 					if(level >= 500)//1/3 of 450 will cap to 500
 						level = 500;
 
-					newName = prototype->getDisplayedName() + "\\#00ccff" + " (Divine)";//
+					newName = "\\#00ccff" + prototype->getDisplayedName() + " (Divine)";//
+
+					if(System::random(7) == 7) {//1/1000
+						excMod = 40.0;
+						fJunkValue *= 2;
+
+						level += System::random(50);
+						if(level >= 500)
+							level = 500;
+
+						newName = "\\#ff77ff" + prototype->getDisplayedName() + " (Astral)";//
+
+						if(System::random(9) == 9) {//1/10,000
+							excMod = 60.0;
+							fJunkValue *= 2;
+
+							level = 500;
+
+							newName = "\\#ff0800" + prototype->getDisplayedName() + " (Godlike)";//
+
+							if(System::random(11) == 11) {//1/100,000
+								excMod = 100.0;//100x
+								fJunkValue *= 2;
+								level = 500;
+								newName = "\\#1b1b1b" + prototype->getDisplayedName() + " (Demiurgical)";//
+							}
+						}
+					}
 				}
 			}
 
@@ -367,6 +404,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 		if (crystal != nullptr)
 			crystal->setItemLevel(level);
+
 	}
 	else {
 		//craftingValues->setCurrentValue("challenge_level", level);
@@ -393,7 +431,11 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
-		float percentage = System::random(10000) / 10000.f;//9000 + System::random(1000) / 10000.f; //System::random(10000) / 10000.f;
+		float percentage = System::random(10000) / 10000.f;//5000 + System::random(5000) / 10000.f; //System::random(10000) / 10000.f;
+
+		//NEW RANDOMIZER
+//		int newrandomizer = (excMod * 1000) / 2;
+//		excMod = (excMod * .75) + (System::random(excMod) * .25);//setting percentage to 1 and using this breaks some stats like force cost rolls always the same because they are ignored on exc below
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll
