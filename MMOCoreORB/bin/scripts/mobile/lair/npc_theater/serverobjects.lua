@@ -48,6 +48,8 @@ includeFile("lair/npc_theater/dathomir_nightsister_elder_enclave_neutral_large_t
 includeFile("lair/npc_theater/dathomir_nightsister_outcast_camp_neutral_small_theater.lua")
 includeFile("lair/npc_theater/dathomir_nightsister_slaver_camp_neutral_small_theater.lua")
 includeFile("lair/npc_theater/dathomir_nightsister_spell_weaver_camp_neutral_large_theater.lua")
+includeFile("lair/npc_theater/dathomir_nightsister_elder_enclave_neutral_large_theater2.lua")
+
 
 includeFile("lair/npc_theater/endor_donkuwah_chieftan_neutral_medium_theater.lua")
 includeFile("lair/npc_theater/endor_donkuwah_eerie_spiritmaster_neutral_medium_theater.lua")
@@ -148,6 +150,8 @@ includeFile("lair/npc_theater/global_wilder_frontiersman_camp_neutral_medium_the
 includeFile("lair/npc_theater/global_wookiee_brawler_camp_neutral_small_theater.lua")
 includeFile("lair/npc_theater/global_luke_skywalker.lua")
 includeFile("lair/npc_theater/global_darth_vader.lua")
+includeFile("lair/npc_theater/global_light_jedi_sentinel.lua")
+includeFile("lair/npc_theater/global_dark_jedi_sentinel.lua")
 
 includeFile("lair/npc_theater/lok_blood_razor_camp_neutral_easy_theater.lua")
 includeFile("lair/npc_theater/lok_blood_razor_camp_neutral_medium_theater.lua")

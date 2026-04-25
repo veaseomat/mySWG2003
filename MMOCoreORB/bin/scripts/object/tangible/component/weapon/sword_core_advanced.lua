@@ -49,8 +49,8 @@ object_tangible_component_weapon_sword_core_advanced = object_tangible_component
 	experimentalWeights = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "exp_durability", "expRange", "expRange", "expRange", "expEffeciency", "expEffeciency", "expEffeciency"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "hitpoints", "zerorangemod", "maxrangemod", "midrangemod", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 1, 1, 0, 0, 10, 0, 0, 0, 10, 10, 10},
-	experimentalMax = {0, 0, 50, 50, -0.7, 15, 100, 40, 40, 40, -3, -3, -3},
+	experimentalMin = {0, 0, 5, 5, 0, 0, 10, 0, 0, 0, 10, 10, 10},
+	experimentalMax = {0, 0, 250, 250, -0.7, 15, 100, 40, 40, 40, -3, -3, -3},
 	experimentalPrecision = {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 }

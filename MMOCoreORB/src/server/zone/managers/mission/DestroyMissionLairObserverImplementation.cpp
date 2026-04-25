@@ -28,7 +28,7 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 		spawnLimitAdjustment = 3;
 	}
 
-	int spawnLimit = lairTemplate->getSpawnLimit() + spawnLimitAdjustment;
+	int spawnLimit = lairTemplate->getSpawnLimit();// + spawnLimitAdjustment;
 
 	if (forceSpawn) {
 		spawnNumber.increment();
@@ -86,13 +86,13 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 
 	} else {
 		const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
-		int amountToSpawn = 0;
+		int amountToSpawn = System::random(2) + spawnLimit / 3;//0;
 
-		if (getMobType() == LairTemplate::CREATURE) {
-			amountToSpawn = spawnLimit / 3;
-		} else {
-			amountToSpawn = System::random(2) + (spawnLimit / 3);
-		}
+//		if (getMobType() == LairTemplate::CREATURE) {
+//			amountToSpawn = spawnLimit / 3;
+//		} else {
+//			amountToSpawn = System::random(2) + (spawnLimit / 3);
+//		}
 
 		if (amountToSpawn < 1)
 			amountToSpawn = 1;

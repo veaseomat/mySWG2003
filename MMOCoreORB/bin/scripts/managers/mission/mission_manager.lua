@@ -60,17 +60,33 @@ bh_targets_at_mission_level = {
 		"bh_feral_force_wielder", --level 115
 		"bh_force_crystal_hunter", --level 115
 		"bh_tusken_carnage_champion", --level 116
-		"bh_dark_adept", --level 120
-		"dark_adept",
-		"dark_jedi_knight",
-		"dark_jedi_master",
-		"black_sun_assassin",
-		"black_sun_guard",
-		"black_sun_henchman",
-		"black_sun_thug",
-		"death_watch_ghost",
-		"death_watch_bloodguard",
-		"death_watch_wraith",
+--		"bh_dark_adept", --level 120
+--		"dark_adept",
+--		"dark_jedi_knight",
+--		"dark_jedi_master",
+
+--		"black_sun_assassin",
+--		"black_sun_guard",
+--		"black_sun_henchman",
+--		"black_sun_thug",
+--		"death_watch_ghost",
+--		"death_watch_bloodguard",
+--		"death_watch_wraith",
+
+		"pvpbh", --250
+--		"pvpimp", --250
+--		"pvpreb", --250
+		"pvpdjk", -- 275
+		"pvpdjk2", --300
+		"pvpdjk3", --325
+		"pvpdjk4", --350
+		"pvpljk",
+		"pvpljk2",
+		"pvpljk3",
+		"pvpljk4",
+				
+--		"dark_jedi_sentinel",
+--		"light_jedi_sentinel",
 		
 		},
 --		level4 = { --this could be jedi on trials mission options

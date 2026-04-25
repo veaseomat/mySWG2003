@@ -90,23 +90,26 @@ object_tangible_wearables_armor_chitin_armor_chitin_s01_chest_plate = object_tan
 	-- Damagetypes in WeaponObject
 	vulnerability = STUN + LIGHTSABER,
 	
-	--specialResists = KINETIC,
+	specialResists = KINETIC,
+
 	-- These are default Blue Frog stats
 	healthEncumbrance = 125,
 	actionEncumbrance = 38,
 	mindEncumbrance = 16,
+	
+		maxCondition = 20000,
 
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
 
-	kinetic = 25,
-	energy = 15,
-	electricity = 0,
+	kinetic = 65,
+	energy = 25,
+	electricity = 25,
 	stun = 0,
-	blast = 15,
-	heat = 0,
-	cold = 0,
-	acid = 15,
+	blast = 25,
+	heat = 25,
+	cold = 25,
+	acid = 25,
 	lightSaber = 0,
 
 	numberExperimentalProperties = {1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 2, 1},

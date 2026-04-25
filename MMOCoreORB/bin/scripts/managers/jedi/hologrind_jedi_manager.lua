@@ -150,7 +150,8 @@ end
 -- Check if the player has mastered all hologrind professions and send sui window and award skills.
 -- @param pCreatureObject pointer to the creature object of the player to check the jedi progression on.
 function HologrindJediManager:checkIfProgressedToJedi(pCreatureObject)
-	if self:getNumberOfMasteredProfessions(pCreatureObject) >= NUMBEROFPROFESSIONSTOMASTER and not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then --self:isJedi(pCreatureObject)
+--	if self:getNumberOfMasteredProfessions(pCreatureObject) >= NUMBEROFPROFESSIONSTOMASTER and not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then --self:isJedi(pCreatureObject)
+	if getRandomNumber(1, 5) == 5 and not CreatureObject(pCreatureObject):hasSkill("force_title_jedi_rank_02") then --self:isJedi(pCreatureObject)
 		self:sendSuiWindow(pCreatureObject)
 		
 		self:awardJediStatusAndSkill(pCreatureObject)
@@ -189,7 +190,7 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 		return
 	end
 
-	self:checkIfProgressedToJedi(pCreatureObject)
+	--self:checkIfProgressedToJedi(pCreatureObject)
 	self:registerObservers(pCreatureObject)
 	
 	PVPFactionIntro:startStepDelay(pCreatureObject, 3)--faction encoutners
@@ -207,6 +208,8 @@ function HologrindJediManager:onPlayerLoggedIn(pCreatureObject)
 	
 	if JediTrials:isOnKnightTrials(pCreatureObject) then	
 		--KnightTrials:showCurrentTrial(pCreatureObject) --DOES NOT FIX
+		
+		KnightTrials:resetCompletedTrialsToStart(pCreatureObject)--reset trials for borked half trial jedi
 		
 		KnightTrials:startNextKnightTrial(pCreatureObject)--this FIXES KNIGHT TRIAL!!!! well sort of its a workaround that resets current trial every logout or server rest.
 
@@ -243,29 +246,38 @@ end
 -- Find out and send the response from the holocron to the player
 -- @param pCreatureObject pointer to the creature object of the player who used the holocron.
 function HologrindJediManager:sendHolocronMessage(pCreatureObject)
-	if self:getNumberOfMasteredProfessions(pCreatureObject) >= MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON then
-		-- The Holocron is quiet. The ancients' knowledge of the Force will no longer assist you on your journey. You must continue seeking on your own.
-		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_quiet")
-		return true
-	else
-		local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
+	self:checkIfProgressedToJedi(pCreatureObject)
+		
+	CreatureObject(pCreatureObject):sendSystemMessage("The Holocron hums softly and begins to glow, you hear a faint whisper of ancient knowledge before the Holocron disappears.")
+		
+	return true
+	
 
-		if (pGhost == nil) then
-			return false
-		end
-
-		local professions = PlayerObject(pGhost):getHologrindProfessions()
-		for i = 1, #professions, 1 do
-			if not PlayerObject(pGhost):hasBadge(professions[i]) then
-				local professionText = self:getProfessionStringIdFromBadgeNumber(professions[i])
-				CreatureObject(pCreatureObject):sendSystemMessageWithTO("@jedi_spam:holocron_light_information", "@skl_n:" .. professionText)
-				--CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
-				break
-			end
-		end
-
-		return false
-	end
+--	if self:getNumberOfMasteredProfessions(pCreatureObject) >= MAXIMUMNUMBEROFPROFESSIONSTOSHOWWITHHOLOCRON then
+--		-- The Holocron is quiet. The ancients' knowledge of the Force will no longer assist you on your journey. You must continue seeking on your own.
+--		CreatureObject(pCreatureObject):sendSystemMessage("@jedi_spam:holocron_quiet")
+--		return true
+--	else
+--		local pGhost = CreatureObject(pCreatureObject):getPlayerObject()
+--
+--		if (pGhost == nil) then
+--			return false
+--		end
+--
+--		local professions = PlayerObject(pGhost):getHologrindProfessions()
+--		for i = 1, #professions, 1 do
+--			if not PlayerObject(pGhost):hasBadge(professions[i]) then
+--				local professionText = self:getProfessionStringIdFromBadgeNumber(professions[i])
+--			--	CreatureObject(pCreatureObject):sendSystemMessageWithTO("@jedi_spam:holocron_light_information", "@skl_n:" .. professionText)
+--				--CreatureObject(pCreatureObject):playEffect("clienteffect/trap_electric_01.cef", "")
+--				--break
+--			end
+--		end
+--		
+--		
+--
+--		return false
+--	end
 end
 
 -- Handling of the useItem event.
@@ -283,15 +295,14 @@ function HologrindJediManager:useItem(pSceneObject, itemType, pCreatureObject)
 		return
 	end
 	
-
 	if itemType == ITEMHOLOCRON then
 		local isSilent = self:sendHolocronMessage(pCreatureObject)
-		if isSilent then
-			return
-		else
+--		if isSilent then
+--			return
+--		else
 			SceneObject(pSceneObject):destroyObjectFromWorld()
 			SceneObject(pSceneObject):destroyObjectFromDatabase()
-		end
+--		end
 	end
 end
 

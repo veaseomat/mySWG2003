@@ -5,11 +5,11 @@ pvpljk = Creature:new {
 	randomNameTag = true,
 	socialGroup = "",
 	faction = "",
-	level = 350,
+	level = 275,
 	elite = 1.25,
 	chanceHit = 23.5,
-	damageMin = 1645,
-	damageMax = 3000,
+	damageMin = 945,
+	damageMax = 1600,
 	baseXp = 25266,
 	baseHAM = 90000,
 	baseHAMmax = 101000,
@@ -30,22 +30,14 @@ pvpljk = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {
---		"object/mobile/dressed_jedi_trainer_old_human_male_01.iff",
---		"object/mobile/dressed_jedi_trainer_chiss_male_01.iff",
---		"object/mobile/dressed_jedi_trainer_nikto_male_01.iff",
---		"object/mobile/dressed_jedi_trainer_twilek_female_01.iff",
---		"object/mobile/dressed_tiberus_anderlock.iff",
---		"object/mobile/dressed_neja_bertolo.iff"
-	"jedi",
-		},
+			"jedi",
+	},
 	lootGroups = {
 		{
 			groups = {
-				{group = "junk", chance = 9000000},
-				{group = "holocron_dark", chance = 300000},
-				{group = "color_crystals", chance = 1000000},
-				{group = "sabers", chance = 1000000}
-			}
+				{group = "junk", chance = 3000000},
+				{group = "dark_jedi_common", chance = 7000000},
+			},
 		},
 	},
 	weapons = {"dark_jedi_weapons_gen2"},

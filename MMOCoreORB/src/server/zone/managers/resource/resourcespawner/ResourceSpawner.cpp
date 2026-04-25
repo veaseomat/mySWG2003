@@ -619,7 +619,7 @@ int ResourceSpawner::randomizeValue(int min, int max) {
 //		}
 //	}
 	
-	int newranstat = System::random(250) + 750;
+	int newranstat = System::random(750) + 750;
 	
 	return newranstat; //randomStat;
 }

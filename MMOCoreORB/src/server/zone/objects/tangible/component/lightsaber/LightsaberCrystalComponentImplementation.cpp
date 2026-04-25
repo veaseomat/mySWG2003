@@ -28,20 +28,20 @@ void LightsaberCrystalComponentImplementation::notifyLoadFromDatabase() {
 	// Randomize item level and stats for existing crystals based on original quality value
 	// TODO: Remove this on a server wipe when old variables are removed
 	if (color == 31 && (minimumDamage != maximumDamage || itemLevel == 0)) {
-		if (quality == POOR)
-			itemLevel = 1 + System::random(38); // 1-39
-		else if (quality == FAIR)
-			itemLevel = 40 + System::random(29); // 40-69
-		else if (quality == GOOD)
-			itemLevel = 70 + System::random(29); // 70-99
-		else if (quality == QUALITY)
-			itemLevel = 100 + System::random(39); // 100-139
-		else if (quality == SELECT)
-			itemLevel = 140 + System::random(79); // 140-219
-		else if (quality == PREMIUM)
-			itemLevel = 330 + System::random(20);
-		else
-			itemLevel = 330 + System::random(20);
+//		if (quality == POOR)
+//			itemLevel = 1 + System::random(38); // 1-39
+//		else if (quality == FAIR)
+//			itemLevel = 40 + System::random(29); // 40-69
+//		else if (quality == GOOD)
+//			itemLevel = 70 + System::random(29); // 70-99
+//		else if (quality == QUALITY)
+//			itemLevel = 100 + System::random(39); // 100-139
+//		else if (quality == SELECT)
+//			itemLevel = 140 + System::random(79); // 140-219
+//		else if (quality == PREMIUM)
+//			itemLevel = 220 + System::random(109); // 220-329
+//		else
+//			itemLevel = 330 + System::random(20);
 
 		attackSpeed = 0.0;
 		minimumDamage = 0;
@@ -187,17 +187,17 @@ void LightsaberCrystalComponentImplementation::validateCrystalStats() {
 }
 
 int LightsaberCrystalComponentImplementation::getCrystalQuality() {
-	if (itemLevel < 40)
+	if (itemLevel < 50)
 		return POOR;
-	else if (itemLevel < 70)
-		return FAIR;
 	else if (itemLevel < 100)
+		return FAIR;
+	else if (itemLevel < 200)
 		return GOOD;
-	else if (itemLevel < 140)
+	else if (itemLevel < 300)
 		return QUALITY;
-	else if (itemLevel < 220)
+	else if (itemLevel < 400)
 		return SELECT;
-	else if (itemLevel < 450)
+	else if (itemLevel < 500)
 		return PREMIUM;
 	else
 		return FLAWLESS;
@@ -469,11 +469,11 @@ void LightsaberCrystalComponentImplementation::updateCraftingValues(CraftingValu
 
 		int finalColor = System::random(6);// red,green,blue
 
-		if (System::random(4) == 4){
+		if (System::random(2) == 2){
 		finalColor = System::random(6) + 5;// 1/10 color crystals will be yellow,purp,orange
 		}
 
-		if (System::random(9) == 9){
+		if (System::random(5) == 5){
 		finalColor = System::random(19) + 11;// 1/100 color crystals will be special named colors
 		}
 

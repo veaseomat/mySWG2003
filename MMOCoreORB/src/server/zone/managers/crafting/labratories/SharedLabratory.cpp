@@ -200,7 +200,7 @@ int SharedLabratory::calculateAssemblySuccess(CreatureObject* player,DraftSchema
 	if (assemblyRoll > 30)
 		return CraftingManager::MARGINALSUCCESS;
 
-	if (assemblyRoll > 20)
+	if (assemblyRoll < 20)
 		return CraftingManager::OK;
 
 	return CraftingManager::BARELYSUCCESSFUL;

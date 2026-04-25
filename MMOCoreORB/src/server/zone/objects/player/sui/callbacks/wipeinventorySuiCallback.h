@@ -24,7 +24,7 @@ public:
 			return;
 
 		//Send another confirmation just to be sure.
-		sui->setPromptText("Again, this command will delete every item that is not equipped in your inventory. Objects destroyed in this manner are not reimbursable. Are you really sure you want to do this?"); //Again, this command will delete every object in your house. Objects destroyed in this manner are not reimbursable. Are you really sure you want to do this?
+		sui->setPromptText("Again, this command will delete every item that is not equipped in your inventory. Objects destroyed in this manner are not recoverable. Are you sure?"); //Again, this command will delete every object in your house. Objects destroyed in this manner are not reimbursable. Are you really sure you want to do this?
 		sui->setCallback(new wipeinventoryConfirmSuiCallback(server));
 
 		ManagedReference<PlayerObject*> ghost = creature->getPlayerObject();

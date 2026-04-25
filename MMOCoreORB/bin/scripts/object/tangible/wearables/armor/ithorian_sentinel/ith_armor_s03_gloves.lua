@@ -52,7 +52,7 @@ object_tangible_wearables_armor_ithorian_sentinel_ith_armor_s03_gloves = object_
 	-- Damage types in WeaponObject
 	vulnerability = STUN + LIGHTSABER,
 
-	--specialResists = ELECTRICITY,
+	specialResists = ELECTRICITY,
 
 	-- These are default Blue Frog stats
 	healthEncumbrance = 80,

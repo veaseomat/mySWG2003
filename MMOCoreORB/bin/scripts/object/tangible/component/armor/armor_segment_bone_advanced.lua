@@ -48,8 +48,8 @@ object_tangible_component_armor_armor_segment_bone_advanced = object_tangible_co
 	experimentalWeights = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "exp_durability", "exp_quality", "exp_durability", "exp_durability", "exp_durability", "exp_durability", "null", "null", "exp_resistance", "null"},
 	experimentalSubGroupTitles = {"null", "null", "hit_points", "armor_effectiveness", "armor_integrity", "armor_health_encumbrance", "armor_action_encumbrance", "armor_mind_encumbrance", "armor_rating", "armor_special_type", "armor_special_effectiveness", "armor_special_integrity"},
-	experimentalMin = {0, 0, 1000, 1, 100, 6, 8, 4, 1, 2, 1, 100},
-	experimentalMax = {0, 0, 1000, 10, 1000, 1, 1, 1, 1, 2, 20, 1000},
+	experimentalMin = {0, 0, 1000, 10, 100, 6, 8, 4, 1, 2, 1, 100},
+	experimentalMax = {0, 0, 1000, 50, 1000, 1, 1, 1, 1, 2, 20, 1000},
 	experimentalPrecision = {0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 4, 4, 4, 1},
 }

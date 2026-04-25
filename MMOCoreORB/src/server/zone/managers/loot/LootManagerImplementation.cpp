@@ -258,36 +258,16 @@ int LootManagerImplementation::calculateLootCredits(int level) {
 
 TangibleObject* LootManagerImplementation::createLootObject(const LootItemTemplate* templateObject, int level, bool maxCondition) {
 
-//	int uncappedLevel = level;
+	//int uncappedLevel = level;
 
-//
-//	if(level <= 350)	//vanilla 300
-//		level = 350;
-//
+	level += System::random(50);
 
-	level = level + System::random(350);
-
-
-	if(level > 350)
+	if(level >= 350)//vanilla 300
 		level = 350;
 
+	if (System::random(9) == 9)//1/10 items will be max lvl
+		level = 350;
 
-
-	//level += System::random(350 - level);
-
-//	int diff = 350 - level;
-//
-//	if (System::random(1) >= 1)	{
-//		level += System::random(diff);
-//	}
-
-//	int randombonus = System::random(350);
-//	int randomcreature = System::random(level);
-//
-//	level = (randombonus + randomcreature) / 2;
-//
-//	if (level < level / 2)	//min lvl is half the creature lvl
-//		level = level / 2;
 
 	const String& directTemplateObject = templateObject->getDirectObjectTemplate();
 
@@ -310,12 +290,14 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	prototype->setJunkDealerNeeded(1);//templateObject->getJunkDealerTypeNeeded());
 	float junkMinValue = templateObject->getJunkMinValue() * junkValueModifier;
+	if (junkMinValue < 20) junkMinValue = 20;
 	float junkMaxValue = templateObject->getJunkMaxValue() * junkValueModifier;
+	if (junkMaxValue < 40) junkMaxValue = 40;
 	float fJunkValue = junkMinValue+System::random(junkMaxValue-junkMinValue) * 2;
 
-	if (level>0 && templateObject->getJunkDealerTypeNeeded()>1){
-		fJunkValue = fJunkValue + (fJunkValue * ((float)level / 100)) * 2; // This is the loot value calculation if the item has a level
-	}
+	//if (level>0 && templateObject->getJunkDealerTypeNeeded()>1){
+	fJunkValue = fJunkValue + (fJunkValue * ((float)level / 100)) * 2; // This is the loot value calculation if the item has a level
+	//}
 
 	prototype->setJunkValue((int)(fJunkValue));
 
@@ -326,61 +308,94 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	setCustomObjectName(prototype, templateObject);
 
-	float excMod = 1.0 + (System::random(50) / 100);//was 15/10
+	float excMod = 2.5;//1.0 + (System::random(15) / 10);
 
 	//float adjustment = floor((float)(((level > 50) ? level : 50) - 50) / 10.f + 0.5);
 
 	bool yellow = false;
 
-	int newlegendaryChance = 4;//was 9
+	int newlegendaryChance = 9;//was 9
 	int newexceptionalChance = 4;
 	int newyellowChance = 1;
+
+//	if (prototype->isLightsaberCrystalObject()) {
+//		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
+//
+//		if (crystal->getColor() != 31)
+//			continue;
+//	}
 
 
 	if (prototype->isComponent() || prototype->isWeaponObject() || prototype->isArmorObject()) {//&&!issaber?
 
-		if (System::random(newlegendaryChance) >= newlegendaryChance) { // - adjustment) { //legendaryChance
+		if (System::random(1) == 1) { // 1/2 chance
 			UnicodeString newName = prototype->getDisplayedName() + " (Legendary)";
+
+			excMod = 5.0;//leggy modifier
+			fJunkValue *= 2;
+
+			level += System::random(75);
+
+			if(level >= 400)//1/3 of 350 will cap to 400
+				level = 400;
+
+			if(System::random(3) == 3) {//1/10
+
+				excMod = 10.0;
+				fJunkValue *= 2;
+
+				level += System::random(75);
+				if(level >= 450)//1/3 of 400 will cap to 450
+					level = 450;
+
+				newName = "\\#5218fa" + prototype->getDisplayedName() + " (Mythic)";// divine next? Vivid Sky Blue #00ccff
+
+				if(System::random(5) == 5) {//1/100
+					excMod = 20.0;
+					fJunkValue *= 2;
+
+					level += System::random(75);
+					if(level >= 500)//1/3 of 450 will cap to 500
+						level = 500;
+
+					newName = "\\#00ccff" + prototype->getDisplayedName() + " (Divine)";//
+
+					if(System::random(7) == 7) {//1/1000
+						excMod = 40.0;
+						fJunkValue *= 2;
+
+						level += System::random(50);
+						if(level >= 500)
+							level = 500;
+
+						newName = "\\#ff77ff" + prototype->getDisplayedName() + " (Astral)";//
+
+						if(System::random(9) == 9) {//1/10,000
+							excMod = 60.0;
+							fJunkValue *= 2;
+
+							level = 500;
+
+							newName = "\\#ff0800" + prototype->getDisplayedName() + " (Godlike)";//
+
+							if(System::random(11) == 11) {//1/100,000
+								excMod = 100.0;//100x
+								fJunkValue *= 2;
+								level = 500;
+								newName = "\\#1b1b1b" + prototype->getDisplayedName() + " (Demiurgical)";//
+							}
+						}
+					}
+				}
+			}
+
 			prototype->setCustomObjectName(newName, false);
-
-			excMod = legendaryModifier; //5.0?
-
-//			level += System::random(350);
-//
-//			if(level > 350)	//vanilla 300
-				//level = 350;
 
 			prototype->addMagicBit(false);
 
 			legendaryLooted.increment();
 		}
 
-//		else if (System::random(newexceptionalChance) >= newexceptionalChance) { // - adjustment) { //exceptionalChance
-//			UnicodeString newName = prototype->getDisplayedName() + " (Exceptional)";
-//			prototype->setCustomObjectName(newName, false);
-//
-//			excMod = exceptionalModifier;
-//
-//			level += System::random(350);
-//
-//			if(level > 350)	//vanilla 300
-//				level = 350;
-//
-//			prototype->addMagicBit(false);
-//
-//			exceptionalLooted.increment();
-//		} else if (System::random(newyellowChance) >= newyellowChance) {
-//				excMod = yellowModifier;
-//
-//				prototype->addMagicBit(false);
-//
-//				level += System::random(350);
-//
-//				if(level > 350)	//vanilla 300
-//					level = 350;
-//
-//				yellowLooted.increment();
-//		}
 
 	}
 
@@ -389,6 +404,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 		if (crystal != nullptr)
 			crystal->setItemLevel(level);
+
 	}
 	else {
 		//craftingValues->setCurrentValue("challenge_level", level);
@@ -415,7 +431,11 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
-		float percentage = 9000 + System::random(1000) / 10000.f; //System::random(level * 1000) / 20000.f; //System::random(10000) / 10000.f;
+		float percentage = System::random(10000) / 10000.f;//5000 + System::random(5000) / 10000.f; //System::random(10000) / 10000.f;
+
+		//NEW RANDOMIZER
+//		int newrandomizer = (excMod * 1000) / 2;
+//		excMod = (excMod * .75) + (System::random(excMod) * .25);//setting percentage to 1 and using this breaks some stats like force cost rolls always the same because they are ignored on exc below
 
 		// If the attribute is represented by an integer (useCount, maxDamage,
 		// range mods, etc), we need to base the percentage on a random roll
@@ -475,88 +495,69 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 			continue;
 		}
 
-		if (prototype->isComponent()) {
-			min *= 1.25;
-			max *= 1.75;
-		}
-
-		if (prototype->isArmorObject()) {
-
-			if (subtitle == "armor_health_encumbrance" || subtitle == "armor_action_encumbrance" || subtitle == "armor_mind_encumbrance") {
-//				craftingValues->setMinValue(subtitle, min * 2);
-//				craftingValues->setMaxValue(subtitle, max * 2);
-				continue;
-			}
-
-//			if (subtitle == "armor_effectiveness") {
-//				craftingValues->setMinValue(subtitle, min * 1.5);
-//				craftingValues->setMaxValue(subtitle, max * 1.5);
-//			}
-
-			min *= 1.75;
-			max *= 1.25;
-
-		}
-
-		//using the exc mod as the randomizer so it doesnt affect the legendary tiers overlap
-		excMod *= 1.25 + (System::random(25000) * .00001);
-
-//		float randomizer = .75 + (System::random(2500) * .0001);
+//		if (prototype->isComponent()) {
+//			max *= 1.75;
+//		}
 //
-//		min *= randomizer;
-//		max *= randomizer;
+//		if (prototype->isArmorObject()) {
+//			if (subtitle == "armor_health_encumbrance" || subtitle == "armor_action_encumbrance" || subtitle == "armor_mind_encumbrance") {
+//
+//				continue;
+//			}
+//			max *= 1.25;
+//		}
 
 
-//		float minMod = (max > min) ? 300.f : -300.f;
-//		float maxMod = (max > min) ? 300.f : -300.f;
+		float minMod = (max > min) ? 350.f : -350.f;//vanilla 300
+		float maxMod = (max > min) ? 350.f : -350.f;
 
 		if (max > min && min >= 0) { // Both max and min non-negative, max is higher
-			//min = ((min * level / minMod) + min) * excMod;
-			//max = ((max * level / maxMod) + max) * excMod;
+			min = ((min * level / minMod) + min) * excMod;
+			max = ((max * level / maxMod) + max) * excMod;
 
-			min *= excMod;
-			max *= excMod;
+//			min *= excMod;
+//			max *= excMod;
 
 		} else if (max > min && max <= 0) { // Both max and min are non-positive, max is higher
-//			minMod *= -1;
-//			maxMod *= -1;
-//			min = ((min * level / minMod) + min) / excMod;
-//			max = ((max * level / maxMod) + max) / excMod;
+			minMod *= -1;
+			maxMod *= -1;
+			min = ((min * level / minMod) + min) / excMod;
+			max = ((max * level / maxMod) + max) / excMod;
 
-			min /= excMod;
-			max /= excMod;
+//			min /= excMod;
+//			max /= excMod;
 
 		} else if (max > min) { // max is positive, min is negative
-//			minMod *= -1;
-//			min = ((min * level / minMod) + min) / excMod;
-//			max = ((max * level / maxMod) + max) * excMod;
+			minMod *= -1;
+			min = ((min * level / minMod) + min) / excMod;
+			max = ((max * level / maxMod) + max) * excMod;
 
-			min /= excMod;
-			max *= excMod;
+//			min /= excMod;
+//			max *= excMod;
 
 		} else if (max < min && max >= 0) { // Both max and min are non-negative, min is higher
-//			min = ((min * level / minMod) + min) / excMod;
-//			max = ((max * level / maxMod) + max) / excMod;
+			min = ((min * level / minMod) + min) / excMod;
+			max = ((max * level / maxMod) + max) / excMod;
 
-			min /= excMod;
-			max /= excMod;
+//			min /= excMod;
+//			max /= excMod;
 
 		} else if (max < min && min <= 0) { // Both max and min are non-positive, min is higher
-//			minMod *= -1;
-//			maxMod *= -1;
-//			min = ((min * level / minMod) + min) * excMod;
-//			max = ((max * level / maxMod) + max) * excMod;
-
-			min *= excMod;
-			max *= excMod;
+			minMod *= -1;
+			maxMod *= -1;
+			min = ((min * level / minMod) + min) * excMod;
+			max = ((max * level / maxMod) + max) * excMod;
+//
+//			min *= excMod;
+//			max *= excMod;
 
 		} else { // max is negative, min is positive
-//			maxMod *= -1;
-//			min = ((min * level / minMod) + min) / excMod;
-//			max = ((max * level / maxMod) + max) * excMod;
+			maxMod *= -1;
+			min = ((min * level / minMod) + min) / excMod;
+			max = ((max * level / maxMod) + max) * excMod;
 
-			min /= excMod;
-			max *= excMod;
+//			min /= excMod;
+//			max *= excMod;
 		}
 
 //		if (excMod == 1.0 && (yellowChance == 0 || System::random(yellowChance) == 0)) {
@@ -627,8 +628,8 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	//setSkillMods(prototype, templateObject, level, excMod);
 
-	if (System::random(2) == 2)// || prototype->isRobeObject())
-		setSockets(prototype, craftingValues);
+	//if (System::random(2) == 2)// || prototype->isRobeObject())
+	setSockets(prototype, craftingValues);
 
 	// Update the Tano with new values
 	prototype->updateCraftingValues(craftingValues, true);
@@ -803,7 +804,13 @@ bool LootManagerImplementation::createLoot(TransactionLog& trx, SceneObject* con
 bool LootManagerImplementation::createLootFromCollection(TransactionLog& trx, SceneObject* container, const LootGroupCollection* lootCollection, int level) {
 	for (int i = 0; i < lootCollection->count(); ++i) {
 		const LootGroupCollectionEntry* entry = lootCollection->get(i);
-		int lootChance = entry->getLootChance() * 2.0;
+		int lootChance = entry->getLootChance() * 1.75;
+		
+				//random holocron creation (only drops on mobs that have loot lists)
+		int holochance = 1000;
+		if (System::random(holochance) >= holochance) {
+			createLoot(trx, container, "holocron_3", level);
+		}
 
 		if (lootChance <= 0)
 			continue;

@@ -49,8 +49,8 @@ object_tangible_component_weapon_chemical_dispersion_mechanism_advanced = object
 	experimentalWeights = {1, 1, 2, 1, 2, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "exp_durability"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "hitpoints"},
-	experimentalMin = {0, 0, 1, 1, 10},
-	experimentalMax = {0, 0, 20, 20, 100},
+	experimentalMin = {0, 0, 5, 5, 10},
+	experimentalMax = {0, 0, 100, 100, 100},
 	experimentalPrecision = {0, 0, 0, 0, 0},
 	experimentalCombineType = {1, 1, 1, 1, 1},
 }

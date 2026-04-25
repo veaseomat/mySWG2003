@@ -90,13 +90,11 @@ void WeaponObjectImplementation::loadTemplateData(SharedObjectTemplate* template
 	if (templateAttackSpeed > 1)
 		attackSpeed = templateAttackSpeed;
 
-	setSliceable(true);
-
-//	if (!isJediWeapon()) {
-//		setSliceable(true);
-//	} else if (isJediWeapon()) {
-//		setSliceable(false);
-//	}
+	if (!isJediWeapon()) {
+		setSliceable(true);
+	} else if (isJediWeapon()) {
+		setSliceable(false);
+	}
 }
 
 void WeaponObjectImplementation::sendContainerTo(CreatureObject* player) {
@@ -365,8 +363,13 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 	}
 
 	// Force Cost
-	if (getForceCost() > 0)
-		alm->insertAttribute("forcecost", (float)getForceCost());
+	float newfc = (float)getForceCost();
+
+	if (isJediWeapon() && newfc < 2.0)
+		newfc = 2.0;
+
+	if (newfc > 0)
+		alm->insertAttribute("forcecost", newfc);//(float)getForceCost());
 
 	for (int i = 0; i < getNumberOfDots(); i++) {
 

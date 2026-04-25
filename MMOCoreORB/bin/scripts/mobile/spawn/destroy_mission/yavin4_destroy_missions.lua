@@ -116,8 +116,14 @@ yavin4_destroy_missions = {
 			maxDifficulty = 99,
 			size = 25,
 		},
-				{
+		{
 			lairTemplateName = "yavin4_stintaril_giant_neutral_medium_boss_01",
+			minDifficulty = 95,
+			maxDifficulty = 99,
+			size = 25,
+		},
+		{
+			lairTemplateName = "yavin4_geo",
 			minDifficulty = 95,
 			maxDifficulty = 99,
 			size = 25,

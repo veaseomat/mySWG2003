@@ -37,6 +37,12 @@ global_hard = {
 			weighting = 1,
 			size = 25
 		},
+		{
+			lairTemplateName = "global_dark_jedi_camp_dark_jedi_theater2",
+			minDifficulty = 95,
+			maxDifficulty = 99,
+			size = 25,
+		},
 	}
 }
 

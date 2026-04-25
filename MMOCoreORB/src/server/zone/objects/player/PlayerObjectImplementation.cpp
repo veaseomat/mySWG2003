@@ -584,7 +584,7 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 //		}
 	}
 
-//	int xpCap = -1;
+	int xpCap = 1000000000;
 //
 //	if (xpTypeCapList.contains(xpType))
 //		xpCap = xpTypeCapList.get(xpType);
@@ -592,10 +592,10 @@ int PlayerObjectImplementation::addExperience(const String& xpType, int xp, bool
 //	if (xpCap < 0)
 //		xpCap = 2000;
 //
-//	if (xp > xpCap) {
-//		valueToAdd = xpCap - (xp - valueToAdd);
-//		xp = xpCap;
-//	}
+	if (xp > xpCap) {
+		valueToAdd = xpCap - (xp - valueToAdd);
+		xp = xpCap;
+	}
 
 	if (notifyClient) {
 		PlayerObjectDeltaMessage8* dplay8 = new PlayerObjectDeltaMessage8(this);
@@ -2070,17 +2070,27 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 	}
 
 	if (!forceRegenerationEvent->isScheduled()) {
-		int forceControlMod = 0, forceManipulationMod = 0;
+		int forcePowerMod = 0, forceControlMod = 0, forceManipulationMod = 0;
 
 		if (creature->hasSkill("force_rank_light_novice")) {
+			forcePowerMod = creature->getSkillMod("force_power_light");
 			forceControlMod = creature->getSkillMod("force_control_light");
 			forceManipulationMod = creature->getSkillMod("force_manipulation_light");
 		} else if (creature->hasSkill("force_rank_dark_novice")) {
+			forcePowerMod = creature->getSkillMod("force_power_dark");
 			forceControlMod = creature->getSkillMod("force_power_dark");
 			forceManipulationMod = creature->getSkillMod("force_manipulation_dark");
 		}
 
-		regen += (forceControlMod + forceManipulationMod) / 10.f;
+		regen += forceManipulationMod / 2;// / 5.f;
+
+		if (regen > 125)
+			regen = ((regen - 125) / 5) + 125;
+
+		if (creature->isInCombat())//combat regen reduced
+			regen /= 2;
+//		else
+//			regen *= 2;//out of combat regen buff
 
 		int regenMultiplier = creature->getSkillMod("private_force_regen_multiplier");
 		int regenDivisor = creature->getSkillMod("private_force_regen_divisor");
@@ -2092,6 +2102,7 @@ void PlayerObjectImplementation::activateForcePowerRegen() {
 			regen /= regenDivisor;
 
 		float timer = regen / 5.f;
+
 
 		float scheduledTime = 10 / timer;
 		uint64 miliTime = static_cast<uint64>(scheduledTime * 1000.f);
@@ -2983,17 +2994,22 @@ void PlayerObjectImplementation::recalculateForcePower() {
 
 	int maxForce = player->getSkillMod("jedi_force_power_max");
 
-	int forcePowerMod = 0, forceControlMod = 0;
+	int forcePowerMod = 0, forceControlMod = 0, forceManipulationMod = 0;
 
 	if (player->hasSkill("force_rank_light_novice")) {
 		forcePowerMod = player->getSkillMod("force_power_light");
 		forceControlMod = player->getSkillMod("force_control_light");
+		forceManipulationMod = player->getSkillMod("force_manipulation_light");
 	} else if (player->hasSkill("force_rank_dark_novice")) {
 		forcePowerMod = player->getSkillMod("force_power_dark");
 		forceControlMod = player->getSkillMod("force_control_dark");
+		forceManipulationMod = player->getSkillMod("force_manipulation_dark");
 	}
 
-	maxForce += (forcePowerMod + forceControlMod) * 10;
+	maxForce += (forcePowerMod + forceControlMod + forceManipulationMod) * 10;
+
+	if (maxForce > 5000)
+		maxForce = ((maxForce - 5000) / 5) + 5000;
 
 	setForcePowerMax(maxForce, true);
 }

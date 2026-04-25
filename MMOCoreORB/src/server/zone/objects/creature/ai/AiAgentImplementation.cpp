@@ -150,25 +150,21 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	
 	//if (level > 350) level = 350;
 	
-	if (System::random(25) == 25 && level < 500) {// and elite <= 1.0) {
-		legendarynpc = true;
-		level = 500;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
-	}
+//	if (System::random(25) == 25 && level < 500) {// and elite <= 1.0) {
+//		legendarynpc = true;
+//		level = 500;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
+//	}
 
 	planetMapCategory = npcTemplate->getPlanetMapCategory();
 
-	float minDmg = npcTemplate->getDamageMin(); //level * 6; //
-	float maxDmg = npcTemplate->getDamageMax(); //level * 10; //
+	float minDmg = npcTemplate->getDamageMin();
+	float maxDmg = npcTemplate->getDamageMax();
 	float speed = calculateAttackSpeed(level);
 	bool allowedWeapon = true;
 
 	if (petDeed != nullptr) {
-		minDmg = petDeed->getMinDamage();
-		maxDmg = petDeed->getMaxDamage() * 1.25;
-		if (maxDmg > 820) maxDmg = 820;
-		minDmg *= 3;
-		maxDmg *= 3;
-
+		minDmg = petDeed->getMinDamage() * 2;
+		maxDmg = petDeed->getMaxDamage() * 2;
 		allowedWeapon = petDeed->getRanged();
 	}
 
@@ -214,21 +210,21 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 				int finalColor = System::random(5);// red,green,blue
 
-				if (System::random(4) >= 4){
+				if (System::random(4) == 4){
 					finalColor = System::random(6) + 5;// 1/10 color crystals will be yellow,purp,orange
 				}
 
-				if (System::random(9) >= 9){
+				if (System::random(9) == 9){
 					finalColor = System::random(19) + 11;// 1/100 color crystals will be special named colors
 				}
 
 				String factionString = npcTemplate->getFaction();
 
-				if (System::random(9) <= 6 && factionString == "imperial") {// imp jedi red
+				if (System::random(1) == 1 && factionString == "imperial") {// imp jedi red
 					finalColor = System::random(1);
 				}
 
-				if (System::random(9) <= 6 && factionString == "rebel") {// reb jedi blue/green
+				if (System::random(1) == 1 && factionString == "rebel") {// reb jedi blue/green
 					finalColor = System::random(4) + 1;
 				}
 
@@ -285,20 +281,23 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 	baseHAM.removeAll();
 	if (petDeed == nullptr) {
 		for (int i = 0; i < 9; ++i) {
-			if (i % 3 == 0) {
+			//if (i % 3 == 0) {
 				ham = System::random(getHamMaximum() - getHamBase()) + getHamBase();
 				if (isDroidObject() && isPet())
 					ham = getHamMaximum();
 
-				if (ham > 100000) ham = 100000;//ham cap
+				if (ham > 30000) ham = 30000;//ham cap
 
 				//ham /= 4;//reduce ham
 
 				//ham += System::random(100) + 100;//increase base ham for low lvl
 
+				ham = System::random(ham * .3) + (ham * .7);
+
 				baseHAM.add(ham);
-			} else
-				baseHAM.add(ham/10);
+			//} else
+//				ham = System::random(ham * .3) + (ham * .7);
+//				baseHAM.add(ham/10);
 		}
 	} else {
 		int health = petDeed->getHealth();
@@ -1529,7 +1528,7 @@ void AiAgentImplementation::respawn(Zone* zone, int level) {
 			}
 		}
 	} else {
-		setLevel(level);
+//		setLevel(level);
 	}
 
 	resetBehaviorList();
@@ -1596,8 +1595,8 @@ void AiAgentImplementation::notifyDespawn(Zone* zone) {
 	loadTemplateData(templateObject);
 	loadTemplateData(npcTemplate);
 
-	if (oldLevel != level)
-		setLevel(level);
+//	if (oldLevel != level)
+//		setLevel(level);
 
 	stateBitmask = 0;
 
@@ -1769,16 +1768,46 @@ void AiAgentImplementation::activatePostureRecovery() {
 }
 
 void AiAgentImplementation::activateHAMRegeneration(int latency) {
-    if (isIncapacitated() || isDead() || isInCombat())
+    if (isIncapacitated() || isDead()) {// || isInCombat())
         return;
+    }
 
-    uint32 healthTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::HEALTH) / 300000.f * latency));
-    uint32 actionTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::ACTION) / 300000.f * latency));
-    uint32 mindTick   = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::MIND) / 300000.f * latency));
+	//int creatureLevel = getLevel();
+	float modifier = 1.0;
 
-    healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick, true, false);
-    healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick, true, false);
-    healDamage(asCreatureObject(), CreatureAttribute::MIND,   mindTick,   true, false);
+//    uint32 healthTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::HEALTH) / 300000.f * latency));
+//    uint32 actionTick = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::ACTION) / 300000.f * latency));
+//    uint32 mindTick   = (uint32) Math::max(1.f, (float) ceil(getMaxHAM(CreatureAttribute::MIND) / 300000.f * latency));
+
+    int healthTick = getMaxHAM(CreatureAttribute::HEALTH) / 3000;
+    int actionTick = getMaxHAM(CreatureAttribute::ACTION) / 3000;
+    int mindTick = getMaxHAM(CreatureAttribute::MIND) / 3000;
+
+
+	if (healthTick < 1)
+		healthTick = 1;
+
+	if (actionTick < 1)
+		actionTick = 1;
+
+	if (mindTick < 1)
+		mindTick = 1;
+
+	if (healthTick > 10)
+		healthTick = ((healthTick - 10) / 2) + 10;
+
+	if (actionTick > 10)
+		actionTick = ((actionTick - 10) / 2) + 10;
+
+	if (mindTick > 10)
+		mindTick = ((mindTick - 10) / 2) + 10;
+
+	if (!isInCombat())
+		modifier = 5.0;
+
+    healDamage(asCreatureObject(), CreatureAttribute::HEALTH, healthTick * modifier, true, false);
+    healDamage(asCreatureObject(), CreatureAttribute::ACTION, actionTick * modifier, true, false);
+    healDamage(asCreatureObject(), CreatureAttribute::MIND,   mindTick * modifier,   true, false);
 
     activatePassiveWoundRegeneration();
 }

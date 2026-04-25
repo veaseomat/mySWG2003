@@ -4,18 +4,18 @@ saber_rcp2 = {
 	minimumLevel = 0,
 	maximumLevel = -1,
 --	newmaximumLevel = 1,
-	customObjectName = "Master crystal pack",
+	customObjectName = "Kyber Crystal Pack",
 	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack.iff",
 	craftingValues = {
-		{"mindamage", 25,125,0},
-		{"maxdamage", 50,250,0},
-		{"attackspeed",-0.2,-1.0,1},
-		{"woundchance",10,25,1},
+		{"mindamage", 1,125,0},
+		{"maxdamage", 5,250,0},
+		{"attackspeed",-0.1,-1.0,1},
+		{"woundchance",2,25,1},
 		{"forcecost",-0.1,-5,1},
 --		{"color",1,30,0},
 --		{"attackactioncost",0,-1,0},
 --		{"attackmindcost",0,-1,0},
-		{"useCount",4,8,0}
+		{"useCount",2,2,1}
 	},
 	customizationStringName = {},
 	customizationValues = {}

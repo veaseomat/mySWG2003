@@ -384,6 +384,9 @@ void FrsManagerImplementation::validatePlayerData(CreatureObject* player) {
 	int councilType = playerData->getCouncilType();
 	int curPlayerRank = playerData->getRank();
 
+//	if (player->hasSkill("force_rank_light_rank_09") || player->hasSkill("force_rank_dark_rank_09"))
+//		curPlayerRank = 10;
+
 	if (curPlayerRank == -1)
 		return;
 

@@ -3,9 +3,9 @@ global_black_sun_neutral_none = Lair:new {
 		{"black_sun_assassin",1},
 		{"black_sun_guard",2},
 		{"black_sun_henchman",2},
-		{"black_sun_thug",3}
+		{"black_sun_thug",2}
 	},
-	spawnLimit = 9,
+	spawnLimit = 4,
 	buildingsVeryEasy = {"object/building/poi/anywhere_misc_camp_small_1.iff"},
 	buildingsEasy = {"object/building/poi/anywhere_misc_camp_small_1.iff"},
 	buildingsMedium = {"object/building/poi/anywhere_misc_camp_small_1.iff"},

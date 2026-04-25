@@ -82,9 +82,6 @@ public:
 
 		int newforcecost = forceCost;
 
-		if (newforcecost > 100)
-			newforcecost = 100;
-
 		if (ghost == nullptr)
 			return forceCost;
 
@@ -95,21 +92,10 @@ public:
 
 		locker.release();
 
-		int manipulationMod = 0;
-		float frsModifier = 0;
+		if (newforcecost > 100)
+			newforcecost = ((newforcecost - 100) / 2) + 100;
 
-		if (councilType == FrsManager::COUNCIL_LIGHT) {
-			manipulationMod = creature->getSkillMod("force_manipulation_light");
-			frsModifier = frsLightForceCostModifier;
-		} else if (councilType == FrsManager::COUNCIL_DARK) {
-			manipulationMod = creature->getSkillMod("force_manipulation_dark");
-			frsModifier = frsDarkForceCostModifier;
-		}
-
-		if (manipulationMod == 0 || frsModifier == 0)
-			return newforcecost;//forceCost;
-
-		return newforcecost + (int)((manipulationMod * frsModifier) + .5);
+		return newforcecost;
 	}
 
 	float getCommandDuration(CreatureObject *object, const UnicodeString& arguments) const {

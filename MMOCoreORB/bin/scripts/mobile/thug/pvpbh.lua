@@ -4,7 +4,7 @@ pvpbh = Creature:new {
 	randomNameTag = true,
 	socialGroup = "",
 	faction = "",
-	level = 300,
+	level = 250,
 	elite = 1.5,
 	chanceHit = 55,
 	damageMin = 1200,
@@ -63,8 +63,18 @@ pvpbh = Creature:new {
 		{
 			groups = {
 				{group = "junk", chance = 10000000},
-			}
+			},
 		},
+		{
+			groups = {
+				{group = "junk", chance = 10000000},
+			},
+		},
+--		{
+--			groups = {
+--				{group = "junk", chance = 9000000},
+--			},
+--		},
 	},
 	weapons = {"bh_weapons"},
 	conversationTemplate = "",
