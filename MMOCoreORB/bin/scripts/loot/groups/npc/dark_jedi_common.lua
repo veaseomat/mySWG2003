@@ -21,7 +21,8 @@ dark_jedi_common = {
 		{groupTemplate = "rcp", weight = 2000000},
 		{groupTemplate = "power_crystals", weight = 2000000},
 		{groupTemplate = "holocron_dark", weight = 2000000},
-		{groupTemplate = "holocron_light", weight = 2000000},
+		--{groupTemplate = "holocron_light", weight = 2000000},
+		{groupTemplate = "sabers", weight = 2000000},
 
 	}
 }

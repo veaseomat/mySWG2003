@@ -7,6 +7,7 @@ saber1h5 = {
 	customObjectName = "Trophy Lightsaber",
 	directObjectTemplate = "object/weapon/melee/sword/crafted_saber/sword_lightsaber_one_handed_s5_gen1.iff",
 	craftingValues = {
+		{"color",0,30,0},
 		{"mindamage",150,160,0},
 		{"maxdamage",240,250,0},
 		{"attackspeed",2.4,1.8,1},
@@ -20,7 +21,7 @@ saber1h5 = {
 		{"attackhealthcost",10,10,0},
 		{"attackactioncost",15,10,0},
 		{"attackmindcost",35,25,0},
-		{"forcecost",18.0,16.0,0},
+		{"forcecost",10.0,2.0,0},
 		
 	},
 	customizationStringNames = {},

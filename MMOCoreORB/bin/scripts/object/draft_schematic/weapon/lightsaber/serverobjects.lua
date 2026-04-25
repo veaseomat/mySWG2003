@@ -47,9 +47,6 @@
 -- Server Objects
 includeFile("draft_schematic/weapon/lightsaber/lightsaber_one_hand_gen1.lua")
 includeFile("draft_schematic/weapon/lightsaber/lightsaber_one_hand_gen2.lua")
-
---includeFile("draft_schematic/weapon/lightsaber/lightsaber_one_hand_gen2_s1.lua")
-
 includeFile("draft_schematic/weapon/lightsaber/lightsaber_one_hand_gen3.lua")
 includeFile("draft_schematic/weapon/lightsaber/lightsaber_one_hand_gen4.lua")
 includeFile("draft_schematic/weapon/lightsaber/lightsaber_one_hand_gen5.lua")

@@ -135,8 +135,8 @@ object_weapon_melee_sword_crafted_saber_sword_lightsaber_training = object_weapo
 	experimentalWeights = {1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1},
 	experimentalGroupTitles = {"null", "null", "expDamage", "expDamage", "expDamage", "expDamage", "expEffeciency", "expEffeciency", "expEffeciency", "expEffeciency"},
 	experimentalSubGroupTitles = {"null", "null", "mindamage", "maxdamage", "attackspeed", "woundchance", "forcecost", "attackhealthcost", "attackactioncost", "attackmindcost"},
-	experimentalMin = {0, 0, 50, 130, 4.8, 2, 18, 20, 35, 40},
-	experimentalMax = {0, 0, 70, 170, 4.5, 10, 15, 15, 25, 25},
+	experimentalMin = {0, 0, 50, 130, 4.8, 2, 22, 20, 35, 40},
+	experimentalMax = {0, 0, 70, 170, 1.0, 10, 12, 15, 25, 25},
 	experimentalPrecision = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0},
 	experimentalCombineType = {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
 }

@@ -370,6 +370,14 @@ void WeaponObjectImplementation::fillAttributeList(AttributeListMessage* alm, Cr
 
 	if (newfc > 0)
 		alm->insertAttribute("forcecost", newfc);//(float)getForceCost());
+		
+	if (isJediWeapon()) {
+		StringBuffer str3;
+		str3 << "@jedi_spam:saber_color_" << getBladeColor();
+
+		alm->insertAttribute("color", str3);
+		setCustomizationVariable("/private/index_color_blade", getBladeColor(), true);
+	}
 
 	for (int i = 0; i < getNumberOfDots(); i++) {
 
@@ -631,7 +639,9 @@ void WeaponObjectImplementation::updateCraftingValues(CraftingValues* values, bo
 
 	if (isJediWeapon()) {
 		setForceCost(Math::getPrecision(values->getCurrentValue("forcecost"), 1));
-		setBladeColor(31);
+		//setBladeColor(31);//vanilla
+		setBladeColor(values->getCurrentValue("color"));
+		//setCustomizationVariable("/private/index_color_blade", values->getCurrentValue("color"), true);//didnt work here? cant remember
 	}
 
 	value = values->getCurrentValue("woundchance");
