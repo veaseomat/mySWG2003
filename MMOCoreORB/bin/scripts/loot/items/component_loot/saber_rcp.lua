@@ -3,21 +3,22 @@
 saber_rcp = {
 	minimumLevel = 0,
 	maximumLevel = -1,
---	newmaximumLevel = 1,
-	customObjectName = "Kyber Crystal Pack",
-	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_refined_crystal_pack.iff",
+	customObjectName = "Lightsaber Crystal",
+	directObjectTemplate = "object/tangible/component/weapon/lightsaber/lightsaber_module_force_crystal.iff",
 	craftingValues = {
-		{"mindamage", 1,125,0},
-		{"maxdamage", 5,250,0},
-		{"attackspeed",-0.1,-1.0,1},
-		{"woundchance",2,25,1},
-		{"forcecost",-0.1,-5,1},
---		{"color",1,30,0},
---		{"attackactioncost",0,-1,0},
---		{"attackmindcost",0,-1,0},
-		{"useCount",2,2,1}
+		{"color",0,30,0},--actual color now managed in lootmanagerimp.cpp
+		{"mindamage", 5,150,0},
+		{"maxdamage", 10,225,0},
+--		{"attackspeed",0.0,-4.0,1},
+		{"woundchance",0,0,0},
+		{"forcecost",0,-10,0},
+		--{"hitpoints",20,100,0},forcecost
+		--{"midrangemod",4,20,0},
+--		{"attackhealthcost",0,-9,0},
+--		{"attackactioncost",0,-9,0},
+--		{"attackmindcost",0,-9,0},
 	},
-	customizationStringName = {},
+	customizationStringNames = {},
 	customizationValues = {}
 }
 

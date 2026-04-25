@@ -23,8 +23,8 @@ void LightsaberObjectMenuComponent::fillObjectMenuResponse(SceneObject* sceneObj
 
 	TangibleObjectMenuComponent::fillObjectMenuResponse(sceneObject, menuResponse, player);
 
-	String text = "@jedi_spam:open_saber";
-	menuResponse->addRadialMenuItem(89, 3, text);
+//	String text = "@jedi_spam:open_saber";
+//	menuResponse->addRadialMenuItem(89, 3, text);
 
 }
 

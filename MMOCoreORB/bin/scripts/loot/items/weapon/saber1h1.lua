@@ -7,6 +7,7 @@ saber1h1 = {
 	customObjectName = "Trophy Lightsaber",
 	directObjectTemplate = "object/weapon/melee/sword/crafted_saber/sword_lightsaber_one_handed_s1_gen1.iff",
 	craftingValues = {
+		{"color",0,30,0},
 		{"mindamage",150,160,0},
 		{"maxdamage",240,250,0},
 		{"attackspeed",2.4,1.8,1},
@@ -20,7 +21,7 @@ saber1h1 = {
 		{"attackhealthcost",10,10,0},
 		{"attackactioncost",15,10,0},
 		{"attackmindcost",35,25,0},
-		{"forcecost",18.0,16.0,0},
+		{"forcecost",10.0,2.0,0},
 		
 	},
 	customizationStringNames = {},
@@ -29,8 +30,8 @@ saber1h1 = {
 	-- randomDotChance: The chance of this weapon object dropping with a random dot on it. Higher number means less chance. Set to 0 to always have a random dot.
 	randomDotChance = -1,
 	junkDealerTypeNeeded = JUNKARMS,
-	junkMinValue = 2500,
-	junkMaxValue = 4500
+	junkMinValue = 25,
+	junkMaxValue = 45
 
 }
 
