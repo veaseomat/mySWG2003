@@ -431,7 +431,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
-		float percentage = System::random(10000) / 10000.f;//5000 + System::random(5000) / 10000.f; //System::random(10000) / 10000.f;
+		float percentage = ((level * 10) + System::random(level * 10)) / 10000.f; //System::random(10000) / 10000.f;
 
 		//NEW RANDOMIZER
 //		int newrandomizer = (excMod * 1000) / 2;

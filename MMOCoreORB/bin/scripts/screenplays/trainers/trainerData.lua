@@ -384,8 +384,8 @@ trainerSkills = {
     "force_rank_dark_rank_02",
     "force_rank_light_rank_01", 
     "force_rank_dark_rank_01",
---    "force_rank_light_master", 
---    "force_rank_dark_master"
+    "force_rank_light_master", 
+    "force_rank_dark_master"
 	},
 
 	trainer_entertainer = {
@@ -1682,8 +1682,8 @@ trainerSkills = {
     "force_rank_dark_rank_02",
     "force_rank_light_rank_01", 
     "force_rank_dark_rank_01",
---    "force_rank_light_master", 
---    "force_rank_dark_master"
+    "force_rank_light_master", 
+    "force_rank_dark_master"
 	},
 	
 	trainer_frs_dark = {

@@ -20,6 +20,7 @@
 #include "server/zone/packets/creature/CreatureObjectDeltaMessage4.h"
 #include "server/zone/managers/mission/MissionManager.h"
 #include "server/zone/managers/frs/FrsManager.h"
+#include "server/zone/objects/player/FactionStatus.h"
 
 SkillManager::SkillManager()
 	: Logger("SkillManager") {
@@ -239,6 +240,11 @@ bool SkillManager::awardSkill(const String& skillName, CreatureObject* creature,
 	if (skill == nullptr)
 		return false;
 
+	if ((skill->getSkillName() == "force_rank_light_master" || skill->getSkillName() == "force_rank_dark_master") && creature->getFactionStatus() != FactionStatus::OVERT ) {
+		creature->sendSystemMessage("You must be overt special forces to train this skill.");
+		return false;
+	}
+
 	Locker locker(creature);
 
 	//Check for required skills.
@@ -453,6 +459,17 @@ bool SkillManager::surrenderSkill(const String& skillName, CreatureObject* creat
 	//this prevents learning both frs trees
 	if ((skill->getSkillName() == "force_title_jedi_rank_03") && (creature->hasSkill("force_rank_light_novice") || creature->hasSkill("force_rank_dark_novice"))){
 		creature->sendSystemMessage("You must first surrender all FRS skill boxes before you can surrender this box.");
+		return false;
+	}
+
+//	if (creature->isincombat()) {
+//		return false;
+//	}
+
+
+
+	if ((creature->hasSkill("force_rank_light_master") || creature->hasSkill("force_rank_dark_master")) &! creature->isDead()){
+		creature->sendSystemMessage("You can not surrender this skill, you can only lose it on death.");
 		return false;
 	}
 

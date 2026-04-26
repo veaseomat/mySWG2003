@@ -1092,6 +1092,8 @@ int PlayerManagerImplementation::notifyDestruction(TangibleObject* destructor, T
 
 	CreatureObject* playerCreature = cast<CreatureObject*>( destructedObject);
 
+	PlayerObject* ghost = playerCreature->getPlayerObject();
+
 	if ((playerCreature->isIncapacitated() && !(playerCreature->isFeigningDeath())) || playerCreature->isDead())
 		return 1;
 
@@ -1099,8 +1101,6 @@ int PlayerManagerImplementation::notifyDestruction(TangibleObject* destructor, T
 		playerCreature->updateCooldownTimer("mount_dismount", 0);
 		playerCreature->executeObjectControllerAction(STRING_HASHCODE("dismount"));
 	}
-
-	PlayerObject* ghost = playerCreature->getPlayerObject();
 
 	ghost->addIncapacitationTime();
 
@@ -1336,6 +1336,18 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 	player->setTargetID(0, true);
 
 	player->notifyObjectKillObservers(attacker);
+
+
+
+	if (player->isPlayerCreature() && (player->hasSkill("force_rank_light_master") || player->hasSkill("force_rank_dark_master"))) {
+		SkillManager* skillManager = server->getSkillManager();
+
+		skillManager->surrenderSkill("force_rank_light_master", player, true);
+		skillManager->surrenderSkill("force_rank_dark_master", player, true);
+
+		ghost->setTitle("", true);
+	}
+
 }
 
 void PlayerManagerImplementation::sendActivateCloneRequest(CreatureObject* player, int typeofdeath) {
