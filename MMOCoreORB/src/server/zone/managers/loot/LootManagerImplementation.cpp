@@ -333,55 +333,42 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 			excMod = 5.0;//leggy modifier
 			fJunkValue *= 2;
-
 			level += System::random(75);
 
-			if(level >= 400)//1/3 of 350 will cap to 400
-				level = 400;
-
-			if(System::random(3) == 3) {//1/10
+			if(System::random(4) == 4) {//1/10
 
 				excMod = 10.0;
 				fJunkValue *= 2;
-
 				level += System::random(75);
-				if(level >= 450)//1/3 of 400 will cap to 450
-					level = 450;
 
 				newName = "\\#5218fa" + prototype->getDisplayedName() + " (Mythic)";// divine next? Vivid Sky Blue #00ccff
 
-				if(System::random(5) == 5) {//1/100
-					excMod = 20.0;
+				if(System::random(4) == 4) {//1/50
+					excMod = 25.0;
 					fJunkValue *= 2;
-
 					level += System::random(75);
-					if(level >= 500)//1/3 of 450 will cap to 500
-						level = 500;
 
 					newName = "\\#00ccff" + prototype->getDisplayedName() + " (Divine)";//
 
-					if(System::random(7) == 7) {//1/1000
-						excMod = 40.0;
+					if(System::random(3) == 3) {//1/200
+						excMod = 50.0;
 						fJunkValue *= 2;
-
-						level += System::random(50);
-						if(level >= 500)
-							level = 500;
+						level += System::random(75);
 
 						newName = "\\#ff77ff" + prototype->getDisplayedName() + " (Astral)";//
 
-						if(System::random(9) == 9) {//1/10,000
-							excMod = 60.0;
+						if(System::random(4) == 4) {//1/1,000
+							excMod = 75.0;
 							fJunkValue *= 2;
-
-							level = 500;
+							level += System::random(75);
 
 							newName = "\\#ff0800" + prototype->getDisplayedName() + " (Godlike)";//
 
-							if(System::random(11) == 11) {//1/100,000
+							if(System::random(9) == 9) {//1/10,000
 								excMod = 100.0;//100x
 								fJunkValue *= 2;
-								level = 500;
+								level += System::random(75);
+
 								newName = "\\#1b1b1b" + prototype->getDisplayedName() + " (Demiurgical)";//
 							}
 						}
@@ -398,6 +385,9 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 
 	}
+
+	if(level >= 500)
+		level = 500;
 
 	if (prototype->isLightsaberCrystalObject()) {
 		LightsaberCrystalComponent* crystal = cast<LightsaberCrystalComponent*> (prototype.get());
