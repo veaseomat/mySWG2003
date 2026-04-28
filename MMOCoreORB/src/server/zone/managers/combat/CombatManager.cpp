@@ -1730,7 +1730,7 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 
 	if (attacker->isPlayerCreature() && data.isForceAttack()) { //force powers damage bonus cuz it sucks
-		float powersmult = 5.0;
+		float powersmult = 7.0;
 
 		ManagedReference<PlayerObject*> ghost = attacker->getPlayerObject();
 		FrsData* playerData = ghost->getFrsData();
@@ -1855,9 +1855,9 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 	// PvP Damage Reduction.
 	if (attacker->isPlayerCreature() && defender->isPlayerCreature() && !data.isForceAttack()) {
-		damage *= 0.25;
+		damage *= 0.2;
 		if (damage > 100) {
-			damage = ((damage - 100) / 2) + 100;
+			damage = ((damage - 100) / 3) + 100;
 		}
 	}
 
@@ -1962,8 +1962,8 @@ int CombatManager::getHitChance(TangibleObject* attacker, CreatureObject* target
 	int attackerAccuracy = getAttackerAccuracyModifier(attacker, targetCreature, weapon);
 	debug() << "Base attacker accuracy is " << attackerAccuracy;
 
-	if (attackerAccuracy > 65)
-		attackerAccuracy = ((attackerAccuracy - 65) / 5 ) + 65;
+	if (attackerAccuracy > 75)
+		attackerAccuracy = ((attackerAccuracy - 75) / 5) + 75;
 
 	if (!attacker->isPlayerCreature())
 		attackerAccuracy += 25;
@@ -2577,7 +2577,7 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 
 		if (attacker->isAiAgent() && !attacker->isCreature()) {
 
-			if (aistrength > aiquick && !weapon->isJediWeapon() && (aihealth < (aihealthmax * .5) || aiaction < (aiactionmax * .5)) && System::random(15) >= 15) {
+			if (aistrength > aiquick && !weapon->isJediWeapon() && (aihealth < (aihealthmax * .5) || aiaction < (aiactionmax * .5)) && System::random(15) == 15) {
 
 				int healammount = 100;
 
@@ -2608,7 +2608,7 @@ int CombatManager::applyDamage(TangibleObject* attacker, WeaponObject* weapon, C
 				return 0;
 			}
 
-			if (weapon->isJediWeapon() && System::random(5) >= 5 && (aihealth < (aihealthmax * .5) || aiaction < (aiactionmax * .5) || aimind < (aimindmax * .5))) {
+			if (weapon->isJediWeapon() && System::random(15) == 15 && (aihealth < (aihealthmax * .5) || aiaction < (aiactionmax * .5) || aimind < (aimindmax * .5))) {
 
 				int jedhealammount = 500;
 
