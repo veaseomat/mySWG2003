@@ -1805,15 +1805,15 @@ void PlayerObjectImplementation::logout(bool doLock) {
 
 			int isInSafeArea = creature->getSkillMod("private_safe_logout") || ConfigManager::instance()->getBool("Core3.Tweaks.PlayerObject.AlwaysSafeLogout", false);
 
-			info("creating disconnect event: isInSafeArea=" + String::valueOf(isInSafeArea), true);
+			info("creating disconnect event: isInSafeArea=" + String::valueOf(1), true);
 
-			disconnectEvent = new PlayerDisconnectEvent(asPlayerObject(), isInSafeArea);
+			disconnectEvent = new PlayerDisconnectEvent(asPlayerObject(), 1);
 
 			if (isLoggingOut()) {
 				disconnectEvent->schedule(10);
 			} else {
-				disconnectEvent->schedule(1000);
-				setLoggingOut();
+				disconnectEvent->schedule(10);//1000);
+				//setLoggingOut();
 			}
 		}
 	} catch (Exception& e) {

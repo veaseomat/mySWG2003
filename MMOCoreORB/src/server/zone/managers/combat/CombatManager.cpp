@@ -1730,24 +1730,24 @@ float CombatManager::calculateDamage(CreatureObject* attacker, WeaponObject* wea
 
 
 	if (attacker->isPlayerCreature() && data.isForceAttack()) { //force powers damage bonus cuz it sucks
-		float powersmult = 7.0;
+		float powersmult = 15.0;
 
 		ManagedReference<PlayerObject*> ghost = attacker->getPlayerObject();
 		FrsData* playerData = ghost->getFrsData();
 		int councilType = playerData->getCouncilType();
 
-		float darkDamage = attacker->getSkillMod("force_power_dark") / 2;
-		float lightDamage = attacker->getSkillMod("force_power_light") / 3;
+		float darkDamage = attacker->getSkillMod("force_power_dark");
+		float lightDamage = attacker->getSkillMod("force_power_light");
 
-		if (attacker->hasSkill("force_rank_light_novice")) {
+		if (attacker->hasSkill("force_rank_dark_novice")) {
 			if (darkDamage > 0 && data.isForceAttack()) {
-				darkDamage += 10;
-				powersmult += (darkDamage / 100.f);
+				darkDamage += 25;
+				powersmult *= (darkDamage / 100.f) + 1.0;
 			}
-		} else if (attacker->hasSkill("force_rank_dark_novice")) {
+		} else if (attacker->hasSkill("force_rank_light_novice")) {
 			if (lightDamage > 0 && data.isForceAttack()) {
 				lightDamage += 5;
-				powersmult += (lightDamage / 100.f);
+				powersmult *= (lightDamage / 100.f) + 1.0;
 			}
 		}
 

@@ -28,7 +28,7 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 		spawnLimitAdjustment = 3;
 	}
 
-	int spawnLimit = lairTemplate->getSpawnLimit();// + spawnLimitAdjustment;
+	int spawnLimit = lairTemplate->getSpawnLimit() + System::random(lairTemplate->getSpawnLimit());// + spawnLimitAdjustment;
 
 	if (forceSpawn) {
 		spawnNumber.increment();
@@ -94,10 +94,12 @@ bool DestroyMissionLairObserverImplementation::checkForNewSpawns(TangibleObject*
 //			amountToSpawn = System::random(2) + (spawnLimit / 3);
 //		}
 
+		amountToSpawn = System::random(spawnLimit / 2) + (spawnLimit / 2);
+
 		if (amountToSpawn < 1)
 			amountToSpawn = 1;
 
-		amountToSpawn += System::random(amountToSpawn);
+		//amountToSpawn += System::random(amountToSpawn);
 
 		for (int i = 0; i < amountToSpawn; i++) {
 			int num = System::random(mobiles->size() - 1);

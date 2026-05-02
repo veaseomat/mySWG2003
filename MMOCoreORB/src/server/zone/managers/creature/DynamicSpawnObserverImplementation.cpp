@@ -62,15 +62,17 @@ void DynamicSpawnObserverImplementation::spawnInitialMobiles(SceneObject* buildi
 
 	int spawnLimitAdjustment = (difficulty - 2) / 2;
 
-	int totalNumberToSpawn = (lairTemplate->getSpawnLimit() / 3) + spawnLimitAdjustment;
+	int totalNumberToSpawn = lairTemplate->getSpawnLimit() + System::random(lairTemplate->getSpawnLimit()) ;//+ spawnLimitAdjustment;
 	VectorMap<String, int> objectsToSpawn; // String mobileTemplate, int number to spawn
 	const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
 	uint32 lairTemplateCRC = getLairTemplateName().hashCode();
 
+	totalNumberToSpawn = System::random(totalNumberToSpawn / 2) + (totalNumberToSpawn / 2);
+
 	if (totalNumberToSpawn < 1)
 		totalNumberToSpawn = 1;
 
-	totalNumberToSpawn += System::random(totalNumberToSpawn);
+	//totalNumberToSpawn += System::random(totalNumberToSpawn);
 
 	for (int i = 0; i < totalNumberToSpawn; i++) {
 		int num = System::random(mobiles->size() - 1);

@@ -260,13 +260,13 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 	//int uncappedLevel = level;
 
-	level += System::random(50);
+	level += System::random(100);
 
-	if(level >= 350)//vanilla 300
-		level = 350;
+	if(level >= 300)//vanilla 300
+		level = 300;
 
 	if (System::random(9) == 9)//1/10 items will be max lvl
-		level = 350;
+		level = 300;
 
 
 	const String& directTemplateObject = templateObject->getDirectObjectTemplate();
@@ -333,41 +333,61 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 
 			excMod = 5.0;//leggy modifier
 			fJunkValue *= 2;
-			level += System::random(75);
+			if(level < 100)
+				level = 100;
+			level += System::random(100);
+			if(level >= 300)//vanilla 300
+				level = 300;
 
 			if(System::random(4) == 4) {//1/10
-
 				excMod = 10.0;
 				fJunkValue *= 2;
-				level += System::random(75);
+				if(level < 150)
+					level = 150;
+				level += System::random(100);
+				if(level >= 350)//
+					level = 350;
 
 				newName = "\\#5218fa" + prototype->getDisplayedName() + " (Mythic)";// divine next? Vivid Sky Blue #00ccff
 
 				if(System::random(4) == 4) {//1/50
 					excMod = 25.0;
 					fJunkValue *= 2;
-					level += System::random(75);
+					if(level < 200)
+						level = 200;
+					level += System::random(100);
+					if(level >= 350)//
+						level = 350;
 
 					newName = "\\#00ccff" + prototype->getDisplayedName() + " (Divine)";//
 
 					if(System::random(3) == 3) {//1/200
 						excMod = 50.0;
 						fJunkValue *= 2;
-						level += System::random(75);
+						if(level < 300)
+							level = 300;
+						level += System::random(100);
+						if(level >= 400)//
+							level = 400;
 
 						newName = "\\#ff77ff" + prototype->getDisplayedName() + " (Astral)";//
 
 						if(System::random(4) == 4) {//1/1,000
 							excMod = 75.0;
 							fJunkValue *= 2;
-							level += System::random(75);
+							if(level < 400)
+								level = 400;
+							level += System::random(100);
+							if(level >= 500)//
+								level = 500;
 
 							newName = "\\#ff0800" + prototype->getDisplayedName() + " (Godlike)";//
 
 							if(System::random(9) == 9) {//1/10,000
 								excMod = 100.0;//100x
 								fJunkValue *= 2;
-								level += System::random(75);
+								//level += System::random(100);
+								level = 500;
 
 								newName = "\\#1b1b1b" + prototype->getDisplayedName() + " (Demiurgical)";//
 							}
@@ -421,7 +441,7 @@ TangibleObject* LootManagerImplementation::createLootObject(const LootItemTempla
 		if (min == max)
 			continue;
 
-		float percentage = ((level * 10) + System::random(level * 10)) / 10000.f; //System::random(10000) / 10000.f;
+		float percentage = (((level * 20) * .75) + System::random(((level * 20) * .25))) / 10000.f; //System::random(10000) / 10000.f;
 
 		//NEW RANDOMIZER
 //		int newrandomizer = (excMod * 1000) / 2;

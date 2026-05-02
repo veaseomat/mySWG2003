@@ -96,7 +96,7 @@ int SpawnAreaImplementation::notifyObserverEvent(unsigned int eventType, Observa
 
 			Locker locker(area);
 
-			area->setRadius(64);//lair radius 64
+			area->setRadius(16);//lair radius 64
 			area->setNoSpawnArea(true);
 			area->initializePosition(sceno->getPositionX(), sceno->getPositionZ(), sceno->getPositionY());
 
@@ -166,7 +166,7 @@ void SpawnAreaImplementation::tryToSpawn(SceneObject* object) {
 	//	return;
 
 	// Check the spot to see if spawning is allowed
-	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), finalSpawn->getSize() + 64)) {	//finalSpawn->getSize() + 64.f
+	if (!planetManager->isSpawningPermittedAt(randomPosition.getX(), randomPosition.getY(), finalSpawn->getSize() + 16)) {	//finalSpawn->getSize() + 64.f
 		return;
 	}
 

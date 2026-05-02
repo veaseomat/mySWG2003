@@ -49,17 +49,17 @@ function ForceShrineMenuComponent:doMeditate(pObject, pPlayer)
 	elseif (JediTrials:isOnKnightTrials(pPlayer)) then
 		local pPlayerShrine = KnightTrials:getTrialShrine(pPlayer)
 
-		if (pPlayerShrine ~= nil and pObject ~= pPlayerShrine) then
-			local correctShrineZone = SceneObject(pPlayerShrine):getZoneName()
-			if (correctShrineZone ~= SceneObject(pObject):getZoneName()) then
-				local messageString = LuaStringIdChatParameter("@jedi_trials:knight_shrine_reminder")
-				messageString:setTO(getStringId("@jedi_trials:" .. correctShrineZone))
-				CreatureObject(pPlayer):sendSystemMessage(messageString:_getObject())
-			else
-				CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:knight_shrine_wrong")
-			end
-			return
-		end
+--		if (pPlayerShrine ~= nil and pObject ~= pPlayerShrine) then
+--			local correctShrineZone = SceneObject(pPlayerShrine):getZoneName()
+--			if (correctShrineZone ~= SceneObject(pObject):getZoneName()) then
+--				local messageString = LuaStringIdChatParameter("@jedi_trials:knight_shrine_reminder")
+--				messageString:setTO(getStringId("@jedi_trials:" .. correctShrineZone))
+--				CreatureObject(pPlayer):sendSystemMessage(messageString:_getObject())
+--			else
+--				CreatureObject(pPlayer):sendSystemMessage("@jedi_trials:knight_shrine_wrong")
+--			end
+--			return
+--		end
 
 		local currentTrial = JediTrials:getCurrentTrial(pPlayer)
 		local trialsCompleted = JediTrials:getTrialsCompleted(pPlayer)

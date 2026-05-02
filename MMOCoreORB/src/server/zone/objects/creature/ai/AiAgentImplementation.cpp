@@ -146,7 +146,17 @@ void AiAgentImplementation::loadTemplateData(CreatureTemplate* templateData) {
 
 	bool legendarynpc = false;//adds (elite) name tag
 
-	level = getTemplateLevel();
+	int newlevel = getTemplateLevel();
+
+	newlevel += System::random(50);
+
+//	if (System::random(9) == 9 && level < 100) {// and elite <= 1.0) {
+//		level = 100;// + (System::random(25) * .01);//1.516 X lvl 330 = lvl 500
+//	}
+
+	if (newlevel > 500) newlevel = 500;
+
+	level = newlevel;//getTemplateLevel();
 	
 	//if (level > 350) level = 350;
 	

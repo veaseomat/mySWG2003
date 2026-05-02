@@ -257,16 +257,18 @@ bool LairObserverImplementation::checkForNewSpawns(TangibleObject* lair, Tangibl
 		const Vector<String>* mobiles = lairTemplate->getWeightedMobiles();
 		int amountToSpawn = 0;
 
-		if (getMobType() == LairTemplate::CREATURE) {
-			amountToSpawn = System::random(3) + ((lairTemplate->getSpawnLimit() / 3) - 2);
-		} else {
-			amountToSpawn = System::random(lairTemplate->getSpawnLimit() / 2) + (lairTemplate->getSpawnLimit() / 2);
-		}
+//		if (getMobType() == LairTemplate::CREATURE) {
+//			amountToSpawn = System::random(lairTemplate->getSpawnLimit()) + lairTemplate->getSpawnLimit();
+//		} else {
+//			amountToSpawn = System::random(lairTemplate->getSpawnLimit()) + lairTemplate->getSpawnLimit();
+//		}
+
+		amountToSpawn = System::random(lairTemplate->getSpawnLimit() / 2) + (lairTemplate->getSpawnLimit() / 2);
 
 		if (amountToSpawn < 1)
 			amountToSpawn = 1;
 
-		amountToSpawn += System::random(amountToSpawn);
+//		amountToSpawn += System::random(amountToSpawn);
 
 		for (int i = 0; i < amountToSpawn; i++) {
 			int num = System::random(mobiles->size() - 1);
